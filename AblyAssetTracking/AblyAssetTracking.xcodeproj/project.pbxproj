@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -28,6 +28,11 @@
 		188893CD257660E100866E6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 188893CB257660E100866E6F /* Main.storyboard */; };
 		188893CF257660E200866E6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 188893CE257660E200866E6F /* Assets.xcassets */; };
 		188893D2257660E200866E6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 188893D0257660E200866E6F /* LaunchScreen.storyboard */; };
+		18F428E82576753700026943 /* AblyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428E72576753700026943 /* AblyClient.swift */; };
+		18F428EB2576754B00026943 /* AblyAssetTrackingPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428EA2576754B00026943 /* AblyAssetTrackingPublisher.swift */; };
+		18F428EC2576758B00026943 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889358257660A800866E6F /* Core.framework */; };
+		18F428ED257675BE00026943 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889358257660A800866E6F /* Core.framework */; };
+		18F428F02576764100026943 /* AblyAssetTrackingSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428EF2576764100026943 /* AblyAssetTrackingSubscriber.swift */; };
 		24EE523D63B8756D0201DA5C /* Pods_SubscriberExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5382C42F4B0046285F779DE /* Pods_SubscriberExample.framework */; };
 		81CE863500E2D9EDC27C9E1D /* Pods_PublisherExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC0A743D30074B2B8AD702F /* Pods_PublisherExample.framework */; };
 		ABF806436C8A86D022038155 /* Pods_Subscriber_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C3034FB7DD99E9F5B429E3 /* Pods_Subscriber_SubscriberTests.framework */; };
@@ -59,6 +64,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1888938F257660BE00866E6F;
 			remoteInfo = Subscriber;
+		};
+		18F428E32576745600026943 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 188892942576578B00866E6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18889357257660A800866E6F;
+			remoteInfo = Core;
+		};
+		18F428E52576745C00026943 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 188892942576578B00866E6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18889357257660A800866E6F;
+			remoteInfo = Core;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -99,6 +118,9 @@
 		188893CE257660E200866E6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		188893D1257660E200866E6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		188893D3257660E200866E6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18F428E72576753700026943 /* AblyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyClient.swift; sourceTree = "<group>"; };
+		18F428EA2576754B00026943 /* AblyAssetTrackingPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyAssetTrackingPublisher.swift; sourceTree = "<group>"; };
+		18F428EF2576764100026943 /* AblyAssetTrackingSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyAssetTrackingSubscriber.swift; sourceTree = "<group>"; };
 		22525DFB2FD75E751748F56C /* Pods-Subscriber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.debug.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.debug.xcconfig"; sourceTree = "<group>"; };
 		297CDD111E4F42EBEA96FD5F /* Pods-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		305F7663F59BEE61819BC0DB /* Pods-Core-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-Core-CoreTests/Pods-Core-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F428EC2576758B00026943 /* Core.framework in Frameworks */,
 				FAC3DFEEB6F93A8A57E11583 /* Pods_Publisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F428ED257675BE00026943 /* Core.framework in Frameworks */,
 				B4FE415B7D2820A9D1EB62CB /* Pods_Subscriber.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,6 +253,7 @@
 		18889359257660A800866E6F /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				18F428E2257672F200026943 /* Sources */,
 				1888935A257660A800866E6F /* Core.h */,
 				1888935B257660A800866E6F /* Info.plist */,
 			);
@@ -247,6 +272,7 @@
 		18889375257660B500866E6F /* Publisher */ = {
 			isa = PBXGroup;
 			children = (
+				18F428E92576753E00026943 /* Sources */,
 				18889376257660B500866E6F /* Publisher.h */,
 				18889377257660B500866E6F /* Info.plist */,
 			);
@@ -265,6 +291,7 @@
 		18889391257660BE00866E6F /* Subscriber */ = {
 			isa = PBXGroup;
 			children = (
+				18F428EE2576763100026943 /* Sources */,
 				18889392257660BE00866E6F /* Subscriber.h */,
 				18889393257660BE00866E6F /* Info.plist */,
 			);
@@ -306,6 +333,30 @@
 				188893D3257660E200866E6F /* Info.plist */,
 			);
 			path = PublisherExample;
+			sourceTree = "<group>";
+		};
+		18F428E2257672F200026943 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				18F428E72576753700026943 /* AblyClient.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		18F428E92576753E00026943 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				18F428EA2576754B00026943 /* AblyAssetTrackingPublisher.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		18F428EE2576763100026943 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				18F428EF2576764100026943 /* AblyAssetTrackingSubscriber.swift */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		1E175BCE17D7F0399A77B893 /* Frameworks */ = {
@@ -428,6 +479,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				18F428E42576745600026943 /* PBXTargetDependency */,
 			);
 			name = Publisher;
 			productName = Publisher;
@@ -467,6 +519,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				18F428E62576745C00026943 /* PBXTargetDependency */,
 			);
 			name = Subscriber;
 			productName = Subscriber;
@@ -541,18 +594,21 @@
 				TargetAttributes = {
 					18889357257660A800866E6F = {
 						CreatedOnToolsVersion = 11.7;
+						LastSwiftMigration = 1170;
 					};
 					1888935F257660A800866E6F = {
 						CreatedOnToolsVersion = 11.7;
 					};
 					18889373257660B500866E6F = {
 						CreatedOnToolsVersion = 11.7;
+						LastSwiftMigration = 1170;
 					};
 					1888937B257660B500866E6F = {
 						CreatedOnToolsVersion = 11.7;
 					};
 					1888938F257660BE00866E6F = {
 						CreatedOnToolsVersion = 11.7;
+						LastSwiftMigration = 1170;
 					};
 					18889397257660BE00866E6F = {
 						CreatedOnToolsVersion = 11.7;
@@ -890,6 +946,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F428E82576753700026943 /* AblyClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -905,6 +962,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F428EB2576754B00026943 /* AblyAssetTrackingPublisher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -920,6 +978,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F428F02576764100026943 /* AblyAssetTrackingSubscriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -968,6 +1027,16 @@
 			isa = PBXTargetDependency;
 			target = 1888938F257660BE00866E6F /* Subscriber */;
 			targetProxy = 1888939A257660BE00866E6F /* PBXContainerItemProxy */;
+		};
+		18F428E42576745600026943 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18889357257660A800866E6F /* Core */;
+			targetProxy = 18F428E32576745600026943 /* PBXContainerItemProxy */;
+		};
+		18F428E62576745C00026943 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18889357257660A800866E6F /* Core */;
+			targetProxy = 18F428E52576745C00026943 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1131,6 +1200,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 297CDD111E4F42EBEA96FD5F /* Pods-Core.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1147,6 +1217,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.ably.asset-tracking.Core";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1156,6 +1227,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 56D359902D3C4B54073A9E43 /* Pods-Core.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1181,6 +1253,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 305F7663F59BEE61819BC0DB /* Pods-Core-CoreTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1199,6 +1272,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 79094DC0E50489820CA27BB7 /* Pods-Core-CoreTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1217,6 +1291,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9E3B8EF91F539F166DE8ABA9 /* Pods-Publisher.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1233,6 +1308,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.ably.asset-tracking.Publisher";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1242,6 +1318,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9AC16A9BA3E86FAA85AC24C9 /* Pods-Publisher.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1267,6 +1344,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 70350755EE2F33A1D8215F29 /* Pods-Publisher-PublisherTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = PublisherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1285,6 +1363,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3A34A097C32C8A42F4613D63 /* Pods-Publisher-PublisherTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = PublisherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1303,6 +1382,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 22525DFB2FD75E751748F56C /* Pods-Subscriber.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1319,6 +1399,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.ably.asset-tracking.Subscriber";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1328,6 +1409,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0193ABA58D54D319FC071B88 /* Pods-Subscriber.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1353,6 +1435,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0B2EF71B23CE988FB122A73A /* Pods-Subscriber-SubscriberTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = SubscriberTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1371,6 +1454,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B5977E15251C782415C2B8E7 /* Pods-Subscriber-SubscriberTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = SubscriberTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
