@@ -9,10 +9,11 @@
 import UIKit
 import Core
 
-class AblyAssetTrackingPublisher {
-    
-    // Temporary function to test if we can use Core classes here
+public class AblyAssetTrackingPublisher {
+    public init() {}
+        
     func testCoreDependency() {
-        let client = AblyClient()
+        // Temporary function to test if we can use Core classes here
+        let _ = AblyClient()
     }
 }

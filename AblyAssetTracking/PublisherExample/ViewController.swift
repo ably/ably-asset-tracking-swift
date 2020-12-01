@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Publisher
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Temporary test to validate if we have acess to Publisher data
+        let _ = AblyAssetTrackingPublisher()
     }
 
 
