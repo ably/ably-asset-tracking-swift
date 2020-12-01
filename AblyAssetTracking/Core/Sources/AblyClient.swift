@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-// Temporary class to test if we can use Core in Publisher and Subscriber
 public class AblyClient {
     public init() {}
 }
