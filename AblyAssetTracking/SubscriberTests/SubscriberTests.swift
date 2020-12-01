@@ -1,15 +1,15 @@
 //
-//  AssetTrackingPublisherTests.swift
-//  AssetTrackingPublisherTests
+//  SubscriberTests.swift
+//  SubscriberTests
 //
 //  Created by Michal Miedlarz on 01/12/2020.
 //  Copyright © 2020 Ably. All rights reserved.
 //
 
 import XCTest
-@testable import AssetTrackingPublisher
+@testable import Subscriber
 
-class AssetTrackingPublisherTests: XCTestCase {
+class SubscriberTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
