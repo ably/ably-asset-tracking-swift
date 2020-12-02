@@ -28,7 +28,7 @@ PODS:
   - ULID (1.1.0)
 
 DEPENDENCIES:
-  - Ably (~> 1.2)
+  - Ably (>= 1.2)
   - MapboxCoreNavigation (~> 1.0)
   - Nimble (~> 9.0)
   - Quick (~> 3.0)
@@ -68,6 +68,6 @@ SPEC CHECKSUMS:
   Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: cbe6e3568f0faed25bde060b7a72675e919205b5
+PODFILE CHECKSUM: 9fd41eae6fb12110be1912238bc93747661aa595
 
 COCOAPODS: 1.9.3
