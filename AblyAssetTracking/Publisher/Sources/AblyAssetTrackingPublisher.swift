@@ -1,13 +1,20 @@
 import UIKit
-import Core
 
+
+public protocol AblyAssetTrackingPublisherDelegate: class {
+    func ablyAssetTrackingPublisher(sendeR: AblyAssetTrackingPublisher, didFailWithError error: Error)
+}
 
 public class AblyAssetTrackingPublisher {
-    public init(configuration: AblyConfiguration) {}
-        
-    func testCoreDependency() {
-        // Temporary function to test if we can use Core classes here
-        let _ = AblyClient()
-        let _ = MapBoxService()
+    private let configuration: AblyConfiguration
+    private let locationSerice: LocationService
+    
+    public weak var delegate: AblyAssetTrackingPublisherDelegate?
+    
+    public init(configuration: AblyConfiguration) {
+        self.configuration = configuration
+        self.locationSerice = LocationService()
     }
+    
+
 }
