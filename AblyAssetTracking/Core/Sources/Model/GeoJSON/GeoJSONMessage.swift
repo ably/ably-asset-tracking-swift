@@ -18,5 +18,20 @@ class GeoJSONMessage: Codable {
         geometry = GeoJSONGeometry(location: location)
         properties = GeoJSONProperties(location: location)
     }
+    
+    func toCoreLocation() -> CLLocation? {
+        guard let longitude = geometry.coordinates.first,
+              let latitude = geometry.coordinates.last
+        else { return nil }
+        
+        return CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
+            altitude: properties.altitude,
+            horizontalAccuracy: properties.accuracyHorizontal,
+            verticalAccuracy: -1,
+            course: properties.bearing,
+            speed: properties.speed,
+            timestamp: Date(timeIntervalSince1970: properties.time))
+    }
 }
 
