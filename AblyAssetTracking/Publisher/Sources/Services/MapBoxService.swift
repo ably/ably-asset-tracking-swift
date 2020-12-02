@@ -12,7 +12,6 @@ class MapBoxService {
     private let locationManager: NavigationLocationManager
     
     public init() {
-        self.locationManager = NavigationLocationManager()
-        locationManager.manu
+        self.locationManager = NavigationLocationManager()        
     }
 }
