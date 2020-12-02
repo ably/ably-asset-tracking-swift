@@ -1,6 +1,6 @@
 import UIKit
 
-public class MapConfiguration: NSObject {
+public class MapConfiguration {
     let apiKey: String
     
     public init(apiKey: String) {
