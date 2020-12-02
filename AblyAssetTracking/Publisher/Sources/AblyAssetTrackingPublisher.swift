@@ -1,8 +1,8 @@
 import UIKit
-
+import CoreLocation
 
 public protocol AblyAssetTrackingPublisherDelegate: class {
-    func ablyAssetTrackingPublisher(sendeR: AblyAssetTrackingPublisher, didFailWithError error: Error)
+    func ablyAssetTrackingPublisher(sender: AblyAssetTrackingPublisher, didFailWithError error: Error)
 }
 
 public class AblyAssetTrackingPublisher {
@@ -16,5 +16,31 @@ public class AblyAssetTrackingPublisher {
         self.locationSerice = LocationService()
     }
     
+    public func start() {
+        locationSerice.startUpdatingLocation()
+    }
+    
+    public func stop() {
+        locationSerice.stopUpdatingLocation()
+    }
+    
+    // TODO - Clarify if we need those methods.
+    public func requestAlwaysAuthorization() {
+        locationSerice.requestAlwaysAuthorization()
+    }
+    
+    public func requestWhenInUseAuthorization() {
+        locationSerice.requestWhenInUseAuthorization()
+    }
+}
 
+extension AblyAssetTrackingPublisher: LocationServiceDelegate {
+    func locationService(sender: LocationService, didFailWithError error: Error) {
+        delegate?.ablyAssetTrackingPublisher(sender: self, didFailWithError: error)
+    }
+    
+    func locationService(sender: LocationService, didUpdateLocation location: CLLocation) {
+        // TOOD - convert CLLocation to GeoJSON and pass to AblyService.
+        // TODO - Clarify if we need to let our client know about detected position.
+    }
 }

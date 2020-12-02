@@ -24,8 +24,25 @@ class LocationService {
         self.locationDataSource.delegate = self
     }
     
-    func start() {
-        
+    func startUpdatingLocation() {
+        locationDataSource.startUpdatingLocation { [weak self] (error) in
+            guard let error = error,
+                  let strongSelf = self
+            else { return }
+            self?.delegate?.locationService(sender: strongSelf, didFailWithError: error)
+        }
+    }
+    
+    func stopUpdatingLocation() {
+        locationDataSource.systemLocationManager.stopUpdatingLocation()
+    }
+    
+    func requestAlwaysAuthorization() {
+        locationDataSource.systemLocationManager.requestAlwaysAuthorization()
+    }
+    
+    func requestWhenInUseAuthorization() {
+        locationDataSource.systemLocationManager.requestWhenInUseAuthorization()
     }
 }
 
@@ -33,12 +50,11 @@ extension LocationService: PassiveLocationDataSourceDelegate {
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
         delegate?.locationService(sender: self, didUpdateLocation: location)
     }
-
+    
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didFailWithError error: Error) {
         delegate?.locationService(sender: self, didFailWithError: error)
     }
     
-    /// - seealso: `CLLocationManagerDelegate.locationManager(_:didUpdateHeading:)`
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateHeading newHeading: CLHeading) {
         // Ignore
     }
