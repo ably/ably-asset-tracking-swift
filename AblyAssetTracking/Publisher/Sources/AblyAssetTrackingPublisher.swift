@@ -8,5 +8,6 @@ public class AblyAssetTrackingPublisher {
     func testCoreDependency() {
         // Temporary function to test if we can use Core classes here
         let _ = AblyClient()
+        let _ = MapBoxService()
     }
 }

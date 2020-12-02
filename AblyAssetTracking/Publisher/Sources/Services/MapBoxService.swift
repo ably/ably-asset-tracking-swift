@@ -6,8 +6,13 @@
 //  Copyright © 2020 Ably. All rights reserved.
 //
 
-import UIKit
+import MapboxCoreNavigation
 
-class MapBoxService: NSObject {
-
+class MapBoxService {
+    private let locationManager: NavigationLocationManager
+    
+    public init() {
+        self.locationManager = NavigationLocationManager()
+        locationManager.manu
+    }
 }

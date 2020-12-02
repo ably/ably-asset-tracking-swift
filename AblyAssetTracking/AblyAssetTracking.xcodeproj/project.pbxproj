@@ -10,6 +10,11 @@
 		188688102577783E00FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
 		188688222577787B00FBD4A0 /* AblyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188688212577787B00FBD4A0 /* AblyConfiguration.swift */; };
 		1886882D25777B9C00FBD4A0 /* MapBoxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886882C25777B9C00FBD4A0 /* MapBoxService.swift */; };
+		1886887D25779B2600FBD4A0 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889358257660A800866E6F /* Core.framework */; };
+		1886888025779B2800FBD4A0 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889374257660B500866E6F /* Publisher.framework */; };
+		1886889225779B9600FBD4A0 /* AblyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886889125779B9600FBD4A0 /* AblyService.swift */; };
+		1886889B25779FA900FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
+		188688A425779FAA00FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
 		18889361257660A800866E6F /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889358257660A800866E6F /* Core.framework */; };
 		18889366257660A800866E6F /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18889365257660A800866E6F /* CoreTests.swift */; };
 		18889368257660A800866E6F /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 1888935A257660A800866E6F /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -21,8 +26,6 @@
 		188893A0257660BE00866E6F /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 18889392257660BE00866E6F /* Subscriber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F428E82576753700026943 /* AblyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428E72576753700026943 /* AblyClient.swift */; };
 		18F428EB2576754B00026943 /* AblyAssetTrackingPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428EA2576754B00026943 /* AblyAssetTrackingPublisher.swift */; };
-		18F428EC2576758B00026943 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889358257660A800866E6F /* Core.framework */; };
-		18F428ED257675BE00026943 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889358257660A800866E6F /* Core.framework */; };
 		18F428F02576764100026943 /* AblyAssetTrackingSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428EF2576764100026943 /* AblyAssetTrackingSubscriber.swift */; };
 		18F428FB257676FE00026943 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428FA257676FE00026943 /* AppDelegate.swift */; };
 		18F428FF257676FE00026943 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428FE257676FE00026943 /* ViewController.swift */; };
@@ -34,7 +37,6 @@
 		18F4291A2576770A00026943 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F429182576770A00026943 /* Main.storyboard */; };
 		18F4291C2576770B00026943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F4291B2576770B00026943 /* Assets.xcassets */; };
 		18F4291F2576770B00026943 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F4291D2576770B00026943 /* LaunchScreen.storyboard */; };
-		18F429242576799800026943 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889374257660B500866E6F /* Publisher.framework */; };
 		18F4292525767A1500026943 /* Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889390257660BE00866E6F /* Subscriber.framework */; };
 		95300BC576202BABC1CBD48E /* Pods_SubscriberExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5382C42F4B0046285F779DE /* Pods_SubscriberExample.framework */; };
 		ABF806436C8A86D022038155 /* Pods_Subscriber_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C3034FB7DD99E9F5B429E3 /* Pods_Subscriber_SubscriberTests.framework */; };
@@ -76,6 +78,7 @@
 		1886880F2577783E00FBD4A0 /* MapConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfiguration.swift; sourceTree = "<group>"; };
 		188688212577787B00FBD4A0 /* AblyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConfiguration.swift; sourceTree = "<group>"; };
 		1886882C25777B9C00FBD4A0 /* MapBoxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxService.swift; sourceTree = "<group>"; };
+		1886889125779B9600FBD4A0 /* AblyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyService.swift; sourceTree = "<group>"; };
 		18889358257660A800866E6F /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1888935A257660A800866E6F /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		1888935B257660A800866E6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -157,7 +160,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F428EC2576758B00026943 /* Core.framework in Frameworks */,
 				FAC3DFEEB6F93A8A57E11583 /* Pods_Publisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,7 +177,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F428ED257675BE00026943 /* Core.framework in Frameworks */,
 				B4FE415B7D2820A9D1EB62CB /* Pods_Subscriber.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,7 +203,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F429242576799800026943 /* Publisher.framework in Frameworks */,
+				1886888025779B2800FBD4A0 /* Publisher.framework in Frameworks */,
+				1886887D25779B2600FBD4A0 /* Core.framework in Frameworks */,
 				AE35A8DEE26C9493159E6FEA /* Pods_PublisherExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				1886882C25777B9C00FBD4A0 /* MapBoxService.swift */,
+				1886889125779B9600FBD4A0 /* AblyService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -972,7 +975,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1886882D25777B9C00FBD4A0 /* MapBoxService.swift in Sources */,
+				1886889225779B9600FBD4A0 /* AblyService.swift in Sources */,
 				18F428EB2576754B00026943 /* AblyAssetTrackingPublisher.swift in Sources */,
+				1886889B25779FA900FBD4A0 /* MapConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -989,6 +994,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F428F02576764100026943 /* AblyAssetTrackingSubscriber.swift in Sources */,
+				188688A425779FAA00FBD4A0 /* MapConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1251,7 +1257,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 305F7663F59BEE61819BC0DB /* Pods-Core-CoreTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1270,7 +1275,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 79094DC0E50489820CA27BB7 /* Pods-Core-CoreTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1342,7 +1346,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 70350755EE2F33A1D8215F29 /* Pods-Publisher-PublisherTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = PublisherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1361,7 +1364,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3A34A097C32C8A42F4613D63 /* Pods-Publisher-PublisherTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = PublisherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1433,7 +1435,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0B2EF71B23CE988FB122A73A /* Pods-Subscriber-SubscriberTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = SubscriberTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1452,7 +1453,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B5977E15251C782415C2B8E7 /* Pods-Subscriber-SubscriberTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = SubscriberTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
