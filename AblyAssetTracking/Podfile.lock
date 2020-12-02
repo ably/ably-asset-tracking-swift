@@ -1,3 +1,65 @@
-PODFILE CHECKSUM: 6e0c5235fb842b79a7878b3cab22cebb9ee75edf
+PODS:
+  - Ably (1.2.3):
+    - AblyDeltaCodec (= 1.2.0)
+    - msgpack (= 0.3.1)
+    - SocketRocketAblyFork (= 0.5.2-ably-7)
+    - ULID (= 1.1.0)
+  - AblyDeltaCodec (1.2.0)
+  - MapboxAccounts (2.3.0)
+  - MapboxCommon (7.1.2)
+  - MapboxCoreNavigation (1.1.0):
+    - MapboxAccounts (~> 2.3.0)
+    - MapboxDirections (~> 1.0)
+    - MapboxMobileEvents (~> 0.10.2)
+    - MapboxNavigationNative (~> 22.0)
+    - Turf (~> 1.0)
+  - MapboxDirections (1.1.0):
+    - Polyline (~> 5.0)
+    - Turf (~> 1.0)
+  - MapboxMobileEvents (0.10.6)
+  - MapboxNavigationNative (22.0.5):
+    - MapboxCommon (= 7.1.2)
+  - msgpack (0.3.1)
+  - Polyline (5.0.2)
+  - SocketRocketAblyFork (0.5.2-ably-7)
+  - Turf (1.1.0)
+  - ULID (1.1.0)
+
+DEPENDENCIES:
+  - Ably (~> 1.2)
+  - MapboxCoreNavigation (~> 1.0)
+
+SPEC REPOS:
+  trunk:
+    - Ably
+    - AblyDeltaCodec
+    - MapboxAccounts
+    - MapboxCommon
+    - MapboxCoreNavigation
+    - MapboxDirections
+    - MapboxMobileEvents
+    - MapboxNavigationNative
+    - msgpack
+    - Polyline
+    - SocketRocketAblyFork
+    - Turf
+    - ULID
+
+SPEC CHECKSUMS:
+  Ably: 9f143677993cb6df20fce4551b9b6b2e55ad2f4d
+  AblyDeltaCodec: 6123f31df5b04a0f5452968505a46ba16a9eb689
+  MapboxAccounts: 84abfdde95d9dc483f604c1b0fe1861edf691ce7
+  MapboxCommon: e469f6c62de29e1906c37e0bce65f6826e7fb9ac
+  MapboxCoreNavigation: 1e859a9660eb8558fe5ab2dbe7d6ef396d9d9b0c
+  MapboxDirections: f47e5648051967c502897cf808090874e3f81c5d
+  MapboxMobileEvents: 5ef561e6b6f9cbff2900d62a52322e75d1a7dfdf
+  MapboxNavigationNative: 88f243e0460fc7d1d50035bf13583355da6e4c26
+  msgpack: a14de9216d29cfd0a7aff5af5150601a27e899a4
+  Polyline: fce41d72e1146c41c6d081f7656827226f643dff
+  SocketRocketAblyFork: 33ff506ecb565498051b8f358d60ae44274c3981
+  Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
+  ULID: b4714891a02819364faecd574a53e391c4c6de9d
+
+PODFILE CHECKSUM: bcb2b206b5239b365720214f59f1cf3ac22a4fe9
 
 COCOAPODS: 1.9.3

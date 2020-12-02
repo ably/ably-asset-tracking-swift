@@ -9,14 +9,17 @@ end
 
 target 'Publisher' do
   use_frameworks!
-
+  pod 'Ably', '~> 1.2'
+  pod 'MapboxCoreNavigation', '~> 1.0'
+  
   target 'PublisherTests' do
   end
 end
 
 target 'Subscriber' do
   use_frameworks!
-
+  pod 'Ably', '~> 1.2'
+  
   target 'SubscriberTests' do
   end
 end
