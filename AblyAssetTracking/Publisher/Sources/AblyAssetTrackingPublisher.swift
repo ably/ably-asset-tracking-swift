@@ -11,6 +11,7 @@ import CoreLocation
 
 public protocol AblyAssetTrackingPublisherDelegate: class {
     func ablyAssetTrackingPublisher(sender: AblyAssetTrackingPublisher, didFailWithError error: Error)
+    func ablyAssetTrackingPublisher(sender: AblyAssetTrackingPublisher, didUpdateLocation location: CLLocation)
 }
 
 public class AblyAssetTrackingPublisher {
@@ -48,7 +49,7 @@ extension AblyAssetTrackingPublisher: LocationServiceDelegate {
     }
     
     func locationService(sender: LocationService, didUpdateLocation location: CLLocation) {
+        delegate?.ablyAssetTrackingPublisher(sender: self, didUpdateLocation: location)
         // TOOD - convert CLLocation to GeoJSON and pass to AblyService.
-        // TODO - Clarify if we need to let our client know about detected position.
     }
 }
