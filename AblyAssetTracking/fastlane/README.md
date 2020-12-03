@@ -16,11 +16,36 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
+### ios test_all
+```
+fastlane ios test_all
+```
+Run tests on the Core framework of SDK
 ### ios test_core
 ```
 fastlane ios test_core
 ```
 Run tests on the Core framework of SDK
+### ios test_publisher
+```
+fastlane ios test_publisher
+```
+Run tests on the Publisher framework of SDK
+### ios test_subscriber
+```
+fastlane ios test_subscriber
+```
+Run tests on the Subscriber framework of SDK
+### ios build_subscriber
+```
+fastlane ios build_subscriber
+```
+Build Subscriber SDK and export is as .framework file
+### ios build_publisher
+```
+fastlane ios build_publisher
+```
+Build Publisher SDK and export is as .framework file
 
 ----
 

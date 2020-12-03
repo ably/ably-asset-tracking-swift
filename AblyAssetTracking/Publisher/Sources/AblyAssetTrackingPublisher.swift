@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Core
-
 
 public class AblyAssetTrackingPublisher {
     public init(configuration: AblyConfiguration) {}

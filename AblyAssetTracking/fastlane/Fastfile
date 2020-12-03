@@ -1,14 +1,61 @@
 default_platform(:ios)
 
 platform :ios do
+  before_all do
+    # cocoapods
+  end
+
+  desc "Run tests on the Core framework of SDK"
+  lane :test_all do
+    test_core
+    test_publisher
+    test_subscriber
+  end
+
   desc "Run tests on the Core framework of SDK"
   lane :test_core do
-    pods
     scan(
       workspace: './AblyAssetTracking.xcworkspace',
       scheme: 'Core',
       clean: true,
       code_coverage: true,
     )
+  end
+
+  desc "Run tests on the Publisher framework of SDK"
+  lane :test_publisher do
+    scan(
+      workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'Publisher',
+      clean: true,
+      code_coverage: true,
+    )
+  end
+
+  desc "Run tests on the Subscriber framework of SDK"
+  lane :test_subscriber do
+    scan(
+      workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'Subscriber',
+      clean: true,
+      code_coverage: true,
+    )
+  end
+
+  desc "Build Subscriber SDK and export is as .framework file"
+  lane :build_subscriber do
+    xcodebuild(
+      archive: true,
+      workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'Subscriber',
+      destination: 'generic/platform=iOS',
+      archive_path: 'archives/Subscriber.xcarchive',
+      # xcargs: 'SKIP_INSTALL=NO',
+    )
+  end
+
+  desc "Build Publisher SDK and export is as .framework file"
+  lane :build_publisher do
+
   end
 end
