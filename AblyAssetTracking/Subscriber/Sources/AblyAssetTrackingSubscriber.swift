@@ -1,10 +1,16 @@
-import UIKit
+import Foundation
 
-public class AblyAssetTrackingSubscriber {    
-    public init() {}
+public class AblyAssetTrackingSubscriber: AssetTrackingSubscriber {
+    private let configuration: AssetTrackingSubscriberConfiguration
+    public var delegate: AssetTrackingSubscriberDelegate?
     
-    // Temporary function to test if we can use Core classes here
-    func testCoreDependency() {
-        let _ = AblyClient()
+    /**
+     Default constructor. Initializes Subscriber with given `AssetTrackingSubscriberConfiguration`.
+     Subscriber starts listening (and notifying delegate) after initialization.
+     - Parameters:
+     -  configuration: Configuration struct to use in this instance.
+     */
+    public init(configuration: AssetTrackingSubscriberConfiguration) {
+        self.configuration = configuration
     }
 }

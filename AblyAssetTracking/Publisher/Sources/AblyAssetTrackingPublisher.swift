@@ -10,14 +10,20 @@ import UIKit
 import CoreLocation
 
 public class AblyAssetTrackingPublisher: AssetTrackingPublisher {
-    private let configuration: AblyConfiguration
+    private let configuration: AssetTrackingPublisherConfiguration
     private let locationSerice: LocationService
     
     public weak var delegate: AssetTrackingPublisherDelegate?
     public var activeTrackable: Trackable?
     public var transportationMode: TransportationMode
     
-    public init(configuration: AblyConfiguration) {
+    /**
+     Default constructor. Initializes Publisher with given `AssetTrackingPublisherConfiguration`.
+     Publisher starts listening (and notifying delegate) after initialization.
+     - Parameters:
+     -  configuration: Configuration struct to use in this instance.
+     */
+    public init(configuration: AssetTrackingPublisherConfiguration) {
         self.configuration = configuration
         self.locationSerice = LocationService()
         
