@@ -12,11 +12,17 @@ import CoreLocation
 public protocol AssetTrackingPublisherDelegate: class {
     /**
      Called when `AssetTrackingPublisher` spot any (location, network or permissions) error
+     - Parameters:
+     - sender: `AssetTrackingPublisher` instance.
+     - error: Detected error.
      */
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didFailWithError error: Error)
     
     /**
-     Called when `AssetTrackingPublisher` detect new location. Same location will be sent to the Subscriber module
+     Called when `AssetTrackingPublisher` detect new Raw location. Same location will be sent to the Subscriber module
+     - Parameters:
+     - sender:`AssetTrackingPublisher` instance.
+     - location: Location object received from LocationManager
      */
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateLocation location: CLLocation)
 }
