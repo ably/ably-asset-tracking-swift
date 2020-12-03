@@ -2,7 +2,7 @@ default_platform(:ios)
 
 platform :ios do
   before_all do
-    # cocoapods
+    cocoapods
   end
 
   desc "Run tests on the Core framework of SDK"
@@ -50,7 +50,7 @@ platform :ios do
       scheme: 'Subscriber',
       destination: 'generic/platform=iOS',
       archive_path: 'archives/Subscriber.xcarchive',
-      # xcargs: 'SKIP_INSTALL=NO',
+      xcargs: 'SKIP_INSTALL=NO',
     )
   end
 
