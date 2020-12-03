@@ -56,6 +56,13 @@ platform :ios do
 
   desc "Build Publisher SDK and export is as .framework file"
   lane :build_publisher do
-
+    xcodebuild(
+      archive: true,
+      workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'Publisher',
+      destination: 'generic/platform=iOS',
+      archive_path: 'archives/Publisher.xcarchive',
+      xcargs: 'SKIP_INSTALL=NO',
+    )
   end
 end
