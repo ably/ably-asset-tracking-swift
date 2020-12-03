@@ -1,47 +1,56 @@
+//
+//  AblyAssetTrackingPublisher.swift
+//  Publisher
+//
+//  Created by Michal Miedlarz on 01/12/2020.
+//  Copyright © 2020 Ably. All rights reserved.
+//
+
 import UIKit
 import CoreLocation
 
-public protocol AblyAssetTrackingPublisherDelegate: class {
-    func ablyAssetTrackingPublisher(sender: AblyAssetTrackingPublisher, didFailWithError error: Error)
-    func ablyAssetTrackingPublisher(sender: AblyAssetTrackingPublisher, didUpdateLocation location: CLLocation)
-}
-
-public class AblyAssetTrackingPublisher {
+public class AblyAssetTrackingPublisher: AssetTrackingPublisher {
     private let configuration: AblyConfiguration
-    private let locationService: LocationService
+    private let locationSerice: LocationService
     
-    public weak var delegate: AblyAssetTrackingPublisherDelegate?
+    public weak var delegate: AssetTrackingPublisherDelegate?
+    public var activeTrackable: Trackable?
+    public var transportationMode: TransportationMode
     
     public init(configuration: AblyConfiguration) {
         self.configuration = configuration
-        self.locationService = LocationService()
+        self.locationSerice = LocationService()
+        
+        // TODO: Set proper values from configuration
+        self.activeTrackable = nil
+        self.transportationMode = TransportationMode()
     }
     
-    public func start() {
-        locationService.startUpdatingLocation()
+    public func track(trackable: Trackable) {
+        // TODO: Implement method
+    }
+    
+    public func add(trackable: Trackable) {
+        // TODO: Implement method
+    }
+    
+    public func remove(trackable: Trackable) -> Bool {
+        // TODO: Implement method
+        return false;
     }
     
     public func stop() {
-        locationService.stopUpdatingLocation()
-    }
-    
-    // TODO - Clarify if we need those methods.
-    public func requestAlwaysAuthorization() {
-        locationService.requestAlwaysAuthorization()
-    }
-    
-    public func requestWhenInUseAuthorization() {
-        locationService.requestWhenInUseAuthorization()
+        // TODO: Implement method
     }
 }
 
 extension AblyAssetTrackingPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: Error) {
-        delegate?.ablyAssetTrackingPublisher(sender: self, didFailWithError: error)
+        delegate?.assetTrackingPublisher(sender: self, didFailWithError: error)
     }
     
     func locationService(sender: LocationService, didUpdateLocation location: CLLocation) {
-        delegate?.ablyAssetTrackingPublisher(sender: self, didUpdateLocation: location)
-        // TODO - convert CLLocation to GeoJSON and pass to AblyService [ATS-66]
+        delegate?.assetTrackingPublisher(sender: self, didUpdateLocation: location)
+        // TOOD - convert CLLocation to GeoJSON and pass to AblyService.
     }
 }
