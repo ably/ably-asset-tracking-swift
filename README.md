@@ -1,7 +1,6 @@
 # AblyAssetTracking SDK
 
-Hi there. This is the main repo for Ably Asset Tracking (AAT) project.
-Since it's in a very early stage of development, this doc will be changed heavily.
+This is the main repo for Ably Asset Tracking (AAT) project.
 
 ## Table of contents
 
@@ -11,7 +10,8 @@ Since it's in a very early stage of development, this doc will be changed heavil
 3. Concepts and assumptions
 
 ## Build instructions
-Project use CocoaPods, Fastlane (TBD), and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12. However, building it's not straightforward and requires some extra steps.
+
+Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
 
 1. Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/maps/overview/#configure-credentials). You can skip public token configuration for now.
 2. Install bundler using:
@@ -26,9 +26,17 @@ bundle exec pod install
 4. Open `AblyAssetTracking.xcworkspace` file. After updating `Info.plist` with the MapBox public key, you should be ready to run the example apps.
 
 ### Why Bundler
+
 It's common that several developers (or CI) will have different tool versions installed locally on their machines, and it may cause compatibility problems (some tools might work only on dedicated versions). So to avoid asking everyone to upgrade/downgrade their local tools it's easier to use some tool to execute needed commands with preset versions and that's what Bundler does. Of course, you are still free to execute all CLI commands directly if you wish.
 
+Here is the list of tools versioned with the Bundler with their versions:
+- `CocoaPods` (1.9.3)
+- `Fastlane` (2.169.0)
+
+You may always check `Gemfile.lock` as it's the source of truth for versions of used libraries.
+
 ## Project structure
+
 The project follows standard Pods architecture, so you'll find `AblyAssetTracking.xcworkspace` file which, after opening in Xcode reveals `AblyAssetTracking` and `Pods` projects. We'll skip the description of `Pods` as it's pretty standard and focus on `AblyAssetTracking`.
 
 There are 3 framework targets with dedicated tests and 2 example apps:
@@ -44,6 +52,7 @@ There are 3 framework targets with dedicated tests and 2 example apps:
   <br> Example app demonstrating Subscriber SDK usage and presenting asset locations on the map
 
 ## Concepts and assumptions
+
 - SDK will be written in Swift, however, it still has to be compatible with ObjC
 - It should be structured as monorepo with publishing SDK and demo app and subscribing SDK and demo app.
 - Both SDK are well tested (I’d love to use Quick/Nimble for that)
