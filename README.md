@@ -55,7 +55,7 @@ There are 3 framework targets with dedicated tests and 2 example apps:
 
 - SDK will be written in Swift, however, it still has to be compatible with ObjC
 - It should be structured as monorepo with publishing SDK and demo app and subscribing SDK and demo app.
-- Both SDK are well tested (I’d love to use Quick/Nimble for that)
+- Both SDK are well tested
 - We’re following Protocol Oriented Programming with Dependency Injection for easy testing and stubbing.
 - Demo apps are written using MVC pattern as they won't contain any heavy logic
 - There should be some static analysis built-in (SwiftLint)
