@@ -1,35 +1,24 @@
 platform :ios, '12.0'
 
-def testing_pods
-  pod 'Quick', '~> 3.0'
-  pod 'Nimble', '~> 9.0'
-end
-
 target 'Core' do
   use_frameworks!
-  
-  target 'CoreTests' do
-    testing_pods
-  end
 
+  target 'CoreTests' do
+  end
 end
 
 target 'Publisher' do
   use_frameworks!
 
   target 'PublisherTests' do
-    testing_pods
   end
-
 end
 
 target 'Subscriber' do
   use_frameworks!
 
   target 'SubscriberTests' do
-    testing_pods
   end
-
 end
 
 target 'PublisherExample' do
