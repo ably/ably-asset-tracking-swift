@@ -8,6 +8,9 @@
 
 import CoreLocation
 
+/**
+ Part of DTO used in `GeoJSONMessage`, used to map GeoJSON properties field (as defined in https://geojson.org ).
+ */
 class GeoJSONProperties: Codable {
     let accuracyHorizontal: Double
     let altitude: Double
