@@ -59,10 +59,9 @@ class GeoJSONProperties: Codable {
      in the current building if inside a supported venue. Nil if floor is unavailable.
      It's estimated value based on altitude and may not refer to actual building.
      
-     Check:
-     https://www.apple.com/ios/feature-availability/#maps-indoor-maps-airports
-     https://www.apple.com/ios/feature-availability/#maps-indoor-maps-malls
-     for a list of supported places
+     Check list of supported
+     [Airports](https://www.apple.com/ios/feature-availability/#maps-indoor-maps-airports) and
+     [Malls](https://www.apple.com/ios/feature-availability/#maps-indoor-maps-malls) .
      */
     let floor: Int?
     
