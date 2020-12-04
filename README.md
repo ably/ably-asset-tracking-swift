@@ -13,7 +13,7 @@ This is the main repo for Ably Asset Tracking (AAT) project.
 
 Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
 
-1. Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/maps/overview/#configure-credentials). You can skip public token configuration for now.
+1. Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials). You can skip public token configuration for now.
 2. Install bundler using:
 ```
 gem install bundler
