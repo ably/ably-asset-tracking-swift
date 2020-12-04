@@ -8,30 +8,30 @@ public protocol AblyAssetTrackingPublisherDelegate: class {
 
 public class AblyAssetTrackingPublisher {
     private let configuration: AblyConfiguration
-    private let locationSerice: LocationService
+    private let locationService: LocationService
     
     public weak var delegate: AblyAssetTrackingPublisherDelegate?
     
     public init(configuration: AblyConfiguration) {
         self.configuration = configuration
-        self.locationSerice = LocationService()
+        self.locationService = LocationService()
     }
     
     public func start() {
-        locationSerice.startUpdatingLocation()
+        locationService.startUpdatingLocation()
     }
     
     public func stop() {
-        locationSerice.stopUpdatingLocation()
+        locationService.stopUpdatingLocation()
     }
     
     // TODO - Clarify if we need those methods.
     public func requestAlwaysAuthorization() {
-        locationSerice.requestAlwaysAuthorization()
+        locationService.requestAlwaysAuthorization()
     }
     
     public func requestWhenInUseAuthorization() {
-        locationSerice.requestWhenInUseAuthorization()
+        locationService.requestWhenInUseAuthorization()
     }
 }
 
@@ -42,6 +42,6 @@ extension AblyAssetTrackingPublisher: LocationServiceDelegate {
     
     func locationService(sender: LocationService, didUpdateLocation location: CLLocation) {
         delegate?.ablyAssetTrackingPublisher(sender: self, didUpdateLocation: location)
-        // TOOD - convert CLLocation to GeoJSON and pass to AblyService.
+        // TODO - convert CLLocation to GeoJSON and pass to AblyService.
     }
 }
