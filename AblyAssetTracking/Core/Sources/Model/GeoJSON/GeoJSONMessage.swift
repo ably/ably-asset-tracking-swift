@@ -25,6 +25,7 @@ import CoreLocation
      "bearing": 2.0,
      "speed": 3.0,
      "time": 2.0
+     ...
    }
  }
  ````
@@ -41,17 +42,18 @@ class GeoJSONMessage: Codable {
     }
     
     func toCoreLocation() -> CLLocation? {
-        guard let longitude = geometry.coordinates.first,
+        guard geometry.coordinates.count == 2,
+              let longitude = geometry.coordinates.first,
               let latitude = geometry.coordinates.last
         else { return nil }
         
         return CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
             altitude: properties.altitude,
-            horizontalAccuracy: properties.accuracyHorizontal,
-            verticalAccuracy: -1,
-            course: properties.bearing,
-            speed: properties.speed,
+            horizontalAccuracy: properties.accuracyHorizontal ?? -1,
+            verticalAccuracy: properties.accuracyVertical ?? -1,
+            course: properties.bearing ?? -1,
+            speed: properties.speed ?? -1,
             timestamp: Date(timeIntervalSince1970: properties.time))
     }
 }
