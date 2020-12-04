@@ -1,31 +1,31 @@
 platform :ios, '12.0'
+use_frameworks!
 
-target 'Core' do
-  use_frameworks!
+abstract_target 'Common' do
+  pod 'Ably', '>= 1.2'
+  pod 'MapboxCoreNavigation', '~> 1.0'
 
-  target 'CoreTests' do
+  target 'Core' do
   end
-end
 
-target 'Publisher' do
-  use_frameworks!
-
-  target 'PublisherTests' do
+  target 'Publisher' do
   end
-end
 
-target 'Subscriber' do
-  use_frameworks!
+  target 'Subscriber' do
+  end
+
+  target 'PublisherExample' do
+  end
+
+  target 'SubscriberExample' do
+  end
 
   target 'SubscriberTests' do
   end
-end
 
-target 'PublisherExample' do
-  use_frameworks!
-end
+  target 'CoreTests' do
+  end
 
-
-target 'SubscriberExample' do
-  use_frameworks!
+  target 'PublisherTests' do
+  end
 end

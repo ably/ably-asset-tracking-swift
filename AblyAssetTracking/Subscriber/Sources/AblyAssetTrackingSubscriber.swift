@@ -1,5 +1,4 @@
 import UIKit
-import Core
 
 public class AblyAssetTrackingSubscriber {    
     public init() {}
