@@ -42,6 +42,6 @@ extension AblyAssetTrackingPublisher: LocationServiceDelegate {
     
     func locationService(sender: LocationService, didUpdateLocation location: CLLocation) {
         delegate?.ablyAssetTrackingPublisher(sender: self, didUpdateLocation: location)
-        // TODO - convert CLLocation to GeoJSON and pass to AblyService.
+        // TODO - convert CLLocation to GeoJSON and pass to AblyService [ATS-66]
     }
 }

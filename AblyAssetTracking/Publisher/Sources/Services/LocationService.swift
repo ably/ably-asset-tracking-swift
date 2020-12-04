@@ -48,10 +48,10 @@ extension LocationService: PassiveLocationDataSourceDelegate {
     }
     
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateHeading newHeading: CLHeading) {
-        // Ignore
+        // TODO: Log suitable message when Logger become available [ATS-94]
     }
     
     func passiveLocationDataSourceDidChangeAuthorization(_ dataSource: PassiveLocationDataSource) {
-        // Ignore
+        // TODO: Log suitable message when Logger become available [ATS-94]
     }
 }
