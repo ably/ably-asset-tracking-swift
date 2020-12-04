@@ -65,7 +65,7 @@ public protocol AssetTrackingPublisher {
      another object to become the actively tracked delivery then the `track` method must be subsequently called.
      
      - Parameters:
-     - trackable The object to be removed from this publisher's tracked set, it it's there.
+     - trackable The object to be removed from this publisher's tracked set, if it's there.
      - Returns: `true` if the object was known to this publisher, being that it was in the tracked set.
      */
     func remove(trackable: Trackable) -> Bool
