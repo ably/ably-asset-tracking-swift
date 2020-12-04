@@ -1,11 +1,3 @@
-//
-//  AblyAssetTrackingPublisher.swift
-//  Publisher
-//
-//  Created by Michal Miedlarz on 01/12/2020.
-//  Copyright © 2020 Ably. All rights reserved.
-//
-
 import UIKit
 import CoreLocation
 
@@ -32,7 +24,7 @@ public class AblyAssetTrackingPublisher: AssetTrackingPublisher {
         self.transportationMode = TransportationMode()
     }
     
-    public func track(trackable: Trackable) {
+    public func track(trackable: Trackable) {    
         // TODO: Implement method
     }
     
