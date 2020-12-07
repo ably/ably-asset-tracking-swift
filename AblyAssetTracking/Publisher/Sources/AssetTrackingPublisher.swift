@@ -16,7 +16,15 @@ public protocol AssetTrackingPublisherDelegate: class {
      - sender:`AssetTrackingPublisher` instance.
      - location: Location object received from LocationManager
      */
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateLocation location: CLLocation)
+    func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateRawLocation location: CLLocation)
+    
+    /**
+     Called when `AssetTrackingPublisher` detect new enhanced (map matched) location. Same location will be sent to the Subscriber module
+     - Parameters:
+     - sender:`AssetTrackingPublisher` instance.
+     - location: Location object received from LocationManager
+     */
+    func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateEnhancedLocation location: CLLocation)
 }
 
 public protocol AssetTrackingPublisher {
