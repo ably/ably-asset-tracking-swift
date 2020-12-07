@@ -2,6 +2,13 @@ import CoreLocation
 
 /**
  Part of DTO used in `GeoJSONMessage`, used to map GeoJSON geometry field (as defined in https://geojson.org ).
+ When encoded or decoded from JSON, it produces the following structure:
+ ````
+ {
+    "type": "Point",
+    "coordinates": [1.0, 2.0] // [Lon, Lat]
+ }
+ ````
  */
 class GeoJSONGeometry: Codable {
     let type: GeoJSONType
@@ -24,19 +31,19 @@ class GeoJSONGeometry: Codable {
               let longitude = coordinates.first,
               let latitude = coordinates.last
         else {
-            throw AblyError.inconsistentData("Invalid count of coordinates in GeoJSONGeometry. Received \(coordinates)")
+            throw AblyError.inconsistentData("Invalid count of coordinates in GeoJSONGeometry. Received: \(coordinates)")
         }
         
         guard (latitude >= -90.0 && latitude <= 90.0)
         else {
-            throw AblyError.inconsistentData("Latitude out of range (\(latitude))")
+            throw AblyError.inconsistentData("Latitude out of range [-90, 90]. Received: (\(latitude))")
         }
         
         guard  (longitude >= -180.0 && longitude <= 180.0)
         else {
-            throw AblyError.inconsistentData("Longitude out of range (\(longitude))")
+            throw AblyError.inconsistentData("Longitude out of range [-180, 180]. Received (\(longitude))")
         }
-                             
+        
         self.latitude = latitude
         self.longitude = longitude
     }
