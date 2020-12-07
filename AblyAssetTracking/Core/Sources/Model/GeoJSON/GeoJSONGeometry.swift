@@ -21,12 +21,22 @@ class GeoJSONGeometry: Codable {
         
         let coordinates = try container.decode(Array<Double>.self, forKey: .coordinates)
         guard coordinates.count == 2,
-              let latitude = coordinates.first,
-              let longitude = coordinates.last
+              let longitude = coordinates.first,
+              let latitude = coordinates.last
         else {
             throw AblyError.inconsistentData("Invalid count of coordinates in GeoJSONGeometry. Received \(coordinates)")
         }
         
+        guard (latitude >= -90.0 && latitude <= 90.0)
+        else {
+            throw AblyError.inconsistentData("Latitude out of range (\(latitude))")
+        }
+        
+        guard  (longitude >= -180.0 && longitude <= 180.0)
+        else {
+            throw AblyError.inconsistentData("Longitude out of range (\(longitude))")
+        }
+                             
         self.latitude = latitude
         self.longitude = longitude
     }
@@ -34,7 +44,7 @@ class GeoJSONGeometry: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
-        try container.encode([latitude, longitude], forKey: .coordinates)        
+        try container.encode([longitude, latitude], forKey: .coordinates)        
     }
     
     init(location: CLLocation) {
