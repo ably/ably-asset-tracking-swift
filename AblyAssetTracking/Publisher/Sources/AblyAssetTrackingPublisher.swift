@@ -24,21 +24,26 @@ public class AblyAssetTrackingPublisher: AssetTrackingPublisher {
         self.transportationMode = TransportationMode()
     }
     
-    public func track(trackable: Trackable) {    
+    public func track(trackable: Trackable) {
         // TODO: Implement method
+        failWithNotYetImplemented()
     }
     
     public func add(trackable: Trackable) {
         // TODO: Implement method
+        failWithNotYetImplemented()
     }
     
     public func remove(trackable: Trackable) -> Bool {
         // TODO: Implement method
+        failWithNotYetImplemented()
+        
         return false;
     }
     
     public func stop() {
         // TODO: Implement method
+        failWithNotYetImplemented()
     }
 }
 
