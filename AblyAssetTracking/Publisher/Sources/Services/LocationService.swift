@@ -48,10 +48,12 @@ extension LocationService: PassiveLocationDataSourceDelegate {
     }
     
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateHeading newHeading: CLHeading) {
-        // TODO: Log suitable message when Logger become available [ATS-94]
+        // TODO: Log suitable message when Logger become available:
+        // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
     }
     
     func passiveLocationDataSourceDidChangeAuthorization(_ dataSource: PassiveLocationDataSource) {
-        // TODO: Log suitable message when Logger become available [ATS-94]
+        // TODO: Log suitable message when Logger become available:
+        // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
     }
 }
