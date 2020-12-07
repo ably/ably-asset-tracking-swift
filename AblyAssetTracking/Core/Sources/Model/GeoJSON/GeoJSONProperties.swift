@@ -9,7 +9,7 @@ class GeoJSONProperties: Codable {
     /**
      Object horizontal accuracy in meters.
      */
-    let accuracyHorizontal: Double?
+    let accuracyHorizontal: Double
     
     /**
      Object vertical accuracy in meters.
@@ -57,15 +57,31 @@ class GeoJSONProperties: Codable {
      */
     let floor: Int?
     
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        time = try container.decode(Double.self, forKey: .time)
+        floor = try container.decode(Int.self, forKey: .floor)
+        altitude = try container.decode(Double.self, forKey: .altitude)
+        speed = try container.decode(Double.self, forKey: .speed)
+        accuracySpeed = try container.decode(Double.self, forKey: .accuracySpeed)
+        accuracyHorizontal = try container.decode(Double.self, forKey: .accuracyHorizontal)
+        accuracyVertical = try container.decode(Double.self, forKey: .accuracyVertical)
+        accuracyBearing = try container.decode(Double.self, forKey: .accuracyBearing)
+        bearing = try container.decode(Double.self, forKey: .bearing)
+        
+        guard accuracyHorizontal >= 0 else {
+            throw AblyError.inconsistentData("Invalid horizontal accuracy got \(accuracyHorizontal)")
+        }
+    }
     
     init(location: CLLocation) {
         time = location.timestamp.timeIntervalSince1970
         floor = location.floor?.level
         altitude = location.altitude
+        accuracyHorizontal = location.horizontalAccuracy
         
         speed = location.speed >= 0 ? location.speed : nil
-        accuracySpeed = location.speedAccuracy >= 0 ? location.speedAccuracy : nil
-        accuracyHorizontal = location.horizontalAccuracy >= 0 ? location.horizontalAccuracy : nil
+        accuracySpeed = location.speedAccuracy >= 0 ? location.speedAccuracy : nil        
         accuracyVertical = location.verticalAccuracy >= 0 ? location.verticalAccuracy : nil
         
         bearing = location.course >= 0 ? location.course : nil
