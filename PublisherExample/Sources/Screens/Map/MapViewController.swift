@@ -4,6 +4,8 @@ import Publisher
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
+    
+    private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
     private let trackingId: String
     private var publisher: AssetTrackingPublisher?
     
@@ -25,7 +27,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPublisher()
-        
+        setupMapView()
     }
     
     // MARK: View setup
@@ -40,6 +42,11 @@ class MapViewController: UIViewController {
         publisher = DefaultPublisher(configuration: configuration)
         publisher?.delegate = self
         publisher?.track(trackable: trackable)        
+    }
+    
+    private func setupMapView() {
+        mapView.register(AssetAnnotationView.self, forAnnotationViewWithReuseIdentifier: assetAnnotationReuseIdentifier)
+        mapView.delegate = self
     }
     
     // MARK: Utils
@@ -66,12 +73,11 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
 
-        let identifier = "LocationAnnotation"
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) ??
-                             MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-        annotationView.canShowCallout = false
-        annotationView.annotation = annotation
-        
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: assetAnnotationReuseIdentifier) ??
+                            AssetAnnotationView(annotation: annotation, reuseIdentifier: assetAnnotationReuseIdentifier)
+        let isRaw = annotation.title == "Raw"
+        annotationView.backgroundColor = isRaw ? UIColor.yellow.withAlphaComponent(0.7) :
+                                                 UIColor.blue.withAlphaComponent(0.7)
         return annotationView
     }
 }
