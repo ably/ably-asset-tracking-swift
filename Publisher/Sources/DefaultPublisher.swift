@@ -7,7 +7,7 @@ public class DefaultPublisher: AssetTrackingPublisher {
     private let ablyService: AblyPublisherService
     
     public weak var delegate: AssetTrackingPublisherDelegate?
-    public var activeTrackable: Trackable?
+    private(set) public var activeTrackable: Trackable?
     public var transportationMode: TransportationMode
     
     /**
@@ -21,8 +21,7 @@ public class DefaultPublisher: AssetTrackingPublisher {
         self.locationService = LocationService()
         self.ablyService = AblyPublisherService(apiKey: configuration.apiKey,
                                                 clientId: configuration.clientId)
-        
-        
+                
         // TODO: Set proper values from configuration
         self.activeTrackable = nil
         self.transportationMode = TransportationMode()
@@ -31,8 +30,15 @@ public class DefaultPublisher: AssetTrackingPublisher {
     }
     
     public func track(trackable: Trackable) {
-        // TODO: Implement method
-        failWithNotYetImplemented()
+        activeTrackable = trackable
+        ablyService.track(trackable: trackable) { [weak self] error in
+            guard let strongSelf = self else { return }
+            
+            if let error = error {
+                strongSelf.delegate?.assetTrackingPublisher(sender: strongSelf, didFailWithError: error)
+            }
+            strongSelf.locationService.startUpdatingLocation()
+        }
     }
     
     public func add(trackable: Trackable) {
