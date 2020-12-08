@@ -46,7 +46,8 @@ class AblyPublisherService {
         }
         
         // Force cast allowed here, as presence data is our internal class which should never fail to encode
-        let data = try! JSONEncoder().encode(presenceData)
+        let data = presenceData.toEncodedJSONString()!
+        
         channel = client.channels.get(trackable.id)
         channel?.presence.enterClient(clientId, data: data) { error in
             // TODO: Log suitable message when Logger become available:
@@ -68,12 +69,14 @@ class AblyPublisherService {
             completion?(AblyError.publisherError("Attempt to send location while not connected to any channel"))
             return
         }
+                    
+        let geoJSON = GeoJSONMessage(location: location)
+        guard let data = [geoJSON].toEncodedJSONString() else {
+            completion?(AblyError.inconsistentData("Cannot encode location data to JSON"))
+            return
+        }
         
-        let geoJSON = GeoJSONMessage(location: location)        
-        // Force cast allowed here, as presence data is our internal class which should never fail to encode
-        let data = try! JSONEncoder().encode([geoJSON])
         let message = ARTMessage(name: name.rawValue, data: data)
-        
         channel.publish([message]) { errorInfo in
             completion?(errorInfo)
         }
