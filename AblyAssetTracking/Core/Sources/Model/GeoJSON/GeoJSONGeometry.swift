@@ -1,7 +1,7 @@
 import CoreLocation
 
 /**
- Part of DTO used in `GeoJSONMessage`, used to map GeoJSON geometry field (as defined in https://geojson.org ).
+ Helper class used in `GeoJSONMessage` to map GeoJSON geometry field (as defined at https://geojson.org ).
  When encoded or decoded from JSON, it produces the following structure:
  ````
  {

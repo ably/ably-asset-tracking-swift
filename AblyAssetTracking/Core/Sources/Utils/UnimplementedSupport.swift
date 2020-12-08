@@ -1,8 +1,8 @@
 import Foundation
 
 /**
- Wrapper function for assertionFailure which fails only in debug builds.
+ Wrapper function for preconditionFailure which fails in debug and production builds.
  */
 func failWithNotYetImplemented(file: String = #file, line: Int = #line, function: String = #function) {
-    assertionFailure("Not implemented yet: \(file):\(line) - \(function)")
+    preconditionFailure("Not implemented yet: \(file):\(line) - \(function)")
 }

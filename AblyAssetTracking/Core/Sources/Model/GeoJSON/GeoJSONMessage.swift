@@ -1,7 +1,7 @@
 import CoreLocation
 
 /**
- DTO class used to send location updates from Publisher to Subscriber modules.
+ Class used to send location updates from Publisher to Subscriber modules.
  It's mapped to GeoJSON format (https://geojson.org) with the following structure:
  
  ````
