@@ -17,10 +17,6 @@ class LocationService {
         self.locationDataSource.delegate = self
     }
     
-    deinit {
-        locationDataSource.systemLocationManager.stopUpdatingLocation()
-    }
-    
     func startUpdatingLocation() {
         locationDataSource.startUpdatingLocation { [weak self] (error) in
             // TODO: Log suitable message when Logger become available:
