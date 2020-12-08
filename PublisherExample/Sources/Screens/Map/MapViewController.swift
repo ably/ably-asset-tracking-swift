@@ -96,24 +96,22 @@ extension MapViewController: MKMapViewDelegate {
 
 extension MapViewController: AssetTrackingPublisherDelegate {
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didFailWithError error: Error) {
-        print("didFailWithError \(error)")
+        
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateRawLocation location: CLLocation) {
-        print("Received new raw location \(location)")
         rawLocation = location
         refreshAnnotations()
         scrollToReceivedLocation()
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateEnhancedLocation location: CLLocation) {
-        print("Received new enhanced location \(location)")
         enhancedLocation = location
         refreshAnnotations()
         scrollToReceivedLocation()
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus) {
-        print("didChangeConnectionStatus \(status)")
+
     }
 }
