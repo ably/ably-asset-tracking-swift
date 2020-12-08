@@ -36,7 +36,7 @@ class MapViewController: UIViewController {
         let configuration = AssetTrackingPublisherConfiguration(apiKey: Constants.ablyApiKey,
                                                                 clientId: Constants.ablyClientId)
         let trackable = DefaultTrackable(id: trackingId,
-                                         metadata: "Metadata",
+                                         metadata: "",
                                          latitude: 0,
                                          longitude: 0)
         

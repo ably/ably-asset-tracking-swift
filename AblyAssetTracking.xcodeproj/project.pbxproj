@@ -22,6 +22,7 @@
 		1869987625802111006FF1CC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869987025802111006FF1CC /* SettingsViewController.swift */; };
 		1869987725802111006FF1CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869987225802111006FF1CC /* MapViewController.swift */; };
 		1869987825802111006FF1CC /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1869987325802111006FF1CC /* MapViewController.xib */; };
+		1869989225802151006FF1CC /* AssetAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869989125802151006FF1CC /* AssetAnnotationView.swift */; };
 		188688102577783E00FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
 		188688222577787B00FBD4A0 /* AblyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188688212577787B00FBD4A0 /* AblyConfiguration.swift */; };
 		1886882D25777B9C00FBD4A0 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886882C25777B9C00FBD4A0 /* LocationService.swift */; };
@@ -127,6 +128,7 @@
 		1869987025802111006FF1CC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1869987225802111006FF1CC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1869987325802111006FF1CC /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		1869989125802151006FF1CC /* AssetAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetAnnotationView.swift; sourceTree = "<group>"; };
 		1886880F2577783E00FBD4A0 /* MapConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfiguration.swift; sourceTree = "<group>"; };
 		188688212577787B00FBD4A0 /* AblyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConfiguration.swift; sourceTree = "<group>"; };
 		1886882C25777B9C00FBD4A0 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 		1869987125802111006FF1CC /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				1869989125802151006FF1CC /* AssetAnnotationView.swift */,
 				1869987225802111006FF1CC /* MapViewController.swift */,
 				1869987325802111006FF1CC /* MapViewController.xib */,
 			);
@@ -1401,6 +1404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F429132576770A00026943 /* AppDelegate.swift in Sources */,
+				1869989225802151006FF1CC /* AssetAnnotationView.swift in Sources */,
 				1869987425802111006FF1CC /* Constants.swift in Sources */,
 				1869987625802111006FF1CC /* SettingsViewController.swift in Sources */,
 				1869987725802111006FF1CC /* MapViewController.swift in Sources */,
