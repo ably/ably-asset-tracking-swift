@@ -293,6 +293,25 @@
 			path = GeoJSON;
 			sourceTree = "<group>";
 		};
+		1866801D257FA74B00CCE946 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				18F429162576770A00026943 /* ViewController.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		1866801E257FA75800CCE946 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				18F429182576770A00026943 /* Main.storyboard */,
+				18F4291B2576770B00026943 /* Assets.xcassets */,
+				18F4291D2576770B00026943 /* LaunchScreen.storyboard */,
+				18F429202576770B00026943 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		188688062577782300FBD4A0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,12 +523,9 @@
 		18F429112576770A00026943 /* PublisherExample */ = {
 			isa = PBXGroup;
 			children = (
+				1866801E257FA75800CCE946 /* Resources */,
+				1866801D257FA74B00CCE946 /* Sources */,
 				18F429122576770A00026943 /* AppDelegate.swift */,
-				18F429162576770A00026943 /* ViewController.swift */,
-				18F429182576770A00026943 /* Main.storyboard */,
-				18F4291B2576770B00026943 /* Assets.xcassets */,
-				18F4291D2576770B00026943 /* LaunchScreen.storyboard */,
-				18F429202576770B00026943 /* Info.plist */,
 			);
 			path = PublisherExample;
 			sourceTree = "<group>";
@@ -1834,7 +1850,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PublisherExample/Info.plist;
+				INFOPLIST_FILE = PublisherExample/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1853,7 +1869,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PublisherExample/Info.plist;
+				INFOPLIST_FILE = PublisherExample/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
