@@ -9,11 +9,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initialViewController = storyboard.instantiateInitialViewController()
-    
-        window?.rootViewController = initialViewController
+                
+        let settingsVC = SettingsViewController()
+        let navVC = UINavigationController(rootViewController: settingsVC)
+            
+        window?.rootViewController = navVC
         window?.makeKeyAndVisible()
         
         return true
