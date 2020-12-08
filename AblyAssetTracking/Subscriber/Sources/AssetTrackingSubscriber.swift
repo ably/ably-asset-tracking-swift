@@ -47,7 +47,7 @@ public protocol AssetTrackingSubscriberDelegate {
 public protocol AssetTrackingSubscriber {
     /**
      Delegate object to receive events from `AssetTrackingSubscriber`.
-     It holds a weak reference so make sure to keep your delegate object in memory.
+     It maintains a weak reference to your delegate, so ensure to maintain your own strong reference as well.
      */
     var delegate: AssetTrackingSubscriberDelegate? { get set }
 }
