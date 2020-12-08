@@ -30,14 +30,16 @@ class MapViewController: UIViewController {
     
     // MARK: View setup
     private func setupPublisher() {
-        let configuration = AssetTrackingPublisherConfiguration(apiKey: "", clientId: "")
+        let configuration = AssetTrackingPublisherConfiguration(apiKey: Constants.ablyApiKey,
+                                                                clientId: Constants.ablyClientId)
         let trackable = DefaultTrackable(id: trackingId,
                                          metadata: "Metadata",
                                          latitude: 0,
                                          longitude: 0)
         
         publisher = DefaultPublisher(configuration: configuration)
-        publisher?.track(trackable: trackable)
+        publisher?.delegate = self
+        publisher?.track(trackable: trackable)        
     }
     
     // MARK: Utils
@@ -54,6 +56,7 @@ class MapViewController: UIViewController {
             let annotation = MKPointAnnotation()
             annotation.title = "Enhanced"
             annotation.coordinate = location.coordinate
+            
             mapView.addAnnotation(annotation)
         }
     }
@@ -63,36 +66,34 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
 
-        let identifier = "Annotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = false
-        } else {
-            annotationView!.annotation = annotation
-        }
-
+        let identifier = "LocationAnnotation"
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) ??
+                             MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        annotationView.canShowCallout = false
+        annotationView.annotation = annotation
+        
         return annotationView
     }
 }
 
 extension MapViewController: AssetTrackingPublisherDelegate {
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didFailWithError error: Error) {
-        
+        print("didFailWithError \(error)")
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateRawLocation location: CLLocation) {
+        print("Received new raw location \(location)")
         rawLocation = location
         refreshAnnotations()
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateEnhancedLocation location: CLLocation) {
+        print("Received new enhanced location \(location)")
         enhancedLocation = location
         refreshAnnotations()
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus) {
-        
+        print("didChangeConnectionStatus \(status)")
     }
 }
