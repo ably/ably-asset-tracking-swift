@@ -47,8 +47,8 @@ class AblyPublisherService {
         
         // Force cast allowed here, as presence data is our internal class which should never fail to encode
         let data = try! JSONEncoder().encode(presenceData)
-        let channel = client.channels.get(trackable.id)
-        channel.presence.enterClient(clientId, data: data) { error in
+        channel = client.channels.get(trackable.id)
+        channel?.presence.enterClient(clientId, data: data) { error in
             // TODO: Log suitable message when Logger become available:
             // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
             completion?(error)
