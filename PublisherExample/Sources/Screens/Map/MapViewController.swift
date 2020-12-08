@@ -11,6 +11,7 @@ class MapViewController: UIViewController {
     
     private var rawLocation: CLLocation?
     private var enhancedLocation: CLLocation?
+    private var wasMapScrolled: Bool = false
     
     // MARK: Initialization
     init(trackingId: String) {
@@ -63,9 +64,20 @@ class MapViewController: UIViewController {
             let annotation = MKPointAnnotation()
             annotation.title = "Enhanced"
             annotation.coordinate = location.coordinate
-            
             mapView.addAnnotation(annotation)
         }
+    }
+    
+    private func scrollToReceivedLocation() {
+        guard let location = rawLocation ?? enhancedLocation,
+              !wasMapScrolled
+        else { return }
+        
+        wasMapScrolled = true
+        let region = MKCoordinateRegion(center: location.coordinate,
+                                        latitudinalMeters: 600,
+                                        longitudinalMeters: 600)
+        mapView.setRegion(region, animated: true)
     }
 }
 
@@ -91,12 +103,14 @@ extension MapViewController: AssetTrackingPublisherDelegate {
         print("Received new raw location \(location)")
         rawLocation = location
         refreshAnnotations()
+        scrollToReceivedLocation()
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateEnhancedLocation location: CLLocation) {
         print("Received new enhanced location \(location)")
         enhancedLocation = location
         refreshAnnotations()
+        scrollToReceivedLocation()
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus) {
