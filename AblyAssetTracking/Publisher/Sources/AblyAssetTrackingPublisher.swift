@@ -3,7 +3,7 @@ import CoreLocation
 
 public class AblyAssetTrackingPublisher: AssetTrackingPublisher {
     private let configuration: AssetTrackingPublisherConfiguration
-    private let locationSerice: LocationService
+    private let locationService: LocationService
     
     public weak var delegate: AssetTrackingPublisherDelegate?
     public var activeTrackable: Trackable?
@@ -17,7 +17,7 @@ public class AblyAssetTrackingPublisher: AssetTrackingPublisher {
      */
     public init(configuration: AssetTrackingPublisherConfiguration) {
         self.configuration = configuration
-        self.locationSerice = LocationService()
+        self.locationService = LocationService()
         
         // TODO: Set proper values from configuration
         self.activeTrackable = nil
