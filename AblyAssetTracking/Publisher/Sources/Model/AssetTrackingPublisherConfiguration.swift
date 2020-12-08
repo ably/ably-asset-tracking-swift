@@ -1,7 +1,7 @@
 import UIKit
 
 /**
- Main configuration class used to initialize `AblyAssetTrackingPublisher`
+ Main configuration class used to initialize `AssetTrackingPublisher`
  */
 public class AssetTrackingPublisherConfiguration {
     let apiKey: String

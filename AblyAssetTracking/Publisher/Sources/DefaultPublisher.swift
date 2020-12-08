@@ -1,7 +1,7 @@
 import UIKit
 import CoreLocation
 
-public class AblyAssetTrackingPublisher: AssetTrackingPublisher {
+public class DefaultPublisher: AssetTrackingPublisher {
     private let configuration: AssetTrackingPublisherConfiguration
     private let locationService: LocationService
     
@@ -47,7 +47,7 @@ public class AblyAssetTrackingPublisher: AssetTrackingPublisher {
     }
 }
 
-extension AblyAssetTrackingPublisher: LocationServiceDelegate {
+extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: Error) {
         delegate?.assetTrackingPublisher(sender: self, didFailWithError: error)
     }

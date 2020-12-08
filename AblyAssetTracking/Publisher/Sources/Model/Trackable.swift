@@ -1,7 +1,7 @@
 import CoreLocation
 
 /**
-Main protocol used to track assets in SDK. There is a basic implementation of it done in `AblyTrackable` class.
+ Main protocol used to track assets in SDK. There is a basic implementation of it done in the `DefaultTrackable` class.
  */
 public protocol Trackable {
     var id: String { get }
@@ -12,7 +12,7 @@ public protocol Trackable {
 /**
  The default implementation for `Trackable` protocol to use in communication with SDK.
  */
-public class AblyTrackable: Trackable {
+public class DefaultTrackable: Trackable {
     public let id: String
     public let metadata: String?
     public let destination: CLLocationCoordinate2D

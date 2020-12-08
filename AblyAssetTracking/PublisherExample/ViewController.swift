@@ -9,6 +9,6 @@ class ViewController: UIViewController {
         
         // Temporary test to validate if we have access to Publisher data
         let configuration = AssetTrackingPublisherConfiguration(apiKey: "", clientId: "")
-        let publisher = AblyAssetTrackingPublisher(configuration: configuration)
+        let publisher = DefaultPublisher(configuration: configuration)
     }
 }

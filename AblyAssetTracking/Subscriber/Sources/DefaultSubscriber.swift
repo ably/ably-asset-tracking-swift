@@ -1,6 +1,6 @@
 import Foundation
 
-public class AblyAssetTrackingSubscriber: AssetTrackingSubscriber {
+public class DefaultSubscriber: AssetTrackingSubscriber {
     private let configuration: AssetTrackingSubscriberConfiguration
     public var delegate: AssetTrackingSubscriberDelegate?
     
