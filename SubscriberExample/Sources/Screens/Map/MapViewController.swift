@@ -9,6 +9,7 @@ class MapViewController: UIViewController {
     
     private let trackingId: String
     private var subscriber: AssetTrackingSubscriber?
+    private var errors: [Error] = []
     
     private var rawLocation: CLLocation? { didSet { updateRawLocationAnnotation() }}
     private var enhancedLocation: CLLocation? { didSet { updateEnhancedLocationAnnotation() }}
@@ -76,7 +77,7 @@ class MapViewController: UIViewController {
 
 extension MapViewController: AssetTrackingSubscriberDelegate {
     func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didFailWithError error: Error) {
-        
+        errors.append(error)
     }
     
     func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didUpdateRawLocation location: CLLocation) {
