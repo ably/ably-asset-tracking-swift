@@ -7,6 +7,7 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var animationSwitch: UISwitch!
     @IBOutlet private weak var mapView: MKMapView!
     
+    private let truckAnnotationViewIdentifier = "MapTruckAnnotationViewIdentifier"
     private let trackingId: String
     private var subscriber: AssetTrackingSubscriber?
     private var errors: [Error] = []
@@ -32,6 +33,14 @@ class MapViewController: UIViewController {
         title = "Tracking \(trackingId)"
         assetStatusLabel.text = "The asset connection status is not determined"
         setupSubscriber()
+        
+        mapView.delegate = self
+        mapView.register(TruckAnnotationView.self, forAnnotationViewWithReuseIdentifier: truckAnnotationViewIdentifier)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        subscriber?.stop()
     }
     
     private func setupSubscriber() {
@@ -46,31 +55,61 @@ class MapViewController: UIViewController {
     
     // MARK: Utils
     private func updateRawLocationAnnotation() {
-        updateAnnotation(withTitle: "Raw", location: rawLocation)
+        updateAnnotation(withType: .raw, location: rawLocation)
     }
     
     private func updateEnhancedLocationAnnotation() {
-        updateAnnotation(withTitle: "Enhanced", location: rawLocation)
+        updateAnnotation(withType: .enhanced, location: rawLocation)
     }
     
-    private func updateAnnotation(withTitle: String, location: CLLocation?) {
+    private func updateAnnotation(withType type: TruckAnnotationType, location: CLLocation?) {
         guard let location = location else {
-            let annotationsToRemove = mapView.annotations.filter({ $0.title == title })
+            let annotationsToRemove = mapView.annotations.filter({ ($0 as? TruckAnnotation)?.type == type })
             mapView.removeAnnotations(annotationsToRemove)
             return
         }
         
-        if let annotation = mapView.annotations.first(where: { $0.title == title }) as? MKPointAnnotation {
-            let animated = animationSwitch.isOn
-            UIView.animate(withDuration: animated ? 0.5 :1) {
+        if let annotation = mapView.annotations.first(where: { $0.title == title }) as? TruckAnnotation {
+            let isAnimated = animationSwitch.isOn
+            UIView.animate(withDuration: isAnimated ? 0.5 : 1) {
                 annotation.coordinate = location.coordinate
+                annotation.bearing = location.course
             }
         } else {
-            let annotation = MKPointAnnotation()
-            annotation.title = title
+            let annotation = TruckAnnotation()
+            annotation.type = type
             annotation.coordinate = location.coordinate
+            annotation.bearing = location.course
             mapView.addAnnotation(annotation)
         }
+    }
+    
+    private func scrollToReceivedLocation() {
+        let mapCenter = mapView.region.center
+        let minimumCenterDistance: Double = 500
+        guard let location = rawLocation ?? enhancedLocation,
+              location.distance(from: CLLocation(latitude: mapCenter.latitude, longitude: mapCenter.longitude)) > minimumCenterDistance
+        else { return }
+        let region = MKCoordinateRegion(center: location.coordinate,
+                                        latitudinalMeters: 600,
+                                        longitudinalMeters: 600)
+        mapView.setRegion(region, animated: true)
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? TruckAnnotation
+        else { return nil}
+        
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: truckAnnotationViewIdentifier) as? TruckAnnotationView ??
+            TruckAnnotationView(annotation: annotation, reuseIdentifier: truckAnnotationViewIdentifier)
+        let isRaw = annotation.type == .raw
+        annotationView.backgroundColor = isRaw ? UIColor.yellow.withAlphaComponent(0.7) :
+            UIColor.blue.withAlphaComponent(0.7)
+        annotationView.bearing = annotation.bearing
+        
+        return annotationView
     }
 }
 
