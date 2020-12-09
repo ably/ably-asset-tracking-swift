@@ -3,7 +3,6 @@ import CoreLocation
 
 public class DefaultSubscriber: AssetTrackingSubscriber {
     private let configuration: AssetTrackingSubscriberConfiguration
-    private let trackable: Trackable
     private let ablyService: AblySubscriberService
     
     public var delegate: AssetTrackingSubscriberDelegate?
@@ -13,15 +12,12 @@ public class DefaultSubscriber: AssetTrackingSubscriber {
      Subscriber starts listening (and notifying delegate) after initialization.
      - Parameters:
         -  configuration: Configuration struct to use in this instance.
-        - trackable: Asset to track.
      */
-    public init(configuration: AssetTrackingSubscriberConfiguration,
-                trackable: Trackable) {
+    public init(configuration: AssetTrackingSubscriberConfiguration) {
         self.configuration = configuration
-        self.trackable = trackable
         self.ablyService = AblySubscriberService(apiKey: configuration.apiKey,
                                                  clientId: configuration.clientId,
-                                                 trackable: trackable)
+                                                 trackingId: configuration.trackingId)
         self.ablyService.delegate = self
     }
     

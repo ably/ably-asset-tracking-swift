@@ -17,14 +17,14 @@ class AblySubscriberService {
 
     weak var delegate: AblySubscriberServiceDelegate?
     
-    init(apiKey: String, clientId: String, trackable: Trackable) {
+    init(apiKey: String, clientId: String, trackingId: String) {
         self.client = ARTRealtime(key: apiKey)
         self.presenceData = PresenceData(type: .subscriber)
         self.clientId = clientId
         
         let options = ARTRealtimeChannelOptions()
         options.params = ["rewind": "1"]
-        channel = client.channels.get(trackable.id, options: options)
+        channel = client.channels.get(trackingId, options: options)
     }
     
     func start(completion: ((Error?) -> Void)?) {
