@@ -1,11 +1,3 @@
-//
-//  Constants.swift
-//  PublisherExample
-//
-//  Created by Michal Miedlarz on 08/12/2020.
-//  Copyright © 2020 Ably. All rights reserved.
-//
-
 import UIKit
 
 class Constants {
