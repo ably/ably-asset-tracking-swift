@@ -43,10 +43,17 @@ class AblySubscriberService {
         }
         
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in
-            guard let strongSelf = self,
-                  let json = message.data as? String,
+            guard let strongSelf = self else { return }
+            guard let json = message.data as? String,
                   let geoJSONMessages: [GeoJSONMessage] = [GeoJSONMessage].fromJSONString(json)
-            else { return }
+            else {
+                strongSelf.delegate?.subscriberService(
+                    sender: strongSelf,
+                    didFailWithError: AblyError.inconsistentData("Cannot parse raw location message: \(message.data ?? "nil")")
+                )
+                return
+            }
+            
             geoJSONMessages.forEach {
                 let location = $0.toCoreLocation()
                 strongSelf.delegate?.subscriberService(sender: strongSelf, didReceiveRawLocation: location)
@@ -54,10 +61,17 @@ class AblySubscriberService {
         }
         
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
-            guard let strongSelf = self,
-                  let json = message.data as? String,
+            guard let strongSelf = self else { return }
+            guard let json = message.data as? String,
                   let geoJSONMessages: [GeoJSONMessage] = [GeoJSONMessage].fromJSONString(json)
-            else { return }
+            else {
+                strongSelf.delegate?.subscriberService(
+                    sender: strongSelf,
+                    didFailWithError: AblyError.inconsistentData("Cannot parse enhanced location message: \(message.data ?? "nil")")
+                )
+                return
+            }
+            
             geoJSONMessages.forEach {
                 let location = $0.toCoreLocation()
                 strongSelf.delegate?.subscriberService(sender: strongSelf, didReceiveEnhancedLocation: location)
