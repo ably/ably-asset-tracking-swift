@@ -36,6 +36,7 @@ class SettingsViewController: UIViewController {
             present(alert, animated: true, completion: nil)
             return
         }
-        let vc = MapViewController
+        let vc = MapViewController(trackingId: trackingId)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
