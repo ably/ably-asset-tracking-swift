@@ -13,4 +13,8 @@ public class DefaultSubscriber: AssetTrackingSubscriber {
     public init(configuration: AssetTrackingSubscriberConfiguration) {
         self.configuration = configuration
     }
+    
+    public func stop() {
+        
+    }
 }
