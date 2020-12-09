@@ -72,8 +72,8 @@ class MapViewController: UIViewController {
         if let annotation = mapView.annotations.first(where: { ($0 as? TruckAnnotation)?.type == type }) as? TruckAnnotation {
             annotation.bearing = location.course
             
-            // Delegate's "viewForAnnotation" method is not called when we're only updating annotation.
-            // That's why we need to update in in AnnotationView manually.
+            // Delegate's "viewForAnnotation" method is not called when we're only updating coordinate or bearing, so AnnotationView is not updated.
+            // That's why we need to set latest values in AnnotationView manually.
             if let view = mapView.view(for: annotation) as? TruckAnnotationView {
                 view.bearing = annotation.bearing
             }
