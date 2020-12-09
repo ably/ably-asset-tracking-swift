@@ -12,15 +12,20 @@ class GeoJSONProperties: Codable {
     let accuracyHorizontal: Double
     
     /**
-     Object vertical accuracy in meters.
+     Timestamp from a moment when measurment was done (in seconds since 1st of January 1970)
      */
-    let accuracyVertical: Double?
+    let time: Double
     
     /**
      Object altitude in meters. May be positive or negative for abowe and below sea level measurement.
      */
     let altitude: Double
     
+    /**
+     Object vertical accuracy in meters.
+     */
+    let accuracyVertical: Double?
+        
     /**
      Object bearing (or course) in degrees true North
      */
@@ -42,11 +47,6 @@ class GeoJSONProperties: Codable {
     let accuracySpeed: Double?
     
     /**
-     Timestamp from a moment when measurment was done (in seconds since 1st of January 1970)
-     */
-    let time: Double
-    
-    /**
      Contains information about the logical floor that object is on
      in the current building if inside a supported venue. Nil if floor is unavailable.
      It's estimated value based on altitude and may not refer to actual building.
@@ -59,15 +59,16 @@ class GeoJSONProperties: Codable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        time = try container.decode(Double.self, forKey: .time)
-        floor = try container.decode(Int.self, forKey: .floor)
-        altitude = try container.decode(Double.self, forKey: .altitude)
-        speed = try container.decode(Double.self, forKey: .speed)
-        accuracySpeed = try container.decode(Double.self, forKey: .accuracySpeed)
         accuracyHorizontal = try container.decode(Double.self, forKey: .accuracyHorizontal)
-        accuracyVertical = try container.decode(Double.self, forKey: .accuracyVertical)
-        accuracyBearing = try container.decode(Double.self, forKey: .accuracyBearing)
-        bearing = try container.decode(Double.self, forKey: .bearing)
+        time = try container.decode(Double.self, forKey: .time)
+        altitude = try container.decode(Double.self, forKey: .altitude)
+        
+        floor = try? container.decode(Int.self, forKey: .floor)
+        speed = try? container.decode(Double.self, forKey: .speed)
+        accuracySpeed = try? container.decode(Double.self, forKey: .accuracySpeed)
+        accuracyVertical = try? container.decode(Double.self, forKey: .accuracyVertical)
+        accuracyBearing = try? container.decode(Double.self, forKey: .accuracyBearing)
+        bearing = try? container.decode(Double.self, forKey: .bearing)
         
         guard accuracyHorizontal >= 0 else {
             throw AblyError.inconsistentData("Invalid horizontal accuracy got \(accuracyHorizontal)")
