@@ -1,7 +1,7 @@
 import CoreLocation
 
 /**
- Part of DTO used in `GeoJSONMessage`, used to map GeoJSON properties field (as defined in https://geojson.org ).
+ Helper class used in `GeoJSONMessage` to map GeoJSON properties field (as defined at https://geojson.org ).
  All properties match properties from `CLLocation`.
  */
 class GeoJSONProperties: Codable {

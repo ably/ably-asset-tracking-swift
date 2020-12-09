@@ -6,6 +6,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Temporary test to validate if we have access to Subscriber framework
-        let _ = AblyAssetTrackingSubscriber()
+        let configuration = AssetTrackingSubscriberConfiguration(apiKey: "", clientId: "", resolution: 1, trackingId: "")
+        let _ = DefaultSubscriber(configuration: configuration)        
     }
 }

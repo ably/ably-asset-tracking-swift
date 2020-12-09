@@ -3,7 +3,8 @@ import MapboxCoreNavigation
 
 protocol LocationServiceDelegate: class {
     func locationService(sender: LocationService, didFailWithError error: Error)
-    func locationService(sender: LocationService, didUpdateLocation location: CLLocation)
+    func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation)
+    func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation)
 }
 
 class LocationService {
@@ -40,7 +41,8 @@ class LocationService {
 
 extension LocationService: PassiveLocationDataSourceDelegate {
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
-        delegate?.locationService(sender: self, didUpdateLocation: location)
+        delegate?.locationService(sender: self, didUpdateRawLocation: rawLocation)
+        delegate?.locationService(sender: self, didUpdateEnhancedLocation: location)
     }
     
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didFailWithError error: Error) {
