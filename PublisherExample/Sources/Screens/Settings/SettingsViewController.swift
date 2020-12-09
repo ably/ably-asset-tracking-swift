@@ -45,7 +45,7 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    @IBAction func onStartButtonPress(_ sender: Any) {
+    @IBAction private func onStartButtonPress(_ sender: Any) {
         guard let trackingId = trackingIdTextField.text,
               !trackingId.isEmpty
         else {

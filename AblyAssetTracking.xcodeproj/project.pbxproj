@@ -17,7 +17,7 @@
 		186997F325800E03006FF1CC /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186997F225800E03006FF1CC /* Codable+EncodedString.swift */; };
 		186997F425800E03006FF1CC /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186997F225800E03006FF1CC /* Codable+EncodedString.swift */; };
 		186997F525800E03006FF1CC /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186997F225800E03006FF1CC /* Codable+EncodedString.swift */; };
-		1869987425802111006FF1CC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869986C25802111006FF1CC /* Constants.swift */; };
+		1869987425802111006FF1CC /* PublisherKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869986C25802111006FF1CC /* PublisherKeys.swift */; };
 		1869987525802111006FF1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1869986F25802111006FF1CC /* SettingsViewController.xib */; };
 		1869987625802111006FF1CC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869987025802111006FF1CC /* SettingsViewController.swift */; };
 		1869987725802111006FF1CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869987225802111006FF1CC /* MapViewController.swift */; };
@@ -123,7 +123,7 @@
 		18365EF32577DEB300C84E81 /* GeoJSONMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONMessage.swift; sourceTree = "<group>"; };
 		18365F062577E5A500C84E81 /* GeoJSONGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometry.swift; sourceTree = "<group>"; };
 		186997F225800E03006FF1CC /* Codable+EncodedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+EncodedString.swift"; sourceTree = "<group>"; };
-		1869986C25802111006FF1CC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1869986C25802111006FF1CC /* PublisherKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherKeys.swift; sourceTree = "<group>"; };
 		1869986F25802111006FF1CC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		1869987025802111006FF1CC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1869987225802111006FF1CC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -304,7 +304,9 @@
 		1866801D257FA74B00CCE946 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1869986B25802111006FF1CC /* Sources */,
+				1869986D25802111006FF1CC /* Screens */,
+				18F429122576770A00026943 /* AppDelegate.swift */,
+				1869986C25802111006FF1CC /* PublisherKeys.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -317,15 +319,6 @@
 				18F429202576770B00026943 /* Info.plist */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		1869986B25802111006FF1CC /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				1869986C25802111006FF1CC /* Constants.swift */,
-				1869986D25802111006FF1CC /* Screens */,
-			);
-			name = Sources;
 			sourceTree = "<group>";
 		};
 		1869986D25802111006FF1CC /* Screens */ = {
@@ -569,7 +562,6 @@
 			children = (
 				1866801E257FA75800CCE946 /* Resources */,
 				1866801D257FA74B00CCE946 /* Sources */,
-				18F429122576770A00026943 /* AppDelegate.swift */,
 			);
 			path = PublisherExample;
 			sourceTree = "<group>";
@@ -1405,7 +1397,7 @@
 			files = (
 				18F429132576770A00026943 /* AppDelegate.swift in Sources */,
 				1869989225802151006FF1CC /* AssetAnnotationView.swift in Sources */,
-				1869987425802111006FF1CC /* Constants.swift in Sources */,
+				1869987425802111006FF1CC /* PublisherKeys.swift in Sources */,
 				1869987625802111006FF1CC /* SettingsViewController.swift in Sources */,
 				1869987725802111006FF1CC /* MapViewController.swift in Sources */,
 			);

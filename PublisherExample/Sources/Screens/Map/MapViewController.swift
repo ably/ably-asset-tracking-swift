@@ -27,14 +27,15 @@ class MapViewController: UIViewController {
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Publishing \(trackingId)"
         setupPublisher()
         setupMapView()
     }
     
     // MARK: View setup
     private func setupPublisher() {
-        let configuration = AssetTrackingPublisherConfiguration(apiKey: Constants.ablyApiKey,
-                                                                clientId: Constants.ablyClientId)
+        let configuration = AssetTrackingPublisherConfiguration(apiKey: PublisherKeys.ablyApiKey,
+                                                                clientId: PublisherKeys.ablyClientId)
         let trackable = DefaultTrackable(id: trackingId,
                                          metadata: "",
                                          latitude: 0,
