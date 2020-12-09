@@ -52,6 +52,11 @@ public protocol AssetTrackingSubscriber {
     var delegate: AssetTrackingSubscriberDelegate? { get set }
     
     /**
+    Starts listening for asset location
+     */
+    func start()
+    
+    /**
      Stops asset subscriber from listening for asset location
      */
     func stop()
