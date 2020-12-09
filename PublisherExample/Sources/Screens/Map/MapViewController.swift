@@ -4,6 +4,7 @@ import Publisher
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var connectionStatusLabel: UILabel!
     
     private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
     private let trackingId: String
@@ -113,6 +114,6 @@ extension MapViewController: AssetTrackingPublisherDelegate {
     }
     
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus) {
-
+        connectionStatusLabel.text = "Connection status: \(status)"
     }
 }
