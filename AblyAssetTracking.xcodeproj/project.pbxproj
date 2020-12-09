@@ -80,10 +80,7 @@
 		18E4FF292577E66000AC2DD2 /* GeoJSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4FF262577E66000AC2DD2 /* GeoJSONType.swift */; };
 		18F428EB2576754B00026943 /* DefaultPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428EA2576754B00026943 /* DefaultPublisher.swift */; };
 		18F428F02576764100026943 /* DefaultSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428EF2576764100026943 /* DefaultSubscriber.swift */; };
-		18F428FB257676FE00026943 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428FA257676FE00026943 /* AppDelegate.swift */; };
-		18F428FF257676FE00026943 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F428FE257676FE00026943 /* ViewController.swift */; };
 		18F42902257676FE00026943 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F42900257676FE00026943 /* Main.storyboard */; };
-		18F42904257676FF00026943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F42903257676FF00026943 /* Assets.xcassets */; };
 		18F42907257676FF00026943 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F42905257676FF00026943 /* LaunchScreen.storyboard */; };
 		18F429132576770A00026943 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F429122576770A00026943 /* AppDelegate.swift */; };
 		18F4291C2576770B00026943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F4291B2576770B00026943 /* Assets.xcassets */; };
@@ -202,12 +199,8 @@
 		18F428EA2576754B00026943 /* DefaultPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
 		18F428EF2576764100026943 /* DefaultSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSubscriber.swift; sourceTree = "<group>"; };
 		18F428F8257676FE00026943 /* SubscriberExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubscriberExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		18F428FA257676FE00026943 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		18F428FE257676FE00026943 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		18F42901257676FE00026943 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		18F42903257676FF00026943 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18F42906257676FF00026943 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		18F42908257676FF00026943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18F429102576770A00026943 /* PublisherExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18F429122576770A00026943 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18F4291B2576770B00026943 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -590,12 +583,8 @@
 		18F428F9257676FE00026943 /* SubscriberExample */ = {
 			isa = PBXGroup;
 			children = (
-				18F428FA257676FE00026943 /* AppDelegate.swift */,
-				18F428FE257676FE00026943 /* ViewController.swift */,
 				18F42900257676FE00026943 /* Main.storyboard */,
-				18F42903257676FF00026943 /* Assets.xcassets */,
 				18F42905257676FF00026943 /* LaunchScreen.storyboard */,
-				18F42908257676FF00026943 /* Info.plist */,
 			);
 			path = SubscriberExample;
 			sourceTree = "<group>";
@@ -967,7 +956,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F42907257676FF00026943 /* LaunchScreen.storyboard in Resources */,
-				18F42904257676FF00026943 /* Assets.xcassets in Resources */,
 				18F42902257676FE00026943 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1437,8 +1425,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F428FF257676FE00026943 /* ViewController.swift in Sources */,
-				18F428FB257676FE00026943 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
