@@ -11,3 +11,11 @@ xcuserdata/
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
 Pods/
+
+# Build products
+archives/
+
+#Fastlane reports
+fastlane/report.xml
+fastlane/test_output/report.junit
+fastlane/test_output/report.html
