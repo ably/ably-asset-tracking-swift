@@ -35,8 +35,8 @@ class MapViewController: UIViewController {
     }
     
     private func setupSubscriber() {
-        let configuration = AssetTrackingSubscriberConfiguration(apiKey: "",
-                                                                 clientId: "",
+        let configuration = AssetTrackingSubscriberConfiguration(apiKey: SubscriberKeys.ablyApiKey,
+                                                                 clientId: SubscriberKeys.ablyClientId,
                                                                  resolution: 0,
                                                                  trackingId: trackingId)
         subscriber = DefaultSubscriber(configuration: configuration)
@@ -73,7 +73,6 @@ class MapViewController: UIViewController {
         }
     }
 }
-
 
 extension MapViewController: AssetTrackingSubscriberDelegate {
     func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didFailWithError error: Error) {
