@@ -7,12 +7,13 @@ class TruckAnnotationView: MKAnnotationView {
     var bearing: Double = 0 { didSet { updateImage() }}
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        frame = CGRect(x: 0, y: 0, width: 16, height: 16)
+        frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         centerOffset = CGPoint(x: 0, y: -frame.size.height / 2)
-        layer.cornerRadius = 8
+        
+        layer.cornerRadius = 12
         canShowCallout = false
         addSubview(imageView)
         updateImage()
@@ -26,7 +27,8 @@ class TruckAnnotationView: MKAnnotationView {
     private func updateImage() {
         let step = 22.5
         switch bearing {
-        case 350-step..<step: imageView.image = UIImage(named: "truckN")
+        case 360-step..<360: imageView.image = UIImage(named: "truckN")
+        case 0..<step: imageView.image = UIImage(named: "truckN")
         case 45-step..<45+step: imageView.image = UIImage(named: "truckNE")
         case 90-step..<90+step: imageView.image = UIImage(named: "truckE")
         case 135-step..<135+step: imageView.image = UIImage(named: "truckSE")

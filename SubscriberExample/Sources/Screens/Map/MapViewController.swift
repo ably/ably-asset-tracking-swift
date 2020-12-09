@@ -69,11 +69,18 @@ class MapViewController: UIViewController {
             return
         }
         
-        if let annotation = mapView.annotations.first(where: { $0.title == title }) as? TruckAnnotation {
+        if let annotation = mapView.annotations.first(where: { ($0 as? TruckAnnotation)?.type == type }) as? TruckAnnotation {
+            annotation.bearing = location.course
+            
+            // Delegate's "viewForAnnotation" method is not called when we're only updating annotation.
+            // That's why we need to update in in AnnotationView manually.
+            if let view = mapView.view(for: annotation) as? TruckAnnotationView {
+                view.bearing = annotation.bearing
+            }
+            
             let isAnimated = animationSwitch.isOn
-            UIView.animate(withDuration: isAnimated ? 0.5 : 1) {
+            UIView.animate(withDuration: isAnimated ? 1 : 0) {
                 annotation.coordinate = location.coordinate
-                annotation.bearing = location.course
             }
         } else {
             let annotation = TruckAnnotation()
@@ -85,11 +92,13 @@ class MapViewController: UIViewController {
     }
     
     private func scrollToReceivedLocation() {
-        let mapCenter = mapView.region.center
-        let minimumCenterDistance: Double = 500
+        let minimumDistanceToCenter: Double = 300
+        let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
+                                   longitude: mapView.region.center.longitude)
         guard let location = rawLocation ?? enhancedLocation,
-              location.distance(from: CLLocation(latitude: mapCenter.latitude, longitude: mapCenter.longitude)) > minimumCenterDistance
+              location.distance(from: mapCenter) > minimumDistanceToCenter
         else { return }
+        
         let region = MKCoordinateRegion(center: location.coordinate,
                                         latitudinalMeters: 600,
                                         longitudinalMeters: 600)
@@ -100,15 +109,14 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? TruckAnnotation
-        else { return nil}
+        else { return nil }
         
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: truckAnnotationViewIdentifier) as? TruckAnnotationView ??
-            TruckAnnotationView(annotation: annotation, reuseIdentifier: truckAnnotationViewIdentifier)
+                             TruckAnnotationView(annotation: annotation, reuseIdentifier: truckAnnotationViewIdentifier)
         let isRaw = annotation.type == .raw
-        annotationView.backgroundColor = isRaw ? UIColor.yellow.withAlphaComponent(0.7) :
-            UIColor.blue.withAlphaComponent(0.7)
         annotationView.bearing = annotation.bearing
-        
+        annotationView.backgroundColor = isRaw ? UIColor.yellow.withAlphaComponent(0.7) :
+                                                 UIColor.blue.withAlphaComponent(0.7)
         return annotationView
     }
 }
@@ -120,10 +128,12 @@ extension MapViewController: AssetTrackingSubscriberDelegate {
     
     func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didUpdateRawLocation location: CLLocation) {
         rawLocation = location
+        scrollToReceivedLocation()
     }
     
     func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didUpdateEnhancedLocation location: CLLocation) {
         enhancedLocation = location
+        scrollToReceivedLocation()
     }
     
     func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didChangeAssetConnectionStatus status: AssetTrackingConnectionStatus) {
