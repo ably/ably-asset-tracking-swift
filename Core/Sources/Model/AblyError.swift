@@ -11,11 +11,6 @@ enum AblyError: Error {
     case inconsistentData(String)
     
     /**
-    Called while attempting to track another channel
-     */
-    case alreadyConnectedToChannel
-    
-    /**
     General purpose error for Publisher SDK
      */
     case publisherError(String)

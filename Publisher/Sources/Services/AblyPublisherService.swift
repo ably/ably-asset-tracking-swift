@@ -40,10 +40,7 @@ class AblyPublisherService {
     
     // MARK: Main interface
     func track(trackable: Trackable, completion: ((Error?) -> Void)?) {
-        guard channel == nil else {
-            completion?(AblyError.alreadyConnectedToChannel)
-            return
-        }
+        precondition(channel == nil, "In current SDK version, service can track only one asset per instance")        
         
         // Force cast allowed here, as presence data is our internal class which should never fail to encode
         let data = presenceData.toEncodedJSONString()!
