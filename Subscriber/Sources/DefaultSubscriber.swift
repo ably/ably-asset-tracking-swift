@@ -24,8 +24,8 @@ public class DefaultSubscriber: AssetTrackingSubscriber {
     public func start() {
         ablyService.start { [weak self] error in
             if let error = error,
-               let strongSelf = self {
-                strongSelf.delegate?.assetTrackingSubscriber(sender: strongSelf, didFailWithError: error)
+               let self = self {
+                self.delegate?.assetTrackingSubscriber(sender: self, didFailWithError: error)
             }
         }
     }

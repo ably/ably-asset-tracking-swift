@@ -43,12 +43,12 @@ class AblySubscriberService {
         }
         
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             guard let json = message.data as? String,
                   let geoJSONMessages: [GeoJSONMessage] = [GeoJSONMessage].fromJSONString(json)
             else {
-                strongSelf.delegate?.subscriberService(
-                    sender: strongSelf,
+                self.delegate?.subscriberService(
+                    sender: self,
                     didFailWithError: AblyError.inconsistentData("Cannot parse raw location message: \(message.data ?? "nil")")
                 )
                 return
@@ -56,17 +56,17 @@ class AblySubscriberService {
             
             geoJSONMessages.forEach {
                 let location = $0.toCoreLocation()
-                strongSelf.delegate?.subscriberService(sender: strongSelf, didReceiveRawLocation: location)
+                self.delegate?.subscriberService(sender: self, didReceiveRawLocation: location)
             }
         }
         
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             guard let json = message.data as? String,
                   let geoJSONMessages: [GeoJSONMessage] = [GeoJSONMessage].fromJSONString(json)
             else {
-                strongSelf.delegate?.subscriberService(
-                    sender: strongSelf,
+                self.delegate?.subscriberService(
+                    sender: self,
                     didFailWithError: AblyError.inconsistentData("Cannot parse enhanced location message: \(message.data ?? "nil")")
                 )
                 return
@@ -74,7 +74,7 @@ class AblySubscriberService {
             
             geoJSONMessages.forEach {
                 let location = $0.toCoreLocation()
-                strongSelf.delegate?.subscriberService(sender: strongSelf, didReceiveEnhancedLocation: location)
+                self.delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: location)
             }
         }
     }
@@ -114,8 +114,8 @@ class AblySubscriberService {
             // TODO: Log suitable message when Logger become available:
             // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
             if let error = error,
-               let strongSelf = self {
-                strongSelf.delegate?.subscriberService(sender: strongSelf, didFailWithError: error)
+               let self = self {
+                self.delegate?.subscriberService(sender: self, didFailWithError: error)
             }
         }
     }
