@@ -29,10 +29,10 @@ class AblyPublisherService {
         // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
         client.connection.on { [weak self] stateChange in
             guard let current = stateChange?.current,
-                  let strongSelf = self
+                  let self = self
             else { return }
-            strongSelf.delegate?.publisherService(
-                sender: strongSelf,
+            self.delegate?.publisherService(
+                sender: self,
                 didChangeConnectionStatus: current.toAblyConnectionStatus()
             )
         }

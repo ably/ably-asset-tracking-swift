@@ -32,12 +32,12 @@ public class DefaultPublisher: AssetTrackingPublisher {
     public func track(trackable: Trackable) {
         activeTrackable = trackable
         ablyService.track(trackable: trackable) { [weak self] error in
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             
             if let error = error {
-                strongSelf.delegate?.assetTrackingPublisher(sender: strongSelf, didFailWithError: error)
+                self.delegate?.assetTrackingPublisher(sender: self, didFailWithError: error)
             }
-            strongSelf.locationService.startUpdatingLocation()
+            self.locationService.startUpdatingLocation()
         }
     }
     
@@ -67,9 +67,9 @@ extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
         delegate?.assetTrackingPublisher(sender: self, didUpdateRawLocation: location)
         ablyService.sendRawAssetLocation(location: location) { [weak self] error in
-            if let strongSelf = self,
+            if let self = self,
                let error = error {
-                strongSelf.delegate?.assetTrackingPublisher(sender: strongSelf, didFailWithError: error)
+                self.delegate?.assetTrackingPublisher(sender: self, didFailWithError: error)
             }
         }
     }
@@ -77,9 +77,9 @@ extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
         delegate?.assetTrackingPublisher(sender: self, didUpdateEnhancedLocation: location)
         ablyService.sendEnhancedAssetLocation(location: location) { [weak self] error in
-            if let strongSelf = self,
+            if let self = self,
                let error = error {
-                strongSelf.delegate?.assetTrackingPublisher(sender: strongSelf, didFailWithError: error)
+                self.delegate?.assetTrackingPublisher(sender: self, didFailWithError: error)
             }
         }
     }

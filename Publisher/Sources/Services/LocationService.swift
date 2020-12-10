@@ -22,8 +22,8 @@ class LocationService {
             // TODO: Log suitable message when Logger become available:
             // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
             if let error = error,
-               let strongSelf = self {
-                strongSelf.delegate?.locationService(sender: strongSelf, didFailWithError: error)
+               let self = self {
+                self.delegate?.locationService(sender: self, didFailWithError: error)
             }
         }
     }
