@@ -11,8 +11,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settingsVC = SettingsViewController()
         let navVC = UINavigationController(rootViewController: settingsVC)
         
-        window?.rootViewController = navVC
-        window?.makeKeyAndVisible()
+        window.rootViewController = navVC
+        window.makeKeyAndVisible()
         
         return true
     }
