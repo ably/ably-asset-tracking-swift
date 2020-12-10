@@ -14,4 +14,9 @@ enum AblyError: Error {
     General purpose error for Publisher SDK
      */
     case publisherError(String)
+    
+    /**
+     Thrown in case of failed JSON Encoding/Decoding using `Codable+EncodedString` or `Decodable+FromJSONString`
+     */
+    case JSONCodingError(String)
 }

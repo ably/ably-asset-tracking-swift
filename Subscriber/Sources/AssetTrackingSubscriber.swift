@@ -41,7 +41,7 @@ public protocol AssetTrackingSubscriberDelegate {
         - sender: `AssetTrackingSubscriber` instance.
         - status: Updated connection status.
      */
-    func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didChangeConnectionStatus status: AssetTrackingConnectionStatus)
+    func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didChangeAssetConnectionStatus status: AssetTrackingConnectionStatus)
 }
 
 public protocol AssetTrackingSubscriber {
@@ -50,4 +50,14 @@ public protocol AssetTrackingSubscriber {
      It maintains a weak reference to your delegate, so ensure to maintain your own strong reference as well.
      */
     var delegate: AssetTrackingSubscriberDelegate? { get set }
+    
+    /**
+    Starts listening for asset location
+     */
+    func start()
+    
+    /**
+     Stops asset subscriber from listening for asset location
+     */
+    func stop()
 }

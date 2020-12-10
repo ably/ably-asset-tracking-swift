@@ -34,7 +34,7 @@ class GeoJSONMessage: Codable {
         // TODO: Handle data correctness in https://github.com/ably/ably-asset-tracking-cocoa/issues/10
     }
     
-    func toCoreLocation() throws -> CLLocation  {                        
+    func toCoreLocation() -> CLLocation  {                        
         return CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: geometry.latitude, longitude: geometry.longitude),
             altitude: properties.altitude,
