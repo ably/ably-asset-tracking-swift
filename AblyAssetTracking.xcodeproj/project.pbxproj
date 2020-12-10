@@ -33,7 +33,9 @@
 		18889399257660BE00866E6F /* Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889390257660BE00866E6F /* Subscriber.framework */; };
 		1888939E257660BE00866E6F /* SubscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888939D257660BE00866E6F /* SubscriberTests.swift */; };
 		188893A0257660BE00866E6F /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 18889392257660BE00866E6F /* Subscriber.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		188B0EE125822ABF0078ED85 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B0EE025822ABF0078ED85 /* Logger.swift */; };
+		188B0EEB258240FC0078ED85 /* AblyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B0EEA258240FC0078ED85 /* AblyLogger.swift */; };
+		188B0EF4258241010078ED85 /* AblyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B0EEA258240FC0078ED85 /* AblyLogger.swift */; };
+		188B0EF5258241020078ED85 /* AblyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B0EEA258240FC0078ED85 /* AblyLogger.swift */; };
 		18C4ED09842F414226EC25E8 /* Pods_Common_PublisherExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578E2BFE6C532135EE9AB40 /* Pods_Common_PublisherExample.framework */; };
 		18C8E78B257F9A0F0086EC97 /* AblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8E788257F9A0F0086EC97 /* AblyPublisherService.swift */; };
 		18C8E78C257F9A0F0086EC97 /* PresenceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8E789257F9A0F0086EC97 /* PresenceData.swift */; };
@@ -141,7 +143,7 @@
 		18889398257660BE00866E6F /* SubscriberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubscriberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1888939D257660BE00866E6F /* SubscriberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberTests.swift; sourceTree = "<group>"; };
 		1888939F257660BE00866E6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		188B0EE025822ABF0078ED85 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		188B0EEA258240FC0078ED85 /* AblyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyLogger.swift; sourceTree = "<group>"; };
 		18C8E788257F9A0F0086EC97 /* AblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblyPublisherService.swift; sourceTree = "<group>"; };
 		18C8E789257F9A0F0086EC97 /* PresenceData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceData.swift; sourceTree = "<group>"; };
 		18C8E78A257F9A0F0086EC97 /* EventName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 			children = (
 				18D86263257F628B0044CE7B /* Utils */,
 				188688062577782300FBD4A0 /* Model */,
+				188B0EEA258240FC0078ED85 /* AblyLogger.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -476,7 +479,6 @@
 				1886882B25777B9000FBD4A0 /* Services */,
 				18D8620B257F62150044CE7B /* AssetTrackingPublisher.swift */,
 				18F428EA2576754B00026943 /* DefaultPublisher.swift */,
-				188B0EE025822ABF0078ED85 /* Logger.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1254,6 +1256,7 @@
 				188688102577783E00FBD4A0 /* MapConfiguration.swift in Sources */,
 				186997F325800E03006FF1CC /* Codable+EncodedString.swift in Sources */,
 				18C8E7D1257FA2240086EC97 /* EventName.swift in Sources */,
+				188B0EEB258240FC0078ED85 /* AblyLogger.swift in Sources */,
 				18E4FF272577E66000AC2DD2 /* GeoJSONType.swift in Sources */,
 				18C8E7C6257FA1320086EC97 /* AblyConnectionStatus.swift in Sources */,
 			);
@@ -1287,7 +1290,7 @@
 				18D8620C257F62150044CE7B /* AssetTrackingPublisher.swift in Sources */,
 				18C8E7C7257FA1320086EC97 /* AblyConnectionStatus.swift in Sources */,
 				18C8E78B257F9A0F0086EC97 /* AblyPublisherService.swift in Sources */,
-				188B0EE125822ABF0078ED85 /* Logger.swift in Sources */,
+				188B0EF4258241010078ED85 /* AblyLogger.swift in Sources */,
 				18E4FF282577E66000AC2DD2 /* GeoJSONType.swift in Sources */,
 				186997F425800E03006FF1CC /* Codable+EncodedString.swift in Sources */,
 				1886889B25779FA900FBD4A0 /* MapConfiguration.swift in Sources */,
@@ -1312,6 +1315,7 @@
 				18365E0D2577ADCF00C84E81 /* AblyConfiguration.swift in Sources */,
 				18D86283257F62B80044CE7B /* AssetTrackingSubscriber.swift in Sources */,
 				18F428F02576764100026943 /* DefaultSubscriber.swift in Sources */,
+				188B0EF5258241020078ED85 /* AblyLogger.swift in Sources */,
 				18D86277257F62960044CE7B /* UnimplementedSupport.swift in Sources */,
 				18C8E7C8257FA1320086EC97 /* AblyConnectionStatus.swift in Sources */,
 				18365F092577E5A500C84E81 /* GeoJSONGeometry.swift in Sources */,

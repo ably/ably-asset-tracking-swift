@@ -1,6 +1,5 @@
 import CoreLocation
 import MapboxCoreNavigation
-import os.log
 
 protocol LocationServiceDelegate: class {
     func locationService(sender: LocationService, didFailWithError error: Error)
@@ -8,9 +7,10 @@ protocol LocationServiceDelegate: class {
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation)
 }
 
+private let log = AblyLogger(subsystem: .publisher, category: "LocationService")
+
 class LocationService {
     private let locationDataSource: PassiveLocationDataSource
-    
     weak var delegate: LocationServiceDelegate?
     
     init() {
@@ -22,7 +22,7 @@ class LocationService {
         locationDataSource.startUpdatingLocation { [weak self] (error) in
             if let error = error,
                let strongSelf = self {
-                os_log("Error while updating location: %{public}@", log: .location, type: .error, error as CVarArg)
+                log.error("Error while updating location: %{public}@", String(describing: error))
                 strongSelf.delegate?.locationService(sender: strongSelf, didFailWithError: error)
             }
         }
@@ -43,23 +43,21 @@ class LocationService {
 
 extension LocationService: PassiveLocationDataSourceDelegate {
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
-        os_log(".passiveLocationDataSource.didUpdateLocation. location: %{private}@, rawLocation: %{private}@",
-               log: .location, type: .info, location)
-        
+        log.info(".passiveLocationDataSource.didUpdateLocation. location: %{private}@, rawLocation: %{private}@", location)
         delegate?.locationService(sender: self, didUpdateRawLocation: rawLocation)
         delegate?.locationService(sender: self, didUpdateEnhancedLocation: location)
     }
     
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didFailWithError error: Error) {
-        os_log("passiveLocationDataSource.didFailWithError. error:%{public}@", log: .location, type: .error, error as CVarArg)
+        log.error("passiveLocationDataSource.didFailWithError. error:%{public}@", String(describing: error))
         delegate?.locationService(sender: self, didFailWithError: error)
     }
     
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateHeading newHeading: CLHeading) {
-        os_log("passiveLocationDataSource.didUpdateHeading. heading:%{private}@", log: .location, type: .debug, newHeading)        
+        log.debug("passiveLocationDataSource.didUpdateHeading. heading:%{private}@", newHeading)
     }
     
     func passiveLocationDataSourceDidChangeAuthorization(_ dataSource: PassiveLocationDataSource) {
-        os_log("passiveLocationDataSource.didChangeAuthorization", log: .location, type: .debug)
+        log.debug("passiveLocationDataSource.didChangeAuthorization")
     }
 }
