@@ -17,6 +17,12 @@
 		186997F325800E03006FF1CC /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186997F225800E03006FF1CC /* Codable+EncodedString.swift */; };
 		186997F425800E03006FF1CC /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186997F225800E03006FF1CC /* Codable+EncodedString.swift */; };
 		186997F525800E03006FF1CC /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186997F225800E03006FF1CC /* Codable+EncodedString.swift */; };
+		1869987425802111006FF1CC /* PublisherKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869986C25802111006FF1CC /* PublisherKeys.swift */; };
+		1869987525802111006FF1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1869986F25802111006FF1CC /* SettingsViewController.xib */; };
+		1869987625802111006FF1CC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869987025802111006FF1CC /* SettingsViewController.swift */; };
+		1869987725802111006FF1CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869987225802111006FF1CC /* MapViewController.swift */; };
+		1869987825802111006FF1CC /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1869987325802111006FF1CC /* MapViewController.xib */; };
+		1869989225802151006FF1CC /* AssetAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869989125802151006FF1CC /* AssetAnnotationView.swift */; };
 		188688102577783E00FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
 		188688222577787B00FBD4A0 /* AblyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188688212577787B00FBD4A0 /* AblyConfiguration.swift */; };
 		1886882D25777B9C00FBD4A0 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886882C25777B9C00FBD4A0 /* LocationService.swift */; };
@@ -74,8 +80,6 @@
 		18F42904257676FF00026943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F42903257676FF00026943 /* Assets.xcassets */; };
 		18F42907257676FF00026943 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F42905257676FF00026943 /* LaunchScreen.storyboard */; };
 		18F429132576770A00026943 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F429122576770A00026943 /* AppDelegate.swift */; };
-		18F429172576770A00026943 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F429162576770A00026943 /* ViewController.swift */; };
-		18F4291A2576770A00026943 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F429182576770A00026943 /* Main.storyboard */; };
 		18F4291C2576770B00026943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F4291B2576770B00026943 /* Assets.xcassets */; };
 		18F4291F2576770B00026943 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F4291D2576770B00026943 /* LaunchScreen.storyboard */; };
 		18F4292525767A1500026943 /* Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889390257660BE00866E6F /* Subscriber.framework */; };
@@ -145,6 +149,12 @@
 		18365EF32577DEB300C84E81 /* GeoJSONMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONMessage.swift; sourceTree = "<group>"; };
 		18365F062577E5A500C84E81 /* GeoJSONGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometry.swift; sourceTree = "<group>"; };
 		186997F225800E03006FF1CC /* Codable+EncodedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+EncodedString.swift"; sourceTree = "<group>"; };
+		1869986C25802111006FF1CC /* PublisherKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherKeys.swift; sourceTree = "<group>"; };
+		1869986F25802111006FF1CC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		1869987025802111006FF1CC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		1869987225802111006FF1CC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		1869987325802111006FF1CC /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		1869989125802151006FF1CC /* AssetAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetAnnotationView.swift; sourceTree = "<group>"; };
 		1886880F2577783E00FBD4A0 /* MapConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfiguration.swift; sourceTree = "<group>"; };
 		188688212577787B00FBD4A0 /* AblyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConfiguration.swift; sourceTree = "<group>"; };
 		1886882C25777B9C00FBD4A0 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -192,8 +202,6 @@
 		18F42908257676FF00026943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18F429102576770A00026943 /* PublisherExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18F429122576770A00026943 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		18F429162576770A00026943 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		18F429192576770A00026943 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		18F4291B2576770B00026943 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18F4291E2576770B00026943 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18F429202576770B00026943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -316,6 +324,54 @@
 				18E4FF262577E66000AC2DD2 /* GeoJSONType.swift */,
 			);
 			path = GeoJSON;
+			sourceTree = "<group>";
+		};
+		1866801D257FA74B00CCE946 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				1869986D25802111006FF1CC /* Screens */,
+				18F429122576770A00026943 /* AppDelegate.swift */,
+				1869986C25802111006FF1CC /* PublisherKeys.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		1866801E257FA75800CCE946 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				18F4291B2576770B00026943 /* Assets.xcassets */,
+				18F4291D2576770B00026943 /* LaunchScreen.storyboard */,
+				18F429202576770B00026943 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1869986D25802111006FF1CC /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				1869986E25802111006FF1CC /* Settings */,
+				1869987125802111006FF1CC /* Map */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		1869986E25802111006FF1CC /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1869986F25802111006FF1CC /* SettingsViewController.xib */,
+				1869987025802111006FF1CC /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		1869987125802111006FF1CC /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				1869989125802151006FF1CC /* AssetAnnotationView.swift */,
+				1869987225802111006FF1CC /* MapViewController.swift */,
+				1869987325802111006FF1CC /* MapViewController.xib */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		188688062577782300FBD4A0 /* Model */ = {
@@ -529,12 +585,8 @@
 		18F429112576770A00026943 /* PublisherExample */ = {
 			isa = PBXGroup;
 			children = (
-				18F429122576770A00026943 /* AppDelegate.swift */,
-				18F429162576770A00026943 /* ViewController.swift */,
-				18F429182576770A00026943 /* Main.storyboard */,
-				18F4291B2576770B00026943 /* Assets.xcassets */,
-				18F4291D2576770B00026943 /* LaunchScreen.storyboard */,
-				18F429202576770B00026943 /* Info.plist */,
+				1866801E257FA75800CCE946 /* Resources */,
+				1866801D257FA74B00CCE946 /* Sources */,
 			);
 			path = PublisherExample;
 			sourceTree = "<group>";
@@ -908,7 +960,8 @@
 			files = (
 				18F4291F2576770B00026943 /* LaunchScreen.storyboard in Resources */,
 				18F4291C2576770B00026943 /* Assets.xcassets in Resources */,
-				18F4291A2576770A00026943 /* Main.storyboard in Resources */,
+				1869987825802111006FF1CC /* MapViewController.xib in Resources */,
+				1869987525802111006FF1CC /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1369,8 +1422,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F429172576770A00026943 /* ViewController.swift in Sources */,
 				18F429132576770A00026943 /* AppDelegate.swift in Sources */,
+				1869989225802151006FF1CC /* AssetAnnotationView.swift in Sources */,
+				1869987425802111006FF1CC /* PublisherKeys.swift in Sources */,
+				1869987625802111006FF1CC /* SettingsViewController.swift in Sources */,
+				1869987725802111006FF1CC /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,14 +1465,6 @@
 				18F42906257676FF00026943 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		18F429182576770A00026943 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				18F429192576770A00026943 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		18F4291D2576770B00026943 /* LaunchScreen.storyboard */ = {
@@ -1861,7 +1909,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PublisherExample/Info.plist;
+				INFOPLIST_FILE = PublisherExample/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1880,7 +1928,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PublisherExample/Info.plist;
+				INFOPLIST_FILE = PublisherExample/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
