@@ -19,10 +19,12 @@ class LocationService {
     
     func startUpdatingLocation() {
         locationDataSource.startUpdatingLocation { [weak self] (error) in
-            guard let error = error,
-                  let strongSelf = self
-            else { return }
-            self?.delegate?.locationService(sender: strongSelf, didFailWithError: error)
+            // TODO: Log suitable message when Logger become available:
+            // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
+            if let error = error,
+               let self = self {
+                self.delegate?.locationService(sender: self, didFailWithError: error)
+            }
         }
     }
     

@@ -28,6 +28,15 @@ public protocol AssetTrackingPublisherDelegate: class {
         - location: Location object received from LocationManager
      */
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateEnhancedLocation location: CLLocation)
+    
+    /**
+     Called when there is a connection update directly in AblySDK.
+     
+     - Parameters:
+        - sender:`AssetTrackingPublisher` instance.
+        - status: Most recent connection status
+     */
+    func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus)
 }
 
 public protocol AssetTrackingPublisher {
