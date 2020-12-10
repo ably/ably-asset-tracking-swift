@@ -19,7 +19,6 @@
 		188688102577783E00FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
 		188688222577787B00FBD4A0 /* AblyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188688212577787B00FBD4A0 /* AblyConfiguration.swift */; };
 		1886882D25777B9C00FBD4A0 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886882C25777B9C00FBD4A0 /* LocationService.swift */; };
-		1886887D25779B2600FBD4A0 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889358257660A800866E6F /* Core.framework */; };
 		1886888025779B2800FBD4A0 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889374257660B500866E6F /* Publisher.framework */; };
 		1886889225779B9600FBD4A0 /* AblyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886889125779B9600FBD4A0 /* AblyService.swift */; };
 		1886889B25779FA900FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
@@ -33,6 +32,8 @@
 		18889399257660BE00866E6F /* Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889390257660BE00866E6F /* Subscriber.framework */; };
 		1888939E257660BE00866E6F /* SubscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888939D257660BE00866E6F /* SubscriberTests.swift */; };
 		188893A0257660BE00866E6F /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 18889392257660BE00866E6F /* Subscriber.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		188B0EBF258205EC0078ED85 /* Publisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18889374257660B500866E6F /* Publisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		188B0EC1258206140078ED85 /* Subscriber.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18889390257660BE00866E6F /* Subscriber.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		18C4ED09842F414226EC25E8 /* Pods_Common_PublisherExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578E2BFE6C532135EE9AB40 /* Pods_Common_PublisherExample.framework */; };
 		18D8615A257E90D10044CE7B /* AblyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86159257E90D10044CE7B /* AblyError.swift */; };
 		18D8615B257E90D10044CE7B /* AblyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86159257E90D10044CE7B /* AblyError.swift */; };
@@ -100,6 +101,31 @@
 			remoteInfo = Subscriber;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		188B0EB6258205D40078ED85 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				188B0EBF258205EC0078ED85 /* Publisher.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		188B0EC0258205FD0078ED85 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				188B0EC1258206140078ED85 /* Subscriber.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0193ABA58D54D319FC071B88 /* Pods-Subscriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.release.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.release.xcconfig"; sourceTree = "<group>"; };
@@ -262,7 +288,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1886888025779B2800FBD4A0 /* Publisher.framework in Frameworks */,
-				1886887D25779B2600FBD4A0 /* Core.framework in Frameworks */,
 				18C4ED09842F414226EC25E8 /* Pods_Common_PublisherExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -712,6 +737,7 @@
 				18F428F4257676FE00026943 /* Sources */,
 				18F428F5257676FE00026943 /* Frameworks */,
 				18F428F6257676FE00026943 /* Resources */,
+				188B0EC0258205FD0078ED85 /* Embed Frameworks */,
 				7D022E5CDD1416263B8C8F64 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -732,6 +758,7 @@
 				18F4290C2576770A00026943 /* Sources */,
 				18F4290D2576770A00026943 /* Frameworks */,
 				18F4290E2576770A00026943 /* Resources */,
+				188B0EB6258205D40078ED85 /* Embed Frameworks */,
 				61E36CE346E41180EE744905 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
