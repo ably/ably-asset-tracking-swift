@@ -42,8 +42,8 @@ class AblyPublisherService {
     func track(trackable: Trackable, completion: ((Error?) -> Void)?) {
         precondition(channel == nil, "In current SDK version, service can track only one asset per instance")        
         
-        // Force cast allowed here, as presence data is our internal class which should never fail to encode
-        let data = presenceData.toEncodedJSONString()!
+        // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
+        let data = try! presenceData.toJSONString()
         
         channel = client.channels.get(trackable.id)
         channel?.presence.enterClient(clientId, data: data) { error in
@@ -67,11 +67,10 @@ class AblyPublisherService {
             return
         }
                     
+        
+        // Force cast intentional here. It's a fatal error if we are unable to create JSON String from GeoJSONMessage
         let geoJSON = GeoJSONMessage(location: location)
-        guard let data = [geoJSON].toEncodedJSONString() else {
-            completion?(AblyError.inconsistentData("Cannot encode location data to JSON"))
-            return
-        }
+        let data = try! [geoJSON].toJSONString()
         
         let message = ARTMessage(name: name.rawValue, data: data)
         channel.publish([message]) { errorInfo in

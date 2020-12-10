@@ -35,7 +35,8 @@ class AblySubscriberService {
         })
         
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
-        let data = presenceData.toEncodedJSONString()!
+        let data = try! presenceData.toJSONString()
+        
         channel.presence.enterClient(clientId, data: data) { error in
             // TODO: Log suitable message when Logger become available:
             // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
@@ -43,39 +44,11 @@ class AblySubscriberService {
         }
         
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in
-            guard let self = self else { return }
-            guard let json = message.data as? String,
-                  let geoJSONMessages: [GeoJSONMessage] = [GeoJSONMessage].fromJSONString(json)
-            else {
-                self.delegate?.subscriberService(
-                    sender: self,
-                    didFailWithError: AblyError.inconsistentData("Cannot parse raw location message: \(message.data ?? "nil")")
-                )
-                return
-            }
-            
-            geoJSONMessages.forEach {
-                let location = $0.toCoreLocation()
-                self.delegate?.subscriberService(sender: self, didReceiveRawLocation: location)
-            }
+            self?.handleLocationUpdateResponse(forEvent: .raw, messageData: message.data)
         }
         
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
-            guard let self = self else { return }
-            guard let json = message.data as? String,
-                  let geoJSONMessages: [GeoJSONMessage] = [GeoJSONMessage].fromJSONString(json)
-            else {
-                self.delegate?.subscriberService(
-                    sender: self,
-                    didFailWithError: AblyError.inconsistentData("Cannot parse enhanced location message: \(message.data ?? "nil")")
-                )
-                return
-            }
-            
-            geoJSONMessages.forEach {
-                let location = $0.toCoreLocation()
-                self.delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: location)
-            }
+            self?.handleLocationUpdateResponse(forEvent: .enhanced, messageData: message.data)
         }
     }
     
@@ -86,6 +59,27 @@ class AblySubscriberService {
     }
 
     // MARK: Utils
+    private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
+        guard let json = messageData as? String else {
+            let error = AblyError.inconsistentData("Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))")
+            delegate?.subscriberService(sender: self, didFailWithError: error)
+            return
+        }
+        
+        var messages: [GeoJSONMessage] = []
+        do {
+            messages = try [GeoJSONMessage].fromJSONString(json)
+        } catch let error {
+            delegate?.subscriberService(sender: self, didFailWithError: error)
+            return
+        }
+        
+        let locations = messages.map { $0.toCoreLocation() }
+        event == .raw ?
+            locations.forEach ({ delegate?.subscriberService(sender: self, didReceiveRawLocation: $0) }) :
+            locations.forEach ({ delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: $0) })
+    }
+    
     private func handleIncomingPresenceMessage(_ message: ARTPresenceMessage) {
         let supportedActions: [ARTPresenceAction] = [.present, .enter, .leave]
         guard supportedActions.contains(message.action),
@@ -109,7 +103,8 @@ class AblySubscriberService {
         delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .offline)
         
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
-        let data = presenceData.toEncodedJSONString()!
+        let data = try! presenceData.toJSONString()
+        
         channel.presence.leaveClient(clientId, data: data) { [weak self] error in
             // TODO: Log suitable message when Logger become available:
             // https://github.com/ably/ably-asset-tracking-cocoa/issues/8

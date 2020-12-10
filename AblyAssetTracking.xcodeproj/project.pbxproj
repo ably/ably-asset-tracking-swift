@@ -541,8 +541,8 @@
 			isa = PBXGroup;
 			children = (
 				18786DA72582A94500FCE2BB /* Decodable+FromJSONString.swift */,
-				18D86264257F628B0044CE7B /* UnimplementedSupport.swift */,
 				186997F225800E03006FF1CC /* Codable+EncodedString.swift */,
+				18D86264257F628B0044CE7B /* UnimplementedSupport.swift */,
 			);
 			name = Utils;
 			path = Core/Sources/Utils;
