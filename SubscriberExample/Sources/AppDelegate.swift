@@ -5,7 +5,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
         
         let settingsVC = SettingsViewController()
         let navVC = UINavigationController(rootViewController: settingsVC)
