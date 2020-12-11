@@ -22,12 +22,14 @@ PODS:
   - msgpack (0.3.1)
   - Polyline (5.0.2)
   - SocketRocketAblyFork (0.5.2-ably-7)
+  - SwiftLint (0.41.0)
   - Turf (1.1.0)
   - ULID (1.1.0)
 
 DEPENDENCIES:
   - Ably (>= 1.2)
   - MapboxCoreNavigation (~> 1.0)
+  - SwiftLint
 
 SPEC REPOS:
   trunk:
@@ -42,6 +44,7 @@ SPEC REPOS:
     - msgpack
     - Polyline
     - SocketRocketAblyFork
+    - SwiftLint
     - Turf
     - ULID
 
@@ -57,9 +60,10 @@ SPEC CHECKSUMS:
   msgpack: a14de9216d29cfd0a7aff5af5150601a27e899a4
   Polyline: fce41d72e1146c41c6d081f7656827226f643dff
   SocketRocketAblyFork: 33ff506ecb565498051b8f358d60ae44274c3981
+  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
   Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: ff4b44a3a8559cf4fe491fd953ac2835803653ac
+PODFILE CHECKSUM: a1aa21609cc35a4d91b7817bf98cf80b7415a1de
 
 COCOAPODS: 1.9.3
