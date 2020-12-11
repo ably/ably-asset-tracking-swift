@@ -51,8 +51,4 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation) {
         delegate?.assetTrackingSubscriber(sender: self, didUpdateEnhancedLocation: location)
     }
-    
-    public func stop() {
-        
-    }
 }
