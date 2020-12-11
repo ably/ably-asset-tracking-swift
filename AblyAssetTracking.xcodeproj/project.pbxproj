@@ -754,6 +754,7 @@
 			buildPhases = (
 				C6E8549927768FA9DD2B5288 /* [CP] Check Pods Manifest.lock */,
 				18889353257660A800866E6F /* Headers */,
+				1889429525837D7800DA992B /* Run Swiftlint */,
 				18889354257660A800866E6F /* Sources */,
 				18889355257660A800866E6F /* Frameworks */,
 				18889356257660A800866E6F /* Resources */,
@@ -773,6 +774,7 @@
 			buildPhases = (
 				10455478C8D47236FDEC1BF8 /* [CP] Check Pods Manifest.lock */,
 				05BCD88DCD3EBABD88DAF177 /* [CP] Prepare Artifacts */,
+				1889429625837D8C00DA992B /* Run Swiftlint */,
 				1888935C257660A800866E6F /* Sources */,
 				1888935D257660A800866E6F /* Frameworks */,
 				1888935E257660A800866E6F /* Resources */,
@@ -814,6 +816,7 @@
 			buildPhases = (
 				663E59CCDE6B1AEC5E182566 /* [CP] Check Pods Manifest.lock */,
 				08C6436F62FEDFD89F0D9D2A /* [CP] Prepare Artifacts */,
+				1889428D25837D6100DA992B /* Run Swiftlint */,
 				18889378257660B500866E6F /* Sources */,
 				18889379257660B500866E6F /* Frameworks */,
 				1888937A257660B500866E6F /* Resources */,
@@ -835,6 +838,7 @@
 			buildPhases = (
 				44DA02D4349337F539C3550A /* [CP] Check Pods Manifest.lock */,
 				1888938B257660BE00866E6F /* Headers */,
+				1889429725837DA000DA992B /* Run Swiftlint */,
 				1888938C257660BE00866E6F /* Sources */,
 				1888938D257660BE00866E6F /* Frameworks */,
 				1888938E257660BE00866E6F /* Resources */,
@@ -854,6 +858,7 @@
 			buildPhases = (
 				A5684D65BA01239A47770919 /* [CP] Check Pods Manifest.lock */,
 				8C851780A53C09C923075F92 /* [CP] Prepare Artifacts */,
+				1889429825837DC000DA992B /* Run Swiftlint */,
 				18889394257660BE00866E6F /* Sources */,
 				18889395257660BE00866E6F /* Frameworks */,
 				18889396257660BE00866E6F /* Resources */,
@@ -875,6 +880,7 @@
 			buildPhases = (
 				166D576AA1475FD5D6EB232D /* [CP] Check Pods Manifest.lock */,
 				09D6D85EFEA94F86D6EA37A7 /* [CP] Prepare Artifacts */,
+				1889429925837DD600DA992B /* Run Swiftlint */,
 				18F428F4257676FE00026943 /* Sources */,
 				18F428F5257676FE00026943 /* Frameworks */,
 				18F428F6257676FE00026943 /* Resources */,
@@ -896,6 +902,7 @@
 			buildPhases = (
 				18210919A16E7751651C4132 /* [CP] Check Pods Manifest.lock */,
 				84945FA0DD6D019945385836 /* [CP] Prepare Artifacts */,
+				1889429A25837DF500DA992B /* Run Swiftlint */,
 				18F4290C2576770A00026943 /* Sources */,
 				18F4290D2576770A00026943 /* Frameworks */,
 				18F4290E2576770A00026943 /* Resources */,
@@ -1177,7 +1184,140 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./Publisher\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./Publisher\n\n";
+		};
+		1889428D25837D6100DA992B /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./PublisherTests\n";
+		};
+		1889429525837D7800DA992B /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./Core\n";
+		};
+		1889429625837D8C00DA992B /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./CoreTests\n";
+		};
+		1889429725837DA000DA992B /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./Subscriber\n\n";
+		};
+		1889429825837DC000DA992B /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./SubscriberTests\n";
+		};
+		1889429925837DD600DA992B /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./SubscriberExample\n";
+		};
+		1889429A25837DF500DA992B /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --path ./PublisherExample\n";
 		};
 		44DA02D4349337F539C3550A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -1,7 +1,6 @@
 disabled_rules:
-  - colon
-  - comma
-  - control_statement
+  - force_try
+  - todo
 
 opt_in_rules:
   - empty_count
@@ -14,7 +13,7 @@ force_try:
 
 line_length:
   warning: 250
-  ignore_comments: true
+  ignores_comments: true
 
 file_length:
   warning: 700

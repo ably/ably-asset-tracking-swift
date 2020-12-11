@@ -42,7 +42,9 @@ class LocationService {
 }
 
 extension LocationService: PassiveLocationDataSourceDelegate {
-    func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
+    func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource,
+                                   didUpdateLocation location: CLLocation,
+                                   rawLocation: CLLocation) {
         delegate?.locationService(sender: self, didUpdateRawLocation: rawLocation)
         delegate?.locationService(sender: self, didUpdateEnhancedLocation: location)
     }
