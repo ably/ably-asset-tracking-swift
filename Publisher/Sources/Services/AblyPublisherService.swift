@@ -1,7 +1,7 @@
 import Ably
 import CoreLocation
 
-protocol AblyPublisherServiceDelegate: class {
+protocol AblyPublisherServiceDelegate: AnyObject {
     func publisherService(sender: AblyPublisherService, didChangeConnectionStatus status: AblyConnectionStatus)
 }
 

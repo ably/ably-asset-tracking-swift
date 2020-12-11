@@ -1,7 +1,7 @@
 import Foundation
 import CoreLocation
 
-public protocol AssetTrackingPublisherDelegate: class {
+public protocol AssetTrackingPublisherDelegate: AnyObject {
     /**
      Called when `AssetTrackingPublisher` spot any (location, network or permissions) error
      
@@ -39,8 +39,10 @@ public protocol AssetTrackingPublisherDelegate: class {
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus)
 }
 
+/**
+ Main AssetTrackingPublisher interface implemented in SDK by `DefaultPublisher`
+ */
 public protocol AssetTrackingPublisher {
-
     /**
      Delegate object to receive events from `AssetTrackingPublisher`.
      It holds a weak reference so make sure to keep your delegate object in memory.
