@@ -5,6 +5,7 @@ import Ably
  Public wrapper for ARTRealtimeConnectionState, as we don't want to pass it to our clients
  */
 public enum AblyConnectionStatus {
+    // swiftlint:disable missing_docs
     case initialized
     case connecting
     case connected

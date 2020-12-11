@@ -4,9 +4,9 @@ import CoreLocation
 public class DefaultSubscriber: AssetTrackingSubscriber {
     private let configuration: AssetTrackingSubscriberConfiguration
     private let ablyService: AblySubscriberService
-    
-    public var delegate: AssetTrackingSubscriberDelegate?
-    
+
+    public weak var delegate: AssetTrackingSubscriberDelegate?
+
     /**
      Default constructor. Initializes Subscriber with given `AssetTrackingSubscriberConfiguration`.
      Subscriber starts listening (and notifying delegate) after initialization.
@@ -20,7 +20,7 @@ public class DefaultSubscriber: AssetTrackingSubscriber {
                                                  trackingId: configuration.trackingId)
         self.ablyService.delegate = self
     }
-    
+
     public func start() {
         ablyService.start { [weak self] error in
             if let error = error,
@@ -29,7 +29,7 @@ public class DefaultSubscriber: AssetTrackingSubscriber {
             }
         }
     }
-    
+
     public func stop() {
         ablyService.stop()
     }
@@ -39,15 +39,15 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
     func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetTrackingConnectionStatus) {
         delegate?.assetTrackingSubscriber(sender: self, didChangeAssetConnectionStatus: status)
     }
-    
+
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error) {
         delegate?.assetTrackingSubscriber(sender: self, didFailWithError: error)
     }
-    
+
     func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation) {
         delegate?.assetTrackingSubscriber(sender: self, didUpdateRawLocation: location)
     }
-    
+
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation) {
         delegate?.assetTrackingSubscriber(sender: self, didUpdateEnhancedLocation: location)
     }

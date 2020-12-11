@@ -1,0 +1,40 @@
+disabled_rules:
+  - force_try
+  - todo
+
+opt_in_rules:
+  - anyobject_protocol # See https://forums.swift.org/t/class-only-protocols-class-vs-anyobject/11507/10 for details.
+  - array_init
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - empty_xctest_method
+  - fallthrough
+  - fatal_error_message
+  - file_header
+  - missing_docs
+  - override_in_extension
+  - vertical_whitespace_between_cases
+  - vertical_whitespace_closing_braces
+  - xct_specific_matcher
+  - yoda_condition
+
+excluded:
+  - Pods
+
+file_header:
+  forbidden_string: //
+
+line_length:
+  warning: 250
+  ignores_comments: true
+
+file_length:
+  warning: 700
+  error: 1200
+
+identifier_name:
+  excluded: 'id'

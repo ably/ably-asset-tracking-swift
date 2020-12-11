@@ -7,7 +7,7 @@ enum ClientType: String, Codable {
 
 class PresenceData: Codable {
     let type: ClientType
-    
+
     init(type: ClientType) {
         self.type = type
     }

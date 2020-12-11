@@ -4,6 +4,7 @@ use_frameworks!
 abstract_target 'Common' do
   pod 'Ably', '>= 1.2'
   pod 'MapboxCoreNavigation', '~> 1.0'
+  pod 'SwiftLint'
 
   target 'Core' do
   end
