@@ -6,7 +6,7 @@ import CoreLocation
 public protocol Trackable {
     var id: String { get }
     var metadata: String? { get }
-    var destination: CLLocationCoordinate2D { get }
+    var destination: CLLocationCoordinate2D? { get }
 }
 
 /**
@@ -15,11 +15,11 @@ public protocol Trackable {
 public class DefaultTrackable: Trackable {
     public let id: String
     public let metadata: String?
-    public let destination: CLLocationCoordinate2D
-    
-    public init(id: String, metadata: String, latitude: Double, longitude: Double) {
+    public let destination: CLLocationCoordinate2D?
+
+    public init(id: String, metadata: String? = nil, destination: CLLocationCoordinate2D? = nil) {
         self.id = id
         self.metadata = metadata
-        self.destination = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        self.destination = destination
     }
 }
