@@ -3,27 +3,27 @@ import MapKit
 
 class TruckAnnotationView: MKAnnotationView {
     private let imageView: UIImageView
-    
-    var bearing: Double = 0 { didSet { updateImage() }}
-    
+
+    var bearing: Double = 0 { didSet { updateImage() } }
+
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        
+
         frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         centerOffset = CGPoint(x: 0, y: -frame.size.height / 2)
-        
+
         layer.cornerRadius = 12
         canShowCallout = false
         addSubview(imageView)
         updateImage()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func updateImage() {
         let step = 22.5
         switch bearing {

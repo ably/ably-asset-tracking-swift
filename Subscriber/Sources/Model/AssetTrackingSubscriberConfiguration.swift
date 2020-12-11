@@ -8,7 +8,15 @@ public class AssetTrackingSubscriberConfiguration {
     let clientId: String
     let resolution: Double
     let trackingId: String
-    
+
+    /**
+     Default initializer.
+    - Parameters:
+        - apiKey: Ably API key
+        - clientId: Ably API Client ID
+        - resolution: Chosen resolution policy (TBD)
+        - trackingId: Identifier of the asset to track
+     */
     public init(apiKey: String, clientId: String, resolution: Double, trackingId: String) {
         self.apiKey = apiKey
         self.clientId = clientId

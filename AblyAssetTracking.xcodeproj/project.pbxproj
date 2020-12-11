@@ -30,14 +30,10 @@
 		18786DC12582A98B00FCE2BB /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18786DC02582A98B00FCE2BB /* Trackable.swift */; };
 		18786DD02582A9A100FCE2BB /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18786DC02582A98B00FCE2BB /* Trackable.swift */; };
 		18786DD82582A9A200FCE2BB /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18786DC02582A98B00FCE2BB /* Trackable.swift */; };
-		188688102577783E00FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
 		188688222577787B00FBD4A0 /* AblyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188688212577787B00FBD4A0 /* AblyConfiguration.swift */; };
 		1886882D25777B9C00FBD4A0 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886882C25777B9C00FBD4A0 /* LocationService.swift */; };
 		1886888025779B2800FBD4A0 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889374257660B500866E6F /* Publisher.framework */; };
-		1886889B25779FA900FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
-		188688A425779FAA00FBD4A0 /* MapConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886880F2577783E00FBD4A0 /* MapConfiguration.swift */; };
 		18889361257660A800866E6F /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889358257660A800866E6F /* Core.framework */; };
-		18889366257660A800866E6F /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18889365257660A800866E6F /* CoreTests.swift */; };
 		18889368257660A800866E6F /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 1888935A257660A800866E6F /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1888937D257660B500866E6F /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18889374257660B500866E6F /* Publisher.framework */; };
 		18889382257660B500866E6F /* PublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18889381257660B500866E6F /* PublisherTests.swift */; };
@@ -169,14 +165,12 @@
 		18786D9E2582A93100FCE2BB /* AblySubscriberService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblySubscriberService.swift; sourceTree = "<group>"; };
 		18786DA72582A94500FCE2BB /* Decodable+FromJSONString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+FromJSONString.swift"; sourceTree = "<group>"; };
 		18786DC02582A98B00FCE2BB /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
-		1886880F2577783E00FBD4A0 /* MapConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfiguration.swift; sourceTree = "<group>"; };
 		188688212577787B00FBD4A0 /* AblyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConfiguration.swift; sourceTree = "<group>"; };
 		1886882C25777B9C00FBD4A0 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		18889358257660A800866E6F /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1888935A257660A800866E6F /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		1888935B257660A800866E6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18889360257660A800866E6F /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		18889365257660A800866E6F /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		18889367257660A800866E6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18889374257660B500866E6F /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18889376257660B500866E6F /* Publisher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Publisher.h; sourceTree = "<group>"; };
@@ -404,7 +398,6 @@
 			isa = PBXGroup;
 			children = (
 				18365EFD2577E57400C84E81 /* GeoJSON */,
-				1886880F2577783E00FBD4A0 /* MapConfiguration.swift */,
 				188688212577787B00FBD4A0 /* AblyConfiguration.swift */,
 				18D86159257E90D10044CE7B /* AblyError.swift */,
 				18786DC02582A98B00FCE2BB /* Trackable.swift */,
@@ -470,7 +463,6 @@
 			isa = PBXGroup;
 			children = (
 				18D86165257EA7EA0044CE7B /* Sources */,
-				18889365257660A800866E6F /* CoreTests.swift */,
 				18889367257660A800866E6F /* Info.plist */,
 			);
 			path = CoreTests;
@@ -1564,7 +1556,6 @@
 				18D86265257F628B0044CE7B /* UnimplementedSupport.swift in Sources */,
 				18D8615A257E90D10044CE7B /* AblyError.swift in Sources */,
 				18E4FF092577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */,
-				188688102577783E00FBD4A0 /* MapConfiguration.swift in Sources */,
 				186997F325800E03006FF1CC /* Codable+EncodedString.swift in Sources */,
 				18C8E7D1257FA2240086EC97 /* EventName.swift in Sources */,
 				18E4FF272577E66000AC2DD2 /* GeoJSONType.swift in Sources */,
@@ -1576,7 +1567,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18889366257660A800866E6F /* CoreTests.swift in Sources */,
 				18D86169257EA8120044CE7B /* GeoJSONMessageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1603,7 +1593,6 @@
 				18C8E78B257F9A0F0086EC97 /* AblyPublisherService.swift in Sources */,
 				18E4FF282577E66000AC2DD2 /* GeoJSONType.swift in Sources */,
 				186997F425800E03006FF1CC /* Codable+EncodedString.swift in Sources */,
-				1886889B25779FA900FBD4A0 /* MapConfiguration.swift in Sources */,
 				18E4FF142577E62C00AC2DD2 /* GeoJSONMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1635,7 +1624,6 @@
 				18D86284257F62B80044CE7B /* AssetTrackingSubscriberConfiguration.swift in Sources */,
 				18E4FF0B2577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */,
 				18C8E7B3257FA10F0086EC97 /* PresenceData.swift in Sources */,
-				188688A425779FAA00FBD4A0 /* MapConfiguration.swift in Sources */,
 				18E4FF1D2577E62D00AC2DD2 /* GeoJSONMessage.swift in Sources */,
 				186997F525800E03006FF1CC /* Codable+EncodedString.swift in Sources */,
 			);

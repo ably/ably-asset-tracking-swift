@@ -25,21 +25,21 @@ class GeoJSONMessageTests: XCTestCase {
         }
         """
     }
-    
+
     func testEncodedJSON() throws {
         // Instead of comparing JSON strings, try to:
         // Decode original message => Encode decoded message => Re-decode encoded message => Compare original and re-decoded messages
-        
+
         let json = jsonWithCoordinates("[1.0, 2.0]")
         let data = json.data(using: .utf8)!
         let message =  try! JSONDecoder().decode(GeoJSONMessage.self, from: data)
-        
+
         let encodedData = try! JSONEncoder().encode(message)
         let encodedString = String(data: encodedData, encoding: .utf8)!
-        
+
         let decodedData = encodedString.data(using: .utf8)!
         let decodedMessage =  try! JSONDecoder().decode(GeoJSONMessage.self, from: decodedData)
-        
+
         XCTAssertEqual(message.geometry.longitude, decodedMessage.geometry.longitude)
         XCTAssertEqual(message.geometry.latitude, decodedMessage.geometry.latitude)
         XCTAssertEqual(message.type, decodedMessage.type)
@@ -54,7 +54,7 @@ class GeoJSONMessageTests: XCTestCase {
         XCTAssertEqual(message.properties.accuracySpeed, decodedMessage.properties.accuracySpeed)
         XCTAssertEqual(message.properties.accuracyBearing, decodedMessage.properties.accuracyBearing)
     }
-    
+
     func testValidJSON() throws {
         let json = jsonWithCoordinates("[1.0, 2.0]")
         let data = json.data(using: .utf8)!
@@ -73,37 +73,37 @@ class GeoJSONMessageTests: XCTestCase {
         XCTAssertEqual(message.properties.accuracySpeed, 6.2)
         XCTAssertEqual(message.properties.accuracyBearing, 7.3)
     }
-    
+
     func testInvalidJSON_NoCoordinates() throws {
         let json = jsonWithCoordinates("[]")
         let data = json.data(using: .utf8)!
         XCTAssertThrowsError(try JSONDecoder().decode(GeoJSONMessage.self, from: data))
     }
-    
+
     func testInvalidJSON_TooMuchCoordinates() throws {
         let json = jsonWithCoordinates("[1.0, 2.0, 3.0, 4.0, 5.0]")
         let data = json.data(using: .utf8)!
         XCTAssertThrowsError(try JSONDecoder().decode(GeoJSONMessage.self, from: data))
     }
-    
+
     func testInvalidJSON_OutOfRange_Lon_Above() throws {
         let json = jsonWithCoordinates("[181.0, 1.0]")
         let data = json.data(using: .utf8)!
         XCTAssertThrowsError(try JSONDecoder().decode(GeoJSONMessage.self, from: data))
     }
-    
+
     func testInvalidJSON_OutOfRange_Lon_Below() throws {
         let json = jsonWithCoordinates("[-181.0, 1.0]")
         let data = json.data(using: .utf8)!
         XCTAssertThrowsError(try JSONDecoder().decode(GeoJSONMessage.self, from: data))
     }
-    
+
     func testInvalidJSON_OutOfRange_Lat_Above() throws {
         let json = jsonWithCoordinates("[1.0, 90.5]")
         let data = json.data(using: .utf8)!
         XCTAssertThrowsError(try JSONDecoder().decode(GeoJSONMessage.self, from: data))
     }
-    
+
     func testInvalidJSON_OutOfRange_Lat_Below() throws {
         let json = jsonWithCoordinates("[10, -90.5]")
         let data = json.data(using: .utf8)!

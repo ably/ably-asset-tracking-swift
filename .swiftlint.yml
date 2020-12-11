@@ -35,3 +35,6 @@ line_length:
 file_length:
   warning: 700
   error: 1200
+
+identifier_name:
+  excluded: 'id'

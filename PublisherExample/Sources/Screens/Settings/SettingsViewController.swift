@@ -5,36 +5,36 @@ class SettingsViewController: UIViewController {
     @IBOutlet private weak var locationPermissionButton: UIButton!
     @IBOutlet private weak var trackingIdTextField: UITextField!
     @IBOutlet private weak var startButton: UIButton!
-    
+
     private let locationManager = CLLocationManager()
-    
+
     // MARK: Initialization
     init() {
         let viewControllerType = SettingsViewController.self
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
-    
+
     private func setupView() {
         self.title = "Ably Asset Tracking Publisher"
         locationPermissionButton.layer.borderWidth = 1
         locationPermissionButton.layer.borderColor = UIColor.systemBlue.cgColor
         locationPermissionButton.layer.cornerRadius = locationPermissionButton.bounds.height / 2
-        
+
         startButton.layer.borderWidth = 1
         startButton.layer.borderColor = UIColor.systemBlue.cgColor
         startButton.layer.cornerRadius = locationPermissionButton.bounds.height / 2
     }
-    
+
     // MARK: Actions
     @IBAction private func onLocationPermissionButtonPress(_ sender: Any) {
         let status = CLLocationManager.authorizationStatus()
@@ -44,7 +44,7 @@ class SettingsViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
     }
-    
+
     @IBAction private func onStartButtonPress(_ sender: Any) {
         guard let trackingId = trackingIdTextField.text,
               !trackingId.isEmpty
@@ -56,11 +56,11 @@ class SettingsViewController: UIViewController {
             present(alert, animated: true, completion: nil)
             return
         }
-        
-        let vc = MapViewController(trackingId: trackingId)
-        navigationController?.pushViewController(vc, animated: true)
+
+        let mapVC = MapViewController(trackingId: trackingId)
+        navigationController?.pushViewController(mapVC, animated: true)
     }
-    
+
     // MARK: Utils
     private func showPermissionSettingsAlert() {
         let alert = UIAlertController(
@@ -75,7 +75,7 @@ class SettingsViewController: UIViewController {
             else { return }
             UIApplication.shared.open(settingsUrl, completionHandler: nil)
         }))
-        
+
         present(alert, animated: true, completion: nil)
     }
 }

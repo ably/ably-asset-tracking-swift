@@ -5,26 +5,26 @@ import Publisher
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var connectionStatusLabel: UILabel!
-    
+
     private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
     private let trackingId: String
     private var publisher: AssetTrackingPublisher?
-    
+
     private var rawLocation: CLLocation?
     private var enhancedLocation: CLLocation?
     private var wasMapScrolled: Bool = false
-    
+
     // MARK: Initialization
     init(trackingId: String) {
         self.trackingId = trackingId
         let viewControllerType = MapViewController.self
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class MapViewController: UIViewController {
         setupPublisher()
         setupMapView()
     }
-    
+
     // MARK: View setup
     private func setupPublisher() {
         let configuration = AssetTrackingPublisherConfiguration(apiKey: PublisherKeys.ablyApiKey,
@@ -41,21 +41,21 @@ class MapViewController: UIViewController {
                                          metadata: "",
                                          latitude: 0,
                                          longitude: 0)
-        
+
         publisher = DefaultPublisher(configuration: configuration)
         publisher?.delegate = self
-        publisher?.track(trackable: trackable)        
+        publisher?.track(trackable: trackable)
     }
-    
+
     private func setupMapView() {
         mapView.register(AssetAnnotationView.self, forAnnotationViewWithReuseIdentifier: assetAnnotationReuseIdentifier)
         mapView.delegate = self
     }
-    
+
     // MARK: Utils
     private func refreshAnnotations() {
         mapView.annotations.forEach { mapView.removeAnnotation($0) }
-        
+
         if let location = rawLocation {
             let annotation = MKPointAnnotation()
             annotation.coordinate = location.coordinate
@@ -69,12 +69,12 @@ class MapViewController: UIViewController {
             mapView.addAnnotation(annotation)
         }
     }
-    
+
     private func scrollToReceivedLocation() {
         guard let location = rawLocation ?? enhancedLocation,
               !wasMapScrolled
         else { return }
-        
+
         wasMapScrolled = true
         let region = MKCoordinateRegion(center: location.coordinate,
                                         latitudinalMeters: 600,
@@ -98,21 +98,20 @@ extension MapViewController: MKMapViewDelegate {
 
 extension MapViewController: AssetTrackingPublisherDelegate {
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didFailWithError error: Error) {
-        
     }
-    
+
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateRawLocation location: CLLocation) {
         rawLocation = location
         refreshAnnotations()
         scrollToReceivedLocation()
     }
-    
+
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateEnhancedLocation location: CLLocation) {
         enhancedLocation = location
         refreshAnnotations()
         scrollToReceivedLocation()
     }
-    
+
     func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus) {
         connectionStatusLabel.text = "Connection status: \(status)"
     }
