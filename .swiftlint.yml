@@ -1,6 +1,21 @@
-only_rules:
-  - empty_parameters
-  - vertical_whitespace
-  - trailing_whitespace
-  - comment_spacing
-  - anyobject_protocol # See https://forums.swift.org/t/class-only-protocols-class-vs-anyobject/11507/10 for details.
+disabled_rules:
+  - colon
+  - comma
+  - control_statement
+
+opt_in_rules:
+  - empty_count
+
+excluded:
+  - Pods
+
+force_try:
+  severity: warning
+
+line_length:
+  warning: 250
+  ignore_comments: true
+
+file_length:
+  warning: 700
+  error: 1200
