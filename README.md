@@ -1,5 +1,7 @@
 # AblyAssetTracking SDK
 
+![.github/workflows/check.yml](https://github.com/ably/ably-asset-tracking-cocoa/workflows/.github/workflows/check.yml/badge.svg)
+
 This is the main repo for Ably Asset Tracking (AAT) project.
 
 ## Table of contents
