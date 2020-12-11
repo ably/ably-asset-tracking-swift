@@ -9,9 +9,9 @@ public class AssetTrackingPublisherConfiguration {
 
     /**
      Default constructor.
-        - Parameters:
-            - apiKey: Ably API key in format: '<keyName>:<keySecret>'
-            - clientId: Ably client ID 
+     - Parameters:
+        - apiKey: Ably API key in format: "keyName:keySecret'
+        - clientId: Ably client ID
      */
     public init(apiKey: String, clientId: String) {
         self.apiKey = apiKey

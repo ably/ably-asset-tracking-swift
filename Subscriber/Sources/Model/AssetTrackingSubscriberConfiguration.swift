@@ -12,8 +12,8 @@ public class AssetTrackingSubscriberConfiguration {
     /**
      Default initializer.
     - Parameters:
-        - apiKey: Ably API key
-        - clientId: Ably API Client ID
+        - apiKey: Ably API key in format: "keyName:keySecret"
+        - clientId: Ably client ID
         - resolution: Chosen resolution policy (TBD)
         - trackingId: Identifier of the asset to track
      */
