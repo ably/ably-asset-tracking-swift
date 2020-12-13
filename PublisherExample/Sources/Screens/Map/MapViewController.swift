@@ -35,16 +35,14 @@ class MapViewController: UIViewController {
 
     // MARK: View setup
     private func setupPublisher() {
-        let configuration = AssetTrackingPublisherConfiguration(apiKey: PublisherKeys.ablyApiKey,
-                                                                clientId: PublisherKeys.ablyClientId)
-        let trackable = DefaultTrackable(id: trackingId,
-                                         metadata: "",
-                                         latitude: 0,
-                                         longitude: 0)
+        publisher = try? PublisherBuilder()
+            .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey, clientId: PublisherKeys.ablyClientId))
+            .log(LogConfiguration())
+            .transportationMode(TransportationMode())
+            .start()
 
-        publisher = DefaultPublisher(configuration: configuration)
         publisher?.delegate = self
-        publisher?.track(trackable: trackable)
+        publisher?.track(trackable: Trackable(id: trackingId))
     }
 
     private func setupMapView() {

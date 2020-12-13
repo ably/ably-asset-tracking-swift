@@ -69,7 +69,6 @@
 		18D8615C257E90D10044CE7B /* AblyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86159257E90D10044CE7B /* AblyError.swift */; };
 		18D86169257EA8120044CE7B /* GeoJSONMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86168257EA8120044CE7B /* GeoJSONMessageTests.swift */; };
 		18D8620C257F62150044CE7B /* AssetTrackingPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8620B257F62150044CE7B /* AssetTrackingPublisher.swift */; };
-		18D86258257F627A0044CE7B /* AssetTrackingPublisherConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86255257F627A0044CE7B /* AssetTrackingPublisherConfiguration.swift */; };
 		18D8625A257F627A0044CE7B /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86257257F627A0044CE7B /* TransportationMode.swift */; };
 		18D86265257F628B0044CE7B /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86264257F628B0044CE7B /* UnimplementedSupport.swift */; };
 		18D8626E257F62950044CE7B /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86264257F628B0044CE7B /* UnimplementedSupport.swift */; };
@@ -94,6 +93,8 @@
 		18F9CF102586049C0057D7F2 /* LogConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9CF0F2586049C0057D7F2 /* LogConfiguration.swift */; };
 		18F9CF312586056D0057D7F2 /* LogConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9CF0F2586049C0057D7F2 /* LogConfiguration.swift */; };
 		18F9CF392586056D0057D7F2 /* LogConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9CF0F2586049C0057D7F2 /* LogConfiguration.swift */; };
+		18F9CF4F258612AD0057D7F2 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86257257F627A0044CE7B /* TransportationMode.swift */; };
+		18F9CF57258612AE0057D7F2 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86257257F627A0044CE7B /* TransportationMode.swift */; };
 		2922C3717334BD78ACCBA499 /* Pods_Common_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 855881FAFEC9405D8CE8DFD3 /* Pods_Common_Core.framework */; };
 		9294BD6C549B7D08ECC48143 /* Pods_Common_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2103CE006F9EAB9302C0952 /* Pods_Common_PublisherTests.framework */; };
 		9FFC97F63CA7554C90575942 /* Pods_Common_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E5AACDFFAE0A36A9BCAD43 /* Pods_Common_CoreTests.framework */; };
@@ -206,7 +207,6 @@
 		18D86159257E90D10044CE7B /* AblyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyError.swift; sourceTree = "<group>"; };
 		18D86168257EA8120044CE7B /* GeoJSONMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONMessageTests.swift; sourceTree = "<group>"; };
 		18D8620B257F62150044CE7B /* AssetTrackingPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingPublisher.swift; sourceTree = "<group>"; };
-		18D86255257F627A0044CE7B /* AssetTrackingPublisherConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingPublisherConfiguration.swift; sourceTree = "<group>"; };
 		18D86257257F627A0044CE7B /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
 		18D86264257F628B0044CE7B /* UnimplementedSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnimplementedSupport.swift; sourceTree = "<group>"; };
 		18D86280257F62B80044CE7B /* AssetTrackingSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingSubscriber.swift; sourceTree = "<group>"; };
@@ -586,8 +586,6 @@
 		18D86254257F627A0044CE7B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				18D86255257F627A0044CE7B /* AssetTrackingPublisherConfiguration.swift */,
-				18D86257257F627A0044CE7B /* TransportationMode.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -668,6 +666,7 @@
 				188688212577787B00FBD4A0 /* ConnectionConfiguration.swift */,
 				18786DC02582A98B00FCE2BB /* Trackable.swift */,
 				18F9CF0F2586049C0057D7F2 /* LogConfiguration.swift */,
+				18D86257257F627A0044CE7B /* TransportationMode.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -1572,6 +1571,7 @@
 				18D86265257F628B0044CE7B /* UnimplementedSupport.swift in Sources */,
 				18D8615A257E90D10044CE7B /* AblyError.swift in Sources */,
 				18E4FF092577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */,
+				18F9CF4F258612AD0057D7F2 /* TransportationMode.swift in Sources */,
 				186997F325800E03006FF1CC /* Codable+EncodedString.swift in Sources */,
 				18C8E7D1257FA2240086EC97 /* EventName.swift in Sources */,
 				18E4FF272577E66000AC2DD2 /* GeoJSONType.swift in Sources */,
@@ -1596,7 +1596,6 @@
 				18365E042577ADCE00C84E81 /* ConnectionConfiguration.swift in Sources */,
 				1886882D25777B9C00FBD4A0 /* LocationService.swift in Sources */,
 				18E4FF0A2577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */,
-				18D86258257F627A0044CE7B /* AssetTrackingPublisherConfiguration.swift in Sources */,
 				18C8E78C257F9A0F0086EC97 /* PresenceData.swift in Sources */,
 				18F428EB2576754B00026943 /* DefaultPublisher.swift in Sources */,
 				18786DB02582A95400FCE2BB /* Decodable+FromJSONString.swift in Sources */,
@@ -1630,6 +1629,7 @@
 			files = (
 				18786DB82582A95400FCE2BB /* Decodable+FromJSONString.swift in Sources */,
 				18C8E7D2257FA2240086EC97 /* EventName.swift in Sources */,
+				18F9CF57258612AE0057D7F2 /* TransportationMode.swift in Sources */,
 				18D8615C257E90D10044CE7B /* AblyError.swift in Sources */,
 				18365E0D2577ADCF00C84E81 /* ConnectionConfiguration.swift in Sources */,
 				18786D9F2582A93100FCE2BB /* AblySubscriberService.swift in Sources */,

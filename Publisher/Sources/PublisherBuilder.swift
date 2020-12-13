@@ -50,21 +50,24 @@ public class PublisherBuilder {
     /**
     Sets the mandatory `ConnectionConfiguration` property
      */
-    public func connection(_ configuration: ConnectionConfiguration) {
+    public func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder {
         self.connection = configuration
+        return self
     }
 
     /**
      Sets the mandatory `LogConfiguration` property
      */
-    public func log(_ configuration: LogConfiguration) {
+    public func log(_ configuration: LogConfiguration) -> PublisherBuilder {
         self.logConfiguration = configuration
+        return self
     }
 
     /**
      Sets the mandatory `TransportationMode` property
      */
-    public func transportationMode(_ transportationMode: TransportationMode) {
+    public func transportationMode(_ transportationMode: TransportationMode) -> PublisherBuilder {
         self.transportationMode = transportationMode
+        return self
     }
 }

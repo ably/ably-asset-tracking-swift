@@ -1,5 +1,8 @@
 import UIKit
 
-public class LogConfiguration: NSObject {
-
+/**
+ Configuration class to control logging behavior (TBD).
+ */
+public class LogConfiguration {
+    public init() {}
 }
