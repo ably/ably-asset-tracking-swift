@@ -39,9 +39,9 @@ class MapViewController: UIViewController {
             .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey, clientId: PublisherKeys.ablyClientId))
             .log(LogConfiguration())
             .transportationMode(TransportationMode())
+            .publisherDelegate(self)
             .start()
 
-        publisher?.delegate = self
         publisher?.track(trackable: Trackable(id: trackingId))
     }
 

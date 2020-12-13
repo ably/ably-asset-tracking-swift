@@ -7,6 +7,7 @@ public class PublisherBuilder {
     private var connection: ConnectionConfiguration?
     private var logConfiguration: LogConfiguration?
     private var transportationMode: TransportationMode?
+    private weak var delegate: AssetTrackingPublisherDelegate?
 
     /**
      Default constructor for `PublisherBuilder`
@@ -42,13 +43,15 @@ public class PublisherBuilder {
             )
         }
 
-        return DefaultPublisher(connectionConfiguration: connection,
-                                logConfiguration: logConfiguration,
-                                transportationMode: transportationMode)
+        let publisher =  DefaultPublisher(connectionConfiguration: connection,
+                                          logConfiguration: logConfiguration,
+                                          transportationMode: transportationMode)
+        publisher.delegate = delegate
+        return publisher
     }
 
     /**
-    Sets the mandatory `ConnectionConfiguration` property
+     Sets the mandatory `ConnectionConfiguration` property
      */
     public func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder {
         self.connection = configuration
@@ -68,6 +71,15 @@ public class PublisherBuilder {
      */
     public func transportationMode(_ transportationMode: TransportationMode) -> PublisherBuilder {
         self.transportationMode = transportationMode
+        return self
+    }
+
+    /**
+     Sets the optional `AssetTrackingPublisherDelegate` property.
+     It's optional to pass it via builder, as it can be set directly on AssetTrackingPublisher.  Maintains weak reference.
+     */
+    public func publisherDelegate(_ delegate: AssetTrackingPublisherDelegate) -> PublisherBuilder {
+        self.delegate = delegate
         return self
     }
 }
