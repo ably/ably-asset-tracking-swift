@@ -19,4 +19,9 @@ enum AblyError: Error {
      Thrown in case of failed JSON Encoding/Decoding using `Codable+EncodedString` or `Decodable+FromJSONString`
      */
     case JSONCodingError(String)
+
+    /**
+     Thrown in case of missing properties in builder
+     */
+    case incompleteConfiguration(String)
 }

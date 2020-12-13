@@ -92,7 +92,7 @@ public protocol AssetTrackingPublisher {
     /**
      The active means of transport for this publisher.
      */
-    var transportationMode: TransportationMode { get set }
+    var transportationMode: TransportationMode { get }
 
     /**
      Stops this publisher from publishing locations. Once a publisher has been stopped, it cannot be restarted.

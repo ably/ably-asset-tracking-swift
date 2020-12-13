@@ -1,14 +1,15 @@
 import UIKit
 import CoreLocation
 
-public class DefaultPublisher: AssetTrackingPublisher {
-    private let configuration: AssetTrackingPublisherConfiguration
+class DefaultPublisher: AssetTrackingPublisher {
+    private let connectionConfiguration: ConnectionConfiguration
+    private let logConfiguration: LogConfiguration
     private let locationService: LocationService
     private let ablyService: AblyPublisherService
 
+    public let transportationMode: TransportationMode
     public weak var delegate: AssetTrackingPublisherDelegate?
     private(set) public var activeTrackable: Trackable?
-    public var transportationMode: TransportationMode
 
     /**
      Default constructor. Initializes Publisher with given `AssetTrackingPublisherConfiguration`.
@@ -16,20 +17,21 @@ public class DefaultPublisher: AssetTrackingPublisher {
      - Parameters:
      -  configuration: Configuration struct to use in this instance.
      */
-    public init(configuration: AssetTrackingPublisherConfiguration) {
-        self.configuration = configuration
-        self.locationService = LocationService()
-        self.ablyService = AblyPublisherService(apiKey: configuration.apiKey,
-                                                clientId: configuration.clientId)
+    init(connectionConfiguration: ConnectionConfiguration,
+         logConfiguration: LogConfiguration,
+         transportationMode: TransportationMode) {
+        self.connectionConfiguration = connectionConfiguration
+        self.logConfiguration = logConfiguration
+        self.transportationMode = transportationMode
 
-        // TODO: Set proper values from configuration
-        self.activeTrackable = nil
-        self.transportationMode = TransportationMode()
+        self.locationService = LocationService()
+        self.ablyService = AblyPublisherService(configuration: connectionConfiguration)
+
         self.ablyService.delegate = self
         self.locationService.delegate = self
     }
 
-    public func track(trackable: Trackable) {
+    func track(trackable: Trackable) {
         activeTrackable = trackable
         ablyService.track(trackable: trackable) { [weak self] error in
             guard let self = self else { return }
@@ -41,19 +43,19 @@ public class DefaultPublisher: AssetTrackingPublisher {
         }
     }
 
-    public func add(trackable: Trackable) {
+    func add(trackable: Trackable) {
         // TODO: Implement method
         failWithNotYetImplemented()
     }
 
-    public func remove(trackable: Trackable) -> Bool {
+    func remove(trackable: Trackable) -> Bool {
         // TODO: Implement method
         failWithNotYetImplemented()
 
         return false
     }
 
-    public func stop() {
+    func stop() {
         // TODO: Implement method
         failWithNotYetImplemented()
     }

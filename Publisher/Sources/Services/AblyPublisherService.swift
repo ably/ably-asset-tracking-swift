@@ -7,7 +7,8 @@ protocol AblyPublisherServiceDelegate: AnyObject {
 
 class AblyPublisherService {
     private let client: ARTRealtime
-    private let clientId: String
+    private let configuration: ConnectionConfiguration
+
     private let presenceData: PresenceData
     private var channel: ARTRealtimeChannel?
 
@@ -16,9 +17,9 @@ class AblyPublisherService {
         return client.connection.state.toAblyConnectionStatus()
     }
 
-    init(apiKey: String, clientId: String) {
-        self.clientId = clientId
-        self.client = ARTRealtime(key: apiKey)
+    init(configuration: ConnectionConfiguration) {
+        self.configuration = configuration
+        self.client = ARTRealtime(key: configuration.apiKey)
         self.presenceData = PresenceData(type: .publisher)
 
         setup()
@@ -46,7 +47,7 @@ class AblyPublisherService {
         let data = try! presenceData.toJSONString()
 
         channel = client.channels.get(trackable.id)
-        channel?.presence.enterClient(clientId, data: data) { error in
+        channel?.presence.enterClient(configuration.clientId, data: data) { error in
             // TODO: Log suitable message when Logger become available:
             // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
             completion?(error)
