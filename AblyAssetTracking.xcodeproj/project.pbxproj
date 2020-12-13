@@ -74,7 +74,6 @@
 		18D8626E257F62950044CE7B /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86264257F628B0044CE7B /* UnimplementedSupport.swift */; };
 		18D86277257F62960044CE7B /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86264257F628B0044CE7B /* UnimplementedSupport.swift */; };
 		18D86283257F62B80044CE7B /* AssetTrackingSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86280257F62B80044CE7B /* AssetTrackingSubscriber.swift */; };
-		18D86284257F62B80044CE7B /* AssetTrackingSubscriberConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86282257F62B80044CE7B /* AssetTrackingSubscriberConfiguration.swift */; };
 		18E4FF092577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4FF082577E62700AC2DD2 /* GeoJSONProperties.swift */; };
 		18E4FF0A2577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4FF082577E62700AC2DD2 /* GeoJSONProperties.swift */; };
 		18E4FF0B2577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4FF082577E62700AC2DD2 /* GeoJSONProperties.swift */; };
@@ -95,6 +94,7 @@
 		18F9CF392586056D0057D7F2 /* LogConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9CF0F2586049C0057D7F2 /* LogConfiguration.swift */; };
 		18F9CF4F258612AD0057D7F2 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86257257F627A0044CE7B /* TransportationMode.swift */; };
 		18F9CF57258612AE0057D7F2 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86257257F627A0044CE7B /* TransportationMode.swift */; };
+		18FE9F9D258617A500DBF612 /* SubscriberBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE9F9C258617A500DBF612 /* SubscriberBuilder.swift */; };
 		2922C3717334BD78ACCBA499 /* Pods_Common_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 855881FAFEC9405D8CE8DFD3 /* Pods_Common_Core.framework */; };
 		9294BD6C549B7D08ECC48143 /* Pods_Common_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2103CE006F9EAB9302C0952 /* Pods_Common_PublisherTests.framework */; };
 		9FFC97F63CA7554C90575942 /* Pods_Common_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E5AACDFFAE0A36A9BCAD43 /* Pods_Common_CoreTests.framework */; };
@@ -210,7 +210,6 @@
 		18D86257257F627A0044CE7B /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
 		18D86264257F628B0044CE7B /* UnimplementedSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnimplementedSupport.swift; sourceTree = "<group>"; };
 		18D86280257F62B80044CE7B /* AssetTrackingSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingSubscriber.swift; sourceTree = "<group>"; };
-		18D86282257F62B80044CE7B /* AssetTrackingSubscriberConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingSubscriberConfiguration.swift; sourceTree = "<group>"; };
 		18E4FF082577E62700AC2DD2 /* GeoJSONProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONProperties.swift; sourceTree = "<group>"; };
 		18E4FF262577E66000AC2DD2 /* GeoJSONType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONType.swift; sourceTree = "<group>"; };
 		18F428EA2576754B00026943 /* DefaultPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
@@ -223,6 +222,7 @@
 		18F429202576770B00026943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18F9CEFE258602F10057D7F2 /* PublisherBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherBuilder.swift; sourceTree = "<group>"; };
 		18F9CF0F2586049C0057D7F2 /* LogConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfiguration.swift; sourceTree = "<group>"; };
+		18FE9F9C258617A500DBF612 /* SubscriberBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberBuilder.swift; sourceTree = "<group>"; };
 		1DF5DE27FB1C0AAB68B25FC9 /* Pods-Common-Subscriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Common-Subscriber.release.xcconfig"; path = "Target Support Files/Pods-Common-Subscriber/Pods-Common-Subscriber.release.xcconfig"; sourceTree = "<group>"; };
 		22525DFB2FD75E751748F56C /* Pods-Subscriber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.debug.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.debug.xcconfig"; sourceTree = "<group>"; };
 		2630D5D8915F79689B10C70D /* Pods-Common-PublisherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Common-PublisherTests.debug.xcconfig"; path = "Target Support Files/Pods-Common-PublisherTests/Pods-Common-PublisherTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -601,14 +601,6 @@
 			path = Core/Sources/Utils;
 			sourceTree = SOURCE_ROOT;
 		};
-		18D86281257F62B80044CE7B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				18D86282257F62B80044CE7B /* AssetTrackingSubscriberConfiguration.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		18F428E2257672F200026943 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,9 +627,9 @@
 			isa = PBXGroup;
 			children = (
 				18786D9D2582A93100FCE2BB /* Services */,
-				18D86281257F62B80044CE7B /* Model */,
 				18D86280257F62B80044CE7B /* AssetTrackingSubscriber.swift */,
 				18F428EF2576764100026943 /* DefaultSubscriber.swift */,
+				18FE9F9C258617A500DBF612 /* SubscriberBuilder.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1628,6 +1620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18786DB82582A95400FCE2BB /* Decodable+FromJSONString.swift in Sources */,
+				18FE9F9D258617A500DBF612 /* SubscriberBuilder.swift in Sources */,
 				18C8E7D2257FA2240086EC97 /* EventName.swift in Sources */,
 				18F9CF57258612AE0057D7F2 /* TransportationMode.swift in Sources */,
 				18D8615C257E90D10044CE7B /* AblyError.swift in Sources */,
@@ -1640,7 +1633,6 @@
 				18365F092577E5A500C84E81 /* GeoJSONGeometry.swift in Sources */,
 				18E4FF292577E66000AC2DD2 /* GeoJSONType.swift in Sources */,
 				18786DD82582A9A200FCE2BB /* Trackable.swift in Sources */,
-				18D86284257F62B80044CE7B /* AssetTrackingSubscriberConfiguration.swift in Sources */,
 				18E4FF0B2577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */,
 				18C8E7B3257FA10F0086EC97 /* PresenceData.swift in Sources */,
 				18F9CF392586056D0057D7F2 /* LogConfiguration.swift in Sources */,

@@ -1,7 +1,7 @@
 import UIKit
 
 /**
- Default and preferred way to create AssetTrackingPublisher.
+ Default and preferred way to create the `AssetTrackingPublisher`.
  */
 public class PublisherBuilder: NSObject {
     private var connection: ConnectionConfiguration?

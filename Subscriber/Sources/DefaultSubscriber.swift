@@ -2,9 +2,10 @@ import Foundation
 import CoreLocation
 
 class DefaultSubscriber: AssetTrackingSubscriber {
-    private let configuration: AssetTrackingSubscriberConfiguration
+    private let logConfiguration: LogConfiguration
+    private let trackingId: String
+    private let resolution: Double?
     private let ablyService: AblySubscriberService
-
     weak var delegate: AssetTrackingSubscriberDelegate?
 
     /**
@@ -13,11 +14,15 @@ class DefaultSubscriber: AssetTrackingSubscriber {
      - Parameters:
         -  configuration: Configuration struct to use in this instance.
      */
-    init(configuration: AssetTrackingSubscriberConfiguration) {
-        self.configuration = configuration
-        self.ablyService = AblySubscriberService(apiKey: configuration.apiKey,
-                                                 clientId: configuration.clientId,
-                                                 trackingId: configuration.trackingId)
+    init(connectionConfiguration: ConnectionConfiguration,
+         logConfiguration: LogConfiguration,
+         trackingId: String,
+         resolution: Double?) {
+        self.trackingId = trackingId
+        self.resolution = resolution
+        self.logConfiguration = logConfiguration
+        self.ablyService = AblySubscriberService(configuration: connectionConfiguration,
+                                                 trackingId: trackingId)
         self.ablyService.delegate = self
     }
 

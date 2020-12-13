@@ -62,12 +62,7 @@ public protocol AssetTrackingSubscriber {
      Delegate object to receive events from `AssetTrackingSubscriber`.
      It maintains a weak reference to your delegate, so ensure to maintain your own strong reference as well.
      */
-    var delegate: AssetTrackingSubscriberDelegate? { get set }
-
-    /**
-     Starts listening for asset location
-     */
-    func start()
+    var delegate: AssetTrackingSubscriberDelegate? { get set }    
 
     /**
      Stops asset subscriber from listening for asset location

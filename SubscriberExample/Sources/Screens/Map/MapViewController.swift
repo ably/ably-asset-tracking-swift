@@ -44,13 +44,14 @@ class MapViewController: UIViewController {
     }
 
     private func setupSubscriber() {
-        let configuration = AssetTrackingSubscriberConfiguration(apiKey: SubscriberKeys.ablyApiKey,
-                                                                 clientId: SubscriberKeys.ablyClientId,
-                                                                 resolution: 0,
-                                                                 trackingId: trackingId)
-        subscriber = DefaultSubscriber(configuration: configuration)
-        subscriber?.delegate = self
-        subscriber?.start()
+        subscriber = try? SubscriberBuilder()
+            .connection(ConnectionConfiguration(apiKey: SubscriberKeys.ablyApiKey,
+                                                clientId: SubscriberKeys.ablyClientId))
+            .trackingId(trackingId)
+            .log(LogConfiguration())
+            .resolution(0)
+            .subscriberDelegate(self)
+            .start()
     }
 
     // MARK: Utils
