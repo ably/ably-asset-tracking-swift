@@ -3,6 +3,6 @@ import UIKit
 /**
  Configuration class to control logging behavior (TBD).
  */
-public class LogConfiguration {
-    public init() {}
+public class LogConfiguration: NSObject {
+
 }

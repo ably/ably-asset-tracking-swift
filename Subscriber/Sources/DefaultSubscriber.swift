@@ -1,11 +1,11 @@
 import Foundation
 import CoreLocation
 
-public class DefaultSubscriber: AssetTrackingSubscriber {
+class DefaultSubscriber: AssetTrackingSubscriber {
     private let configuration: AssetTrackingSubscriberConfiguration
     private let ablyService: AblySubscriberService
 
-    public weak var delegate: AssetTrackingSubscriberDelegate?
+    weak var delegate: AssetTrackingSubscriberDelegate?
 
     /**
      Default constructor. Initializes Subscriber with given `AssetTrackingSubscriberConfiguration`.
@@ -13,7 +13,7 @@ public class DefaultSubscriber: AssetTrackingSubscriber {
      - Parameters:
         -  configuration: Configuration struct to use in this instance.
      */
-    public init(configuration: AssetTrackingSubscriberConfiguration) {
+    init(configuration: AssetTrackingSubscriberConfiguration) {
         self.configuration = configuration
         self.ablyService = AblySubscriberService(apiKey: configuration.apiKey,
                                                  clientId: configuration.clientId,
@@ -21,7 +21,7 @@ public class DefaultSubscriber: AssetTrackingSubscriber {
         self.ablyService.delegate = self
     }
 
-    public func start() {
+    func start() {
         ablyService.start { [weak self] error in
             if let error = error,
                let self = self {
@@ -30,7 +30,7 @@ public class DefaultSubscriber: AssetTrackingSubscriber {
         }
     }
 
-    public func stop() {
+    func stop() {
         ablyService.stop()
     }
 }

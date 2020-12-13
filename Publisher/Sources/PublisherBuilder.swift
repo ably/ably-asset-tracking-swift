@@ -3,16 +3,11 @@ import UIKit
 /**
  Default and preferred way to create AssetTrackingPublisher.
  */
-public class PublisherBuilder {
+public class PublisherBuilder: NSObject {
     private var connection: ConnectionConfiguration?
     private var logConfiguration: LogConfiguration?
     private var transportationMode: TransportationMode?
     private weak var delegate: AssetTrackingPublisherDelegate?
-
-    /**
-     Default constructor for `PublisherBuilder`
-     */
-    public init() { }
 
     /**
      Creates a `AssetTrackingPublisher` which is ready to publish the asset location to subscribers.
