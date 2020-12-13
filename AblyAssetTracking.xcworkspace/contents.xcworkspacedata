@@ -2,7 +2,19 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:AblyAssetTracking.xcodeproj">
+      location = "group:Core/Core.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Publisher/Publisher.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Subscriber/Subscriber.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PublisherExample/PublisherExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SubscriberExample/SubscriberExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
