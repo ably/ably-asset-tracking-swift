@@ -2,7 +2,7 @@ import Ably
 import CoreLocation
 
 protocol AblyPublisherServiceDelegate: AnyObject {
-    func publisherService(sender: AblyPublisherService, didChangeConnectionStatus status: AblyConnectionStatus)
+    func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState)
 }
 
 class AblyPublisherService {
@@ -13,8 +13,8 @@ class AblyPublisherService {
     private var channel: ARTRealtimeChannel?
 
     weak var delegate: AblyPublisherServiceDelegate?
-    var connectionState: AblyConnectionStatus {
-        return client.connection.state.toAblyConnectionStatus()
+    var connectionState: ConnectionState {
+        return client.connection.state.toConnectionState()
     }
 
     init(configuration: ConnectionConfiguration) {
@@ -34,7 +34,7 @@ class AblyPublisherService {
             else { return }
             self.delegate?.publisherService(
                 sender: self,
-                didChangeConnectionStatus: current.toAblyConnectionStatus()
+                didChangeConnectionState: current.toConnectionState()
             )
         }
     }
