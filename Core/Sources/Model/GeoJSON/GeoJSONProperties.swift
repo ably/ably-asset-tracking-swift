@@ -71,7 +71,7 @@ class GeoJSONProperties: Codable {
         bearing = try? container.decode(Double.self, forKey: .bearing)
 
         guard accuracyHorizontal >= 0 else {
-            throw AblyError.inconsistentData("Invalid horizontal accuracy got \(accuracyHorizontal)")
+            throw AssetTrackingError.inconsistentData("Invalid horizontal accuracy got \(accuracyHorizontal)")
         }
     }
 

@@ -31,17 +31,17 @@ class GeoJSONGeometry: Codable {
               let longitude = coordinates.first,
               let latitude = coordinates.last
         else {
-            throw AblyError.inconsistentData("Invalid count of coordinates in GeoJSONGeometry. Received: \(coordinates)")
+            throw AssetTrackingError.inconsistentData("Invalid count of coordinates in GeoJSONGeometry. Received: \(coordinates)")
         }
 
         guard latitude >= -90.0 && latitude <= 90.0
         else {
-            throw AblyError.inconsistentData("Latitude out of range [-90, 90]. Received: (\(latitude))")
+            throw AssetTrackingError.inconsistentData("Latitude out of range [-90, 90]. Received: (\(latitude))")
         }
 
         guard  longitude >= -180.0 && longitude <= 180.0
         else {
-            throw AblyError.inconsistentData("Longitude out of range [-180, 180]. Received (\(longitude))")
+            throw AssetTrackingError.inconsistentData("Longitude out of range [-180, 180]. Received (\(longitude))")
         }
 
         self.latitude = latitude

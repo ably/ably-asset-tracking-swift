@@ -6,6 +6,6 @@ extension Encodable {
         if let result =  String(data: data, encoding: .utf8) {
             return result
         }
-        throw AblyError.JSONCodingError("Unable to convert data object to string.")
+        throw AssetTrackingError.JSONCodingError("Unable to convert data object to string.")
     }
 }

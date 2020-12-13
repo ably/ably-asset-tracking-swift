@@ -64,7 +64,7 @@ class AblyPublisherService {
 
     private func sendAssetLocation(location: CLLocation, withName name: EventName, completion: ((Error?) -> Void)?) {
         guard let channel = channel else {
-            completion?(AblyError.publisherError("Attempt to send location while not connected to any channel"))
+            completion?(AssetTrackingError.publisherError("Attempt to send location while not connected to any channel"))
             return
         }
 

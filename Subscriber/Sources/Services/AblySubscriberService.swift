@@ -61,7 +61,7 @@ class AblySubscriberService {
     // MARK: Utils
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
-            let error = AblyError.inconsistentData("Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))")
+            let error = AssetTrackingError.inconsistentData("Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))")
             delegate?.subscriberService(sender: self, didFailWithError: error)
             return
         }
