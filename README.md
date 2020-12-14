@@ -30,15 +30,15 @@ Here is an example of how the Asset Publishing SDK can be used:
 ```swift
 // Initialise a Publisher
 publisher = try? PublisherFactory.publishers() // get a Publisher Builder
-  .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY, clientId: CLIENT_ID)) // provide Ably configuration with credentials
+  .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY,
+                                      clientId: CLIENT_ID)) // provide Ably configuration with credentials
   .log(LogConfiguration()) // provide logging configuration
   .transportationMode(TransportationMode()) // provide mode of transportation for better location enhancements
-  .publisherDelegate(self) // provide delegate to handle location updates locally if needed
+  .delegate(self) // provide delegate to handle location updates locally if needed
   .start()
 
 // Start tracking an asset
 publisher?.track(trackable: Trackable(id: trackingId)) // provide a tracking ID of the asset
-
 ```
 
 Asset Subscribing SDK is used to receive the location of the required assets. 
@@ -46,12 +46,12 @@ Asset Subscribing SDK is used to receive the location of the required assets.
 Here is an example of how Asset Subscribing SDK can be used: 
 
 ```swift
-subscriber = try? SubscriberFactory.subscribers() // Get a Subscriber
+subscriber = try? SubscriberFactory.subscribers() // Get a Subscriber Builder
   .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY,
                                       clientId: CLIENT_ID)) // provide Ably configuration with credentials
   .trackingId(trackingId) // Provide a Tracking ID for the asset to be tracked
   .log(LogConfiguration()) // provide logging configuration
-  .subscriberDelegate(self) // provide a delegate to handle received location updates
+  .delegate(self) // provide a delegate to handle received location updates
   .start() // start listening to updates
 ```
 
