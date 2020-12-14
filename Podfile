@@ -1,32 +1,52 @@
 platform :ios, '12.0'
 use_frameworks!
+workspace 'AblyAssetTracking.xcworkspace'
 
-abstract_target 'Common' do
-  pod 'Ably', '>= 1.2'
-  pod 'MapboxCoreNavigation', '~> 1.0'
+def ably_sdk
+  pod 'Ably', '~> 1.2.0'
+end
+
+target 'Core' do
+  project 'Core/Core.xcodeproj'
   pod 'SwiftLint'
+end
 
-  target 'Core' do
-  end
+target 'Publisher' do
+  project 'Publisher/Publisher.xcodeproj'
+  ably_sdk
+  pod 'SwiftLint'
+  pod 'MapboxCoreNavigation', '~> 1.1.0'
+end
 
-  target 'Publisher' do
-  end
+target 'Subscriber' do
+  project 'Subscriber/Subscriber.xcodeproj'
+  ably_sdk
+  pod 'SwiftLint'
+end
 
-  target 'Subscriber' do
-  end
+# Example apps
+target 'PublisherExample' do
+  project 'PublisherExample/PublisherExample.xcodeproj'
+  pod 'SwiftLint'
+end
 
-  target 'PublisherExample' do
-  end
+target 'SubscriberExample' do
+  project 'SubscriberExample/SubscriberExample.xcodeproj'
+  pod 'SwiftLint'
+end
 
-  target 'SubscriberExample' do
-  end
+# Tests
+target 'CoreTests' do
+  project 'Core/Core.xcodeproj'
+  pod 'SwiftLint'
+end
 
-  target 'SubscriberTests' do
-  end
+target 'PublisherTests' do
+  project 'Publisher/Publisher.xcodeproj'
+  pod 'SwiftLint'
+end
 
-  target 'CoreTests' do
-  end
-
-  target 'PublisherTests' do
-  end
+target 'SubscriberTests' do
+  project 'Subscriber/Subscriber.xcodeproj'
+  pod 'SwiftLint'
 end
