@@ -34,9 +34,9 @@ public protocol PublisherDelegate: AnyObject {
      
      - Parameters:
         - sender:`Publisher` instance.
-        - status: Most recent connection status
+        - state: Most recent connection state
      */
-    func publisher(sender: Publisher, didChangeConnectionStatus status: AblyConnectionStatus)
+    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState)
 }
 
 /**

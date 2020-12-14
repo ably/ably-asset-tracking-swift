@@ -50,7 +50,7 @@ class MapViewController: UIViewController {
             .trackingId(trackingId)
             .log(LogConfiguration())
             .resolution(0)
-            .subscriberDelegate(self)
+            .delegate(self)
             .start()
     }
 

@@ -21,21 +21,21 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func start() throws -> Publisher {
         guard let connection = connection
         else {
-            throw AblyError.incompleteConfiguration(
+            throw AssetTrackingError.incompleteConfiguration(
                 "Missing mandatory property: ConnectionConfiguration. Did you forgot to call `connection` on builder object?"
             )
         }
 
         guard let logConfiguration = logConfiguration
         else {
-            throw AblyError.incompleteConfiguration(
+            throw AssetTrackingError.incompleteConfiguration(
                 "Missing mandatory property: LogConfiguration. Did you forgot to call `log` on builder object?"
             )
         }
 
         guard let transportationMode = transportationMode
         else {
-            throw AblyError.incompleteConfiguration(
+            throw AssetTrackingError.incompleteConfiguration(
                 "Missing mandatory property: TransportationMode. Did you forgot to call `transportationMode` on builder object?"
             )
         }
@@ -68,7 +68,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate)
     }
 
-    func publisherDelegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
+    func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: logConfiguration,
                                        transportationMode: transportationMode,
