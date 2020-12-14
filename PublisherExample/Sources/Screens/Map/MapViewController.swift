@@ -8,7 +8,7 @@ class MapViewController: UIViewController {
 
     private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
     private let trackingId: String
-    private var publisher: AssetTrackingPublisher?
+    private var publisher: Publisher?
 
     private var rawLocation: CLLocation?
     private var enhancedLocation: CLLocation?
@@ -35,16 +35,14 @@ class MapViewController: UIViewController {
 
     // MARK: View setup
     private func setupPublisher() {
-        let configuration = AssetTrackingPublisherConfiguration(apiKey: PublisherKeys.ablyApiKey,
-                                                                clientId: PublisherKeys.ablyClientId)
-        let trackable = DefaultTrackable(id: trackingId,
-                                         metadata: "",
-                                         latitude: 0,
-                                         longitude: 0)
+        publisher = try? PublisherFactory.publishers()
+            .connection(ConnectionConfiguration(apiKey: PublisherKeys.apiKey, clientId: PublisherKeys.clientId))
+            .log(LogConfiguration())
+            .transportationMode(TransportationMode())
+            .publisherDelegate(self)
+            .start()
 
-        publisher = DefaultPublisher(configuration: configuration)
-        publisher?.delegate = self
-        publisher?.track(trackable: trackable)
+        publisher?.track(trackable: Trackable(id: trackingId))
     }
 
     private func setupMapView() {
@@ -96,23 +94,23 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
-extension MapViewController: AssetTrackingPublisherDelegate {
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didFailWithError error: Error) {
+extension MapViewController: PublisherDelegate {
+    func publisher(sender: Publisher, didFailWithError error: Error) {
     }
 
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateRawLocation location: CLLocation) {
+    func publisher(sender: Publisher, didUpdateRawLocation location: CLLocation) {
         rawLocation = location
         refreshAnnotations()
         scrollToReceivedLocation()
     }
 
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateEnhancedLocation location: CLLocation) {
+    func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
         enhancedLocation = location
         refreshAnnotations()
         scrollToReceivedLocation()
     }
 
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus) {
+    func publisher(sender: Publisher, didChangeConnectionStatus status: AblyConnectionStatus) {
         connectionStatusLabel.text = "Connection status: \(status)"
     }
 }

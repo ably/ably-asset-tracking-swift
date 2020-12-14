@@ -1,6 +1,6 @@
 import UIKit
 
 class PublisherKeys {
-    static let ablyApiKey = "<INSERT_API_KEY_HERE>"
-    static let ablyClientId = "<INSERT_CLIENT_ID_HERE>"
+    static let apiKey = "<INSERT_API_KEY_HERE>"
+    static let clientId = "<INSERT_CLIENT_ID_HERE>"
 }

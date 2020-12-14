@@ -3,7 +3,7 @@ import Ably
 import CoreLocation
 
 protocol AblySubscriberServiceDelegate: AnyObject {
-    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetTrackingConnectionStatus)
+    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus)
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error)
     func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation)
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation)
@@ -11,16 +11,16 @@ protocol AblySubscriberServiceDelegate: AnyObject {
 
 class AblySubscriberService {
     private let client: ARTRealtime
-    private let clientId: String
+    private let configuration: ConnectionConfiguration
     private let presenceData: PresenceData
     private let channel: ARTRealtimeChannel
 
     weak var delegate: AblySubscriberServiceDelegate?
 
-    init(apiKey: String, clientId: String, trackingId: String) {
-        self.client = ARTRealtime(key: apiKey)
+    init(configuration: ConnectionConfiguration, trackingId: String) {
+        self.client = ARTRealtime(key: configuration.apiKey)
         self.presenceData = PresenceData(type: .subscriber)
-        self.clientId = clientId
+        self.configuration = configuration
 
         let options = ARTRealtimeChannelOptions()
         options.params = ["rewind": "1"]
@@ -37,7 +37,7 @@ class AblySubscriberService {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
-        channel.presence.enterClient(clientId, data: data) { error in
+        channel.presence.enterClient(configuration.clientId, data: data) { error in
             // TODO: Log suitable message when Logger become available:
             // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
             completion?(error)
@@ -106,7 +106,7 @@ class AblySubscriberService {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
-        channel.presence.leaveClient(clientId, data: data) { [weak self] error in
+        channel.presence.leaveClient(configuration.clientId, data: data) { [weak self] error in
             // TODO: Log suitable message when Logger become available:
             // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
             if let error = error,

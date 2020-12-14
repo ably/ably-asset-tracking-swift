@@ -1,6 +1,6 @@
 import UIKit
 
-public class AblyConfiguration: NSObject {
+public class ConnectionConfiguration: NSObject {
     let apiKey: String
     let clientId: String
 
