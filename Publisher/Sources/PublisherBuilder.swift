@@ -9,6 +9,20 @@ public class PublisherBuilder: NSObject {
     private var transportationMode: TransportationMode?
     private weak var delegate: AssetTrackingPublisherDelegate?
 
+    public override init() {
+        super.init()
+    }
+
+    private init(connection: ConnectionConfiguration?,
+                 logConfiguration: LogConfiguration?,
+                 transportationMode: TransportationMode?,
+                 delegate: AssetTrackingPublisherDelegate?) {
+        self.connection = connection
+        self.logConfiguration = logConfiguration
+        self.transportationMode = transportationMode
+        self.delegate = delegate
+    }
+
     /**
      Creates a `AssetTrackingPublisher` which is ready to publish the asset location to subscribers.
      Notice that it needs asset to to track - it can be set using `AssetTrackingPublisher.track()` function.
@@ -45,36 +59,47 @@ public class PublisherBuilder: NSObject {
         return publisher
     }
 
+
+    // MARK: Mandatory properties
     /**
      Sets the mandatory `ConnectionConfiguration` property
      */
     public func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder {
-        self.connection = configuration
-        return self
+        return PublisherBuilder(connection: configuration,
+                                logConfiguration: logConfiguration,
+                                transportationMode: transportationMode,
+                                delegate: delegate)
     }
 
     /**
      Sets the mandatory `LogConfiguration` property
      */
     public func log(_ configuration: LogConfiguration) -> PublisherBuilder {
-        self.logConfiguration = configuration
-        return self
+        return PublisherBuilder(connection: connection,
+                                logConfiguration: configuration,
+                                transportationMode: transportationMode,
+                                delegate: delegate)
     }
 
     /**
      Sets the mandatory `TransportationMode` property
      */
     public func transportationMode(_ transportationMode: TransportationMode) -> PublisherBuilder {
-        self.transportationMode = transportationMode
-        return self
+        return PublisherBuilder(connection: connection,
+                                logConfiguration: logConfiguration,
+                                transportationMode: transportationMode,
+                                delegate: delegate)
     }
 
+    // MARK: Optional properties
     /**
      Sets the optional `AssetTrackingPublisherDelegate` property.
      It's optional to pass it via builder, as it can be set directly on AssetTrackingPublisher.  Maintains weak reference.
      */
     public func publisherDelegate(_ delegate: AssetTrackingPublisherDelegate) -> PublisherBuilder {
-        self.delegate = delegate
-        return self
+        return PublisherBuilder(connection: connection,
+                                logConfiguration: logConfiguration,
+                                transportationMode: transportationMode,
+                                delegate: delegate)
     }
 }

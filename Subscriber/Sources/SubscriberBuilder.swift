@@ -10,6 +10,22 @@ public class SubscriberBuilder: NSObject {
     private var resolution: Double?
     private weak var delegate: AssetTrackingSubscriberDelegate?
 
+    public override init() {
+        super.init()
+    }
+
+    private init(connection: ConnectionConfiguration?,
+                 logConfiguration: LogConfiguration?,
+                 trackingId: String?,
+                 resolution: Double?,
+                 delegate: AssetTrackingSubscriberDelegate?) {
+        self.connection = connection
+        self.logConfiguration = logConfiguration
+        self.trackingId = trackingId
+        self.resolution = resolution
+        self.delegate = delegate
+    }
+
     /**
      Creates a `AssetTrackingSubscriber` which is already listening and passing location updates of asset with given `trackingId`.
      - throws: `AssetTrackingError.incompleteConfiguration`  in case of missing mandatory property
@@ -51,24 +67,33 @@ public class SubscriberBuilder: NSObject {
      Sets the mandatory `ConnectionConfiguration` property
      */
     public func connection(_ configuration: ConnectionConfiguration) -> SubscriberBuilder {
-        self.connection = configuration
-        return self
+        return SubscriberBuilder(connection: configuration,
+                                 logConfiguration: logConfiguration,
+                                 trackingId: trackingId,
+                                 resolution: resolution,
+                                 delegate: delegate)
     }
 
     /**
      Sets the mandatory `LogConfiguration` property
      */
     public func log(_ configuration: LogConfiguration) -> SubscriberBuilder {
-        self.logConfiguration = configuration
-        return self
+        return SubscriberBuilder(connection: connection,
+                                 logConfiguration: configuration,
+                                 trackingId: trackingId,
+                                 resolution: resolution,
+                                 delegate: delegate)
     }
 
     /**
      Sets the mandatory `trackingId` property
      */
     public func trackingId(_ trackingId: String) -> SubscriberBuilder {
-        self.trackingId = trackingId
-        return self
+        return SubscriberBuilder(connection: connection,
+                                 logConfiguration: logConfiguration,
+                                 trackingId: trackingId,
+                                 resolution: resolution,
+                                 delegate: delegate)
     }
 
     // MARK: Optional properties
@@ -76,8 +101,11 @@ public class SubscriberBuilder: NSObject {
      Sets the optional `resolution` property
      */
     public func resolution(_ resolution: Double) -> SubscriberBuilder {
-        self.resolution = resolution
-        return self
+        return SubscriberBuilder(connection: connection,
+                                 logConfiguration: logConfiguration,
+                                 trackingId: trackingId,
+                                 resolution: resolution,
+                                 delegate: delegate)
     }
 
     /**
@@ -85,7 +113,10 @@ public class SubscriberBuilder: NSObject {
      It's optional to pass it via builder, as it can be set directly on `AssetTrackingSubscriber`.  Maintains weak reference.
      */
     public func subscriberDelegate(_ delegate: AssetTrackingSubscriberDelegate) -> SubscriberBuilder {
-        self.delegate = delegate
-        return self
+        return SubscriberBuilder(connection: connection,
+                                 logConfiguration: logConfiguration,
+                                 trackingId: trackingId,
+                                 resolution: resolution,
+                                 delegate: delegate)
     }
 }
