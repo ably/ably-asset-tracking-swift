@@ -132,3 +132,7 @@ You may always check `Gemfile.lock` as it's the source of truth for versions of 
 - SDK instances are created using the Builder pattern.
 - We’re supporting iOS 12 and higher
 - There is a Fastlane setup for testing and archiving SDKs
+
+### iOS version requirements
+
+These SDKs require a minimum of iOS 12+ / iPadOS 12+
