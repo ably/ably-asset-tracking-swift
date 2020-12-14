@@ -1,4 +1,5 @@
 import UIKit
+import Core
 
 /**
  Default and preferred way to create the `Publisher`.

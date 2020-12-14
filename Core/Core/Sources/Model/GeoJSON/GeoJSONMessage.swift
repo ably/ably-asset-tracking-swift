@@ -22,19 +22,19 @@ import CoreLocation
  }
  ````
  */
-class GeoJSONMessage: Codable {
+public class GeoJSONMessage: Codable {
     let type: GeoJSONType
     let geometry: GeoJSONGeometry
     let properties: GeoJSONProperties
 
-    init(location: CLLocation) {
+    public init(location: CLLocation) {
         type = .feature
         geometry = GeoJSONGeometry(location: location)
         properties = GeoJSONProperties(location: location)
         // TODO: Handle data correctness in https://github.com/ably/ably-asset-tracking-cocoa/issues/10
     }
 
-    func toCoreLocation() -> CLLocation {
+    public func toCoreLocation() -> CLLocation {
         return CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: geometry.latitude, longitude: geometry.longitude),
             altitude: properties.altitude,

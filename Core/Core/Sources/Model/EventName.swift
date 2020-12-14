@@ -1,6 +1,6 @@
 import Foundation
 
-enum EventName: String {
+public enum EventName: String {
     case raw
     case enhanced
 }

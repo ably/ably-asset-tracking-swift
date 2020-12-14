@@ -1,5 +1,9 @@
 import UIKit
 import CoreLocation
+import Core
+
+public typealias ConnectionConfiguration = Core.ConnectionConfiguration
+public typealias LogConfiguration = Core.LogConfiguration
 
 /**
  Indicates Asset connection status (i.e. if courier is publishing his location)

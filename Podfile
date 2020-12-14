@@ -1,5 +1,6 @@
 platform :ios, '12.0'
 use_frameworks!
+inhibit_all_warnings!
 workspace 'AblyAssetTracking.xcworkspace'
 
 def ably_sdk
@@ -28,11 +29,14 @@ end
 target 'PublisherExample' do
   project 'PublisherExample/PublisherExample.xcodeproj'
   pod 'SwiftLint'
+  pod 'Ably', '~> 1.2.0'
+  pod 'MapboxCoreNavigation', '~> 1.1.0'
 end
 
 target 'SubscriberExample' do
   project 'SubscriberExample/SubscriberExample.xcodeproj'
   pod 'SwiftLint'
+  pod 'Ably', '~> 1.2.0'
 end
 
 # Tests

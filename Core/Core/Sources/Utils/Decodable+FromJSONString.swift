@@ -1,6 +1,6 @@
 import Foundation
 
-extension Decodable {
+public extension Decodable {
     static func fromJSONString<T>(_ json: String) throws -> T where T: Decodable {
         guard let data = json.data(using: .utf8)
         else {
