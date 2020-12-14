@@ -1,6 +1,15 @@
 import Foundation
 import CoreLocation
 
+extension Publisher {
+    /**
+     Returns the default builder of Publisher instances.
+     */
+    public static func publishers() -> PublisherBuilder {
+        return DefaultPublisherBuilder()
+    }
+}
+
 public protocol PublisherDelegate: AnyObject {
     /**
      Called when the `Publisher` spot any (location, network or permissions) error
