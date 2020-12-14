@@ -29,8 +29,8 @@ public protocol PublisherBuilder {
     func transportationMode(_ transportationMode: TransportationMode) -> PublisherBuilder
 
     /**
-     Sets the optional `PublisherDelegate` property.
+     Sets the optional `Delegate` property.
      It's optional to pass it via builder, as it can be set directly on `Publisher`.  Maintains weak reference.
      */
-    func publisherDelegate(_ delegate: PublisherDelegate) -> PublisherBuilder
+    func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder
 }

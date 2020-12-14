@@ -82,7 +82,7 @@ extension DefaultPublisher: LocationServiceDelegate {
 }
 
 extension DefaultPublisher: AblyPublisherServiceDelegate {
-    func publisherService(sender: AblyPublisherService, didChangeConnectionStatus status: AblyConnectionStatus) {
-        delegate?.publisher(sender: self, didChangeConnectionStatus: status)
+    func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
+        delegate?.publisher(sender: self, didChangeConnectionState: state)
     }
 }

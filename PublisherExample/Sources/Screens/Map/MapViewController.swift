@@ -36,10 +36,11 @@ class MapViewController: UIViewController {
     // MARK: View setup
     private func setupPublisher() {
         publisher = try? PublisherFactory.publishers()
-            .connection(ConnectionConfiguration(apiKey: PublisherKeys.apiKey, clientId: PublisherKeys.clientId))
+            .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey,
+                                                clientId: PublisherKeys.ablyClientId))
             .log(LogConfiguration())
             .transportationMode(TransportationMode())
-            .publisherDelegate(self)
+            .delegate(self)
             .start()
 
         publisher?.track(trackable: Trackable(id: trackingId))
@@ -110,7 +111,7 @@ extension MapViewController: PublisherDelegate {
         scrollToReceivedLocation()
     }
 
-    func publisher(sender: Publisher, didChangeConnectionStatus status: AblyConnectionStatus) {
-        connectionStatusLabel.text = "Connection status: \(status)"
+    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
+        connectionStatusLabel.text = "Connection state: \(state)"
     }
 }

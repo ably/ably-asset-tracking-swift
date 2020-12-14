@@ -32,8 +32,8 @@ public protocol SubscriberBuilder {
     func resolution(_ resolution: Double) -> SubscriberBuilder
 
     /**
-     Sets the optional `AssetTrackingSubscriberDelegate` property.
-     It's optional to pass it via builder, as it can be set directly on `AssetTrackingSubscriber`.  Maintains weak reference.
+     Sets the optional `Delegate` property.
+     It's optional to pass it via builder, as it can be set directly on `Subscriber`.  Maintains weak reference.
      */
-    func subscriberDelegate(_ delegate: SubscriberDelegate) -> SubscriberBuilder
+    func delegate(_ delegate: SubscriberDelegate) -> SubscriberBuilder
 }
