@@ -9,7 +9,7 @@ class MapViewController: UIViewController {
 
     private let truckAnnotationViewIdentifier = "MapTruckAnnotationViewIdentifier"
     private let trackingId: String
-    private var subscriber: AssetTrackingSubscriber?
+    private var subscriber: Subscriber?
     private var errors: [Error] = []
 
     private var rawLocation: CLLocation? { didSet { updateRawLocationAnnotation() } }
@@ -122,22 +122,22 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
-extension MapViewController: AssetTrackingSubscriberDelegate {
-    func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didFailWithError error: Error) {
+extension MapViewController: SubscriberDelegate {
+    func subscriber(sender: Subscriber, didFailWithError error: Error) {
         errors.append(error)
     }
 
-    func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didUpdateRawLocation location: CLLocation) {
+    func subscriber(sender: Subscriber, didUpdateRawLocation location: CLLocation) {
         rawLocation = location
         scrollToReceivedLocation()
     }
 
-    func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didUpdateEnhancedLocation location: CLLocation) {
+    func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation) {
         enhancedLocation = location
         scrollToReceivedLocation()
     }
 
-    func assetTrackingSubscriber(sender: AssetTrackingSubscriber, didChangeAssetConnectionStatus status: AssetTrackingConnectionStatus) {
+    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: AssetConnectionStatus) {
         assetStatusLabel.text = status == .online ? "The asset is online" : "The asset is offline"
     }
 }

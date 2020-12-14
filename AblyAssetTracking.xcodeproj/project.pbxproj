@@ -73,7 +73,7 @@
 		18D86265257F628B0044CE7B /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86264257F628B0044CE7B /* UnimplementedSupport.swift */; };
 		18D8626E257F62950044CE7B /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86264257F628B0044CE7B /* UnimplementedSupport.swift */; };
 		18D86277257F62960044CE7B /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86264257F628B0044CE7B /* UnimplementedSupport.swift */; };
-		18D86283257F62B80044CE7B /* AssetTrackingSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86280257F62B80044CE7B /* AssetTrackingSubscriber.swift */; };
+		18D86283257F62B80044CE7B /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D86280257F62B80044CE7B /* Subscriber.swift */; };
 		18E4FF092577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4FF082577E62700AC2DD2 /* GeoJSONProperties.swift */; };
 		18E4FF0A2577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4FF082577E62700AC2DD2 /* GeoJSONProperties.swift */; };
 		18E4FF0B2577E62700AC2DD2 /* GeoJSONProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4FF082577E62700AC2DD2 /* GeoJSONProperties.swift */; };
@@ -209,7 +209,7 @@
 		18D8620B257F62150044CE7B /* AssetTrackingPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingPublisher.swift; sourceTree = "<group>"; };
 		18D86257257F627A0044CE7B /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
 		18D86264257F628B0044CE7B /* UnimplementedSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnimplementedSupport.swift; sourceTree = "<group>"; };
-		18D86280257F62B80044CE7B /* AssetTrackingSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingSubscriber.swift; sourceTree = "<group>"; };
+		18D86280257F62B80044CE7B /* Subscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		18E4FF082577E62700AC2DD2 /* GeoJSONProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONProperties.swift; sourceTree = "<group>"; };
 		18E4FF262577E66000AC2DD2 /* GeoJSONType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONType.swift; sourceTree = "<group>"; };
 		18F428EA2576754B00026943 /* DefaultPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
@@ -627,7 +627,7 @@
 			isa = PBXGroup;
 			children = (
 				18786D9D2582A93100FCE2BB /* Services */,
-				18D86280257F62B80044CE7B /* AssetTrackingSubscriber.swift */,
+				18D86280257F62B80044CE7B /* Subscriber.swift */,
 				18F428EF2576764100026943 /* DefaultSubscriber.swift */,
 				18FE9F9C258617A500DBF612 /* SubscriberBuilder.swift */,
 			);
@@ -1626,7 +1626,7 @@
 				18D8615C257E90D10044CE7B /* AblyError.swift in Sources */,
 				18365E0D2577ADCF00C84E81 /* ConnectionConfiguration.swift in Sources */,
 				18786D9F2582A93100FCE2BB /* AblySubscriberService.swift in Sources */,
-				18D86283257F62B80044CE7B /* AssetTrackingSubscriber.swift in Sources */,
+				18D86283257F62B80044CE7B /* Subscriber.swift in Sources */,
 				18F428F02576764100026943 /* DefaultSubscriber.swift in Sources */,
 				18D86277257F62960044CE7B /* UnimplementedSupport.swift in Sources */,
 				18C8E7C8257FA1320086EC97 /* AblyConnectionStatus.swift in Sources */,

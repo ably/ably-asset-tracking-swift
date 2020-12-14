@@ -3,7 +3,7 @@ import Ably
 import CoreLocation
 
 protocol AblySubscriberServiceDelegate: AnyObject {
-    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetTrackingConnectionStatus)
+    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus)
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error)
     func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation)
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation)

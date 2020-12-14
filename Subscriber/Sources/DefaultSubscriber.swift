@@ -1,15 +1,15 @@
 import Foundation
 import CoreLocation
 
-class DefaultSubscriber: AssetTrackingSubscriber {
+class DefaultSubscriber: Subscriber {
     private let logConfiguration: LogConfiguration
     private let trackingId: String
     private let resolution: Double?
     private let ablyService: AblySubscriberService
-    weak var delegate: AssetTrackingSubscriberDelegate?
+    weak var delegate: SubscriberDelegate?
 
     /**
-     Default constructor. Initializes Subscriber with given `AssetTrackingSubscriberConfiguration`.
+     Default constructor. Initializes Subscriber with given `Subscriber`.
      Subscriber starts listening (and notifying delegate) after initialization.
      - Parameters:
         -  configuration: Configuration struct to use in this instance.
@@ -30,7 +30,7 @@ class DefaultSubscriber: AssetTrackingSubscriber {
         ablyService.start { [weak self] error in
             if let error = error,
                let self = self {
-                self.delegate?.assetTrackingSubscriber(sender: self, didFailWithError: error)
+                self.delegate?.subscriber(sender: self, didFailWithError: error)
             }
         }
     }
@@ -41,19 +41,19 @@ class DefaultSubscriber: AssetTrackingSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberServiceDelegate {
-    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetTrackingConnectionStatus) {
-        delegate?.assetTrackingSubscriber(sender: self, didChangeAssetConnectionStatus: status)
+    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus) {
+        delegate?.subscriber(sender: self, didChangeAssetConnectionStatus: status)
     }
 
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error) {
-        delegate?.assetTrackingSubscriber(sender: self, didFailWithError: error)
+        delegate?.subscriber(sender: self, didFailWithError: error)
     }
 
     func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation) {
-        delegate?.assetTrackingSubscriber(sender: self, didUpdateRawLocation: location)
+        delegate?.subscriber(sender: self, didUpdateRawLocation: location)
     }
 
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation) {
-        delegate?.assetTrackingSubscriber(sender: self, didUpdateEnhancedLocation: location)
+        delegate?.subscriber(sender: self, didUpdateEnhancedLocation: location)
     }
 }
