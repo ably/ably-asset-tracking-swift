@@ -44,7 +44,7 @@ class MapViewController: UIViewController {
     }
 
     private func setupSubscriber() {
-        subscriber = try? SubscriberBuilder()
+        subscriber = try? SubscriberFactory.subscribers()
             .connection(ConnectionConfiguration(apiKey: SubscriberKeys.ablyApiKey,
                                                 clientId: SubscriberKeys.ablyClientId))
             .trackingId(trackingId)

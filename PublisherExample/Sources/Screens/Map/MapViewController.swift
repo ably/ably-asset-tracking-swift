@@ -34,8 +34,8 @@ class MapViewController: UIViewController {
     }
 
     // MARK: View setup
-    private func setupPublisher() {        
-        publisher = try? Publisher.publishers()
+    private func setupPublisher() {
+        publisher = try? PublisherFactory.publishers()
             .connection(ConnectionConfiguration(apiKey: PublisherKeys.apiKey, clientId: PublisherKeys.clientId))
             .log(LogConfiguration())
             .transportationMode(TransportationMode())
