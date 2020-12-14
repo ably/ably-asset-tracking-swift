@@ -1,13 +1,13 @@
 import UIKit
 
 /**
- Default and preferred way to create the `AssetTrackingPublisher`.
+ Default and preferred way to create the `Publisher`.
  */
 public class PublisherBuilder: NSObject {
     private var connection: ConnectionConfiguration?
     private var logConfiguration: LogConfiguration?
     private var transportationMode: TransportationMode?
-    private weak var delegate: AssetTrackingPublisherDelegate?
+    private weak var delegate: PublisherDelegate?
 
     public override init() {
         super.init()
@@ -16,7 +16,7 @@ public class PublisherBuilder: NSObject {
     private init(connection: ConnectionConfiguration?,
                  logConfiguration: LogConfiguration?,
                  transportationMode: TransportationMode?,
-                 delegate: AssetTrackingPublisherDelegate?) {
+                 delegate: PublisherDelegate?) {
         self.connection = connection
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
@@ -24,13 +24,13 @@ public class PublisherBuilder: NSObject {
     }
 
     /**
-     Creates a `AssetTrackingPublisher` which is ready to publish the asset location to subscribers.
-     Notice that it needs asset to to track - it can be set using `AssetTrackingPublisher.track()` function.
+     Creates a `Publisher` which is ready to publish the asset location to subscribers.
+     Notice that it needs asset to to track - it can be set using `Publisher.track()` function.
 
      - throws: `AssetTrackingError.incompleteConfiguration`  in case of missing mandatory property
-     - Returns: `AssetTrackingPublisher`  ready to `track` the asset.
+     - Returns: `Publisher`  ready to `track` the asset.
      */
-    public func start() throws -> AssetTrackingPublisher {
+    public func start() throws -> Publisher {
         guard let connection = connection
         else {
             throw AblyError.incompleteConfiguration(
@@ -58,7 +58,6 @@ public class PublisherBuilder: NSObject {
         publisher.delegate = delegate
         return publisher
     }
-
 
     // MARK: Mandatory properties
     /**
@@ -93,10 +92,10 @@ public class PublisherBuilder: NSObject {
 
     // MARK: Optional properties
     /**
-     Sets the optional `AssetTrackingPublisherDelegate` property.
-     It's optional to pass it via builder, as it can be set directly on AssetTrackingPublisher.  Maintains weak reference.
+     Sets the optional `PublisherDelegate` property.
+     It's optional to pass it via builder, as it can be set directly on `Publisher`.  Maintains weak reference.
      */
-    public func publisherDelegate(_ delegate: AssetTrackingPublisherDelegate) -> PublisherBuilder {
+    public func publisherDelegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
         return PublisherBuilder(connection: connection,
                                 logConfiguration: logConfiguration,
                                 transportationMode: transportationMode,

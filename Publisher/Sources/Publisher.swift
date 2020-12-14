@@ -1,53 +1,53 @@
 import Foundation
 import CoreLocation
 
-public protocol AssetTrackingPublisherDelegate: AnyObject {
+public protocol PublisherDelegate: AnyObject {
     /**
-     Called when `AssetTrackingPublisher` spot any (location, network or permissions) error
+     Called when the `Publisher` spot any (location, network or permissions) error
      
      - Parameters:
-        - sender: `AssetTrackingPublisher` instance.
+        - sender: `Publisher` instance.
         - error: Detected error.
      */
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didFailWithError error: Error)
+    func publisher(sender: Publisher, didFailWithError error: Error)
 
     /**
-     Called when `AssetTrackingPublisher` detect new Raw location. Same location will be sent to the Subscriber module
+     Called when the `Publisher` detect new Raw location. Same location will be sent to the Subscriber module
      
      - Parameters:
-        - sender:`AssetTrackingPublisher` instance.
+        - sender:`Publisher` instance.
         - location: Location object received from LocationManager
      */
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateRawLocation location: CLLocation)
+    func publisher(sender: Publisher, didUpdateRawLocation location: CLLocation)
 
     /**
-     Called when `AssetTrackingPublisher` detect new enhanced (map matched) location. Same location will be sent to the Subscriber module
+     Called when the `Publisher` detect new enhanced (map matched) location. Same location will be sent to the Subscriber module
      
      - Parameters:
-        - sender:`AssetTrackingPublisher` instance.
+        - sender:`Publisher` instance.
         - location: Location object received from LocationManager
      */
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didUpdateEnhancedLocation location: CLLocation)
+    func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation)
 
     /**
      Called when there is a connection update directly in AblySDK.
      
      - Parameters:
-        - sender:`AssetTrackingPublisher` instance.
+        - sender:`Publisher` instance.
         - status: Most recent connection status
      */
-    func assetTrackingPublisher(sender: AssetTrackingPublisher, didChangeConnectionStatus status: AblyConnectionStatus)
+    func publisher(sender: Publisher, didChangeConnectionStatus status: AblyConnectionStatus)
 }
 
 /**
- Main AssetTrackingPublisher interface implemented in SDK by `DefaultPublisher`
+ Main `Publisher` interface implemented in SDK by `DefaultPublisher`
  */
-public protocol AssetTrackingPublisher {
+public protocol Publisher {
     /**
-     Delegate object to receive events from `AssetTrackingPublisher`.
+     Delegate object to receive events from `Publisher`.
      It holds a weak reference so make sure to keep your delegate object in memory.
      */
-    var delegate: AssetTrackingPublisherDelegate? { get set }
+    var delegate: PublisherDelegate? { get set }
 
     /**
      Adds a `Trackable` object and makes it the actively tracked object, meaning that the state of the `activeTrackable` property

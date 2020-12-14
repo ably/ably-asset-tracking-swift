@@ -62,7 +62,7 @@ public protocol Subscriber {
      Delegate object to receive events from `Subscriber`.
      It maintains a weak reference to your delegate, so ensure to maintain your own strong reference as well.
      */
-    var delegate: SubscriberDelegate? { get set }    
+    var delegate: SubscriberDelegate? { get set }
 
     /**
      Stops asset subscriber from listening for asset location

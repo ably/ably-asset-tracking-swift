@@ -8,12 +8,6 @@ class DefaultSubscriber: Subscriber {
     private let ablyService: AblySubscriberService
     weak var delegate: SubscriberDelegate?
 
-    /**
-     Default constructor. Initializes Subscriber with given `Subscriber`.
-     Subscriber starts listening (and notifying delegate) after initialization.
-     - Parameters:
-        -  configuration: Configuration struct to use in this instance.
-     */
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
          trackingId: String,
