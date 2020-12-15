@@ -1,10 +1,3 @@
-//
-//  PublisherTests.swift
-//  PublisherTests
-//
-//  Created by Michal Miedlarz on 13/12/2020.
-//
-
 import XCTest
 
 class PublisherTests: XCTestCase {

@@ -1,10 +1,3 @@
-//
-//  Core.h
-//  Core
-//
-//  Created by Michal Miedlarz on 13/12/2020.
-//
-
 #import <Foundation/Foundation.h>
 
 //! Project version number for Core.
