@@ -56,6 +56,8 @@ abstract_target 'asset_tracking' do
   end
 end
 
+# Due to issue on Xcode 12 we need to add 'arm64' as Excluded Architecture. Without it app will fail when built for device using Xcode12.
+# As a downside, it won't be possible to run it on iOS simulator on MacBooks with M1 cpu.
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
