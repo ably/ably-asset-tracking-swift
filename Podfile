@@ -55,3 +55,10 @@ abstract_target 'asset_tracking' do
     project 'Subscriber/Subscriber.xcodeproj'
   end
 end
+
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    config.build_settings['ARCHS'] = "arm64 x86_64"
+  end
+end
