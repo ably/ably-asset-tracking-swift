@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -174,6 +174,7 @@
 			buildPhases = (
 				A3592AFB92CC042D68E3EF19 /* [CP] Check Pods Manifest.lock */,
 				65E904E8F0D1B546437D55FC /* [CP] Prepare Artifacts */,
+				183BE6B02588A5BA0097A30B /* Run SwiftLint */,
 				180F60EF258632D90014B310 /* Sources */,
 				180F60F0258632D90014B310 /* Frameworks */,
 				180F60F1258632D90014B310 /* Resources */,
@@ -253,6 +254,25 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PublisherExample/Pods-PublisherExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		183BE6B02588A5BA0097A30B /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./PublisherExample\n";
 		};
 		65E904E8F0D1B546437D55FC /* [CP] Prepare Artifacts */ = {
 			isa = PBXShellScriptBuildPhase;

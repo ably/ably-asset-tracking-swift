@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -170,6 +170,7 @@
 			buildConfigurationList = 180F60E6258632B50014B310 /* Build configuration list for PBXNativeTarget "SubscriberExample" */;
 			buildPhases = (
 				98901E8D1547F173660B26D9 /* [CP] Check Pods Manifest.lock */,
+				183BE6B12588A5D40097A30B /* Run SwiftLint */,
 				180F60CE258632B40014B310 /* Sources */,
 				180F60CF258632B40014B310 /* Frameworks */,
 				180F60D0258632B40014B310 /* Resources */,
@@ -232,6 +233,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		183BE6B12588A5D40097A30B /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./SubscriberExample\n";
+		};
 		98901E8D1547F173660B26D9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
