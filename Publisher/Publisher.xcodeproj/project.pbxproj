@@ -14,7 +14,7 @@
 		180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61712586341E0014B310 /* DefaultPublisher.swift */; };
 		180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61742586341E0014B310 /* AblyPublisherService.swift */; };
 		180F617A2586341E0014B310 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61752586341E0014B310 /* LocationService.swift */; };
-		184E8720258779C6000DF408 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E871F258779C6000DF408 /* ConnectionState.swift */; };
+		183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183BE6B72588AC8D0097A30B /* ConnectionState.swift */; };
 		184E873325877C6D000DF408 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184E873225877C6D000DF408 /* Core.framework */; };
 		185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DD25889EBB00E2D2E2 /* Publisher.swift */; };
 		185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */; };
@@ -44,7 +44,7 @@
 		180F61712586341E0014B310 /* DefaultPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
 		180F61742586341E0014B310 /* AblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblyPublisherService.swift; sourceTree = "<group>"; };
 		180F61752586341E0014B310 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		184E871F258779C6000DF408 /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
+		183BE6B72588AC8D0097A30B /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		184E873225877C6D000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094DD25889EBB00E2D2E2 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherBuilder.swift; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		185094E325889ED200E2D2E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				184E871F258779C6000DF408 /* ConnectionState.swift */,
+				183BE6B72588AC8D0097A30B /* ConnectionState.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -383,11 +383,11 @@
 			files = (
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,
 				180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */,
+				183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */,
 				185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */,
 				180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */,
 				180F617A2586341E0014B310 /* LocationService.swift in Sources */,
 				180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */,
-				184E8720258779C6000DF408 /* ConnectionState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
