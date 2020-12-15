@@ -17,8 +17,8 @@
 		184E87F425878906000DF408 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 184E87F225878906000DF408 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		185094D925889E9E00E2D2E2 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094D725889E9E00E2D2E2 /* Subscriber.swift */; };
 		185094DA25889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */; };
-		9B9580F8AD4653E85A531D59 /* Pods_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF543A436031322DF65B1A7 /* Pods_SubscriberTests.framework */; };
-		B788E1741108DAB02898915D /* Pods_Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E024FEF02A75C7F31955FC42 /* Pods_Subscriber.framework */; };
+		1F9298B18A4CD0599098401B /* Pods_asset_tracking_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */; };
+		2375C3D9FBC87E4236B66FA6 /* Pods_asset_tracking_Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B94C2AA15165F9680C282FE /* Pods_asset_tracking_Subscriber.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0552628DD6ED2E541A84E89A /* Pods-asset_tracking-SubscriberTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberTests.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests.release.xcconfig"; sourceTree = "<group>"; };
 		180F60AD258632740014B310 /* Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		180F60B0258632740014B310 /* Subscriber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Subscriber.h; sourceTree = "<group>"; };
 		180F60B1258632740014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,12 +60,15 @@
 		184E87F225878906000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094D725889E9E00E2D2E2 /* Subscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberBuilder.swift; sourceTree = "<group>"; };
-		3CF543A436031322DF65B1A7 /* Pods_SubscriberTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SubscriberTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		22FFAB8B0C6913B4171922D1 /* Pods-asset_tracking-Subscriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Subscriber.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Subscriber/Pods-asset_tracking-Subscriber.release.xcconfig"; sourceTree = "<group>"; };
+		2B94C2AA15165F9680C282FE /* Pods_asset_tracking_Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_SubscriberTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E84C9527E90EEB26AA8FE61 /* Pods-asset_tracking-Subscriber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Subscriber.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Subscriber/Pods-asset_tracking-Subscriber.debug.xcconfig"; sourceTree = "<group>"; };
 		A243740C463C9796525DDC55 /* Pods-Subscriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.release.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.release.xcconfig"; sourceTree = "<group>"; };
 		A77BDA31C9F103BB99CE1A31 /* Pods-Subscriber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.debug.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.debug.xcconfig"; sourceTree = "<group>"; };
 		B0C194B8C93C37753B28F4C4 /* Pods-SubscriberTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubscriberTests.debug.xcconfig"; path = "Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B35382D91FBE9FB98C137BB8 /* Pods-asset_tracking-SubscriberTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DACEA3FB594D43A74240A868 /* Pods-SubscriberTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubscriberTests.release.xcconfig"; path = "Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests.release.xcconfig"; sourceTree = "<group>"; };
-		E024FEF02A75C7F31955FC42 /* Pods_Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,8 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B788E1741108DAB02898915D /* Pods_Subscriber.framework in Frameworks */,
 				184E87F325878906000DF408 /* Core.framework in Frameworks */,
+				2375C3D9FBC87E4236B66FA6 /* Pods_asset_tracking_Subscriber.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				180F61342586332B0014B310 /* Subscriber.framework in Frameworks */,
-				9B9580F8AD4653E85A531D59 /* Pods_SubscriberTests.framework in Frameworks */,
+				1F9298B18A4CD0599098401B /* Pods_asset_tracking_SubscriberTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +159,10 @@
 				A243740C463C9796525DDC55 /* Pods-Subscriber.release.xcconfig */,
 				B0C194B8C93C37753B28F4C4 /* Pods-SubscriberTests.debug.xcconfig */,
 				DACEA3FB594D43A74240A868 /* Pods-SubscriberTests.release.xcconfig */,
+				8E84C9527E90EEB26AA8FE61 /* Pods-asset_tracking-Subscriber.debug.xcconfig */,
+				22FFAB8B0C6913B4171922D1 /* Pods-asset_tracking-Subscriber.release.xcconfig */,
+				B35382D91FBE9FB98C137BB8 /* Pods-asset_tracking-SubscriberTests.debug.xcconfig */,
+				0552628DD6ED2E541A84E89A /* Pods-asset_tracking-SubscriberTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
@@ -165,8 +173,8 @@
 			children = (
 				184E87F225878906000DF408 /* Core.framework */,
 				184E875625877E9C000DF408 /* Core.framework */,
-				E024FEF02A75C7F31955FC42 /* Pods_Subscriber.framework */,
-				3CF543A436031322DF65B1A7 /* Pods_SubscriberTests.framework */,
+				2B94C2AA15165F9680C282FE /* Pods_asset_tracking_Subscriber.framework */,
+				8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -282,7 +290,6 @@
 /* Begin PBXShellScriptBuildPhase section */
 		183BE6AF2588A59E0097A30B /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -314,7 +321,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Subscriber-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-asset_tracking-Subscriber-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -336,7 +343,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SubscriberTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-asset_tracking-SubscriberTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -349,15 +356,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -518,7 +525,7 @@
 		};
 		180F60C2258632750014B310 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A77BDA31C9F103BB99CE1A31 /* Pods-Subscriber.debug.xcconfig */;
+			baseConfigurationReference = 8E84C9527E90EEB26AA8FE61 /* Pods-asset_tracking-Subscriber.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -542,7 +549,7 @@
 		};
 		180F60C3258632750014B310 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A243740C463C9796525DDC55 /* Pods-Subscriber.release.xcconfig */;
+			baseConfigurationReference = 22FFAB8B0C6913B4171922D1 /* Pods-asset_tracking-Subscriber.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -566,7 +573,7 @@
 		};
 		180F61382586332B0014B310 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B0C194B8C93C37753B28F4C4 /* Pods-SubscriberTests.debug.xcconfig */;
+			baseConfigurationReference = B35382D91FBE9FB98C137BB8 /* Pods-asset_tracking-SubscriberTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -585,7 +592,7 @@
 		};
 		180F61392586332B0014B310 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DACEA3FB594D43A74240A868 /* Pods-SubscriberTests.release.xcconfig */;
+			baseConfigurationReference = 0552628DD6ED2E541A84E89A /* Pods-asset_tracking-SubscriberTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

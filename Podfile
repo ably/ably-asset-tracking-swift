@@ -7,50 +7,51 @@ def ably_sdk
   pod 'Ably', '~> 1.2.0'
 end
 
-target 'Core' do
-  project 'Core/Core.xcodeproj'
-  pod 'SwiftLint'
-end
-
-target 'Publisher' do
-  project 'Publisher/Publisher.xcodeproj'
-  ably_sdk
-  pod 'SwiftLint'
+def mapbox_sdk
   pod 'MapboxCoreNavigation', '~> 1.1.0'
 end
 
-target 'Subscriber' do
-  project 'Subscriber/Subscriber.xcodeproj'
-  ably_sdk
+abstract_target 'asset_tracking' do
   pod 'SwiftLint'
-end
 
-# Example apps
-target 'PublisherExample' do
-  project 'PublisherExample/PublisherExample.xcodeproj'
-  pod 'SwiftLint'
-  pod 'Ably', '~> 1.2.0'
-  pod 'MapboxCoreNavigation', '~> 1.1.0'
-end
+  target 'Core' do
+    project 'Core/Core.xcodeproj'
+  end
 
-target 'SubscriberExample' do
-  project 'SubscriberExample/SubscriberExample.xcodeproj'
-  pod 'SwiftLint'
-  pod 'Ably', '~> 1.2.0'
-end
+  target 'Publisher' do
+    project 'Publisher/Publisher.xcodeproj'
+    ably_sdk
+    mapbox_sdk
+  end
 
-# Tests
-target 'CoreTests' do
-  project 'Core/Core.xcodeproj'
-  pod 'SwiftLint'
-end
+  target 'Subscriber' do
+    project 'Subscriber/Subscriber.xcodeproj'
+    ably_sdk
+    pod 'SwiftLint'
+  end
 
-target 'PublisherTests' do
-  project 'Publisher/Publisher.xcodeproj'
-  pod 'SwiftLint'
-end
+  # Example apps
+  target 'PublisherExample' do
+    project 'PublisherExample/PublisherExample.xcodeproj'
+    mapbox_sdk
+    ably_sdk
+  end
 
-target 'SubscriberTests' do
-  project 'Subscriber/Subscriber.xcodeproj'
-  pod 'SwiftLint'
+  target 'SubscriberExample' do
+    project 'SubscriberExample/SubscriberExample.xcodeproj'
+    ably_sdk
+  end
+
+  # Tests
+  target 'CoreTests' do
+    project 'Core/Core.xcodeproj'
+  end
+
+  target 'PublisherTests' do
+    project 'Publisher/Publisher.xcodeproj'
+  end
+
+  target 'SubscriberTests' do
+    project 'Subscriber/Subscriber.xcodeproj'
+  end
 end
