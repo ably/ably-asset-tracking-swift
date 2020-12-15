@@ -86,7 +86,7 @@ There are 3 framework targets with dedicated tests and 2 example apps:
 
 The following secrets must be specified in order to run the example apps: 
 
-- `ABLY_API_KEY`: this needs to be provided in `PublisherKeys.swift` or 'SubscriberKeys.swift' respectively for publishing and subscribing example apps. 
+- `ABLY_API_KEY`: this needs to be provided in `PublisherKeys.swift` or `SubscriberKeys.swift` respectively for publishing and subscribing example apps. 
 - `MAPBOX_ACCESS_TOKEN` needs to be set in the `Info.plist` file for `MGLMapboxAccessToken` key.
 
 
