@@ -2,9 +2,28 @@ import Foundation
 import CoreLocation
 import Core
 
+/**
+ `ConnectionConfiguration` is a part of the `Core` framework which is not visible to the `Publisher` SDK users.
+ Workaround for this is to use public typealias.
+ */
 public typealias ConnectionConfiguration = Core.ConnectionConfiguration
+
+/**
+ `LogConfiguration` is a part of the `Core` framework which is not visible to the `Publisher` SDK users.
+ Workaround for this is to use public typealias.
+ */
 public typealias LogConfiguration = Core.LogConfiguration
+
+/**
+ `TransportationMode` is a part of the `Core` framework which is not visible to the `Publisher` SDK users.
+ Workaround for this is to use public typealias.
+ */
 public typealias TransportationMode = Core.TransportationMode
+
+/**
+ `Trackable` is a part of the `Core` framework which is not visible to the `Publisher` SDK users.
+ Workaround for this is to use public typealias.
+ */
 public typealias Trackable = Core.Trackable
 
 public protocol PublisherDelegate: AnyObject {
