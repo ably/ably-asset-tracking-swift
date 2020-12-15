@@ -173,10 +173,12 @@
 			buildConfigurationList = 180F6107258632DA0014B310 /* Build configuration list for PBXNativeTarget "PublisherExample" */;
 			buildPhases = (
 				A3592AFB92CC042D68E3EF19 /* [CP] Check Pods Manifest.lock */,
+				65E904E8F0D1B546437D55FC /* [CP] Prepare Artifacts */,
 				180F60EF258632D90014B310 /* Sources */,
 				180F60F0258632D90014B310 /* Frameworks */,
 				180F60F1258632D90014B310 /* Resources */,
 				184E8816258789A8000DF408 /* Embed Frameworks */,
+				0CF337463B65A52122505789 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -235,6 +237,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0CF337463B65A52122505789 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PublisherExample/Pods-PublisherExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PublisherExample/Pods-PublisherExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PublisherExample/Pods-PublisherExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65E904E8F0D1B546437D55FC /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PublisherExample/Pods-PublisherExample-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PublisherExample/Pods-PublisherExample-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PublisherExample/Pods-PublisherExample-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A3592AFB92CC042D68E3EF19 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

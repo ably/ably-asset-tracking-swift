@@ -10,12 +10,13 @@
 		180F60BE258632750014B310 /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F60B0258632740014B310 /* Subscriber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		180F61322586332B0014B310 /* SubscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61312586332B0014B310 /* SubscriberTests.swift */; };
 		180F61342586332B0014B310 /* Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F60AD258632740014B310 /* Subscriber.framework */; };
-		180F6181258634290014B310 /* AssetTrackingSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F617C258634290014B310 /* AssetTrackingSubscriber.swift */; };
 		180F6182258634290014B310 /* DefaultSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F617D258634290014B310 /* DefaultSubscriber.swift */; };
 		180F6183258634290014B310 /* AblySubscriberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F617F258634290014B310 /* AblySubscriberService.swift */; };
 		180F6184258634290014B310 /* SubscriberBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6180258634290014B310 /* SubscriberBuilder.swift */; };
 		184E87F325878906000DF408 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184E87F225878906000DF408 /* Core.framework */; };
 		184E87F425878906000DF408 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 184E87F225878906000DF408 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		185094D925889E9E00E2D2E2 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094D725889E9E00E2D2E2 /* Subscriber.swift */; };
+		185094DA25889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */; };
 		9B9580F8AD4653E85A531D59 /* Pods_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF543A436031322DF65B1A7 /* Pods_SubscriberTests.framework */; };
 		B788E1741108DAB02898915D /* Pods_Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E024FEF02A75C7F31955FC42 /* Pods_Subscriber.framework */; };
 /* End PBXBuildFile section */
@@ -51,12 +52,13 @@
 		180F612F2586332B0014B310 /* SubscriberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubscriberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		180F61312586332B0014B310 /* SubscriberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberTests.swift; sourceTree = "<group>"; };
 		180F61332586332B0014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		180F617C258634290014B310 /* AssetTrackingSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingSubscriber.swift; sourceTree = "<group>"; };
 		180F617D258634290014B310 /* DefaultSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSubscriber.swift; sourceTree = "<group>"; };
 		180F617F258634290014B310 /* AblySubscriberService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblySubscriberService.swift; sourceTree = "<group>"; };
 		180F6180258634290014B310 /* SubscriberBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriberBuilder.swift; sourceTree = "<group>"; };
 		184E875625877E9C000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		184E87F225878906000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		185094D725889E9E00E2D2E2 /* Subscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
+		185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberBuilder.swift; sourceTree = "<group>"; };
 		3CF543A436031322DF65B1A7 /* Pods_SubscriberTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SubscriberTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A243740C463C9796525DDC55 /* Pods-Subscriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.release.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.release.xcconfig"; sourceTree = "<group>"; };
 		A77BDA31C9F103BB99CE1A31 /* Pods-Subscriber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.debug.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.debug.xcconfig"; sourceTree = "<group>"; };
@@ -129,10 +131,11 @@
 		180F617B258634290014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				180F617C258634290014B310 /* AssetTrackingSubscriber.swift */,
-				180F617D258634290014B310 /* DefaultSubscriber.swift */,
 				180F617E258634290014B310 /* Services */,
+				185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */,
+				185094D725889E9E00E2D2E2 /* Subscriber.swift */,
 				180F6180258634290014B310 /* SubscriberBuilder.swift */,
+				180F617D258634290014B310 /* DefaultSubscriber.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -346,8 +349,9 @@
 			files = (
 				180F6183258634290014B310 /* AblySubscriberService.swift in Sources */,
 				180F6184258634290014B310 /* SubscriberBuilder.swift in Sources */,
-				180F6181258634290014B310 /* AssetTrackingSubscriber.swift in Sources */,
 				180F6182258634290014B310 /* DefaultSubscriber.swift in Sources */,
+				185094DA25889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift in Sources */,
+				185094D925889E9E00E2D2E2 /* Subscriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

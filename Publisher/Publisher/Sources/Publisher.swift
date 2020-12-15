@@ -1,5 +1,11 @@
 import Foundation
 import CoreLocation
+import Core
+
+public typealias ConnectionConfiguration = Core.ConnectionConfiguration
+public typealias LogConfiguration = Core.LogConfiguration
+public typealias TransportationMode = Core.TransportationMode
+public typealias Trackable = Core.Trackable
 
 public protocol PublisherDelegate: AnyObject {
     /**
