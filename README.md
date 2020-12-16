@@ -119,8 +119,7 @@ You may always check `Gemfile.lock` as it's the source of truth for versions of 
 
 #### Xcode 12 and Apple M1 compability
 
-Due to [MapBox CoreNavigation SDK issue](https://github.com/mapbox/mapbox-navigation-ios/issues/2672), to be able to build example apps for physical devices, we needed to exclude the `arm64` architecture from supported simulator architectures (check post install script in `Podfile`). It means, that if you are using Apple M1 based computer, you **will not** be able run example app on simulator.
-Sorry for inconvinience, we are in touch with MapBox developers and we will update our SDK as soon as they fix the issue.
+Due to [MapBox CoreNavigation SDK issue](https://github.com/ably/ably-asset-tracking-cocoa/issues/40), to be able to build example apps for physical devices, we needed to exclude the `arm64` architecture from supported simulator architectures (check post install script in `Podfile`). It means, that if you are using Apple M1 based computer, you **will not** be able run example app on simulator.
 
 ### Concepts and assumptions
 
