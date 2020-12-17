@@ -1,6 +1,6 @@
 import UIKit
 import MapKit
-import Subscriber
+import AblyAssetTracking
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var assetStatusLabel: UILabel!

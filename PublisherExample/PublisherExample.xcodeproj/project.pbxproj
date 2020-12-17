@@ -16,24 +16,8 @@
 		180F61A5258634350014B310 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F619A258634350014B310 /* MapViewController.swift */; };
 		180F61A6258634350014B310 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F619B258634350014B310 /* MapViewController.xib */; };
 		180F61A7258634350014B310 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F619C258634350014B310 /* AppDelegate.swift */; };
-		184E8814258789A8000DF408 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184E8813258789A8000DF408 /* Publisher.framework */; };
-		184E8815258789A8000DF408 /* Publisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 184E8813258789A8000DF408 /* Publisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		22C4B424466EAB516E4FD80F /* Pods_asset_tracking_PublisherExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		184E8816258789A8000DF408 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				184E8815258789A8000DF408 /* Publisher.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		180F60F3258632D90014B310 /* PublisherExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,7 +46,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				184E8814258789A8000DF408 /* Publisher.framework in Frameworks */,
 				22C4B424466EAB516E4FD80F /* Pods_asset_tracking_PublisherExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,7 +155,6 @@
 				180F60EF258632D90014B310 /* Sources */,
 				180F60F0258632D90014B310 /* Frameworks */,
 				180F60F1258632D90014B310 /* Resources */,
-				184E8816258789A8000DF408 /* Embed Frameworks */,
 				0CF337463B65A52122505789 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (

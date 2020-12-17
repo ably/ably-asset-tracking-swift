@@ -1,6 +1,6 @@
 import UIKit
 import MapKit
-import Publisher
+import AblyAssetTracking
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
