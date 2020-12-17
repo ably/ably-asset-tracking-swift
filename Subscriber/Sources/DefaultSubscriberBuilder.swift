@@ -1,5 +1,4 @@
 import UIKit
-import Core
 
 class DefaultSubscriberBuilder: SubscriberBuilder {
     private var connection: ConnectionConfiguration?

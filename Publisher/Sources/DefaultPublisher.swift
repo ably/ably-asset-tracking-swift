@@ -1,6 +1,5 @@
 import UIKit
 import CoreLocation
-import Core
 
 class DefaultPublisher: Publisher {
     private let connectionConfiguration: ConnectionConfiguration
