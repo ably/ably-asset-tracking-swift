@@ -60,7 +60,11 @@ end
 # As a downside, it won't be possible to run it on iOS simulator on MacBooks with M1 cpu.
 # Check https://github.com/ably/ably-asset-tracking-cocoa/issues/40 for details.
 post_install do |installer|
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
-  end
+  installer.pods_project.targets.each do |target|
+      if target.name  == "MapboxCoreNavigation"
+        target.build_configurations.each do |config|
+          config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+        end
+      end
+    end
 end
