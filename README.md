@@ -89,8 +89,6 @@ The following secrets must be specified in order to run the example apps:
 - `ABLY_API_KEY`: this needs to be provided in `PublisherKeys.swift` or 'SubscriberKeys.swift' respectively for publishing and subscribing example apps.
 - `MAPBOX_ACCESS_TOKEN` needs to be set in the `Info.plist` file for `MGLMapboxAccessToken` key.
 
-
-
 ### Build instructions
 
 Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
@@ -140,3 +138,7 @@ Due to [MapBox CoreNavigation SDK issue](https://github.com/ably/ably-asset-trac
 ### iOS version requirements
 
 These SDKs require a minimum of iOS 12+ / iPadOS 12+
+
+### Working on code shared between Publisher and Subscriber
+
+To speed up CocoaPods setup we removed framework/project linking in Xcode and we're just referencing files from the `Core` framework in `Publisher` and `Subscriber` SDK. There is a [ticket](https://github.com/ably/ably-asset-tracking-cocoa/issues/43) to fix it in the future, but for now, if you need to add or move any file in the `Core` SDK make sure that you also reference them in `Publisher` and `Subscriber`.
