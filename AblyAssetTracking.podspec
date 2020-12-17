@@ -22,6 +22,8 @@ Pod::Spec.new do |spec|
     ss.ios.deployment_target = '12.0'
   end
 
+  # Following lines will add warnings during execution of `pod install`
+  # Check https://github.com/ably/ably-asset-tracking-cocoa/issues/40 for more details
   spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 end
