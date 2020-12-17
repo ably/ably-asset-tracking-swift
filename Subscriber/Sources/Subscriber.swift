@@ -1,18 +1,5 @@
 import UIKit
 import CoreLocation
-import Core
-
-/**
- `ConnectionConfiguration` is a part of the `Core` framework which is not visible to the `Subscriber` SDK users.
- Workaround for this is to use public typealias.
- */
-public typealias ConnectionConfiguration = Core.ConnectionConfiguration
-
-/**
- `LogConfiguration` is a part of the `Core` framework which is not visible to the `Subscriber` SDK users.
- Workaround for this is to use public typealias.
- */
-public typealias LogConfiguration = Core.LogConfiguration
 
 /**
  Indicates Asset connection status (i.e. if courier is publishing his location)

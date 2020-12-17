@@ -13,10 +13,22 @@
 		180F6182258634290014B310 /* DefaultSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F617D258634290014B310 /* DefaultSubscriber.swift */; };
 		180F6183258634290014B310 /* AblySubscriberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F617F258634290014B310 /* AblySubscriberService.swift */; };
 		180F6184258634290014B310 /* SubscriberBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6180258634290014B310 /* SubscriberBuilder.swift */; };
-		184E87F325878906000DF408 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184E87F225878906000DF408 /* Core.framework */; };
-		184E87F425878906000DF408 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 184E87F225878906000DF408 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		185094D925889E9E00E2D2E2 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094D725889E9E00E2D2E2 /* Subscriber.swift */; };
 		185094DA25889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */; };
+		18FCE203258B8336005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F2258B8336005BC480 /* ConnectionConfiguration.swift */; };
+		18FCE204258B8336005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F3258B8336005BC480 /* Trackable.swift */; };
+		18FCE205258B8336005BC480 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F4258B8336005BC480 /* TransportationMode.swift */; };
+		18FCE206258B8336005BC480 /* LogConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F5258B8336005BC480 /* LogConfiguration.swift */; };
+		18FCE207258B8336005BC480 /* GeoJSONMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F8258B8336005BC480 /* GeoJSONMessage.swift */; };
+		18FCE208258B8336005BC480 /* GeoJSONGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F9258B8336005BC480 /* GeoJSONGeometry.swift */; };
+		18FCE209258B8336005BC480 /* GeoJSONProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1FA258B8336005BC480 /* GeoJSONProperties.swift */; };
+		18FCE20A258B8336005BC480 /* GeoJSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1FB258B8336005BC480 /* GeoJSONType.swift */; };
+		18FCE20B258B8336005BC480 /* PresenceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1FC258B8336005BC480 /* PresenceData.swift */; };
+		18FCE20C258B8336005BC480 /* EventName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1FD258B8336005BC480 /* EventName.swift */; };
+		18FCE20D258B8336005BC480 /* AssetTrackingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1FE258B8336005BC480 /* AssetTrackingError.swift */; };
+		18FCE20E258B8336005BC480 /* Decodable+FromJSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE200258B8336005BC480 /* Decodable+FromJSONString.swift */; };
+		18FCE20F258B8336005BC480 /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE201258B8336005BC480 /* Codable+EncodedString.swift */; };
+		18FCE210258B8336005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE202258B8336005BC480 /* UnimplementedSupport.swift */; };
 		1F9298B18A4CD0599098401B /* Pods_asset_tracking_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */; };
 		2375C3D9FBC87E4236B66FA6 /* Pods_asset_tracking_Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B94C2AA15165F9680C282FE /* Pods_asset_tracking_Subscriber.framework */; };
 /* End PBXBuildFile section */
@@ -30,20 +42,6 @@
 			remoteInfo = Subscriber;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		184E87F525878906000DF408 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				184E87F425878906000DF408 /* Core.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0552628DD6ED2E541A84E89A /* Pods-asset_tracking-SubscriberTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberTests.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -60,6 +58,20 @@
 		184E87F225878906000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094D725889E9E00E2D2E2 /* Subscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberBuilder.swift; sourceTree = "<group>"; };
+		18FCE1F2258B8336005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
+		18FCE1F3258B8336005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
+		18FCE1F4258B8336005BC480 /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
+		18FCE1F5258B8336005BC480 /* LogConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogConfiguration.swift; sourceTree = "<group>"; };
+		18FCE1F8258B8336005BC480 /* GeoJSONMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONMessage.swift; sourceTree = "<group>"; };
+		18FCE1F9258B8336005BC480 /* GeoJSONGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometry.swift; sourceTree = "<group>"; };
+		18FCE1FA258B8336005BC480 /* GeoJSONProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONProperties.swift; sourceTree = "<group>"; };
+		18FCE1FB258B8336005BC480 /* GeoJSONType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONType.swift; sourceTree = "<group>"; };
+		18FCE1FC258B8336005BC480 /* PresenceData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceData.swift; sourceTree = "<group>"; };
+		18FCE1FD258B8336005BC480 /* EventName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
+		18FCE1FE258B8336005BC480 /* AssetTrackingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingError.swift; sourceTree = "<group>"; };
+		18FCE200258B8336005BC480 /* Decodable+FromJSONString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+FromJSONString.swift"; sourceTree = "<group>"; };
+		18FCE201258B8336005BC480 /* Codable+EncodedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+EncodedString.swift"; sourceTree = "<group>"; };
+		18FCE202258B8336005BC480 /* UnimplementedSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnimplementedSupport.swift; sourceTree = "<group>"; };
 		22FFAB8B0C6913B4171922D1 /* Pods-asset_tracking-Subscriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Subscriber.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Subscriber/Pods-asset_tracking-Subscriber.release.xcconfig"; sourceTree = "<group>"; };
 		2B94C2AA15165F9680C282FE /* Pods_asset_tracking_Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_SubscriberTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +88,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				184E87F325878906000DF408 /* Core.framework in Frameworks */,
 				2375C3D9FBC87E4236B66FA6 /* Pods_asset_tracking_Subscriber.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,6 +127,7 @@
 		180F60AF258632740014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				18FCE1F0258B8321005BC480 /* Common */,
 				180F617E258634290014B310 /* Services */,
 				185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */,
 				185094D725889E9E00E2D2E2 /* Subscriber.swift */,
@@ -142,6 +154,62 @@
 				180F617F258634290014B310 /* AblySubscriberService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		18FCE1F0258B8321005BC480 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1F1258B8336005BC480 /* Configuration */,
+				18FCE1F6258B8336005BC480 /* Model */,
+				18FCE1FF258B8336005BC480 /* Utils */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		18FCE1F1258B8336005BC480 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1F2258B8336005BC480 /* ConnectionConfiguration.swift */,
+				18FCE1F3258B8336005BC480 /* Trackable.swift */,
+				18FCE1F4258B8336005BC480 /* TransportationMode.swift */,
+				18FCE1F5258B8336005BC480 /* LogConfiguration.swift */,
+			);
+			name = Configuration;
+			path = ../../Core/Sources/Configuration;
+			sourceTree = "<group>";
+		};
+		18FCE1F6258B8336005BC480 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1F7258B8336005BC480 /* GeoJSON */,
+				18FCE1FC258B8336005BC480 /* PresenceData.swift */,
+				18FCE1FD258B8336005BC480 /* EventName.swift */,
+				18FCE1FE258B8336005BC480 /* AssetTrackingError.swift */,
+			);
+			name = Model;
+			path = ../../Core/Sources/Model;
+			sourceTree = "<group>";
+		};
+		18FCE1F7258B8336005BC480 /* GeoJSON */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1F8258B8336005BC480 /* GeoJSONMessage.swift */,
+				18FCE1F9258B8336005BC480 /* GeoJSONGeometry.swift */,
+				18FCE1FA258B8336005BC480 /* GeoJSONProperties.swift */,
+				18FCE1FB258B8336005BC480 /* GeoJSONType.swift */,
+			);
+			path = GeoJSON;
+			sourceTree = "<group>";
+		};
+		18FCE1FF258B8336005BC480 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE200258B8336005BC480 /* Decodable+FromJSONString.swift */,
+				18FCE201258B8336005BC480 /* Codable+EncodedString.swift */,
+				18FCE202258B8336005BC480 /* UnimplementedSupport.swift */,
+			);
+			name = Utils;
+			path = ../../Core/Sources/Utils;
 			sourceTree = "<group>";
 		};
 		9B627571DD4C0A47013DA4AB /* Pods */ = {
@@ -195,7 +263,6 @@
 				180F60A9258632740014B310 /* Sources */,
 				180F60AA258632740014B310 /* Frameworks */,
 				180F60AB258632740014B310 /* Resources */,
-				184E87F525878906000DF408 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -366,11 +433,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18FCE20E258B8336005BC480 /* Decodable+FromJSONString.swift in Sources */,
+				18FCE20D258B8336005BC480 /* AssetTrackingError.swift in Sources */,
+				18FCE20C258B8336005BC480 /* EventName.swift in Sources */,
+				18FCE20A258B8336005BC480 /* GeoJSONType.swift in Sources */,
+				18FCE205258B8336005BC480 /* TransportationMode.swift in Sources */,
+				18FCE208258B8336005BC480 /* GeoJSONGeometry.swift in Sources */,
 				180F6183258634290014B310 /* AblySubscriberService.swift in Sources */,
+				18FCE204258B8336005BC480 /* Trackable.swift in Sources */,
+				18FCE209258B8336005BC480 /* GeoJSONProperties.swift in Sources */,
+				18FCE210258B8336005BC480 /* UnimplementedSupport.swift in Sources */,
+				18FCE20B258B8336005BC480 /* PresenceData.swift in Sources */,
 				180F6184258634290014B310 /* SubscriberBuilder.swift in Sources */,
+				18FCE206258B8336005BC480 /* LogConfiguration.swift in Sources */,
+				18FCE203258B8336005BC480 /* ConnectionConfiguration.swift in Sources */,
 				180F6182258634290014B310 /* DefaultSubscriber.swift in Sources */,
+				18FCE20F258B8336005BC480 /* Codable+EncodedString.swift in Sources */,
 				185094DA25889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift in Sources */,
 				185094D925889E9E00E2D2E2 /* Subscriber.swift in Sources */,
+				18FCE207258B8336005BC480 /* GeoJSONMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +615,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.ably.asset-tracking.Subscriber";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -558,6 +640,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.ably.asset-tracking.Subscriber";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

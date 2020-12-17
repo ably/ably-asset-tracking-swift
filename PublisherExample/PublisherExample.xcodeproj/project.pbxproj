@@ -18,8 +18,6 @@
 		180F61A7258634350014B310 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F619C258634350014B310 /* AppDelegate.swift */; };
 		184E8814258789A8000DF408 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184E8813258789A8000DF408 /* Publisher.framework */; };
 		184E8815258789A8000DF408 /* Publisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 184E8813258789A8000DF408 /* Publisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		18FCE158258B7915005BC480 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCE157258B7915005BC480 /* Core.framework */; };
-		18FCE159258B7915005BC480 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCE157258B7915005BC480 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		22C4B424466EAB516E4FD80F /* Pods_asset_tracking_PublisherExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,7 +29,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				184E8815258789A8000DF408 /* Publisher.framework in Embed Frameworks */,
-				18FCE159258B7915005BC480 /* Core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,7 +63,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				184E8814258789A8000DF408 /* Publisher.framework in Frameworks */,
-				18FCE158258B7915005BC480 /* Core.framework in Frameworks */,
 				22C4B424466EAB516E4FD80F /* Pods_asset_tracking_PublisherExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
