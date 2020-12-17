@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -95,8 +95,8 @@
 		180F6077258632360014B310 = {
 			isa = PBXGroup;
 			children = (
-				180F6083258632360014B310 /* Core */,
-				180F61102586330C0014B310 /* CoreTests */,
+				180F6083258632360014B310 /* Sources */,
+				180F61102586330C0014B310 /* Tests */,
 				180F6082258632360014B310 /* Products */,
 				54065136501DF471CE3B1D12 /* Pods */,
 				82CF7C3990DDDFA6A6B85261 /* Frameworks */,
@@ -112,33 +112,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		180F6083258632360014B310 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				180F613E258633C00014B310 /* Sources */,
-				180F6084258632360014B310 /* Core.h */,
-				180F6085258632360014B310 /* Info.plist */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		180F61102586330C0014B310 /* CoreTests */ = {
-			isa = PBXGroup;
-			children = (
-				180F61682586340D0014B310 /* Sources */,
-				180F61132586330C0014B310 /* Info.plist */,
-			);
-			path = CoreTests;
-			sourceTree = "<group>";
-		};
-		180F613E258633C00014B310 /* Sources */ = {
+		180F6083258632360014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				180F613F258633C00014B310 /* Configuration */,
 				180F6144258633C00014B310 /* Utils */,
 				180F6148258633C00014B310 /* Model */,
+				180F6084258632360014B310 /* Core.h */,
+				180F6085258632360014B310 /* Info.plist */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		180F61102586330C0014B310 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				180F61682586340D0014B310 /* Sources */,
+				180F61132586330C0014B310 /* Info.plist */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		180F613F258633C00014B310 /* Configuration */ = {
@@ -378,7 +370,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./Core \n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./Sources \n";
 		};
 		387047687D93B0C573393BE7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -576,7 +568,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Core/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -600,7 +592,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Core/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -621,7 +613,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = CoreTests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -640,7 +632,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = CoreTests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

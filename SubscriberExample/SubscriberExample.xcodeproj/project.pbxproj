@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -84,7 +84,8 @@
 		180F60C9258632B40014B310 = {
 			isa = PBXGroup;
 			children = (
-				180F60D4258632B40014B310 /* SubscriberExample */,
+				180F61B5258634420014B310 /* Resources */,
+				180F61A9258634420014B310 /* Sources */,
 				180F60D3258632B40014B310 /* Products */,
 				14BEDC866427695CC7AE99BE /* Pods */,
 				D8E7ACFB43B945847EF8DCA4 /* Frameworks */,
@@ -97,15 +98,6 @@
 				180F60D2258632B40014B310 /* SubscriberExample.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		180F60D4258632B40014B310 /* SubscriberExample */ = {
-			isa = PBXGroup;
-			children = (
-				180F61B5258634420014B310 /* Resources */,
-				180F61A9258634420014B310 /* Sources */,
-			);
-			path = SubscriberExample;
 			sourceTree = "<group>";
 		};
 		180F61A9258634420014B310 /* Sources */ = {
@@ -253,7 +245,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./SubscriberExample\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./Sources\n\n";
 		};
 		98901E8D1547F173660B26D9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -447,7 +439,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "$(SRCROOT)/SubscriberExample/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,7 +458,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "$(SRCROOT)/SubscriberExample/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

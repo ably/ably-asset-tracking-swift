@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -96,8 +96,8 @@
 		180F60A3258632740014B310 = {
 			isa = PBXGroup;
 			children = (
-				180F60AF258632740014B310 /* Subscriber */,
-				180F61302586332B0014B310 /* SubscriberTests */,
+				180F60AF258632740014B310 /* Sources */,
+				180F61302586332B0014B310 /* Tests */,
 				180F60AE258632740014B310 /* Products */,
 				9B627571DD4C0A47013DA4AB /* Pods */,
 				D5C6911A2677C8E7B83EA9E0 /* Frameworks */,
@@ -113,26 +113,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		180F60AF258632740014B310 /* Subscriber */ = {
-			isa = PBXGroup;
-			children = (
-				180F617B258634290014B310 /* Sources */,
-				180F60B0258632740014B310 /* Subscriber.h */,
-				180F60B1258632740014B310 /* Info.plist */,
-			);
-			path = Subscriber;
-			sourceTree = "<group>";
-		};
-		180F61302586332B0014B310 /* SubscriberTests */ = {
-			isa = PBXGroup;
-			children = (
-				180F61312586332B0014B310 /* SubscriberTests.swift */,
-				180F61332586332B0014B310 /* Info.plist */,
-			);
-			path = SubscriberTests;
-			sourceTree = "<group>";
-		};
-		180F617B258634290014B310 /* Sources */ = {
+		180F60AF258632740014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				180F617E258634290014B310 /* Services */,
@@ -140,8 +121,19 @@
 				185094D725889E9E00E2D2E2 /* Subscriber.swift */,
 				180F6180258634290014B310 /* SubscriberBuilder.swift */,
 				180F617D258634290014B310 /* DefaultSubscriber.swift */,
+				180F60B0258632740014B310 /* Subscriber.h */,
+				180F60B1258632740014B310 /* Info.plist */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		180F61302586332B0014B310 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				180F61312586332B0014B310 /* SubscriberTests.swift */,
+				180F61332586332B0014B310 /* Info.plist */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		180F617E258634290014B310 /* Services */ = {
@@ -304,7 +296,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./Subscriber\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./Sources\n";
 		};
 		E2D6A39CE565CE8692BB0498 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -532,7 +524,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Subscriber/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -556,7 +548,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Subscriber/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -577,7 +569,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = SubscriberTests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -596,7 +588,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = SubscriberTests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -84,7 +84,8 @@
 		180F60EA258632D90014B310 = {
 			isa = PBXGroup;
 			children = (
-				180F60F5258632D90014B310 /* PublisherExample */,
+				180F6192258634350014B310 /* Sources */,
+				180F618B258634350014B310 /* Resources */,
 				180F60F4258632D90014B310 /* Products */,
 				13D9AE7CB68D65C53C76082C /* Pods */,
 				A5AB50E1560DB553BC23560C /* Frameworks */,
@@ -97,15 +98,6 @@
 				180F60F3258632D90014B310 /* PublisherExample.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		180F60F5258632D90014B310 /* PublisherExample */ = {
-			isa = PBXGroup;
-			children = (
-				180F6192258634350014B310 /* Sources */,
-				180F618B258634350014B310 /* Resources */,
-			);
-			path = PublisherExample;
 			sourceTree = "<group>";
 		};
 		180F618B258634350014B310 /* Resources */ = {
@@ -271,7 +263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./PublisherExample\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./Sources\n";
 		};
 		65E904E8F0D1B546437D55FC /* [CP] Prepare Artifacts */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -464,7 +456,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "$(SRCROOT)/PublisherExample/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -483,7 +475,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "$(SRCROOT)/PublisherExample/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
