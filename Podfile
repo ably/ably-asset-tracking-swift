@@ -33,13 +33,12 @@ abstract_target 'asset_tracking' do
   # Example apps
   target 'PublisherExample' do
     project 'PublisherExample/PublisherExample.xcodeproj'
-    mapbox_sdk
-    ably_sdk
+    pod 'AblyAssetTracking/Publisher', :path => 'AblyAssetTracking.podspec'
   end
 
   target 'SubscriberExample' do
     project 'SubscriberExample/SubscriberExample.xcodeproj'
-    ably_sdk
+    pod 'AblyAssetTracking/Subscriber', :path => 'AblyAssetTracking.podspec'
   end
 
   # Tests

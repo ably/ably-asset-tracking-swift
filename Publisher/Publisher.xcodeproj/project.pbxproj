@@ -664,7 +664,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B412391C99428EFFA9D511B /* Pods-asset_tracking-PublisherTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -683,7 +682,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 713F639B2A96304D65AB1950 /* Pods-asset_tracking-PublisherTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
