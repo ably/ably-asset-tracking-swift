@@ -6,7 +6,7 @@ import Logging
 let logger: Logger = Logger(label: "com.ably.asset-tracking.Publisher")
 
 class DefaultPublisher: Publisher {
-
+    private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
     private let logConfiguration: LogConfiguration
     private let locationService: LocationService
@@ -22,7 +22,8 @@ class DefaultPublisher: Publisher {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
-
+        self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher",
+                                          qos: .default)
         self.locationService = LocationService()
         self.ablyService = AblyPublisherService(configuration: connectionConfiguration)
 
@@ -31,14 +32,18 @@ class DefaultPublisher: Publisher {
     }
 
     func track(trackable: Trackable) {
-        activeTrackable = trackable
-        ablyService.track(trackable: trackable) { [weak self] error in
+        performOnWorkingThread { [weak self] in
             guard let self = self else { return }
 
-            if let error = error {
-                self.delegate?.publisher(sender: self, didFailWithError: error)
+            self.activeTrackable = trackable
+            self.ablyService.track(trackable: trackable) { [weak self] error in
+                if let error = error {
+                    self?.notifyDelegateDidFailWithError(error)
+                }
+                self?.performOnWorkingThread { [weak self] in
+                    self?.locationService.startUpdatingLocation()
+                }
             }
-            self.locationService.startUpdatingLocation()
         }
     }
 
@@ -58,32 +63,57 @@ class DefaultPublisher: Publisher {
         // TODO: Implement method
         failWithNotYetImplemented()
     }
+
+    // MARK: Utils
+    private func performOnWorkingThread(_ operation: @escaping () -> Void) {
+        workingQueue.async(execute: operation)
+    }
+
+    private func performOnMainThread(_ operation: @escaping () -> Void) {
+        DispatchQueue.main.async(execute: operation)
+    }
+
+    private func notifyDelegateDidFailWithError(_ error: Error) {
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didFailWithError: error)
+        }
+    }
 }
 
 extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: Error) {
         logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
-        delegate?.publisher(sender: self, didFailWithError: error)
+        notifyDelegateDidFailWithError(error)
     }
 
     func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
         logger.debug("locationService.didUpdateRawLocation.", source: "DefaultPublisher")
-        delegate?.publisher(sender: self, didUpdateRawLocation: location)
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didUpdateRawLocation: location)
+        }
+
         ablyService.sendRawAssetLocation(location: location) { [weak self] error in
-            if let self = self,
-               let error = error {
-                self.delegate?.publisher(sender: self, didFailWithError: error)
+            if let error = error {
+                self?.notifyDelegateDidFailWithError(error)
             }
         }
     }
 
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
-        delegate?.publisher(sender: self, didUpdateEnhancedLocation: location)
-        ablyService.sendEnhancedAssetLocation(location: location) { [weak self] error in
-            if let self = self,
-               let error = error {
-                self.delegate?.publisher(sender: self, didFailWithError: error)
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: location)
+        }
+
+        performOnWorkingThread { [weak self] in
+            guard let self = self else { return }
+            self.ablyService.sendEnhancedAssetLocation(location: location) { [weak self] error in
+                if let error = error {
+                    self?.notifyDelegateDidFailWithError(error)
+                }
             }
         }
     }
@@ -92,6 +122,9 @@ extension DefaultPublisher: LocationServiceDelegate {
 extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
-        delegate?.publisher(sender: self, didChangeConnectionState: state)
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didChangeConnectionState: state)
+        }
     }
 }
