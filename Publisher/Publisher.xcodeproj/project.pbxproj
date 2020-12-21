@@ -25,6 +25,7 @@
 		185D6D29258F5A7D00935049 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D28258F5A7D00935049 /* TrackableResolutionRequest.swift */; };
 		185D6D2D258F65F000935049 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D2C258F65F000935049 /* Subscriber.swift */; };
 		185D6D33258F684E00935049 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D32258F684E00935049 /* Proximity.swift */; };
+		185D6D372590849500935049 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D362590849500935049 /* Accuracy.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
 		18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D1258B8264005BC480 /* TransportationMode.swift */; };
@@ -77,6 +78,7 @@
 		185D6D28258F5A7D00935049 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
 		185D6D2C258F65F000935049 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		185D6D32258F684E00935049 /* Proximity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
+		185D6D362590849500935049 /* Accuracy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
 		18FCE1D1258B8264005BC480 /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		185D6D13258F55F800935049 /* Resolution Policy */ = {
 			isa = PBXGroup;
 			children = (
+				185D6D362590849500935049 /* Accuracy.swift */,
 				185CDD7B258BAA3F009AA564 /* ResolutionPolicy.swift */,
 				185D6D16258F569500935049 /* Resolution.swift */,
 				185D6D2C258F65F000935049 /* Subscriber.swift */,
@@ -481,6 +484,7 @@
 				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
 				185D6D17258F569500935049 /* Resolution.swift in Sources */,
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,
+				185D6D372590849500935049 /* Accuracy.swift in Sources */,
 				185CDD7C258BAA3F009AA564 /* ResolutionPolicy.swift in Sources */,
 				185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */,
 				185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */,

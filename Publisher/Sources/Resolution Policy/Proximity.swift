@@ -4,12 +4,12 @@ protocol Proximity { }
 
 class DefaultProximity: Proximity {
     /**
-     * Estimated time remaining to arrive at the destination, in milliseconds.
+     Estimated time remaining to arrive at the destination, in milliseconds.
      */
     let temporal: Double?
 
     /**
-     * Distance from the destination, in metres.
+     Distance from the destination, in metres.
      */
     let spatial: Double?
 
@@ -26,15 +26,15 @@ class DefaultProximity: Proximity {
 
 protocol ProximityHandler {
     /**
-     * The desired proximity has been reached.
-     *
-     * @param threshold The threshold which was supplied when this handler was registered.
+     The desired proximity has been reached.
+     - Parameters:
+     - threshold: The threshold which was supplied when this handler was registered.
      */
     func onProximityReached(threshold: Proximity)
 
     /**
-     * This handler has been cancelled, either explicitly using [cancelProximityThreshold], or implicitly
-     * because a new handler has taken its place for the associated [Publisher].
+     This handler has been cancelled, either explicitly using [cancelProximityThreshold], or implicitly
+     because a new handler has taken its place for the associated [Publisher].
      */
     func onProximityCancelled()
 }

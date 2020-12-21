@@ -1,50 +1,23 @@
-protocol ResolutionPolicy {
-    func resolve(request: TrackableResolutionRequest) -> Resolution
-    func resolve(resolutions: [Resolution]) -> Resolution
-}
-
 /**
- * The accuracy of a geographical coordinate.
- *
- * Presents a unified representation of location accuracy (Apple) and quality priority (Android).
+  Defines the strategy by which the various `ResolutionRequest`s and preferences are translated by `Publisher`
+  instances into a target `Resolution`.
  */
-public enum Accuracy: Int {
+protocol ResolutionPolicy {
     /**
-     * - Android: [PRIORITY_NO_POWER](https://developers.google.com/android/reference/com/google/android/gms/location/LocationRequest#PRIORITY_NO_POWER)
-     *   (best possible with zero additional power consumption)
-     * - Apple: [kCLLocationAccuracyReduced](https://developer.apple.com/documentation/corelocation/kcllocationaccuracyreduced)
-     *   (preserves the user’s country, typically preserves the city, and is usually within 1–20 kilometers of the actual location)
+      Determine a target `Resolution` for a `Trackable` object.
+
+      The intention is for the resulting [Resolution] to impact networking per [Trackable].
      */
-    case minimum = 1
+    func resolve(request: TrackableResolutionRequest) -> Resolution
 
     /**
-     * - Android: [PRIORITY_LOW_POWER](https://developers.google.com/android/reference/com/google/android/gms/location/LocationRequest#PRIORITY_LOW_POWER)
-     *   (coarse "city" level, circa 10km accuracy)
-     * - Apple: Either [kCLLocationAccuracyKilometer](https://developer.apple.com/documentation/corelocation/kcllocationaccuracykilometer)
-     *   or [kCLLocationAccuracyThreeKilometers](https://developer.apple.com/documentation/corelocation/kcllocationaccuracythreekilometers)
-     */
-    case low = 2
+      Determine a target `Resolution` from a set of resolutions.
 
-    /**
-     * - Android: [PRIORITY_BALANCED_POWER_ACCURACY](https://developers.google.com/android/reference/com/google/android/gms/location/LocationRequest#PRIORITY_BALANCED_POWER_ACCURACY)
-     *   (coarse "block" level, circa 100m accuracy)
-     * - Apple: Either [kCLLocationAccuracyNearestTenMeters](https://developer.apple.com/documentation/corelocation/kcllocationaccuracynearesttenmeters)
-     *   or [kCLLocationAccuracyHundredMeters](https://developer.apple.com/documentation/corelocation/kcllocationaccuracyhundredmeters)
-     */
-    case balanced = 3
+      This set may be empty.
 
-    /**
-     * - Android: [PRIORITY_HIGH_ACCURACY](https://developers.google.com/android/reference/com/google/android/gms/location/LocationRequest#PRIORITY_HIGH_ACCURACY)
-     *   (most accurate locations that are available)
-     * - Apple: [kCLLocationAccuracyBest](https://developer.apple.com/documentation/corelocation/kcllocationaccuracybest)
-     *   (very high accuracy but not to the same level required for navigation apps)
+      The intention use for this method is to be applied to Resolutions returned by first overload
+      of `resolve` and to determine out of different resolutions per `Trackable` which `Resolution`
+      should be used for setting the location engine updates frequency.
      */
-    case high = 4
-
-    /**
-     * - Android: same as [HIGH]
-     * - Apple: [kCLLocationAccuracyBestForNavigation](https://developer.apple.com/documentation/corelocation/kcllocationaccuracybestfornavigation)
-     *   (precise position information required at all times, with significant extra power requirement implication)
-     */
-    case maximum = 5
+    func resolve(resolutions: Set<Resolution>) -> Resolution
 }
