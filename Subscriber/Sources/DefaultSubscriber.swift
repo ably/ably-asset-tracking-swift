@@ -3,7 +3,11 @@ import CoreLocation
 import Logging
 
 // Default logger used in Publisher SDK
-let logger = Logger(label: "io.ably.asset-tracking.Subscriber")
+let logger: Logger = {
+    var logger = Logger(label: "io.ably.asset-tracking.Subscriber")
+    logger.logLevel = .trace
+    return logger
+}()
 
 class DefaultSubscriber: Subscriber {
     private let logConfiguration: LogConfiguration

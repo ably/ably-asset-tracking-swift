@@ -31,7 +31,7 @@ class AblySubscriberService {
         // Trigger offline event at start
         delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .offline)
         channel.presence.subscribe({ [weak self] message in
-            logger.debug("Received presence update from channel: \(channel.name)")
+            logger.debug("Received presence update from channel")
             self?.handleIncomingPresenceMessage(message)
         })
 
@@ -46,12 +46,12 @@ class AblySubscriberService {
         }
 
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in
-            logger.debug("Received raw location message from channel: \(channel.name)")
+            logger.debug("Received raw location message from channel")
             self?.handleLocationUpdateResponse(forEvent: .raw, messageData: message.data)
         }
 
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
-            logger.debug("Received enhanced location message from channel: \(channel.name)")
+            logger.debug("Received enhanced location message from channel")
             self?.handleLocationUpdateResponse(forEvent: .enhanced, messageData: message.data)
         }
     }
