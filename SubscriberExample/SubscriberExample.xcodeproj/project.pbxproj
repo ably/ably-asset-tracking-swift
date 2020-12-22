@@ -17,26 +17,8 @@
 		180F61C1258634420014B310 /* SubscriberKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61B4258634420014B310 /* SubscriberKeys.swift */; };
 		180F61C2258634420014B310 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B6258634420014B310 /* Assets.xcassets */; };
 		180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B7258634420014B310 /* LaunchScreen.storyboard */; };
-		184E87D125878881000DF408 /* Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184E87D025878881000DF408 /* Subscriber.framework */; };
-		184E87D225878881000DF408 /* Subscriber.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 184E87D025878881000DF408 /* Subscriber.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		18FCE15B258B7926005BC480 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCE15A258B7926005BC480 /* Core.framework */; };
-		18FCE15C258B7926005BC480 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 18FCE15A258B7926005BC480 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AD1A2941DA0611830A033DC6 /* Pods_asset_tracking_SubscriberExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE9C779EED7B3BB95CF6565 /* Pods_asset_tracking_SubscriberExample.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		184E87AE25878720000DF408 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				184E87D225878881000DF408 /* Subscriber.framework in CopyFiles */,
-				18FCE15C258B7926005BC480 /* Core.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		10C9EE25682A62F3C1679AC5 /* Pods-asset_tracking-SubscriberExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberExample.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberExample/Pods-asset_tracking-SubscriberExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -65,8 +47,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				184E87D125878881000DF408 /* Subscriber.framework in Frameworks */,
-				18FCE15B258B7926005BC480 /* Core.framework in Frameworks */,
 				AD1A2941DA0611830A033DC6 /* Pods_asset_tracking_SubscriberExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,7 +156,6 @@
 				180F60CE258632B40014B310 /* Sources */,
 				180F60CF258632B40014B310 /* Frameworks */,
 				180F60D0258632B40014B310 /* Resources */,
-				184E87AE25878720000DF408 /* CopyFiles */,
 				DE1646D25EED47AD0D3D12A0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (

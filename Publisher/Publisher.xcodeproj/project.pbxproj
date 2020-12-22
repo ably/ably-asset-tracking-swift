@@ -15,9 +15,22 @@
 		180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61742586341E0014B310 /* AblyPublisherService.swift */; };
 		180F617A2586341E0014B310 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61752586341E0014B310 /* LocationService.swift */; };
 		183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183BE6B72588AC8D0097A30B /* ConnectionState.swift */; };
-		184E873325877C6D000DF408 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184E873225877C6D000DF408 /* Core.framework */; };
 		185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DD25889EBB00E2D2E2 /* Publisher.swift */; };
 		185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */; };
+		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
+		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
+		18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D1258B8264005BC480 /* TransportationMode.swift */; };
+		18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D2258B8264005BC480 /* LogConfiguration.swift */; };
+		18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D5258B8264005BC480 /* GeoJSONMessage.swift */; };
+		18FCE1E5258B8264005BC480 /* GeoJSONGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D6258B8264005BC480 /* GeoJSONGeometry.swift */; };
+		18FCE1E6258B8264005BC480 /* GeoJSONProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D7258B8264005BC480 /* GeoJSONProperties.swift */; };
+		18FCE1E7258B8264005BC480 /* GeoJSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D8258B8264005BC480 /* GeoJSONType.swift */; };
+		18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D9258B8264005BC480 /* PresenceData.swift */; };
+		18FCE1E9258B8264005BC480 /* EventName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DA258B8264005BC480 /* EventName.swift */; };
+		18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DB258B8264005BC480 /* AssetTrackingError.swift */; };
+		18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */; };
+		18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */; };
+		18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */; };
 		BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FF3FC4C81DED6B6A5792B3 /* Pods_asset_tracking_Publisher.framework */; };
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
 /* End PBXBuildFile section */
@@ -48,6 +61,20 @@
 		184E873225877C6D000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094DD25889EBB00E2D2E2 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherBuilder.swift; sourceTree = "<group>"; };
+		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
+		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
+		18FCE1D1258B8264005BC480 /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
+		18FCE1D2258B8264005BC480 /* LogConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogConfiguration.swift; sourceTree = "<group>"; };
+		18FCE1D5258B8264005BC480 /* GeoJSONMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONMessage.swift; sourceTree = "<group>"; };
+		18FCE1D6258B8264005BC480 /* GeoJSONGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometry.swift; sourceTree = "<group>"; };
+		18FCE1D7258B8264005BC480 /* GeoJSONProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONProperties.swift; sourceTree = "<group>"; };
+		18FCE1D8258B8264005BC480 /* GeoJSONType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONType.swift; sourceTree = "<group>"; };
+		18FCE1D9258B8264005BC480 /* PresenceData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceData.swift; sourceTree = "<group>"; };
+		18FCE1DA258B8264005BC480 /* EventName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
+		18FCE1DB258B8264005BC480 /* AssetTrackingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingError.swift; sourceTree = "<group>"; };
+		18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+FromJSONString.swift"; sourceTree = "<group>"; };
+		18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+EncodedString.swift"; sourceTree = "<group>"; };
+		18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnimplementedSupport.swift; sourceTree = "<group>"; };
 		35611B0FAFCE409CE8FE313E /* Pods-PublisherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PublisherTests.release.xcconfig"; path = "Target Support Files/Pods-PublisherTests/Pods-PublisherTests.release.xcconfig"; sourceTree = "<group>"; };
 		5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_PublisherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		713F639B2A96304D65AB1950 /* Pods-asset_tracking-PublisherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherTests.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherTests/Pods-asset_tracking-PublisherTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -64,7 +91,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				184E873325877C6D000DF408 /* Core.framework in Frameworks */,
 				BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,6 +130,7 @@
 		180F6099258632510014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				18FCE195258B7FBB005BC480 /* Common */,
 				185094E325889ED200E2D2E2 /* Model */,
 				180F61732586341E0014B310 /* Services */,
 				185094DD25889EBB00E2D2E2 /* Publisher.swift */,
@@ -140,6 +167,62 @@
 				183BE6B72588AC8D0097A30B /* ConnectionState.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		18FCE195258B7FBB005BC480 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1CE258B8264005BC480 /* Configuration */,
+				18FCE1D3258B8264005BC480 /* Model */,
+				18FCE1DC258B8264005BC480 /* Utils */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		18FCE1CE258B8264005BC480 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */,
+				18FCE1D0258B8264005BC480 /* Trackable.swift */,
+				18FCE1D1258B8264005BC480 /* TransportationMode.swift */,
+				18FCE1D2258B8264005BC480 /* LogConfiguration.swift */,
+			);
+			name = Configuration;
+			path = ../../Core/Sources/Configuration;
+			sourceTree = "<group>";
+		};
+		18FCE1D3258B8264005BC480 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1D4258B8264005BC480 /* GeoJSON */,
+				18FCE1D9258B8264005BC480 /* PresenceData.swift */,
+				18FCE1DA258B8264005BC480 /* EventName.swift */,
+				18FCE1DB258B8264005BC480 /* AssetTrackingError.swift */,
+			);
+			name = Model;
+			path = ../../Core/Sources/Model;
+			sourceTree = "<group>";
+		};
+		18FCE1D4258B8264005BC480 /* GeoJSON */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1D5258B8264005BC480 /* GeoJSONMessage.swift */,
+				18FCE1D6258B8264005BC480 /* GeoJSONGeometry.swift */,
+				18FCE1D7258B8264005BC480 /* GeoJSONProperties.swift */,
+				18FCE1D8258B8264005BC480 /* GeoJSONType.swift */,
+			);
+			path = GeoJSON;
+			sourceTree = "<group>";
+		};
+		18FCE1DC258B8264005BC480 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */,
+				18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */,
+				18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */,
+			);
+			name = Utils;
+			path = ../../Core/Sources/Utils;
 			sourceTree = "<group>";
 		};
 		9B719654E1BFB314021F4272 /* Pods */ = {
@@ -362,13 +445,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */,
+				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,
+				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
+				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
+				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
 				180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */,
+				18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */,
+				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
+				18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */,
 				183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */,
 				185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */,
+				18FCE1E6258B8264005BC480 /* GeoJSONProperties.swift in Sources */,
 				180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */,
+				18FCE1E5258B8264005BC480 /* GeoJSONGeometry.swift in Sources */,
+				18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */,
 				180F617A2586341E0014B310 /* LocationService.swift in Sources */,
+				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,
+				18FCE1E7258B8264005BC480 /* GeoJSONType.swift in Sources */,
 				180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */,
+				18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +629,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.ably.asset-tracking.Publisher";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -556,6 +654,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.ably.asset-tracking.Publisher";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -565,7 +664,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B412391C99428EFFA9D511B /* Pods-asset_tracking-PublisherTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -584,7 +682,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 713F639B2A96304D65AB1950 /* Pods-asset_tracking-PublisherTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
