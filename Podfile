@@ -13,9 +13,9 @@ end
 
 abstract_target 'asset_tracking' do
   # Official Apple SwiftLog pod
-  pod 'Logging'
+  pod 'Logging', '~> 1.4.0'
   pod 'SwiftLint'
-  
+
   target 'Core' do
     project 'Core/Core.xcodeproj'
   end

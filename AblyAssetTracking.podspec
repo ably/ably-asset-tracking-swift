@@ -12,12 +12,14 @@ Pod::Spec.new do |spec|
   spec.subspec 'Publisher' do |ss|
     ss.dependency 'Ably', '~> 1.2.0'
     ss.dependency 'MapboxCoreNavigation', '~> 1.1.0'
+    ss.dependency 'Logging', '~> 1.4.0'
     ss.source_files = 'Publisher/Sources/**/*.swift', 'Core/Sources/**/*.swift'
     ss.ios.deployment_target = '12.0'
   end
 
   spec.subspec 'Subscriber' do |ss|
     ss.dependency 'Ably', '~> 1.2.0'
+    ss.dependency 'Logging', '~> 1.4.0'
     ss.source_files = 'Subscriber/Sources/**/*.swift', 'Core/Sources/**/*.swift'
     ss.ios.deployment_target = '12.0'
   end
