@@ -10,6 +10,7 @@ PODS:
   - AblyAssetTracking/Subscriber (0.0.1):
     - Ably (~> 1.2.0)
   - AblyDeltaCodec (1.2.0)
+  - Logging (1.4.0)
   - MapboxAccounts (2.3.0)
   - MapboxCommon (7.1.2)
   - MapboxCoreNavigation (1.1.0):
@@ -35,6 +36,7 @@ DEPENDENCIES:
   - Ably (~> 1.2.0)
   - AblyAssetTracking/Publisher (from `AblyAssetTracking.podspec`)
   - AblyAssetTracking/Subscriber (from `AblyAssetTracking.podspec`)
+  - Logging
   - MapboxCoreNavigation (~> 1.1.0)
   - SwiftLint
 
@@ -42,6 +44,7 @@ SPEC REPOS:
   trunk:
     - Ably
     - AblyDeltaCodec
+    - Logging
     - MapboxAccounts
     - MapboxCommon
     - MapboxCoreNavigation
@@ -63,6 +66,7 @@ SPEC CHECKSUMS:
   Ably: 9f143677993cb6df20fce4551b9b6b2e55ad2f4d
   AblyAssetTracking: 21dea2a5ec014a1412e5ccc52cf20ed70b25a528
   AblyDeltaCodec: 6123f31df5b04a0f5452968505a46ba16a9eb689
+  Logging: beeb016c9c80cf77042d62e83495816847ef108b
   MapboxAccounts: 84abfdde95d9dc483f604c1b0fe1861edf691ce7
   MapboxCommon: e469f6c62de29e1906c37e0bce65f6826e7fb9ac
   MapboxCoreNavigation: 1e859a9660eb8558fe5ab2dbe7d6ef396d9d9b0c
@@ -76,6 +80,6 @@ SPEC CHECKSUMS:
   Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: 777ffced108c49ce1f3d8356f37c51a7511ccdfa
+PODFILE CHECKSUM: be35cfd6d1c3a20271ee84a8bc39592405dd147f
 
 COCOAPODS: 1.10.0

@@ -26,12 +26,11 @@ class AblyPublisherService {
     }
 
     private func setup() {
-        // TODO: Log suitable message when Logger become available:
-        // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
         client.connection.on { [weak self] stateChange in
             guard let current = stateChange?.current,
                   let self = self
             else { return }
+            logger.debug("Connection to Ably changed. New state: \(current)", source: "AblyPublisherService")
             self.delegate?.publisherService(
                 sender: self,
                 didChangeConnectionState: current.toConnectionState()
@@ -48,8 +47,9 @@ class AblyPublisherService {
 
         channel = client.channels.get(trackable.id)
         channel?.presence.enterClient(configuration.clientId, data: data) { error in
-            // TODO: Log suitable message when Logger become available:
-            // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
+            error == nil ?
+                logger.debug("Entered to presence successfully", source: "AblyPublisherService") :
+                logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
             completion?(error)
         }
     }
