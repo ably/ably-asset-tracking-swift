@@ -18,6 +18,8 @@
 		180F61A7258634350014B310 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F619C258634350014B310 /* AppDelegate.swift */; };
 		184E8814258789A8000DF408 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184E8813258789A8000DF408 /* Publisher.framework */; };
 		184E8815258789A8000DF408 /* Publisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 184E8813258789A8000DF408 /* Publisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18FCE158258B7915005BC480 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCE157258B7915005BC480 /* Core.framework */; };
+		18FCE159258B7915005BC480 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCE157258B7915005BC480 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		22C4B424466EAB516E4FD80F /* Pods_asset_tracking_PublisherExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +31,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				184E8815258789A8000DF408 /* Publisher.framework in Embed Frameworks */,
+				18FCE159258B7915005BC480 /* Core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,6 +53,7 @@
 		184E87972587832D000DF408 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		184E8813258789A8000DF408 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_PublisherExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18FCE157258B7915005BC480 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B9333D6414A2A3550296030 /* Pods-asset_tracking-PublisherExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherExample.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample.debug.xcconfig"; sourceTree = "<group>"; };
 		47DB52A27D84E8297C6907BC /* Pods-asset_tracking-PublisherExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherExample.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample.release.xcconfig"; sourceTree = "<group>"; };
 		7326CC839458B89D90D44F71 /* Pods-PublisherExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PublisherExample.debug.xcconfig"; path = "Target Support Files/Pods-PublisherExample/Pods-PublisherExample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -62,6 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				184E8814258789A8000DF408 /* Publisher.framework in Frameworks */,
+				18FCE158258B7915005BC480 /* Core.framework in Frameworks */,
 				22C4B424466EAB516E4FD80F /* Pods_asset_tracking_PublisherExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +156,7 @@
 		A5AB50E1560DB553BC23560C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18FCE157258B7915005BC480 /* Core.framework */,
 				184E8813258789A8000DF408 /* Publisher.framework */,
 				184E87972587832D000DF408 /* Publisher.framework */,
 				18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */,
@@ -166,7 +172,6 @@
 			buildConfigurationList = 180F6107258632DA0014B310 /* Build configuration list for PBXNativeTarget "PublisherExample" */;
 			buildPhases = (
 				A3592AFB92CC042D68E3EF19 /* [CP] Check Pods Manifest.lock */,
-				65E904E8F0D1B546437D55FC /* [CP] Prepare Artifacts */,
 				183BE6B02588A5BA0097A30B /* Run SwiftLint */,
 				180F60EF258632D90014B310 /* Sources */,
 				180F60F0258632D90014B310 /* Frameworks */,
@@ -264,23 +269,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config ../.swiftlint.yml --path ./Sources\n";
-		};
-		65E904E8F0D1B546437D55FC /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample-artifacts-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample-artifacts-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample-artifacts.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		A3592AFB92CC042D68E3EF19 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

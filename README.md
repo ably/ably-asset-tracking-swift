@@ -23,9 +23,9 @@ In this repository there are two SDKs for iOS devices:
 - the [Asset Publishing SDK](Publisher/)
 - the [Asset Subscribing SDK](Subscriber/)
 
-The Asset Publishing SDK is used to get the location of the assets that need to be tracked. 
+The Asset Publishing SDK is used to get the location of the assets that need to be tracked.
 
-Here is an example of how the Asset Publishing SDK can be used: 
+Here is an example of how the Asset Publishing SDK can be used:
 
 ```swift
 // Initialise a Publisher
@@ -41,9 +41,9 @@ publisher = try? PublisherFactory.publishers() // get a Publisher Builder
 publisher?.track(trackable: Trackable(id: trackingId)) // provide a tracking ID of the asset
 ```
 
-Asset Subscribing SDK is used to receive the location of the required assets. 
+Asset Subscribing SDK is used to receive the location of the required assets.
 
-Here is an example of how Asset Subscribing SDK can be used: 
+Here is an example of how Asset Subscribing SDK can be used:
 
 ```swift
 subscriber = try? SubscriberFactory.subscribers() // Get a Subscriber Builder
@@ -84,12 +84,10 @@ There are 3 framework targets with dedicated tests and 2 example apps:
 
 ### API Keys and Access Tokens for Example Apps
 
-The following secrets must be specified in order to run the example apps: 
+The following secrets must be specified in order to run the example apps:
 
-- `ABLY_API_KEY`: this needs to be provided in `PublisherKeys.swift` or `SubscriberKeys.swift` respectively for publishing and subscribing example apps. 
+- `ABLY_API_KEY`: this needs to be provided in `PublisherKeys.swift` or `SubscriberKeys.swift` respectively for publishing and subscribing example apps.
 - `MAPBOX_ACCESS_TOKEN` needs to be set in the `Info.plist` file for `MGLMapboxAccessToken` key.
-
-
 
 ### Build instructions
 
@@ -112,10 +110,14 @@ bundle exec pod install
 It's common that several developers (or CI) will have different tool versions installed locally on their machines, and it may cause compatibility problems (some tools might work only on dedicated versions). So to avoid asking everyone to upgrade/downgrade their local tools it's easier to use some tool to execute needed commands with preset versions and that's what Bundler does. Of course, you are still free to execute all CLI commands directly if you wish.
 
 Here is the list of tools versioned with the Bundler with their versions:
-- `CocoaPods` (1.9.3)
+- `CocoaPods` (1.10.0)
 - `Fastlane` (2.169.0)
 
 You may always check `Gemfile.lock` as it's the source of truth for versions of used libraries.
+
+#### Xcode 12 and Apple M1 compability
+
+Due to [MapBox CoreNavigation SDK issue](https://github.com/ably/ably-asset-tracking-cocoa/issues/40), to be able to build example apps for physical devices, we needed to exclude the `arm64` architecture from supported simulator architectures (check post install script in `Podfile`). It means, that if you are using Apple M1 based computer, you **will not** be able run example app on simulator.
 
 ### Concepts and assumptions
 
