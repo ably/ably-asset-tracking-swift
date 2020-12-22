@@ -112,6 +112,7 @@ It's common that several developers (or CI) will have different tool versions in
 Here is the list of tools versioned with the Bundler with their versions:
 - `CocoaPods` (1.10.0)
 - `Fastlane` (2.169.0)
+- `Slather` (2.6.0)
 
 You may always check `Gemfile.lock` as it's the source of truth for versions of used libraries.
 
