@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1888938F257660BE00866E6F"
-               BuildableName = "Subscriber.framework"
-               BlueprintName = "Subscriber"
-               ReferencedContainer = "container:AblyAssetTracking.xcodeproj">
+               BlueprintIdentifier = "180F6096258632510014B310"
+               BuildableName = "Publisher.framework"
+               BlueprintName = "Publisher"
+               ReferencedContainer = "container:Publisher.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18889397257660BE00866E6F"
-               BuildableName = "SubscriberTests.xctest"
-               BlueprintName = "SubscriberTests"
-               ReferencedContainer = "container:AblyAssetTracking.xcodeproj">
+               BlueprintIdentifier = "180F611F258633140014B310"
+               BuildableName = "PublisherTests.xctest"
+               BlueprintName = "PublisherTests"
+               ReferencedContainer = "container:Publisher.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -60,10 +60,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1888938F257660BE00866E6F"
-            BuildableName = "Subscriber.framework"
-            BlueprintName = "Subscriber"
-            ReferencedContainer = "container:AblyAssetTracking.xcodeproj">
+            BlueprintIdentifier = "180F6096258632510014B310"
+            BuildableName = "Publisher.framework"
+            BlueprintName = "Publisher"
+            ReferencedContainer = "container:Publisher.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

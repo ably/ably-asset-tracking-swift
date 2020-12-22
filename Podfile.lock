@@ -27,8 +27,8 @@ PODS:
   - ULID (1.1.0)
 
 DEPENDENCIES:
-  - Ably (>= 1.2)
-  - MapboxCoreNavigation (~> 1.0)
+  - Ably (~> 1.2.0)
+  - MapboxCoreNavigation (~> 1.1.0)
   - SwiftLint
 
 SPEC REPOS:
@@ -64,6 +64,6 @@ SPEC CHECKSUMS:
   Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: a1aa21609cc35a4d91b7817bf98cf80b7415a1de
+PODFILE CHECKSUM: cbc311b38bf3e6ae1c4cb616b64ae0789076bc0d
 
 COCOAPODS: 1.9.3

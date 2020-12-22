@@ -1,6 +1,7 @@
 import UIKit
 import Ably
 import CoreLocation
+import Core
 
 protocol AblySubscriberServiceDelegate: AnyObject {
     func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus)

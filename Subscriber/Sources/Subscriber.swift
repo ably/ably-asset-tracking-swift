@@ -1,5 +1,18 @@
 import UIKit
 import CoreLocation
+import Core
+
+/**
+ `ConnectionConfiguration` is a part of the `Core` framework which is not visible to the `Subscriber` SDK users.
+ Workaround for this is to use public typealias.
+ */
+public typealias ConnectionConfiguration = Core.ConnectionConfiguration
+
+/**
+ `LogConfiguration` is a part of the `Core` framework which is not visible to the `Subscriber` SDK users.
+ Workaround for this is to use public typealias.
+ */
+public typealias LogConfiguration = Core.LogConfiguration
 
 /**
  Indicates Asset connection status (i.e. if courier is publishing his location)
@@ -11,7 +24,7 @@ public enum AssetConnectionStatus {
     case online
 
     /**
-    Asset is not connected
+     Asset is not connected
      */
     case offline
 }
@@ -21,8 +34,8 @@ public protocol SubscriberDelegate: AnyObject {
      Called when `Subscriber` spot any (location, network or permissions) error
      
      - Parameters:
-     - sender: `Subscriber` instance.
-     - error: Detected error.
+        - sender: `Subscriber` instance.
+        - error: Detected error.
      */
     func subscriber(sender: Subscriber, didFailWithError error: Error)
 
@@ -30,8 +43,8 @@ public protocol SubscriberDelegate: AnyObject {
      Called when `Subscriber` receive any Raw Location (received directly from location manager) update for observed trackable
      
      - Parameters:
-     - sender: `Subscriber` instance.
-     - location: Received location.
+        - sender: `Subscriber` instance.
+        - location: Received location.
      */
     func subscriber(sender: Subscriber, didUpdateRawLocation location: CLLocation)
 
@@ -39,8 +52,8 @@ public protocol SubscriberDelegate: AnyObject {
      Called when the `Subscriber` receive any Enhanced Location (matched to road) update for observed trackable
      
      - Parameters:
-     - sender: `Subscriber` instance.
-     - location: Received location.
+        - sender: `Subscriber` instance.
+        - location: Received location.
      */
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation)
 
@@ -48,8 +61,8 @@ public protocol SubscriberDelegate: AnyObject {
      Called when `Subscriber` change connection status
      
      -  Parameters:
-     - sender: `Subscriber` instance.
-     - status: Updated connection status.
+        - sender: `Subscriber` instance.
+        - status: Updated connection status.
      */
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: AssetConnectionStatus)
 }

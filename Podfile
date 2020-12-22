@@ -1,32 +1,57 @@
 platform :ios, '12.0'
 use_frameworks!
+inhibit_all_warnings!
+workspace 'AblyAssetTracking.xcworkspace'
 
-abstract_target 'Common' do
-  pod 'Ably', '>= 1.2'
-  pod 'MapboxCoreNavigation', '~> 1.0'
+def ably_sdk
+  pod 'Ably', '~> 1.2.0'
+end
+
+def mapbox_sdk
+  pod 'MapboxCoreNavigation', '~> 1.1.0'
+end
+
+abstract_target 'asset_tracking' do
   pod 'SwiftLint'
 
   target 'Core' do
+    project 'Core/Core.xcodeproj'
   end
 
   target 'Publisher' do
+    project 'Publisher/Publisher.xcodeproj'
+    ably_sdk
+    mapbox_sdk
   end
 
   target 'Subscriber' do
+    project 'Subscriber/Subscriber.xcodeproj'
+    ably_sdk
+    pod 'SwiftLint'
   end
 
+  # Example apps
   target 'PublisherExample' do
+    project 'PublisherExample/PublisherExample.xcodeproj'
+    mapbox_sdk
+    ably_sdk
   end
 
   target 'SubscriberExample' do
+    project 'SubscriberExample/SubscriberExample.xcodeproj'
+    ably_sdk
   end
 
-  target 'SubscriberTests' do
-  end
-
+  # Tests
   target 'CoreTests' do
+    project 'Core/Core.xcodeproj'
   end
 
   target 'PublisherTests' do
+    project 'Publisher/Publisher.xcodeproj'
+  end
+
+  target 'SubscriberTests' do
+    project 'Subscriber/Subscriber.xcodeproj'
   end
 end

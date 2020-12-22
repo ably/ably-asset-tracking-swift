@@ -22,7 +22,7 @@ public class Trackable: NSObject {
     public init(id: String, metadata: String? = nil, destination: CLLocationCoordinate2D? = nil) {
         self.id = id
         self.metadata = metadata
-        self.destination = destination        
+        self.destination = destination
         super.init()
     }
 }

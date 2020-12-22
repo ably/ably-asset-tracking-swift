@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18889373257660B500866E6F"
-               BuildableName = "Publisher.framework"
-               BlueprintName = "Publisher"
-               ReferencedContainer = "container:AblyAssetTracking.xcodeproj">
+               BlueprintIdentifier = "180F60AC258632740014B310"
+               BuildableName = "Subscriber.framework"
+               BlueprintName = "Subscriber"
+               ReferencedContainer = "container:Subscriber.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1888937B257660B500866E6F"
-               BuildableName = "PublisherTests.xctest"
-               BlueprintName = "PublisherTests"
-               ReferencedContainer = "container:AblyAssetTracking.xcodeproj">
+               BlueprintIdentifier = "180F612E2586332B0014B310"
+               BuildableName = "SubscriberTests.xctest"
+               BlueprintName = "SubscriberTests"
+               ReferencedContainer = "container:Subscriber.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -60,10 +60,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18889373257660B500866E6F"
-            BuildableName = "Publisher.framework"
-            BlueprintName = "Publisher"
-            ReferencedContainer = "container:AblyAssetTracking.xcodeproj">
+            BlueprintIdentifier = "180F60AC258632740014B310"
+            BuildableName = "Subscriber.framework"
+            BlueprintName = "Subscriber"
+            ReferencedContainer = "container:Subscriber.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

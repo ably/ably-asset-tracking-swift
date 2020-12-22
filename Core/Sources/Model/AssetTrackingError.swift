@@ -3,7 +3,7 @@ import Foundation
 /**
  Default error used in SDK error calls.
  */
-enum AssetTrackingError: Error {
+public enum AssetTrackingError: Error {
 
     /**
      Called when we cannot parse data received from Ably or data is invalid.

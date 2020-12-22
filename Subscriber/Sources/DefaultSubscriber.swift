@@ -1,5 +1,6 @@
 import Foundation
 import CoreLocation
+import Core
 
 class DefaultSubscriber: Subscriber {
     private let logConfiguration: LogConfiguration
