@@ -4,7 +4,7 @@ import Logging
 
 // Default logger used in Publisher SDK
 let logger: Logger = {
-    var logger = Logger(label: "io.ably.asset-tracking.Subscriber")
+    var logger = Logger(label: "com.ably.asset-tracking.Subscriber")
     logger.logLevel = .trace
     return logger
 }()
