@@ -1,8 +1,35 @@
+protocol ResolutionPolicyHooks {
+    /**
+     Register a handler for the addition, removal and activation of `Trackable` objects for the `Publisher`
+     instance whose `creation` `Publisher.Builder.start` caused
+     `createResolutionPolicy` `Factory.createResolutionPolicy` to be called.
+
+     This method should only be called once within the scope of creation of a single publisher's resolution
+     policy. Subsequent calls to this method will replace the previous handler.
+     - Parameters:
+        - listener: The handler, which may be called multiple times during the lifespan of the publisher.
+     */
+    func trackables(listener: TrackableSetListener)
+
+    /**
+     Register a handler for the addition and removal of remote `Subscriber`s to the `Publisher` instance whose
+     `creation` `Publisher.Builder.start` caused `createResolutionPolicy` `Factory.createResolutionPolicy` to be
+     called.
+
+     This method should only be called once within the scope of creation of a single publisher's resolution
+     policy. Subsequent calls to this method will replace the previous handler.
+
+     - Parameters:
+        - listener: The handler, which may be called multiple times during the lifespan of the publisher.
+     */
+    func subscribers(listener: SubscriberSetListener)
+}
+
 /**
  A handler of events relating to the addition, removal and activation of `Trackable` objects for a
  `Publisher` instance.
  */
-protocol ResolutionPolicyTrackableHooks {
+protocol TrackableSetListener {
     /**
      A `Trackable` object has been added to the `Publisher`'s set of tracked objects.
 
@@ -32,7 +59,7 @@ protocol ResolutionPolicyTrackableHooks {
     func onActiveTrackableChanged(trackable: Trackable?)
 }
 
-protocol ResolutionPolicySubscriberHooks {
+protocol SubscriberSetListener {
     /**
      A `Subscriber` has subscribed to receive updates for one or more `Trackable` objects from the
      `Publisher`'s set of tracked objects.
