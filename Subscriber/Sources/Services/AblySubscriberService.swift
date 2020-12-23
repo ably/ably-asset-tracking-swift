@@ -31,6 +31,7 @@ class AblySubscriberService {
         // Trigger offline event at start
         delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .offline)
         channel.presence.subscribe({ [weak self] message in
+            logger.debug("Received presence update from channel")
             self?.handleIncomingPresenceMessage(message)
         })
 
@@ -38,16 +39,19 @@ class AblySubscriberService {
         let data = try! presenceData.toJSONString()
 
         channel.presence.enterClient(configuration.clientId, data: data) { error in
-            // TODO: Log suitable message when Logger become available:
-            // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
+            error == nil ?
+                logger.debug("Entered to channel presence successfully", source: "AblySubscriberService") :
+                logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblySubscriberService")
             completion?(error)
         }
 
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in
+            logger.debug("Received raw location message from channel")
             self?.handleLocationUpdateResponse(forEvent: .raw, messageData: message.data)
         }
 
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
+            logger.debug("Received enhanced location message from channel")
             self?.handleLocationUpdateResponse(forEvent: .enhanced, messageData: message.data)
         }
     }
@@ -107,8 +111,9 @@ class AblySubscriberService {
         let data = try! presenceData.toJSONString()
 
         channel.presence.leaveClient(configuration.clientId, data: data) { [weak self] error in
-            // TODO: Log suitable message when Logger become available:
-            // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
+            error == nil ?
+                logger.debug("Left channel presence successfully", source: "AblySubscriberService") :
+                logger.error("Error during leaving to channel presence: \(String(describing: error))", source: "AblySubscriberService")
             if let error = error,
                let self = self {
                 self.delegate?.subscriberService(sender: self, didFailWithError: error)

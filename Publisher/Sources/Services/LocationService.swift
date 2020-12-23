@@ -19,10 +19,9 @@ class LocationService {
 
     func startUpdatingLocation() {
         locationDataSource.startUpdatingLocation { [weak self] (error) in
-            // TODO: Log suitable message when Logger become available:
-            // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
             if let error = error,
                let self = self {
+                logger.error("Error while starting location updates: \(error)", source: "LocationService")
                 self.delegate?.locationService(sender: self, didFailWithError: error)
             }
         }
@@ -54,12 +53,10 @@ extension LocationService: PassiveLocationDataSourceDelegate {
     }
 
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateHeading newHeading: CLHeading) {
-        // TODO: Log suitable message when Logger become available:
-        // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
+        logger.debug("passiveLocationDataSource.didUpdateHeading", source: "LocationService")
     }
 
     func passiveLocationDataSourceDidChangeAuthorization(_ dataSource: PassiveLocationDataSource) {
-        // TODO: Log suitable message when Logger become available:
-        // https://github.com/ably/ably-asset-tracking-cocoa/issues/8
+        logger.debug("passiveLocationDataSource.passiveLocationDataSourceDidChangeAuthorization", source: "LocationService")
     }
 }

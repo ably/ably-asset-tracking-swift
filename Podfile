@@ -12,6 +12,8 @@ def mapbox_sdk
 end
 
 abstract_target 'asset_tracking' do
+  # Official Apple SwiftLog pod
+  pod 'Logging', '~> 1.4.0'
   pod 'SwiftLint'
 
   target 'Core' do

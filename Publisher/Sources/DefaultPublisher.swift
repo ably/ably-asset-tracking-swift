@@ -1,7 +1,12 @@
 import UIKit
 import CoreLocation
+import Logging
+
+// Default logger used in Publisher SDK
+let logger: Logger = Logger(label: "com.ably.asset-tracking.Publisher")
 
 class DefaultPublisher: Publisher {
+
     private let connectionConfiguration: ConnectionConfiguration
     private let logConfiguration: LogConfiguration
     private let locationService: LocationService
@@ -57,10 +62,12 @@ class DefaultPublisher: Publisher {
 
 extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: Error) {
+        logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
         delegate?.publisher(sender: self, didFailWithError: error)
     }
 
     func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
+        logger.debug("locationService.didUpdateRawLocation.", source: "DefaultPublisher")
         delegate?.publisher(sender: self, didUpdateRawLocation: location)
         ablyService.sendRawAssetLocation(location: location) { [weak self] error in
             if let self = self,
@@ -71,6 +78,7 @@ extension DefaultPublisher: LocationServiceDelegate {
     }
 
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
+        logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
         delegate?.publisher(sender: self, didUpdateEnhancedLocation: location)
         ablyService.sendEnhancedAssetLocation(location: location) { [weak self] error in
             if let self = self,
@@ -83,6 +91,7 @@ extension DefaultPublisher: LocationServiceDelegate {
 
 extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
+        logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
         delegate?.publisher(sender: self, didChangeConnectionState: state)
     }
 }
