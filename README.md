@@ -120,6 +120,26 @@ You may always check `Gemfile.lock` as it's the source of truth for versions of 
 
 Due to [MapBox CoreNavigation SDK issue](https://github.com/ably/ably-asset-tracking-cocoa/issues/40), to be able to build example apps for physical devices, we needed to exclude the `arm64` architecture from supported simulator architectures (check post install script in `Podfile`). It means, that if you are using Apple M1 based computer, you **will not** be able run example app on simulator.
 
+### Running tests
+
+There are two ways of running tests in the project. The first one is standard for all Xcode projects and requires only selecting the correct active scheme in Xcode (`Core`/`Subscriber`/`Publisher`) and running tests from the `Product` -> `Test` menu.
+
+Another one involves `Fastlane` and is executed from the command line:
+```
+# run tests for the Core target
+bundle exec fastlane test_core
+
+# run tests for the Publisher target
+bundle exec fastlane test_publisher
+
+# run tests for the Subscriber target
+bundle exec fastlane test_subscriber
+
+# run tests for all targets
+bundle exec fastlane test_all
+```
+Additionally, when you run tests using `Fastlane` you will see three new directories created: `coverage_core`, `coverage_publisher`, `coverage_subscriber`. Each contains an `index.html` file with a full test coverage report for the given target.
+
 ### Concepts and assumptions
 
 - The SDKs are written in Swift, however they still have to be compatible for use from Objective-C based apps
