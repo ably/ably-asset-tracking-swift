@@ -126,7 +126,7 @@ There are two ways of running tests in the project. The first one is standard fo
 
 Another one involves `Fastlane` and is executed from the command line:
 
-```
+```zsh
 # run tests for the Core target
 bundle exec fastlane test_core
 
