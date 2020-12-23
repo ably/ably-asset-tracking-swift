@@ -29,6 +29,8 @@ platform :ios do
       scheme: 'Core',
       output_directory: 'coverage_core',
       html: true,
+      ignore: ['Core/Tests/*'],
+      source_directory: './Core/Sources'
     )
   end
 
