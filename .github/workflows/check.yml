@@ -9,6 +9,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Configure MapBox Secret Token for Download
         run: |
           echo "machine api.mapbox.com" >> ~/.netrc
@@ -16,7 +17,23 @@ jobs:
           echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+
       - name: Run All Tests using Fastlane
         run: |
           bundle install
           bundle exec fastlane test_all
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-core
+          path: coverage_core/
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-subscriber
+          path: coverage_subscriber/
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-publisher
+          path: coverage_publisher/

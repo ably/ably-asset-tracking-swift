@@ -15,7 +15,13 @@ Pods/
 # Build products
 archives/
 
-#Fastlane reports
-fastlane/report.xml
-fastlane/test_output/report.junit
-fastlane/test_output/report.html
+# Fastlane reports
+/fastlane/report.xml
+/fastlane/test_output/report.junit
+/fastlane/test_output/report.html
+
+# Code coverage reports
+/coverage_core/
+/coverage_subscriber/
+/coverage_publisher/
+

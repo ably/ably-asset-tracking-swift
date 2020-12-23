@@ -5,14 +5,14 @@ platform :ios do
     cocoapods
   end
 
-  desc "Run tests on the Core framework of SDK"
+  desc 'Run tests on the Core framework of SDK'
   lane :test_all do
     test_core
     test_publisher
     test_subscriber
   end
 
-  desc "Run tests on the Core framework of SDK"
+  desc 'Run tests on the Core framework of SDK'
   lane :test_core do
     scan(
       workspace: './AblyAssetTracking.xcworkspace',
@@ -20,9 +20,21 @@ platform :ios do
       clean: true,
       code_coverage: true,
     )
+
+    # Clean previous test coverage and generate new one
+    sh('rm -rf ./coverage_core')
+    slather(
+      workspace: './AblyAssetTracking.xcworkspace',
+      proj: 'Core/Core.xcodeproj',
+      scheme: 'Core',
+      output_directory: 'coverage_core',
+      html: true,
+      ignore: ['Core/Tests/*'],
+      source_directory: './Core/Sources'
+    )
   end
 
-  desc "Run tests on the Publisher framework of SDK"
+  desc 'Run tests on the Publisher framework of SDK'
   lane :test_publisher do
     scan(
       workspace: './AblyAssetTracking.xcworkspace',
@@ -30,9 +42,21 @@ platform :ios do
       clean: true,
       code_coverage: true,
     )
+
+    # Clean previous test coverage and generate new one
+    sh('rm -rf ./coverage_publisher')
+    slather(
+      workspace: './AblyAssetTracking.xcworkspace',
+      proj: 'Publisher/Publisher.xcodeproj',
+      scheme: 'Publisher',
+      output_directory: 'coverage_publisher',
+      html: true,
+      ignore: ['Core/*', 'Common/*', 'Publisher/Tests/*'],
+      source_directory: './Publisher/Sources'
+    )
   end
 
-  desc "Run tests on the Subscriber framework of SDK"
+  desc 'Run tests on the Subscriber framework of SDK'
   lane :test_subscriber do
     scan(
       workspace: './AblyAssetTracking.xcworkspace',
@@ -40,9 +64,19 @@ platform :ios do
       clean: true,
       code_coverage: true,
     )
+    sh('rm -rf ./coverage_subscriber')
+    slather(
+      workspace: './AblyAssetTracking.xcworkspace',
+      proj: 'Subscriber/Subscriber.xcodeproj',
+      scheme: 'Subscriber',
+      output_directory: 'coverage_subscriber',
+      html: true,
+      ignore: ['Core/*', 'Common/*', 'Subscriber/Tests/*'],
+      source_directory: './Subscriber/Sources'
+    )
   end
 
-  desc "Build Subscriber SDK and export is as .framework file"
+  desc 'Build Subscriber SDK and export is as .framework file'
   lane :build_subscriber do
     xcodebuild(
       archive: true,
@@ -54,7 +88,7 @@ platform :ios do
     )
   end
 
-  desc "Build Publisher SDK and export is as .framework file"
+  desc 'Build Publisher SDK and export is as .framework file'
   lane :build_publisher do
     xcodebuild(
       archive: true,
