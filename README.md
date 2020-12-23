@@ -125,6 +125,7 @@ Due to [MapBox CoreNavigation SDK issue](https://github.com/ably/ably-asset-trac
 There are two ways of running tests in the project. The first one is standard for all Xcode projects and requires only selecting the correct active scheme in Xcode (`Core`/`Subscriber`/`Publisher`) and running tests from the `Product` -> `Test` menu.
 
 Another one involves `Fastlane` and is executed from the command line:
+
 ```
 # run tests for the Core target
 bundle exec fastlane test_core
@@ -138,6 +139,7 @@ bundle exec fastlane test_subscriber
 # run tests for all targets
 bundle exec fastlane test_all
 ```
+
 Additionally, when you run tests using `Fastlane` you will see three new directories created: `coverage_core`, `coverage_publisher`, `coverage_subscriber`. Each contains an `index.html` file with a full test coverage report for the given target.
 
 ### Concepts and assumptions
