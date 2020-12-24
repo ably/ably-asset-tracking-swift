@@ -31,20 +31,11 @@ class DefaultPublisher: Publisher {
         self.locationService.delegate = self
     }
 
-    func track(trackable: Trackable) {
-        performOnWorkingThread { [weak self] in
-            guard let self = self else { return }
-
-            self.activeTrackable = trackable
-            self.ablyService.track(trackable: trackable) { [weak self] error in
-                if let error = error {
-                    self?.notifyDelegateDidFailWithError(error)
-                }
-                self?.performOnWorkingThread { [weak self] in
-                    self?.locationService.startUpdatingLocation()
-                }
-            }
-        }
+    func track(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
+        let event = TrackTrackableEvent(trackable: trackable,
+                                        onSuccess: onSuccess,
+                                        onError: onError)
+        execute(event: event)
     }
 
     func add(trackable: Trackable) {
@@ -77,6 +68,28 @@ class DefaultPublisher: Publisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didFailWithError: error)
+        }
+    }
+}
+
+// Mark threading events handling
+extension DefaultPublisher {
+    private func execute(event: PublisherEvent) {
+        workingQueue.async { [weak self] in
+            if let event = event as? TrackTrackableEvent { self?.performTrackTrackableEvent(event) }
+        }
+    }
+
+    private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
+        self.activeTrackable = event.trackable
+        self.ablyService.track(trackable: event.trackable) { [weak self] error in
+            if let error = error {
+                event.onError(error)
+                return
+            }
+            self?.performOnWorkingThread { [weak self] in
+                self?.locationService.startUpdatingLocation()
+            }
         }
     }
 }

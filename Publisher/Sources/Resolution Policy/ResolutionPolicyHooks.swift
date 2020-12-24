@@ -1,9 +1,9 @@
- /**
-  Defines the methods which can be called by a resolution policy when it is created.
-  Methods on this interface may only be called from within implementations of
-  `createResolutionPolicy` `Factory.createResolutionPolicy`.
-  */
- protocol ResolutionPolicyHooks {
+/**
+ Defines the methods which can be called by a resolution policy when it is created.
+ Methods on this interface may only be called from within implementations of
+ `createResolutionPolicy` `Factory.createResolutionPolicy`.
+ */
+protocol ResolutionPolicyHooks {
     /**
      Register a handler for the addition, removal and activation of `Trackable` objects for the `Publisher`
      instance whose `creation` `Publisher.Builder.start` caused

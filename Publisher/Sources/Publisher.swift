@@ -1,6 +1,16 @@
 import Foundation
 import CoreLocation
 
+/**
+ Completion handler for success operations
+ */
+public typealias SuccessHandler = () -> Void
+
+/**
+ Completion handler for failed operations
+ */
+public typealias ErrorHandler = (_ error: Error) -> Void
+
 public protocol PublisherDelegate: AnyObject {
     /**
      Called when the `Publisher` spot any (location, network or permissions) error
@@ -70,8 +80,10 @@ public protocol Publisher {
      
      - Parameters:
         - trackable The object to be added to this publisher's tracked set, if it's not already there, and to be made the actively tracked object.
+        - onSuccess: Called when the trackable is successfully added and make the actively tracked object
+        - onError: Called when an error occurs
      */
-    func track(trackable: Trackable)
+    func track(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
 
     /**
      Adds a `Trackable` object, but does not make it the actively tracked object, meaning that the state of the

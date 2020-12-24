@@ -3,8 +3,20 @@ import CoreLocation
 
 protocol PublisherEvent {}
 
+struct TrackTrackableEvent: PublisherEvent {
+    let trackable: Trackable
+    let onSuccess: SuccessHandler
+    let onError: ErrorHandler
+}
+
 struct StopPublisherEvent: PublisherEvent {}
 struct StartPublisherEvent: PublisherEvent {}
+
+struct RemoveTrackableEvent: PublisherEvent {
+    let trackable: Trackable
+    let onSuccess: (_ wasPresent: Bool) -> Void
+    let onError: (Error) -> Void
+}
 
 struct SuccessEvent: PublisherEvent {
     let onSuccess: () -> Void
@@ -18,18 +30,6 @@ struct ErrorEvent: PublisherEvent {
 struct AddTrackableEvent: PublisherEvent {
     let trackable: Trackable
     let onSuccess: () -> Void
-    let onError: (Error) -> Void
-}
-
-struct TrackTrackableEvent: PublisherEvent {
-    let trackable: Trackable
-    let onSuccess: () -> Void
-    let onError: (Error) -> Void
-}
-
-struct RemoveTrackableEvent: PublisherEvent {
-    let trackable: Trackable
-    let onSuccess: (_ wasPresent: Bool) -> Void
     let onError: (Error) -> Void
 }
 
