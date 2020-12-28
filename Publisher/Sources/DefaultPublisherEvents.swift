@@ -34,3 +34,18 @@ struct RawLocationChangedEvent: PublisherEvent {
 struct EnhancedLocationChangedEvent: PublisherEvent {
     let location: CLLocation
 }
+
+
+// MARK: Delegate handling events
+struct DelegateRawLocationChangedEvent: PublisherEvent {
+    let location: CLLocation
+}
+
+struct DelegateEnhancedLocationChangedEvent: PublisherEvent {
+    let location: CLLocation
+}
+
+struct DelegateConnectionStateChangedEvent: PublisherEvent {
+    let connectionState: ConnectionState
+}
+
