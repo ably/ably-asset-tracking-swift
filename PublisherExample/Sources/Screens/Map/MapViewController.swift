@@ -43,7 +43,7 @@ class MapViewController: UIViewController {
             .delegate(self)
             .start()
 
-        publisher?.track(trackable: Trackable(id: trackingId))
+        publisher?.track(trackable: Trackable(id: trackingId), onSuccess: {  }, onError: { _ in })
     }
 
     private func setupMapView() {

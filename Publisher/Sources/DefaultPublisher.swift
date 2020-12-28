@@ -46,13 +46,87 @@ class DefaultPublisher: Publisher {
     func remove(trackable: Trackable) -> Bool {
         // TODO: Implement method
         failWithNotYetImplemented()
-
         return false
     }
 
     func stop() {
         // TODO: Implement method
         failWithNotYetImplemented()
+    }
+}
+
+// MARK: Threading events handling
+extension DefaultPublisher {
+    private func execute(event: PublisherEvent) {
+        logger.trace("Received event: \(event)")
+        switch event {
+        case let event as SuccessEvent: performOnWorkingThread { [weak self] in self?.handleSuccessEvent(event) }
+        case let event as ErrorEvent: performOnWorkingThread { [weak self] in self?.handleErrorEvent(event) }
+        case let event as TrackTrackableEvent: performOnWorkingThread { [weak self] in self?.performTrackTrackableEvent(event) }
+        case let event as TrackableReadyToTrackEvent: performOnWorkingThread { [weak self] in self?.performTrackableReadyToTrack(event) }
+        case let event as EnhancedLocationChangedEvent: performOnWorkingThread { [weak self] in self?.performEnhancedLocationChanged(event) }
+        case let event as RawLocationChangedEvent: performOnWorkingThread { [weak self] in self?.performRawLocationChanged(event) }
+        case let event as DelegateErrorEvent: performOnWorkingThread { [weak self] in self?.notifyDelegateDidFailWithError(event.error) }
+        default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
+        }
+    }
+
+    // MARK: Track
+    private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
+        guard activeTrackable == nil else {
+            let error =  AssetTrackingError.publisherError("For this preview version of the SDK, track() method may only be called once for any given instance of this class.")
+            execute(event: ErrorEvent(error: error, onError: event.onError))
+            return
+        }
+
+        activeTrackable = event.trackable
+        self.ablyService.track(trackable: event.trackable) { [weak self] error in
+            if let error = error {
+                self?.execute(event: ErrorEvent(error: error, onError: event.onError))
+                return
+            }
+            self?.execute(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+        }
+    }
+
+    private func performTrackableReadyToTrack(_ event: TrackableReadyToTrackEvent) {
+        locationService.startUpdatingLocation()
+        execute(event: SuccessEvent(onSuccess: event.onSuccess))
+    }
+
+    // MARK: Location Changed event
+    private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
+        self.ablyService.sendEnhancedAssetLocation(location: event.location) { [weak self] error in
+            if let error = error {
+                self?.execute(event: DelegateErrorEvent(error: error))
+            }
+        }
+
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.location)
+        }
+    }
+
+    private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
+        ablyService.sendRawAssetLocation(location: event.location) { [weak self] error in
+            if let error = error {
+                self?.execute(event: DelegateErrorEvent(error: error))
+            }
+        }
+
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didUpdateRawLocation: event.location)
+        }
+    }
+
+    private func handleSuccessEvent(_ event: SuccessEvent) {
+        performOnMainThread(event.onSuccess)
+    }
+
+    private func handleErrorEvent(_ event: ErrorEvent) {
+        performOnMainThread { event.onError(event.error) }
     }
 
     // MARK: Utils
@@ -64,74 +138,36 @@ class DefaultPublisher: Publisher {
         DispatchQueue.main.async(execute: operation)
     }
 
+    // MARK: Delegate
     private func notifyDelegateDidFailWithError(_ error: Error) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didFailWithError: error)
         }
     }
+
+
 }
 
-// Mark threading events handling
-extension DefaultPublisher {
-    private func execute(event: PublisherEvent) {
-        workingQueue.async { [weak self] in
-            if let event = event as? TrackTrackableEvent { self?.performTrackTrackableEvent(event) }
-        }
-    }
-
-    private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
-        self.activeTrackable = event.trackable
-        self.ablyService.track(trackable: event.trackable) { [weak self] error in
-            if let error = error {
-                event.onError(error)
-                return
-            }
-            self?.performOnWorkingThread { [weak self] in
-                self?.locationService.startUpdatingLocation()
-            }
-        }
-    }
-}
-
+// MARK: LocationServiceDelegate
 extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: Error) {
         logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
-        notifyDelegateDidFailWithError(error)
+        execute(event: DelegateErrorEvent(error: error))
     }
 
     func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
         logger.debug("locationService.didUpdateRawLocation.", source: "DefaultPublisher")
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateRawLocation: location)
-        }
-
-        ablyService.sendRawAssetLocation(location: location) { [weak self] error in
-            if let error = error {
-                self?.notifyDelegateDidFailWithError(error)
-            }
-        }
+        execute(event: RawLocationChangedEvent(location: location))
     }
 
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: location)
-        }
-
-        performOnWorkingThread { [weak self] in
-            guard let self = self else { return }
-            self.ablyService.sendEnhancedAssetLocation(location: location) { [weak self] error in
-                if let error = error {
-                    self?.notifyDelegateDidFailWithError(error)
-                }
-            }
-        }
+        execute(event: EnhancedLocationChangedEvent(location: location))
     }
 }
 
+// MARK: AblyPublisherServiceDelegate
 extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
