@@ -12,10 +12,6 @@ struct ErrorEvent: PublisherEvent {
     let onError: ErrorHandler
 }
 
-struct DelegateErrorEvent: PublisherEvent {
-    let error: Error
-}
-
 struct TrackTrackableEvent: PublisherEvent {
     let trackable: Trackable
     let onSuccess: SuccessHandler
@@ -35,8 +31,11 @@ struct EnhancedLocationChangedEvent: PublisherEvent {
     let location: CLLocation
 }
 
-
 // MARK: Delegate handling events
+struct DelegateErrorEvent: PublisherEvent {
+    let error: Error
+}
+
 struct DelegateRawLocationChangedEvent: PublisherEvent {
     let location: CLLocation
 }
