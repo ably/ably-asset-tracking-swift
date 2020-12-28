@@ -1,6 +1,7 @@
 import UIKit
 import CoreLocation
 import Logging
+// swiftlint:disable cyclomatic_complexity
 
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.asset-tracking.Publisher")
@@ -72,7 +73,6 @@ extension DefaultPublisher {
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
-
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
