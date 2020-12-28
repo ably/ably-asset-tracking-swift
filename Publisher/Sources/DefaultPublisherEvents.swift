@@ -1,4 +1,3 @@
-import Foundation
 import CoreLocation
 
 protocol PublisherEvent {}
@@ -34,7 +33,6 @@ struct RawLocationChangedEvent: PublisherEvent {
 struct EnhancedLocationChangedEvent: PublisherEvent {
     let location: CLLocation
 }
-
 
 // MARK: Delegate handling events
 struct DelegateRawLocationChangedEvent: PublisherEvent {

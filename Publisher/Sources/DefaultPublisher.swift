@@ -69,6 +69,7 @@ extension DefaultPublisher {
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
             case let event as RawLocationChangedEvent: self?.performRawLocationChanged(event)
 
+            // Delegate events
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)
