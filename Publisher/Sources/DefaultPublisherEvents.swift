@@ -64,4 +64,3 @@ struct DelegateEnhancedLocationChangedEvent: PublisherEvent {
 struct DelegateConnectionStateChangedEvent: PublisherEvent {
     let connectionState: ConnectionState
 }
-

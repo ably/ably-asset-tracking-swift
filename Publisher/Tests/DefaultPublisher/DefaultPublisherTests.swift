@@ -34,9 +34,7 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: track
     func testTrack_success() throws {
-        ablyService.trackCompletionHandler = { completion in
-            completion?(nil)
-        }
+        ablyService.trackCompletionHandler = { completion in completion?(nil) }
 
         let expectation = XCTestExpectation()
         publisher.track(trackable: trackable,
@@ -84,7 +82,112 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
 
+    func testTrack_thread() {
+        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 2
+
+        // Both `onSuccess` and `onError` callbacks should be called on main thread
+        // Notice - in case of failure it will crash whole test suite
+        publisher.track(trackable: trackable,
+                        onSuccess: {
+                            dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                            expectation.fulfill()
+                        },
+                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+
+        publisher.track(trackable: trackable,
+                        onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
+                        onError: { _ in
+                            dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                            expectation.fulfill()
+                        })
+
+        wait(for: [expectation], timeout: 5.0)
+    }
+
     // MARK: add
+    func testAdd_success() {
+        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+
+        let expectation = XCTestExpectation()
+        publisher.add(trackable: trackable,
+                      onSuccess: { expectation.fulfill() },
+                      onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+
+        // It should NOT set active trackable
+        XCTAssertNil(publisher.activeTrackable)
+
+        // It should ask ably service to track given trackable
+        XCTAssertTrue(ablyService.trackCalled)
+        XCTAssertEqual(ablyService.trackParamTrackable, trackable)
+
+        // It should ask location service to start updating location
+        XCTAssertTrue(locationService.startUpdatingLocationCalled)
+    }
+
+    func testAdd_track_success() {
+        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 2
+
+        publisher.track(trackable: trackable,
+                        onSuccess: { expectation.fulfill() },
+                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+
+        publisher.add(trackable: Trackable(id: "TestAddedTrackableId1"),
+                      onSuccess: { expectation.fulfill() },
+                      onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+
+        // It should NOT change active trackable
+        XCTAssertEqual(publisher.activeTrackable, trackable)
+    }
+
+    func testAdd_track_error() {
+        let ablyError = AssetTrackingError.publisherError("Test AblyService error")
+        ablyService.trackCompletionHandler = { completion in completion?(ablyError) }
+
+        let expectation = XCTestExpectation()
+        publisher.add(trackable: trackable,
+                      onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
+                      onError: { error in
+                        XCTAssertEqual(error as? AssetTrackingError, ablyError)
+                        expectation.fulfill()
+                      })
+        wait(for: [expectation], timeout: 5.0)
+    }
+
+    func testAdd_success_thread() {
+        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        let expectation = XCTestExpectation()
+        // `onSuccess` callback should be called on main thread
+        // Notice - in case of failure it will crash whole test suite
+        publisher.add(trackable: trackable,
+                      onSuccess: {
+                        dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                        expectation.fulfill()
+                      },
+                      onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+    }
+
+    func testAdd_error_thread() {
+        ablyService.trackCompletionHandler = { completion in completion?(AssetTrackingError.publisherError("TestError")) }
+        let expectation = XCTestExpectation()
+
+        // `onError` callback should be called on main thread
+        // Notice - in case of failure it will crash whole test suite
+        publisher.add(trackable: trackable,
+                      onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
+                      onError: { _ in
+                        dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                        expectation.fulfill()
+                      })
+        wait(for: [expectation], timeout: 5.0)
+    }
 
     // MARK: remove
 
