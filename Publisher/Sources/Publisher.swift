@@ -92,8 +92,10 @@ public protocol Publisher {
      
      - Parameters:
         - trackable: The object to be added to this publisher's tracked set, if it's not already there.
+        - onSuccess: Called when the trackable is successfully added
+        - onError: Called when an error occurs
      */
-    func add(trackable: Trackable)
+    func add(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
 
     /**
      Removes a `Trackable` property if it is known to this publisher, otherwise does nothing and returns false.

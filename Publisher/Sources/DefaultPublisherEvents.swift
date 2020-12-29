@@ -18,6 +18,12 @@ struct TrackTrackableEvent: PublisherEvent {
     let onError: ErrorHandler
 }
 
+struct AddTrackableEvent: PublisherEvent {
+    let trackable: Trackable
+    let onSuccess: SuccessHandler
+    let onError: ErrorHandler
+}
+
 struct TrackableReadyToTrackEvent: PublisherEvent {
     let trackable: Trackable
     let onSuccess: () -> Void

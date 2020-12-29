@@ -3,6 +3,7 @@ import CoreLocation
 
 protocol AblyPublisherServiceDelegate: AnyObject {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState)
+    func publisherService(sender: AblyPublisherService, didFailWithError error: Error)
 }
 
 class AblyPublisherService {
@@ -10,7 +11,7 @@ class AblyPublisherService {
     private let configuration: ConnectionConfiguration
 
     private let presenceData: PresenceData
-    private var channel: ARTRealtimeChannel?
+    private var channels: [Trackable: ARTRealtimeChannel]
 
     weak var delegate: AblyPublisherServiceDelegate?
     var connectionState: ConnectionState {
@@ -21,6 +22,7 @@ class AblyPublisherService {
         self.configuration = configuration
         self.client = ARTRealtime(key: configuration.apiKey)
         self.presenceData = PresenceData(type: .publisher)
+        self.channels = [:]
 
         setup()
     }
@@ -40,18 +42,17 @@ class AblyPublisherService {
 
     // MARK: Main interface
     func track(trackable: Trackable, completion: ((Error?) -> Void)?) {
-        precondition(channel == nil, "In current SDK version, service can track only one asset per instance")
-
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
-        channel = client.channels.get(trackable.id)
-        channel?.presence.enterClient(configuration.clientId, data: data) { error in
+        let channel = client.channels.get(trackable.id)
+        channel.presence.enterClient(configuration.clientId, data: data) { error in
             error == nil ?
                 logger.debug("Entered to presence successfully", source: "AblyPublisherService") :
                 logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
             completion?(error)
         }
+        channels[trackable] = channel
     }
 
     func sendRawAssetLocation(location: CLLocation, completion: ((Error?) -> Void)?) {
@@ -63,7 +64,7 @@ class AblyPublisherService {
     }
 
     private func sendAssetLocation(location: CLLocation, withName name: EventName, completion: ((Error?) -> Void)?) {
-        guard let channel = channel else {
+        guard !channels.isEmpty else {
             completion?(AssetTrackingError.publisherError("Attempt to send location while not connected to any channel"))
             return
         }
@@ -73,13 +74,17 @@ class AblyPublisherService {
         let data = try! [geoJSON].toJSONString()
 
         let message = ARTMessage(name: name.rawValue, data: data)
-        channel.publish([message]) { errorInfo in
-            completion?(errorInfo)
+        channels.forEach { (_, channel) in
+            channel.publish([message]) { [weak self] error in
+                if let self = self,
+                   let error = error {
+                    self.delegate?.publisherService(sender: self, didFailWithError: error)
+                }
+            }
         }
     }
 
     func stop() {
-        // TODO: Should we clear channel here? Can AblyService be restarted?
         client.close()
     }
 }

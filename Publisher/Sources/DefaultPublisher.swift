@@ -39,9 +39,9 @@ class DefaultPublisher: Publisher {
         execute(event: event)
     }
 
-    func add(trackable: Trackable) {
-        // TODO: Implement method
-        failWithNotYetImplemented()
+    func add(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
+        let event = AddTrackableEvent(trackable: trackable, onSuccess: onSuccess, onError: onError)
+        execute(event: event)
     }
 
     func remove(trackable: Trackable) -> Bool {
@@ -68,6 +68,7 @@ extension DefaultPublisher {
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
             case let event as RawLocationChangedEvent: self?.performRawLocationChanged(event)
+            case let event as AddTrackableEvent: self?.performAddTrackableEvent(event)
 
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
@@ -99,6 +100,17 @@ extension DefaultPublisher {
     private func performTrackableReadyToTrack(_ event: TrackableReadyToTrackEvent) {
         locationService.startUpdatingLocation()
         execute(event: SuccessEvent(onSuccess: event.onSuccess))
+    }
+
+    // MARK: Add trackable
+    private func performAddTrackableEvent(_ event: AddTrackableEvent) {
+        self.ablyService.track(trackable: event.trackable) { [weak self] error in
+            if let error = error {
+                self?.execute(event: ErrorEvent(error: error, onError: event.onError))
+                return
+            }
+            self?.execute(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+        }
     }
 
     // MARK: Location change
@@ -187,6 +199,11 @@ extension DefaultPublisher: LocationServiceDelegate {
 
 // MARK: AblyPublisherServiceDelegate
 extension DefaultPublisher: AblyPublisherServiceDelegate {
+    func publisherService(sender: AblyPublisherService, didFailWithError error: Error) {
+        logger.error("publisherService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
+        execute(event: DelegateErrorEvent(error: error))
+    }
+
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
         execute(event: DelegateConnectionStateChangedEvent(connectionState: state))
