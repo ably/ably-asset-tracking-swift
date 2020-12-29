@@ -44,10 +44,9 @@ class DefaultPublisher: Publisher {
         execute(event: event)
     }
 
-    func remove(trackable: Trackable) -> Bool {
-        // TODO: Implement method
-        failWithNotYetImplemented()
-        return false
+    func remove(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler) {
+        let event = RemoveTrackableEvent(trackable: trackable, onSuccess: onSuccess, onError: onError)
+        execute(event: event)
     }
 
     func stop() {
@@ -69,6 +68,8 @@ extension DefaultPublisher {
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
             case let event as RawLocationChangedEvent: self?.performRawLocationChanged(event)
             case let event as AddTrackableEvent: self?.performAddTrackableEvent(event)
+            case let event as RemoveTrackableEvent: self?.performRemoveTrackableEvent(event)
+            case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
 
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
@@ -102,7 +103,6 @@ extension DefaultPublisher {
         execute(event: SuccessEvent(onSuccess: event.onSuccess))
     }
 
-    // MARK: Add trackable
     private func performAddTrackableEvent(_ event: AddTrackableEvent) {
         self.ablyService.track(trackable: event.trackable) { [weak self] error in
             if let error = error {
@@ -111,6 +111,29 @@ extension DefaultPublisher {
             }
             self?.execute(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
         }
+    }
+
+    private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
+        clearMetadataForRemovedTrackable(trackable: event.trackable)
+        self.ablyService.stopTracking(trackable: event.trackable) { [weak self] wasPresent in
+            wasPresent ?
+                self?.execute(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess)) :
+                self?.execute(event: SuccessEvent(onSuccess: { event.onSuccess(false) }))
+        } onError: { [weak self] error in
+            self?.execute(event: ErrorEvent(error: error, onError: event.onError))
+        }
+    }
+
+    private func clearMetadataForRemovedTrackable(trackable: Trackable) {
+        // TODO: Implement method while working on the default resolution policy
+    }
+
+    private func performClearActiveTrackableEvent(_ event: ClearActiveTrackableEvent) {
+        if activeTrackable == event.trackable {
+            activeTrackable = nil
+            // TODO: Clear current destination in LocationService while working on route based map matching
+        }
+        execute(event: SuccessEvent(onSuccess: { event.onSuccess(true) }))
     }
 
     // MARK: Location change

@@ -24,6 +24,17 @@ struct AddTrackableEvent: PublisherEvent {
     let onError: ErrorHandler
 }
 
+struct RemoveTrackableEvent: PublisherEvent {
+    let trackable: Trackable
+    let onSuccess: (_ wasPresent: Bool) -> Void
+    let onError: ErrorHandler
+}
+
+struct ClearActiveTrackableEvent: PublisherEvent {
+    let trackable: Trackable
+    let onSuccess: (_ wasPresent: Bool) -> Void
+}
+
 struct TrackableReadyToTrackEvent: PublisherEvent {
     let trackable: Trackable
     let onSuccess: () -> Void

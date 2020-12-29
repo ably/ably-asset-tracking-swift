@@ -87,4 +87,18 @@ class AblyPublisherService {
     func stop() {
         client.close()
     }
+
+    func stopTracking(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler) {
+        guard let channel = channels.removeValue(forKey: trackable) else {
+            onSuccess(false)
+            return
+        }
+        // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
+        let data = try! presenceData.toJSONString()
+
+        channel.presence.unsubscribe()
+        channel.presence.leaveClient(configuration.clientId, data: data) { error in
+            error == nil ? onSuccess(true) : onError(error!)
+        }
+    }
 }
