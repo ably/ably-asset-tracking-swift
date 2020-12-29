@@ -190,6 +190,78 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     // MARK: remove
+    func testRemove_success() {
+        let wasPresent = false
+        var receivedWasPresent: Bool?
+        ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(wasPresent) }
+        let expectation = XCTestExpectation()
+
+        // When removing trackable
+        publisher.remove(trackable: trackable,
+                         onSuccess: { present in
+                            receivedWasPresent = present
+                            expectation.fulfill()
+                         },
+                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+
+        // It should ask ablyService to stop tracking
+        XCTAssertTrue(ablyService.stopTrackingCalled)
+
+        // It should ask ablyService to stop tracking given trackable
+        XCTAssertEqual(ablyService.stopTrackingParamTrackable, trackable)
+
+        // It should return correct `wasPresent` value in callback
+        XCTAssertEqual(receivedWasPresent!, wasPresent)
+    }
+
+    func testRemove_activeTrackable() {
+        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(true) }
+
+        var expectation = XCTestExpectation(description: "Handler for `track` call")
+        expectation.expectedFulfillmentCount = 1
+
+        // When removing trackable which was tracked before (so it's set as the activeTrackable)
+        publisher.track(trackable: trackable,
+                        onSuccess: { expectation.fulfill() },
+                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertEqual(publisher.activeTrackable, trackable)
+
+        expectation = XCTestExpectation(description: "Handler for `remove` call")
+        publisher.remove(trackable: publisher.activeTrackable!,
+                         onSuccess: { _ in expectation.fulfill() },
+                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+
+        // It should clear activeTrackable
+        XCTAssertNil(publisher.activeTrackable)
+    }
+
+    func testRemove_nonActiveTrackable() {
+        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(true) }
+
+        var expectation = XCTestExpectation(description: "Handler for `track` call")
+        expectation.expectedFulfillmentCount = 1
+
+        // When removing trackable which was no tracked before (so it's NOT set as the activeTrackable)
+        publisher.track(trackable: trackable,
+                        onSuccess: { expectation.fulfill() },
+                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertEqual(publisher.activeTrackable, trackable)
+
+        expectation = XCTestExpectation(description: "Handler for `remove` call")
+        publisher.remove(trackable: Trackable(id: "AnotherTrackableId"),
+                         onSuccess: { _ in expectation.fulfill() },
+                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+
+        // It should NOT modify activeTrackable
+        XCTAssertEqual(publisher.activeTrackable, trackable)
+    }
 
     // MARK: stop
 }

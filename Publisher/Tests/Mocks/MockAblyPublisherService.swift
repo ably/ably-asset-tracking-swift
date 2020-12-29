@@ -16,7 +16,7 @@ class MockAblyPublisherService: AblyPublisherService {
         trackCalled = true
         trackParamTrackable = trackable
         trackParamCompletion = completion
-        
+
         trackCompletionHandler?(completion)
     }
 
@@ -24,11 +24,16 @@ class MockAblyPublisherService: AblyPublisherService {
     var stopTrackingParamTrackable: Trackable?
     var stopTrackingParamOnSuccess: ((Bool) -> Void)?
     var stopTrackingParamOnError: ErrorHandler?
+    var stopTrackingOnErrorCompletionHandler: ((ErrorHandler) -> Void)?
+    var stopTrackingOnSuccessCompletionHandler: (((Bool) -> Void) -> Void)?
     func stopTracking(trackable: Trackable, onSuccess: @escaping (Bool) -> Void, onError: @escaping ErrorHandler) {
         stopTrackingCalled = true
         stopTrackingParamTrackable = trackable
         stopTrackingParamOnSuccess = onSuccess
         stopTrackingParamOnError = onError
+
+        stopTrackingOnSuccessCompletionHandler?(onSuccess)
+        stopTrackingOnErrorCompletionHandler?(onError)
     }
 
     var sendRawAssetLocationCalled: Bool = false
