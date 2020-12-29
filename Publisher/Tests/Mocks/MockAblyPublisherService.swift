@@ -3,6 +3,9 @@ import Foundation
 @testable import Publisher
 
 class MockAblyPublisherService: AblyPublisherService {
+    var trackablesGetValue: [Trackable] = []
+    var trackables: [Trackable] { return trackablesGetValue }
+
     var wasDelegateSet: Bool = false
     var delegate: AblyPublisherServiceDelegate? {
         didSet { wasDelegateSet = true }

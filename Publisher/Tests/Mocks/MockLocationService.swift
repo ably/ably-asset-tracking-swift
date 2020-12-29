@@ -14,6 +14,6 @@ class MockLocationService: LocationService {
 
     var stopUpdatingLocationCalled: Bool = false
     func stopUpdatingLocation() {
-        stopUpdatingLocationCalled = false
+        stopUpdatingLocationCalled = true
     }
 }

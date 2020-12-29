@@ -7,6 +7,7 @@ protocol AblyPublisherServiceDelegate: AnyObject {
 
 protocol AblyPublisherService: AnyObject {
     var delegate: AblyPublisherServiceDelegate? { get set }
+    var trackables: [Trackable] { get }
 
     func track(trackable: Trackable, completion: ((Error?) -> Void)?)
     func stopTracking(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler)

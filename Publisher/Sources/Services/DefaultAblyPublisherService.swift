@@ -4,14 +4,11 @@ import CoreLocation
 class DefaultAblyPublisherService: AblyPublisherService {
     private let client: ARTRealtime
     private let configuration: ConnectionConfiguration
-
     private let presenceData: PresenceData
     private var channels: [Trackable: ARTRealtimeChannel]
 
     weak var delegate: AblyPublisherServiceDelegate?
-    var connectionState: ConnectionState {
-        return client.connection.state.toConnectionState()
-    }
+    var trackables: [Trackable] { return Array(channels.keys) }
 
     init(configuration: ConnectionConfiguration) {
         self.configuration = configuration

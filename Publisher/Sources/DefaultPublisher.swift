@@ -135,6 +135,9 @@ extension DefaultPublisher {
             activeTrackable = nil
             // TODO: Clear current destination in LocationService while working on route based map matching
         }
+        if ablyService.trackables.isEmpty {
+            locationService.stopUpdatingLocation()
+        }
         execute(event: SuccessEvent(onSuccess: { event.onSuccess(true) }))
     }
 

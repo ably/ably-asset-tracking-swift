@@ -204,6 +204,8 @@ class DefaultPublisherTests: XCTestCase {
         let wasPresent = false
         var receivedWasPresent: Bool?
         ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(wasPresent) }
+        ablyService.trackablesGetValue = [Trackable(id: "Trackable1"), Trackable(id: "Trackable2")]
+
         let expectation = XCTestExpectation()
 
         // When removing trackable
@@ -223,12 +225,15 @@ class DefaultPublisherTests: XCTestCase {
 
         // It should return correct `wasPresent` value in callback
         XCTAssertEqual(receivedWasPresent!, wasPresent)
+
+        // It should NOT ask locationService to stop location updates as there are some tracked trackables
+        XCTAssertFalse(locationService.stopUpdatingLocationCalled)
     }
 
     func testRemove_activeTrackable() {
         ablyService.trackCompletionHandler = { completion in completion?(nil) }
         ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(true) }
-
+        ablyService.trackablesGetValue = []
         var expectation = XCTestExpectation(description: "Handler for `track` call")
         expectation.expectedFulfillmentCount = 1
 
@@ -247,6 +252,9 @@ class DefaultPublisherTests: XCTestCase {
 
         // It should clear activeTrackable
         XCTAssertNil(publisher.activeTrackable)
+
+        // It should ask locationService to stop location updates as there are none tracked trackables
+        XCTAssertTrue(locationService.stopUpdatingLocationCalled)
     }
 
     func testRemove_nonActiveTrackable() {
