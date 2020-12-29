@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		180F609C258632510014B310 /* Publisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F609A258632510014B310 /* Publisher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		180F6123258633140014B310 /* PublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6122258633140014B310 /* PublisherTests.swift */; };
 		180F6125258633140014B310 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F6097258632510014B310 /* Publisher.framework */; };
 		180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61702586341E0014B310 /* PublisherBuilder.swift */; };
 		180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61712586341E0014B310 /* DefaultPublisher.swift */; };
@@ -43,6 +42,9 @@
 		18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */; };
 		18FD2D5C259B1BE400A622DF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D5B259B1BE400A622DF /* LocationService.swift */; };
 		18FD2D60259B1BEE00A622DF /* AblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D5F259B1BEE00A622DF /* AblyPublisherService.swift */; };
+		18FD2D75259B1E6A00A622DF /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D67259B1E3100A622DF /* MockLocationService.swift */; };
+		18FD2D76259B1E6A00A622DF /* MockAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D6F259B1E4800A622DF /* MockAblyPublisherService.swift */; };
+		18FD2D7A259B20D300A622DF /* DefaultPublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D79259B20D300A622DF /* DefaultPublisherTests.swift */; };
 		BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FF3FC4C81DED6B6A5792B3 /* Pods_asset_tracking_Publisher.framework */; };
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
 /* End PBXBuildFile section */
@@ -63,7 +65,6 @@
 		180F609A258632510014B310 /* Publisher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Publisher.h; sourceTree = "<group>"; };
 		180F609B258632510014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		180F6120258633140014B310 /* PublisherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PublisherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		180F6122258633140014B310 /* PublisherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherTests.swift; sourceTree = "<group>"; };
 		180F6124258633140014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		180F61702586341E0014B310 /* PublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherBuilder.swift; sourceTree = "<group>"; };
 		180F61712586341E0014B310 /* DefaultPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
@@ -99,6 +100,9 @@
 		18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnimplementedSupport.swift; sourceTree = "<group>"; };
 		18FD2D5B259B1BE400A622DF /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		18FD2D5F259B1BEE00A622DF /* AblyPublisherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyPublisherService.swift; sourceTree = "<group>"; };
+		18FD2D67259B1E3100A622DF /* MockLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
+		18FD2D6F259B1E4800A622DF /* MockAblyPublisherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAblyPublisherService.swift; sourceTree = "<group>"; };
+		18FD2D79259B20D300A622DF /* DefaultPublisherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherTests.swift; sourceTree = "<group>"; };
 		35611B0FAFCE409CE8FE313E /* Pods-PublisherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PublisherTests.release.xcconfig"; path = "Target Support Files/Pods-PublisherTests/Pods-PublisherTests.release.xcconfig"; sourceTree = "<group>"; };
 		5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_PublisherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		713F639B2A96304D65AB1950 /* Pods-asset_tracking-PublisherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherTests.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherTests/Pods-asset_tracking-PublisherTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -172,7 +176,8 @@
 		180F6121258633140014B310 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				180F6122258633140014B310 /* PublisherTests.swift */,
+				18FD2D66259B1E2100A622DF /* Mocks */,
+				18FD2D65259B1E1800A622DF /* DefaultPublisher */,
 				180F6124258633140014B310 /* Info.plist */,
 			);
 			path = Tests;
@@ -267,6 +272,23 @@
 			);
 			name = Utils;
 			path = ../../Core/Sources/Utils;
+			sourceTree = "<group>";
+		};
+		18FD2D65259B1E1800A622DF /* DefaultPublisher */ = {
+			isa = PBXGroup;
+			children = (
+				18FD2D79259B20D300A622DF /* DefaultPublisherTests.swift */,
+			);
+			path = DefaultPublisher;
+			sourceTree = "<group>";
+		};
+		18FD2D66259B1E2100A622DF /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				18FD2D67259B1E3100A622DF /* MockLocationService.swift */,
+				18FD2D6F259B1E4800A622DF /* MockAblyPublisherService.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		9B719654E1BFB314021F4272 /* Pods */ = {
@@ -529,7 +551,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180F6123258633140014B310 /* PublisherTests.swift in Sources */,
+				18FD2D7A259B20D300A622DF /* DefaultPublisherTests.swift in Sources */,
+				18FD2D76259B1E6A00A622DF /* MockAblyPublisherService.swift in Sources */,
+				18FD2D75259B1E6A00A622DF /* MockLocationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
