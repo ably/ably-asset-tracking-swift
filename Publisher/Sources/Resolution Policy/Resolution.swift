@@ -54,3 +54,11 @@ extension Resolution: Hashable {
         hasher.combine(minimumDisplacement)
     }
 }
+
+extension Resolution {
+    static var `default`: Resolution {
+        return Resolution(accuracy: .balanced,
+                          desiredInterval: 600,
+                          minimumDisplacement: 500)
+    }
+}
