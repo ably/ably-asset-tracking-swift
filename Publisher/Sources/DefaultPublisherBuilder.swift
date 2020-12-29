@@ -42,7 +42,9 @@ class DefaultPublisherBuilder: PublisherBuilder {
 
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
                                           logConfiguration: logConfiguration,
-                                          transportationMode: transportationMode)
+                                          transportationMode: transportationMode,
+                                          ablyService: DefaultAblyPublisherService(configuration: connection),
+                                          locationService: DefaultLocationService())
         publisher.delegate = delegate
         return publisher
     }

@@ -19,14 +19,16 @@ class DefaultPublisher: Publisher {
 
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
-         transportationMode: TransportationMode) {
+         transportationMode: TransportationMode,
+         ablyService: AblyPublisherService,
+         locationService: LocationService) {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
         self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher",
                                           qos: .default)
-        self.locationService = LocationService()
-        self.ablyService = AblyPublisherService(configuration: connectionConfiguration)
+        self.locationService = locationService //LocationService()
+        self.ablyService = ablyService // AblyPublisherService(configuration: connectionConfiguration)
 
         self.ablyService.delegate = self
         self.locationService.delegate = self
