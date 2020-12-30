@@ -18,7 +18,7 @@ class DefaultResolutionPolicy: ResolutionPolicy {
         self.trackableSetListener = DefaultTrackableSetListener()
         self.subscriberSetListener.delegate = self
         self.trackableSetListener.delegate = self
-
+        
         hooks.subscribers(listener: subscriberSetListener)
         hooks.trackables(listener: trackableSetListener)
     }
