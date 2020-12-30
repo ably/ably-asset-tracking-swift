@@ -18,6 +18,7 @@
 		184A9401259C837200D6FDF8 /* MockResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9400259C837200D6FDF8 /* MockResolutionPolicy.swift */; };
 		184A9405259C857100D6FDF8 /* MockTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */; };
 		184A9409259C85AE00D6FDF8 /* MockSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */; };
+		184A9410259C9C6C00D6FDF8 /* BatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */; };
 		185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DD25889EBB00E2D2E2 /* Publisher.swift */; };
 		185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */; };
 		1855B58B259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B58A259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift */; };
@@ -85,6 +86,7 @@
 		184A9400259C837200D6FDF8 /* MockResolutionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicy.swift; sourceTree = "<group>"; };
 		184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTrackableSetListener.swift; sourceTree = "<group>"; };
 		184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriberSetListener.swift; sourceTree = "<group>"; };
+		184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryLevelProvider.swift; sourceTree = "<group>"; };
 		184E873225877C6D000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094DD25889EBB00E2D2E2 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherBuilder.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				1855B598259C672F0079BB3C /* DefaultTrackableSetListener.swift */,
 				1855B594259C62850079BB3C /* DefaultResolutionPolicyMethods.swift */,
 				1855B58A259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift */,
+				184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */,
 			);
 			path = DefaultResolutionPolicy;
 			sourceTree = "<group>";
@@ -584,6 +587,7 @@
 				180F617A2586341E0014B310 /* DefaultLocationService.swift in Sources */,
 				18FD2D5C259B1BE400A622DF /* LocationService.swift in Sources */,
 				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,
+				184A9410259C9C6C00D6FDF8 /* BatteryLevelProvider.swift in Sources */,
 				18FCE1E7258B8264005BC480 /* GeoJSONType.swift in Sources */,
 				180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */,
 				18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */,

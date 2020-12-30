@@ -4,15 +4,21 @@ class DefaultResolutionPolicy: ResolutionPolicy {
     private let defaultResolution: Resolution
     private let subscriberSetListener: DefaultSubscriberSetListener
     private let trackableSetListener: DefaultTrackableSetListener
+    private let batteryLevelProvider: BatteryLevelProvider
 
-    init(hooks: ResolutionPolicyHooks, methods: ResolutionPolicyMethods, defaultResolution: Resolution) {
+    init(hooks: ResolutionPolicyHooks,
+         methods: ResolutionPolicyMethods,
+         defaultResolution: Resolution,
+         batteryLevelProvider: BatteryLevelProvider) {
         self.hooks = hooks
         self.methods = methods
         self.defaultResolution = defaultResolution
+        self.batteryLevelProvider = batteryLevelProvider
         self.subscriberSetListener = DefaultSubscriberSetListener()
         self.trackableSetListener = DefaultTrackableSetListener()
         self.subscriberSetListener.delegate = self
         self.trackableSetListener.delegate = self
+
         hooks.subscribers(listener: subscriberSetListener)
         hooks.trackables(listener: trackableSetListener)
     }
