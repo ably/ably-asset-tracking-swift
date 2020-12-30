@@ -28,6 +28,7 @@ class DefaultPublisherTests: XCTestCase {
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      logConfiguration: LogConfiguration(),
                                      transportationMode: TransportationMode(),
+                                     resolutionPolicyFactory: DefaultResolutionPolicyFactory(),
                                      ablyService: ablyService,
                                      locationService: locationService)
     }
@@ -56,11 +57,14 @@ class DefaultPublisherTests: XCTestCase {
 
     func testTrack_error_duplicate_track() {
         ablyService.trackCompletionHandler = { completion in completion?(nil) }
-        let expectation = XCTestExpectation()
+        var expectation = XCTestExpectation()
 
         // When tracking a trackable
-        publisher.track(trackable: trackable, onSuccess: { }, onError: { _ in })
-
+        publisher.track(trackable: trackable,
+                        onSuccess: { expectation.fulfill() },
+                        onError: { _ in })
+        wait(for: [expectation], timeout: 5.0)
+        expectation = XCTestExpectation()
         // And tracking it once again
         publisher.track(trackable: Trackable(id: "DuplicateTrackableId"),
                         onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
@@ -90,9 +94,8 @@ class DefaultPublisherTests: XCTestCase {
 
     func testTrack_thread() {
         ablyService.trackCompletionHandler = { completion in completion?(nil) }
-        let expectation = XCTestExpectation()
-        expectation.expectedFulfillmentCount = 2
 
+        var expectation = XCTestExpectation()
         // Both `onSuccess` and `onError` callbacks should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.track(trackable: trackable,
@@ -101,7 +104,9 @@ class DefaultPublisherTests: XCTestCase {
                             expectation.fulfill()
                         },
                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
-
+        wait(for: [expectation], timeout: 5.0)
+        
+        expectation = XCTestExpectation()
         publisher.track(trackable: trackable,
                         onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
                         onError: { _ in

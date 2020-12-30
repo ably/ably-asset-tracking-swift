@@ -35,9 +35,14 @@ struct ClearActiveTrackableEvent: PublisherEvent {
     let onSuccess: (_ wasPresent: Bool) -> Void
 }
 
+struct PresenceJoinedSuccessfullyEvent: PublisherEvent {
+    let trackable: Trackable
+    let onComplete: SuccessHandler
+}
+
 struct TrackableReadyToTrackEvent: PublisherEvent {
     let trackable: Trackable
-    let onSuccess: () -> Void
+    let onSuccess: SuccessHandler
 }
 
 struct RawLocationChangedEvent: PublisherEvent {
