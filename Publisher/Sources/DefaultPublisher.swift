@@ -84,7 +84,6 @@ extension DefaultPublisher {
             case let event as RemoveTrackableEvent: self?.performRemoveTrackableEvent(event)
             case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
 
-
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)

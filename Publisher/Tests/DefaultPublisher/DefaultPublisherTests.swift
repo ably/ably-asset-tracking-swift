@@ -7,6 +7,7 @@ class DefaultPublisherTests: XCTestCase {
     var locationService: MockLocationService!
     var ablyService: MockAblyPublisherService!
     var configuration: ConnectionConfiguration!
+    var resolutionPolicyFactory: MockResolutionPolicyFactory!
     var trackable: Trackable!
     var publisher: DefaultPublisher!
 
@@ -22,13 +23,14 @@ class DefaultPublisherTests: XCTestCase {
         locationService = MockLocationService()
         ablyService = MockAblyPublisherService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
+        resolutionPolicyFactory = MockResolutionPolicyFactory()
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      logConfiguration: LogConfiguration(),
                                      transportationMode: TransportationMode(),
-                                     resolutionPolicyFactory: DefaultResolutionPolicyFactory(),
+                                     resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyService: ablyService,
                                      locationService: locationService)
     }
@@ -53,6 +55,14 @@ class DefaultPublisherTests: XCTestCase {
 
         // It should ask location service to start updating location
         XCTAssertTrue(locationService.startUpdatingLocationCalled)
+
+        // It should notify trackables hook that there is new trackable
+        XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedCalled)
+        XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedParamTrackable, trackable)
+
+        // It should notify trackables hook that there is new active trackable
+        XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
+        XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedParamTrackable, trackable)
     }
 
     func testTrack_error_duplicate_track() {
@@ -137,6 +147,13 @@ class DefaultPublisherTests: XCTestCase {
 
         // It should ask location service to start updating location
         XCTAssertTrue(locationService.startUpdatingLocationCalled)
+
+        // It should notify trackables hook that there is new trackable
+        XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedCalled)
+        XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedParamTrackable, trackable)
+
+        // It should NOT notify trackables hook that there is new active trackable
+        XCTAssertFalse(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
     }
 
     func testAdd_track_success() {
@@ -233,6 +250,10 @@ class DefaultPublisherTests: XCTestCase {
 
         // It should NOT ask locationService to stop location updates as there are some tracked trackables
         XCTAssertFalse(locationService.stopUpdatingLocationCalled)
+
+        // It should notify trackables hook that there is trackable removed
+        XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedCalled)
+        XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedParamTrackable, trackable)
     }
 
     func testRemove_activeTrackable() {
@@ -260,6 +281,14 @@ class DefaultPublisherTests: XCTestCase {
 
         // It should ask locationService to stop location updates as there are none tracked trackables
         XCTAssertTrue(locationService.stopUpdatingLocationCalled)
+
+        // It should notify trackables hook that there is trackable removed
+        XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedCalled)
+        XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedParamTrackable, trackable)
+
+        // It should notify trackables hook that there is active trackable changed with nil value
+        XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
+        XCTAssertNil(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedParamTrackable)
     }
 
     func testRemove_nonActiveTrackable() {
@@ -276,13 +305,21 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertEqual(publisher.activeTrackable, trackable)
 
         expectation = XCTestExpectation(description: "Handler for `remove` call")
-        publisher.remove(trackable: Trackable(id: "AnotherTrackableId"),
+        let removedTrackable = Trackable(id: "AnotherTrackableId")
+        publisher.remove(trackable: removedTrackable,
                          onSuccess: { _ in expectation.fulfill() },
                          onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
         wait(for: [expectation], timeout: 5.0)
 
         // It should NOT modify activeTrackable
         XCTAssertEqual(publisher.activeTrackable, trackable)
+
+        // It should notify trackables hook that there is trackable removed
+        XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedCalled)
+        XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedParamTrackable, removedTrackable)
+
+        // It should NOT notify trackables hook that there is active trackable changed
+        XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
     }
 
     func testRemove_error() {
