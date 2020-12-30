@@ -12,6 +12,9 @@ class DefaultPublisher: Publisher {
     private let logConfiguration: LogConfiguration
     private let locationService: LocationService
     private let ablyService: AblyPublisherService
+    private let resolutionPolicy: ResolutionPolicy
+    private let hooks: DefaultResolutionPolicyHooks
+    private let methods: DefaultResolutionPolicyMethods
 
     public let transportationMode: TransportationMode
     public weak var delegate: PublisherDelegate?
@@ -20,6 +23,7 @@ class DefaultPublisher: Publisher {
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
          transportationMode: TransportationMode,
+         resolutionPolicyFactory: ResolutionPolicyFactory,
          ablyService: AblyPublisherService,
          locationService: LocationService) {
         self.connectionConfiguration = connectionConfiguration
@@ -27,11 +31,17 @@ class DefaultPublisher: Publisher {
         self.transportationMode = transportationMode
         self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher",
                                           qos: .default)
-        self.locationService = locationService //LocationService()
-        self.ablyService = ablyService // AblyPublisherService(configuration: connectionConfiguration)
+        self.locationService = locationService
+        self.ablyService = ablyService
+
+        self.hooks = DefaultResolutionPolicyHooks()
+        self.methods = DefaultResolutionPolicyMethods()
+        self.resolutionPolicy = resolutionPolicyFactory.createResolutionPolicy(hooks: hooks,
+                                                                               methods: methods)
 
         self.ablyService.delegate = self
         self.locationService.delegate = self
+        self.methods.delegate = self
     }
 
     func track(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
@@ -235,5 +245,22 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
         execute(event: DelegateConnectionStateChangedEvent(connectionState: state))
+    }
+}
+
+// MARK: ResolutionPolicyMethodsDelegate
+extension DefaultPublisher: DefaultResolutionPolicyMethodsDelegate {
+    func resolutionPolicyMethods(refreshWithSender sender: DefaultResolutionPolicyMethods) {
+        // TODO: Handle
+    }
+
+    func resolutionPolicyMethods(cancelProximityThresholdWithSender sender: DefaultResolutionPolicyMethods) {
+        // TODO: Handle
+    }
+
+    func resolutionPolicyMethods(sender: DefaultResolutionPolicyMethods,
+                                 setProximityThreshold threshold: Proximity,
+                                 withHandler handler: ProximityHandler) {
+        // TODO: Handle
     }
 }
