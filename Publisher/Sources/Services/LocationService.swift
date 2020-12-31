@@ -10,4 +10,5 @@ protocol LocationService: AnyObject {
     var delegate: LocationServiceDelegate? { get set }
     func startUpdatingLocation()
     func stopUpdatingLocation()
+    func changeLocationEngineResolution(resolution: Resolution)
 }

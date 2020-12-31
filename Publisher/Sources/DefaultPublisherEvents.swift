@@ -53,6 +53,10 @@ struct EnhancedLocationChangedEvent: PublisherEvent {
     let location: CLLocation
 }
 
+struct RefreshResolutionPolicyEvent: PublisherEvent {}
+
+struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
+
 // MARK: Delegate handling events
 struct DelegateErrorEvent: PublisherEvent {
     let error: Error

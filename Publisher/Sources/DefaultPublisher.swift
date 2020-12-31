@@ -13,8 +13,16 @@ class DefaultPublisher: Publisher {
     private let locationService: LocationService
     private let ablyService: AblyPublisherService
     private let resolutionPolicy: ResolutionPolicy
+
     private let hooks: DefaultResolutionPolicyHooks
     private let methods: DefaultResolutionPolicyMethods
+    private var proximityThreshold: Proximity?
+    private var proximityHandler: ProximityHandler?
+
+    private var requests: [Trackable: [Subscriber: Resolution]]
+    private var subscribers: [Trackable: Set<Subscriber>]
+    private var resolutions: [Trackable: Resolution]
+    private var locationEngineResolution: Resolution
 
     public let transportationMode: TransportationMode
     public weak var delegate: PublisherDelegate?
@@ -36,8 +44,12 @@ class DefaultPublisher: Publisher {
 
         self.hooks = DefaultResolutionPolicyHooks()
         self.methods = DefaultResolutionPolicyMethods()
-        self.resolutionPolicy = resolutionPolicyFactory.createResolutionPolicy(hooks: hooks,
-                                                                               methods: methods)
+        self.resolutionPolicy = resolutionPolicyFactory.createResolutionPolicy(hooks: hooks, methods: methods)
+        self.locationEngineResolution = resolutionPolicy.resolve(resolutions: [])
+
+        self.requests = [:]
+        self.subscribers = [:]
+        self.resolutions = [:]
 
         self.ablyService.delegate = self
         self.locationService.delegate = self
@@ -85,6 +97,8 @@ extension DefaultPublisher {
             case let event as AddTrackableEvent: self?.performAddTrackableEvent(event)
             case let event as RemoveTrackableEvent: self?.performRemoveTrackableEvent(event)
             case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
+            case let event as RefreshResolutionPolicyEvent: self?.performRefreshResolutionPolicyEvent(event)
+            case let event as ChangeLocationEngineResolutionEvent: self?.performChangeLocationEngineResolutionEvent(event)
 
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
@@ -188,6 +202,28 @@ extension DefaultPublisher {
         }
     }
 
+    // MARK: ResolutionPolicy
+    private func performRefreshResolutionPolicyEvent(_ event: RefreshResolutionPolicyEvent) {
+        ablyService.trackables.forEach { resolveResolution(trackable: $0) }
+    }
+
+    private func resolveResolution(trackable: Trackable) {
+        let currentRequests = requests[trackable]?.values
+        let resolutionSet: Set<Resolution> = currentRequests == nil ? [] : Set(currentRequests!)
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutionSet)
+        resolutions[trackable] = resolutionPolicy.resolve(request: request)
+        execute(event: ChangeLocationEngineResolutionEvent())
+    }
+
+    private func performChangeLocationEngineResolutionEvent(_ event: ChangeLocationEngineResolutionEvent) {
+        locationEngineResolution = resolutionPolicy.resolve(resolutions: Set(resolutions.values))
+        changeLocationEngineResolution(resolution: locationEngineResolution)
+    }
+
+    private func changeLocationEngineResolution(resolution: Resolution) {
+        locationService.changeLocationEngineResolution(resolution: resolution)
+    }
+
     // MARK: Utils
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
         workingQueue.async(execute: operation)
@@ -271,16 +307,17 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
 // MARK: ResolutionPolicyMethodsDelegate
 extension DefaultPublisher: DefaultResolutionPolicyMethodsDelegate {
     func resolutionPolicyMethods(refreshWithSender sender: DefaultResolutionPolicyMethods) {
-        // TODO: Handle
+        execute(event: RefreshResolutionPolicyEvent())
     }
 
     func resolutionPolicyMethods(cancelProximityThresholdWithSender sender: DefaultResolutionPolicyMethods) {
-        // TODO: Handle
+        proximityHandler?.onProximityCancelled()
     }
 
     func resolutionPolicyMethods(sender: DefaultResolutionPolicyMethods,
                                  setProximityThreshold threshold: Proximity,
                                  withHandler handler: ProximityHandler) {
-        // TODO: Handle
+        self.proximityHandler = handler
+        self.proximityThreshold = threshold
     }
 }
