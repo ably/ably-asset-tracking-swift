@@ -19,10 +19,20 @@ public class Trackable: NSObject {
      */
     public let destination: CLLocationCoordinate2D?
 
-    public init(id: String, metadata: String? = nil, destination: CLLocationCoordinate2D? = nil) {
+
+    /**
+    Optional constraints used to determine suitable Resolution
+     */
+    public let constraints: ResolutionConstraints?
+
+    public init(id: String,
+                metadata: String? = nil,
+                destination: CLLocationCoordinate2D? = nil,
+                constraints: ResolutionConstraints? = nil) {
         self.id = id
         self.metadata = metadata
         self.destination = destination
+        self.constraints = constraints
         super.init()
     }
 }

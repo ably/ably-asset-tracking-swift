@@ -1,7 +1,7 @@
 /**
  Specifies factors which contribute towards deciding the tracking `Resolution` for a `Trackable`.
  */
-protocol ResolutionConstraints { }
+public protocol ResolutionConstraints { }
 
 /**
  Specifies the thresholds and corresponding logical mappings for tracking `Resolution`s that are required by the
@@ -26,7 +26,7 @@ public class DefaultResolutionConstraints: ResolutionConstraints {
     let batteryLevelThreshold: Float
 
     /**
-     The multipler to be applied to the `interval` `Resolution.desiredInterval` when the battery level is below
+     The multiplier to be applied to the `interval` `Resolution.desiredInterval` when the battery level is below
      `batteryLevelThreshold`.
      */
     let lowBatteryMultiplier: Float

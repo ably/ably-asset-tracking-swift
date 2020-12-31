@@ -42,6 +42,8 @@ class DefaultPublisher: Publisher {
         self.ablyService.delegate = self
         self.locationService.delegate = self
         self.methods.delegate = self
+
+        DefaultBatteryLevelProvider.setup()
     }
 
     func track(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
