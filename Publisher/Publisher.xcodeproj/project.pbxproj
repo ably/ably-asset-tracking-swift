@@ -20,6 +20,7 @@
 		184A9409259C85AE00D6FDF8 /* MockSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */; };
 		184A9410259C9C6C00D6FDF8 /* BatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */; };
 		184A941B259CA71300D6FDF8 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9417259CA65600D6FDF8 /* ResolutionConstraints.swift */; };
+		184A9442259DD6D500D6FDF8 /* DefaultProximityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9441259DD6D500D6FDF8 /* DefaultProximityHandler.swift */; };
 		185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DD25889EBB00E2D2E2 /* Publisher.swift */; };
 		185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */; };
 		1855B58B259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B58A259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift */; };
@@ -89,6 +90,7 @@
 		184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriberSetListener.swift; sourceTree = "<group>"; };
 		184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryLevelProvider.swift; sourceTree = "<group>"; };
 		184A9417259CA65600D6FDF8 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
+		184A9441259DD6D500D6FDF8 /* DefaultProximityHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProximityHandler.swift; sourceTree = "<group>"; };
 		184E873225877C6D000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094DD25889EBB00E2D2E2 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherBuilder.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				18FD2D80259B6EBE00A622DF /* DefaultResolutionPolicy.swift */,
+				184A9441259DD6D500D6FDF8 /* DefaultProximityHandler.swift */,
 				1855B590259C62600079BB3C /* DefaultResolutionPolicyHooks.swift */,
 				1855B59E259C67B80079BB3C /* DefaultSubscriberSetListener.swift */,
 				1855B598259C672F0079BB3C /* DefaultTrackableSetListener.swift */,
@@ -595,6 +598,7 @@
 				184A941B259CA71300D6FDF8 /* ResolutionConstraints.swift in Sources */,
 				180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */,
 				18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */,
+				184A9442259DD6D500D6FDF8 /* DefaultProximityHandler.swift in Sources */,
 				185D6D2D258F65F000935049 /* Subscriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

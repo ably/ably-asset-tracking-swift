@@ -1,18 +1,18 @@
 import UIKit
 
+protocol DefaultSubscriberSetListenerDelegate: AnyObject {
+    func subscriberSetListener(sender: DefaultSubscriberSetListener, onSubscriberAdded subscriber: Subscriber)
+    func subscriberSetListener(sender: DefaultSubscriberSetListener, onSubscriberRemoved subscriber: Subscriber)
+}
+
 class DefaultSubscriberSetListener: SubscriberSetListener {
-    private var subscribers: Set<Subscriber> = []
+    weak var delegate: DefaultSubscriberSetListenerDelegate?
 
-    func hasSubscribers(trackable: Trackable) -> Bool {
-        return subscribers.contains { $0.trackable == trackable }
-    }
-
-    // MARK: SubscriberSetListener
     func onSubscriberAdded(subscriber: Subscriber) {
-        subscribers.insert(subscriber)
+        delegate?.subscriberSetListener(sender: self, onSubscriberAdded: subscriber)
     }
 
     func onSubscriberRemoved(subscriber: Subscriber) {
-        subscribers.remove(subscriber)
+        delegate?.subscriberSetListener(sender: self, onSubscriberRemoved: subscriber)
     }
 }
