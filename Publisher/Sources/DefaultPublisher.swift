@@ -24,6 +24,11 @@ class DefaultPublisher: Publisher {
     private var resolutions: [Trackable: Resolution]
     private var locationEngineResolution: Resolution
 
+    private var lastRawLocations: [Trackable: CLLocation]
+    private var lastRawTimestamps: [Trackable: Date]
+    private var lastEnhancedLocations: [Trackable: CLLocation]
+    private var lastEnhancedTimestamps: [Trackable: Date]
+
     public let transportationMode: TransportationMode
     public weak var delegate: PublisherDelegate?
     private(set) public var activeTrackable: Trackable?
@@ -49,6 +54,10 @@ class DefaultPublisher: Publisher {
         self.requests = [:]
         self.subscribers = [:]
         self.resolutions = [:]
+        self.lastRawLocations = [:]
+        self.lastEnhancedLocations = [:]
+        self.lastRawTimestamps = [:]
+        self.lastEnhancedTimestamps = [:]
 
         self.ablyService.delegate = self
         self.locationService.delegate = self
@@ -178,6 +187,9 @@ extension DefaultPublisher {
         removeAllSubscribers(forTrackable: event.trackable)
         resolutions.removeValue(forKey: event.trackable)
         requests.removeValue(forKey: event.trackable)
+        lastRawLocations.removeValue(forKey: event.trackable)
+        lastEnhancedLocations.removeValue(forKey: event.trackable)
+
         execute(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess))
     }
 
@@ -205,19 +217,57 @@ extension DefaultPublisher {
 
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
-        self.ablyService.sendEnhancedAssetLocation(location: event.location) { [weak self] error in
-            if let error = error {
-                self?.execute(event: DelegateErrorEvent(error: error))
+        let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
+            return shouldSendLocation(location: event.location,
+                                      lastLocation: lastEnhancedLocations[trackable],
+                                      lastTimestamp: lastEnhancedTimestamps[trackable],
+                                      resolution: resolutions[trackable])
+        }
+
+        trackablesToSend.forEach { trackable in
+            lastEnhancedLocations[trackable] = event.location
+            lastEnhancedTimestamps[trackable] = event.location.timestamp
+
+            ablyService.sendEnhancedAssetLocation(location: event.location, forTrackable: trackable) { [weak self] error in
+                if let error = error {
+                    self?.execute(event: DelegateErrorEvent(error: error))
+                }
             }
         }
     }
 
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
-        ablyService.sendRawAssetLocation(location: event.location) { [weak self] error in
-            if let error = error {
-                self?.execute(event: DelegateErrorEvent(error: error))
+        let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
+            return shouldSendLocation(location: event.location,
+                                      lastLocation: lastRawLocations[trackable],
+                                      lastTimestamp: lastRawTimestamps[trackable],
+                                      resolution: resolutions[trackable])
+        }
+
+        trackablesToSend.forEach { trackable in
+            lastRawLocations[trackable] = event.location
+            lastRawTimestamps[trackable] = event.location.timestamp
+
+            ablyService.sendRawAssetLocation(location: event.location, forTrackable: trackable) { [weak self] error in
+                if let error = error {
+                    self?.execute(event: DelegateErrorEvent(error: error))
+                }
             }
         }
+    }
+
+    private func shouldSendLocation(location: CLLocation,
+                                    lastLocation: CLLocation?,
+                                    lastTimestamp: Date?,
+                                    resolution: Resolution?) -> Bool {
+        guard let resolution = resolution,
+              let lastLocation = lastLocation,
+              let lastTimestamp = lastTimestamp
+        else { return true }
+
+        let distance = location.distance(from: lastLocation)
+        let timeInterval = location.timestamp.timeIntervalSince1970 - lastTimestamp.timeIntervalSince1970
+        return distance > resolution.minimumDisplacement || timeInterval > resolution.desiredInterval
     }
 
     // MARK: ResolutionPolicy

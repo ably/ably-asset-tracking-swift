@@ -61,17 +61,20 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channels[trackable] = channel
     }
 
-    func sendRawAssetLocation(location: CLLocation, completion: ((Error?) -> Void)?) {
-        sendAssetLocation(location: location, withName: .raw, completion: completion)
+    func sendRawAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
+        sendAssetLocation(location: location, forTrackable: trackable, withName: .raw, completion: completion)
     }
 
-    func sendEnhancedAssetLocation(location: CLLocation, completion: ((Error?) -> Void)?) {
-        sendAssetLocation(location: location, withName: .enhanced, completion: completion)
+    func sendEnhancedAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
+        sendAssetLocation(location: location, forTrackable: trackable, withName: .enhanced, completion: completion)
     }
 
-    private func sendAssetLocation(location: CLLocation, withName name: EventName, completion: ((Error?) -> Void)?) {
-        guard !channels.isEmpty else {
-            completion?(AssetTrackingError.publisherError("Attempt to send location while not connected to any channel"))
+    private func sendAssetLocation(location: CLLocation,
+                                   forTrackable trackable: Trackable,
+                                   withName name: EventName,
+                                   completion: ((Error?) -> Void)?) {
+        guard let channel = channels[trackable] else {
+            completion?(AssetTrackingError.publisherError("Attempt to send location while not tracked channel"))
             return
         }
 
@@ -80,12 +83,10 @@ class DefaultAblyPublisherService: AblyPublisherService {
         let data = try! [geoJSON].toJSONString()
 
         let message = ARTMessage(name: name.rawValue, data: data)
-        channels.forEach { (_, channel) in
-            channel.publish([message]) { [weak self] error in
-                if let self = self,
-                   let error = error {
-                    self.delegate?.publisherService(sender: self, didFailWithError: error)
-                }
+        channel.publish([message]) { [weak self] error in
+            if let self = self,
+               let error = error {
+                self.delegate?.publisherService(sender: self, didFailWithError: error)
             }
         }
     }
