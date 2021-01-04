@@ -2,6 +2,13 @@ import Foundation
 @testable import Publisher
 
 class MockLocationService: LocationService {
+    var changeLocationEngineResolutionCalled: Bool = false
+    var changeLocationEngineResolutionParamResolution: Resolution?
+    func changeLocationEngineResolution(resolution: Resolution) {
+        changeLocationEngineResolutionCalled = true
+        changeLocationEngineResolutionParamResolution = resolution
+    }
+
     var wasDelegateSet: Bool = false
     var delegate: LocationServiceDelegate? {
         didSet { wasDelegateSet = true }

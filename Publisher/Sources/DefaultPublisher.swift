@@ -1,11 +1,11 @@
 import UIKit
 import CoreLocation
 import Logging
-// swiftlint:disable cyclomatic_complexity
 
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.asset-tracking.Publisher")
 
+// swiftlint:disable cyclomatic_complexity
 class DefaultPublisher: Publisher {
     private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
@@ -14,11 +14,11 @@ class DefaultPublisher: Publisher {
     private let ablyService: AblyPublisherService
     private let resolutionPolicy: ResolutionPolicy
 
+    // ResolutionPolicy
     private let hooks: DefaultResolutionPolicyHooks
     private let methods: DefaultResolutionPolicyMethods
     private var proximityThreshold: Proximity?
     private var proximityHandler: ProximityHandler?
-
     private var requests: [Trackable: [Subscriber: Resolution]]
     private var subscribers: [Trackable: Set<Subscriber>]
     private var resolutions: [Trackable: Resolution]
@@ -37,8 +37,7 @@ class DefaultPublisher: Publisher {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
-        self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher",
-                                          qos: .default)
+        self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher", qos: .default)
         self.locationService = locationService
         self.ablyService = ablyService
 
@@ -164,6 +163,10 @@ extension DefaultPublisher {
     // MARK: Remove
     private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
         hooks.trackables?.onTrackableRemoved(trackable: event.trackable)
+        removeAllSubscribers(forTrackable: event.trackable)
+        resolutions.removeValue(forKey: event.trackable)
+        requests.removeValue(forKey: event.trackable)
+        
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] wasPresent in
             wasPresent ?
                 self?.execute(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess)) :
@@ -183,6 +186,16 @@ extension DefaultPublisher {
             locationService.stopUpdatingLocation()
         }
         execute(event: SuccessEvent(onSuccess: { event.onSuccess(true) }))
+    }
+
+    private func removeAllSubscribers(forTrackable trackable: Trackable) {
+        guard let trackableSubscribers = subscribers[trackable],
+              !trackableSubscribers.isEmpty
+        else { return }
+        trackableSubscribers.forEach {
+            hooks.subscribers?.onSubscriberRemoved(subscriber: $0)
+        }
+        subscribers[trackable] = []
     }
 
     // MARK: Location change
