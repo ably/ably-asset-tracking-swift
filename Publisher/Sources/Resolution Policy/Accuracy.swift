@@ -2,7 +2,7 @@
  The accuracy of a geographical coordinate.
  Presents a unified representation of location accuracy (Apple) and quality priority (Android).
  */
-public enum Accuracy: Int {
+public enum Accuracy: Int, Codable {
     /**
      - Android: [PRIORITY_NO_POWER](https://developers.google.com/android/reference/com/google/android/gms/location/LocationRequest#PRIORITY_NO_POWER)
      (best possible with zero additional power consumption)

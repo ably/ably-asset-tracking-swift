@@ -38,6 +38,20 @@ class DefaultAblyPublisherService: AblyPublisherService {
         let data = try! presenceData.toJSONString()
 
         let channel = client.channels.get(trackable.id)
+        channel.presence.subscribe { [weak self] message in
+            guard let self = self,
+                  let json = message.data as? String,
+                  let data: PresenceData = try? PresenceData.fromJSONString(json),
+                  let clientId = message.clientId
+            else { return }
+
+            self.delegate?.publisherService(sender: self,
+                                             didReceivePresenceUpdate: message.action.toAblyPublisherPresence(),
+                                             forTrackable: trackable,
+                                             presenceData: data,
+                                             clientId: clientId)
+        }
+
         channel.presence.enterClient(configuration.clientId, data: data) { error in
             error == nil ?
                 logger.debug("Entered to presence successfully", source: "AblyPublisherService") :

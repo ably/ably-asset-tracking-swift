@@ -37,6 +37,7 @@
 		185D6D2D258F65F000935049 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D2C258F65F000935049 /* Subscriber.swift */; };
 		185D6D33258F684E00935049 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D32258F684E00935049 /* Proximity.swift */; };
 		185D6D372590849500935049 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D362590849500935049 /* Accuracy.swift */; };
+		18CF5F5625A2F95500BF1D31 /* AblyPublisherPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */; };
 		18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
@@ -108,6 +109,7 @@
 		185D6D2C258F65F000935049 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		185D6D32258F684E00935049 /* Proximity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
 		185D6D362590849500935049 /* Accuracy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
+		18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyPublisherPresence.swift; sourceTree = "<group>"; };
 		18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherEvents.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			children = (
 				18FD2D5F259B1BEE00A622DF /* AblyPublisherService.swift */,
 				180F61742586341E0014B310 /* DefaultAblyPublisherService.swift */,
+				18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */,
 				18FD2D5B259B1BE400A622DF /* LocationService.swift */,
 				180F61752586341E0014B310 /* DefaultLocationService.swift */,
 			);
@@ -586,6 +589,7 @@
 				18FCE1E6258B8264005BC480 /* GeoJSONProperties.swift in Sources */,
 				180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */,
 				18FCE1E5258B8264005BC480 /* GeoJSONGeometry.swift in Sources */,
+				18CF5F5625A2F95500BF1D31 /* AblyPublisherPresence.swift in Sources */,
 				18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */,
 				1855B591259C62600079BB3C /* DefaultResolutionPolicyHooks.swift in Sources */,
 				1855B58B259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift in Sources */,

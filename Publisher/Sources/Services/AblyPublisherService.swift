@@ -3,6 +3,11 @@ import CoreLocation
 protocol AblyPublisherServiceDelegate: AnyObject {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState)
     func publisherService(sender: AblyPublisherService, didFailWithError error: Error)
+    func publisherService(sender: AblyPublisherService,
+                          didReceivePresenceUpdate presence: AblyPublisherPresence,
+                          forTrackable trackable: Trackable,
+                          presenceData: PresenceData,
+                          clientId: String)
 }
 
 protocol AblyPublisherService: AnyObject {

@@ -7,8 +7,10 @@ public enum ClientType: String, Codable {
 
 public class PresenceData: Codable {
     public let type: ClientType
+    public let resolution: Resolution?
 
     public init(type: ClientType) {
         self.type = type
+        self.resolution = nil
     }
 }

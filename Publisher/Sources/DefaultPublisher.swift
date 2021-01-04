@@ -98,6 +98,7 @@ extension DefaultPublisher {
             case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
             case let event as RefreshResolutionPolicyEvent: self?.performRefreshResolutionPolicyEvent(event)
             case let event as ChangeLocationEngineResolutionEvent: self?.performChangeLocationEngineResolutionEvent(event)
+            case let event as DelegatePresenceUpdateEvent: self?.performPresenceUpdateEvent(event)
 
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
@@ -166,7 +167,7 @@ extension DefaultPublisher {
         removeAllSubscribers(forTrackable: event.trackable)
         resolutions.removeValue(forKey: event.trackable)
         requests.removeValue(forKey: event.trackable)
-        
+
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] wasPresent in
             wasPresent ?
                 self?.execute(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess)) :
@@ -235,6 +236,59 @@ extension DefaultPublisher {
 
     private func changeLocationEngineResolution(resolution: Resolution) {
         locationService.changeLocationEngineResolution(resolution: resolution)
+    }
+
+    // MARK: Subscribers handling
+    private func performPresenceUpdateEvent(_ event: DelegatePresenceUpdateEvent) {
+        guard event.presenceData.type == .subscriber else { return }
+        if event.presence == .enter {
+            addSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
+        } else if event.presence == .leave {
+            removeSubscriber(clientId: event.clientId, trackable: event.trackable)
+        } else if event.presence == .update {
+            updateSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
+        }
+    }
+
+    private func addSubscriber(clientId: String, trackable: Trackable, data: PresenceData) {
+        let subscriber = Subscriber(id: clientId, trackable: trackable)
+        var trackableSubscribers: Set<Subscriber> = subscribers[trackable] ?? []
+        trackableSubscribers.insert(subscriber)
+        subscribers[trackable] = trackableSubscribers
+        saveOrRemoveResolutionRequest(resolution: data.resolution, trackable: trackable, subscriber: subscriber)
+        hooks.subscribers?.onSubscriberAdded(subscriber: subscriber)
+        resolveResolution(trackable: trackable)
+    }
+
+    private func updateSubscriber(clientId: String, trackable: Trackable, data: PresenceData) {
+        guard let trackableSubscribers = subscribers[trackable],
+              let subscriber = trackableSubscribers.first(where: { $0.id == clientId })
+        else { return }
+        saveOrRemoveResolutionRequest(resolution: data.resolution, trackable: trackable, subscriber: subscriber)
+        resolveResolution(trackable: trackable)
+    }
+
+    private func removeSubscriber(clientId: String, trackable: Trackable) {
+        guard var trackableSubscribers = subscribers[trackable],
+              let subscriber = trackableSubscribers.first(where: { $0.id == clientId })
+        else { return }
+
+        trackableSubscribers.remove(subscriber)
+        subscribers[trackable] = trackableSubscribers
+
+        if var trackableRequests = requests[trackable] {
+            trackableRequests.removeValue(forKey: subscriber)
+            requests[trackable] = trackableRequests
+        }
+
+        hooks.subscribers?.onSubscriberRemoved(subscriber: subscriber)
+        resolveResolution(trackable: trackable)
+    }
+
+    private func saveOrRemoveResolutionRequest(resolution: Resolution?, trackable: Trackable, subscriber: Subscriber) {
+        var trackableRequests: [Subscriber: Resolution] = requests[trackable] ?? [:]
+        trackableRequests[subscriber] = resolution
+        requests[trackable] = trackableRequests
     }
 
     // MARK: Utils
@@ -314,6 +368,16 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
         execute(event: DelegateConnectionStateChangedEvent(connectionState: state))
+    }
+
+    func publisherService(sender: AblyPublisherService,
+                          didReceivePresenceUpdate presence: AblyPublisherPresence,
+                          forTrackable trackable: Trackable,
+                          presenceData: PresenceData,
+                          clientId: String) {
+        logger.error("publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)",
+                     source: "DefaultPublisher")
+        execute(event: DelegatePresenceUpdateEvent(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId))
     }
 }
 

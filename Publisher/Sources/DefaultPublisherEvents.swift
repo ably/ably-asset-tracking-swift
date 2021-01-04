@@ -73,3 +73,10 @@ struct DelegateEnhancedLocationChangedEvent: PublisherEvent {
 struct DelegateConnectionStateChangedEvent: PublisherEvent {
     let connectionState: ConnectionState
 }
+
+struct DelegatePresenceUpdateEvent: PublisherEvent {
+    let trackable: Trackable
+    let presence: AblyPublisherPresence
+    let presenceData: PresenceData
+    let clientId: String
+}
