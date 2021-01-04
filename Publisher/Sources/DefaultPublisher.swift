@@ -99,6 +99,7 @@ extension DefaultPublisher {
             case let event as RefreshResolutionPolicyEvent: self?.performRefreshResolutionPolicyEvent(event)
             case let event as ChangeLocationEngineResolutionEvent: self?.performChangeLocationEngineResolutionEvent(event)
             case let event as DelegatePresenceUpdateEvent: self?.performPresenceUpdateEvent(event)
+            case let event as ClearRemovedTrackableMetadataEvent: self?.performClearRemovedTrackableMetadataEvent(event)
 
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
@@ -163,18 +164,21 @@ extension DefaultPublisher {
 
     // MARK: Remove
     private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
-        hooks.trackables?.onTrackableRemoved(trackable: event.trackable)
-        removeAllSubscribers(forTrackable: event.trackable)
-        resolutions.removeValue(forKey: event.trackable)
-        requests.removeValue(forKey: event.trackable)
-
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] wasPresent in
             wasPresent ?
-                self?.execute(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess)) :
+                self?.execute(event: ClearRemovedTrackableMetadataEvent(trackable: event.trackable, onSuccess: event.onSuccess)) :
                 self?.execute(event: SuccessEvent(onSuccess: { event.onSuccess(false) }))
         } onError: { [weak self] error in
             self?.execute(event: ErrorEvent(error: error, onError: event.onError))
         }
+    }
+
+    private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
+        hooks.trackables?.onTrackableRemoved(trackable: event.trackable)
+        removeAllSubscribers(forTrackable: event.trackable)
+        resolutions.removeValue(forKey: event.trackable)
+        requests.removeValue(forKey: event.trackable)
+        execute(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess))
     }
 
     private func performClearActiveTrackableEvent(_ event: ClearActiveTrackableEvent) {

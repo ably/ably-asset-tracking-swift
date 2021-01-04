@@ -223,7 +223,7 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: remove
     func testRemove_success() {
-        let wasPresent = false
+        let wasPresent = true
         var receivedWasPresent: Bool?
         ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(wasPresent) }
         ablyService.trackablesGetValue = [Trackable(id: "Trackable1"), Trackable(id: "Trackable2")]
@@ -251,7 +251,7 @@ class DefaultPublisherTests: XCTestCase {
         // It should NOT ask locationService to stop location updates as there are some tracked trackables
         XCTAssertFalse(locationService.stopUpdatingLocationCalled)
 
-        // It should notify trackables hook that there is trackable removed
+        // It should notify trackables hook that trackable was removed (as it was present in AblyService)
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedParamTrackable, trackable)
     }

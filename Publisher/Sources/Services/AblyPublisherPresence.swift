@@ -1,5 +1,8 @@
 import Ably
 
+/**
+ Wrapper enum for `ARTPresenceAction` to avoid using `Ably SDK` classes in Publisher code
+ */
 enum AblyPublisherPresence {
     case absent
     case present
