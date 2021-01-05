@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1807958925A4AEC00026F4C1 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1807958825A4AEC00026F4C1 /* ResolutionConstraints.swift */; };
+		180795BB25A4AF660026F4C1 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795B825A4AF660026F4C1 /* Accuracy.swift */; };
+		180795BC25A4AF660026F4C1 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795B925A4AF660026F4C1 /* Resolution.swift */; };
+		180795BD25A4AF660026F4C1 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795BA25A4AF660026F4C1 /* ResolutionPolicy.swift */; };
+		180795D325A4AFA10026F4C1 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795D225A4AFA10026F4C1 /* Proximity.swift */; };
+		180795F025A4AFE60026F4C1 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795EF25A4AFE60026F4C1 /* TrackableResolutionRequest.swift */; };
 		180F609C258632510014B310 /* Publisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F609A258632510014B310 /* Publisher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		180F6125258633140014B310 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F6097258632510014B310 /* Publisher.framework */; };
 		180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61702586341E0014B310 /* PublisherBuilder.swift */; };
@@ -19,7 +25,6 @@
 		184A9405259C857100D6FDF8 /* MockTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */; };
 		184A9409259C85AE00D6FDF8 /* MockSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */; };
 		184A9410259C9C6C00D6FDF8 /* BatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */; };
-		184A941B259CA71300D6FDF8 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9417259CA65600D6FDF8 /* ResolutionConstraints.swift */; };
 		184A9442259DD6D500D6FDF8 /* DefaultProximityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9441259DD6D500D6FDF8 /* DefaultProximityHandler.swift */; };
 		185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DD25889EBB00E2D2E2 /* Publisher.swift */; };
 		185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */; };
@@ -28,15 +33,10 @@
 		1855B595259C62850079BB3C /* DefaultResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B594259C62850079BB3C /* DefaultResolutionPolicyMethods.swift */; };
 		1855B599259C672F0079BB3C /* DefaultTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B598259C672F0079BB3C /* DefaultTrackableSetListener.swift */; };
 		1855B59F259C67B80079BB3C /* DefaultSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B59E259C67B80079BB3C /* DefaultSubscriberSetListener.swift */; };
-		185CDD7C258BAA3F009AA564 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CDD7B258BAA3F009AA564 /* ResolutionPolicy.swift */; };
-		185D6D17258F569500935049 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D16258F569500935049 /* Resolution.swift */; };
 		185D6D1B258F573300935049 /* ResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D1A258F573300935049 /* ResolutionPolicyFactory.swift */; };
 		185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D20258F57E300935049 /* ResolutionPolicyHooks.swift */; };
 		185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D24258F57EC00935049 /* ResolutionPolicyMethods.swift */; };
-		185D6D29258F5A7D00935049 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D28258F5A7D00935049 /* TrackableResolutionRequest.swift */; };
 		185D6D2D258F65F000935049 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D2C258F65F000935049 /* Subscriber.swift */; };
-		185D6D33258F684E00935049 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D32258F684E00935049 /* Proximity.swift */; };
-		185D6D372590849500935049 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D362590849500935049 /* Accuracy.swift */; };
 		18CF5F5625A2F95500BF1D31 /* AblyPublisherPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */; };
 		18CF5F7B25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F7A25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift */; };
 		18CF5F7F25A3574A00BF1D31 /* MockPublisherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F7E25A3574A00BF1D31 /* MockPublisherDelegate.swift */; };
@@ -81,6 +81,12 @@
 
 /* Begin PBXFileReference section */
 		09DD4731BFE9981EB7CD8666 /* Pods-Publisher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Publisher.debug.xcconfig"; path = "Target Support Files/Pods-Publisher/Pods-Publisher.debug.xcconfig"; sourceTree = "<group>"; };
+		1807958825A4AEC00026F4C1 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
+		180795B825A4AF660026F4C1 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
+		180795B925A4AF660026F4C1 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
+		180795BA25A4AF660026F4C1 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
+		180795D225A4AFA10026F4C1 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
+		180795EF25A4AFE60026F4C1 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
 		180F6097258632510014B310 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		180F609A258632510014B310 /* Publisher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Publisher.h; sourceTree = "<group>"; };
 		180F609B258632510014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,7 +102,6 @@
 		184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTrackableSetListener.swift; sourceTree = "<group>"; };
 		184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriberSetListener.swift; sourceTree = "<group>"; };
 		184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryLevelProvider.swift; sourceTree = "<group>"; };
-		184A9417259CA65600D6FDF8 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
 		184A9441259DD6D500D6FDF8 /* DefaultProximityHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProximityHandler.swift; sourceTree = "<group>"; };
 		184E873225877C6D000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094DD25889EBB00E2D2E2 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
@@ -106,15 +111,10 @@
 		1855B594259C62850079BB3C /* DefaultResolutionPolicyMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyMethods.swift; sourceTree = "<group>"; };
 		1855B598259C672F0079BB3C /* DefaultTrackableSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTrackableSetListener.swift; sourceTree = "<group>"; };
 		1855B59E259C67B80079BB3C /* DefaultSubscriberSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberSetListener.swift; sourceTree = "<group>"; };
-		185CDD7B258BAA3F009AA564 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
-		185D6D16258F569500935049 /* Resolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
 		185D6D1A258F573300935049 /* ResolutionPolicyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionPolicyFactory.swift; sourceTree = "<group>"; };
 		185D6D20258F57E300935049 /* ResolutionPolicyHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionPolicyHooks.swift; sourceTree = "<group>"; };
 		185D6D24258F57EC00935049 /* ResolutionPolicyMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionPolicyMethods.swift; sourceTree = "<group>"; };
-		185D6D28258F5A7D00935049 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
 		185D6D2C258F65F000935049 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
-		185D6D32258F684E00935049 /* Proximity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
-		185D6D362590849500935049 /* Accuracy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
 		18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyPublisherPresence.swift; sourceTree = "<group>"; };
 		18CF5F7A25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisher_LocationServiceTests.swift; sourceTree = "<group>"; };
 		18CF5F7E25A3574A00BF1D31 /* MockPublisherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPublisherDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +175,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1807958725A4AEC00026F4C1 /* ResolutionPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				180795EF25A4AFE60026F4C1 /* TrackableResolutionRequest.swift */,
+				180795D225A4AFA10026F4C1 /* Proximity.swift */,
+				180795B825A4AF660026F4C1 /* Accuracy.swift */,
+				180795B925A4AF660026F4C1 /* Resolution.swift */,
+				180795BA25A4AF660026F4C1 /* ResolutionPolicy.swift */,
+				1807958825A4AEC00026F4C1 /* ResolutionConstraints.swift */,
+			);
+			name = ResolutionPolicy;
+			path = ../../Core/Sources/ResolutionPolicy;
+			sourceTree = "<group>";
+		};
 		180F608D258632510014B310 = {
 			isa = PBXGroup;
 			children = (
@@ -265,15 +279,9 @@
 		185D6D13258F55F800935049 /* Resolution Policy */ = {
 			isa = PBXGroup;
 			children = (
-				185D6D362590849500935049 /* Accuracy.swift */,
-				185CDD7B258BAA3F009AA564 /* ResolutionPolicy.swift */,
-				185D6D16258F569500935049 /* Resolution.swift */,
-				185D6D28258F5A7D00935049 /* TrackableResolutionRequest.swift */,
 				185D6D1A258F573300935049 /* ResolutionPolicyFactory.swift */,
 				185D6D20258F57E300935049 /* ResolutionPolicyHooks.swift */,
 				185D6D24258F57EC00935049 /* ResolutionPolicyMethods.swift */,
-				184A9417259CA65600D6FDF8 /* ResolutionConstraints.swift */,
-				185D6D32258F684E00935049 /* Proximity.swift */,
 			);
 			path = "Resolution Policy";
 			sourceTree = "<group>";
@@ -289,6 +297,7 @@
 		18FCE195258B7FBB005BC480 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				1807958725A4AEC00026F4C1 /* ResolutionPolicy */,
 				18FCE1CE258B8264005BC480 /* Configuration */,
 				18FCE1D3258B8264005BC480 /* Model */,
 				18FCE1DC258B8264005BC480 /* Utils */,
@@ -589,16 +598,16 @@
 			files = (
 				18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */,
 				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
-				185D6D17258F569500935049 /* Resolution.swift in Sources */,
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,
-				185D6D372590849500935049 /* Accuracy.swift in Sources */,
 				18FD2D60259B1BEE00A622DF /* AblyPublisherService.swift in Sources */,
-				185CDD7C258BAA3F009AA564 /* ResolutionPolicy.swift in Sources */,
 				1855B595259C62850079BB3C /* DefaultResolutionPolicyMethods.swift in Sources */,
 				185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */,
+				180795F025A4AFE60026F4C1 /* TrackableResolutionRequest.swift in Sources */,
 				185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */,
+				1807958925A4AEC00026F4C1 /* ResolutionConstraints.swift in Sources */,
 				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
 				18CF5F9525A45CEA00BF1D31 /* ThresholdChecker.swift in Sources */,
+				180795BB25A4AF660026F4C1 /* Accuracy.swift in Sources */,
 				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
 				180F61792586341E0014B310 /* DefaultAblyPublisherService.swift in Sources */,
@@ -606,12 +615,12 @@
 				18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
 				1855B59F259C67B80079BB3C /* DefaultSubscriberSetListener.swift in Sources */,
-				185D6D33258F684E00935049 /* Proximity.swift in Sources */,
 				18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */,
 				185D6D1B258F573300935049 /* ResolutionPolicyFactory.swift in Sources */,
-				185D6D29258F5A7D00935049 /* TrackableResolutionRequest.swift in Sources */,
+				180795BC25A4AF660026F4C1 /* Resolution.swift in Sources */,
 				183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */,
 				1855B599259C672F0079BB3C /* DefaultTrackableSetListener.swift in Sources */,
+				180795BD25A4AF660026F4C1 /* ResolutionPolicy.swift in Sources */,
 				185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */,
 				18FCE1E6258B8264005BC480 /* GeoJSONProperties.swift in Sources */,
 				180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */,
@@ -626,11 +635,11 @@
 				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,
 				184A9410259C9C6C00D6FDF8 /* BatteryLevelProvider.swift in Sources */,
 				18FCE1E7258B8264005BC480 /* GeoJSONType.swift in Sources */,
-				184A941B259CA71300D6FDF8 /* ResolutionConstraints.swift in Sources */,
 				180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */,
 				18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */,
 				184A9442259DD6D500D6FDF8 /* DefaultProximityHandler.swift in Sources */,
 				185D6D2D258F65F000935049 /* Subscriber.swift in Sources */,
+				180795D325A4AFA10026F4C1 /* Proximity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
