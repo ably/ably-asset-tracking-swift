@@ -136,7 +136,7 @@ extension DefaultResolutionPolicy: DefaultProximityHandlerDelegate {
 
 extension DefaultResolutionSet {
     func getResolution(isNear: Bool, hasSubscriber: Bool) -> Resolution {
-        if isNear && hasSubscriber { return nearWithoutSubscriber }
+        if isNear && hasSubscriber { return nearWithSubscriber }
         if isNear && !hasSubscriber { return nearWithoutSubscriber }
         if !isNear && hasSubscriber { return farWithSubscriber }
         return farWithoutSubscriber

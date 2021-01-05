@@ -62,3 +62,8 @@ extension Resolution {
                           minimumDisplacement: 500)
     }
 }
+extension Resolution: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "Publisher.Resolution accuracy: \(accuracy), desiredInterval: \(desiredInterval), minimumDisplacement: \(minimumDisplacement)"
+    }
+}

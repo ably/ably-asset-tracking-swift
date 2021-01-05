@@ -306,7 +306,7 @@ extension DefaultPublisher {
         let checker = ThresholdChecker()
         let destination = activeTrackable?.destination != nil ?
             CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude) : nil
-        
+
         let isReached: Bool = checker.isThresholdReached(threshold: threshold,
                                                          currentLocation: location,
                                                          currentTime: Date().timeIntervalSince1970,

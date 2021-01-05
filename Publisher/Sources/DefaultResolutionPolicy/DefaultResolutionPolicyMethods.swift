@@ -6,7 +6,7 @@ protocol DefaultResolutionPolicyMethodsDelegate: AnyObject {
 
 class DefaultResolutionPolicyMethods: ResolutionPolicyMethods {
     weak var delegate: DefaultResolutionPolicyMethodsDelegate?
-    
+
     func refresh() {
         delegate?.resolutionPolicyMethods(refreshWithSender: self)
     }
