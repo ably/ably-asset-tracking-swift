@@ -58,7 +58,7 @@ extension Resolution: Hashable {
 extension Resolution {
     static var `default`: Resolution {
         return Resolution(accuracy: .balanced,
-                          desiredInterval: 600,
+                          desiredInterval: 500,
                           minimumDisplacement: 500)
     }
 }

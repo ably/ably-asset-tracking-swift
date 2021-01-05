@@ -36,7 +36,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     // MARK: track
-    func testTrack_success() throws {
+    func testTrack_success() {
         ablyService.trackCompletionHandler = { completion in completion?(nil) }
         let expectation = XCTestExpectation()
 

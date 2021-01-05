@@ -153,6 +153,7 @@ extension DefaultPublisher {
 
     private func performPresenceJoinedSuccessfullyEvent(_ event: PresenceJoinedSuccessfullyEvent) {
         locationService.startUpdatingLocation()
+        resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
         event.onComplete()
     }
@@ -267,7 +268,7 @@ extension DefaultPublisher {
 
         let distance = location.distance(from: lastLocation)
         let timeInterval = location.timestamp.timeIntervalSince1970 - lastTimestamp.timeIntervalSince1970
-        return distance > resolution.minimumDisplacement || timeInterval > resolution.desiredInterval
+        return distance >= resolution.minimumDisplacement || timeInterval >= resolution.desiredInterval
     }
 
     // MARK: ResolutionPolicy

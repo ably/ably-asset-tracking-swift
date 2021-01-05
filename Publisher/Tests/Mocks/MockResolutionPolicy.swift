@@ -25,7 +25,7 @@ class MockResolutionPolicy: ResolutionPolicy {
     var resolveResolutionsParamResolutions: Set<Resolution>?
     var resolveResolutionsReturnValue: Resolution = .default
     func resolve(resolutions: Set<Resolution>) -> Resolution {
-        resolveRequestCalled = true
+        resolveResolutionsCalled = true
         resolveResolutionsParamResolutions = resolutions
         return resolveResolutionsReturnValue
     }
