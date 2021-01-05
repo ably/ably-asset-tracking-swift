@@ -235,6 +235,8 @@ extension DefaultPublisher {
                 }
             }
         }
+
+        checkThreshold(location: event.location)
     }
 
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
@@ -255,6 +257,8 @@ extension DefaultPublisher {
                 }
             }
         }
+
+        checkThreshold(location: event.location)
     }
 
     private func shouldSendLocation(location: CLLocation,
@@ -291,6 +295,26 @@ extension DefaultPublisher {
 
     private func changeLocationEngineResolution(resolution: Resolution) {
         locationService.changeLocationEngineResolution(resolution: resolution)
+    }
+
+    private func checkThreshold(location: CLLocation) {
+        guard let threshold = proximityThreshold,
+              let handler = proximityHandler
+        else { return }
+
+        // TODO: Use correct estimatedArrivalTime while working on route based mapMatching
+        let checker = ThresholdChecker()
+        let destination = activeTrackable?.destination != nil ?
+            CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude) : nil
+        
+        let isReached: Bool = checker.isThresholdReached(threshold: threshold,
+                                                         currentLocation: location,
+                                                         currentTime: Date().timeIntervalSince1970,
+                                                         destination: destination,
+                                                         estimatedArrivalTime: nil)
+        if isReached {
+            handler.onProximityReached(threshold: threshold)
+        }
     }
 
     // MARK: Subscribers handling

@@ -43,6 +43,7 @@
 		18CF5F8425A44FB300BF1D31 /* DefaultResolutionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F8325A44FB300BF1D31 /* DefaultResolutionPolicyTests.swift */; };
 		18CF5F8A25A4509700BF1D31 /* MockResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F8925A4509700BF1D31 /* MockResolutionPolicyMethods.swift */; };
 		18CF5F8E25A4512800BF1D31 /* MockBatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F8D25A4512800BF1D31 /* MockBatteryLevelProvider.swift */; };
+		18CF5F9525A45CEA00BF1D31 /* ThresholdChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F9125A45CE600BF1D31 /* ThresholdChecker.swift */; };
 		18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
@@ -120,6 +121,7 @@
 		18CF5F8325A44FB300BF1D31 /* DefaultResolutionPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyTests.swift; sourceTree = "<group>"; };
 		18CF5F8925A4509700BF1D31 /* MockResolutionPolicyMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyMethods.swift; sourceTree = "<group>"; };
 		18CF5F8D25A4512800BF1D31 /* MockBatteryLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBatteryLevelProvider.swift; sourceTree = "<group>"; };
+		18CF5F9125A45CE600BF1D31 /* ThresholdChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdChecker.swift; sourceTree = "<group>"; };
 		18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherEvents.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				1855B594259C62850079BB3C /* DefaultResolutionPolicyMethods.swift */,
 				1855B58A259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift */,
 				184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */,
+				18CF5F9125A45CE600BF1D31 /* ThresholdChecker.swift */,
 			);
 			path = DefaultResolutionPolicy;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */,
 				185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */,
 				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
+				18CF5F9525A45CEA00BF1D31 /* ThresholdChecker.swift in Sources */,
 				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
 				180F61792586341E0014B310 /* DefaultAblyPublisherService.swift in Sources */,
