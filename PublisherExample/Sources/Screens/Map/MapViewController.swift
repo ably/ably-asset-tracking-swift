@@ -35,12 +35,13 @@ class MapViewController: UIViewController {
 
     // MARK: View setup
     private func setupPublisher() {
-        publisher = try? PublisherFactory.publishers()
-            .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey,
-                                                clientId: PublisherKeys.ablyClientId))
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
+        publisher = try! PublisherFactory.publishers()
+            .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey, clientId: PublisherKeys.ablyClientId))
             .log(LogConfiguration())
             .transportationMode(TransportationMode())
             .delegate(self)
+            .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .start()
 
         publisher?.track(trackable: Trackable(id: trackingId), onSuccess: {  }, onError: { _ in })

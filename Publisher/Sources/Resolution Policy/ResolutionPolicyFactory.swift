@@ -2,7 +2,7 @@
  Defines the methods to be implemented by resolution policy factories, whose responsibility it is to create
  a new `ResolutionPolicy` instance when a `Publisher` is `started` `Publisher.Builder.start`.
  */
-protocol ResolutionPolicyFactory {
+public protocol ResolutionPolicyFactory {
     /**
      This method will be called once for each `Publisher` instance started by any `Builder``Publisher.Builder`
      instance against which this `Factory` was `registered``Publisher.Builder.resolutionPolicy`.

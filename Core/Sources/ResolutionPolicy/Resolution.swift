@@ -19,7 +19,7 @@ public class Resolution: Codable {
      Used to govern the frequency of updates requested from the underlying location provider, as well as the frequency
      of messages broadcast to subscribers.
      */
-    let desiredInterval: TimeInterval
+    let desiredInterval: Double
 
     /**
      Minimum positional granularity required, in metres. Lowering this value increases the spatial resolution.
@@ -34,7 +34,7 @@ public class Resolution: Codable {
     /**
      Default constructor for the Resolution
      */
-    public init(accuracy: Accuracy, desiredInterval: TimeInterval, minimumDisplacement: Double) {
+    public init(accuracy: Accuracy, desiredInterval: Double, minimumDisplacement: Double) {
         self.accuracy = accuracy
         self.desiredInterval = desiredInterval
         self.minimumDisplacement = minimumDisplacement

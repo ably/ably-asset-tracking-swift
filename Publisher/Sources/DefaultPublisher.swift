@@ -272,7 +272,10 @@ extension DefaultPublisher {
 
         let distance = location.distance(from: lastLocation)
         let timeInterval = location.timestamp.timeIntervalSince1970 - lastTimestamp.timeIntervalSince1970
-        return distance >= resolution.minimumDisplacement || timeInterval >= resolution.desiredInterval
+
+        // desiredInterval in resolution is in milliseconds, while timeInterval from timestamp is in seconds
+        let desiredIntervalInSeconds = resolution.desiredInterval / 1000
+        return distance >= resolution.minimumDisplacement || timeInterval >= desiredIntervalInSeconds
     }
 
     // MARK: ResolutionPolicy

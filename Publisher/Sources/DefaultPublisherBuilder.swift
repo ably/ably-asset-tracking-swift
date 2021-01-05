@@ -92,7 +92,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
-    func resolutionPolicyFactory(_ factory: ResolutionPolicyFactory) -> PublisherBuilder {
+    func resolutionPolicyFactory(_ resolutionPolicyFactory: ResolutionPolicyFactory) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: logConfiguration,
                                        transportationMode: transportationMode,

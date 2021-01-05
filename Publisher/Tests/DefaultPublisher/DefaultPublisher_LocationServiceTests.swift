@@ -196,5 +196,4 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         // It should send enhanced location update to AblyService
         XCTAssertTrue(ablyService.sendEnhancedAssetLocationCalled)
     }
-
 }

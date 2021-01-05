@@ -2,7 +2,7 @@
   Defines the strategy by which the various `ResolutionRequest`s and preferences are translated by `Publisher`
   instances into a target `Resolution`.
  */
-protocol ResolutionPolicy {
+public protocol ResolutionPolicy {
     /**
       Determine a target `Resolution` for a `Trackable` object.
 

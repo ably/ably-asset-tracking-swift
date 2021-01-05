@@ -3,7 +3,7 @@
  Methods on this interface may only be called from within implementations of
  `createResolutionPolicy` `Factory.createResolutionPolicy`.
  */
-protocol ResolutionPolicyHooks {
+public protocol ResolutionPolicyHooks {
     /**
      Register a handler for the addition, removal and activation of `Trackable` objects for the `Publisher`
      instance whose `creation` `Publisher.Builder.start` caused
@@ -33,7 +33,7 @@ protocol ResolutionPolicyHooks {
   A handler of events relating to the addition, removal and activation of `Trackable` objects for a
   `Publisher` instance.
   */
- protocol TrackableSetListener {
+ public protocol TrackableSetListener {
     /**
      A `Trackable` object has been added to the `Publisher`'s set of tracked objects.
      If the operation adding `trackable` is also making it the `actively` `Publisher.active` tracked object
@@ -63,7 +63,10 @@ protocol ResolutionPolicyHooks {
     func onActiveTrackableChanged(trackable: Trackable?)
  }
 
- protocol SubscriberSetListener {
+/**
+A handler of events relating to the addition or removal of remote `Subscriber`s to a `Publisher` instance.
+*/
+ public protocol SubscriberSetListener {
     /**
      A `Subscriber` has subscribed to receive updates for one or more `Trackable` objects from the
      `Publisher`'s set of tracked objects.
@@ -82,3 +85,13 @@ protocol ResolutionPolicyHooks {
      */
     func onSubscriberRemoved(subscriber: Subscriber)
  }
+
+public class Subscriber: NSObject {
+    let id: String
+    let trackable: Trackable
+
+    init(id: String, trackable: Trackable) {
+        self.id = id
+        self.trackable = trackable
+    }
+}
