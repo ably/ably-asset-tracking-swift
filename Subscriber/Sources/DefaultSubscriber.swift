@@ -28,6 +28,10 @@ class DefaultSubscriber: Subscriber {
         self.ablyService.delegate = self
     }
 
+    func sendChangeRequest(resolution: Resolution?, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+        execute(event: ChangeResolutionEvent(resolution: resolution, onSuccess: onSuccess, onError: onError))
+    }
+
     func start() {
         execute(event: StartEvent())
     }
@@ -46,6 +50,7 @@ extension DefaultSubscriber {
             case _ as StartEvent: self?.performStart()
             case _ as StopEvent: self?.performStop()
             case let event as SuccessEvent: self?.handleSuccessEvent(event)
+            case let event as ChangeResolutionEvent: self?.performChangeResolution(event)
             case let event as ErrorEvent: self?.handleErrorEvent(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStatusChangedEvent: self?.notifyDelegateConnectionStatusChanged(event)
@@ -65,6 +70,15 @@ extension DefaultSubscriber {
 
     private func performStop() {
         ablyService.stop()
+    }
+
+    private func performChangeResolution(_ event: ChangeResolutionEvent) {
+        ablyService.changeRequest(resolution: event.resolution,
+                                  onSuccess: { [weak self] in
+                                    self?.execute(event: SuccessEvent(onSuccess: event.onSuccess))
+                                  }, onError: { [weak self] error in
+                                    self?.execute(event: ErrorEvent(error: error, onError: event.onError))
+                                  })
     }
 
     // MARK: Utils
