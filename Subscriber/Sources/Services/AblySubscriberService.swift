@@ -17,9 +17,9 @@ class AblySubscriberService {
 
     weak var delegate: AblySubscriberServiceDelegate?
 
-    init(configuration: ConnectionConfiguration, trackingId: String) {
+    init(configuration: ConnectionConfiguration, trackingId: String, resolution: Resolution?) {
         self.client = ARTRealtime(key: configuration.apiKey)
-        self.presenceData = PresenceData(type: .subscriber)
+        self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
         self.configuration = configuration
 
         let options = ARTRealtimeChannelOptions()

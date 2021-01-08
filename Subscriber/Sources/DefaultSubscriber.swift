@@ -9,22 +9,21 @@ class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
     private let logConfiguration: LogConfiguration
     private let trackingId: String
-    private let resolution: Double?
     private let ablyService: AblySubscriberService
     weak var delegate: SubscriberDelegate?
 
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
          trackingId: String,
-         resolution: Double?) {
+         resolution: Resolution?) {
         self.trackingId = trackingId
-        self.resolution = resolution
         self.logConfiguration = logConfiguration
         self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher",
                                           qos: .default)
 
         self.ablyService = AblySubscriberService(configuration: connectionConfiguration,
-                                                 trackingId: trackingId)
+                                                 trackingId: trackingId,
+                                                 resolution: resolution)
         self.ablyService.delegate = self
     }
 
