@@ -18,8 +18,8 @@
 		180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61702586341E0014B310 /* PublisherBuilder.swift */; };
 		180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61712586341E0014B310 /* DefaultPublisher.swift */; };
 		180F61792586341E0014B310 /* DefaultAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61742586341E0014B310 /* DefaultAblyPublisherService.swift */; };
-		180F617A2586341E0014B310 /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61752586341E0014B310 /* DefaultLocationService.swift */; };
 		183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183BE6B72588AC8D0097A30B /* ConnectionState.swift */; };
+		18476F5F25AB82310032E69C /* RouteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18476F5E25AB82310032E69C /* RouteProvider.swift */; };
 		184A93FD259C830600D6FDF8 /* MockResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A93FC259C830600D6FDF8 /* MockResolutionPolicyFactory.swift */; };
 		184A9401259C837200D6FDF8 /* MockResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9400259C837200D6FDF8 /* MockResolutionPolicy.swift */; };
 		184A9405259C857100D6FDF8 /* MockTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */; };
@@ -43,6 +43,8 @@
 		18CF5F8A25A4509700BF1D31 /* MockResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F8925A4509700BF1D31 /* MockResolutionPolicyMethods.swift */; };
 		18CF5F8E25A4512800BF1D31 /* MockBatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F8D25A4512800BF1D31 /* MockBatteryLevelProvider.swift */; };
 		18CF5F9525A45CEA00BF1D31 /* ThresholdChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F9125A45CE600BF1D31 /* ThresholdChecker.swift */; };
+		18D7CFDA25AB2FF000EBE77E /* PassiveLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7CFD925AB2FF000EBE77E /* PassiveLocationService.swift */; };
+		18D7CFDE25AB301200EBE77E /* RouteLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7CFDD25AB301200EBE77E /* RouteLocationService.swift */; };
 		18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
@@ -94,8 +96,8 @@
 		180F61702586341E0014B310 /* PublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherBuilder.swift; sourceTree = "<group>"; };
 		180F61712586341E0014B310 /* DefaultPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
 		180F61742586341E0014B310 /* DefaultAblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultAblyPublisherService.swift; sourceTree = "<group>"; };
-		180F61752586341E0014B310 /* DefaultLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLocationService.swift; sourceTree = "<group>"; };
 		183BE6B72588AC8D0097A30B /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
+		18476F5E25AB82310032E69C /* RouteProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProvider.swift; sourceTree = "<group>"; };
 		184A93FC259C830600D6FDF8 /* MockResolutionPolicyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyFactory.swift; sourceTree = "<group>"; };
 		184A9400259C837200D6FDF8 /* MockResolutionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicy.swift; sourceTree = "<group>"; };
 		184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTrackableSetListener.swift; sourceTree = "<group>"; };
@@ -120,6 +122,8 @@
 		18CF5F8925A4509700BF1D31 /* MockResolutionPolicyMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyMethods.swift; sourceTree = "<group>"; };
 		18CF5F8D25A4512800BF1D31 /* MockBatteryLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBatteryLevelProvider.swift; sourceTree = "<group>"; };
 		18CF5F9125A45CE600BF1D31 /* ThresholdChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdChecker.swift; sourceTree = "<group>"; };
+		18D7CFD925AB2FF000EBE77E /* PassiveLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassiveLocationService.swift; sourceTree = "<group>"; };
+		18D7CFDD25AB301200EBE77E /* RouteLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteLocationService.swift; sourceTree = "<group>"; };
 		18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherEvents.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
@@ -244,7 +248,9 @@
 				180F61742586341E0014B310 /* DefaultAblyPublisherService.swift */,
 				18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */,
 				18FD2D5B259B1BE400A622DF /* LocationService.swift */,
-				180F61752586341E0014B310 /* DefaultLocationService.swift */,
+				18D7CFD925AB2FF000EBE77E /* PassiveLocationService.swift */,
+				18D7CFDD25AB301200EBE77E /* RouteLocationService.swift */,
+				18476F5E25AB82310032E69C /* RouteProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -626,8 +632,9 @@
 				18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */,
 				1855B591259C62600079BB3C /* DefaultResolutionPolicyHooks.swift in Sources */,
 				1855B58B259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift in Sources */,
+				18D7CFDA25AB2FF000EBE77E /* PassiveLocationService.swift in Sources */,
 				18FD2D81259B6EBE00A622DF /* DefaultResolutionPolicy.swift in Sources */,
-				180F617A2586341E0014B310 /* DefaultLocationService.swift in Sources */,
+				18476F5F25AB82310032E69C /* RouteProvider.swift in Sources */,
 				18FD2D5C259B1BE400A622DF /* LocationService.swift in Sources */,
 				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,
 				184A9410259C9C6C00D6FDF8 /* BatteryLevelProvider.swift in Sources */,
@@ -635,6 +642,7 @@
 				180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */,
 				18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */,
 				184A9442259DD6D500D6FDF8 /* DefaultProximityHandler.swift in Sources */,
+				18D7CFDE25AB301200EBE77E /* RouteLocationService.swift in Sources */,
 				180795D325A4AFA10026F4C1 /* Proximity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
