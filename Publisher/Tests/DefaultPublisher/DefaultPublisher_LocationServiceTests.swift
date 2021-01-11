@@ -7,6 +7,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var ablyService: MockAblyPublisherService!
     var configuration: ConnectionConfiguration!
     var resolutionPolicyFactory: MockResolutionPolicyFactory!
+    var routeProvider: MockRouteProvider!
     var trackable: Trackable!
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
@@ -15,6 +16,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         locationService = MockLocationService()
         ablyService = MockAblyPublisherService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
+        routeProvider = MockRouteProvider()
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         delegate = MockPublisherDelegate()
         trackable = Trackable(id: "TrackableId",
@@ -25,7 +27,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
                                      transportationMode: TransportationMode(),
                                      resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyService: ablyService,
-                                     locationService: locationService)
+                                     locationService: locationService,
+                                     routeProvider: routeProvider)
         publisher.delegate = delegate
     }
 
