@@ -1,5 +1,6 @@
 import Foundation
 import CoreLocation
+import MapboxDirections
 
 protocol PublisherEvent {}
 
@@ -48,6 +49,14 @@ struct PresenceJoinedSuccessfullyEvent: PublisherEvent {
 struct TrackableReadyToTrackEvent: PublisherEvent {
     let trackable: Trackable
     let onSuccess: SuccessHandler
+}
+
+struct SetDestinationEvent: PublisherEvent {
+    let destination: CLLocationCoordinate2D?
+}
+
+struct SetDestinationSuccessEvent: PublisherEvent {
+    let route: Route
 }
 
 struct RawLocationChangedEvent: PublisherEvent {

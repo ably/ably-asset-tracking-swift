@@ -44,7 +44,8 @@ class MapViewController: UIViewController {
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .start()
 
-        publisher?.track(trackable: Trackable(id: trackingId), onSuccess: {  }, onError: { _ in })
+        let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
+        publisher?.track(trackable: Trackable(id: trackingId, destination: destination), onSuccess: {  }, onError: { _ in })
     }
 
     private func setupMapView() {

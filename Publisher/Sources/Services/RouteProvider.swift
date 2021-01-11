@@ -2,12 +2,12 @@ import CoreLocation
 import MapboxDirections
 
 protocol RouteProvider {
-    func getRoute(to destination: CLLocationCoordinate2D, onSuccess: @escaping (Route, RouteOptions) -> Void, onError: @escaping ErrorHandler)
+    func getRoute(to destination: CLLocationCoordinate2D, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler)
 }
 
 class DefaultRouteProvider: NSObject, RouteProvider {
     private let locationManager: CLLocationManager
-    private var onSuccess: ((Route, RouteOptions) -> Void)?
+    private var onSuccess: ((Route) -> Void)?
     private var onError: ErrorHandler?
     private var destination: CLLocationCoordinate2D?
 
@@ -16,7 +16,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         super.init()
     }
 
-    func getRoute(to destination: CLLocationCoordinate2D, onSuccess: @escaping (Route, RouteOptions) -> Void, onError: @escaping ErrorHandler) {
+    func getRoute(to destination: CLLocationCoordinate2D, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
         guard self.onError == nil,
               self.onSuccess == nil
         else {
@@ -46,7 +46,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
                     self.handleErrorCallback(error: AssetTrackingError.publisherError("Missing route in Directions response."))
                     return
                 }
-                self.handleRouteCallback(route: route, options: options)
+                self.handleRouteCallback(route: route)
             }
         }
     }
@@ -60,9 +60,9 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         self.onError = nil
     }
 
-    private func handleRouteCallback(route: Route, options: RouteOptions) {
+    private func handleRouteCallback(route: Route) {
         guard let onSuccess = onSuccess else { return }
-        onSuccess(route, options)
+        onSuccess(route)
 
         self.destination = nil
         self.onSuccess = nil
@@ -77,7 +77,7 @@ extension DefaultRouteProvider: CLLocationManagerDelegate {
         handleLocationUpdate(location: location)
     }
 
-    func handleErrorCallback(_ manager: CLLocationManager, didFailWithError error: Error) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.delegate = nil
         handleErrorCallback(error: error)
     }

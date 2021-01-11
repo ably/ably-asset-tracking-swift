@@ -1,7 +1,7 @@
 import CoreLocation
 import MapboxCoreNavigation
 
-class PassiveLocationService: LocationService {
+class DefaultLocationService: LocationService {
     private let locationDataSource: PassiveLocationDataSource
 
     weak var delegate: LocationServiceDelegate?
@@ -30,7 +30,7 @@ class PassiveLocationService: LocationService {
     }
 }
 
-extension PassiveLocationService: PassiveLocationDataSourceDelegate {
+extension DefaultLocationService: PassiveLocationDataSourceDelegate {
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource,
                                    didUpdateLocation location: CLLocation,
                                    rawLocation: CLLocation) {
