@@ -13,6 +13,7 @@ class MapViewController: UIViewController {
     private var rawLocation: CLLocation?
     private var enhancedLocation: CLLocation?
     private var wasMapScrolled: Bool = false
+    private var trackables: [Trackable] = []
 
     // MARK: Initialization
     init(trackingId: String) {
@@ -28,7 +29,7 @@ class MapViewController: UIViewController {
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Publishing \(trackingId)"
+        setupNavigationBar()
         setupPublisher()
         setupMapView()
     }
@@ -45,12 +46,20 @@ class MapViewController: UIViewController {
             .start()
 
         let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
-        publisher?.track(trackable: Trackable(id: trackingId, destination: destination), onSuccess: {  }, onError: { _ in })
+        let trackable = Trackable(id: trackingId, destination: destination)
+        publisher?.track(trackable: trackable, onSuccess: {  }, onError: { _ in })
+
+        trackables = [trackable]
     }
 
     private func setupMapView() {
         mapView.register(AssetAnnotationView.self, forAnnotationViewWithReuseIdentifier: assetAnnotationReuseIdentifier)
         mapView.delegate = self
+    }
+
+    private func setupNavigationBar() {
+        title = "Publishing \(trackingId)"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(onEditButtonPressed))
     }
 
     // MARK: Utils
@@ -81,6 +90,22 @@ class MapViewController: UIViewController {
                                         latitudinalMeters: 600,
                                         longitudinalMeters: 600)
         mapView.setRegion(region, animated: true)
+    }
+
+    @objc
+    func onEditButtonPressed() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Edit Trackables",
+                                                style: .default,
+                                                handler: { [weak self] _ in self?.navigateToTrackablesScreen() }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        navigationController?.present(alertController, animated: true, completion: nil)
+    }
+
+    private func navigateToTrackablesScreen() {
+        let viewController = TrackablesViewController(trackables: trackables)
+        viewController.delegate = self
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -115,5 +140,17 @@ extension MapViewController: PublisherDelegate {
 
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
         connectionStatusLabel.text = "Connection state: \(state)"
+    }
+}
+
+extension MapViewController: TrackablesViewControllerDelegate {
+    func trackablesViewController(sender: TrackablesViewController, didAddTrackable trackable: Trackable) {
+        publisher?.add(trackable: trackable, onSuccess: { }, onError: { _ in })
+        trackables.append(trackable)
+    }
+
+    func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable) {
+        publisher?.remove(trackable: trackable, onSuccess: { _ in }, onError: { _ in })
+        trackables.removeAll(where: { $0 == trackable })
     }
 }
