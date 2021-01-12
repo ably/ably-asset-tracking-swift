@@ -5,6 +5,7 @@ protocol AddTrackableViewControllerDelegate: AnyObject {
     func addTrackableViewController(sender: AddTrackableViewController, onTrackableAdded trackable: Trackable)
 }
 
+// swiftlint:disable identifier_name
 class AddTrackableViewController: UIViewController {
     @IBOutlet private weak var saveAsDefaultSwitch: UISwitch!
     @IBOutlet private weak var resolutionConstraintsSwitch: UISwitch!
@@ -56,6 +57,6 @@ class AddTrackableViewController: UIViewController {
 
     // MARK: Actions
     @IBAction func onResolutionConstraintsSwitchValueChanged(_ sender: Any) {
-        self.resolutionConstraintsZeroHeightConstraint.priority = self.resolutionConstraintsSwitch.isOn ? .defaultLow : .defaultHigh        
+        self.resolutionConstraintsZeroHeightConstraint.priority = self.resolutionConstraintsSwitch.isOn ? .defaultLow : .defaultHigh
     }
 }
