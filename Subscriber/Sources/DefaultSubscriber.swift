@@ -20,7 +20,7 @@ class DefaultSubscriber: Subscriber {
         self.trackingId = trackingId
         self.resolution = resolution
         self.logConfiguration = logConfiguration
-        self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher",
+        self.workingQueue = DispatchQueue(label: "com.ably.asset-tracking.Subscriber.DefaultSubscriber",
                                           qos: .default)
 
         self.ablyService = AblySubscriberService(configuration: connectionConfiguration,
