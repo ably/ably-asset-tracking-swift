@@ -28,14 +28,29 @@ class TrackablesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupNavigationBar()
     }
 
+    // MARK: View setup
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "TrackablesTableViewCell", bundle: .main), forCellReuseIdentifier: cellIdentifier)
         tableView.reloadData()
+    }
+
+    private func setupNavigationBar() {
+        title = "Trackables"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onAddTrackableButtonPress))
+    }
+
+    // MARK: Actions
+    @objc
+    private func onAddTrackableButtonPress() {
+        let viewController = AddTrackableViewController()
+        viewController.delegate = self
+        navigationController?.present(viewController, animated: true, completion: nil)
     }
 }
 
@@ -61,5 +76,13 @@ extension TrackablesViewController: UITableViewDelegate, UITableViewDataSource {
         let trackable = trackables.remove(at: indexPath.row)
         tableView.reloadData()
         delegate?.trackablesViewController(sender: self, didRemoveTrackable: trackable)
+    }
+}
+
+extension TrackablesViewController: AddTrackableViewControllerDelegate {
+    func addTrackableViewController(sender: AddTrackableViewController, onTrackableAdded trackable: Trackable) {
+        trackables.append(trackable)
+        tableView.reloadData()
+        delegate?.trackablesViewController(sender: self, didAddTrackable: trackable)
     }
 }
