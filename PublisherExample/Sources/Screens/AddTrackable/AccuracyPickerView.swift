@@ -4,11 +4,11 @@ import AblyAssetTracking
 class AccuracyPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     private let options: [Accuracy] = [.minimum, .low, .balanced, .high, .maximum]
     private let titles = ["Minimum", "Low", "Balanced", "High", "Maximum"]
+    private let onSelectionChanged: ((Accuracy, String) -> Void)?
 
-    private var currentRow: Int = 0
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(onSelectionChanged: ((Accuracy, String) -> Void)?) {
+        self.onSelectionChanged = onSelectionChanged
+        super.init(frame: .zero)
         self.delegate = self
         self.dataSource = self
         self.backgroundColor = UIColor.white.withAlphaComponent(0.9)
@@ -38,6 +38,6 @@ class AccuracyPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        currentRow = row
+        onSelectionChanged?(options[row], titles[row])
     }
 }

@@ -76,25 +76,33 @@ class AddTrackableViewController: UIViewController {
         setupForDecimal(textField: proximitySpatialTextField, nextTextField: proximityTemporalTextField)
         setupForDecimal(textField: proximityTemporalTextField, nextTextField: farWithoutSubscriberAccuracyTextField)
 
-        farWithoutSubscriberAccuracyTextField.inputView = AccuracyPickerView()
+        farWithoutSubscriberAccuracyTextField.inputView = AccuracyPickerView(onSelectionChanged: { [weak self] (_, title) in
+            self?.farWithoutSubscriberAccuracyTextField.text = title
+        })
         setupForDecimal(textField: farWithoutSubscriberAccuracyTextField, nextTextField: farWithoutSubscriberDesiredIntervalTextField)
         setupForDecimal(textField: farWithoutSubscriberDesiredIntervalTextField, nextTextField: farWithoutSubscriberMinimumDisplacementTextField)
         setupForDecimal(textField: farWithoutSubscriberMinimumDisplacementTextField, nextTextField: farWithSubscriberAccuracyTextField)
 
-        farWithSubscriberAccuracyTextField.inputView = AccuracyPickerView()
+        farWithSubscriberAccuracyTextField.inputView = AccuracyPickerView(onSelectionChanged: { [weak self] (_, title) in
+            self?.farWithSubscriberAccuracyTextField.text = title
+        })
         setupForDecimal(textField: farWithSubscriberAccuracyTextField, nextTextField: farWithSubscriberDesiredIntervalTextField)
         setupForDecimal(textField: farWithSubscriberDesiredIntervalTextField, nextTextField: farWithSubscriberMinimumDisplacementTextField)
         setupForDecimal(textField: farWithSubscriberMinimumDisplacementTextField, nextTextField: nearWithoutSubscriberAccuracyTextField)
 
-        nearWithoutSubscriberAccuracyTextField.inputView = AccuracyPickerView()
+        nearWithoutSubscriberAccuracyTextField.inputView = AccuracyPickerView(onSelectionChanged: { [weak self] (_, title) in
+            self?.nearWithoutSubscriberAccuracyTextField.text = title
+        })
         setupForDecimal(textField: nearWithoutSubscriberAccuracyTextField, nextTextField: nearWithoutSubscriberDesiredIntervalTextField)
         setupForDecimal(textField: nearWithoutSubscriberDesiredIntervalTextField, nextTextField: nearWithoutSubscriberMinimumDisplacementTextField)
         setupForDecimal(textField: nearWithoutSubscriberMinimumDisplacementTextField, nextTextField: nearWithSubscriberAccuracyTextField)
 
-        nearWithSubscriberAccuracyTextField.inputView = AccuracyPickerView()
+        nearWithSubscriberAccuracyTextField.inputView = AccuracyPickerView(onSelectionChanged: { [weak self] (_, title) in
+            self?.nearWithSubscriberAccuracyTextField.text = title
+        })
         setupForDecimal(textField: nearWithSubscriberAccuracyTextField, nextTextField: nearWithSubscriberDesiredIntervalTextField)
         setupForDecimal(textField: nearWithSubscriberDesiredIntervalTextField, nextTextField: nearWithSubscriberMinimumDisplacementTextField)
-        setupForDecimal(textField: nearWithoutSubscriberMinimumDisplacementTextField, nextTextField: nil)
+        setupForDecimal(textField: nearWithSubscriberMinimumDisplacementTextField, nextTextField: nil)
     }
 
     private func setupForDecimal(textField: UITextField, nextTextField: UITextField?) {
@@ -215,7 +223,7 @@ class AddTrackableViewController: UIViewController {
                                desiredIntervalTextField: UITextField,
                                minimumDisplacementTextField: UITextField) throws -> Resolution {
         guard let accuracyText = accuracyTextField.text,
-              let accuracy = AccuracyPickerView().accuracyWithTitle(accuracyText)
+              let accuracy = AccuracyPickerView(onSelectionChanged: nil).accuracyWithTitle(accuracyText)
         else {
             throw AddTrackableError(message: "Incorrect Accuracy value for \(resolutionName) resolution.")
         }

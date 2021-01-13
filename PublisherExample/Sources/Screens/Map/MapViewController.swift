@@ -59,7 +59,7 @@ class MapViewController: UIViewController {
 
     private func setupNavigationBar() {
         title = "Publishing \(trackingId)"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(onEditButtonPressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(onEditButtonPressed))
     }
 
     // MARK: Utils
