@@ -63,27 +63,50 @@ class AddTrackableViewController: UIViewController {
 
     // MARK: View setup
     private func setupTextFields() {
+        trackableIdTextField.keyboardType = .default
+        trackableIdTextField.delegate = self
+        trackableIdTextField.returnKeyType = .next
+
+        setupForDecimal(textField: latitudeTextField, nextTextField: longitudeTextField)
+        setupForDecimal(textField: longitudeTextField, nextTextField: nil)
+
+        // Resolution constraints
+        setupForDecimal(textField: batteryLevelThresholdTextField, nextTextField: lowBatteryMultiplierTextField)
+        setupForDecimal(textField: lowBatteryMultiplierTextField, nextTextField: proximitySpatialTextField)
+        setupForDecimal(textField: proximitySpatialTextField, nextTextField: proximityTemporalTextField)
+        setupForDecimal(textField: proximityTemporalTextField, nextTextField: farWithoutSubscriberAccuracyTextField)
+
         farWithoutSubscriberAccuracyTextField.inputView = AccuracyPickerView()
-        farWithoutSubscriberAccuracyTextField.inputAccessoryView = AccuracyPickerToolbar(onDoneButtonPress: { [weak self] in
-            self?.farWithoutSubscriberDesiredIntervalTextField.becomeFirstResponder()
-        })
-        farWithoutSubscriberAccuracyTextField.inputAccessoryView?.sizeToFit()
+        setupForDecimal(textField: farWithoutSubscriberAccuracyTextField, nextTextField: farWithoutSubscriberDesiredIntervalTextField)
+        setupForDecimal(textField: farWithoutSubscriberDesiredIntervalTextField, nextTextField: farWithoutSubscriberMinimumDisplacementTextField)
+        setupForDecimal(textField: farWithoutSubscriberMinimumDisplacementTextField, nextTextField: farWithSubscriberAccuracyTextField)
 
         farWithSubscriberAccuracyTextField.inputView = AccuracyPickerView()
-        farWithSubscriberAccuracyTextField.inputAccessoryView = AccuracyPickerToolbar(onDoneButtonPress: { [weak self] in
-            self?.farWithSubscriberDesiredIntervalTextField.becomeFirstResponder()
-        })
-        farWithSubscriberAccuracyTextField.inputAccessoryView?.sizeToFit()
-
-        nearWithSubscriberAccuracyTextField.inputView = AccuracyPickerView()
-        nearWithSubscriberAccuracyTextField.inputAccessoryView = AccuracyPickerToolbar(onDoneButtonPress: { [weak self] in
-            self?.nearWithSubscriberDesiredIntervalTextField.becomeFirstResponder()
-        })
+        setupForDecimal(textField: farWithSubscriberAccuracyTextField, nextTextField: farWithSubscriberDesiredIntervalTextField)
+        setupForDecimal(textField: farWithSubscriberDesiredIntervalTextField, nextTextField: farWithSubscriberMinimumDisplacementTextField)
+        setupForDecimal(textField: farWithSubscriberMinimumDisplacementTextField, nextTextField: nearWithoutSubscriberAccuracyTextField)
 
         nearWithoutSubscriberAccuracyTextField.inputView = AccuracyPickerView()
-        nearWithoutSubscriberAccuracyTextField.inputAccessoryView = AccuracyPickerToolbar(onDoneButtonPress: { [weak self] in
-            self?.nearWithoutSubscriberDesiredIntervalTextField.becomeFirstResponder()
+        setupForDecimal(textField: nearWithoutSubscriberAccuracyTextField, nextTextField: nearWithoutSubscriberDesiredIntervalTextField)
+        setupForDecimal(textField: nearWithoutSubscriberDesiredIntervalTextField, nextTextField: nearWithoutSubscriberMinimumDisplacementTextField)
+        setupForDecimal(textField: nearWithoutSubscriberMinimumDisplacementTextField, nextTextField: nearWithSubscriberAccuracyTextField)
+
+        nearWithSubscriberAccuracyTextField.inputView = AccuracyPickerView()
+        setupForDecimal(textField: nearWithSubscriberAccuracyTextField, nextTextField: nearWithSubscriberDesiredIntervalTextField)
+        setupForDecimal(textField: nearWithSubscriberDesiredIntervalTextField, nextTextField: nearWithSubscriberMinimumDisplacementTextField)
+        setupForDecimal(textField: nearWithoutSubscriberMinimumDisplacementTextField, nextTextField: nil)
+    }
+
+    private func setupForDecimal(textField: UITextField, nextTextField: UITextField?) {
+        textField.keyboardType = .decimalPad
+        textField.inputAccessoryView = AddTrackableToolbar(onNextButtonPress: {
+            if let nextTextField = nextTextField {
+                nextTextField.becomeFirstResponder()
+            } else {
+                textField.endEditing(true)
+            }
         })
+        textField.inputAccessoryView?.sizeToFit()
     }
 
     // MARK: Actions
@@ -112,13 +135,14 @@ class AddTrackableViewController: UIViewController {
         resolutionConstraintsZeroHeightConstraint.priority = resolutionConstraintsSwitch.isOn ? .defaultLow : .defaultHigh
     }
 
+    // MARK: Trackable creation
     private func createTrackableFromCurrentData() throws -> Trackable {
         guard let trackableId = trackableIdTextField.text,
               !trackableId.isEmpty
         else { throw AddTrackableError(message: "Missing or incorrect TrackableId.") }
         let destination = try getDestination()
 
-        if resolutionConstraintsSwitch.isOn {
+        if !resolutionConstraintsSwitch.isOn {
             return Trackable(id: trackableId, metadata: nil, destination: destination, constraints: nil)
         }
 
@@ -232,5 +256,15 @@ class AddTrackableViewController: UIViewController {
 
         let destination: CLLocationCoordinate2D? = latitude != nil && longitude != nil ? CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!) : nil
         return destination
+    }
+}
+
+extension AddTrackableViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == trackableIdTextField {
+            latitudeTextField.becomeFirstResponder()
+            return false
+        }
+        return true
     }
 }

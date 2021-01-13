@@ -16,7 +16,7 @@
 		180F61A5258634350014B310 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F619A258634350014B310 /* MapViewController.swift */; };
 		180F61A6258634350014B310 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F619B258634350014B310 /* MapViewController.xib */; };
 		180F61A7258634350014B310 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F619C258634350014B310 /* AppDelegate.swift */; };
-		188F5DF625AF136700202C97 /* AccuracyPickerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5DF525AF136700202C97 /* AccuracyPickerToolbar.swift */; };
+		188F5DF625AF136700202C97 /* AddTrackableToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5DF525AF136700202C97 /* AddTrackableToolbar.swift */; };
 		188F5DFA25AF181E00202C97 /* AddTrackableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5DF925AF181E00202C97 /* AddTrackableError.swift */; };
 		18A7FB6425AE05FD005AC55E /* TrackablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7FB6225AE05FD005AC55E /* TrackablesViewController.swift */; };
 		18A7FB6525AE05FD005AC55E /* TrackablesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A7FB6325AE05FD005AC55E /* TrackablesViewController.xib */; };
@@ -42,7 +42,7 @@
 		180F619C258634350014B310 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		184E87972587832D000DF408 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		184E8813258789A8000DF408 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		188F5DF525AF136700202C97 /* AccuracyPickerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccuracyPickerToolbar.swift; sourceTree = "<group>"; };
+		188F5DF525AF136700202C97 /* AddTrackableToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackableToolbar.swift; sourceTree = "<group>"; };
 		188F5DF925AF181E00202C97 /* AddTrackableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackableError.swift; sourceTree = "<group>"; };
 		18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_PublisherExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18A7FB6225AE05FD005AC55E /* TrackablesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackablesViewController.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 				18A7FB6F25AE1596005AC55E /* AddTrackableViewController.swift */,
 				18A7FB7025AE1596005AC55E /* AddTrackableViewController.xib */,
 				18A7FB7525AE3624005AC55E /* AccuracyPickerView.swift */,
-				188F5DF525AF136700202C97 /* AccuracyPickerToolbar.swift */,
+				188F5DF525AF136700202C97 /* AddTrackableToolbar.swift */,
 				188F5DF925AF181E00202C97 /* AddTrackableError.swift */,
 			);
 			path = AddTrackable;
@@ -330,7 +330,7 @@
 				18A7FB7625AE3624005AC55E /* AccuracyPickerView.swift in Sources */,
 				180F61A4258634350014B310 /* AssetAnnotationView.swift in Sources */,
 				180F61A3258634350014B310 /* SettingsViewController.swift in Sources */,
-				188F5DF625AF136700202C97 /* AccuracyPickerToolbar.swift in Sources */,
+				188F5DF625AF136700202C97 /* AddTrackableToolbar.swift in Sources */,
 				18A7FB6A25AE07B4005AC55E /* TrackablesTableViewCell.swift in Sources */,
 				18A7FB6425AE05FD005AC55E /* TrackablesViewController.swift in Sources */,
 				180F61A5258634350014B310 /* MapViewController.swift in Sources */,
