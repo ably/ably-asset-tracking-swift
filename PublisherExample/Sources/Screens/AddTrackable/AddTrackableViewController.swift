@@ -10,7 +10,7 @@ protocol AddTrackableViewControllerDelegate: AnyObject {
 class AddTrackableViewController: UIViewController {
     @IBOutlet private weak var saveAsDefaultSwitch: UISwitch!
     @IBOutlet private weak var resolutionConstraintsSwitch: UISwitch!
-    @IBOutlet private weak var resolutionConstraintsContainer: UIView!
+    @IBOutlet private weak var scrollView: UIScrollView!
 
     @IBOutlet private weak var trackableIdTextField: UITextField!
     @IBOutlet private weak var latitudeTextField: UITextField!
@@ -56,9 +56,19 @@ class AddTrackableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTextFields()
-
         resolutionConstraintsSwitch.isOn = false
+        loadDefaultData()
         updateResolutionConstraintsSectionVisibility()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        registerForKeyboardNotifications()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unregisterFromKeyboardNotifications()
     }
 
     // MARK: View setup
@@ -107,7 +117,7 @@ class AddTrackableViewController: UIViewController {
 
     private func setupForDecimal(textField: UITextField, nextTextField: UITextField?) {
         textField.keyboardType = .decimalPad
-        textField.inputAccessoryView = AddTrackableToolbar(onNextButtonPress: {
+        textField.inputAccessoryView = AddTrackableToolbar(onNextButtonPress: { [weak self] in
             if let nextTextField = nextTextField {
                 nextTextField.becomeFirstResponder()
             } else {
@@ -126,6 +136,9 @@ class AddTrackableViewController: UIViewController {
         do {
             let trackable = try createTrackableFromCurrentData()
             delegate?.addTrackableViewController(sender: self, onTrackableAdded: trackable)
+            if saveAsDefaultSwitch.isOn {
+                saveCurrentDataAsDefault()
+            }
             dismiss(animated: true, completion: nil)
         } catch let err {
             let alert = UIAlertController(title: "Alert", message: err.localizedDescription, preferredStyle: .alert)
@@ -138,12 +151,18 @@ class AddTrackableViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
+    @IBAction private func onScreenTapped(_ sender: Any) {
+        view.endEditing(true)
+    }
+
     // MARK: Utils
     private func updateResolutionConstraintsSectionVisibility() {
         resolutionConstraintsZeroHeightConstraint.priority = resolutionConstraintsSwitch.isOn ? .defaultLow : .defaultHigh
     }
+}
 
-    // MARK: Trackable creation
+// MARK: Trackable Creation
+extension AddTrackableViewController {
     private func createTrackableFromCurrentData() throws -> Trackable {
         guard let trackableId = trackableIdTextField.text,
               !trackableId.isEmpty
@@ -267,6 +286,76 @@ class AddTrackableViewController: UIViewController {
     }
 }
 
+// MARK: Save/Load defaults
+extension AddTrackableViewController {
+    private enum DefaultKeys: String {
+        case trackableId
+        case latitude
+        case longitude
+        case batteryLevelThreshold
+        case lowBatteryMultiplier
+        case proximitySpatial
+        case proximityTemporal
+        case farWithoutSubscriberAccuracy
+        case farWithoutSubscriberDesiredInterval
+        case farWithoutSubscriberMinimumDisplacement
+        case farWithSubscriberAccuracy
+        case farWithSubscriberDesiredInterval
+        case farWithSubscriberMinimumDisplacement
+        case nearWithoutSubscriberAccuracy
+        case nearWithoutSubscriberDesiredInterval
+        case nearWithoutSubscriberMinimumDisplacement
+        case nearWithSubscriberAccuracy
+        case nearWithSubscriberDesiredInterval
+        case nearWithSubscriberMinimumDisplacement
+        case isResolutionConstraintsEnabled
+    }
+
+    private func saveCurrentDataAsDefault() {
+        UserDefaults.standard.setValue(latitudeTextField.text, forKey: DefaultKeys.latitude.rawValue)
+        UserDefaults.standard.setValue(longitudeTextField.text, forKey: DefaultKeys.longitude.rawValue)
+        UserDefaults.standard.setValue(batteryLevelThresholdTextField.text, forKey: DefaultKeys.batteryLevelThreshold.rawValue)
+        UserDefaults.standard.setValue(lowBatteryMultiplierTextField.text, forKey: DefaultKeys.lowBatteryMultiplier.rawValue)
+        UserDefaults.standard.setValue(proximitySpatialTextField.text, forKey: DefaultKeys.proximitySpatial.rawValue)
+        UserDefaults.standard.setValue(proximityTemporalTextField.text, forKey: DefaultKeys.proximityTemporal.rawValue)
+        UserDefaults.standard.setValue(farWithoutSubscriberAccuracyTextField.text, forKey: DefaultKeys.farWithoutSubscriberAccuracy.rawValue)
+        UserDefaults.standard.setValue(farWithoutSubscriberDesiredIntervalTextField.text, forKey: DefaultKeys.farWithoutSubscriberDesiredInterval.rawValue)
+        UserDefaults.standard.setValue(farWithoutSubscriberMinimumDisplacementTextField.text, forKey: DefaultKeys.farWithoutSubscriberMinimumDisplacement.rawValue)
+        UserDefaults.standard.setValue(farWithSubscriberAccuracyTextField.text, forKey: DefaultKeys.farWithSubscriberAccuracy.rawValue)
+        UserDefaults.standard.setValue(farWithSubscriberDesiredIntervalTextField.text, forKey: DefaultKeys.farWithSubscriberDesiredInterval.rawValue)
+        UserDefaults.standard.setValue(farWithSubscriberMinimumDisplacementTextField.text, forKey: DefaultKeys.farWithSubscriberMinimumDisplacement.rawValue)
+        UserDefaults.standard.setValue(nearWithoutSubscriberAccuracyTextField.text, forKey: DefaultKeys.nearWithoutSubscriberAccuracy.rawValue)
+        UserDefaults.standard.setValue(nearWithoutSubscriberDesiredIntervalTextField.text, forKey: DefaultKeys.nearWithoutSubscriberDesiredInterval.rawValue)
+        UserDefaults.standard.setValue(nearWithoutSubscriberMinimumDisplacementTextField.text, forKey: DefaultKeys.nearWithoutSubscriberMinimumDisplacement.rawValue)
+        UserDefaults.standard.setValue(nearWithSubscriberAccuracyTextField.text, forKey: DefaultKeys.nearWithSubscriberAccuracy.rawValue)
+        UserDefaults.standard.setValue(nearWithSubscriberDesiredIntervalTextField.text, forKey: DefaultKeys.nearWithSubscriberDesiredInterval.rawValue)
+        UserDefaults.standard.setValue(nearWithSubscriberMinimumDisplacementTextField.text, forKey: DefaultKeys.nearWithSubscriberMinimumDisplacement.rawValue)
+        UserDefaults.standard.setValue(resolutionConstraintsSwitch.isOn, forKey: DefaultKeys.isResolutionConstraintsEnabled.rawValue)
+    }
+
+    private func loadDefaultData() {
+        latitudeTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.latitude.rawValue)
+        longitudeTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.longitude.rawValue)
+        batteryLevelThresholdTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.batteryLevelThreshold.rawValue)
+        lowBatteryMultiplierTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.lowBatteryMultiplier.rawValue)
+        proximitySpatialTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.proximitySpatial.rawValue)
+        proximityTemporalTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.proximityTemporal.rawValue)
+        farWithoutSubscriberAccuracyTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.farWithoutSubscriberAccuracy.rawValue)
+        farWithoutSubscriberDesiredIntervalTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.farWithoutSubscriberDesiredInterval.rawValue)
+        farWithoutSubscriberMinimumDisplacementTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.farWithoutSubscriberMinimumDisplacement.rawValue)
+        farWithSubscriberAccuracyTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.farWithSubscriberAccuracy.rawValue)
+        farWithSubscriberDesiredIntervalTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.farWithSubscriberDesiredInterval.rawValue)
+        farWithSubscriberMinimumDisplacementTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.farWithSubscriberMinimumDisplacement.rawValue)
+        nearWithoutSubscriberAccuracyTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.nearWithoutSubscriberAccuracy.rawValue)
+        nearWithoutSubscriberDesiredIntervalTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.nearWithoutSubscriberDesiredInterval.rawValue)
+        nearWithoutSubscriberMinimumDisplacementTextField.text = UserDefaults.standard.string( forKey: DefaultKeys.nearWithoutSubscriberMinimumDisplacement.rawValue)
+        nearWithSubscriberAccuracyTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.nearWithSubscriberAccuracy.rawValue)
+        nearWithSubscriberDesiredIntervalTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.nearWithSubscriberDesiredInterval.rawValue)
+        nearWithSubscriberMinimumDisplacementTextField.text = UserDefaults.standard.string(forKey: DefaultKeys.nearWithSubscriberMinimumDisplacement.rawValue)
+        resolutionConstraintsSwitch.isOn = UserDefaults.standard.bool(forKey: DefaultKeys.isResolutionConstraintsEnabled.rawValue)
+    }
+}
+
 extension AddTrackableViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == trackableIdTextField {
@@ -274,5 +363,35 @@ extension AddTrackableViewController: UITextFieldDelegate {
             return false
         }
         return true
+    }
+}
+
+// MARK: Keyboard handling
+extension AddTrackableViewController {
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    func unregisterFromKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc
+    func keyboardWillShow(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+        else { return }
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+    }
+
+    @objc
+    func keyboardWillHide(notification: Notification) {
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
 }

@@ -29,10 +29,10 @@
                 <outlet property="nearWithoutSubscriberMinimumDisplacementTextField" destination="6iN-l6-rgf" id="eG3-LA-Z99"/>
                 <outlet property="proximitySpatialTextField" destination="Lxw-oo-3f6" id="wJd-CL-oXp"/>
                 <outlet property="proximityTemporalTextField" destination="QRS-d6-lM2" id="5jK-7q-9l7"/>
-                <outlet property="resolutionConstraintsContainer" destination="ftr-RZ-JNv" id="Ugb-V3-BM5"/>
                 <outlet property="resolutionConstraintsSwitch" destination="Ygg-7z-g10" id="U3S-pE-Nnc"/>
                 <outlet property="resolutionConstraintsZeroHeightConstraint" destination="wCN-PD-kiu" id="t1L-0f-0gC"/>
                 <outlet property="saveAsDefaultSwitch" destination="aDR-7a-IuE" id="MgC-Gm-irF"/>
+                <outlet property="scrollView" destination="4g7-x5-yfj" id="ku5-xZ-uPs"/>
                 <outlet property="trackableIdTextField" destination="Azp-lX-pTQ" id="BaO-qf-9GJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -448,6 +448,7 @@
                                 </switch>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <gestureRecognizers/>
                             <constraints>
                                 <constraint firstItem="6Rc-QQ-f9j" firstAttribute="top" secondItem="2sW-f8-C1K" secondAttribute="bottom" constant="12" id="0ks-WC-vPT"/>
                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="adS-If-Jhr" secondAttribute="bottom" constant="8" id="3WY-Hz-eYX"/>
@@ -481,6 +482,9 @@
                                 <constraint firstItem="adS-If-Jhr" firstAttribute="leading" secondItem="Bht-q2-1xr" secondAttribute="leading" constant="24" id="vr8-aF-ksT"/>
                                 <constraint firstItem="6Rc-QQ-f9j" firstAttribute="leading" secondItem="Bht-q2-1xr" secondAttribute="leading" constant="24" id="yAm-xe-Ogv"/>
                             </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="xjt-g9-4bG" appends="YES" id="aQk-AC-piL"/>
+                            </connections>
                         </view>
                     </subviews>
                     <constraints>
@@ -510,6 +514,11 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-4.3478260869565224" y="255.80357142857142"/>
         </view>
+        <tapGestureRecognizer id="xjt-g9-4bG">
+            <connections>
+                <action selector="onScreenTapped:" destination="-1" id="A2d-VI-5Va"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <systemColor name="separatorColor">
