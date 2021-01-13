@@ -120,6 +120,10 @@ extension MapViewController: MKMapViewDelegate {
                                                  UIColor.blue.withAlphaComponent(0.7)
         return annotationView
     }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        // TODO: Handle zoom change here
+    }
 }
 
 extension MapViewController: SubscriberDelegate {
