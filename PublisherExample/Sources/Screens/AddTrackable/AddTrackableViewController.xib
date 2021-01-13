@@ -43,21 +43,27 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Trackable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i54-Rn-hHB">
-                    <rect key="frame" x="152.5" y="52" width="109" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="149.5" y="60" width="115" height="21.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utA-YZ-Fw7">
-                    <rect key="frame" x="16" y="47.5" width="30" height="30"/>
+                    <rect key="frame" x="16" y="56" width="30" height="30"/>
                     <state key="normal" title="Add"/>
+                    <connections>
+                        <action selector="onAddButtonPress:" destination="-1" eventType="touchUpInside" id="yBI-aL-0s7"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBv-g6-Rgd">
-                    <rect key="frame" x="358" y="47.5" width="48" height="30"/>
+                    <rect key="frame" x="358" y="56" width="48" height="30"/>
                     <state key="normal" title="Cancel"/>
+                    <connections>
+                        <action selector="onCancelButtonPress:" destination="-1" eventType="touchUpInside" id="Lyr-Wf-qCg"/>
+                    </connections>
                 </button>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4g7-x5-yfj">
-                    <rect key="frame" x="0.0" y="84.5" width="414" height="1383.5"/>
+                    <rect key="frame" x="0.0" y="93.5" width="414" height="1374.5"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bht-q2-1xr" userLabel="ContentView">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="1388"/>
@@ -491,7 +497,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="utA-YZ-Fw7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="1Gv-6T-qwJ"/>
-                <constraint firstItem="i54-Rn-hHB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="1eh-lo-fkp"/>
+                <constraint firstItem="i54-Rn-hHB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="1eh-lo-fkp"/>
                 <constraint firstItem="WBv-g6-Rgd" firstAttribute="centerY" secondItem="i54-Rn-hHB" secondAttribute="centerY" id="67u-FK-Wka"/>
                 <constraint firstItem="4g7-x5-yfj" firstAttribute="top" secondItem="i54-Rn-hHB" secondAttribute="bottom" constant="12" id="6cP-Ug-4ju"/>
                 <constraint firstItem="4g7-x5-yfj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="An5-BZ-ERT"/>

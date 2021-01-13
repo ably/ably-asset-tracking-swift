@@ -31,7 +31,7 @@ public class DefaultResolutionConstraints: ResolutionConstraints {
      */
     let lowBatteryMultiplier: Float
 
-    init(resolutions: DefaultResolutionSet,
+    public init(resolutions: DefaultResolutionSet,
          proximityThreshold: Proximity,
          batteryLevelThreshold: Float,
          lowBatteryMultiplier: Float) {
@@ -71,7 +71,7 @@ public class DefaultResolutionSet {
      */
     let nearWithSubscriber: Resolution
 
-    init(farWithoutSubscriber: Resolution,
+    public init(farWithoutSubscriber: Resolution,
          farWithSubscriber: Resolution,
          nearWithoutSubscriber: Resolution,
          nearWithSubscriber: Resolution) {
@@ -86,7 +86,7 @@ public class DefaultResolutionSet {
      - Parameters:
         - resolution The resolution to be used to populate all fields.
      */
-    init(resolution: Resolution) {
+    public init(resolution: Resolution) {
         self.farWithSubscriber = resolution
         self.farWithoutSubscriber = resolution
         self.nearWithSubscriber = resolution

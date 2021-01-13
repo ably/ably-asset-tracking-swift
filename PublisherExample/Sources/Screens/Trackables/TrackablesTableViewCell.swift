@@ -10,10 +10,9 @@ class TrackablesTableViewCell: UITableViewCell {
         selectionStyle = .none
     }
 
-    func setup(withTrackable trackable: Trackable)  {
+    func setup(withTrackable trackable: Trackable) {
         trackableIdLabel.text = trackable.id
         trackableDestinationLabel.text = nil
-        
         if let destination = trackable.destination {
             trackableDestinationLabel.text = String(format: "%.5f %.5f", destination.latitude, destination.longitude)
         }
