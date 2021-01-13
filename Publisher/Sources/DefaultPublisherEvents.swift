@@ -23,7 +23,7 @@ struct TrackTrackableEvent: PublisherEvent {
 
 struct TrackableReadyToTrackEvent: PublisherEvent {
     let trackable: Trackable
-    let onSuccess: () -> Void
+    let onSuccess: SuccessHandler
 }
 
 struct RawLocationChangedEvent: PublisherEvent {
