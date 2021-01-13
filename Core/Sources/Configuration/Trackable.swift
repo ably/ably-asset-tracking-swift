@@ -19,7 +19,6 @@ public class Trackable: NSObject {
      */
     public let destination: CLLocationCoordinate2D?
 
-
     /**
     Optional constraints used to determine suitable Resolution
      */

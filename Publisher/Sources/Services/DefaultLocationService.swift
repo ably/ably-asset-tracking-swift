@@ -28,6 +28,10 @@ class DefaultLocationService: LocationService {
     func changeLocationEngineResolution(resolution: Resolution) {
         // TODO: Implement method
     }
+    
+    func changeRoutingProfile(profile: RoutingProfile) {
+        // TODO: Implement method
+    }
 }
 
 extension DefaultLocationService: PassiveLocationDataSourceDelegate {

@@ -24,9 +24,9 @@ public protocol PublisherBuilder {
     func log(_ configuration: LogConfiguration) -> PublisherBuilder
 
     /**
-     Sets the mandatory `TransportationMode` property
+     Sets the mandatory `RoutingProfile` property
      */
-    func transportationMode(_ transportationMode: TransportationMode) -> PublisherBuilder
+    func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder
 
     /**
      Sets the mandatory `ResolutionPolicyFactory` property

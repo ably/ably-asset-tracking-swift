@@ -11,4 +11,5 @@ protocol LocationService: AnyObject {
     func startUpdatingLocation()
     func stopUpdatingLocation()
     func changeLocationEngineResolution(resolution: Resolution)
+    func changeRoutingProfile(profile: RoutingProfile)
 }

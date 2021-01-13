@@ -32,20 +32,20 @@ class DefaultPublisher: Publisher {
     private var lastEnhancedTimestamps: [Trackable: Date]
     private var route: Route?
 
-    public let transportationMode: TransportationMode
+    public let routingProfile: RoutingProfile
     public weak var delegate: PublisherDelegate?
     private(set) public var activeTrackable: Trackable?
 
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
-         transportationMode: TransportationMode,
+         routingProfile: RoutingProfile,
          resolutionPolicyFactory: ResolutionPolicyFactory,
          ablyService: AblyPublisherService,
          locationService: LocationService,
          routeProvider: RouteProvider) {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
-        self.transportationMode = transportationMode
+        self.routingProfile = routingProfile
         self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher", qos: .default)
         self.locationService = locationService
         self.ablyService = ablyService
@@ -87,6 +87,11 @@ class DefaultPublisher: Publisher {
         let event = RemoveTrackableEvent(trackable: trackable, onSuccess: onSuccess, onError: onError)
         execute(event: event)
     }
+    
+    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
+        let event = ChangeRoutingProfileEvent(profile: profile)
+        execute(event: event)
+    }
 
     func stop() {
         // TODO: Implement method
@@ -121,6 +126,8 @@ extension DefaultPublisher {
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
+            case let event as ChangeRoutingProfileEvent:
+                return
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -303,6 +310,11 @@ extension DefaultPublisher {
         // desiredInterval in resolution is in milliseconds, while timeInterval from timestamp is in seconds
         let desiredIntervalInSeconds = resolution.desiredInterval / 1000
         return distance >= resolution.minimumDisplacement || timeInterval >= desiredIntervalInSeconds
+    }
+    
+    // MARK: RoutingProfile
+    private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
+        
     }
 
     // MARK: ResolutionPolicy

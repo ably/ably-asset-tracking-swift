@@ -48,7 +48,6 @@
 		18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
-		18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D1258B8264005BC480 /* TransportationMode.swift */; };
 		18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D2258B8264005BC480 /* LogConfiguration.swift */; };
 		18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D5258B8264005BC480 /* GeoJSONMessage.swift */; };
 		18FCE1E5258B8264005BC480 /* GeoJSONGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D6258B8264005BC480 /* GeoJSONGeometry.swift */; };
@@ -68,6 +67,7 @@
 		18FD2D81259B6EBE00A622DF /* DefaultResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D80259B6EBE00A622DF /* DefaultResolutionPolicy.swift */; };
 		BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FF3FC4C81DED6B6A5792B3 /* Pods_asset_tracking_Publisher.framework */; };
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
+		F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34425AF3E35002799BD /* RoutingProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,7 +127,6 @@
 		18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherEvents.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
-		18FCE1D1258B8264005BC480 /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
 		18FCE1D2258B8264005BC480 /* LogConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D5258B8264005BC480 /* GeoJSONMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONMessage.swift; sourceTree = "<group>"; };
 		18FCE1D6258B8264005BC480 /* GeoJSONGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometry.swift; sourceTree = "<group>"; };
@@ -153,6 +152,7 @@
 		8B412391C99428EFFA9D511B /* Pods-asset_tracking-PublisherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherTests/Pods-asset_tracking-PublisherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		96BA6252D49C6BAA02CFF7B7 /* Pods-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Publisher.release.xcconfig"; path = "Target Support Files/Pods-Publisher/Pods-Publisher.release.xcconfig"; sourceTree = "<group>"; };
 		C8859F81CDD7390E11741B66 /* Pods-asset_tracking-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.release.xcconfig"; sourceTree = "<group>"; };
+		F65AC34425AF3E35002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F9B1CBDB707C22DF88ACEF73 /* Pods-asset_tracking-Publisher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -310,9 +310,9 @@
 		18FCE1CE258B8264005BC480 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				F65AC34425AF3E35002799BD /* RoutingProfile.swift */,
 				18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */,
 				18FCE1D0258B8264005BC480 /* Trackable.swift */,
-				18FCE1D1258B8264005BC480 /* TransportationMode.swift */,
 				18FCE1D2258B8264005BC480 /* LogConfiguration.swift */,
 			);
 			name = Configuration;
@@ -607,6 +607,7 @@
 				185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */,
 				180795F025A4AFE60026F4C1 /* TrackableResolutionRequest.swift in Sources */,
 				185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */,
+				F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */,
 				1807958925A4AEC00026F4C1 /* ResolutionConstraints.swift in Sources */,
 				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
 				18CF5F9525A45CEA00BF1D31 /* ThresholdChecker.swift in Sources */,
@@ -615,7 +616,6 @@
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
 				180F61792586341E0014B310 /* DefaultAblyPublisherService.swift in Sources */,
 				18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */,
-				18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
 				1855B59F259C67B80079BB3C /* DefaultSubscriberSetListener.swift in Sources */,
 				18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */,

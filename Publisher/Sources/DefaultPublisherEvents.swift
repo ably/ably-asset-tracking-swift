@@ -71,6 +71,10 @@ struct RefreshResolutionPolicyEvent: PublisherEvent {}
 
 struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
 
+struct ChangeRoutingProfileEvent: PublisherEvent {
+    let profile: RoutingProfile
+}
+
 // MARK: Delegate handling events
 struct DelegateErrorEvent: PublisherEvent {
     let error: Error
