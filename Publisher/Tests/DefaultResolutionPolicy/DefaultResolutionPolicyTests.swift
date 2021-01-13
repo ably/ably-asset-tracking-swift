@@ -252,39 +252,4 @@ class DefaultResolutionPolicyTests: XCTestCase {
         // Should return nearWithSubscriber
         XCTAssertEqual(result, resolutionSet.nearWithSubscriber)
     }
-
-
 }
-
-/*
- @Test
- fun `resolving a request with resolution set should return nearWithoutSubscriber when below threshold and no subscriber is present`() {
- // given
- val trackableResolutionSet = anyDefaultResolutionSet()
- val trackable = createTrackable(trackableResolutionSet)
- val resolutionRequest = TrackableResolutionRequest(trackable, emptySet())
- mockBelowThresholdWithoutSubscribers(trackable)
-
- // when
- val resolvedResolution = policy.resolve(resolutionRequest)
-
- // then
- Assert.assertEquals(trackableResolutionSet.nearWithoutSubscriber, resolvedResolution)
- }
-
- @Test
- fun `resolving a request with resolution set should return nearWithSubscriber when below threshold and at least one subscriber is present`() {
- // given
- val trackableResolutionSet = anyDefaultResolutionSet()
- val trackable = createTrackable(trackableResolutionSet)
- val resolutionRequest = TrackableResolutionRequest(trackable, emptySet())
- mockBelowThresholdWithSubscribers(trackable)
-
- // when
- val resolvedResolution = policy.resolve(resolutionRequest)
-
- // then
- Assert.assertEquals(trackableResolutionSet.nearWithSubscriber, resolvedResolution)
- }
-
- */
