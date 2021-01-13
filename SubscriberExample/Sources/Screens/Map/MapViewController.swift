@@ -12,6 +12,9 @@ class MapViewController: UIViewController {
     private var subscriber: Subscriber?
     private var errors: [Error] = []
 
+    private var currentResolution: Resolution?
+    private var resolutionDebounceTimer: Timer?
+
     private var rawLocation: CLLocation? { didSet { updateRawLocationAnnotation() } }
     private var enhancedLocation: CLLocation? { didSet { updateEnhancedLocationAnnotation() } }
 
@@ -41,7 +44,11 @@ class MapViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         subscriber?.stop()
+        resolutionDebounceTimer?.invalidate()
+        resolutionDebounceTimer = nil
     }
+
+    // MARK: View setup
 
     private func setupSubscriber() {
         subscriber = try? SubscriberFactory.subscribers()
@@ -105,6 +112,43 @@ class MapViewController: UIViewController {
                                         longitudinalMeters: 600)
         mapView.setRegion(region, animated: true)
     }
+
+    // MARK: Request new resolution based on zoom
+    private func scheduleResolutionUpdate() {
+        resolutionDebounceTimer?.invalidate()
+        resolutionDebounceTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
+            self?.performResolutionUpdate()
+        })
+    }
+
+    private func performResolutionUpdate() {
+        let resolution = resolutionForCurrentMapZoom()
+        if resolution == currentResolution { return }
+
+        subscriber?.sendChangeRequest(resolution: resolution,
+                                      onSuccess: { [weak self] in
+                                        self?.currentResolution = resolution
+                                        logger.info("Updated resolution to: \(resolution)")
+                                      }, onError: { [weak self] error in
+                                        let alertVC = UIAlertController(title: "Error", message: "Can't change resolution: \(error.localizedDescription)", preferredStyle: .alert)
+                                        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        self?.present(alertVC, animated: true, completion: nil)
+                                      })
+    }
+
+    private func resolutionForCurrentMapZoom() -> Resolution {
+        let zoom = mapView.getZoomLevel()
+        if zoom < 10 {
+            return Resolution(accuracy: .minimum, desiredInterval: 120 * 1000, minimumDisplacement: 10000)
+        } else if 10.0...12.0 ~= zoom {
+            return Resolution(accuracy: .low, desiredInterval: 60 * 1000, minimumDisplacement: 5000)
+        } else if 12.0...14.0 ~= zoom {
+            return Resolution(accuracy: .balanced, desiredInterval: 30 * 1000, minimumDisplacement: 100)
+        } else if 14.0...16.0 ~= zoom {
+            return Resolution(accuracy: .high, desiredInterval: 10 * 1000, minimumDisplacement: 30)
+        }
+        return Resolution(accuracy: .maximum, desiredInterval: 5 * 1000, minimumDisplacement: 1)
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -113,16 +157,18 @@ extension MapViewController: MKMapViewDelegate {
         else { return nil }
 
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: truckAnnotationViewIdentifier) as? TruckAnnotationView ??
-                             TruckAnnotationView(annotation: annotation, reuseIdentifier: truckAnnotationViewIdentifier)
+            TruckAnnotationView(annotation: annotation, reuseIdentifier: truckAnnotationViewIdentifier)
         let isRaw = annotation.type == .raw
         annotationView.bearing = annotation.bearing
         annotationView.backgroundColor = isRaw ? UIColor.yellow.withAlphaComponent(0.7) :
-                                                 UIColor.blue.withAlphaComponent(0.7)
+            UIColor.blue.withAlphaComponent(0.7)
         return annotationView
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        // TODO: Handle zoom change here
+        let zoom = mapView.getZoomLevel()
+        logger.debug("Current map zoom level: \(zoom)")
+        scheduleResolutionUpdate()
     }
 }
 
