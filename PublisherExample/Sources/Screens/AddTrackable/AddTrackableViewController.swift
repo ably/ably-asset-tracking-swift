@@ -117,7 +117,7 @@ class AddTrackableViewController: UIViewController {
 
     private func setupForDecimal(textField: UITextField, nextTextField: UITextField?) {
         textField.keyboardType = .decimalPad
-        textField.inputAccessoryView = AddTrackableToolbar(onNextButtonPress: { [weak self] in
+        textField.inputAccessoryView = AddTrackableToolbar(onNextButtonPress: {
             if let nextTextField = nextTextField {
                 nextTextField.becomeFirstResponder()
             } else {
