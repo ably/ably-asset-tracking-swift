@@ -178,8 +178,10 @@ extension DefaultPublisher {
         routeProvider.changeRoutingProfile(to: routingProfile,
                                            onSuccess: { [weak self] route in
                                             self?.execute(event: SetDestinationSuccessEvent(route: route))
+                                            event.onSuccess()
                                            }, onError: { error in
                                             logger.error("Can't change RoutingProfile. Error: \(error)")
+                                            event.onError(error)
                                            })
     }
 

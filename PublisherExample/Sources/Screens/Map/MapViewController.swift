@@ -57,7 +57,7 @@ class MapViewController: UIViewController {
     private func changeRoutingProfile(to routingProfile: RoutingProfile) {
         publisher?.changeRoutingProfile(profile: routingProfile, onSuccess: { }, onError: { _ in })
     }
-    
+
     private func refreshAnnotations() {
         mapView.annotations.forEach { mapView.removeAnnotation($0) }
 

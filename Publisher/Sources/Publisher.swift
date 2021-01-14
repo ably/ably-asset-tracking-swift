@@ -126,6 +126,8 @@ public protocol Publisher {
      
      - Parameters:
         - profile: The routing profile to be used from now on.
+        - onSuccess: Called when changing RoutingProfile was successful.
+        - onError: Called when an error occurs.
     */
     func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
 
