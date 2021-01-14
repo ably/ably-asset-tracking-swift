@@ -6,6 +6,7 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var assetStatusLabel: UILabel!
     @IBOutlet private weak var animationSwitch: UISwitch!
     @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var resolutionLabel: UILabel!
 
     private let truckAnnotationViewIdentifier = "MapTruckAnnotationViewIdentifier"
     private let trackingId: String
@@ -39,6 +40,8 @@ class MapViewController: UIViewController {
 
         mapView.delegate = self
         mapView.register(TruckAnnotationView.self, forAnnotationViewWithReuseIdentifier: truckAnnotationViewIdentifier)
+
+        updateResolutionLabel()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -128,6 +131,7 @@ class MapViewController: UIViewController {
         subscriber?.sendChangeRequest(resolution: resolution,
                                       onSuccess: { [weak self] in
                                         self?.currentResolution = resolution
+                                        self?.updateResolutionLabel()
                                         logger.info("Updated resolution to: \(resolution)")
                                       }, onError: { [weak self] error in
                                         let alertVC = UIAlertController(title: "Error", message: "Can't change resolution: \(error.localizedDescription)", preferredStyle: .alert)
@@ -148,6 +152,22 @@ class MapViewController: UIViewController {
             return Resolution(accuracy: .high, desiredInterval: 10 * 1000, minimumDisplacement: 30)
         }
         return Resolution(accuracy: .maximum, desiredInterval: 5 * 1000, minimumDisplacement: 1)
+    }
+
+    private func updateResolutionLabel() {
+        guard let resolution = currentResolution
+        else {
+            resolutionLabel.text = "Resolution: None"
+            resolutionLabel.font = UIFont.systemFont(ofSize: 17)
+            return
+        }
+        resolutionLabel.font = UIFont.systemFont(ofSize: 14)
+        resolutionLabel.text = """
+            Resolution:
+            Accuracy: \(resolution.accuracy)
+            Minimum displacement: \(resolution.minimumDisplacement)
+            Desired interval: \(resolution.desiredInterval)
+            """
     }
 }
 

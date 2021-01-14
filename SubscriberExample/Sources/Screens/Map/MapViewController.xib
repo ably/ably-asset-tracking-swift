@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,8 +12,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="SubscriberExample" customModuleProvider="target">
             <connections>
                 <outlet property="animationSwitch" destination="sen-Ab-9Ef" id="Xsh-ao-DIm"/>
-                <outlet property="assetStatusLabel" destination="lrm-Ub-YVy" id="5pN-ti-Qm7"/>
+                <outlet property="assetStatusLabel" destination="lrm-Ub-YVy" id="pCT-Lg-ffQ"/>
                 <outlet property="mapView" destination="8rN-ex-fYt" id="hlP-fp-bxE"/>
+                <outlet property="resolutionLabel" destination="6O5-H6-HfX" id="8Tu-yq-Gfh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -45,13 +46,44 @@
                     <rect key="frame" x="349" y="93" width="51" height="31"/>
                 </switch>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8rN-ex-fYt">
-                    <rect key="frame" x="0.0" y="132" width="414" height="730"/>
+                    <rect key="frame" x="0.0" y="213" width="414" height="649"/>
                 </mapView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Otn-da-B2G">
                     <rect key="frame" x="16" y="131" width="398" height="1"/>
                     <color key="backgroundColor" systemColor="separatorColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="bnd-9j-Ab0"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6O5-H6-HfX">
+                    <rect key="frame" x="16" y="144" width="188" height="56"/>
+                    <attributedString key="attributedText">
+                        <fragment>
+                            <string key="content">Resolution:
+Accuracy: Medium
+Minimum displacement: 1000
+Desired interval: 1000</string>
+                            <attributes>
+                                <color key="NSBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <font key="NSFont" size="12" name="Menlo-Regular"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="29.649999999999999" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                    <tabStops>
+                                        <textTab alignment="left" location="29.649999618530273">
+                                            <options/>
+                                        </textTab>
+                                    </tabStops>
+                                </paragraphStyle>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eXR-3k-muh">
+                    <rect key="frame" x="16" y="212" width="398" height="1"/>
+                    <color key="backgroundColor" systemColor="separatorColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="uBx-mA-zG7"/>
                     </constraints>
                 </view>
             </subviews>
@@ -61,18 +93,23 @@
                 <constraint firstItem="sMc-4x-IXA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="21z-g5-oB5"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8rN-ex-fYt" secondAttribute="trailing" id="3o5-bJ-k6X"/>
                 <constraint firstItem="lrm-Ub-YVy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="14" id="5A7-FR-aeY"/>
+                <constraint firstItem="eXR-3k-muh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="5Hm-Hv-jDQ"/>
                 <constraint firstAttribute="trailing" secondItem="rlU-Db-8yK" secondAttribute="trailing" id="72K-lC-aue"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sen-Ab-9Ef" secondAttribute="trailing" constant="16" id="744-4O-y5a"/>
                 <constraint firstItem="sen-Ab-9Ef" firstAttribute="centerY" secondItem="sMc-4x-IXA" secondAttribute="centerY" id="7w1-zk-e0A"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="8rN-ex-fYt" secondAttribute="bottom" id="7w8-hO-WYp"/>
                 <constraint firstItem="rlU-Db-8yK" firstAttribute="top" secondItem="lrm-Ub-YVy" secondAttribute="bottom" constant="6" id="ADx-4C-rbQ"/>
-                <constraint firstItem="8rN-ex-fYt" firstAttribute="top" secondItem="Otn-da-B2G" secondAttribute="bottom" id="H5c-7r-ybE"/>
+                <constraint firstAttribute="trailing" secondItem="eXR-3k-muh" secondAttribute="trailing" id="F3u-GL-ph2"/>
+                <constraint firstItem="6O5-H6-HfX" firstAttribute="top" secondItem="Otn-da-B2G" secondAttribute="bottom" constant="12" id="PJ7-5z-vs6"/>
                 <constraint firstItem="rlU-Db-8yK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="XtK-q7-tde"/>
                 <constraint firstItem="8rN-ex-fYt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="c9s-dr-upz"/>
                 <constraint firstItem="Otn-da-B2G" firstAttribute="top" secondItem="sMc-4x-IXA" secondAttribute="bottom" constant="12" id="dse-wA-XRF"/>
                 <constraint firstItem="sMc-4x-IXA" firstAttribute="top" secondItem="rlU-Db-8yK" secondAttribute="bottom" constant="12" id="lGu-SY-hhH"/>
                 <constraint firstItem="lrm-Ub-YVy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="o5F-4U-5RM"/>
                 <constraint firstItem="Otn-da-B2G" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="r0o-fv-Wvp"/>
+                <constraint firstItem="8rN-ex-fYt" firstAttribute="top" secondItem="eXR-3k-muh" secondAttribute="bottom" id="vdj-zO-7Cv"/>
+                <constraint firstItem="6O5-H6-HfX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="w6e-AZ-8t4"/>
+                <constraint firstItem="eXR-3k-muh" firstAttribute="top" secondItem="6O5-H6-HfX" secondAttribute="bottom" constant="12" id="wKQ-bl-8aJ"/>
                 <constraint firstAttribute="trailing" secondItem="Otn-da-B2G" secondAttribute="trailing" id="xV1-EB-6Iz"/>
             </constraints>
             <point key="canvasLocation" x="140.57971014492756" y="123.88392857142857"/>
