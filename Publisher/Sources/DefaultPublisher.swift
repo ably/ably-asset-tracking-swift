@@ -314,7 +314,8 @@ extension DefaultPublisher {
     
     // MARK: RoutingProfile
     private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
-        
+        routingProfile = event.profile
+        locationService.changeRoutingProfile(profile: routingProfile)
     }
 
     // MARK: ResolutionPolicy
