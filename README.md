@@ -145,7 +145,7 @@ Additionally, when you run tests using `Fastlane` you will see three new directo
 
 - The SDKs are written in Swift, however they still have to be compatible for use from Objective-C based apps.
 - Favor Protocol Oriented Programming with Dependency Injection when writing any code. We're unable to create automatic mocks in Swift, so it'll be helpful for writing unit tests.
-- There is a SwiftLint integrated to the project. Make sure that your code does not add any SwiftLint related warning.
+- SwiftLint is integrated into the project. Make sure that your code does not add any SwiftLint related warning.
 - Please remove default Xcode header comments (with author, license and creation date) as they're not necessary.
 - If you're adding or modifying any part of the public interface of SDK, please also update [QuickHelp](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/SymbolDocumentation.html#//apple_ref/doc/uid/TP40016497-CH51-SW1) documentation.
 
