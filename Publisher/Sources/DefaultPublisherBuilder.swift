@@ -76,7 +76,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
-    
+
     func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: logConfiguration,

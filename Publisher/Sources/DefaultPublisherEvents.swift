@@ -73,6 +73,8 @@ struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
 
 struct ChangeRoutingProfileEvent: PublisherEvent {
     let profile: RoutingProfile
+    let onSuccess: SuccessHandler
+    let onError: ErrorHandler
 }
 
 // MARK: Delegate handling events

@@ -2,7 +2,8 @@ import CoreLocation
 import MapboxDirections
 
 protocol RouteProvider {
-    func getRoute(to destination: CLLocationCoordinate2D, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler)
+    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler)
+    func changeRoutingProfile(to routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler)
 }
 
 class DefaultRouteProvider: NSObject, RouteProvider {
@@ -10,31 +11,46 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     private var onSuccess: ((Route) -> Void)?
     private var onError: ErrorHandler?
     private var destination: CLLocationCoordinate2D?
+    private var routingProfile: RoutingProfile?
 
     override init() {
         locationManager = CLLocationManager()
         super.init()
     }
 
-    func getRoute(to destination: CLLocationCoordinate2D, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
-        guard self.onError == nil,
-              self.onSuccess == nil
-        else {
-            onError(AssetTrackingError.publisherError("Provider is already calculating route."))
+    func changeRoutingProfile(to routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
+        self.routingProfile = routingProfile
+        guard let destination = self.destination,
+              !isCalculating(onErrorHandler: onError) else {
+            return
+        }
+
+        self.getRoute(to: destination,
+                 withRoutingProfile: routingProfile,
+                 onSuccess: onSuccess,
+                 onError: onError)
+    }
+
+    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
+
+        if isCalculating(onErrorHandler: onError) {
             return
         }
 
         self.onSuccess = onSuccess
         self.onError = onError
         self.destination = destination
+        self.routingProfile = routingProfile
         self.locationManager.delegate = self
         self.locationManager.requestLocation()
     }
 
     private func handleLocationUpdate(location: CLLocation) {
-        guard let destination = destination else { return }
+        guard let destination = destination,
+              let routingProfile = routingProfile else { return }
 
-        let options = RouteOptions(coordinates: [destination, location.coordinate])
+        let options = RouteOptions(coordinates: [destination, location.coordinate],
+                                   profileIdentifier: routingProfile.toMapboxProfileIdentifier())
         Directions.shared.calculate(options) { [weak self] (_, result) in
             guard let self = self else { return }
             switch result {
@@ -67,6 +83,16 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         self.destination = nil
         self.onSuccess = nil
         self.onError = nil
+    }
+    
+    private func isCalculating(onErrorHandler onError: ErrorHandler) -> Bool {
+        guard self.onError == nil,
+              self.onSuccess == nil
+        else {
+            onError(AssetTrackingError.publisherError("Provider is already calculating route."))
+            return true
+        }
+        return false
     }
 }
 

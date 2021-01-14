@@ -32,9 +32,9 @@ class DefaultPublisher: Publisher {
     private var lastEnhancedTimestamps: [Trackable: Date]
     private var route: Route?
 
-    public let routingProfile: RoutingProfile
     public weak var delegate: PublisherDelegate?
     private(set) public var activeTrackable: Trackable?
+    private(set) public var routingProfile: RoutingProfile
 
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
@@ -87,9 +87,9 @@ class DefaultPublisher: Publisher {
         let event = RemoveTrackableEvent(trackable: trackable, onSuccess: onSuccess, onError: onError)
         execute(event: event)
     }
-    
+
     func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
-        let event = ChangeRoutingProfileEvent(profile: profile)
+        let event = ChangeRoutingProfileEvent(profile: profile, onSuccess: onSuccess, onError: onError)
         execute(event: event)
     }
 
@@ -126,8 +126,7 @@ extension DefaultPublisher {
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
-            case let event as ChangeRoutingProfileEvent:
-                return
+            case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -172,6 +171,18 @@ extension DefaultPublisher {
         event.onComplete()
     }
 
+    // MARK: RoutingProfile
+    private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
+        routingProfile = event.profile
+
+        routeProvider.changeRoutingProfile(to: routingProfile,
+                                           onSuccess: { [weak self] route in
+                                            self?.execute(event: SetDestinationSuccessEvent(route: route))
+                                           }, onError: { error in
+                                            logger.error("Can't change RoutingProfile. Error: \(error)")
+                                           })
+    }
+
     // MARK: Destination
     private func performSetDestinationEvent(_ event: SetDestinationEvent) {
         guard let destination = event.destination else {
@@ -180,6 +191,7 @@ extension DefaultPublisher {
         }
 
         routeProvider.getRoute(to: destination,
+                               withRoutingProfile: routingProfile,
                                onSuccess: { [weak self] route in
                                 self?.execute(event: SetDestinationSuccessEvent(route: route))
                                },
@@ -310,12 +322,6 @@ extension DefaultPublisher {
         // desiredInterval in resolution is in milliseconds, while timeInterval from timestamp is in seconds
         let desiredIntervalInSeconds = resolution.desiredInterval / 1000
         return distance >= resolution.minimumDisplacement || timeInterval >= desiredIntervalInSeconds
-    }
-    
-    // MARK: RoutingProfile
-    private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
-        routingProfile = event.profile
-        locationService.changeRoutingProfile(profile: routingProfile)
     }
 
     // MARK: ResolutionPolicy
