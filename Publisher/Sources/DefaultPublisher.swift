@@ -36,7 +36,7 @@ class DefaultPublisher: Publisher {
         let event = TrackTrackableEvent(trackable: trackable,
                                         onSuccess: onSuccess,
                                         onError: onError)
-        execute(event: event)
+        enqueue(event: event)
     }
 
     func add(trackable: Trackable) {
@@ -58,7 +58,7 @@ class DefaultPublisher: Publisher {
 
 // MARK: Threading events handling
 extension DefaultPublisher {
-    private func execute(event: PublisherEvent) {
+    private func enqueue(event: PublisherEvent) {
         logger.trace("Received event: \(event)")
         performOnWorkingThread { [weak self] in
             switch event {
@@ -83,30 +83,30 @@ extension DefaultPublisher {
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
             let error =  AssetTrackingError.publisherError("For this preview version of the SDK, track() method may only be called once for any given instance of this class.")
-            execute(event: ErrorEvent(error: error, onError: event.onError))
+            enqueue(event: ErrorEvent(error: error, onError: event.onError))
             return
         }
 
         activeTrackable = event.trackable
         self.ablyService.track(trackable: event.trackable) { [weak self] error in
             if let error = error {
-                self?.execute(event: ErrorEvent(error: error, onError: event.onError))
+                self?.enqueue(event: ErrorEvent(error: error, onError: event.onError))
                 return
             }
-            self?.execute(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+            self?.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
         }
     }
 
     private func performTrackableReadyToTrack(_ event: TrackableReadyToTrackEvent) {
         locationService.startUpdatingLocation()
-        execute(event: SuccessEvent(onSuccess: event.onSuccess))
+        enqueue(event: SuccessEvent(onSuccess: event.onSuccess))
     }
 
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
         self.ablyService.sendEnhancedAssetLocation(location: event.location) { [weak self] error in
             if let error = error {
-                self?.execute(event: DelegateErrorEvent(error: error))
+                self?.enqueue(event: DelegateErrorEvent(error: error))
             }
         }
     }
@@ -114,7 +114,7 @@ extension DefaultPublisher {
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
         ablyService.sendRawAssetLocation(location: event.location) { [weak self] error in
             if let error = error {
-                self?.execute(event: DelegateErrorEvent(error: error))
+                self?.enqueue(event: DelegateErrorEvent(error: error))
             }
         }
     }
@@ -170,19 +170,19 @@ extension DefaultPublisher {
 extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: Error) {
         logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
-        execute(event: DelegateErrorEvent(error: error))
+        enqueue(event: DelegateErrorEvent(error: error))
     }
 
     func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
         logger.debug("locationService.didUpdateRawLocation.", source: "DefaultPublisher")
-        execute(event: RawLocationChangedEvent(location: location))
-        execute(event: DelegateRawLocationChangedEvent(location: location))
+        enqueue(event: RawLocationChangedEvent(location: location))
+        enqueue(event: DelegateRawLocationChangedEvent(location: location))
     }
 
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
-        execute(event: EnhancedLocationChangedEvent(location: location))
-        execute(event: DelegateEnhancedLocationChangedEvent(location: location))
+        enqueue(event: EnhancedLocationChangedEvent(location: location))
+        enqueue(event: DelegateEnhancedLocationChangedEvent(location: location))
     }
 }
 
@@ -190,6 +190,6 @@ extension DefaultPublisher: LocationServiceDelegate {
 extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
-        execute(event: DelegateConnectionStateChangedEvent(connectionState: state))
+        enqueue(event: DelegateConnectionStateChangedEvent(connectionState: state))
     }
 }
