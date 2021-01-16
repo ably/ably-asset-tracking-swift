@@ -1,7 +1,7 @@
 import UIKit
 import Logging
 
-let logger: Logger = Logger(label: "com.ably.asset-tracking.PublisherExample")
+let logger: Logger = Logger(label: "com.ably.tracking.PublisherExample")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

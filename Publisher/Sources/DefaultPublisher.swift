@@ -4,7 +4,7 @@ import Logging
 // swiftlint:disable cyclomatic_complexity
 
 // Default logger used in Publisher SDK
-let logger: Logger = Logger(label: "com.ably.asset-tracking.Publisher")
+let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
 class DefaultPublisher: Publisher {
     private let workingQueue: DispatchQueue
@@ -23,7 +23,7 @@ class DefaultPublisher: Publisher {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
-        self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher",
+        self.workingQueue = DispatchQueue(label: "io.ably.tracking.Publisher.DefaultPublisher",
                                           qos: .default)
         self.locationService = LocationService()
         self.ablyService = AblyPublisherService(configuration: connectionConfiguration)

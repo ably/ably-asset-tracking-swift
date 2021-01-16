@@ -3,7 +3,7 @@ import CoreLocation
 import Logging
 
 // Default logger used in Subscriber SDK
-let logger: Logger = Logger(label: "com.ably.asset-tracking.Subscriber")
+let logger: Logger = Logger(label: "com.ably.tracking.Subscriber")
 
 class DefaultSubscriber: Subscriber {
     private let logConfiguration: LogConfiguration
