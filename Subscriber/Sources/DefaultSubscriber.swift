@@ -44,8 +44,6 @@ extension DefaultSubscriber {
             switch event {
             case _ as StartEvent: self?.performStart()
             case _ as StopEvent: self?.performStop()
-            case let event as SuccessEvent: self?.handleSuccessEvent(event)
-            case let event as ErrorEvent: self?.handleErrorEvent(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStatusChangedEvent: self?.notifyDelegateConnectionStatusChanged(event)
             case let event as DelegateRawLocationReceivedEvent: self?.notifyDelegateRawLocationChanged(event)
@@ -53,6 +51,14 @@ extension DefaultSubscriber {
             default: preconditionFailure("Unhandled event in DefaultSubscriber: \(event) ")
             }
         }
+    }
+
+    private func callback(_ handler: @escaping SuccessHandler) {
+        performOnMainThread(handler)
+    }
+
+    private func callback(error: Error, handler: @escaping ErrorHandler) {
+        performOnMainThread { handler(error) }
     }
 
     // MARK: Start/Stop
@@ -74,14 +80,6 @@ extension DefaultSubscriber {
 
     private func performOnMainThread(_ operation: @escaping () -> Void) {
         DispatchQueue.main.async(execute: operation)
-    }
-
-    private func handleSuccessEvent(_ event: SuccessEvent) {
-        performOnMainThread(event.onSuccess)
-    }
-
-    private func handleErrorEvent(_ event: ErrorEvent) {
-        performOnMainThread { event.onError(event.error) }
     }
 
     // MARK: Delegate
