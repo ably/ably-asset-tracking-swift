@@ -65,12 +65,6 @@ extension DefaultPublisher {
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
             case let event as RawLocationChangedEvent: self?.performRawLocationChanged(event)
-
-            // Delegate events
-            case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
-            case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
-            case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)
-            case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -82,6 +76,23 @@ extension DefaultPublisher {
 
     private func callback(error: Error, handler: @escaping ErrorHandler) {
         performOnMainThread { handler(error) }
+    }
+
+    private func callback(event: DelegatePublisherEvent) {
+        logger.trace("Received delegate event: \(event)")
+        performOnMainThread { [weak self] in
+            guard let self = self,
+                  let delegate = self.delegate
+            else { return }
+
+            switch event {
+            case let event as DelegateErrorEvent: self.delegate?.publisher(sender: self, didFailWithError: event.error)
+            case let event as DelegateConnectionStateChangedEvent: self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+            case let event as DelegateRawLocationChangedEvent: self.delegate?.publisher(sender: self, didUpdateRawLocation: event.location)
+            case let event as DelegateEnhancedLocationChangedEvent: self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.location)
+            default: preconditionFailure("Unhandled delegate event in DefaultPublisher: \(event) ")
+            }
+        }
     }
 
     // MARK: Track
@@ -111,7 +122,7 @@ extension DefaultPublisher {
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
         self.ablyService.sendEnhancedAssetLocation(location: event.location) { [weak self] error in
             if let error = error {
-                self?.enqueue(event: DelegateErrorEvent(error: error))
+                self?.callback(event: DelegateErrorEvent(error: error))
             }
         }
     }
@@ -119,7 +130,7 @@ extension DefaultPublisher {
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
         ablyService.sendRawAssetLocation(location: event.location) { [weak self] error in
             if let error = error {
-                self?.enqueue(event: DelegateErrorEvent(error: error))
+                self?.callback(event: DelegateErrorEvent(error: error))
             }
         }
     }
@@ -132,54 +143,25 @@ extension DefaultPublisher {
     private func performOnMainThread(_ operation: @escaping () -> Void) {
         DispatchQueue.main.async(execute: operation)
     }
-
-    // MARK: Delegate
-    private func notifyDelegateDidFailWithError(_ error: Error) {
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didFailWithError: error)
-        }
-    }
-
-    private func notifyDelegateRawLocationChanged(_ event: DelegateRawLocationChangedEvent) {
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateRawLocation: event.location)
-        }
-    }
-
-    private func notifyDelegateEnhancedLocationChanged(_ event: DelegateEnhancedLocationChangedEvent) {
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.location)
-        }
-    }
-
-    private func notifyDelegateConnectionStateChanged(_ event: DelegateConnectionStateChangedEvent) {
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
-        }
-    }
 }
 
 // MARK: LocationServiceDelegate
 extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: Error) {
         logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
-        enqueue(event: DelegateErrorEvent(error: error))
+        callback(event: DelegateErrorEvent(error: error))
     }
 
     func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
         logger.debug("locationService.didUpdateRawLocation.", source: "DefaultPublisher")
         enqueue(event: RawLocationChangedEvent(location: location))
-        enqueue(event: DelegateRawLocationChangedEvent(location: location))
+        callback(event: DelegateRawLocationChangedEvent(location: location))
     }
 
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
         enqueue(event: EnhancedLocationChangedEvent(location: location))
-        enqueue(event: DelegateEnhancedLocationChangedEvent(location: location))
+        callback(event: DelegateEnhancedLocationChangedEvent(location: location))
     }
 }
 
@@ -187,6 +169,6 @@ extension DefaultPublisher: LocationServiceDelegate {
 extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
-        enqueue(event: DelegateConnectionStateChangedEvent(connectionState: state))
+        callback(event: DelegateConnectionStateChangedEvent(connectionState: state))
     }
 }
