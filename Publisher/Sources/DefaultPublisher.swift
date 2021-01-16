@@ -78,7 +78,7 @@ extension DefaultPublisher {
         performOnMainThread { handler(error) }
     }
 
-    private func callback(event: DelegatePublisherEvent) {
+    private func callback(event: PublisherDelegateEvent) {
         logger.trace("Received delegate event: \(event)")
         performOnMainThread { [weak self] in
             guard let self = self,
@@ -86,10 +86,10 @@ extension DefaultPublisher {
             else { return }
 
             switch event {
-            case let event as DelegateErrorEvent: self.delegate?.publisher(sender: self, didFailWithError: event.error)
-            case let event as DelegateConnectionStateChangedEvent: self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
-            case let event as DelegateRawLocationChangedEvent: self.delegate?.publisher(sender: self, didUpdateRawLocation: event.location)
-            case let event as DelegateEnhancedLocationChangedEvent: self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.location)
+            case let event as DelegateErrorEvent: delegate.publisher(sender: self, didFailWithError: event.error)
+            case let event as DelegateConnectionStateChangedEvent: delegate.publisher(sender: self, didChangeConnectionState: event.connectionState)
+            case let event as DelegateRawLocationChangedEvent: delegate.publisher(sender: self, didUpdateRawLocation: event.location)
+            case let event as DelegateEnhancedLocationChangedEvent: delegate.publisher(sender: self, didUpdateEnhancedLocation: event.location)
             default: preconditionFailure("Unhandled delegate event in DefaultPublisher: \(event) ")
             }
         }

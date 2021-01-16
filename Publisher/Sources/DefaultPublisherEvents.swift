@@ -22,20 +22,20 @@ struct EnhancedLocationChangedEvent: PublisherEvent {
 }
 
 // MARK: Delegate handling events
-protocol DelegatePublisherEvent {}
+protocol PublisherDelegateEvent {}
 
-struct DelegateErrorEvent: DelegatePublisherEvent {
+struct DelegateErrorEvent: PublisherDelegateEvent {
     let error: Error
 }
 
-struct DelegateRawLocationChangedEvent: DelegatePublisherEvent {
+struct DelegateRawLocationChangedEvent: PublisherDelegateEvent {
     let location: CLLocation
 }
 
-struct DelegateEnhancedLocationChangedEvent: DelegatePublisherEvent {
+struct DelegateEnhancedLocationChangedEvent: PublisherDelegateEvent {
     let location: CLLocation
 }
 
-struct DelegateConnectionStateChangedEvent: DelegatePublisherEvent {
+struct DelegateConnectionStateChangedEvent: PublisherDelegateEvent {
     let connectionState: ConnectionState
 }
