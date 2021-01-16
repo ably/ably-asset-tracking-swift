@@ -20,8 +20,7 @@ class DefaultSubscriber: Subscriber {
         self.trackingId = trackingId
         self.resolution = resolution
         self.logConfiguration = logConfiguration
-        self.workingQueue = DispatchQueue(label: "com.ably.asset-tracking.Subscriber.DefaultSubscriber",
-                                          qos: .default)
+        self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
 
         self.ablyService = AblySubscriberService(configuration: connectionConfiguration,
                                                  trackingId: trackingId)
@@ -29,17 +28,17 @@ class DefaultSubscriber: Subscriber {
     }
 
     func start() {
-        execute(event: StartEvent())
+        enqueue(event: StartEvent())
     }
 
     func stop() {
-        execute(event: StopEvent())
+        enqueue(event: StopEvent())
         ablyService.stop()
     }
 }
 
 extension DefaultSubscriber {
-    private func execute(event: SubscriberEvent) {
+    private func enqueue(event: SubscriberEvent) {
         logger.trace("Received event: \(event)")
         performOnWorkingThread { [weak self] in
             switch event {
@@ -55,11 +54,12 @@ extension DefaultSubscriber {
             }
         }
     }
+
     // MARK: Start/Stop
     private func performStart() {
         ablyService.start { [weak self] error in
             guard let error = error else { return }
-            self?.execute(event: DelegateErrorEvent(error: error))
+            self?.enqueue(event: DelegateErrorEvent(error: error))
         }
     }
 
@@ -117,21 +117,21 @@ extension DefaultSubscriber {
 extension DefaultSubscriber: AblySubscriberServiceDelegate {
     func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus) {
         logger.debug("subscriberService.didChangeAssetConnectionStatus. Status: \(status)", source: "DefaultSubscriber")
-        execute(event: DelegateConnectionStatusChangedEvent(status: status))
+        enqueue(event: DelegateConnectionStatusChangedEvent(status: status))
     }
 
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error) {
         logger.error("subscriberService.didFailWithError. Error: \(error)", source: "DefaultSubscriber")
-        execute(event: DelegateErrorEvent(error: error))
+        enqueue(event: DelegateErrorEvent(error: error))
     }
 
     func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation) {
         logger.debug("subscriberService.didReceiveRawLocation.", source: "DefaultSubscriber")
-        execute(event: DelegateRawLocationReceivedEvent(location: location))
+        enqueue(event: DelegateRawLocationReceivedEvent(location: location))
     }
 
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation) {
         logger.debug("subscriberService.didReceiveEnhancedLocation.", source: "DefaultSubscriber")
-        execute(event: DelegateEnhancedLocationReceivedEvent(location: location))
+        enqueue(event: DelegateEnhancedLocationReceivedEvent(location: location))
     }
 }
