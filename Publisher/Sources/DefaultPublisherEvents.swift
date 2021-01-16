@@ -2,15 +2,6 @@ import CoreLocation
 
 protocol PublisherEvent {}
 
-struct SuccessEvent: PublisherEvent {
-    let onSuccess: SuccessHandler
-}
-
-struct ErrorEvent: PublisherEvent {
-    let error: Error
-    let onError: ErrorHandler
-}
-
 struct DelegateErrorEvent: PublisherEvent {
     let error: Error
 }

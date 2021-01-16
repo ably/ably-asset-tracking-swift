@@ -1,7 +1,6 @@
 import UIKit
 import CoreLocation
 import Logging
-// swiftlint:disable cyclomatic_complexity
 
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
@@ -62,8 +61,6 @@ extension DefaultPublisher {
         logger.trace("Received event: \(event)")
         performOnWorkingThread { [weak self] in
             switch event {
-            case let event as SuccessEvent: self?.handleSuccessEvent(event)
-            case let event as ErrorEvent: self?.handleErrorEvent(event)
             case let event as TrackTrackableEvent:  self?.performTrackTrackableEvent(event)
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
@@ -79,18 +76,26 @@ extension DefaultPublisher {
         }
     }
 
+    private func callback(_ handler: @escaping SuccessHandler) {
+        performOnMainThread(handler)
+    }
+
+    private func callback(error: Error, handler: @escaping ErrorHandler) {
+        performOnMainThread { handler(error) }
+    }
+
     // MARK: Track
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
             let error =  AssetTrackingError.publisherError("For this preview version of the SDK, track() method may only be called once for any given instance of this class.")
-            enqueue(event: ErrorEvent(error: error, onError: event.onError))
+            callback(error: error, handler: event.onError)
             return
         }
 
         activeTrackable = event.trackable
         self.ablyService.track(trackable: event.trackable) { [weak self] error in
             if let error = error {
-                self?.enqueue(event: ErrorEvent(error: error, onError: event.onError))
+                self?.callback(error: error, handler: event.onError)
                 return
             }
             self?.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
@@ -99,7 +104,7 @@ extension DefaultPublisher {
 
     private func performTrackableReadyToTrack(_ event: TrackableReadyToTrackEvent) {
         locationService.startUpdatingLocation()
-        enqueue(event: SuccessEvent(onSuccess: event.onSuccess))
+        callback(event.onSuccess)
     }
 
     // MARK: Location change
@@ -126,14 +131,6 @@ extension DefaultPublisher {
 
     private func performOnMainThread(_ operation: @escaping () -> Void) {
         DispatchQueue.main.async(execute: operation)
-    }
-
-    private func handleSuccessEvent(_ event: SuccessEvent) {
-        performOnMainThread(event.onSuccess)
-    }
-
-    private func handleErrorEvent(_ event: ErrorEvent) {
-        performOnMainThread { event.onError(event.error) }
     }
 
     // MARK: Delegate
