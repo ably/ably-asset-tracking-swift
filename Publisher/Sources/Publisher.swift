@@ -82,8 +82,10 @@ public protocol Publisher {
      
      - Parameters:
         - trackable: The object to be added to this publisher's tracked set, if it's not already there.
+        - onSuccess: Called when the trackable is successfully added
+        - onError: Called when an error occurs
      */
-    func add(trackable: Trackable)
+    func add(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
 
     /**
      Removes a `Trackable` property if it is known to this publisher, otherwise does nothing and returns false.
@@ -92,10 +94,10 @@ public protocol Publisher {
      
      - Parameters:
         - trackable: The object to be removed from this publisher's tracked set, if it's there.
-     
-     - Returns: `true` if the object was known to this publisher, being that it was in the tracked set.
+        - onSuccess: Called when the removing was successful, wasPresent is true when the object was known to this publisher, being that it was in the tracked set.
+        - onError: Called when an error occurs
      */
-    func remove(trackable: Trackable) -> Bool
+    func remove(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler)
 
     /**
      The actively tracked object, being the `Trackable` object whose destination will be used for location

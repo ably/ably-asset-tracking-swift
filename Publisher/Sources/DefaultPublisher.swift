@@ -38,16 +38,15 @@ class DefaultPublisher: Publisher {
         enqueue(event: event)
     }
 
-    func add(trackable: Trackable) {
-        // TODO: Implement method
-        failWithNotYetImplemented()
-    }
+    func add(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
+         let event = AddTrackableEvent(trackable: trackable, onSuccess: onSuccess, onError: onError)
+        enqueue(event: event)
+     }
 
-    func remove(trackable: Trackable) -> Bool {
-        // TODO: Implement method
-        failWithNotYetImplemented()
-        return false
-    }
+    func remove(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler) {
+         let event = RemoveTrackableEvent(trackable: trackable, onSuccess: onSuccess, onError: onError)
+         enqueue(event: event)
+     }
 
     func stop() {
         // TODO: Implement method
@@ -65,6 +64,9 @@ extension DefaultPublisher {
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
             case let event as RawLocationChangedEvent: self?.performRawLocationChanged(event)
+            case let event as AddTrackableEvent: self?.performAddTrackableEvent(event)
+            case let event as RemoveTrackableEvent: self?.performRemoveTrackableEvent(event)
+            case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -118,6 +120,40 @@ extension DefaultPublisher {
         callback(event.onSuccess)
     }
 
+    // MARK: Add/Remove trackable
+    private func performAddTrackableEvent(_ event: AddTrackableEvent) {
+        self.ablyService.track(trackable: event.trackable) { [weak self] error in
+            if let error = error {
+                self?.callback(error: error, handler: event.onError)
+                return
+            }
+            self?.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+        }
+    }
+
+    private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
+        clearMetadataForRemovedTrackable(trackable: event.trackable)
+        self.ablyService.stopTracking(trackable: event.trackable) { [weak self] wasPresent in
+            wasPresent ?
+                self?.enqueue(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess)) :
+                self?.callback({ event.onSuccess(false) })
+        } onError: { [weak self] error in
+            self?.callback(error: error, handler: event.onError)
+        }
+    }
+
+    private func clearMetadataForRemovedTrackable(trackable: Trackable) {
+        // TODO: Implement method while working on the default resolution policy
+    }
+
+    private func performClearActiveTrackableEvent(_ event: ClearActiveTrackableEvent) {
+        if activeTrackable == event.trackable {
+            activeTrackable = nil
+            // TODO: Clear current destination in LocationService while working on route based map matching
+        }
+        callback { event.onSuccess(true) }
+    }
+
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
         self.ablyService.sendEnhancedAssetLocation(location: event.location) { [weak self] error in
@@ -167,6 +203,11 @@ extension DefaultPublisher: LocationServiceDelegate {
 
 // MARK: AblyPublisherServiceDelegate
 extension DefaultPublisher: AblyPublisherServiceDelegate {
+    func publisherService(sender: AblyPublisherService, didFailWithError error: Error) {
+        logger.error("publisherService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
+        callback(event: DelegateErrorEvent(error: error))
+    }
+
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
         callback(event: DelegateConnectionStateChangedEvent(connectionState: state))
