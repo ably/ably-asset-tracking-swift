@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1807958225A4AEAC0026F4C1 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1807958125A4AEAC0026F4C1 /* ResolutionConstraints.swift */; };
-		180795C325A4AF6F0026F4C1 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795C025A4AF6F0026F4C1 /* Accuracy.swift */; };
-		180795C425A4AF6F0026F4C1 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795C125A4AF6F0026F4C1 /* Resolution.swift */; };
-		180795C525A4AF6F0026F4C1 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795C225A4AF6F0026F4C1 /* ResolutionPolicy.swift */; };
-		180795DB25A4AFB40026F4C1 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795DA25A4AFB40026F4C1 /* Proximity.swift */; };
-		180795FA25A4B0020026F4C1 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795F925A4B0020026F4C1 /* TrackableResolutionRequest.swift */; };
 		180F6086258632360014B310 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F6084258632360014B310 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		180F61142586330C0014B310 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F6081258632360014B310 /* Core.framework */; };
 		180F6152258633C00014B310 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6140258633C00014B310 /* ConnectionConfiguration.swift */; };
@@ -30,6 +24,14 @@
 		180F615F258633C00014B310 /* EventName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6150258633C00014B310 /* EventName.swift */; };
 		180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6151258633C00014B310 /* AssetTrackingError.swift */; };
 		180F616C2586340D0014B310 /* GeoJSONMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F616B2586340D0014B310 /* GeoJSONMessageTests.swift */; };
+		18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */; };
+		18C7B1AB25B61349000A1418 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A525B61349000A1418 /* ResolutionPolicy.swift */; };
+		18C7B1AC25B61349000A1418 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A625B61349000A1418 /* TrackableResolutionRequest.swift */; };
+		18C7B1AD25B61349000A1418 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A725B61349000A1418 /* ResolutionConstraints.swift */; };
+		18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A825B61349000A1418 /* Proximity.swift */; };
+		18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A925B61349000A1418 /* Accuracy.swift */; };
+		18C7B1B025B61349000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1AA25B61349000A1418 /* Resolution.swift */; };
+		18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */; };
 		2B2E929B8D92D774D39CE786 /* Pods_asset_tracking_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */; };
 		45E464C268419CCC6EFE41C1 /* Pods_asset_tracking_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */; };
 /* End PBXBuildFile section */
@@ -46,12 +48,6 @@
 
 /* Begin PBXFileReference section */
 		0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_CoreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1807958125A4AEAC0026F4C1 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
-		180795C025A4AF6F0026F4C1 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
-		180795C125A4AF6F0026F4C1 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
-		180795C225A4AF6F0026F4C1 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
-		180795DA25A4AFB40026F4C1 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
-		180795F925A4B0020026F4C1 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
 		180F6081258632360014B310 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		180F6084258632360014B310 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		180F6085258632360014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +68,14 @@
 		180F6150258633C00014B310 /* EventName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
 		180F6151258633C00014B310 /* AssetTrackingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingError.swift; sourceTree = "<group>"; };
 		180F616B2586340D0014B310 /* GeoJSONMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONMessageTests.swift; sourceTree = "<group>"; };
+		1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PresenceData_CodableTests.swift; path = Tests/Sources/PresenceData_CodableTests.swift; sourceTree = SOURCE_ROOT; };
+		18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
+		18C7B1A525B61349000A1418 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
+		18C7B1A625B61349000A1418 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
+		18C7B1A725B61349000A1418 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
+		18C7B1A825B61349000A1418 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
+		18C7B1A925B61349000A1418 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
+		18C7B1AA25B61349000A1418 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
 		35A374438110A61B786B1EEE /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
 		58262A249E17B4E4FC6049FA /* Pods-asset_tracking-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-CoreTests/Pods-asset_tracking-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		69B3E7FEA13419A414562A29 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -104,19 +108,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1807957E25A4AE550026F4C1 /* ResolutionPolicy */ = {
-			isa = PBXGroup;
-			children = (
-				180795F925A4B0020026F4C1 /* TrackableResolutionRequest.swift */,
-				180795DA25A4AFB40026F4C1 /* Proximity.swift */,
-				180795C025A4AF6F0026F4C1 /* Accuracy.swift */,
-				180795C125A4AF6F0026F4C1 /* Resolution.swift */,
-				180795C225A4AF6F0026F4C1 /* ResolutionPolicy.swift */,
-				1807958125A4AEAC0026F4C1 /* ResolutionConstraints.swift */,
-			);
-			path = ResolutionPolicy;
-			sourceTree = "<group>";
-		};
 		180F6077258632360014B310 = {
 			isa = PBXGroup;
 			children = (
@@ -140,7 +131,7 @@
 		180F6083258632360014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1807957E25A4AE550026F4C1 /* ResolutionPolicy */,
+				18C7B1A425B61349000A1418 /* ResolutionPolicy */,
 				180F613F258633C00014B310 /* Configuration */,
 				180F6144258633C00014B310 /* Utils */,
 				180F6148258633C00014B310 /* Model */,
@@ -173,6 +164,7 @@
 		180F6144258633C00014B310 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */,
 				180F6145258633C00014B310 /* Decodable+FromJSONString.swift */,
 				180F6146258633C00014B310 /* Codable+EncodedString.swift */,
 				180F6147258633C00014B310 /* UnimplementedSupport.swift */,
@@ -214,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				180F616A2586340D0014B310 /* GeoJSON */,
+				1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -224,6 +217,19 @@
 				180F616B2586340D0014B310 /* GeoJSONMessageTests.swift */,
 			);
 			path = GeoJSON;
+			sourceTree = "<group>";
+		};
+		18C7B1A425B61349000A1418 /* ResolutionPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				18C7B1A525B61349000A1418 /* ResolutionPolicy.swift */,
+				18C7B1A625B61349000A1418 /* TrackableResolutionRequest.swift */,
+				18C7B1A725B61349000A1418 /* ResolutionConstraints.swift */,
+				18C7B1A825B61349000A1418 /* Proximity.swift */,
+				18C7B1A925B61349000A1418 /* Accuracy.swift */,
+				18C7B1AA25B61349000A1418 /* Resolution.swift */,
+			);
+			path = ResolutionPolicy;
 			sourceTree = "<group>";
 		};
 		54065136501DF471CE3B1D12 /* Pods */ = {
@@ -448,21 +454,22 @@
 				180F6158258633C00014B310 /* UnimplementedSupport.swift in Sources */,
 				180F6159258633C00014B310 /* GeoJSONMessage.swift in Sources */,
 				180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */,
+				18C7B1B025B61349000A1418 /* Resolution.swift in Sources */,
 				180F6154258633C00014B310 /* TransportationMode.swift in Sources */,
-				180795C325A4AF6F0026F4C1 /* Accuracy.swift in Sources */,
+				18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */,
 				180F615A258633C00014B310 /* GeoJSONGeometry.swift in Sources */,
-				180795FA25A4B0020026F4C1 /* TrackableResolutionRequest.swift in Sources */,
+				18C7B1AB25B61349000A1418 /* ResolutionPolicy.swift in Sources */,
 				180F6152258633C00014B310 /* ConnectionConfiguration.swift in Sources */,
 				180F615F258633C00014B310 /* EventName.swift in Sources */,
 				180F6157258633C00014B310 /* Codable+EncodedString.swift in Sources */,
-				180795C425A4AF6F0026F4C1 /* Resolution.swift in Sources */,
 				180F6153258633C00014B310 /* Trackable.swift in Sources */,
+				18C7B1AD25B61349000A1418 /* ResolutionConstraints.swift in Sources */,
 				180F615C258633C00014B310 /* GeoJSONType.swift in Sources */,
-				1807958225A4AEAC0026F4C1 /* ResolutionConstraints.swift in Sources */,
-				180795C525A4AF6F0026F4C1 /* ResolutionPolicy.swift in Sources */,
+				18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */,
+				18C7B1AC25B61349000A1418 /* TrackableResolutionRequest.swift in Sources */,
 				180F6156258633C00014B310 /* Decodable+FromJSONString.swift in Sources */,
 				180F615E258633C00014B310 /* PresenceData.swift in Sources */,
-				180795DB25A4AFB40026F4C1 /* Proximity.swift in Sources */,
+				18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */,
 				180F615B258633C00014B310 /* GeoJSONProperties.swift in Sources */,
 				180F6155258633C00014B310 /* LogConfiguration.swift in Sources */,
 			);
@@ -473,6 +480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				180F616C2586340D0014B310 /* GeoJSONMessageTests.swift in Sources */,
+				18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,7 +633,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.Core";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.Core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -650,7 +658,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.Core";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.Core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
