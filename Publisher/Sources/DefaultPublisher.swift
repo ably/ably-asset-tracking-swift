@@ -175,7 +175,7 @@ extension DefaultPublisher {
     private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
         routeProvider.changeRoutingProfile(to: routingProfile,
                                            onSuccess: { [weak self] route in
-                                            routingProfile = event.profile
+                                            self?.routingProfile = event.profile
                                             self?.execute(event: SetDestinationSuccessEvent(route: route))
                                             event.onSuccess()
                                            }, onError: { error in
