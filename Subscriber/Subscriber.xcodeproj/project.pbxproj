@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180375212599E8AA001387BA /* SubscriberEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180375202599E8AA001387BA /* SubscriberEvent.swift */; };
 		180F60BE258632750014B310 /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F60B0258632740014B310 /* Subscriber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		180F61322586332B0014B310 /* SubscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61312586332B0014B310 /* SubscriberTests.swift */; };
 		180F61342586332B0014B310 /* Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F60AD258632740014B310 /* Subscriber.framework */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		0552628DD6ED2E541A84E89A /* Pods-asset_tracking-SubscriberTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberTests.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests.release.xcconfig"; sourceTree = "<group>"; };
+		180375202599E8AA001387BA /* SubscriberEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberEvent.swift; sourceTree = "<group>"; };
 		180F60AD258632740014B310 /* Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		180F60B0258632740014B310 /* Subscriber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Subscriber.h; sourceTree = "<group>"; };
 		180F60B1258632740014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,9 +133,10 @@
 			children = (
 				18FCE1F0258B8321005BC480 /* Common */,
 				180F617E258634290014B310 /* Services */,
-				185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */,
 				185094D725889E9E00E2D2E2 /* Subscriber.swift */,
 				180F6180258634290014B310 /* SubscriberBuilder.swift */,
+				180375202599E8AA001387BA /* SubscriberEvent.swift */,
+				185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */,
 				180F617D258634290014B310 /* DefaultSubscriber.swift */,
 				180F60B0258632740014B310 /* Subscriber.h */,
 				180F60B1258632740014B310 /* Info.plist */,
@@ -451,6 +454,7 @@
 				180F6184258634290014B310 /* SubscriberBuilder.swift in Sources */,
 				18FCE206258B8336005BC480 /* LogConfiguration.swift in Sources */,
 				18FCE203258B8336005BC480 /* ConnectionConfiguration.swift in Sources */,
+				180375212599E8AA001387BA /* SubscriberEvent.swift in Sources */,
 				180F6182258634290014B310 /* DefaultSubscriber.swift in Sources */,
 				18FCE20F258B8336005BC480 /* Codable+EncodedString.swift in Sources */,
 				185094DA25889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift in Sources */,
