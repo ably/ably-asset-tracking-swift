@@ -24,8 +24,8 @@
 		180F615F258633C00014B310 /* EventName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6150258633C00014B310 /* EventName.swift */; };
 		180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6151258633C00014B310 /* AssetTrackingError.swift */; };
 		180F616C2586340D0014B310 /* GeoJSONMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F616B2586340D0014B310 /* GeoJSONMessageTests.swift */; };
-		1885CB5B25B5A27C000D8CAA /* PresenceData_CodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */; };
 		18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */; };
+		18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */; };
 		2B2E929B8D92D774D39CE786 /* Pods_asset_tracking_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */; };
 		45E464C268419CCC6EFE41C1 /* Pods_asset_tracking_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */; };
 /* End PBXBuildFile section */
@@ -430,7 +430,6 @@
 				180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */,
 				180F6154258633C00014B310 /* TransportationMode.swift in Sources */,
 				180F615A258633C00014B310 /* GeoJSONGeometry.swift in Sources */,
-				1885CB5B25B5A27C000D8CAA /* PresenceData_CodableTests.swift in Sources */,
 				180F6152258633C00014B310 /* ConnectionConfiguration.swift in Sources */,
 				180F615F258633C00014B310 /* EventName.swift in Sources */,
 				180F6157258633C00014B310 /* Codable+EncodedString.swift in Sources */,
@@ -449,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				180F616C2586340D0014B310 /* GeoJSONMessageTests.swift in Sources */,
+				18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
