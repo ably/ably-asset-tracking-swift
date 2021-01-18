@@ -94,6 +94,10 @@ struct DelegateConnectionStateChangedEvent: PublisherEvent {
     let connectionState: ConnectionState
 }
 
+struct DelegateResolutionUpdateEvent: PublisherEvent {
+    let resolution: Resolution
+}
+
 struct DelegatePresenceUpdateEvent: PublisherEvent {
     let trackable: Trackable
     let presence: AblyPublisherPresence

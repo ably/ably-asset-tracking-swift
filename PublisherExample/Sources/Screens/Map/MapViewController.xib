@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="connectionStatusLabel" destination="G8H-ht-TKp" id="fgz-RG-mfa"/>
                 <outlet property="mapView" destination="kC3-Gn-KHW" id="hvp-Ya-370"/>
+                <outlet property="resolutionLabel" destination="2y7-9T-Juh" id="juI-5K-lya"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="kC3-Gn-KHW">
-                    <rect key="frame" x="0.0" y="86" width="414" height="776"/>
+                    <rect key="frame" x="0.0" y="166" width="414" height="696"/>
                 </mapView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connection status: Offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8H-ht-TKp">
                     <rect key="frame" x="16" y="56" width="168.5" height="17"/>
@@ -37,6 +38,30 @@
                         <constraint firstAttribute="height" constant="1" id="J6W-Tn-4ip"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2y7-9T-Juh">
+                    <rect key="frame" x="16" y="98" width="382" height="56"/>
+                    <attributedString key="attributedText">
+                        <fragment>
+                            <string key="content">Resolution:
+Accuracy: Medium
+Minimum displacement: 1000
+Desired interval: 1000</string>
+                            <attributes>
+                                <color key="NSBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <font key="NSFont" size="12" name="Menlo-Regular"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="29.649999999999999" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                    <tabStops>
+                                        <textTab alignment="left" location="29.649999618530273">
+                                            <options/>
+                                        </textTab>
+                                    </tabStops>
+                                </paragraphStyle>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -46,10 +71,13 @@
                 <constraint firstItem="kC3-Gn-KHW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="D4E-oL-Ktz"/>
                 <constraint firstItem="nUN-Jb-1CU" firstAttribute="top" secondItem="G8H-ht-TKp" secondAttribute="bottom" constant="12" id="JUd-vW-grX"/>
                 <constraint firstItem="G8H-ht-TKp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="LLu-7s-WJA"/>
+                <constraint firstItem="kC3-Gn-KHW" firstAttribute="top" secondItem="2y7-9T-Juh" secondAttribute="bottom" constant="12" id="SIL-Ra-SNu"/>
                 <constraint firstItem="nUN-Jb-1CU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="b7A-WD-AcU"/>
+                <constraint firstItem="2y7-9T-Juh" firstAttribute="top" secondItem="nUN-Jb-1CU" secondAttribute="bottom" constant="12" id="fBx-vA-MRb"/>
                 <constraint firstItem="nUN-Jb-1CU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gDa-zr-SVK"/>
+                <constraint firstItem="2y7-9T-Juh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="q9g-qD-B8H"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kC3-Gn-KHW" secondAttribute="trailing" id="qfA-oE-wwQ"/>
-                <constraint firstItem="kC3-Gn-KHW" firstAttribute="top" secondItem="nUN-Jb-1CU" secondAttribute="bottom" id="ttt-ZR-qYk"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2y7-9T-Juh" secondAttribute="trailing" constant="16" id="zBa-cE-9ex"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="99.776785714285708"/>
         </view>
