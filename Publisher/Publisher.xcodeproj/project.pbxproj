@@ -26,6 +26,8 @@
 		185D6D2D258F65F000935049 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D2C258F65F000935049 /* Subscriber.swift */; };
 		185D6D33258F684E00935049 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D32258F684E00935049 /* Proximity.swift */; };
 		185D6D372590849500935049 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D362590849500935049 /* Accuracy.swift */; };
+		18A4C1CD25B2E0780092CC70 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C1CC25B2E0780092CC70 /* ResultHandler.swift */; };
+		18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
 		18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D1258B8264005BC480 /* TransportationMode.swift */; };
@@ -79,6 +81,8 @@
 		185D6D2C258F65F000935049 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		185D6D32258F684E00935049 /* Proximity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
 		185D6D362590849500935049 /* Accuracy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
+		18A4C1CC25B2E0780092CC70 /* ResultHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
+		18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherEvents.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
 		18FCE1D1258B8264005BC480 /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
@@ -152,9 +156,10 @@
 				185094E325889ED200E2D2E2 /* Model */,
 				180F61732586341E0014B310 /* Services */,
 				185D6D13258F55F800935049 /* Resolution Policy */,
-				180F61702586341E0014B310 /* PublisherBuilder.swift */,
-				180F61712586341E0014B310 /* DefaultPublisher.swift */,
 				185094DD25889EBB00E2D2E2 /* Publisher.swift */,
+				180F61712586341E0014B310 /* DefaultPublisher.swift */,
+				18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */,
+				180F61702586341E0014B310 /* PublisherBuilder.swift */,
 				185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */,
 				180F609A258632510014B310 /* Publisher.h */,
 				180F609B258632510014B310 /* Info.plist */,
@@ -252,6 +257,7 @@
 		18FCE1DC258B8264005BC480 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18A4C1CC25B2E0780092CC70 /* ResultHandler.swift */,
 				18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */,
 				18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */,
 				18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */,
@@ -491,7 +497,9 @@
 				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
 				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
+				18A4C1CD25B2E0780092CC70 /* ResultHandler.swift in Sources */,
 				180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */,
+				18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */,
 				18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
 				185D6D33258F684E00935049 /* Proximity.swift in Sources */,
@@ -670,7 +678,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.Publisher";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.Publisher;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -695,7 +703,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.Publisher";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.Publisher;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;

@@ -1,0 +1,41 @@
+import CoreLocation
+
+protocol PublisherEvent {}
+
+struct TrackTrackableEvent: PublisherEvent {
+    let trackable: Trackable
+    let onSuccess: SuccessHandler
+    let onError: ErrorHandler
+}
+
+struct TrackableReadyToTrackEvent: PublisherEvent {
+    let trackable: Trackable
+    let onSuccess: SuccessHandler
+}
+
+struct RawLocationChangedEvent: PublisherEvent {
+    let location: CLLocation
+}
+
+struct EnhancedLocationChangedEvent: PublisherEvent {
+    let location: CLLocation
+}
+
+// MARK: Delegate handling events
+protocol PublisherDelegateEvent {}
+
+struct DelegateErrorEvent: PublisherDelegateEvent {
+    let error: Error
+}
+
+struct DelegateRawLocationChangedEvent: PublisherDelegateEvent {
+    let location: CLLocation
+}
+
+struct DelegateEnhancedLocationChangedEvent: PublisherDelegateEvent {
+    let location: CLLocation
+}
+
+struct DelegateConnectionStateChangedEvent: PublisherDelegateEvent {
+    let connectionState: ConnectionState
+}

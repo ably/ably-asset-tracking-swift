@@ -70,8 +70,10 @@ public protocol Publisher {
      
      - Parameters:
         - trackable The object to be added to this publisher's tracked set, if it's not already there, and to be made the actively tracked object.
+        - onSuccess: Called when the trackable is successfully added and make the actively tracked object
+        - onError: Called when an error occurs
      */
-    func track(trackable: Trackable)
+    func track(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
 
     /**
      Adds a `Trackable` object, but does not make it the actively tracked object, meaning that the state of the

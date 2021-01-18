@@ -15,6 +15,7 @@
 		180F6184258634290014B310 /* SubscriberBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6180258634290014B310 /* SubscriberBuilder.swift */; };
 		185094D925889E9E00E2D2E2 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094D725889E9E00E2D2E2 /* Subscriber.swift */; };
 		185094DA25889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */; };
+		18A4C1D325B2E2880092CC70 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C1D225B2E2880092CC70 /* ResultHandler.swift */; };
 		18FCE203258B8336005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F2258B8336005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE204258B8336005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F3258B8336005BC480 /* Trackable.swift */; };
 		18FCE205258B8336005BC480 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1F4258B8336005BC480 /* TransportationMode.swift */; };
@@ -58,6 +59,7 @@
 		184E87F225878906000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094D725889E9E00E2D2E2 /* Subscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberBuilder.swift; sourceTree = "<group>"; };
+		18A4C1D225B2E2880092CC70 /* ResultHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
 		18FCE1F2258B8336005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1F3258B8336005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
 		18FCE1F4258B8336005BC480 /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 		18FCE1FF258B8336005BC480 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18A4C1D225B2E2880092CC70 /* ResultHandler.swift */,
 				18FCE200258B8336005BC480 /* Decodable+FromJSONString.swift */,
 				18FCE201258B8336005BC480 /* Codable+EncodedString.swift */,
 				18FCE202258B8336005BC480 /* UnimplementedSupport.swift */,
@@ -444,6 +447,7 @@
 				18FCE209258B8336005BC480 /* GeoJSONProperties.swift in Sources */,
 				18FCE210258B8336005BC480 /* UnimplementedSupport.swift in Sources */,
 				18FCE20B258B8336005BC480 /* PresenceData.swift in Sources */,
+				18A4C1D325B2E2880092CC70 /* ResultHandler.swift in Sources */,
 				180F6184258634290014B310 /* SubscriberBuilder.swift in Sources */,
 				18FCE206258B8336005BC480 /* LogConfiguration.swift in Sources */,
 				18FCE203258B8336005BC480 /* ConnectionConfiguration.swift in Sources */,
@@ -612,7 +616,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.Subscriber";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.Subscriber;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -637,7 +641,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.Subscriber";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.Subscriber;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
