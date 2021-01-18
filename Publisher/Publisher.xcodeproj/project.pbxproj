@@ -25,12 +25,6 @@
 		18C7B11525B60D89000A1418 /* DefaultPublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10C25B60D75000A1418 /* DefaultPublisherTests.swift */; };
 		18C7B11A25B60D8E000A1418 /* MockAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10E25B60D75000A1418 /* MockAblyPublisherService.swift */; };
 		18C7B11B25B60D8E000A1418 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10F25B60D75000A1418 /* MockLocationService.swift */; };
-		18C7B14825B60EA0000A1418 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B14225B60EA0000A1418 /* ResolutionPolicy.swift */; };
-		18C7B14925B60EA0000A1418 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B14325B60EA0000A1418 /* TrackableResolutionRequest.swift */; };
-		18C7B14A25B60EA0000A1418 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B14425B60EA0000A1418 /* ResolutionConstraints.swift */; };
-		18C7B14B25B60EA0000A1418 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B14525B60EA0000A1418 /* Proximity.swift */; };
-		18C7B14C25B60EA0000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B14625B60EA0000A1418 /* Accuracy.swift */; };
-		18C7B14D25B60EA0000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B14725B60EA0000A1418 /* Resolution.swift */; };
 		18C7B15C25B6109E000A1418 /* DefaultResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15325B6109E000A1418 /* DefaultResolutionPolicyMethods.swift */; };
 		18C7B15D25B6109E000A1418 /* DefaultProximityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15425B6109E000A1418 /* DefaultProximityHandler.swift */; };
 		18C7B15E25B6109E000A1418 /* DefaultSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15525B6109E000A1418 /* DefaultSubscriberSetListener.swift */; };
@@ -50,6 +44,12 @@
 		18C7B18325B611E4000A1418 /* MockResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17C25B611E4000A1418 /* MockResolutionPolicyMethods.swift */; };
 		18C7B18425B611E4000A1418 /* MockResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17D25B611E4000A1418 /* MockResolutionPolicyFactory.swift */; };
 		18C7B18525B611E4000A1418 /* MockTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17E25B611E4000A1418 /* MockTrackableSetListener.swift */; };
+		18C7B1BC25B6135A000A1418 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1B625B6135A000A1418 /* ResolutionPolicy.swift */; };
+		18C7B1BD25B6135A000A1418 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1B725B6135A000A1418 /* TrackableResolutionRequest.swift */; };
+		18C7B1BE25B6135A000A1418 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1B825B6135A000A1418 /* ResolutionConstraints.swift */; };
+		18C7B1BF25B6135A000A1418 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1B925B6135A000A1418 /* Proximity.swift */; };
+		18C7B1C025B6135A000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1BA25B6135A000A1418 /* Accuracy.swift */; };
+		18C7B1C125B6135A000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1BB25B6135A000A1418 /* Resolution.swift */; };
 		18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
@@ -103,12 +103,6 @@
 		18C7B10C25B60D75000A1418 /* DefaultPublisherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherTests.swift; sourceTree = "<group>"; };
 		18C7B10E25B60D75000A1418 /* MockAblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAblyPublisherService.swift; sourceTree = "<group>"; };
 		18C7B10F25B60D75000A1418 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
-		18C7B14225B60EA0000A1418 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
-		18C7B14325B60EA0000A1418 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
-		18C7B14425B60EA0000A1418 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
-		18C7B14525B60EA0000A1418 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
-		18C7B14625B60EA0000A1418 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
-		18C7B14725B60EA0000A1418 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
 		18C7B15325B6109E000A1418 /* DefaultResolutionPolicyMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyMethods.swift; sourceTree = "<group>"; };
 		18C7B15425B6109E000A1418 /* DefaultProximityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultProximityHandler.swift; sourceTree = "<group>"; };
 		18C7B15525B6109E000A1418 /* DefaultSubscriberSetListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberSetListener.swift; sourceTree = "<group>"; };
@@ -128,6 +122,12 @@
 		18C7B17C25B611E4000A1418 /* MockResolutionPolicyMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyMethods.swift; sourceTree = "<group>"; };
 		18C7B17D25B611E4000A1418 /* MockResolutionPolicyFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyFactory.swift; sourceTree = "<group>"; };
 		18C7B17E25B611E4000A1418 /* MockTrackableSetListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTrackableSetListener.swift; sourceTree = "<group>"; };
+		18C7B1B625B6135A000A1418 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
+		18C7B1B725B6135A000A1418 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
+		18C7B1B825B6135A000A1418 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
+		18C7B1B925B6135A000A1418 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
+		18C7B1BA25B6135A000A1418 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
+		18C7B1BB25B6135A000A1418 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
 		18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherEvents.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
@@ -280,19 +280,6 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
-		18C7B14125B60EA0000A1418 /* ResolutionPolicy */ = {
-			isa = PBXGroup;
-			children = (
-				18C7B14225B60EA0000A1418 /* ResolutionPolicy.swift */,
-				18C7B14325B60EA0000A1418 /* TrackableResolutionRequest.swift */,
-				18C7B14425B60EA0000A1418 /* ResolutionConstraints.swift */,
-				18C7B14525B60EA0000A1418 /* Proximity.swift */,
-				18C7B14625B60EA0000A1418 /* Accuracy.swift */,
-				18C7B14725B60EA0000A1418 /* Resolution.swift */,
-			);
-			path = ResolutionPolicy;
-			sourceTree = "<group>";
-		};
 		18C7B15225B6109E000A1418 /* DefaultResolutionPolicy */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,10 +304,24 @@
 			path = DefaultResolutionPolicy;
 			sourceTree = "<group>";
 		};
+		18C7B1B525B6135A000A1418 /* ResolutionPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				18C7B1B625B6135A000A1418 /* ResolutionPolicy.swift */,
+				18C7B1B725B6135A000A1418 /* TrackableResolutionRequest.swift */,
+				18C7B1B825B6135A000A1418 /* ResolutionConstraints.swift */,
+				18C7B1B925B6135A000A1418 /* Proximity.swift */,
+				18C7B1BA25B6135A000A1418 /* Accuracy.swift */,
+				18C7B1BB25B6135A000A1418 /* Resolution.swift */,
+			);
+			name = ResolutionPolicy;
+			path = ../../Core/Sources/ResolutionPolicy;
+			sourceTree = "<group>";
+		};
 		18FCE195258B7FBB005BC480 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				18C7B14125B60EA0000A1418 /* ResolutionPolicy */,
+				18C7B1B525B6135A000A1418 /* ResolutionPolicy */,
 				18FCE1CE258B8264005BC480 /* Configuration */,
 				18FCE1D3258B8264005BC480 /* Model */,
 				18FCE1DC258B8264005BC480 /* Utils */,
@@ -603,15 +604,14 @@
 				18C7B15D25B6109E000A1418 /* DefaultProximityHandler.swift in Sources */,
 				185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */,
 				185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */,
-				18C7B14925B60EA0000A1418 /* TrackableResolutionRequest.swift in Sources */,
 				18C7B16A25B61131000A1418 /* AblyPublisherPresence.swift in Sources */,
 				18C7B16325B6109E000A1418 /* DefaultResolutionPolicy.swift in Sources */,
 				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
 				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
-				18C7B14D25B60EA0000A1418 /* Resolution.swift in Sources */,
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
 				18A4C1CD25B2E0780092CC70 /* ResultHandler.swift in Sources */,
 				18C7B10725B60D5F000A1418 /* DefaultLocationService.swift in Sources */,
+				18C7B1C125B6135A000A1418 /* Resolution.swift in Sources */,
 				180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */,
 				18C7B15C25B6109E000A1418 /* DefaultResolutionPolicyMethods.swift in Sources */,
 				18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */,
@@ -619,26 +619,27 @@
 				18C7B15F25B6109E000A1418 /* DefaultTrackableSetListener.swift in Sources */,
 				18C7B16025B6109E000A1418 /* DefaultResolutionPolicyFactory.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
-				18C7B14C25B60EA0000A1418 /* Accuracy.swift in Sources */,
+				18C7B1BC25B6135A000A1418 /* ResolutionPolicy.swift in Sources */,
 				18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */,
 				185D6D1B258F573300935049 /* ResolutionPolicyFactory.swift in Sources */,
 				183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */,
+				18C7B1BD25B6135A000A1418 /* TrackableResolutionRequest.swift in Sources */,
 				185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */,
 				18C7B16425B6109E000A1418 /* BatteryLevelProvider.swift in Sources */,
+				18C7B1BF25B6135A000A1418 /* Proximity.swift in Sources */,
 				18FCE1E6258B8264005BC480 /* GeoJSONProperties.swift in Sources */,
-				18C7B14825B60EA0000A1418 /* ResolutionPolicy.swift in Sources */,
 				180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */,
-				18C7B14A25B60EA0000A1418 /* ResolutionConstraints.swift in Sources */,
 				18C7B16225B6109E000A1418 /* ThresholdChecker.swift in Sources */,
 				18FCE1E5258B8264005BC480 /* GeoJSONGeometry.swift in Sources */,
 				18C7B15E25B6109E000A1418 /* DefaultSubscriberSetListener.swift in Sources */,
 				18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */,
 				180F617A2586341E0014B310 /* LocationService.swift in Sources */,
 				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,
+				18C7B1C025B6135A000A1418 /* Accuracy.swift in Sources */,
+				18C7B1BE25B6135A000A1418 /* ResolutionConstraints.swift in Sources */,
 				18FCE1E7258B8264005BC480 /* GeoJSONType.swift in Sources */,
 				180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */,
 				18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */,
-				18C7B14B25B60EA0000A1418 /* Proximity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

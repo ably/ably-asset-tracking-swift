@@ -25,12 +25,12 @@
 		180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6151258633C00014B310 /* AssetTrackingError.swift */; };
 		180F616C2586340D0014B310 /* GeoJSONMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F616B2586340D0014B310 /* GeoJSONMessageTests.swift */; };
 		18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */; };
-		18C7B13725B60E48000A1418 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B13125B60E48000A1418 /* ResolutionPolicy.swift */; };
-		18C7B13825B60E48000A1418 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B13225B60E48000A1418 /* TrackableResolutionRequest.swift */; };
-		18C7B13925B60E48000A1418 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B13325B60E48000A1418 /* ResolutionConstraints.swift */; };
-		18C7B13A25B60E48000A1418 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B13425B60E48000A1418 /* Proximity.swift */; };
-		18C7B13B25B60E48000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B13525B60E48000A1418 /* Accuracy.swift */; };
-		18C7B13C25B60E48000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B13625B60E48000A1418 /* Resolution.swift */; };
+		18C7B1AB25B61349000A1418 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A525B61349000A1418 /* ResolutionPolicy.swift */; };
+		18C7B1AC25B61349000A1418 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A625B61349000A1418 /* TrackableResolutionRequest.swift */; };
+		18C7B1AD25B61349000A1418 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A725B61349000A1418 /* ResolutionConstraints.swift */; };
+		18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A825B61349000A1418 /* Proximity.swift */; };
+		18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A925B61349000A1418 /* Accuracy.swift */; };
+		18C7B1B025B61349000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1AA25B61349000A1418 /* Resolution.swift */; };
 		18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */; };
 		2B2E929B8D92D774D39CE786 /* Pods_asset_tracking_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */; };
 		45E464C268419CCC6EFE41C1 /* Pods_asset_tracking_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */; };
@@ -70,12 +70,12 @@
 		180F616B2586340D0014B310 /* GeoJSONMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONMessageTests.swift; sourceTree = "<group>"; };
 		1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PresenceData_CodableTests.swift; path = Tests/Sources/PresenceData_CodableTests.swift; sourceTree = SOURCE_ROOT; };
 		18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
-		18C7B13125B60E48000A1418 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
-		18C7B13225B60E48000A1418 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
-		18C7B13325B60E48000A1418 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
-		18C7B13425B60E48000A1418 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
-		18C7B13525B60E48000A1418 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
-		18C7B13625B60E48000A1418 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
+		18C7B1A525B61349000A1418 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
+		18C7B1A625B61349000A1418 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
+		18C7B1A725B61349000A1418 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
+		18C7B1A825B61349000A1418 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
+		18C7B1A925B61349000A1418 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
+		18C7B1AA25B61349000A1418 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
 		35A374438110A61B786B1EEE /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
 		58262A249E17B4E4FC6049FA /* Pods-asset_tracking-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-CoreTests/Pods-asset_tracking-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		69B3E7FEA13419A414562A29 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 		180F6083258632360014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				18C7B13025B60E48000A1418 /* ResolutionPolicy */,
+				18C7B1A425B61349000A1418 /* ResolutionPolicy */,
 				180F613F258633C00014B310 /* Configuration */,
 				180F6144258633C00014B310 /* Utils */,
 				180F6148258633C00014B310 /* Model */,
@@ -219,15 +219,15 @@
 			path = GeoJSON;
 			sourceTree = "<group>";
 		};
-		18C7B13025B60E48000A1418 /* ResolutionPolicy */ = {
+		18C7B1A425B61349000A1418 /* ResolutionPolicy */ = {
 			isa = PBXGroup;
 			children = (
-				18C7B13125B60E48000A1418 /* ResolutionPolicy.swift */,
-				18C7B13225B60E48000A1418 /* TrackableResolutionRequest.swift */,
-				18C7B13325B60E48000A1418 /* ResolutionConstraints.swift */,
-				18C7B13425B60E48000A1418 /* Proximity.swift */,
-				18C7B13525B60E48000A1418 /* Accuracy.swift */,
-				18C7B13625B60E48000A1418 /* Resolution.swift */,
+				18C7B1A525B61349000A1418 /* ResolutionPolicy.swift */,
+				18C7B1A625B61349000A1418 /* TrackableResolutionRequest.swift */,
+				18C7B1A725B61349000A1418 /* ResolutionConstraints.swift */,
+				18C7B1A825B61349000A1418 /* Proximity.swift */,
+				18C7B1A925B61349000A1418 /* Accuracy.swift */,
+				18C7B1AA25B61349000A1418 /* Resolution.swift */,
 			);
 			path = ResolutionPolicy;
 			sourceTree = "<group>";
@@ -454,22 +454,22 @@
 				180F6158258633C00014B310 /* UnimplementedSupport.swift in Sources */,
 				180F6159258633C00014B310 /* GeoJSONMessage.swift in Sources */,
 				180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */,
-				18C7B13C25B60E48000A1418 /* Resolution.swift in Sources */,
+				18C7B1B025B61349000A1418 /* Resolution.swift in Sources */,
 				180F6154258633C00014B310 /* TransportationMode.swift in Sources */,
-				18C7B13B25B60E48000A1418 /* Accuracy.swift in Sources */,
+				18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */,
 				180F615A258633C00014B310 /* GeoJSONGeometry.swift in Sources */,
-				18C7B13725B60E48000A1418 /* ResolutionPolicy.swift in Sources */,
+				18C7B1AB25B61349000A1418 /* ResolutionPolicy.swift in Sources */,
 				180F6152258633C00014B310 /* ConnectionConfiguration.swift in Sources */,
 				180F615F258633C00014B310 /* EventName.swift in Sources */,
 				180F6157258633C00014B310 /* Codable+EncodedString.swift in Sources */,
 				180F6153258633C00014B310 /* Trackable.swift in Sources */,
-				18C7B13925B60E48000A1418 /* ResolutionConstraints.swift in Sources */,
+				18C7B1AD25B61349000A1418 /* ResolutionConstraints.swift in Sources */,
 				180F615C258633C00014B310 /* GeoJSONType.swift in Sources */,
 				18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */,
-				18C7B13825B60E48000A1418 /* TrackableResolutionRequest.swift in Sources */,
+				18C7B1AC25B61349000A1418 /* TrackableResolutionRequest.swift in Sources */,
 				180F6156258633C00014B310 /* Decodable+FromJSONString.swift in Sources */,
 				180F615E258633C00014B310 /* PresenceData.swift in Sources */,
-				18C7B13A25B60E48000A1418 /* Proximity.swift in Sources */,
+				18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */,
 				180F615B258633C00014B310 /* GeoJSONProperties.swift in Sources */,
 				180F6155258633C00014B310 /* LogConfiguration.swift in Sources */,
 			);
