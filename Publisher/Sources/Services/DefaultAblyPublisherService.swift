@@ -24,7 +24,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
             guard let current = stateChange?.current,
                   let self = self
             else { return }
-            logger.debug("Connection to Ably changed. New state: \(current)", source: "AblyPublisherService")
+            logger.debug("Connection to Ably changed. New state: \(current)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(
                 sender: self,
                 didChangeConnectionState: current.toConnectionState()
@@ -55,7 +55,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channel.presence.enterClient(configuration.clientId, data: data) { error in
             error == nil ?
                 logger.debug("Entered to presence successfully", source: "AblyPublisherService") :
-                logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
+                logger.error("Error during joining to channel presence: \(String(describing: error))", source: "DefaultAblyPublisherService")
             completion?(error)
         }
         channels[trackable] = channel

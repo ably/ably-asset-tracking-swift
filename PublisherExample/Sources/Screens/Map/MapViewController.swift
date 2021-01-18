@@ -44,7 +44,12 @@ class MapViewController: UIViewController {
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .start()
 
-        publisher?.track(trackable: Trackable(id: trackingId), onSuccess: {  }, onError: { _ in })
+        publisher?.track(trackable: Trackable(id: trackingId),
+                         onSuccess: {
+                            logger.info("Tracking started successfully")
+                         }, onError: { error in
+                            logger.error("Error during tracking start: \(error)")
+                         })
     }
 
     private func setupMapView() {
