@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import AblyAssetTracking
+import Keys
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var assetStatusLabel: UILabel!
@@ -44,9 +45,10 @@ class MapViewController: UIViewController {
     }
 
     private func setupSubscriber() {
+        let keys = AblyAssetTrackingKeys.init()
         subscriber = try? SubscriberFactory.subscribers()
-            .connection(ConnectionConfiguration(apiKey: SubscriberKeys.ablyApiKey,
-                                                clientId: SubscriberKeys.ablyClientId))
+            .connection(ConnectionConfiguration(apiKey: keys.ablyApiKey,
+                                                clientId: keys.ablyClientId))
             .trackingId(trackingId)
             .log(LogConfiguration())
             .resolution(Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500))

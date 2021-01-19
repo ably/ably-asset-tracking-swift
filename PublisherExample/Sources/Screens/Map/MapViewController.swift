@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import AblyAssetTracking
+import Keys
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
@@ -41,8 +42,10 @@ class MapViewController: UIViewController {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         currentResolution = resolution
         
+        let keys = AblyAssetTrackingKeys.init()
+        
         publisher = try! PublisherFactory.publishers()
-            .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey, clientId: PublisherKeys.ablyClientId))
+            .connection(ConnectionConfiguration(apiKey: keys.ablyApiKey, clientId: keys.ablyClientId))
             .log(LogConfiguration())
             .routingProfile(.driving)
             .delegate(self)

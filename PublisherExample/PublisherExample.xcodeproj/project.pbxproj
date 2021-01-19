@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		180F619D258634350014B310 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180F618C258634350014B310 /* Assets.xcassets */; };
 		180F619E258634350014B310 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 180F618D258634350014B310 /* LaunchScreen.storyboard */; };
-		180F61A1258634350014B310 /* PublisherKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6193258634350014B310 /* PublisherKeys.swift */; };
 		180F61A2258634350014B310 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F6196258634350014B310 /* SettingsViewController.xib */; };
 		180F61A3258634350014B310 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6197258634350014B310 /* SettingsViewController.swift */; };
 		180F61A4258634350014B310 /* AssetAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6199258634350014B310 /* AssetAnnotationView.swift */; };
@@ -24,7 +23,6 @@
 		180F618C258634350014B310 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180F618E258634350014B310 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		180F6191258634350014B310 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		180F6193258634350014B310 /* PublisherKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherKeys.swift; sourceTree = "<group>"; };
 		180F6196258634350014B310 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		180F6197258634350014B310 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		180F6199258634350014B310 /* AssetAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetAnnotationView.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				180F619C258634350014B310 /* AppDelegate.swift */,
-				180F6193258634350014B310 /* PublisherKeys.swift */,
 				180F6194258634350014B310 /* Screens */,
 			);
 			path = Sources;
@@ -274,7 +271,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				180F61A7258634350014B310 /* AppDelegate.swift in Sources */,
-				180F61A1258634350014B310 /* PublisherKeys.swift in Sources */,
 				180F61A4258634350014B310 /* AssetAnnotationView.swift in Sources */,
 				180F61A3258634350014B310 /* SettingsViewController.swift in Sources */,
 				180F61A5258634350014B310 /* MapViewController.swift in Sources */,
