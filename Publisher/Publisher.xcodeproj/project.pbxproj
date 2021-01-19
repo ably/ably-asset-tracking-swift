@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		180F609C258632510014B310 /* Publisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F609A258632510014B310 /* Publisher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		180F6123258633140014B310 /* PublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6122258633140014B310 /* PublisherTests.swift */; };
 		180F6125258633140014B310 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F6097258632510014B310 /* Publisher.framework */; };
 		180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61702586341E0014B310 /* PublisherBuilder.swift */; };
 		180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61712586341E0014B310 /* DefaultPublisher.swift */; };
@@ -27,6 +26,11 @@
 		185D6D33258F684E00935049 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D32258F684E00935049 /* Proximity.swift */; };
 		185D6D372590849500935049 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D362590849500935049 /* Accuracy.swift */; };
 		18A4C1CD25B2E0780092CC70 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C1CC25B2E0780092CC70 /* ResultHandler.swift */; };
+		18C7B10725B60D5F000A1418 /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10525B60D5F000A1418 /* DefaultLocationService.swift */; };
+		18C7B10825B60D5F000A1418 /* DefaultAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10625B60D5F000A1418 /* DefaultAblyPublisherService.swift */; };
+		18C7B11525B60D89000A1418 /* DefaultPublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10C25B60D75000A1418 /* DefaultPublisherTests.swift */; };
+		18C7B11A25B60D8E000A1418 /* MockAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10E25B60D75000A1418 /* MockAblyPublisherService.swift */; };
+		18C7B11B25B60D8E000A1418 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10F25B60D75000A1418 /* MockLocationService.swift */; };
 		18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
@@ -62,7 +66,6 @@
 		180F609A258632510014B310 /* Publisher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Publisher.h; sourceTree = "<group>"; };
 		180F609B258632510014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		180F6120258633140014B310 /* PublisherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PublisherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		180F6122258633140014B310 /* PublisherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherTests.swift; sourceTree = "<group>"; };
 		180F6124258633140014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		180F61702586341E0014B310 /* PublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherBuilder.swift; sourceTree = "<group>"; };
 		180F61712586341E0014B310 /* DefaultPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
@@ -82,6 +85,11 @@
 		185D6D32258F684E00935049 /* Proximity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
 		185D6D362590849500935049 /* Accuracy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
 		18A4C1CC25B2E0780092CC70 /* ResultHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
+		18C7B10525B60D5F000A1418 /* DefaultLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLocationService.swift; sourceTree = "<group>"; };
+		18C7B10625B60D5F000A1418 /* DefaultAblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultAblyPublisherService.swift; sourceTree = "<group>"; };
+		18C7B10C25B60D75000A1418 /* DefaultPublisherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherTests.swift; sourceTree = "<group>"; };
+		18C7B10E25B60D75000A1418 /* MockAblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAblyPublisherService.swift; sourceTree = "<group>"; };
+		18C7B10F25B60D75000A1418 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
 		18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherEvents.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
@@ -170,7 +178,8 @@
 		180F6121258633140014B310 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				180F6122258633140014B310 /* PublisherTests.swift */,
+				18C7B10B25B60D75000A1418 /* DefaultPublisher */,
+				18C7B10D25B60D75000A1418 /* Mocks */,
 				180F6124258633140014B310 /* Info.plist */,
 			);
 			path = Tests;
@@ -179,6 +188,8 @@
 		180F61732586341E0014B310 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				18C7B10625B60D5F000A1418 /* DefaultAblyPublisherService.swift */,
+				18C7B10525B60D5F000A1418 /* DefaultLocationService.swift */,
 				180F61742586341E0014B310 /* AblyPublisherService.swift */,
 				180F61752586341E0014B310 /* LocationService.swift */,
 			);
@@ -207,6 +218,23 @@
 				185D6D32258F684E00935049 /* Proximity.swift */,
 			);
 			path = "Resolution Policy";
+			sourceTree = "<group>";
+		};
+		18C7B10B25B60D75000A1418 /* DefaultPublisher */ = {
+			isa = PBXGroup;
+			children = (
+				18C7B10C25B60D75000A1418 /* DefaultPublisherTests.swift */,
+			);
+			path = DefaultPublisher;
+			sourceTree = "<group>";
+		};
+		18C7B10D25B60D75000A1418 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				18C7B10E25B60D75000A1418 /* MockAblyPublisherService.swift */,
+				18C7B10F25B60D75000A1418 /* MockLocationService.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		18FCE195258B7FBB005BC480 /* Common */ = {
@@ -490,6 +518,7 @@
 				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
 				185D6D17258F569500935049 /* Resolution.swift in Sources */,
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,
+				18C7B10825B60D5F000A1418 /* DefaultAblyPublisherService.swift in Sources */,
 				185D6D372590849500935049 /* Accuracy.swift in Sources */,
 				185CDD7C258BAA3F009AA564 /* ResolutionPolicy.swift in Sources */,
 				185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */,
@@ -498,6 +527,7 @@
 				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
 				18A4C1CD25B2E0780092CC70 /* ResultHandler.swift in Sources */,
+				18C7B10725B60D5F000A1418 /* DefaultLocationService.swift in Sources */,
 				180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */,
 				18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */,
 				18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */,
@@ -525,7 +555,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180F6123258633140014B310 /* PublisherTests.swift in Sources */,
+				18C7B11B25B60D8E000A1418 /* MockLocationService.swift in Sources */,
+				18C7B11A25B60D8E000A1418 /* MockAblyPublisherService.swift in Sources */,
+				18C7B11525B60D89000A1418 /* DefaultPublisherTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

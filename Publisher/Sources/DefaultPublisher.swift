@@ -18,14 +18,16 @@ class DefaultPublisher: Publisher {
 
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
-         transportationMode: TransportationMode) {
+         transportationMode: TransportationMode,
+         ablyService: AblyPublisherService,
+         locationService: LocationService) {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
         self.workingQueue = DispatchQueue(label: "io.ably.tracking.Publisher.DefaultPublisher",
                                           qos: .default)
-        self.locationService = LocationService()
-        self.ablyService = AblyPublisherService(configuration: connectionConfiguration)
+        self.locationService = locationService
+        self.ablyService = ablyService
 
         self.ablyService.delegate = self
         self.locationService.delegate = self
@@ -150,6 +152,9 @@ extension DefaultPublisher {
         if activeTrackable == event.trackable {
             activeTrackable = nil
             // TODO: Clear current destination in LocationService while working on route based map matching
+        }
+        if ablyService.trackables.isEmpty {
+            locationService.stopUpdatingLocation()
         }
         callback { event.onSuccess(true) }
     }
