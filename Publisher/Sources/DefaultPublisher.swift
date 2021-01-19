@@ -171,7 +171,7 @@ extension DefaultPublisher {
         if activeTrackable != event.trackable {
             activeTrackable = event.trackable
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
-            enqueue(event: SetDestinationEvent(destination: event.trackable.destination))
+            performSetDestinationEvent(SetDestinationEvent(destination: event.trackable.destination))
         }
         callback(event.onSuccess)
     }
