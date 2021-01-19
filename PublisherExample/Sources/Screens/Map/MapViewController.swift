@@ -46,6 +46,7 @@ class MapViewController: UIViewController {
         
         publisher = try! PublisherFactory.publishers()
             .connection(ConnectionConfiguration(apiKey: keys.ablyApiKey, clientId: keys.ablyClientId))
+            .mapboxConfiguration(MapboxConfiguration(mapboxKey: keys.mapboxAccessToken))
             .log(LogConfiguration())
             .routingProfile(.driving)
             .delegate(self)

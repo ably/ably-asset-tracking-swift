@@ -7,7 +7,8 @@ plugin 'cocoapods-keys', {
     :project => "AblyAssetTrackingKeys",
     :keys => [
         "ablyApiKey",
-        "ablyClientId"
+        "ablyClientId",
+	"mapboxAccessToken"
     ]
 }
 

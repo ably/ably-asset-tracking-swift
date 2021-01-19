@@ -1,13 +1,16 @@
 import CoreLocation
 import MapboxCoreNavigation
+import MapboxDirections
 
 class DefaultLocationService: LocationService {
     private let locationDataSource: PassiveLocationDataSource
 
     weak var delegate: LocationServiceDelegate?
 
-    init() {
-        self.locationDataSource = PassiveLocationDataSource()
+    init(mapboxConfiguration: MapboxConfiguration) {
+        let directions = Directions(credentials: mapboxConfiguration.getCredentians())
+        self.locationDataSource = PassiveLocationDataSource(directions: directions, systemLocationManager: nil)
+    
         self.locationDataSource.delegate = self
     }
 

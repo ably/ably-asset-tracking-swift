@@ -69,6 +69,8 @@
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
 		F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34425AF3E35002799BD /* RoutingProfile.swift */; };
 		F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */; };
+		F67C0C3D25B70C1B006BA0B4 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C0C3C25B70C1B006BA0B4 /* MapboxConfiguration.swift */; };
+		F67C0C8725B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C0C8625B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +157,8 @@
 		C8859F81CDD7390E11741B66 /* Pods-asset_tracking-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.release.xcconfig"; sourceTree = "<group>"; };
 		F65AC34425AF3E35002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+Extensions.swift"; sourceTree = "<group>"; };
+		F67C0C3C25B70C1B006BA0B4 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
+		F67C0C8625B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapboxConfiguration+Extensions.swift"; sourceTree = "<group>"; };
 		F9B1CBDB707C22DF88ACEF73 /* Pods-asset_tracking-Publisher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -313,6 +317,7 @@
 		18FCE1CE258B8264005BC480 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				F67C0C3C25B70C1B006BA0B4 /* MapboxConfiguration.swift */,
 				F65AC34425AF3E35002799BD /* RoutingProfile.swift */,
 				18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */,
 				18FCE1D0258B8264005BC480 /* Trackable.swift */,
@@ -412,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */,
+				F67C0C8625B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -619,6 +625,7 @@
 				180795F025A4AFE60026F4C1 /* TrackableResolutionRequest.swift in Sources */,
 				185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */,
 				F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */,
+				F67C0C3D25B70C1B006BA0B4 /* MapboxConfiguration.swift in Sources */,
 				F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */,
 				1807958925A4AEC00026F4C1 /* ResolutionConstraints.swift in Sources */,
 				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
@@ -642,6 +649,7 @@
 				18FCE1E5258B8264005BC480 /* GeoJSONGeometry.swift in Sources */,
 				18CF5F5625A2F95500BF1D31 /* AblyPublisherPresence.swift in Sources */,
 				18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */,
+				F67C0C8725B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift in Sources */,
 				1855B591259C62600079BB3C /* DefaultResolutionPolicyHooks.swift in Sources */,
 				1855B58B259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift in Sources */,
 				18FD2D81259B6EBE00A622DF /* DefaultResolutionPolicy.swift in Sources */,

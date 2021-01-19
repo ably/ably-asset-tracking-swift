@@ -112,7 +112,11 @@ What is the key for ablyClientId
 > <INSERT_CLIENT_ID_HERE>
 ```
 
-- `MAPBOX_ACCESS_TOKEN` needs to be set in the `Info.plist` file for `MGLMapboxAccessToken` key.
+- `mapboxAccessToken`:
+```
+What is the key for mapboxAccessToken
+> <INSERT_MAPBOX_ACCESS_TOKEN_HERE>
+```
 
 5. Open `AblyAssetTracking.xcworkspace` file. After updating `Info.plist` with the MapBox public key, you should be ready to run the example apps.
 
