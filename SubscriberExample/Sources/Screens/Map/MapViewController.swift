@@ -49,7 +49,7 @@ class MapViewController: UIViewController {
                                                 clientId: SubscriberKeys.ablyClientId))
             .trackingId(trackingId)
             .log(LogConfiguration())
-            .resolution(0)
+            .resolution(Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500))
             .delegate(self)
             .start()
     }

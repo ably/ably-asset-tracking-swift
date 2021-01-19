@@ -12,14 +12,14 @@ protocol AblySubscriberServiceDelegate: AnyObject {
 class AblySubscriberService {
     private let client: ARTRealtime
     private let configuration: ConnectionConfiguration
-    private let presenceData: PresenceData
+    private var presenceData: PresenceData
     private let channel: ARTRealtimeChannel
 
     weak var delegate: AblySubscriberServiceDelegate?
 
-    init(configuration: ConnectionConfiguration, trackingId: String) {
+    init(configuration: ConnectionConfiguration, trackingId: String, resolution: Resolution?) {
         self.client = ARTRealtime(key: configuration.apiKey)
-        self.presenceData = PresenceData(type: .subscriber)
+        self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
         self.configuration = configuration
 
         let options = ARTRealtimeChannelOptions()
@@ -31,7 +31,7 @@ class AblySubscriberService {
         // Trigger offline event at start
         delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .offline)
         channel.presence.subscribe({ [weak self] message in
-            logger.debug("Received presence update from channel")
+            logger.debug("Received presence update from channel", source: "AblySubscriberService")
             self?.handleIncomingPresenceMessage(message)
         })
 
@@ -46,12 +46,12 @@ class AblySubscriberService {
         }
 
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in
-            logger.debug("Received raw location message from channel")
+            logger.debug("Received raw location message from channel", source: "AblySubscriberService")
             self?.handleLocationUpdateResponse(forEvent: .raw, messageData: message.data)
         }
 
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
-            logger.debug("Received enhanced location message from channel")
+            logger.debug("Received enhanced location message from channel", source: "AblySubscriberService")
             self?.handleLocationUpdateResponse(forEvent: .enhanced, messageData: message.data)
         }
     }
@@ -60,6 +60,21 @@ class AblySubscriberService {
         channel.unsubscribe()
         leaveChannelPresence()
         client.close()
+    }
+
+    func changeRequest(resolution: Resolution?, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+        logger.debug("Changing resolution to: \(String(describing: resolution))", source: "AblySubscriberService")
+        presenceData = PresenceData(type: presenceData.type, resolution: resolution)
+
+        // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
+        let data = try! presenceData.toJSONString()
+        channel.presence.updateClient(configuration.clientId, data: data) { error in
+            if let error = error {
+                onError(error)
+            } else {
+                onSuccess()
+            }
+        }
     }
 
     // MARK: Utils

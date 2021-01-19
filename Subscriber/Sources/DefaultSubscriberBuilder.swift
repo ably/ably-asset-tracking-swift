@@ -4,7 +4,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     private var connection: ConnectionConfiguration?
     private var logConfiguration: LogConfiguration?
     private var trackingId: String?
-    private var resolution: Double?
+    private var resolution: Resolution?
     private weak var delegate: SubscriberDelegate?
 
     init() { }
@@ -12,7 +12,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     private init(connection: ConnectionConfiguration?,
                  logConfiguration: LogConfiguration?,
                  trackingId: String?,
-                 resolution: Double?,
+                 resolution: Resolution?,
                  delegate: SubscriberDelegate?) {
         self.connection = connection
         self.logConfiguration = logConfiguration
@@ -76,7 +76,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
                                         delegate: delegate)
     }
 
-    func resolution(_ resolution: Double) -> SubscriberBuilder {
+    func resolution(_ resolution: Resolution) -> SubscriberBuilder {
         return DefaultSubscriberBuilder(connection: connection,
                                         logConfiguration: logConfiguration,
                                         trackingId: trackingId,

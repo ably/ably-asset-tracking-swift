@@ -9,21 +9,24 @@ class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
     private let logConfiguration: LogConfiguration
     private let trackingId: String
-    private let resolution: Double?
     private let ablyService: AblySubscriberService
     weak var delegate: SubscriberDelegate?
 
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
          trackingId: String,
-         resolution: Double?) {
+         resolution: Resolution?) {
         self.trackingId = trackingId
-        self.resolution = resolution
         self.logConfiguration = logConfiguration
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
         self.ablyService = AblySubscriberService(configuration: connectionConfiguration,
-                                                 trackingId: trackingId)
+                                                 trackingId: trackingId,
+                                                 resolution: resolution)
         self.ablyService.delegate = self
+    }
+
+    func sendChangeRequest(resolution: Resolution?, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+        enqueue(event: ChangeResolutionEvent(resolution: resolution, onSuccess: onSuccess, onError: onError))
     }
 
     func start() {
@@ -43,6 +46,7 @@ extension DefaultSubscriber {
             switch event {
             case _ as StartEvent: self?.performStart()
             case _ as StopEvent: self?.performStop()
+            case let event as ChangeResolutionEvent: self?.performChangeResolution(event)
             default: preconditionFailure("Unhandled event in DefaultSubscriber: \(event) ")
             }
         }
@@ -83,6 +87,14 @@ extension DefaultSubscriber {
 
     private func performStop() {
         ablyService.stop()
+    }
+
+    private func performChangeResolution(_ event: ChangeResolutionEvent) {
+        ablyService.changeRequest(
+            resolution: event.resolution,
+            onSuccess: { [weak self] in self?.callback(event.onSuccess) },
+            onError: { [weak self] error in self?.callback(error: error, handler: event.onError) }
+        )
     }
 
     // MARK: Utils

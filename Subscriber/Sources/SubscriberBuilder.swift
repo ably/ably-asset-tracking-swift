@@ -25,11 +25,17 @@ public protocol SubscriberBuilder {
      Sets the mandatory `trackingId` property
      */
     func trackingId(_ trackingId: String) -> SubscriberBuilder
+
     // MARK: Optional properties
+
     /**
      Sets the optional `resolution` property
+
+     - Parameters:
+        - resolution: An indication of how often to this subscriber would like the publisher to sample locations, at what level of positional accuracy, and how often to send them back.
+     - Returns: A new instance of the builder with this property changed.
      */
-    func resolution(_ resolution: Double) -> SubscriberBuilder
+    func resolution(_ resolution: Resolution) -> SubscriberBuilder
 
     /**
      Sets the optional `Delegate` property.

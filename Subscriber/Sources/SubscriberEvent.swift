@@ -6,6 +6,12 @@ struct StartEvent: SubscriberEvent {}
 
 struct StopEvent: SubscriberEvent {}
 
+struct ChangeResolutionEvent: SubscriberEvent {
+    let resolution: Resolution?
+    let onSuccess: SuccessHandler
+    let onError: ErrorHandler
+}
+
 // MARK: Delegate handling events
 
 protocol SubscriberDelegateEvent {}
