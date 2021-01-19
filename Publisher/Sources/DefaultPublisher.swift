@@ -5,12 +5,29 @@ import Logging
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
+// swiftlint:disable cyclomatic_complexity
 class DefaultPublisher: Publisher {
     private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
     private let logConfiguration: LogConfiguration
     private let locationService: LocationService
     private let ablyService: AblyPublisherService
+    private let resolutionPolicy: ResolutionPolicy
+
+    // ResolutionPolicy
+    private let hooks: DefaultResolutionPolicyHooks
+    private let methods: DefaultResolutionPolicyMethods
+    private var proximityThreshold: Proximity?
+    private var proximityHandler: ProximityHandler?
+    private var requests: [Trackable: [Subscriber: Resolution]]
+    private var subscribers: [Trackable: Set<Subscriber>]
+    private var resolutions: [Trackable: Resolution]
+    private var locationEngineResolution: Resolution
+
+    private var lastRawLocations: [Trackable: CLLocation]
+    private var lastRawTimestamps: [Trackable: Date]
+    private var lastEnhancedLocations: [Trackable: CLLocation]
+    private var lastEnhancedTimestamps: [Trackable: Date]
 
     public let transportationMode: TransportationMode
     public weak var delegate: PublisherDelegate?
@@ -19,18 +36,34 @@ class DefaultPublisher: Publisher {
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
          transportationMode: TransportationMode,
+         resolutionPolicyFactory: ResolutionPolicyFactory,
          ablyService: AblyPublisherService,
          locationService: LocationService) {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
-        self.workingQueue = DispatchQueue(label: "io.ably.tracking.Publisher.DefaultPublisher",
-                                          qos: .default)
+        self.workingQueue = DispatchQueue(label: "io.ably.tracking.Publisher.DefaultPublisher", qos: .default)
         self.locationService = locationService
         self.ablyService = ablyService
 
+        self.hooks = DefaultResolutionPolicyHooks()
+        self.methods = DefaultResolutionPolicyMethods()
+        self.resolutionPolicy = resolutionPolicyFactory.createResolutionPolicy(hooks: hooks, methods: methods)
+        self.locationEngineResolution = resolutionPolicy.resolve(resolutions: [])
+
+        self.requests = [:]
+        self.subscribers = [:]
+        self.resolutions = [:]
+        self.lastRawLocations = [:]
+        self.lastEnhancedLocations = [:]
+        self.lastRawTimestamps = [:]
+        self.lastEnhancedTimestamps = [:]
+
         self.ablyService.delegate = self
         self.locationService.delegate = self
+        self.methods.delegate = self
+
+        DefaultBatteryLevelProvider.setup()
     }
 
     func track(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
@@ -63,12 +96,17 @@ extension DefaultPublisher {
         performOnWorkingThread { [weak self] in
             switch event {
             case let event as TrackTrackableEvent:  self?.performTrackTrackableEvent(event)
+            case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
             case let event as RawLocationChangedEvent: self?.performRawLocationChanged(event)
             case let event as AddTrackableEvent: self?.performAddTrackableEvent(event)
             case let event as RemoveTrackableEvent: self?.performRemoveTrackableEvent(event)
             case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
+            case let event as RefreshResolutionPolicyEvent: self?.performRefreshResolutionPolicyEvent(event)
+            case let event as ChangeLocationEngineResolutionEvent: self?.performChangeLocationEngineResolutionEvent(event)
+            case let event as PresenceUpdateEvent: self?.performPresenceUpdateEvent(event)
+            case let event as ClearRemovedTrackableMetadataEvent: self?.performClearRemovedTrackableMetadataEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -107,19 +145,35 @@ extension DefaultPublisher {
             return
         }
 
-        activeTrackable = event.trackable
         self.ablyService.track(trackable: event.trackable) { [weak self] error in
             if let error = error {
                 self?.callback(error: error, handler: event.onError)
                 return
             }
-            self?.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+
+            self?.enqueue(event: PresenceJoinedSuccessfullyEvent(
+                            trackable: event.trackable,
+                            onComplete: { [weak self] in
+                                self?.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+                            })
+            )
         }
     }
 
     private func performTrackableReadyToTrack(_ event: TrackableReadyToTrackEvent) {
-        locationService.startUpdatingLocation()
+        if activeTrackable != event.trackable {
+            activeTrackable = event.trackable
+            hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
+            // TODO: Set destination here while working on route based map matching
+        }
         callback(event.onSuccess)
+    }
+
+    private func performPresenceJoinedSuccessfullyEvent(_ event: PresenceJoinedSuccessfullyEvent) {
+        locationService.startUpdatingLocation()
+        resolveResolution(trackable: event.trackable)
+        hooks.trackables?.onTrackableAdded(trackable: event.trackable)
+        event.onComplete()
     }
 
     // MARK: Add/Remove trackable
@@ -129,28 +183,41 @@ extension DefaultPublisher {
                 self?.callback(error: error, handler: event.onError)
                 return
             }
-            self?.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+            self?.enqueue(event: PresenceJoinedSuccessfullyEvent(
+                            trackable: event.trackable,
+                            onComplete: { [weak self] in self?.callback(event.onSuccess) })
+            )
         }
     }
 
+    // MARK: Remove
     private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
-        clearMetadataForRemovedTrackable(trackable: event.trackable)
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] wasPresent in
-            wasPresent ?
-                self?.enqueue(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess)) :
+            if wasPresent {
+                self?.enqueue(event: ClearRemovedTrackableMetadataEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+            } else {
                 self?.callback({ event.onSuccess(false) })
+            }
         } onError: { [weak self] error in
             self?.callback(error: error, handler: event.onError)
         }
     }
 
-    private func clearMetadataForRemovedTrackable(trackable: Trackable) {
-        // TODO: Implement method while working on the default resolution policy
+    private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
+        hooks.trackables?.onTrackableRemoved(trackable: event.trackable)
+        removeAllSubscribers(forTrackable: event.trackable)
+        resolutions.removeValue(forKey: event.trackable)
+        requests.removeValue(forKey: event.trackable)
+        lastRawLocations.removeValue(forKey: event.trackable)
+        lastEnhancedLocations.removeValue(forKey: event.trackable)
+
+        enqueue(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess))
     }
 
     private func performClearActiveTrackableEvent(_ event: ClearActiveTrackableEvent) {
         if activeTrackable == event.trackable {
             activeTrackable = nil
+            hooks.trackables?.onActiveTrackableChanged(trackable: nil)
             // TODO: Clear current destination in LocationService while working on route based map matching
         }
         if ablyService.trackables.isEmpty {
@@ -159,21 +226,171 @@ extension DefaultPublisher {
         callback { event.onSuccess(true) }
     }
 
+    private func removeAllSubscribers(forTrackable trackable: Trackable) {
+        guard let trackableSubscribers = subscribers[trackable],
+              !trackableSubscribers.isEmpty
+        else { return }
+        trackableSubscribers.forEach {
+            hooks.subscribers?.onSubscriberRemoved(subscriber: $0)
+        }
+        subscribers[trackable] = []
+    }
+
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
-        self.ablyService.sendEnhancedAssetLocation(location: event.location) { [weak self] error in
-            if let error = error {
-                self?.callback(event: DelegateErrorEvent(error: error))
+        let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
+            return shouldSendLocation(location: event.location,
+                                      lastLocation: lastEnhancedLocations[trackable],
+                                      lastTimestamp: lastEnhancedTimestamps[trackable],
+                                      resolution: resolutions[trackable])
+        }
+
+        trackablesToSend.forEach { trackable in
+            lastEnhancedLocations[trackable] = event.location
+            lastEnhancedTimestamps[trackable] = event.location.timestamp
+
+            ablyService.sendEnhancedAssetLocation(location: event.location, forTrackable: trackable) { [weak self] error in
+                if let error = error {
+                    self?.callback(event: DelegateErrorEvent(error: error))
+                }
             }
         }
+
+        checkThreshold(location: event.location)
     }
 
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
-        ablyService.sendRawAssetLocation(location: event.location) { [weak self] error in
-            if let error = error {
-                self?.callback(event: DelegateErrorEvent(error: error))
+        let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
+            return shouldSendLocation(location: event.location,
+                                      lastLocation: lastRawLocations[trackable],
+                                      lastTimestamp: lastRawTimestamps[trackable],
+                                      resolution: resolutions[trackable])
+        }
+
+        trackablesToSend.forEach { trackable in
+            lastRawLocations[trackable] = event.location
+            lastRawTimestamps[trackable] = event.location.timestamp
+
+            ablyService.sendRawAssetLocation(location: event.location, forTrackable: trackable) { [weak self] error in
+                if let error = error {
+                    self?.callback(event: DelegateErrorEvent(error: error))
+                }
             }
         }
+
+        checkThreshold(location: event.location)
+    }
+
+    private func shouldSendLocation(location: CLLocation,
+                                    lastLocation: CLLocation?,
+                                    lastTimestamp: Date?,
+                                    resolution: Resolution?) -> Bool {
+        guard let resolution = resolution,
+              let lastLocation = lastLocation,
+              let lastTimestamp = lastTimestamp
+        else { return true }
+
+        let distance = location.distance(from: lastLocation)
+        let timeInterval = location.timestamp.timeIntervalSince1970 - lastTimestamp.timeIntervalSince1970
+
+        // desiredInterval in resolution is in milliseconds, while timeInterval from timestamp is in seconds
+        let desiredIntervalInSeconds = resolution.desiredInterval / 1000
+        return distance >= resolution.minimumDisplacement || timeInterval >= desiredIntervalInSeconds
+    }
+
+    // MARK: ResolutionPolicy
+    private func performRefreshResolutionPolicyEvent(_ event: RefreshResolutionPolicyEvent) {
+        ablyService.trackables.forEach { resolveResolution(trackable: $0) }
+    }
+
+    private func resolveResolution(trackable: Trackable) {
+        let currentRequests = requests[trackable]?.values
+        let resolutionSet: Set<Resolution> = currentRequests == nil ? [] : Set(currentRequests!)
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutionSet)
+        resolutions[trackable] = resolutionPolicy.resolve(request: request)
+        enqueue(event: ChangeLocationEngineResolutionEvent())
+    }
+
+    private func performChangeLocationEngineResolutionEvent(_ event: ChangeLocationEngineResolutionEvent) {
+        locationEngineResolution = resolutionPolicy.resolve(resolutions: Set(resolutions.values))
+        changeLocationEngineResolution(resolution: locationEngineResolution)
+    }
+
+    private func changeLocationEngineResolution(resolution: Resolution) {
+        locationService.changeLocationEngineResolution(resolution: resolution)
+    }
+
+    private func checkThreshold(location: CLLocation) {
+        guard let threshold = proximityThreshold,
+              let handler = proximityHandler
+        else { return }
+
+        // TODO: Use correct estimatedArrivalTime while working on route based mapMatching
+        let checker = ThresholdChecker()
+        let destination = activeTrackable?.destination != nil ?
+            CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude) : nil
+
+        let isReached: Bool = checker.isThresholdReached(threshold: threshold,
+                                                         currentLocation: location,
+                                                         currentTime: Date().timeIntervalSince1970,
+                                                         destination: destination,
+                                                         estimatedArrivalTime: nil)
+        if isReached {
+            handler.onProximityReached(threshold: threshold)
+        }
+    }
+
+    // MARK: Subscribers handling
+    private func performPresenceUpdateEvent(_ event: PresenceUpdateEvent) {
+        guard event.presenceData.type == .subscriber else { return }
+        if event.presence == .enter {
+            addSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
+        } else if event.presence == .leave {
+            removeSubscriber(clientId: event.clientId, trackable: event.trackable)
+        } else if event.presence == .update {
+            updateSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
+        }
+    }
+
+    private func addSubscriber(clientId: String, trackable: Trackable, data: PresenceData) {
+        let subscriber = Subscriber(id: clientId, trackable: trackable)
+        var trackableSubscribers: Set<Subscriber> = subscribers[trackable] ?? []
+        trackableSubscribers.insert(subscriber)
+        subscribers[trackable] = trackableSubscribers
+        saveOrRemoveResolutionRequest(resolution: data.resolution, trackable: trackable, subscriber: subscriber)
+        hooks.subscribers?.onSubscriberAdded(subscriber: subscriber)
+        resolveResolution(trackable: trackable)
+    }
+
+    private func updateSubscriber(clientId: String, trackable: Trackable, data: PresenceData) {
+        guard let trackableSubscribers = subscribers[trackable],
+              let subscriber = trackableSubscribers.first(where: { $0.id == clientId })
+        else { return }
+        saveOrRemoveResolutionRequest(resolution: data.resolution, trackable: trackable, subscriber: subscriber)
+        resolveResolution(trackable: trackable)
+    }
+
+    private func removeSubscriber(clientId: String, trackable: Trackable) {
+        guard var trackableSubscribers = subscribers[trackable],
+              let subscriber = trackableSubscribers.first(where: { $0.id == clientId })
+        else { return }
+
+        trackableSubscribers.remove(subscriber)
+        subscribers[trackable] = trackableSubscribers
+
+        if var trackableRequests = requests[trackable] {
+            trackableRequests.removeValue(forKey: subscriber)
+            requests[trackable] = trackableRequests
+        }
+
+        hooks.subscribers?.onSubscriberRemoved(subscriber: subscriber)
+        resolveResolution(trackable: trackable)
+    }
+
+    private func saveOrRemoveResolutionRequest(resolution: Resolution?, trackable: Trackable, subscriber: Subscriber) {
+        var trackableRequests: [Subscriber: Resolution] = requests[trackable] ?? [:]
+        trackableRequests[subscriber] = resolution
+        requests[trackable] = trackableRequests
     }
 
     // MARK: Utils
@@ -216,5 +433,33 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
         callback(event: DelegateConnectionStateChangedEvent(connectionState: state))
+    }
+
+    func publisherService(sender: AblyPublisherService,
+                          didReceivePresenceUpdate presence: AblyPublisherPresence,
+                          forTrackable trackable: Trackable,
+                          presenceData: PresenceData,
+                          clientId: String) {
+        logger.error("publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)",
+                     source: "DefaultPublisher")
+        enqueue(event: PresenceUpdateEvent(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId))
+    }
+}
+
+// MARK: ResolutionPolicyMethodsDelegate
+extension DefaultPublisher: DefaultResolutionPolicyMethodsDelegate {
+    func resolutionPolicyMethods(refreshWithSender sender: DefaultResolutionPolicyMethods) {
+        enqueue(event: RefreshResolutionPolicyEvent())
+    }
+
+    func resolutionPolicyMethods(cancelProximityThresholdWithSender sender: DefaultResolutionPolicyMethods) {
+        proximityHandler?.onProximityCancelled()
+    }
+
+    func resolutionPolicyMethods(sender: DefaultResolutionPolicyMethods,
+                                 setProximityThreshold threshold: Proximity,
+                                 withHandler handler: ProximityHandler) {
+        self.proximityHandler = handler
+        self.proximityThreshold = threshold
     }
 }

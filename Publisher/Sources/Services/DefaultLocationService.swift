@@ -24,6 +24,10 @@ class DefaultLocationService: LocationService {
     func stopUpdatingLocation() {
         locationDataSource.systemLocationManager.stopUpdatingLocation()
     }
+
+    func changeLocationEngineResolution(resolution: Resolution) {
+        // TODO: Implement method
+    }
 }
 
 extension DefaultLocationService: PassiveLocationDataSourceDelegate {

@@ -29,6 +29,11 @@ public protocol PublisherBuilder {
     func transportationMode(_ transportationMode: TransportationMode) -> PublisherBuilder
 
     /**
+     Sets the mandatory `ResolutionPolicyFactory` property
+     */
+    func resolutionPolicyFactory(_ factory: ResolutionPolicyFactory) -> PublisherBuilder
+
+    /**
      Sets the optional `Delegate` property.
      It's optional to pass it via builder, as it can be set directly on `Publisher`.  Maintains weak reference.
      */

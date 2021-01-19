@@ -1,6 +1,6 @@
 import Foundation
 
-protocol Proximity { }
+public protocol Proximity { }
 
 class DefaultProximity: Proximity {
     /**
@@ -24,7 +24,7 @@ class DefaultProximity: Proximity {
     }
 }
 
-protocol ProximityHandler {
+public protocol ProximityHandler {
     /**
      The desired proximity has been reached.
      - Parameters:

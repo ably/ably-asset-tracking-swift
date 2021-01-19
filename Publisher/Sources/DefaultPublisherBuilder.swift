@@ -4,6 +4,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var connection: ConnectionConfiguration?
     private var logConfiguration: LogConfiguration?
     private var transportationMode: TransportationMode?
+    private var resolutionPolicyFactory: ResolutionPolicyFactory?
     private weak var delegate: PublisherDelegate?
 
     init() { }
@@ -11,11 +12,13 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private init(connection: ConnectionConfiguration?,
                  logConfiguration: LogConfiguration?,
                  transportationMode: TransportationMode?,
-                 delegate: PublisherDelegate?) {
+                 delegate: PublisherDelegate?,
+                 resolutionPolicyFactory: ResolutionPolicyFactory?) {
         self.connection = connection
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
         self.delegate = delegate
+        self.resolutionPolicyFactory = resolutionPolicyFactory
     }
 
     func start() throws -> Publisher {
@@ -40,9 +43,17 @@ class DefaultPublisherBuilder: PublisherBuilder {
             )
         }
 
+        guard let resolutionPolicyFactory = resolutionPolicyFactory
+        else {
+            throw AssetTrackingError.incompleteConfiguration(
+                "Missing mandatory property: ResolutionPolicyFactory. Did you forgot to call `resolutionPolicyFactory` on builder object?"
+            )
+        }
+
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
                                           logConfiguration: logConfiguration,
                                           transportationMode: transportationMode,
+                                          resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyService: DefaultAblyPublisherService(configuration: connection),
                                           locationService: DefaultLocationService())
         publisher.delegate = delegate
@@ -53,27 +64,39 @@ class DefaultPublisherBuilder: PublisherBuilder {
         return DefaultPublisherBuilder(connection: configuration,
                                        logConfiguration: logConfiguration,
                                        transportationMode: transportationMode,
-                                       delegate: delegate)
+                                       delegate: delegate,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
     func log(_ configuration: LogConfiguration) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: configuration,
                                        transportationMode: transportationMode,
-                                       delegate: delegate)
+                                       delegate: delegate,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
     func transportationMode(_ transportationMode: TransportationMode) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: logConfiguration,
                                        transportationMode: transportationMode,
-                                       delegate: delegate)
+                                       delegate: delegate,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
     func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: logConfiguration,
                                        transportationMode: transportationMode,
-                                       delegate: delegate)
+                                       delegate: delegate,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
+    }
+
+    func resolutionPolicyFactory(_ resolutionPolicyFactory: ResolutionPolicyFactory) -> PublisherBuilder {
+        return DefaultPublisherBuilder(connection: connection,
+                                       logConfiguration: logConfiguration,
+                                       transportationMode: transportationMode,
+                                       delegate: delegate,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
     }
 }

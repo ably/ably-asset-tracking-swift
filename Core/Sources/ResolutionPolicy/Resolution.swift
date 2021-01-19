@@ -2,7 +2,7 @@
  Governs how often to sample locations, at what level of positional accuracy, and how often to send them to
  subscribers.
  */
-public class Resolution {
+public class Resolution: Codable {
     /**
      The general priority for accuracy of location updates, used to govern any trade-off between power usage and
      positional accuracy.
@@ -19,7 +19,7 @@ public class Resolution {
      Used to govern the frequency of updates requested from the underlying location provider, as well as the frequency
      of messages broadcast to subscribers.
      */
-    let desiredInterval: TimeInterval
+    let desiredInterval: Double
 
     /**
      Minimum positional granularity required, in metres. Lowering this value increases the spatial resolution.
@@ -34,7 +34,7 @@ public class Resolution {
     /**
      Default constructor for the Resolution
      */
-    public init(accuracy: Accuracy, desiredInterval: TimeInterval, minimumDisplacement: Double) {
+    public init(accuracy: Accuracy, desiredInterval: Double, minimumDisplacement: Double) {
         self.accuracy = accuracy
         self.desiredInterval = desiredInterval
         self.minimumDisplacement = minimumDisplacement
@@ -52,5 +52,18 @@ extension Resolution: Hashable {
         hasher.combine(accuracy)
         hasher.combine(desiredInterval)
         hasher.combine(minimumDisplacement)
+    }
+}
+
+extension Resolution {
+    static var `default`: Resolution {
+        return Resolution(accuracy: .balanced,
+                          desiredInterval: 500,
+                          minimumDisplacement: 500)
+    }
+}
+extension Resolution: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "Publisher.Resolution accuracy: \(accuracy), desiredInterval: \(desiredInterval), minimumDisplacement: \(minimumDisplacement)"
     }
 }
