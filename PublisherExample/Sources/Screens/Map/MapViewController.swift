@@ -44,17 +44,12 @@ class MapViewController: UIViewController {
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .start()
 
-<<<<<<< HEAD
         let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
-        publisher?.track(trackable: Trackable(id: trackingId, destination: destination), onSuccess: {  }, onError: { _ in })
-=======
-        publisher?.track(trackable: Trackable(id: trackingId),
-                         onSuccess: {
+        publisher?.track(trackable: Trackable(id: trackingId, destination: destination), onSuccess: {
                             logger.info("Tracking started successfully")
                          }, onError: { error in
                             logger.error("Error during tracking start: \(error)")
                          })
->>>>>>> feature/ATS-140-Resolution-Subscriber
     }
 
     private func setupMapView() {
