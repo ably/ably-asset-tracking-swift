@@ -83,13 +83,6 @@ There are 3 framework targets with dedicated tests and 2 example apps:
 - `SubscriberExample` (without tests)
   <br> Example app demonstrating Subscriber SDK usage and presenting asset locations on the map
 
-### API Keys and Access Tokens for Example Apps
-
-The following secrets must be specified in order to run the example apps:
-
-- `ABLY_API_KEY`: this needs to be provided in `PublisherKeys.swift` or `SubscriberKeys.swift` respectively for publishing and subscribing example apps.
-- `MAPBOX_ACCESS_TOKEN` needs to be set in the `Info.plist` file for `MGLMapboxAccessToken` key.
-
 ### Build instructions
 
 Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
@@ -104,7 +97,24 @@ gem install bundler
 bundle install
 bundle exec pod install
 ```
-4. Open `AblyAssetTracking.xcworkspace` file. After updating `Info.plist` with the MapBox public key, you should be ready to run the example apps.
+4. API Keys and Access Tokens for Example Apps:
+
+During the pods installation you will be asked to provide:
+- `ablyApiKey` :
+```
+What is the key for ablyApiKey
+> <INSERT_API_KEY_HERE>
+```
+
+- `ablyClienId`:
+```
+What is the key for ablyClientId
+> <INSERT_CLIENT_ID_HERE>
+```
+
+- `MAPBOX_ACCESS_TOKEN` needs to be set in the `Info.plist` file for `MGLMapboxAccessToken` key.
+
+5. Open `AblyAssetTracking.xcworkspace` file. After updating `Info.plist` with the MapBox public key, you should be ready to run the example apps.
 
 #### Why Bundler
 
