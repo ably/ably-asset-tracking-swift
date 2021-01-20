@@ -5,7 +5,7 @@ workspace 'AblyAssetTracking.xcworkspace'
 
 plugin 'cocoapods-keys', {
     :project => "AblyAssetTrackingKeys",
-    :targets => ["PublisherExample", "SubscriberExample"],
+    :targets => ["Publisher", "Subscriber"],
     :keys => [
         "ablyApiKey",
         "ablyClientId",
