@@ -4,7 +4,7 @@ inhibit_all_warnings!
 workspace 'AblyAssetTracking.xcworkspace'
 
 plugin 'cocoapods-keys', {
-    :project => "AblyAssetTrackingKeys",
+    :project => "AblyAssetTracking",
     :targets => ["Publisher", "Subscriber"],
     :keys => [
         "ablyApiKey",

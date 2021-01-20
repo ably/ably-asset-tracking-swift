@@ -27,7 +27,7 @@ jobs:
           
       - name: Configure Cocoapods-Keys
         run: |
-          bundle exec pod keys set ablyApiKey $ABLY_API_KEY PublisherExample
+          bundle exec pod keys set ablyApiKey $ABLY_API_KEY AblyAssetTracking
           bundle exec pod keys set ablyClientId $ABLY_CLIENT_ID
           bundle exec pod keys set mapboxAccessToken $MAPBOX_ACCESS_TOKEN
           
