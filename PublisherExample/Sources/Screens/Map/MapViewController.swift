@@ -45,8 +45,8 @@ class MapViewController: UIViewController {
         let keys = AblyAssetTrackingKeys.init()
         
         publisher = try! PublisherFactory.publishers()
-            .connection(ConnectionConfiguration(apiKey: keys.aBLY_API_KEY, clientId: keys.aBLY_CLIENT_ID))
-            .mapboxConfiguration(MapboxConfiguration(mapboxKey: keys.mAPBOX_ACCESS_TOKEN))
+            .connection(ConnectionConfiguration(apiKey: keys.ablyApiKey, clientId: keys.ablyClientId))
+            .mapboxConfiguration(MapboxConfiguration(mapboxKey: keys.mapboxAccessToken))
             .log(LogConfiguration())
             .routingProfile(.driving)
             .delegate(self)

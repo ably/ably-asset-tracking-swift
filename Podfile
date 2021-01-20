@@ -6,9 +6,9 @@ workspace 'AblyAssetTracking.xcworkspace'
 plugin 'cocoapods-keys', {
     :project => "AblyAssetTrackingKeys",
     :keys => [
-        "ABLY_API_KEY",
-        "ABLY_CLIENT_ID",
-	"MAPBOX_ACCESS_TOKEN"
+        "ablyApiKey",
+        "ablyClientId",
+	"mapboxAccessToken"
     ]
 }
 
