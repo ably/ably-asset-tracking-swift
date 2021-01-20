@@ -18,11 +18,15 @@ jobs:
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
           
-      - name: Set Ably and Mapbox access keys
+      - name: Configure Ably and Mapbox access keys
         run: |
-          bundle exec pod keys set ablyApiKey "-" AblyAssetTrackingKeys
-          bundle exec pod keys set ablyClientId "-" AblyAssetTrackingKeys
-          bundle exec pod keys set mapboxAccessToken "-" AblyAssetTrackingKeys
+          echo "ablyApiKey $ABLY_API_KEY" >> ~/.netrc
+          echo "ablyClientId $ABLY_CLIENT_ID" >> ~/.netrc
+          echo "mapboxAccessToken $MAPBOX_ACCESS_TOKEN" >> ~/.netrc
+        env:
+          ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
+          ABLY_CLIENT_ID: ${{ secrets.ABLY_CLIENT_ID }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
 
       - name: Run All Tests using Fastlane
         run: |
