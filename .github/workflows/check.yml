@@ -19,7 +19,7 @@ jobs:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
-          ABLY_CLIENT_ID: -
+          ABLY_CLIENT_ID: "-"
 
       - name: Run All Tests using Fastlane
         run: |
