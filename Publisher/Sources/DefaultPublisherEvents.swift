@@ -1,17 +1,7 @@
-import Foundation
 import CoreLocation
 import MapboxDirections
 
 protocol PublisherEvent {}
-
-struct SuccessEvent: PublisherEvent {
-    let onSuccess: SuccessHandler
-}
-
-struct ErrorEvent: PublisherEvent {
-    let error: Error
-    let onError: ErrorHandler
-}
 
 struct TrackTrackableEvent: PublisherEvent {
     let trackable: Trackable
@@ -71,26 +61,28 @@ struct RefreshResolutionPolicyEvent: PublisherEvent {}
 
 struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
 
-// MARK: Delegate handling events
-struct DelegateErrorEvent: PublisherEvent {
-    let error: Error
-}
-
-struct DelegateRawLocationChangedEvent: PublisherEvent {
-    let location: CLLocation
-}
-
-struct DelegateEnhancedLocationChangedEvent: PublisherEvent {
-    let location: CLLocation
-}
-
-struct DelegateConnectionStateChangedEvent: PublisherEvent {
-    let connectionState: ConnectionState
-}
-
-struct DelegatePresenceUpdateEvent: PublisherEvent {
+struct PresenceUpdateEvent: PublisherEvent {
     let trackable: Trackable
     let presence: AblyPublisherPresence
     let presenceData: PresenceData
     let clientId: String
+}
+
+// MARK: Delegate handling events
+protocol PublisherDelegateEvent {}
+
+struct DelegateErrorEvent: PublisherDelegateEvent {
+    let error: Error
+}
+
+struct DelegateRawLocationChangedEvent: PublisherDelegateEvent {
+    let location: CLLocation
+}
+
+struct DelegateEnhancedLocationChangedEvent: PublisherDelegateEvent {
+    let location: CLLocation
+}
+
+struct DelegateConnectionStateChangedEvent: PublisherDelegateEvent {
+    let connectionState: ConnectionState
 }
