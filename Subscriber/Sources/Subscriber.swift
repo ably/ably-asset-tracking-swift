@@ -2,16 +2,6 @@ import UIKit
 import CoreLocation
 
 /**
- Completion handler for success operations
- */
-public typealias SuccessHandler = () -> Void
-
-/**
- Completion handler for failed operations
- */
-public typealias ErrorHandler = (_ error: Error) -> Void
-
-/**
  Indicates Asset connection status (i.e. if courier is publishing his location)
  */
 public enum AssetConnectionStatus {

@@ -7,44 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1807958925A4AEC00026F4C1 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1807958825A4AEC00026F4C1 /* ResolutionConstraints.swift */; };
-		180795BB25A4AF660026F4C1 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795B825A4AF660026F4C1 /* Accuracy.swift */; };
-		180795BC25A4AF660026F4C1 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795B925A4AF660026F4C1 /* Resolution.swift */; };
-		180795BD25A4AF660026F4C1 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795BA25A4AF660026F4C1 /* ResolutionPolicy.swift */; };
-		180795D325A4AFA10026F4C1 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795D225A4AFA10026F4C1 /* Proximity.swift */; };
-		180795F025A4AFE60026F4C1 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795EF25A4AFE60026F4C1 /* TrackableResolutionRequest.swift */; };
 		180F609C258632510014B310 /* Publisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F609A258632510014B310 /* Publisher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		180F6125258633140014B310 /* Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F6097258632510014B310 /* Publisher.framework */; };
 		180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61702586341E0014B310 /* PublisherBuilder.swift */; };
 		180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61712586341E0014B310 /* DefaultPublisher.swift */; };
-		180F61792586341E0014B310 /* DefaultAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61742586341E0014B310 /* DefaultAblyPublisherService.swift */; };
+		180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61742586341E0014B310 /* AblyPublisherService.swift */; };
+		180F617A2586341E0014B310 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61752586341E0014B310 /* LocationService.swift */; };
 		183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183BE6B72588AC8D0097A30B /* ConnectionState.swift */; };
-		18476F5F25AB82310032E69C /* RouteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18476F5E25AB82310032E69C /* RouteProvider.swift */; };
-		184A93FD259C830600D6FDF8 /* MockResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A93FC259C830600D6FDF8 /* MockResolutionPolicyFactory.swift */; };
-		184A9401259C837200D6FDF8 /* MockResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9400259C837200D6FDF8 /* MockResolutionPolicy.swift */; };
-		184A9405259C857100D6FDF8 /* MockTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */; };
-		184A9409259C85AE00D6FDF8 /* MockSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */; };
-		184A9410259C9C6C00D6FDF8 /* BatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */; };
-		184A9442259DD6D500D6FDF8 /* DefaultProximityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A9441259DD6D500D6FDF8 /* DefaultProximityHandler.swift */; };
 		185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DD25889EBB00E2D2E2 /* Publisher.swift */; };
 		185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */; };
-		1855B58B259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B58A259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift */; };
-		1855B591259C62600079BB3C /* DefaultResolutionPolicyHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B590259C62600079BB3C /* DefaultResolutionPolicyHooks.swift */; };
-		1855B595259C62850079BB3C /* DefaultResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B594259C62850079BB3C /* DefaultResolutionPolicyMethods.swift */; };
-		1855B599259C672F0079BB3C /* DefaultTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B598259C672F0079BB3C /* DefaultTrackableSetListener.swift */; };
-		1855B59F259C67B80079BB3C /* DefaultSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855B59E259C67B80079BB3C /* DefaultSubscriberSetListener.swift */; };
 		185D6D1B258F573300935049 /* ResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D1A258F573300935049 /* ResolutionPolicyFactory.swift */; };
 		185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D20258F57E300935049 /* ResolutionPolicyHooks.swift */; };
 		185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D24258F57EC00935049 /* ResolutionPolicyMethods.swift */; };
-		18CF5F5625A2F95500BF1D31 /* AblyPublisherPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */; };
-		18CF5F7B25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F7A25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift */; };
-		18CF5F7F25A3574A00BF1D31 /* MockPublisherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F7E25A3574A00BF1D31 /* MockPublisherDelegate.swift */; };
-		18CF5F8425A44FB300BF1D31 /* DefaultResolutionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F8325A44FB300BF1D31 /* DefaultResolutionPolicyTests.swift */; };
-		18CF5F8A25A4509700BF1D31 /* MockResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F8925A4509700BF1D31 /* MockResolutionPolicyMethods.swift */; };
-		18CF5F8E25A4512800BF1D31 /* MockBatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F8D25A4512800BF1D31 /* MockBatteryLevelProvider.swift */; };
-		18CF5F9525A45CEA00BF1D31 /* ThresholdChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF5F9125A45CE600BF1D31 /* ThresholdChecker.swift */; };
-		18D2B10525ACBF4A00373E04 /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D2B10425ACBF4A00373E04 /* DefaultLocationService.swift */; };
-		18D2B12C25ACCFE200373E04 /* MockRouteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D2B12B25ACCFE200373E04 /* MockRouteProvider.swift */; };
+		18A4C1CD25B2E0780092CC70 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C1CC25B2E0780092CC70 /* ResultHandler.swift */; };
+		18C7B10725B60D5F000A1418 /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10525B60D5F000A1418 /* DefaultLocationService.swift */; };
+		18C7B10825B60D5F000A1418 /* DefaultAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10625B60D5F000A1418 /* DefaultAblyPublisherService.swift */; };
+		18C7B11525B60D89000A1418 /* DefaultPublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10C25B60D75000A1418 /* DefaultPublisherTests.swift */; };
+		18C7B11A25B60D8E000A1418 /* MockAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10E25B60D75000A1418 /* MockAblyPublisherService.swift */; };
+		18C7B11B25B60D8E000A1418 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B10F25B60D75000A1418 /* MockLocationService.swift */; };
+		18C7B15C25B6109E000A1418 /* DefaultResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15325B6109E000A1418 /* DefaultResolutionPolicyMethods.swift */; };
+		18C7B15D25B6109E000A1418 /* DefaultProximityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15425B6109E000A1418 /* DefaultProximityHandler.swift */; };
+		18C7B15E25B6109E000A1418 /* DefaultSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15525B6109E000A1418 /* DefaultSubscriberSetListener.swift */; };
+		18C7B15F25B6109E000A1418 /* DefaultTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15625B6109E000A1418 /* DefaultTrackableSetListener.swift */; };
+		18C7B16025B6109E000A1418 /* DefaultResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15725B6109E000A1418 /* DefaultResolutionPolicyFactory.swift */; };
+		18C7B16125B6109E000A1418 /* DefaultResolutionPolicyHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15825B6109E000A1418 /* DefaultResolutionPolicyHooks.swift */; };
+		18C7B16225B6109E000A1418 /* ThresholdChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15925B6109E000A1418 /* ThresholdChecker.swift */; };
+		18C7B16325B6109E000A1418 /* DefaultResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15A25B6109E000A1418 /* DefaultResolutionPolicy.swift */; };
+		18C7B16425B6109E000A1418 /* BatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15B25B6109E000A1418 /* BatteryLevelProvider.swift */; };
+		18C7B16A25B61131000A1418 /* AblyPublisherPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B16925B61131000A1418 /* AblyPublisherPresence.swift */; };
+		18C7B16F25B611D1000A1418 /* DefaultResolutionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B16E25B611D1000A1418 /* DefaultResolutionPolicyTests.swift */; };
+		18C7B17325B611D9000A1418 /* DefaultPublisher_LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17225B611D9000A1418 /* DefaultPublisher_LocationServiceTests.swift */; };
+		18C7B17F25B611E4000A1418 /* MockPublisherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17825B611E4000A1418 /* MockPublisherDelegate.swift */; };
+		18C7B18025B611E4000A1418 /* MockResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17925B611E4000A1418 /* MockResolutionPolicy.swift */; };
+		18C7B18125B611E4000A1418 /* MockSubscriberSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17A25B611E4000A1418 /* MockSubscriberSetListener.swift */; };
+		18C7B18225B611E4000A1418 /* MockBatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17B25B611E4000A1418 /* MockBatteryLevelProvider.swift */; };
+		18C7B18325B611E4000A1418 /* MockResolutionPolicyMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17C25B611E4000A1418 /* MockResolutionPolicyMethods.swift */; };
+		18C7B18425B611E4000A1418 /* MockResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17D25B611E4000A1418 /* MockResolutionPolicyFactory.swift */; };
+		18C7B18525B611E4000A1418 /* MockTrackableSetListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17E25B611E4000A1418 /* MockTrackableSetListener.swift */; };
+		18C7B1BC25B6135A000A1418 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1B625B6135A000A1418 /* ResolutionPolicy.swift */; };
+		18C7B1BD25B6135A000A1418 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1B725B6135A000A1418 /* TrackableResolutionRequest.swift */; };
+		18C7B1BE25B6135A000A1418 /* ResolutionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1B825B6135A000A1418 /* ResolutionConstraints.swift */; };
+		18C7B1BF25B6135A000A1418 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1B925B6135A000A1418 /* Proximity.swift */; };
+		18C7B1C025B6135A000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1BA25B6135A000A1418 /* Accuracy.swift */; };
+		18C7B1C125B6135A000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1BB25B6135A000A1418 /* Resolution.swift */; };
+		18C7B24625B6187B000A1418 /* RouteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B24525B6187B000A1418 /* RouteProvider.swift */; };
+		18C7B26B25B6B3D8000A1418 /* MockRouteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B26A25B6B3D8000A1418 /* MockRouteProvider.swift */; };
 		18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */; };
 		18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */; };
 		18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D0258B8264005BC480 /* Trackable.swift */; };
@@ -60,12 +67,6 @@
 		18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */; };
 		18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */; };
 		18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */; };
-		18FD2D5C259B1BE400A622DF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D5B259B1BE400A622DF /* LocationService.swift */; };
-		18FD2D60259B1BEE00A622DF /* AblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D5F259B1BEE00A622DF /* AblyPublisherService.swift */; };
-		18FD2D75259B1E6A00A622DF /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D67259B1E3100A622DF /* MockLocationService.swift */; };
-		18FD2D76259B1E6A00A622DF /* MockAblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D6F259B1E4800A622DF /* MockAblyPublisherService.swift */; };
-		18FD2D7A259B20D300A622DF /* DefaultPublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D79259B20D300A622DF /* DefaultPublisherTests.swift */; };
-		18FD2D81259B6EBE00A622DF /* DefaultResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D80259B6EBE00A622DF /* DefaultResolutionPolicy.swift */; };
 		BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FF3FC4C81DED6B6A5792B3 /* Pods_asset_tracking_Publisher.framework */; };
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
 /* End PBXBuildFile section */
@@ -82,12 +83,6 @@
 
 /* Begin PBXFileReference section */
 		09DD4731BFE9981EB7CD8666 /* Pods-Publisher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Publisher.debug.xcconfig"; path = "Target Support Files/Pods-Publisher/Pods-Publisher.debug.xcconfig"; sourceTree = "<group>"; };
-		1807958825A4AEC00026F4C1 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
-		180795B825A4AF660026F4C1 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
-		180795B925A4AF660026F4C1 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
-		180795BA25A4AF660026F4C1 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
-		180795D225A4AFA10026F4C1 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
-		180795EF25A4AFE60026F4C1 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
 		180F6097258632510014B310 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		180F609A258632510014B310 /* Publisher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Publisher.h; sourceTree = "<group>"; };
 		180F609B258632510014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -95,35 +90,48 @@
 		180F6124258633140014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		180F61702586341E0014B310 /* PublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherBuilder.swift; sourceTree = "<group>"; };
 		180F61712586341E0014B310 /* DefaultPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
-		180F61742586341E0014B310 /* DefaultAblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultAblyPublisherService.swift; sourceTree = "<group>"; };
+		180F61742586341E0014B310 /* AblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblyPublisherService.swift; sourceTree = "<group>"; };
+		180F61752586341E0014B310 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		183BE6B72588AC8D0097A30B /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
-		18476F5E25AB82310032E69C /* RouteProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProvider.swift; sourceTree = "<group>"; };
-		184A93FC259C830600D6FDF8 /* MockResolutionPolicyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyFactory.swift; sourceTree = "<group>"; };
-		184A9400259C837200D6FDF8 /* MockResolutionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicy.swift; sourceTree = "<group>"; };
-		184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTrackableSetListener.swift; sourceTree = "<group>"; };
-		184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriberSetListener.swift; sourceTree = "<group>"; };
-		184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryLevelProvider.swift; sourceTree = "<group>"; };
-		184A9441259DD6D500D6FDF8 /* DefaultProximityHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProximityHandler.swift; sourceTree = "<group>"; };
 		184E873225877C6D000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094DD25889EBB00E2D2E2 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherBuilder.swift; sourceTree = "<group>"; };
-		1855B58A259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyFactory.swift; sourceTree = "<group>"; };
-		1855B590259C62600079BB3C /* DefaultResolutionPolicyHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyHooks.swift; sourceTree = "<group>"; };
-		1855B594259C62850079BB3C /* DefaultResolutionPolicyMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyMethods.swift; sourceTree = "<group>"; };
-		1855B598259C672F0079BB3C /* DefaultTrackableSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTrackableSetListener.swift; sourceTree = "<group>"; };
-		1855B59E259C67B80079BB3C /* DefaultSubscriberSetListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberSetListener.swift; sourceTree = "<group>"; };
 		185D6D1A258F573300935049 /* ResolutionPolicyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionPolicyFactory.swift; sourceTree = "<group>"; };
 		185D6D20258F57E300935049 /* ResolutionPolicyHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionPolicyHooks.swift; sourceTree = "<group>"; };
 		185D6D24258F57EC00935049 /* ResolutionPolicyMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionPolicyMethods.swift; sourceTree = "<group>"; };
-		18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyPublisherPresence.swift; sourceTree = "<group>"; };
-		18CF5F7A25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisher_LocationServiceTests.swift; sourceTree = "<group>"; };
-		18CF5F7E25A3574A00BF1D31 /* MockPublisherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPublisherDelegate.swift; sourceTree = "<group>"; };
-		18CF5F8325A44FB300BF1D31 /* DefaultResolutionPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyTests.swift; sourceTree = "<group>"; };
-		18CF5F8925A4509700BF1D31 /* MockResolutionPolicyMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyMethods.swift; sourceTree = "<group>"; };
-		18CF5F8D25A4512800BF1D31 /* MockBatteryLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBatteryLevelProvider.swift; sourceTree = "<group>"; };
-		18CF5F9125A45CE600BF1D31 /* ThresholdChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdChecker.swift; sourceTree = "<group>"; };
-		18D2B10425ACBF4A00373E04 /* DefaultLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLocationService.swift; sourceTree = "<group>"; };
-		18D2B12B25ACCFE200373E04 /* MockRouteProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouteProvider.swift; sourceTree = "<group>"; };
+		18A4C1CC25B2E0780092CC70 /* ResultHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
+		18C7B10525B60D5F000A1418 /* DefaultLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLocationService.swift; sourceTree = "<group>"; };
+		18C7B10625B60D5F000A1418 /* DefaultAblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultAblyPublisherService.swift; sourceTree = "<group>"; };
+		18C7B10C25B60D75000A1418 /* DefaultPublisherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherTests.swift; sourceTree = "<group>"; };
+		18C7B10E25B60D75000A1418 /* MockAblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAblyPublisherService.swift; sourceTree = "<group>"; };
+		18C7B10F25B60D75000A1418 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
+		18C7B15325B6109E000A1418 /* DefaultResolutionPolicyMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyMethods.swift; sourceTree = "<group>"; };
+		18C7B15425B6109E000A1418 /* DefaultProximityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultProximityHandler.swift; sourceTree = "<group>"; };
+		18C7B15525B6109E000A1418 /* DefaultSubscriberSetListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberSetListener.swift; sourceTree = "<group>"; };
+		18C7B15625B6109E000A1418 /* DefaultTrackableSetListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTrackableSetListener.swift; sourceTree = "<group>"; };
+		18C7B15725B6109E000A1418 /* DefaultResolutionPolicyFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyFactory.swift; sourceTree = "<group>"; };
+		18C7B15825B6109E000A1418 /* DefaultResolutionPolicyHooks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyHooks.swift; sourceTree = "<group>"; };
+		18C7B15925B6109E000A1418 /* ThresholdChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdChecker.swift; sourceTree = "<group>"; };
+		18C7B15A25B6109E000A1418 /* DefaultResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicy.swift; sourceTree = "<group>"; };
+		18C7B15B25B6109E000A1418 /* BatteryLevelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryLevelProvider.swift; sourceTree = "<group>"; };
+		18C7B16925B61131000A1418 /* AblyPublisherPresence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblyPublisherPresence.swift; sourceTree = "<group>"; };
+		18C7B16E25B611D1000A1418 /* DefaultResolutionPolicyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyTests.swift; sourceTree = "<group>"; };
+		18C7B17225B611D9000A1418 /* DefaultPublisher_LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisher_LocationServiceTests.swift; sourceTree = "<group>"; };
+		18C7B17825B611E4000A1418 /* MockPublisherDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPublisherDelegate.swift; sourceTree = "<group>"; };
+		18C7B17925B611E4000A1418 /* MockResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicy.swift; sourceTree = "<group>"; };
+		18C7B17A25B611E4000A1418 /* MockSubscriberSetListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSubscriberSetListener.swift; sourceTree = "<group>"; };
+		18C7B17B25B611E4000A1418 /* MockBatteryLevelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBatteryLevelProvider.swift; sourceTree = "<group>"; };
+		18C7B17C25B611E4000A1418 /* MockResolutionPolicyMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyMethods.swift; sourceTree = "<group>"; };
+		18C7B17D25B611E4000A1418 /* MockResolutionPolicyFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResolutionPolicyFactory.swift; sourceTree = "<group>"; };
+		18C7B17E25B611E4000A1418 /* MockTrackableSetListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTrackableSetListener.swift; sourceTree = "<group>"; };
+		18C7B1B625B6135A000A1418 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
+		18C7B1B725B6135A000A1418 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
+		18C7B1B825B6135A000A1418 /* ResolutionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionConstraints.swift; sourceTree = "<group>"; };
+		18C7B1B925B6135A000A1418 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
+		18C7B1BA25B6135A000A1418 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
+		18C7B1BB25B6135A000A1418 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
+		18C7B24525B6187B000A1418 /* RouteProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteProvider.swift; sourceTree = "<group>"; };
+		18C7B26A25B6B3D8000A1418 /* MockRouteProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRouteProvider.swift; sourceTree = "<group>"; };
 		18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherEvents.swift; sourceTree = "<group>"; };
 		18FCE1CF258B8264005BC480 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		18FCE1D0258B8264005BC480 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
@@ -139,12 +147,6 @@
 		18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+FromJSONString.swift"; sourceTree = "<group>"; };
 		18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+EncodedString.swift"; sourceTree = "<group>"; };
 		18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnimplementedSupport.swift; sourceTree = "<group>"; };
-		18FD2D5B259B1BE400A622DF /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		18FD2D5F259B1BEE00A622DF /* AblyPublisherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyPublisherService.swift; sourceTree = "<group>"; };
-		18FD2D67259B1E3100A622DF /* MockLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
-		18FD2D6F259B1E4800A622DF /* MockAblyPublisherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAblyPublisherService.swift; sourceTree = "<group>"; };
-		18FD2D79259B20D300A622DF /* DefaultPublisherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPublisherTests.swift; sourceTree = "<group>"; };
-		18FD2D80259B6EBE00A622DF /* DefaultResolutionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicy.swift; sourceTree = "<group>"; };
 		35611B0FAFCE409CE8FE313E /* Pods-PublisherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PublisherTests.release.xcconfig"; path = "Target Support Files/Pods-PublisherTests/Pods-PublisherTests.release.xcconfig"; sourceTree = "<group>"; };
 		5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_PublisherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		713F639B2A96304D65AB1950 /* Pods-asset_tracking-PublisherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherTests.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherTests/Pods-asset_tracking-PublisherTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -177,20 +179,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1807958725A4AEC00026F4C1 /* ResolutionPolicy */ = {
-			isa = PBXGroup;
-			children = (
-				180795EF25A4AFE60026F4C1 /* TrackableResolutionRequest.swift */,
-				180795D225A4AFA10026F4C1 /* Proximity.swift */,
-				180795B825A4AF660026F4C1 /* Accuracy.swift */,
-				180795B925A4AF660026F4C1 /* Resolution.swift */,
-				180795BA25A4AF660026F4C1 /* ResolutionPolicy.swift */,
-				1807958825A4AEC00026F4C1 /* ResolutionConstraints.swift */,
-			);
-			name = ResolutionPolicy;
-			path = ../../Core/Sources/ResolutionPolicy;
-			sourceTree = "<group>";
-		};
 		180F608D258632510014B310 = {
 			isa = PBXGroup;
 			children = (
@@ -218,9 +206,9 @@
 				185094E325889ED200E2D2E2 /* Model */,
 				180F61732586341E0014B310 /* Services */,
 				185D6D13258F55F800935049 /* Resolution Policy */,
-				1855B589259C62310079BB3C /* DefaultResolutionPolicy */,
-				180F61712586341E0014B310 /* DefaultPublisher.swift */,
+				18C7B15225B6109E000A1418 /* DefaultResolutionPolicy */,
 				185094DD25889EBB00E2D2E2 /* Publisher.swift */,
+				180F61712586341E0014B310 /* DefaultPublisher.swift */,
 				18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */,
 				180F61702586341E0014B310 /* PublisherBuilder.swift */,
 				185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */,
@@ -233,9 +221,9 @@
 		180F6121258633140014B310 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				18FD2D66259B1E2100A622DF /* Mocks */,
-				18FD2D65259B1E1800A622DF /* DefaultPublisher */,
-				18CF5F8225A44F7500BF1D31 /* DefaultResolutionPolicy */,
+				18C7B16D25B611D1000A1418 /* DefaultResolutionPolicy */,
+				18C7B10B25B60D75000A1418 /* DefaultPublisher */,
+				18C7B10D25B60D75000A1418 /* Mocks */,
 				180F6124258633140014B310 /* Info.plist */,
 			);
 			path = Tests;
@@ -244,12 +232,12 @@
 		180F61732586341E0014B310 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				18FD2D5F259B1BEE00A622DF /* AblyPublisherService.swift */,
-				180F61742586341E0014B310 /* DefaultAblyPublisherService.swift */,
-				18CF5F5525A2F95500BF1D31 /* AblyPublisherPresence.swift */,
-				18FD2D5B259B1BE400A622DF /* LocationService.swift */,
-				18D2B10425ACBF4A00373E04 /* DefaultLocationService.swift */,
-				18476F5E25AB82310032E69C /* RouteProvider.swift */,
+				18C7B24525B6187B000A1418 /* RouteProvider.swift */,
+				18C7B16925B61131000A1418 /* AblyPublisherPresence.swift */,
+				18C7B10625B60D5F000A1418 /* DefaultAblyPublisherService.swift */,
+				18C7B10525B60D5F000A1418 /* DefaultLocationService.swift */,
+				180F61742586341E0014B310 /* AblyPublisherService.swift */,
+				180F61752586341E0014B310 /* LocationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -262,22 +250,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1855B589259C62310079BB3C /* DefaultResolutionPolicy */ = {
-			isa = PBXGroup;
-			children = (
-				18FD2D80259B6EBE00A622DF /* DefaultResolutionPolicy.swift */,
-				184A9441259DD6D500D6FDF8 /* DefaultProximityHandler.swift */,
-				1855B590259C62600079BB3C /* DefaultResolutionPolicyHooks.swift */,
-				1855B59E259C67B80079BB3C /* DefaultSubscriberSetListener.swift */,
-				1855B598259C672F0079BB3C /* DefaultTrackableSetListener.swift */,
-				1855B594259C62850079BB3C /* DefaultResolutionPolicyMethods.swift */,
-				1855B58A259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift */,
-				184A940C259C9B9F00D6FDF8 /* BatteryLevelProvider.swift */,
-				18CF5F9125A45CE600BF1D31 /* ThresholdChecker.swift */,
-			);
-			path = DefaultResolutionPolicy;
-			sourceTree = "<group>";
-		};
 		185D6D13258F55F800935049 /* Resolution Policy */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,18 +260,74 @@
 			path = "Resolution Policy";
 			sourceTree = "<group>";
 		};
-		18CF5F8225A44F7500BF1D31 /* DefaultResolutionPolicy */ = {
+		18C7B10B25B60D75000A1418 /* DefaultPublisher */ = {
 			isa = PBXGroup;
 			children = (
-				18CF5F8325A44FB300BF1D31 /* DefaultResolutionPolicyTests.swift */,
+				18C7B17225B611D9000A1418 /* DefaultPublisher_LocationServiceTests.swift */,
+				18C7B10C25B60D75000A1418 /* DefaultPublisherTests.swift */,
+			);
+			path = DefaultPublisher;
+			sourceTree = "<group>";
+		};
+		18C7B10D25B60D75000A1418 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				18C7B26A25B6B3D8000A1418 /* MockRouteProvider.swift */,
+				18C7B17B25B611E4000A1418 /* MockBatteryLevelProvider.swift */,
+				18C7B17825B611E4000A1418 /* MockPublisherDelegate.swift */,
+				18C7B17925B611E4000A1418 /* MockResolutionPolicy.swift */,
+				18C7B17D25B611E4000A1418 /* MockResolutionPolicyFactory.swift */,
+				18C7B17C25B611E4000A1418 /* MockResolutionPolicyMethods.swift */,
+				18C7B17A25B611E4000A1418 /* MockSubscriberSetListener.swift */,
+				18C7B17E25B611E4000A1418 /* MockTrackableSetListener.swift */,
+				18C7B10E25B60D75000A1418 /* MockAblyPublisherService.swift */,
+				18C7B10F25B60D75000A1418 /* MockLocationService.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		18C7B15225B6109E000A1418 /* DefaultResolutionPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				18C7B15325B6109E000A1418 /* DefaultResolutionPolicyMethods.swift */,
+				18C7B15425B6109E000A1418 /* DefaultProximityHandler.swift */,
+				18C7B15525B6109E000A1418 /* DefaultSubscriberSetListener.swift */,
+				18C7B15625B6109E000A1418 /* DefaultTrackableSetListener.swift */,
+				18C7B15725B6109E000A1418 /* DefaultResolutionPolicyFactory.swift */,
+				18C7B15825B6109E000A1418 /* DefaultResolutionPolicyHooks.swift */,
+				18C7B15925B6109E000A1418 /* ThresholdChecker.swift */,
+				18C7B15A25B6109E000A1418 /* DefaultResolutionPolicy.swift */,
+				18C7B15B25B6109E000A1418 /* BatteryLevelProvider.swift */,
 			);
 			path = DefaultResolutionPolicy;
+			sourceTree = "<group>";
+		};
+		18C7B16D25B611D1000A1418 /* DefaultResolutionPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				18C7B16E25B611D1000A1418 /* DefaultResolutionPolicyTests.swift */,
+			);
+			path = DefaultResolutionPolicy;
+			sourceTree = "<group>";
+		};
+		18C7B1B525B6135A000A1418 /* ResolutionPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				18C7B1B625B6135A000A1418 /* ResolutionPolicy.swift */,
+				18C7B1B725B6135A000A1418 /* TrackableResolutionRequest.swift */,
+				18C7B1B825B6135A000A1418 /* ResolutionConstraints.swift */,
+				18C7B1B925B6135A000A1418 /* Proximity.swift */,
+				18C7B1BA25B6135A000A1418 /* Accuracy.swift */,
+				18C7B1BB25B6135A000A1418 /* Resolution.swift */,
+			);
+			name = ResolutionPolicy;
+			path = ../../Core/Sources/ResolutionPolicy;
 			sourceTree = "<group>";
 		};
 		18FCE195258B7FBB005BC480 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				1807958725A4AEC00026F4C1 /* ResolutionPolicy */,
+				18C7B1B525B6135A000A1418 /* ResolutionPolicy */,
 				18FCE1CE258B8264005BC480 /* Configuration */,
 				18FCE1D3258B8264005BC480 /* Model */,
 				18FCE1DC258B8264005BC480 /* Utils */,
@@ -345,38 +373,13 @@
 		18FCE1DC258B8264005BC480 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18A4C1CC25B2E0780092CC70 /* ResultHandler.swift */,
 				18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */,
 				18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */,
 				18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */,
 			);
 			name = Utils;
 			path = ../../Core/Sources/Utils;
-			sourceTree = "<group>";
-		};
-		18FD2D65259B1E1800A622DF /* DefaultPublisher */ = {
-			isa = PBXGroup;
-			children = (
-				18FD2D79259B20D300A622DF /* DefaultPublisherTests.swift */,
-				18CF5F7A25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift */,
-			);
-			path = DefaultPublisher;
-			sourceTree = "<group>";
-		};
-		18FD2D66259B1E2100A622DF /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				18FD2D67259B1E3100A622DF /* MockLocationService.swift */,
-				18FD2D6F259B1E4800A622DF /* MockAblyPublisherService.swift */,
-				184A93FC259C830600D6FDF8 /* MockResolutionPolicyFactory.swift */,
-				184A9400259C837200D6FDF8 /* MockResolutionPolicy.swift */,
-				184A9404259C857100D6FDF8 /* MockTrackableSetListener.swift */,
-				184A9408259C85AE00D6FDF8 /* MockSubscriberSetListener.swift */,
-				18CF5F7E25A3574A00BF1D31 /* MockPublisherDelegate.swift */,
-				18CF5F8925A4509700BF1D31 /* MockResolutionPolicyMethods.swift */,
-				18CF5F8D25A4512800BF1D31 /* MockBatteryLevelProvider.swift */,
-				18D2B12B25ACCFE200373E04 /* MockRouteProvider.swift */,
-			);
-			path = Mocks;
 			sourceTree = "<group>";
 		};
 		9B719654E1BFB314021F4272 /* Pods */ = {
@@ -601,48 +604,49 @@
 			files = (
 				18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */,
 				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
+				18C7B16125B6109E000A1418 /* DefaultResolutionPolicyHooks.swift in Sources */,
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,
-				18FD2D60259B1BEE00A622DF /* AblyPublisherService.swift in Sources */,
-				1855B595259C62850079BB3C /* DefaultResolutionPolicyMethods.swift in Sources */,
+				18C7B10825B60D5F000A1418 /* DefaultAblyPublisherService.swift in Sources */,
+				18C7B15D25B6109E000A1418 /* DefaultProximityHandler.swift in Sources */,
 				185D6D21258F57E300935049 /* ResolutionPolicyHooks.swift in Sources */,
-				180795F025A4AFE60026F4C1 /* TrackableResolutionRequest.swift in Sources */,
 				185D6D25258F57EC00935049 /* ResolutionPolicyMethods.swift in Sources */,
-				1807958925A4AEC00026F4C1 /* ResolutionConstraints.swift in Sources */,
+				18C7B16A25B61131000A1418 /* AblyPublisherPresence.swift in Sources */,
+				18C7B16325B6109E000A1418 /* DefaultResolutionPolicy.swift in Sources */,
 				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
-				18CF5F9525A45CEA00BF1D31 /* ThresholdChecker.swift in Sources */,
-				180795BB25A4AF660026F4C1 /* Accuracy.swift in Sources */,
 				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
-				180F61792586341E0014B310 /* DefaultAblyPublisherService.swift in Sources */,
+				18A4C1CD25B2E0780092CC70 /* ResultHandler.swift in Sources */,
+				18C7B10725B60D5F000A1418 /* DefaultLocationService.swift in Sources */,
+				18C7B1C125B6135A000A1418 /* Resolution.swift in Sources */,
+				180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */,
+				18C7B15C25B6109E000A1418 /* DefaultResolutionPolicyMethods.swift in Sources */,
 				18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */,
 				18FCE1E2258B8264005BC480 /* TransportationMode.swift in Sources */,
+				18C7B15F25B6109E000A1418 /* DefaultTrackableSetListener.swift in Sources */,
+				18C7B16025B6109E000A1418 /* DefaultResolutionPolicyFactory.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
-				1855B59F259C67B80079BB3C /* DefaultSubscriberSetListener.swift in Sources */,
+				18C7B1BC25B6135A000A1418 /* ResolutionPolicy.swift in Sources */,
 				18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */,
 				185D6D1B258F573300935049 /* ResolutionPolicyFactory.swift in Sources */,
-				180795BC25A4AF660026F4C1 /* Resolution.swift in Sources */,
 				183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */,
-				1855B599259C672F0079BB3C /* DefaultTrackableSetListener.swift in Sources */,
-				180795BD25A4AF660026F4C1 /* ResolutionPolicy.swift in Sources */,
+				18C7B1BD25B6135A000A1418 /* TrackableResolutionRequest.swift in Sources */,
 				185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */,
+				18C7B16425B6109E000A1418 /* BatteryLevelProvider.swift in Sources */,
+				18C7B1BF25B6135A000A1418 /* Proximity.swift in Sources */,
 				18FCE1E6258B8264005BC480 /* GeoJSONProperties.swift in Sources */,
 				180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */,
+				18C7B16225B6109E000A1418 /* ThresholdChecker.swift in Sources */,
 				18FCE1E5258B8264005BC480 /* GeoJSONGeometry.swift in Sources */,
-				18CF5F5625A2F95500BF1D31 /* AblyPublisherPresence.swift in Sources */,
+				18C7B24625B6187B000A1418 /* RouteProvider.swift in Sources */,
+				18C7B15E25B6109E000A1418 /* DefaultSubscriberSetListener.swift in Sources */,
 				18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */,
-				1855B591259C62600079BB3C /* DefaultResolutionPolicyHooks.swift in Sources */,
-				1855B58B259C624C0079BB3C /* DefaultResolutionPolicyFactory.swift in Sources */,
-				18FD2D81259B6EBE00A622DF /* DefaultResolutionPolicy.swift in Sources */,
-				18D2B10525ACBF4A00373E04 /* DefaultLocationService.swift in Sources */,
-				18476F5F25AB82310032E69C /* RouteProvider.swift in Sources */,
-				18FD2D5C259B1BE400A622DF /* LocationService.swift in Sources */,
+				180F617A2586341E0014B310 /* LocationService.swift in Sources */,
 				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,
-				184A9410259C9C6C00D6FDF8 /* BatteryLevelProvider.swift in Sources */,
+				18C7B1C025B6135A000A1418 /* Accuracy.swift in Sources */,
+				18C7B1BE25B6135A000A1418 /* ResolutionConstraints.swift in Sources */,
 				18FCE1E7258B8264005BC480 /* GeoJSONType.swift in Sources */,
 				180F61762586341E0014B310 /* PublisherBuilder.swift in Sources */,
 				18FCE1E3258B8264005BC480 /* LogConfiguration.swift in Sources */,
-				184A9442259DD6D500D6FDF8 /* DefaultProximityHandler.swift in Sources */,
-				180795D325A4AFA10026F4C1 /* Proximity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,19 +654,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18CF5F7F25A3574A00BF1D31 /* MockPublisherDelegate.swift in Sources */,
-				18CF5F8E25A4512800BF1D31 /* MockBatteryLevelProvider.swift in Sources */,
-				184A9409259C85AE00D6FDF8 /* MockSubscriberSetListener.swift in Sources */,
-				18CF5F8A25A4509700BF1D31 /* MockResolutionPolicyMethods.swift in Sources */,
-				18FD2D7A259B20D300A622DF /* DefaultPublisherTests.swift in Sources */,
-				18CF5F8425A44FB300BF1D31 /* DefaultResolutionPolicyTests.swift in Sources */,
-				18FD2D76259B1E6A00A622DF /* MockAblyPublisherService.swift in Sources */,
-				184A9405259C857100D6FDF8 /* MockTrackableSetListener.swift in Sources */,
-				184A93FD259C830600D6FDF8 /* MockResolutionPolicyFactory.swift in Sources */,
-				18D2B12C25ACCFE200373E04 /* MockRouteProvider.swift in Sources */,
-				18CF5F7B25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift in Sources */,
-				184A9401259C837200D6FDF8 /* MockResolutionPolicy.swift in Sources */,
-				18FD2D75259B1E6A00A622DF /* MockLocationService.swift in Sources */,
+				18C7B18325B611E4000A1418 /* MockResolutionPolicyMethods.swift in Sources */,
+				18C7B11B25B60D8E000A1418 /* MockLocationService.swift in Sources */,
+				18C7B18525B611E4000A1418 /* MockTrackableSetListener.swift in Sources */,
+				18C7B17325B611D9000A1418 /* DefaultPublisher_LocationServiceTests.swift in Sources */,
+				18C7B18125B611E4000A1418 /* MockSubscriberSetListener.swift in Sources */,
+				18C7B16F25B611D1000A1418 /* DefaultResolutionPolicyTests.swift in Sources */,
+				18C7B18225B611E4000A1418 /* MockBatteryLevelProvider.swift in Sources */,
+				18C7B18025B611E4000A1418 /* MockResolutionPolicy.swift in Sources */,
+				18C7B18425B611E4000A1418 /* MockResolutionPolicyFactory.swift in Sources */,
+				18C7B26B25B6B3D8000A1418 /* MockRouteProvider.swift in Sources */,
+				18C7B17F25B611E4000A1418 /* MockPublisherDelegate.swift in Sources */,
+				18C7B11A25B60D8E000A1418 /* MockAblyPublisherService.swift in Sources */,
+				18C7B11525B60D89000A1418 /* DefaultPublisherTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,7 +819,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.Publisher";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.Publisher;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -840,7 +844,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.Publisher";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.Publisher;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;

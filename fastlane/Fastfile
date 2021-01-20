@@ -99,4 +99,23 @@ platform :ios do
       xcargs: 'SKIP_INSTALL=NO',
     )
   end
+
+  desc 'Build example apps to validate that there are no build errors'
+  lane :build_example_apps do
+    xcodebuild(
+      workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'PublisherExample',
+      configuration: 'Debug',
+      sdk: 'iphonesimulator',
+      arch: 'x86_64'
+    )
+
+    xcodebuild(
+      workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'SubscriberExample',
+      configuration: 'Debug',
+      sdk: 'iphonesimulator',
+      arch: 'x86_64'
+    )
+  end
 end
