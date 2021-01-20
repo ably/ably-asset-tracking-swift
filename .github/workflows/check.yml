@@ -19,10 +19,6 @@ jobs:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
           
       - name: Configure Ably and Mapbox access keys
-        run: |
-          echo "ablyApiKey $ABLY_API_KEY" >> ~/.netrc
-          echo "ablyClientId $ABLY_CLIENT_ID" >> ~/.netrc
-          echo "mapboxAccessToken $MAPBOX_ACCESS_TOKEN" >> ~/.netrc
         env:
           ablyApiKey: ${{ secrets.ABLY_API_KEY }}
           ablyClientId: ${{ secrets.ABLY_CLIENT_ID }}
