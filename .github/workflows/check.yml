@@ -17,12 +17,9 @@ jobs:
           echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
-          
-      - name: Configure Ably and Mapbox access keys
-        env:
-          ablyApiKey: ${{ secrets.ABLY_API_KEY }}
-          ablyClientId: ${{ secrets.ABLY_CLIENT_ID }}
-          mapboxAccessToken: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
+          ABLY_CLIENT_ID: -
 
       - name: Run All Tests using Fastlane
         run: |
