@@ -52,6 +52,17 @@ abstract_target 'asset_tracking' do
     pod 'AblyAssetTracking/Subscriber', :path => 'AblyAssetTracking.podspec'
   end
 
+  # Integration tests
+  target 'Integration' do
+    project 'Integration/Integration.xcodeproj'
+    pod 'AblyAssetTracking/Integration', :path => 'AblyAssetTracking.podspec'
+  end
+
+  target 'IntegrationTests' do
+    project 'Integration/Integration.xcodeproj'
+    pod 'AblyAssetTracking/Integration', :path => 'AblyAssetTracking.podspec'
+  end
+
   # Tests
   target 'CoreTests' do
     project 'Core/Core.xcodeproj'
@@ -59,7 +70,6 @@ abstract_target 'asset_tracking' do
 
   target 'PublisherTests' do
     project 'Publisher/Publisher.xcodeproj'
-    mapbox_sdk
   end
 
   target 'SubscriberTests' do

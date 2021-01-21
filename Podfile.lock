@@ -4,6 +4,10 @@ PODS:
     - msgpack (= 0.3.1)
     - SocketRocketAblyFork (= 0.5.2-ably-7)
     - ULID (= 1.1.0)
+  - AblyAssetTracking/Integration (0.0.1):
+    - Ably (~> 1.2.0)
+    - Logging (~> 1.4.0)
+    - MapboxCoreNavigation (~> 1.1.0)
   - AblyAssetTracking/Publisher (0.0.1):
     - Ably (~> 1.2.0)
     - Logging (~> 1.4.0)
@@ -37,6 +41,7 @@ PODS:
 
 DEPENDENCIES:
   - Ably (~> 1.2.0)
+  - AblyAssetTracking/Integration (from `AblyAssetTracking.podspec`)
   - AblyAssetTracking/Publisher (from `AblyAssetTracking.podspec`)
   - AblyAssetTracking/Subscriber (from `AblyAssetTracking.podspec`)
   - Keys (from `Pods/CocoaPodsKeys`)
@@ -70,7 +75,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Ably: 9f143677993cb6df20fce4551b9b6b2e55ad2f4d
-  AblyAssetTracking: a2adac51dca6cfc6ee2a543278bafcdb722b364b
+  AblyAssetTracking: 516ca054ea882e96f1473f66536d98d3b6195908
   AblyDeltaCodec: 6123f31df5b04a0f5452968505a46ba16a9eb689
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
@@ -87,6 +92,6 @@ SPEC CHECKSUMS:
   Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: 54856ad28625f02a536fd1e6d8137d3ec273c6a3
+PODFILE CHECKSUM: b0ad4eee339a4d1b3cc29f248b2a28130072a1d2
 
 COCOAPODS: 1.10.0
