@@ -60,7 +60,7 @@ abstract_target 'asset_tracking' do
 
   target 'IntegrationTests' do
     project 'Integration/Integration.xcodeproj'
-    pod 'AblyAssetTracking/Integration', :path => 'AblyAssetTracking.podspec'
+pod 'AblyAssetTracking/Integration', :path => 'AblyAssetTracking.podspec'
   end
 
   # Tests

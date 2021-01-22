@@ -71,6 +71,7 @@
 		F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */; };
 		F67C0C3D25B70C1B006BA0B4 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C0C3C25B70C1B006BA0B4 /* MapboxConfiguration.swift */; };
 		F67C0C8725B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C0C8625B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift */; };
+		F6B5474325B98BED002BA3E9 /* PublisherIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B5471125B9899C002BA3E9 /* PublisherIntegrationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,7 @@
 		F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+Extensions.swift"; sourceTree = "<group>"; };
 		F67C0C3C25B70C1B006BA0B4 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
 		F67C0C8625B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapboxConfiguration+Extensions.swift"; sourceTree = "<group>"; };
+		F6B5471125B9899C002BA3E9 /* PublisherIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherIntegrationTests.swift; sourceTree = "<group>"; };
 		F9B1CBDB707C22DF88ACEF73 /* Pods-asset_tracking-Publisher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				18FD2D66259B1E2100A622DF /* Mocks */,
+				F6B5471025B98956002BA3E9 /* Publisher */,
 				18FD2D65259B1E1800A622DF /* DefaultPublisher */,
 				18CF5F8225A44F7500BF1D31 /* DefaultResolutionPolicy */,
 				180F6124258633140014B310 /* Info.plist */,
@@ -420,6 +423,14 @@
 				F67C0C8625B70EE3006BA0B4 /* MapboxConfiguration+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F6B5471025B98956002BA3E9 /* Publisher */ = {
+			isa = PBXGroup;
+			children = (
+				F6B5471125B9899C002BA3E9 /* PublisherIntegrationTests.swift */,
+			);
+			path = Publisher;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -683,6 +694,7 @@
 				18CF5F7B25A352E100BF1D31 /* DefaultPublisher_LocationServiceTests.swift in Sources */,
 				184A9401259C837200D6FDF8 /* MockResolutionPolicy.swift in Sources */,
 				18FD2D75259B1E6A00A622DF /* MockLocationService.swift in Sources */,
+				F6B5474325B98BED002BA3E9 /* PublisherIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import AblyAssetTracking
 @testable import Integration
 
 class IntegrationTests: XCTestCase {

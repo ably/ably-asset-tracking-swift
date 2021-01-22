@@ -28,7 +28,6 @@ Pod::Spec.new do |spec|
     ss.dependency 'Ably', '~> 1.2.0'
     ss.dependency 'MapboxCoreNavigation', '~> 1.1.0'
     ss.dependency 'Logging', '~> 1.4.0'
-    ss.source_files = 'Integration/Sources/**/*.swift', 'Core/Sources/**/*.swift'
     ss.ios.deployment_target = '12.0'
   end
 
