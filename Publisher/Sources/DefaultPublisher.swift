@@ -178,7 +178,6 @@ extension DefaultPublisher {
                 )
             } else {
                 self.route = nil
-                return
             }
         }
         callback(event.onSuccess)
