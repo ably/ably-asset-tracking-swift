@@ -271,46 +271,48 @@ extension DefaultPublisher {
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
         let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
-            return shouldSendLocation(location: event.location,
+            return shouldSendLocation(location: event.locationUpdate.location,
                                       lastLocation: lastEnhancedLocations[trackable],
                                       lastTimestamp: lastEnhancedTimestamps[trackable],
                                       resolution: resolutions[trackable])
         }
 
         trackablesToSend.forEach { trackable in
-            lastEnhancedLocations[trackable] = event.location
-            lastEnhancedTimestamps[trackable] = event.location.timestamp
+            lastEnhancedLocations[trackable] = event.locationUpdate.location
+            lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
 
-            ablyService.sendEnhancedAssetLocation(location: event.location, forTrackable: trackable) { [weak self] error in
+            
+            
+            ablyService.sendEnhancedAssetLocation(location: event.locationUpdate.location, forTrackable: trackable) { [weak self] error in
                 if let error = error {
                     self?.execute(event: DelegateErrorEvent(error: error))
                 }
             }
         }
 
-        checkThreshold(location: event.location)
+        checkThreshold(location: event.locationUpdate.location)
     }
 
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
         let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
-            return shouldSendLocation(location: event.location,
+            return shouldSendLocation(location: event.locationUpdate.location,
                                       lastLocation: lastRawLocations[trackable],
                                       lastTimestamp: lastRawTimestamps[trackable],
                                       resolution: resolutions[trackable])
         }
 
         trackablesToSend.forEach { trackable in
-            lastRawLocations[trackable] = event.location
-            lastRawTimestamps[trackable] = event.location.timestamp
+            lastRawLocations[trackable] = event.locationUpdate.location
+            lastRawTimestamps[trackable] = event.locationUpdate.location.timestamp
 
-            ablyService.sendRawAssetLocation(location: event.location, forTrackable: trackable) { [weak self] error in
+            ablyService.sendRawAssetLocation(location: event.locationUpdate.location, forTrackable: trackable) { [weak self] error in
                 if let error = error {
                     self?.execute(event: DelegateErrorEvent(error: error))
                 }
             }
         }
 
-        checkThreshold(location: event.location)
+        checkThreshold(location: event.locationUpdate.location)
     }
 
     private func shouldSendLocation(location: CLLocation,
@@ -490,13 +492,14 @@ extension DefaultPublisher: LocationServiceDelegate {
 
     func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
         logger.debug("locationService.didUpdateRawLocation.", source: "DefaultPublisher")
-        execute(event: RawLocationChangedEvent(location: location))
+        execute(event: RawLocationChangedEvent(locationUpdate: RawLocationUpdate(location: location)))
         execute(event: DelegateRawLocationChangedEvent(location: location))
     }
 
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
-        execute(event: EnhancedLocationChangedEvent(location: location))
+        let locationUpdate = EnhancedLocationUpdate(location: location)
+        execute(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate))
         execute(event: DelegateEnhancedLocationChangedEvent(location: location))
     }
 }

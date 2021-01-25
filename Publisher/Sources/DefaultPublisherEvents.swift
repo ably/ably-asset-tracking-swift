@@ -60,11 +60,11 @@ struct SetDestinationSuccessEvent: PublisherEvent {
 }
 
 struct RawLocationChangedEvent: PublisherEvent {
-    let location: CLLocation
+    let locationUpdate: RawLocationUpdate
 }
 
 struct EnhancedLocationChangedEvent: PublisherEvent {
-    let location: CLLocation
+    let locationUpdate: EnhancedLocationUpdate
 }
 
 struct RefreshResolutionPolicyEvent: PublisherEvent {}

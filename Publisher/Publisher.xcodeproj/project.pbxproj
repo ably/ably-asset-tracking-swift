@@ -67,6 +67,7 @@
 		18FD2D81259B6EBE00A622DF /* DefaultResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD2D80259B6EBE00A622DF /* DefaultResolutionPolicy.swift */; };
 		BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FF3FC4C81DED6B6A5792B3 /* Pods_asset_tracking_Publisher.framework */; };
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
+		F659515925BED52D001973A3 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F659515825BED52D001973A3 /* LocationUpdate.swift */; };
 		F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34425AF3E35002799BD /* RoutingProfile.swift */; };
 		F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */; };
 		F67C0C3D25B70C1B006BA0B4 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C0C3C25B70C1B006BA0B4 /* MapboxConfiguration.swift */; };
@@ -155,6 +156,7 @@
 		8B412391C99428EFFA9D511B /* Pods-asset_tracking-PublisherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherTests/Pods-asset_tracking-PublisherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		96BA6252D49C6BAA02CFF7B7 /* Pods-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Publisher.release.xcconfig"; path = "Target Support Files/Pods-Publisher/Pods-Publisher.release.xcconfig"; sourceTree = "<group>"; };
 		C8859F81CDD7390E11741B66 /* Pods-asset_tracking-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.release.xcconfig"; sourceTree = "<group>"; };
+		F659515825BED52D001973A3 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F65AC34425AF3E35002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+Extensions.swift"; sourceTree = "<group>"; };
 		F67C0C3C25B70C1B006BA0B4 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				18FCE1D9258B8264005BC480 /* PresenceData.swift */,
 				18FCE1DA258B8264005BC480 /* EventName.swift */,
 				18FCE1DB258B8264005BC480 /* AssetTrackingError.swift */,
+				F659515825BED52D001973A3 /* LocationUpdate.swift */,
 			);
 			name = Model;
 			path = ../../Core/Sources/Model;
@@ -643,6 +646,7 @@
 				183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */,
 				1855B599259C672F0079BB3C /* DefaultTrackableSetListener.swift in Sources */,
 				180795BD25A4AF660026F4C1 /* ResolutionPolicy.swift in Sources */,
+				F659515925BED52D001973A3 /* LocationUpdate.swift in Sources */,
 				185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */,
 				18FCE1E6258B8264005BC480 /* GeoJSONProperties.swift in Sources */,
 				180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */,
@@ -735,6 +739,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -799,6 +804,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

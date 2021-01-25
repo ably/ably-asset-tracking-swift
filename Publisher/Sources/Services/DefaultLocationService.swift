@@ -33,7 +33,7 @@ class DefaultLocationService: LocationService {
     }
 }
 
-extension DefaultLocationService: PassiveLocationDataSourceDelegate {
+extension DefaultLocationService: PassiveLocationDataSourceDelegate {    
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource,
                                    didUpdateLocation location: CLLocation,
                                    rawLocation: CLLocation) {
