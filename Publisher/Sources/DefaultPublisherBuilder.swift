@@ -55,7 +55,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                           transportationMode: transportationMode,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyService: DefaultAblyPublisherService(configuration: connection),
-                                          locationService: DefaultLocationService())
+                                          locationService: DefaultLocationService(),
+                                          routeProvider: DefaultRouteProvider())
         publisher.delegate = delegate
         return publisher
     }

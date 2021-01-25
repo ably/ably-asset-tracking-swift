@@ -7,6 +7,7 @@ class DefaultPublisherTests: XCTestCase {
     var locationService: MockLocationService!
     var ablyService: MockAblyPublisherService!
     var configuration: ConnectionConfiguration!
+    var routeProvider: MockRouteProvider!
     var resolutionPolicyFactory: MockResolutionPolicyFactory!
     var trackable: Trackable!
     var publisher: DefaultPublisher!
@@ -24,6 +25,7 @@ class DefaultPublisherTests: XCTestCase {
         ablyService = MockAblyPublisherService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         resolutionPolicyFactory = MockResolutionPolicyFactory()
+        routeProvider = MockRouteProvider()
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
@@ -32,7 +34,8 @@ class DefaultPublisherTests: XCTestCase {
                                      transportationMode: TransportationMode(),
                                      resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyService: ablyService,
-                                     locationService: locationService)
+                                     locationService: locationService,
+                                     routeProvider: routeProvider)
     }
 
     // MARK: track
@@ -63,6 +66,25 @@ class DefaultPublisherTests: XCTestCase {
         // It should notify trackables hook that there is new active trackable
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedParamTrackable, trackable)
+    }
+
+    // MARK: track
+    func testTrack_destination() {
+        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        let expectation = XCTestExpectation()
+
+        let destination = CLLocationCoordinate2D(latitude: 12.3456, longitude: 56.789)
+        let trackable = Trackable(id: "TrackableId", destination: destination)
+
+        // When tracking a trackable with given destination
+        publisher.track(trackable: trackable,
+                        onSuccess: { expectation.fulfill() },
+                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        wait(for: [expectation], timeout: 5.0)
+
+        // It should ask RouteProvider to calculate route to given destination
+        XCTAssertTrue(routeProvider.getRouteCalled)
+        XCTAssertEqual(routeProvider.getRouteParamDestination, destination)
     }
 
     func testTrack_error_duplicate_track() {

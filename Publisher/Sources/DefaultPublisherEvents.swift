@@ -1,4 +1,5 @@
 import CoreLocation
+import MapboxDirections
 
 protocol PublisherEvent {}
 
@@ -40,6 +41,10 @@ struct TrackableReadyToTrackEvent: PublisherEvent {
     let onSuccess: SuccessHandler
 }
 
+struct SetDestinationSuccessEvent: PublisherEvent {
+    let route: Route
+}
+
 struct RawLocationChangedEvent: PublisherEvent {
     let location: CLLocation
 }
@@ -58,7 +63,6 @@ struct PresenceUpdateEvent: PublisherEvent {
     let presenceData: PresenceData
     let clientId: String
 }
-
 
 // MARK: Delegate handling events
 protocol PublisherDelegateEvent {}

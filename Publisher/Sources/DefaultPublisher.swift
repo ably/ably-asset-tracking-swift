@@ -1,6 +1,7 @@
 import UIKit
 import CoreLocation
 import Logging
+import MapboxDirections
 
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
@@ -13,6 +14,7 @@ class DefaultPublisher: Publisher {
     private let locationService: LocationService
     private let ablyService: AblyPublisherService
     private let resolutionPolicy: ResolutionPolicy
+    private let routeProvider: RouteProvider
 
     // ResolutionPolicy
     private let hooks: DefaultResolutionPolicyHooks
@@ -28,6 +30,7 @@ class DefaultPublisher: Publisher {
     private var lastRawTimestamps: [Trackable: Date]
     private var lastEnhancedLocations: [Trackable: CLLocation]
     private var lastEnhancedTimestamps: [Trackable: Date]
+    private var route: Route?
 
     public let transportationMode: TransportationMode
     public weak var delegate: PublisherDelegate?
@@ -38,13 +41,15 @@ class DefaultPublisher: Publisher {
          transportationMode: TransportationMode,
          resolutionPolicyFactory: ResolutionPolicyFactory,
          ablyService: AblyPublisherService,
-         locationService: LocationService) {
+         locationService: LocationService,
+         routeProvider: RouteProvider) {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
         self.transportationMode = transportationMode
         self.workingQueue = DispatchQueue(label: "io.ably.tracking.Publisher.DefaultPublisher", qos: .default)
         self.locationService = locationService
         self.ablyService = ablyService
+        self.routeProvider = routeProvider
 
         self.hooks = DefaultResolutionPolicyHooks()
         self.methods = DefaultResolutionPolicyMethods()
@@ -107,6 +112,7 @@ extension DefaultPublisher {
             case let event as ChangeLocationEngineResolutionEvent: self?.performChangeLocationEngineResolutionEvent(event)
             case let event as PresenceUpdateEvent: self?.performPresenceUpdateEvent(event)
             case let event as ClearRemovedTrackableMetadataEvent: self?.performClearRemovedTrackableMetadataEvent(event)
+            case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -164,7 +170,15 @@ extension DefaultPublisher {
         if activeTrackable != event.trackable {
             activeTrackable = event.trackable
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
-            // TODO: Set destination here while working on route based map matching
+            if let destination = event.trackable.destination {
+                routeProvider.getRoute(
+                    to: destination,
+                    onSuccess: { [weak self] route in self?.enqueue(event: SetDestinationSuccessEvent(route: route)) },
+                    onError: { error in logger.error("Can't fetch route. Error: \(error)") }
+                )
+            } else {
+                self.route = nil
+            }
         }
         callback(event.onSuccess)
     }
@@ -174,6 +188,10 @@ extension DefaultPublisher {
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
         event.onComplete()
+    }
+
+    private func performSetDestinationSuccessEvent(_ event: SetDestinationSuccessEvent) {
+        self.route = event.route
     }
 
     // MARK: Add/Remove trackable
@@ -218,7 +236,7 @@ extension DefaultPublisher {
         if activeTrackable == event.trackable {
             activeTrackable = nil
             hooks.trackables?.onActiveTrackableChanged(trackable: nil)
-            // TODO: Clear current destination in LocationService while working on route based map matching
+            route = nil
         }
         if ablyService.trackables.isEmpty {
             locationService.stopUpdatingLocation()
@@ -325,16 +343,17 @@ extension DefaultPublisher {
               let handler = proximityHandler
         else { return }
 
-        // TODO: Use correct estimatedArrivalTime while working on route based mapMatching
         let checker = ThresholdChecker()
         let destination = activeTrackable?.destination != nil ?
             CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude) : nil
+        let estimatedArrivalTime = route?.expectedTravelTime == nil ? nil :
+            route!.expectedTravelTime + Date().timeIntervalSince1970
 
         let isReached: Bool = checker.isThresholdReached(threshold: threshold,
                                                          currentLocation: location,
                                                          currentTime: Date().timeIntervalSince1970,
                                                          destination: destination,
-                                                         estimatedArrivalTime: nil)
+                                                         estimatedArrivalTime: estimatedArrivalTime)
         if isReached {
             handler.onProximityReached(threshold: threshold)
         }
