@@ -112,7 +112,6 @@ extension DefaultPublisher {
             case let event as ChangeLocationEngineResolutionEvent: self?.performChangeLocationEngineResolutionEvent(event)
             case let event as PresenceUpdateEvent: self?.performPresenceUpdateEvent(event)
             case let event as ClearRemovedTrackableMetadataEvent: self?.performClearRemovedTrackableMetadataEvent(event)
-            case let event as SetDestinationEvent: self?.performSetDestinationEvent(event)
             case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
@@ -171,7 +170,16 @@ extension DefaultPublisher {
         if activeTrackable != event.trackable {
             activeTrackable = event.trackable
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
-            performSetDestinationEvent(SetDestinationEvent(destination: event.trackable.destination))
+            if let destination = event.trackable.destination {
+                routeProvider.getRoute(
+                    to: destination,
+                    onSuccess: { [weak self] route in self?.enqueue(event: SetDestinationSuccessEvent(route: route)) },
+                    onError: { error in logger.error("Can't fetch route. Error: \(error)") }
+                )
+            } else {
+                self.route = nil
+                return
+            }
         }
         callback(event.onSuccess)
     }
@@ -181,20 +189,6 @@ extension DefaultPublisher {
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
         event.onComplete()
-    }
-
-    // MARK: Destination
-    private func performSetDestinationEvent(_ event: SetDestinationEvent) {
-        guard let destination = event.destination else {
-            self.route = nil
-            return
-        }
-
-        routeProvider.getRoute(
-            to: destination,
-            onSuccess: { [weak self] route in self?.enqueue(event: SetDestinationSuccessEvent(route: route)) },
-            onError: { error in logger.error("Can't fetch route. Error: \(error)") }
-        )
     }
 
     private func performSetDestinationSuccessEvent(_ event: SetDestinationSuccessEvent) {

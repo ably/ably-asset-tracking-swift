@@ -41,10 +41,6 @@ struct TrackableReadyToTrackEvent: PublisherEvent {
     let onSuccess: SuccessHandler
 }
 
-struct SetDestinationEvent: PublisherEvent {
-    let destination: CLLocationCoordinate2D?
-}
-
 struct SetDestinationSuccessEvent: PublisherEvent {
     let route: Route
 }
