@@ -26,8 +26,7 @@ class DefaultPublisher: Publisher {
     private var subscribers: [Trackable: Set<Subscriber>]
     private var resolutions: [Trackable: Resolution]
     private var locationEngineResolution: Resolution
-
-    private var lastPublisherLocation: CLLocation?
+    
     private var lastEnhancedLocations: [Trackable: CLLocation]
     private var lastEnhancedTimestamps: [Trackable: Date]
     private var route: Route?
@@ -275,11 +274,13 @@ extension DefaultPublisher {
             lastEnhancedLocations[trackable] = event.locationUpdate.location
             lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
             
-            ablyService.sendEnhancedAssetLocation(locationUpdate: event.locationUpdate, forTrackable: trackable, completion: { [weak self] error in
-                if let error = error {
-                    self?.execute(event: DelegateErrorEvent(error: error))
-                }
-            })
+            ablyService.sendEnhancedAssetLocation(
+                locationUpdate: event.locationUpdate,
+                forTrackable: trackable) { [weak self] error in
+                    if let error = error {
+                        self?.execute(event: DelegateErrorEvent(error: error))
+                    }
+            }
         }
 
         checkThreshold(location: event.locationUpdate.location)
