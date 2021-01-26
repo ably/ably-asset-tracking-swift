@@ -51,12 +51,12 @@ class MockAblyPublisherService: AblyPublisherService {
     }
 
     var sendEnhancedAssetLocationCalled: Bool = false
-    var sendEnhancedAssetLocationParamLocation: CLLocation?
+    var sendEnhancedAssetLocationParamLocationUpdate: EnhancedLocationUpdate?
     var sendEnhancedAssetLocationParamTrackable: Trackable?
     var sendEnhancedAssetLocationParamCompletion: ((Error?) -> Void)?
-    func sendEnhancedAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
+    func sendEnhancedAssetLocation(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
         sendEnhancedAssetLocationCalled = true
-        sendEnhancedAssetLocationParamLocation = location
+        sendEnhancedAssetLocationParamLocationUpdate = locationUpdate
         sendEnhancedAssetLocationParamTrackable = trackable
         sendEnhancedAssetLocationParamCompletion = completion
     }
