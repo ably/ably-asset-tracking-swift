@@ -68,7 +68,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
         
         // Force cast intentional here. It's a fatal error if we are unable to create JSON String from GeoJSONMessage
-        let geoJson = EnhacedLocationUpdateMessage(location: locationUpdate.location)
+        let geoJson = EnhacedLocationUpdateMessage(locationUpdate: locationUpdate)
         let data = try! [geoJson].toJSONString()
         
         let message = ARTMessage(name: EventName.enhanced.rawValue, data: data)

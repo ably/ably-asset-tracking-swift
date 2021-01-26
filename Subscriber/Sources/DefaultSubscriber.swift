@@ -53,7 +53,6 @@ extension DefaultSubscriber {
             case let event as ErrorEvent: self?.handleErrorEvent(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStatusChangedEvent: self?.notifyDelegateConnectionStatusChanged(event)
-            case let event as DelegateRawLocationReceivedEvent: self?.notifyDelegateRawLocationChanged(event)
             case let event as DelegateEnhancedLocationReceivedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             default: preconditionFailure("Unhandled event in DefaultSubscriber: \(event) ")
             }
@@ -112,13 +111,6 @@ extension DefaultSubscriber {
         }
     }
 
-    private func notifyDelegateRawLocationChanged(_ event: DelegateRawLocationReceivedEvent) {
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.subscriber(sender: self, didUpdateRawLocation: event.location)
-        }
-    }
-
     private func notifyDelegateEnhancedLocationChanged(_ event: DelegateEnhancedLocationReceivedEvent) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
@@ -136,11 +128,6 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error) {
         logger.error("subscriberService.didFailWithError. Error: \(error)", source: "DefaultSubscriber")
         execute(event: DelegateErrorEvent(error: error))
-    }
-
-    func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation) {
-        logger.debug("subscriberService.didReceiveRawLocation.", source: "DefaultSubscriber")
-        execute(event: DelegateRawLocationReceivedEvent(location: location))
     }
 
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation) {

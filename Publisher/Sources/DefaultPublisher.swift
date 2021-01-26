@@ -111,7 +111,6 @@ extension DefaultPublisher {
             case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
-            case let event as RawLocationChangedEvent: self?.performRawLocationChanged(event)
             case let event as AddTrackableEvent: self?.performAddTrackableEvent(event)
             case let event as RemoveTrackableEvent: self?.performRemoveTrackableEvent(event)
             case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
@@ -124,7 +123,6 @@ extension DefaultPublisher {
 
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
-            case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             case let event as DelegateResolutionUpdateEvent: self?.notifyDelegateResolutionUpdate(event)
@@ -287,12 +285,6 @@ extension DefaultPublisher {
         checkThreshold(location: event.locationUpdate.location)
     }
 
-    private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
-        let location = event.locationUpdate.location
-        lastPublisherLocation = location
-        checkThreshold(location: location)
-    }
-
     private func shouldSendLocation(location: CLLocation,
                                     lastLocation: CLLocation?,
                                     lastTimestamp: Date?,
@@ -432,17 +424,10 @@ extension DefaultPublisher {
         }
     }
 
-    private func notifyDelegateRawLocationChanged(_ event: DelegateRawLocationChangedEvent) {
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateRawLocation: event.location)
-        }
-    }
-
     private func notifyDelegateEnhancedLocationChanged(_ event: DelegateEnhancedLocationChangedEvent) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.location)
+            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
         }
     }
 
@@ -468,17 +453,11 @@ extension DefaultPublisher: LocationServiceDelegate {
         execute(event: DelegateErrorEvent(error: error))
     }
 
-    func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
-        logger.debug("locationService.didUpdateRawLocation.", source: "DefaultPublisher")
-        execute(event: RawLocationChangedEvent(locationUpdate: RawLocationUpdate(location: location)))
-        execute(event: DelegateRawLocationChangedEvent(location: location))
-    }
-
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
         let locationUpdate = EnhancedLocationUpdate(location: location)
         execute(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate))
-        execute(event: DelegateEnhancedLocationChangedEvent(location: location))
+        execute(event: DelegateEnhancedLocationChangedEvent(locationUpdate: locationUpdate))
     }
 }
 

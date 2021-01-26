@@ -2,7 +2,6 @@ import CoreLocation
 
 protocol LocationServiceDelegate: AnyObject {
     func locationService(sender: LocationService, didFailWithError error: Error)
-    func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation)
     func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation)
 }
 

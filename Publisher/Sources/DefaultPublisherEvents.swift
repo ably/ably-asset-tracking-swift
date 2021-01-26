@@ -59,10 +59,6 @@ struct SetDestinationSuccessEvent: PublisherEvent {
     let route: Route
 }
 
-struct RawLocationChangedEvent: PublisherEvent {
-    let locationUpdate: RawLocationUpdate
-}
-
 struct EnhancedLocationChangedEvent: PublisherEvent {
     let locationUpdate: EnhancedLocationUpdate
 }
@@ -82,12 +78,8 @@ struct DelegateErrorEvent: PublisherEvent {
     let error: Error
 }
 
-struct DelegateRawLocationChangedEvent: PublisherEvent {
-    let location: CLLocation
-}
-
 struct DelegateEnhancedLocationChangedEvent: PublisherEvent {
-    let location: CLLocation
+    let locationUpdate: EnhancedLocationUpdate
 }
 
 struct DelegateConnectionStateChangedEvent: PublisherEvent {

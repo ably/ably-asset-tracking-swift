@@ -5,7 +5,6 @@ import CoreLocation
 protocol AblySubscriberServiceDelegate: AnyObject {
     func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus)
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error)
-    func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation)
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation)
 }
 
@@ -45,11 +44,6 @@ class AblySubscriberService {
             completion?(error)
         }
 
-        channel.subscribe(EventName.raw.rawValue) { [weak self] message in
-            logger.debug("Received raw location message from channel", source: "AblySubscriberService")
-            self?.handleLocationUpdateResponse(forEvent: .raw, messageData: message.data)
-        }
-
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
             logger.debug("Received enhanced location message from channel", source: "AblySubscriberService")
             self?.handleLocationUpdateResponse(forEvent: .enhanced, messageData: message.data)
@@ -85,18 +79,21 @@ class AblySubscriberService {
             return
         }
 
-        var messages: [GeoJSONMessage] = []
+        var messages: [EnhacedLocationUpdateMessage] = []
         do {
-            messages = try [GeoJSONMessage].fromJSONString(json)
+            messages = try [EnhacedLocationUpdateMessage].fromJSONString(json)
         } catch let error {
             delegate?.subscriberService(sender: self, didFailWithError: error)
             return
         }
 
-        let locations = messages.map { $0.toCoreLocation() }
-        event == .raw ?
-            locations.forEach({ delegate?.subscriberService(sender: self, didReceiveRawLocation: $0) }) :
-            locations.forEach({ delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: $0) })
+        let locations = messages.map {
+            $0.location.toCoreLocation()
+        }
+        
+        locations.forEach({
+            delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: $0)
+        })
     }
 
     private func handleIncomingPresenceMessage(_ message: ARTPresenceMessage) {

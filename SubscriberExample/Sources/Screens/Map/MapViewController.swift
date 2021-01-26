@@ -13,8 +13,7 @@ class MapViewController: UIViewController {
     private var subscriber: Subscriber?
     private var errors: [Error] = []
 
-    private var rawLocation: CLLocation? { didSet { updateRawLocationAnnotation() } }
-    private var enhancedLocation: CLLocation? { didSet { updateEnhancedLocationAnnotation() } }
+    private var location: CLLocation? { didSet { updateLocationAnnotation() } }
 
     // MARK: Initialization
     init(trackingId: String) {
@@ -51,28 +50,19 @@ class MapViewController: UIViewController {
                                                 clientId: keys.ablyClientId))
             .trackingId(trackingId)
             .log(LogConfiguration())
-            .resolution(Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500))
+            .resolution(Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100))
             .delegate(self)
             .start()
     }
 
     // MARK: Utils
-    private func updateRawLocationAnnotation() {
-        updateAnnotation(withType: .raw, location: rawLocation)
-    }
-
-    private func updateEnhancedLocationAnnotation() {
-        updateAnnotation(withType: .enhanced, location: rawLocation)
-    }
-
-    private func updateAnnotation(withType type: TruckAnnotationType, location: CLLocation?) {
+    private func updateLocationAnnotation() {
         guard let location = location else {
-            let annotationsToRemove = mapView.annotations.filter({ ($0 as? TruckAnnotation)?.type == type })
-            mapView.removeAnnotations(annotationsToRemove)
+            mapView.removeAnnotations(mapView.annotations)
             return
         }
 
-        if let annotation = mapView.annotations.first(where: { ($0 as? TruckAnnotation)?.type == type }) as? TruckAnnotation {
+        if let annotation = mapView.annotations.first as? TruckAnnotation {
             annotation.bearing = location.course
 
             // Delegate's "viewForAnnotation" method is not called when we're only updating coordinate or bearing, so AnnotationView is not updated.
@@ -87,7 +77,6 @@ class MapViewController: UIViewController {
             }
         } else {
             let annotation = TruckAnnotation()
-            annotation.type = type
             annotation.coordinate = location.coordinate
             annotation.bearing = location.course
             mapView.addAnnotation(annotation)
@@ -98,7 +87,7 @@ class MapViewController: UIViewController {
         let minimumDistanceToCenter: Double = 300
         let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
                                    longitude: mapView.region.center.longitude)
-        guard let location = rawLocation ?? enhancedLocation,
+        guard let location = self.location,
               location.distance(from: mapCenter) > minimumDistanceToCenter
         else { return }
 
@@ -116,10 +105,9 @@ extension MapViewController: MKMapViewDelegate {
 
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: truckAnnotationViewIdentifier) as? TruckAnnotationView ??
                              TruckAnnotationView(annotation: annotation, reuseIdentifier: truckAnnotationViewIdentifier)
-        let isRaw = annotation.type == .raw
         annotationView.bearing = annotation.bearing
-        annotationView.backgroundColor = isRaw ? UIColor.yellow.withAlphaComponent(0.7) :
-                                                 UIColor.blue.withAlphaComponent(0.7)
+        annotationView.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
+                                                 
         return annotationView
     }
 }
@@ -129,13 +117,8 @@ extension MapViewController: SubscriberDelegate {
         errors.append(error)
     }
 
-    func subscriber(sender: Subscriber, didUpdateRawLocation location: CLLocation) {
-        rawLocation = location
-        scrollToReceivedLocation()
-    }
-
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation) {
-        enhancedLocation = location
+        self.location = location
         scrollToReceivedLocation()
     }
 
@@ -143,3 +126,4 @@ extension MapViewController: SubscriberDelegate {
         assetStatusLabel.text = status == .online ? "The asset is online" : "The asset is offline"
     }
 }
+

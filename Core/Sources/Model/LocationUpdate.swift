@@ -5,14 +5,6 @@ public enum LocationUpdateType: String, Codable {
     case actual = "ACTUAL"
 }
 
-public class RawLocationUpdate {
-    let location: CLLocation
-    
-    init(location: CLLocation) {
-        self.location = location
-    }
-}
-
 public class EnhancedLocationUpdate {
     let location: CLLocation
     
@@ -28,7 +20,7 @@ public class EnhancedLocationUpdate {
 public class EnhacedLocationUpdateMessage: Codable {
     let location: GeoJSONMessage
     
-    init(location: CLLocation) {
-        self.location = GeoJSONMessage(location: location)
+    init(locationUpdate: EnhancedLocationUpdate) {
+        self.location = GeoJSONMessage(location: locationUpdate.location)
     }
 }
