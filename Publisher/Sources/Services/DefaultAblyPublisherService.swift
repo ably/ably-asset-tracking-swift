@@ -60,14 +60,6 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
         channels[trackable] = channel
     }
-
-    func sendRawAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
-        sendAssetLocation(location: location, forTrackable: trackable, withName: .raw, completion: completion)
-    }
-
-    func sendEnhancedAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
-        sendAssetLocation(location: location, forTrackable: trackable, withName: .enhanced, completion: completion)
-    }
     
     func sendEnhancedAssetLocation(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
         guard let channel = channels[trackable] else {
@@ -75,6 +67,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
             return
         }
         
+        // Force cast intentional here. It's a fatal error if we are unable to create JSON String from GeoJSONMessage
         let geoJson = EnhacedLocationUpdateMessage(location: locationUpdate.location)
         let data = try! [geoJson].toJSONString()
         
@@ -83,32 +76,13 @@ class DefaultAblyPublisherService: AblyPublisherService {
             if let self = self,
                let error = error {
                 self.delegate?.publisherService(sender: self, didFailWithError: error)
+                return
             }
+            
+            logger.debug("ablyService.didSendEnhancedLocation.", source: "DefaultAblyService")
         }
     }
-
-    private func sendAssetLocation(location: CLLocation,
-                                   forTrackable trackable: Trackable,
-                                   withName name: EventName,
-                                   completion: ((Error?) -> Void)?) {
-        guard let channel = channels[trackable] else {
-            completion?(AssetTrackingError.publisherError("Attempt to send location while not tracked channel"))
-            return
-        }
-
-        // Force cast intentional here. It's a fatal error if we are unable to create JSON String from GeoJSONMessage
-        let geoJSON = GeoJSONMessage(location: location)
-        let data = try! [geoJSON].toJSONString()
-
-        let message = ARTMessage(name: name.rawValue, data: data)
-        channel.publish([message]) { [weak self] error in
-            if let self = self,
-               let error = error {
-                self.delegate?.publisherService(sender: self, didFailWithError: error)
-            }
-        }
-    }
-
+    
     func stop() {
         client.close()
     }

@@ -27,8 +27,7 @@ class DefaultPublisher: Publisher {
     private var resolutions: [Trackable: Resolution]
     private var locationEngineResolution: Resolution
 
-    private var lastRawLocations: [Trackable: CLLocation]
-    private var lastRawTimestamps: [Trackable: Date]
+    private var lastPublisherLocation: CLLocation?
     private var lastEnhancedLocations: [Trackable: CLLocation]
     private var lastEnhancedTimestamps: [Trackable: Date]
     private var route: Route?
@@ -62,9 +61,7 @@ class DefaultPublisher: Publisher {
         self.requests = [:]
         self.subscribers = [:]
         self.resolutions = [:]
-        self.lastRawLocations = [:]
         self.lastEnhancedLocations = [:]
-        self.lastRawTimestamps = [:]
         self.lastEnhancedTimestamps = [:]
 
         self.ablyService.delegate = self
@@ -240,7 +237,6 @@ extension DefaultPublisher {
         removeAllSubscribers(forTrackable: event.trackable)
         resolutions.removeValue(forKey: event.trackable)
         requests.removeValue(forKey: event.trackable)
-        lastRawLocations.removeValue(forKey: event.trackable)
         lastEnhancedLocations.removeValue(forKey: event.trackable)
 
         execute(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess))
@@ -280,39 +276,21 @@ extension DefaultPublisher {
         trackablesToSend.forEach { trackable in
             lastEnhancedLocations[trackable] = event.locationUpdate.location
             lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
-
             
-            
-            ablyService.sendEnhancedAssetLocation(location: event.locationUpdate.location, forTrackable: trackable) { [weak self] error in
+            ablyService.sendEnhancedAssetLocation(locationUpdate: event.locationUpdate, forTrackable: trackable, completion: { [weak self] error in
                 if let error = error {
                     self?.execute(event: DelegateErrorEvent(error: error))
                 }
-            }
+            })
         }
 
         checkThreshold(location: event.locationUpdate.location)
     }
 
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
-        let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
-            return shouldSendLocation(location: event.locationUpdate.location,
-                                      lastLocation: lastRawLocations[trackable],
-                                      lastTimestamp: lastRawTimestamps[trackable],
-                                      resolution: resolutions[trackable])
-        }
-
-        trackablesToSend.forEach { trackable in
-            lastRawLocations[trackable] = event.locationUpdate.location
-            lastRawTimestamps[trackable] = event.locationUpdate.location.timestamp
-
-            ablyService.sendRawAssetLocation(location: event.locationUpdate.location, forTrackable: trackable) { [weak self] error in
-                if let error = error {
-                    self?.execute(event: DelegateErrorEvent(error: error))
-                }
-            }
-        }
-
-        checkThreshold(location: event.locationUpdate.location)
+        let location = event.locationUpdate.location
+        lastPublisherLocation = location
+        checkThreshold(location: location)
     }
 
     private func shouldSendLocation(location: CLLocation,
