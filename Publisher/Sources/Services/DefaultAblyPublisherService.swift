@@ -33,7 +33,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
     }
 
     // MARK: Main interface
-    func track(trackable: Trackable, completion: ((Error?) -> Void)?) {
+    func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
@@ -53,17 +53,23 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
 
         channel.presence.enterClient(configuration.clientId, data: data) { error in
-            error == nil ?
-                logger.debug("Entered to presence successfully", source: "AblyPublisherService") :
-                logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
-            completion?(error)
+            guard let error = error else {
+                logger.debug("Entered to presence successfully", source: "AblyPublisherService")
+                completion(.success(()))
+                return
+            }
+
+            logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
+            completion(.failure(error))
         }
+        
         channels[trackable] = channel
     }
     
-    func sendEnhancedAssetLocation(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
+    func sendEnhancedAssetLocation(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: @escaping ResultHandler<Void>) {
         guard let channel = channels[trackable] else {
-            completion?(AssetTrackingError.publisherError("Attempt to send location while not tracked channel"))
+            let error = AssetTrackingError.publisherError("Attempt to send location while not tracked channel")
+            completion(.failure(error))
             return
         }
         
@@ -87,9 +93,9 @@ class DefaultAblyPublisherService: AblyPublisherService {
         client.close()
     }
 
-    func stopTracking(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler) {
+    func stopTracking(trackable: Trackable, completion: @escaping ResultHandler<Bool>) {
         guard let channel = channels.removeValue(forKey: trackable) else {
-            onSuccess(false)
+            completion(.success(false))
             return
         }
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
@@ -97,7 +103,11 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
         channel.presence.unsubscribe()
         channel.presence.leaveClient(configuration.clientId, data: data) { error in
-            error == nil ? onSuccess(true) : onError(error!)
+            guard let error = error else {
+                completion(.success(true))
+                return
+            }
+            completion(.failure(error))
         }
     }
 }

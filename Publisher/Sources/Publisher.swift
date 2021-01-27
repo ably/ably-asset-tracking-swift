@@ -2,14 +2,9 @@ import Foundation
 import CoreLocation
 
 /**
- Completion handler for success operations
+ Completion handler for operations ended with success or error.
  */
-public typealias SuccessHandler = () -> Void
-
-/**
- Completion handler for failed operations
- */
-public typealias ErrorHandler = (_ error: Error) -> Void
+public typealias ResultHandler<T: Any> = (Result<T, Error>) -> Void
 
 public protocol PublisherDelegate: AnyObject {
     /**
@@ -80,10 +75,9 @@ public protocol Publisher {
      
      - Parameters:
         - trackable The object to be added to this publisher's tracked set, if it's not already there, and to be made the actively tracked object.
-        - onSuccess: Called when the trackable is successfully added and make the actively tracked object
-        - onError: Called when an error occurs
+        - completion: Called on completion of the method.
      */
-    func track(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
+    func track(trackable: Trackable, completion: @escaping ResultHandler<Void>)
 
     /**
      Adds a `Trackable` object, but does not make it the actively tracked object, meaning that the state of the
@@ -92,10 +86,9 @@ public protocol Publisher {
      
      - Parameters:
         - trackable: The object to be added to this publisher's tracked set, if it's not already there.
-        - onSuccess: Called when the trackable is successfully added
-        - onError: Called when an error occurs
+        - completion: Called on completion of the method.
      */
-    func add(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
+    func add(trackable: Trackable, completion: @escaping ResultHandler<Void>)
 
     /**
      Removes a `Trackable` property if it is known to this publisher, otherwise does nothing and returns false.
@@ -107,7 +100,7 @@ public protocol Publisher {
         - onSuccess: Called when the removing was successful, wasPresent is true when the object was known to this publisher, being that it was in the tracked set.
         - onError: Called when an error occurs
      */
-    func remove(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler)
+    func remove(trackable: Trackable, completion: @escaping ResultHandler<Bool>)
 
     /**
      The actively tracked object, being the `Trackable` object whose destination will be used for location
@@ -129,7 +122,7 @@ public protocol Publisher {
         - onSuccess: Called when changing RoutingProfile was successful.
         - onError: Called when an error occurs.
     */
-    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
+    func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>)
 
     /**
      Stops this publisher from publishing locations. Once a publisher has been stopped, it cannot be restarted.

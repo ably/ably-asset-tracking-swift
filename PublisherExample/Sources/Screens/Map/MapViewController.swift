@@ -54,7 +54,15 @@ class MapViewController: UIViewController {
             .start()
 
         let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
-        publisher?.track(trackable: Trackable(id: trackingId, destination: destination), onSuccess: {  }, onError: { _ in })
+        
+        publisher?.track(trackable: Trackable(id: trackingId, destination: destination)) { result in
+            switch result {
+            case .success():
+                return
+            case .failure(_):
+                return
+            }
+        }
     }
 
     private func setupMapView() {
@@ -64,7 +72,14 @@ class MapViewController: UIViewController {
 
     // MARK: Utils
     private func changeRoutingProfile(to routingProfile: RoutingProfile) {
-        publisher?.changeRoutingProfile(profile: routingProfile, onSuccess: { }, onError: { _ in })
+        publisher?.changeRoutingProfile(profile: routingProfile) { result in
+            switch result {
+            case .success():
+                return
+            case .failure(_):
+                return
+            }
+        }
     }
 
     private func refreshAnnotations() {

@@ -70,25 +70,24 @@ class DefaultPublisher: Publisher {
         DefaultBatteryLevelProvider.setup()
     }
 
-    func track(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
+    func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
         let event = TrackTrackableEvent(trackable: trackable,
-                                        onSuccess: onSuccess,
-                                        onError: onError)
+                                        resultHandler: completion)
         execute(event: event)
     }
 
-    func add(trackable: Trackable, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
-        let event = AddTrackableEvent(trackable: trackable, onSuccess: onSuccess, onError: onError)
+    func add(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
+        let event = AddTrackableEvent(trackable: trackable, resultHandler: completion)
         execute(event: event)
     }
 
-    func remove(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler) {
-        let event = RemoveTrackableEvent(trackable: trackable, onSuccess: onSuccess, onError: onError)
+    func remove(trackable: Trackable, completion: @escaping ResultHandler<Bool>) {
+        let event = RemoveTrackableEvent(trackable: trackable, resultHandler: completion)
         execute(event: event)
     }
 
-    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
-        let event = ChangeRoutingProfileEvent(profile: profile, onSuccess: onSuccess, onError: onError)
+    func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>) {
+        let event = ChangeRoutingProfileEvent(profile: profile, resultHandler: completion)
         execute(event: event)
     }
 
@@ -104,8 +103,6 @@ extension DefaultPublisher {
         logger.trace("Received event: \(event)")
         performOnWorkingThread { [weak self] in
             switch event {
-            case let event as SuccessEvent: self?.handleSuccessEvent(event)
-            case let event as ErrorEvent: self?.handleErrorEvent(event)
             case let event as TrackTrackableEvent:  self?.performTrackTrackableEvent(event)
             case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
@@ -134,22 +131,30 @@ extension DefaultPublisher {
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
             let error =  AssetTrackingError.publisherError("For this preview version of the SDK, track() method may only be called once for any given instance of this class.")
-            execute(event: ErrorEvent(error: error, onError: event.onError))
+            performOnMainThread {
+                event.resultHandler(.failure(error))
+            }
             return
         }
-
-        self.ablyService.track(trackable: event.trackable) { [weak self] error in
-            if let error = error {
-                self?.execute(event: ErrorEvent(error: error, onError: event.onError))
-                return
-            }
-
-            self?.execute(event: PresenceJoinedSuccessfullyEvent(
+        
+        self.ablyService.track(trackable: event.trackable) { [weak self] result in
+            switch result {
+            case .success:
+                let presenceJoinedEvent = PresenceJoinedSuccessfullyEvent(
+                    trackable: event.trackable) { [weak self] _ in
+                        let trackableReadyToTrackEvent = TrackableReadyToTrackEvent(
                             trackable: event.trackable,
-                            onComplete: { [weak self] in
-                                self?.execute(event: TrackableReadyToTrackEvent(trackable: event.trackable, onSuccess: event.onSuccess))
-                            })
-            )
+                            resultHandler: event.resultHandler)
+                    
+                        self?.execute(event: trackableReadyToTrackEvent)
+                    }
+                
+                self?.execute(event: presenceJoinedEvent)
+            case .failure(let error):
+                self?.performOnMainThread {
+                    event.resultHandler(.failure(error))
+                }
+            }
         }
     }
 
@@ -159,28 +164,33 @@ extension DefaultPublisher {
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
             execute(event: SetDestinationEvent(destination: event.trackable.destination))
         }
-        execute(event: SuccessEvent(onSuccess: event.onSuccess))
+        
+        performOnMainThread {
+            event.resultHandler(.success(()))
+        }
     }
 
     private func performPresenceJoinedSuccessfullyEvent(_ event: PresenceJoinedSuccessfullyEvent) {
         locationService.startUpdatingLocation()
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
-        event.onComplete()
+        event.resultHandler(.success(()))
     }
 
     // MARK: RoutingProfile
     private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
         routingProfile = event.profile
-
-        routeProvider.changeRoutingProfile(to: routingProfile,
-                                           onSuccess: { [weak self] route in
-                                            self?.execute(event: SetDestinationSuccessEvent(route: route))
-                                            event.onSuccess()
-                                           }, onError: { error in
-                                            logger.error("Can't change RoutingProfile. Error: \(error)")
-                                            event.onError(error)
-                                           })
+        
+        routeProvider.changeRoutingProfile(to: routingProfile) { [weak self] result in
+            switch result {
+            case .success(let route):
+                self?.execute(event: SetDestinationSuccessEvent(route: route))
+                event.resultHandler(.success(()))
+            case .failure(let error):
+                logger.error("Can't change RoutingProfile. Error: \(error)")
+                event.resultHandler(.failure(error))
+            }
+        }
     }
 
     // MARK: Destination
@@ -189,15 +199,16 @@ extension DefaultPublisher {
             self.route = nil
             return
         }
-
+        
         routeProvider.getRoute(to: destination,
-                               withRoutingProfile: routingProfile,
-                               onSuccess: { [weak self] route in
-                                self?.execute(event: SetDestinationSuccessEvent(route: route))
-                               },
-                               onError: { error in
-                                logger.error("Can't fetch route. Error: \(error)")
-                               })
+                               withRoutingProfile: routingProfile) { [weak self] result in
+            switch result {
+            case .success(let route):
+                self?.execute(event: SetDestinationSuccessEvent(route: route))
+            case .failure(let error):
+                logger.error("Can't fetch route. Error: \(error)")
+            }
+        }
     }
 
     private func performSetDestinationSuccessEvent(_ event: SetDestinationSuccessEvent) {
@@ -206,26 +217,38 @@ extension DefaultPublisher {
 
     // MARK: Add
     private func performAddTrackableEvent(_ event: AddTrackableEvent) {
-        self.ablyService.track(trackable: event.trackable) { [weak self] error in
-            if let error = error {
-                self?.execute(event: ErrorEvent(error: error, onError: event.onError))
-                return
+        self.ablyService.track(trackable: event.trackable) { [weak self] result in
+            switch result {
+            case .success():
+                let presenceJoinedSuccessfullyEvent = PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] _ in
+                    self?.performOnMainThread {
+                        event.resultHandler(.success(()))
+                    }
+                }
+                self?.execute(event: presenceJoinedSuccessfullyEvent)
+            case .failure(let error):
+                self?.performOnMainThread {
+                    event.resultHandler(.failure(error))
+                }
             }
-            self?.execute(event: PresenceJoinedSuccessfullyEvent(
-                            trackable: event.trackable,
-                            onComplete: { [weak self] in self?.execute(event: SuccessEvent(onSuccess: event.onSuccess)) })
-            )
         }
     }
 
     // MARK: Remove
     private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
-        self.ablyService.stopTracking(trackable: event.trackable) { [weak self] wasPresent in
-            wasPresent ?
-                self?.execute(event: ClearRemovedTrackableMetadataEvent(trackable: event.trackable, onSuccess: event.onSuccess)) :
-                self?.execute(event: SuccessEvent(onSuccess: { event.onSuccess(false) }))
-        } onError: { [weak self] error in
-            self?.execute(event: ErrorEvent(error: error, onError: event.onError))
+        self.ablyService.stopTracking(trackable: event.trackable) { [weak self] result in
+            switch result {
+            case .success(let wasPresent):
+                let event = wasPresent
+                    ? self?.execute(event: ClearRemovedTrackableMetadataEvent(trackable: event.trackable, resultHandler: event.resultHandler))
+                    : self?.performOnMainThread {
+                        event.resultHandler(.success(true))
+                    }
+            case .failure(let error):
+                self?.performOnMainThread {
+                    event.resultHandler(.failure(error))
+                }
+            }
         }
     }
 
@@ -236,7 +259,7 @@ extension DefaultPublisher {
         requests.removeValue(forKey: event.trackable)
         lastEnhancedLocations.removeValue(forKey: event.trackable)
 
-        execute(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess))
+        execute(event: ClearActiveTrackableEvent(trackable: event.trackable, resultHandler: event.resultHandler))
     }
 
     private func performClearActiveTrackableEvent(_ event: ClearActiveTrackableEvent) {
@@ -248,7 +271,10 @@ extension DefaultPublisher {
         if ablyService.trackables.isEmpty {
             locationService.stopUpdatingLocation()
         }
-        execute(event: SuccessEvent(onSuccess: { event.onSuccess(true) }))
+        
+        self.performOnMainThread {
+            event.resultHandler(.success(true))
+        }
     }
 
     private func removeAllSubscribers(forTrackable trackable: Trackable) {
@@ -276,8 +302,11 @@ extension DefaultPublisher {
             
             ablyService.sendEnhancedAssetLocation(
                 locationUpdate: event.locationUpdate,
-                forTrackable: trackable) { [weak self] error in
-                    if let error = error {
+                forTrackable: trackable) { [weak self] result in
+                    switch result {
+                    case .success():
+                        return
+                    case .failure(let error):
                         self?.execute(event: DelegateErrorEvent(error: error))
                     }
             }
@@ -407,14 +436,6 @@ extension DefaultPublisher {
 
     private func performOnMainThread(_ operation: @escaping () -> Void) {
         DispatchQueue.main.async(execute: operation)
-    }
-
-    private func handleSuccessEvent(_ event: SuccessEvent) {
-        performOnMainThread(event.onSuccess)
-    }
-
-    private func handleErrorEvent(_ event: ErrorEvent) {
-        performOnMainThread { event.onError(event.error) }
     }
 
     // MARK: Delegate

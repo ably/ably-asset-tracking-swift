@@ -2,14 +2,13 @@ import CoreLocation
 import MapboxDirections
 
 protocol RouteProvider {
-    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler)
-    func changeRoutingProfile(to routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler)
+    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
+    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
 }
 
 class DefaultRouteProvider: NSObject, RouteProvider {
     private let locationManager: CLLocationManager
-    private var onSuccess: ((Route) -> Void)?
-    private var onError: ErrorHandler?
+    private var resultHandler: ResultHandler<Route>?
     private var destination: CLLocationCoordinate2D?
     private var routingProfile: RoutingProfile?
     private var directions: Directions?
@@ -21,27 +20,25 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         super.init()
     }
 
-    func changeRoutingProfile(to routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
+    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
         self.routingProfile = routingProfile
         guard let destination = self.destination,
-              !isCalculating(onErrorHandler: onError) else {
+              !isCalculating(resultHandler: completion) else {
             return
         }
 
         self.getRoute(to: destination,
                  withRoutingProfile: routingProfile,
-                 onSuccess: onSuccess,
-                 onError: onError)
+                 completion: completion)
     }
 
-    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
+    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
 
-        if isCalculating(onErrorHandler: onError) {
+        if isCalculating(resultHandler: completion) {
             return
         }
 
-        self.onSuccess = onSuccess
-        self.onError = onError
+        self.resultHandler = completion
         self.destination = destination
         self.routingProfile = routingProfile
         self.locationManager.delegate = self
@@ -77,28 +74,24 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     private func handleErrorCallback(error: Error) {
-        guard let onError = onError else { return }
-        onError(error)
+        guard let resultHandler = self.resultHandler else { return }
+        resultHandler(.failure(error))
 
         self.destination = nil
-        self.onSuccess = nil
-        self.onError = nil
+        self.resultHandler = nil
     }
 
     private func handleRouteCallback(route: Route) {
-        guard let onSuccess = onSuccess else { return }
-        onSuccess(route)
+        guard let resultHandler = self.resultHandler else { return }
+        resultHandler(.success(route))
 
         self.destination = nil
-        self.onSuccess = nil
-        self.onError = nil
+        self.resultHandler = nil
     }
     
-    private func isCalculating(onErrorHandler onError: ErrorHandler) -> Bool {
-        guard self.onError == nil,
-              self.onSuccess == nil
-        else {
-            onError(AssetTrackingError.publisherError("Provider is already calculating route."))
+    private func isCalculating(resultHandler: ResultHandler<Route>) -> Bool {
+        guard self.resultHandler == nil else {
+            resultHandler(.failure(AssetTrackingError.publisherError("Provider is already calculating route.")))
             return true
         }
         return false

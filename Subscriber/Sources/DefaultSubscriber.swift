@@ -92,7 +92,7 @@ extension DefaultSubscriber {
         performOnMainThread(event.onSuccess)
     }
 
-    private func handleErrorEvent(_ event: ErrorEvent) {
+    private func handleErrorEvent(_ event:  ErrorEvent) {
         performOnMainThread { event.onError(event.error) }
     }
 
