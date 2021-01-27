@@ -26,7 +26,7 @@ class AblySubscriberService {
         channel = client.channels.get(trackingId, options: options)
     }
 
-    func start(completion: ((Error?) -> Void)?) {
+    func start(completion: @escaping ResultHandler<Void>) {
         // Trigger offline event at start
         delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .offline)
         channel.presence.subscribe({ [weak self] message in
@@ -38,10 +38,14 @@ class AblySubscriberService {
         let data = try! presenceData.toJSONString()
 
         channel.presence.enterClient(configuration.clientId, data: data) { error in
-            error == nil ?
-                logger.debug("Entered to channel presence successfully", source: "AblySubscriberService") :
-                logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblySubscriberService")
-            completion?(error)
+            guard let error = error else {
+                logger.debug("Entered to channel presence successfully", source: "AblySubscriberService")
+                completion(.success(()))
+                return
+            }
+            
+            logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblySubscriberService")
+            completion(.failure(error))
         }
 
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
@@ -56,18 +60,18 @@ class AblySubscriberService {
         client.close()
     }
 
-    func changeRequest(resolution: Resolution?, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+    func changeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
         logger.debug("Changing resolution to: \(String(describing: resolution))", source: "AblySubscriberService")
         presenceData = PresenceData(type: presenceData.type, resolution: resolution)
 
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
         channel.presence.update(data) { error in
-            if let error = error {
-                onError(error)
-            } else {
-                onSuccess()
+            guard let error = error else {
+                completion(.success(()))
+                return
             }
+            completion(.failure(error))
         }
     }
 

@@ -27,8 +27,8 @@ class DefaultSubscriber: Subscriber {
         self.ablyService.delegate = self
     }
 
-    func sendChangeRequest(resolution: Resolution?, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        execute(event: ChangeResolutionEvent(resolution: resolution, onSuccess: onSuccess, onError: onError))
+    func sendChangeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+        execute(event: ChangeResolutionEvent(resolution: resolution, resultHandler: completion))
     }
 
     func start() {
@@ -48,9 +48,7 @@ extension DefaultSubscriber {
             switch event {
             case _ as StartEvent: self?.performStart()
             case _ as StopEvent: self?.performStop()
-            case let event as SuccessEvent: self?.handleSuccessEvent(event)
             case let event as ChangeResolutionEvent: self?.performChangeResolution(event)
-            case let event as ErrorEvent: self?.handleErrorEvent(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStatusChangedEvent: self?.notifyDelegateConnectionStatusChanged(event)
             case let event as DelegateEnhancedLocationReceivedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
@@ -60,9 +58,13 @@ extension DefaultSubscriber {
     }
     // MARK: Start/Stop
     private func performStart() {
-        ablyService.start { [weak self] error in
-            guard let error = error else { return }
-            self?.execute(event: DelegateErrorEvent(error: error))
+        ablyService.start { [weak self] result in
+            switch result {
+            case .success:
+                return
+            case .failure(let error):
+                self?.execute(event: DelegateErrorEvent(error: error))
+            }
         }
     }
 
@@ -71,12 +73,18 @@ extension DefaultSubscriber {
     }
 
     private func performChangeResolution(_ event: ChangeResolutionEvent) {
-        ablyService.changeRequest(resolution: event.resolution,
-                                  onSuccess: { [weak self] in
-                                    self?.execute(event: SuccessEvent(onSuccess: event.onSuccess))
-                                  }, onError: { [weak self] error in
-                                    self?.execute(event: ErrorEvent(error: error, onError: event.onError))
-                                  })
+        ablyService.changeRequest(resolution: event.resolution) { [weak self] result in
+            switch result {
+            case .success:
+                self?.performOnMainThread {
+                    event.resultHandler(.success(()))
+                }
+            case .failure(let error):
+                self?.performOnMainThread {
+                    event.resultHandler(.failure(error))
+                }
+            }
+        }
     }
 
     // MARK: Utils
@@ -86,14 +94,6 @@ extension DefaultSubscriber {
 
     private func performOnMainThread(_ operation: @escaping () -> Void) {
         DispatchQueue.main.async(execute: operation)
-    }
-
-    private func handleSuccessEvent(_ event: SuccessEvent) {
-        performOnMainThread(event.onSuccess)
-    }
-
-    private func handleErrorEvent(_ event:  ErrorEvent) {
-        performOnMainThread { event.onError(event.error) }
     }
 
     // MARK: Delegate

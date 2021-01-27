@@ -2,14 +2,14 @@ import CoreLocation
 
 protocol SubscriberEvent {}
 
-struct SuccessEvent: SubscriberEvent {
-    let onSuccess: SuccessHandler
+struct SuccessEvent<T: Any>: SubscriberEvent {
+    let resultHandler: ResultHandler<T>
 }
 
-struct ErrorEvent: SubscriberEvent {
-    let error: Error
-    let onError: ErrorHandler
-}
+//struct ErrorEvent: SubscriberEvent {
+//    let error: Error
+//    let onError: ErrorHandler
+//}
 
 struct StartEvent: SubscriberEvent {}
 
@@ -17,8 +17,7 @@ struct StopEvent: SubscriberEvent {}
 
 struct ChangeResolutionEvent: SubscriberEvent {
     let resolution: Resolution?
-    let onSuccess: SuccessHandler
-    let onError: ErrorHandler
+    let resultHandler: ResultHandler<Void>
 }
 
 // MARK: Delegate handling events
