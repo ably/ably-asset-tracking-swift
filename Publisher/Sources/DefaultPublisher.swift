@@ -6,7 +6,7 @@ import MapboxDirections
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
-// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable cyclomatic_complexity 
 class DefaultPublisher: Publisher {
     private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
