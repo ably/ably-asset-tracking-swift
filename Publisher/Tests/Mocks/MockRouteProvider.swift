@@ -6,26 +6,22 @@ class MockRouteProvider: RouteProvider{
     var getRouteCalled: Bool = false
     var getRouteParamDestination: CLLocationCoordinate2D?
     var getRouteParamRoutingProfile: RoutingProfile?
-    var getRouteParamOnSuccess: ((Route) -> Void)?
-    var getRouteParamOnError: ErrorHandler?
+    var getRouteResultHandler: ResultHandler<Route>?
 
-    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
+    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
         getRouteCalled = true
         getRouteParamDestination = destination
         getRouteParamRoutingProfile = routingProfile
-        getRouteParamOnSuccess = onSuccess
-        getRouteParamOnError = onError
+        getRouteResultHandler = completion
     }
     
     var changeRoutingProfileCalled: Bool = false
     var changeRoutingProfileParamRoutingProfile: RoutingProfile?
-    var changeRoutingProfileOnSuccess: ((Route) -> Void)?
-    var changeRoutingProfileOnError: ErrorHandler?
+    var changeRoutingProfileResultHandler: ResultHandler<Route>?
     
-    func changeRoutingProfile(to routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
+    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
         changeRoutingProfileCalled = true
         changeRoutingProfileParamRoutingProfile = routingProfile
-        changeRoutingProfileOnSuccess = onSuccess
-        changeRoutingProfileOnError = onError
+        changeRoutingProfileResultHandler = completion
     }
 }

@@ -13,52 +13,50 @@ class MockAblyPublisherService: AblyPublisherService {
 
     var trackCalled: Bool = false
     var trackParamTrackable: Trackable?
-    var trackParamCompletion: ((Error?) -> Void)?
-    var trackCompletionHandler: ((((Error?) -> Void)?) -> Void)?
-    func track(trackable: Trackable, completion: ((Error?) -> Void)?) {
+    var trackResultHandler: ResultHandler<Void>?
+    var trackCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
         trackCalled = true
         trackParamTrackable = trackable
-        trackParamCompletion = completion
-
+        trackResultHandler = completion
         trackCompletionHandler?(completion)
     }
 
     var stopTrackingCalled: Bool = false
     var stopTrackingParamTrackable: Trackable?
-    var stopTrackingParamOnSuccess: ((Bool) -> Void)?
-    var stopTrackingParamOnError: ErrorHandler?
-    var stopTrackingOnErrorCompletionHandler: ((ErrorHandler) -> Void)?
-    var stopTrackingOnSuccessCompletionHandler: (((Bool) -> Void) -> Void)?
-    func stopTracking(trackable: Trackable, onSuccess: @escaping (Bool) -> Void, onError: @escaping ErrorHandler) {
+    var stopTrackingResultHandler: ResultHandler<Bool>?
+    var stopTrackingCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
+    func stopTracking(trackable: Trackable, completion: @escaping ResultHandler<Bool>) {
         stopTrackingCalled = true
         stopTrackingParamTrackable = trackable
-        stopTrackingParamOnSuccess = onSuccess
-        stopTrackingParamOnError = onError
-
-        stopTrackingOnSuccessCompletionHandler?(onSuccess)
-        stopTrackingOnErrorCompletionHandler?(onError)
+        stopTrackingResultHandler = completion
+        stopTrackingCompletionHandler?(completion)
     }
 
     var sendRawAssetLocationCalled: Bool = false
     var sendRawAssetLocationParamLocation: CLLocation?
     var sendRawAssetLocationParamTrackable: Trackable?
+    var sendRawAssetLocationResultHandler: ResultHandler<Void>?
+    
     var sendRawAssetLocationParamCompletion: ((Error?) -> Void)?
-    func sendRawAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
+    func sendRawAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: @escaping ResultHandler<Void>) {
         sendRawAssetLocationCalled = true
         sendRawAssetLocationParamLocation = location
         sendRawAssetLocationParamTrackable = trackable
-        sendRawAssetLocationParamCompletion = completion
+        sendRawAssetLocationResultHandler = completion
     }
 
     var sendEnhancedAssetLocationCalled: Bool = false
     var sendEnhancedAssetLocationParamLocationUpdate: EnhancedLocationUpdate?
     var sendEnhancedAssetLocationParamTrackable: Trackable?
+    var sendEnhancedAssetLocationResultHandler: ResultHandler<Void>?
+    
     var sendEnhancedAssetLocationParamCompletion: ((Error?) -> Void)?
-    func sendEnhancedAssetLocation(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
+    func sendEnhancedAssetLocation(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: @escaping ResultHandler<Void>) {
         sendEnhancedAssetLocationCalled = true
         sendEnhancedAssetLocationParamLocationUpdate = locationUpdate
         sendEnhancedAssetLocationParamTrackable = trackable
-        sendEnhancedAssetLocationParamCompletion = completion
+        sendEnhancedAssetLocationResultHandler = completion
     }
 
     var stopCalled: Bool = false
