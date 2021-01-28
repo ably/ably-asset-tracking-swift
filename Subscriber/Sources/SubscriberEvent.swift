@@ -2,15 +2,6 @@ import CoreLocation
 
 protocol SubscriberEvent {}
 
-struct SuccessEvent<T: Any>: SubscriberEvent {
-    let resultHandler: ResultHandler<T>
-}
-
-//struct ErrorEvent: SubscriberEvent {
-//    let error: Error
-//    let onError: ErrorHandler
-//}
-
 struct StartEvent: SubscriberEvent {}
 
 struct StopEvent: SubscriberEvent {}
