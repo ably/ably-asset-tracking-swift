@@ -1,3 +1,5 @@
+import Core
+
 /**
  Defines the methods which can be called by a resolution policy when it is created.
  Methods on this interface may only be called from within implementations of

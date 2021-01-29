@@ -6,21 +6,21 @@ public enum LocationUpdateType: String, Codable {
 }
 
 public class EnhancedLocationUpdate {
-    let location: CLLocation
+    public let location: CLLocation
     
     var type: LocationUpdateType {
         return .actual
     }
     
-    init(location: CLLocation) {
+    public init(location: CLLocation) {
         self.location = location
     }
 }
 
 public class EnhacedLocationUpdateMessage: Codable {
-    let location: GeoJSONMessage
+    public let location: GeoJSONMessage
     
-    init(locationUpdate: EnhancedLocationUpdate) {
+    public init(locationUpdate: EnhancedLocationUpdate) {
         self.location = GeoJSONMessage(location: locationUpdate.location)
     }
 }

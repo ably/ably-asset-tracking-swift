@@ -1,3 +1,5 @@
+import Core
+
 public protocol ResolutionPolicyMethods: AnyObject {
     /**
      Causes the current tracking `Resolution` to be evaluated again by its associated `Publisher` instance.

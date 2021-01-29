@@ -1,3 +1,4 @@
+import Core
 import CoreLocation
 import MapboxCoreNavigation
 import MapboxDirections

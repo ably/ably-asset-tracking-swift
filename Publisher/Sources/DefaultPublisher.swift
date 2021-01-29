@@ -2,6 +2,7 @@ import UIKit
 import CoreLocation
 import Logging
 import MapboxDirections
+import Core
 
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.asset-tracking.Publisher")

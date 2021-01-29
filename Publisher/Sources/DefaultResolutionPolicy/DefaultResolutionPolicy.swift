@@ -1,3 +1,5 @@
+import Core
+
 class DefaultResolutionPolicy: ResolutionPolicy {
     private let hooks: ResolutionPolicyHooks
     private let methods: ResolutionPolicyMethods

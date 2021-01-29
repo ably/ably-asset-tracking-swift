@@ -1,4 +1,5 @@
 import CoreLocation
+import Core
 
 protocol AblyPublisherServiceDelegate: AnyObject {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState)

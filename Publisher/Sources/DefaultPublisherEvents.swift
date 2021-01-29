@@ -1,6 +1,7 @@
 import Foundation
 import CoreLocation
 import MapboxDirections
+import Core
 
 protocol PublisherEvent {}
 

@@ -1,5 +1,6 @@
 import Foundation
 import CoreLocation
+import Core
 
 /**
  Completion handler for operations ended with success or error.

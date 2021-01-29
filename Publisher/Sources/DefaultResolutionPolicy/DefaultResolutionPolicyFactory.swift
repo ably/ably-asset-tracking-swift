@@ -1,3 +1,5 @@
+import Core
+
 public class DefaultResolutionPolicyFactory: NSObject, ResolutionPolicyFactory {
     private let defaultResolution: Resolution
     public init(defaultResolution: Resolution) {

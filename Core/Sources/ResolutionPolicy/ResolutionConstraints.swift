@@ -13,23 +13,23 @@ public class DefaultResolutionConstraints: ResolutionConstraints {
     /**
      Tracking `Resolution` specifications which are to be used according to thresholds.
      */
-    let resolutions: DefaultResolutionSet
+    public let resolutions: DefaultResolutionSet
 
     /**
      The boundary differentiating between "near" and "far" in `resolutions`.
      */
-    let proximityThreshold: Proximity
+    public let proximityThreshold: Proximity
 
     /**
      In the range 0.0f (no battery) to 100.0f (full battery).
      */
-    let batteryLevelThreshold: Float
+    public let batteryLevelThreshold: Float
 
     /**
      The multiplier to be applied to the `interval` `Resolution.desiredInterval` when the battery level is below
      `batteryLevelThreshold`.
      */
-    let lowBatteryMultiplier: Float
+    public let lowBatteryMultiplier: Float
 
     init(resolutions: DefaultResolutionSet,
          proximityThreshold: Proximity,
@@ -51,25 +51,25 @@ public class DefaultResolutionSet {
      The resolution to select if above the `proximityThreshold` `DefaultResolutionConstraints.proximityThreshold`,
      with no subscribers.
      */
-    let farWithoutSubscriber: Resolution
+    public let farWithoutSubscriber: Resolution
 
     /**
      The resolution to select if above the `proximityThreshold` `DefaultResolutionConstraints.proximityThreshold`,
      with one or more subscribers.
      */
-    let farWithSubscriber: Resolution
+    public let farWithSubscriber: Resolution
 
     /**
      The resolution to select if below the `proximityThreshold` `DefaultResolutionConstraints.proximityThreshold`,
      with no subscribers.
      */
-    let nearWithoutSubscriber: Resolution
+    public let nearWithoutSubscriber: Resolution
 
     /**
      The resolution to select if below the `proximityThreshold` `DefaultResolutionConstraints.proximityThreshold`,
      with one or more subscribers.
      */
-    let nearWithSubscriber: Resolution
+    public let nearWithSubscriber: Resolution
 
     init(farWithoutSubscriber: Resolution,
          farWithSubscriber: Resolution,
