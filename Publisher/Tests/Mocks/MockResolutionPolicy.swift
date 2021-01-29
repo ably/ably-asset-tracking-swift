@@ -1,3 +1,4 @@
+@testable import Core
 @testable import Publisher
 
 class MockResolutionPolicy: ResolutionPolicy {

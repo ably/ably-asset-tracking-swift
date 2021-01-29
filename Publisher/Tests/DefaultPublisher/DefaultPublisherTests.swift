@@ -1,6 +1,7 @@
 import XCTest
 import CoreLocation
 import Logging
+@testable import Core
 @testable import Publisher
 
 class DefaultPublisherTests: XCTestCase {

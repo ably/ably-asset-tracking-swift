@@ -1,5 +1,6 @@
 import XCTest
 import CoreLocation
+@testable import Core
 @testable import Publisher
 
 class DefaultResolutionPolicyTests: XCTestCase {

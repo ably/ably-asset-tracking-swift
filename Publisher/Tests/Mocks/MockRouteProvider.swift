@@ -1,5 +1,6 @@
 import MapboxDirections
 import CoreLocation
+@testable import Core
 @testable import Publisher
 
 class MockRouteProvider: RouteProvider{

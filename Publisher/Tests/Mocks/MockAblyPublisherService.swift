@@ -1,5 +1,6 @@
 import CoreLocation
 import Foundation
+@testable import Core
 @testable import Publisher
 
 class MockAblyPublisherService: AblyPublisherService {
