@@ -14,7 +14,7 @@ public class PresenceData: Codable {
         self.resolution = nil
     }
 
-    init(type: ClientType, resolution: Resolution?) {
+    public init(type: ClientType, resolution: Resolution?) {
         self.type = type
         self.resolution = resolution
     }
