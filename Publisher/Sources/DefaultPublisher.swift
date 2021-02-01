@@ -118,7 +118,7 @@ extension DefaultPublisher {
             case let event as PresenceUpdateEvent: self?.performPresenceUpdateEvent(event)
             case let event as ClearRemovedTrackableMetadataEvent: self?.performClearRemovedTrackableMetadataEvent(event)
             case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
-
+            case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -210,6 +210,7 @@ extension DefaultPublisher {
                                            })
     }
 
+    // MARK: Destination
     private func performSetDestinationSuccessEvent(_ event: SetDestinationSuccessEvent) {
         self.route = event.route
     }
