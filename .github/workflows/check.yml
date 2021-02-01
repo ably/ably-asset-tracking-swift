@@ -7,29 +7,23 @@ on:
 jobs:
   check:
     runs-on: macos-latest
+    env:
+      MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+      ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure secret keys
+      - name: Configure MapBox Secret Token for Download
         run: |
           echo "machine api.mapbox.com" >> ~/.netrc
           echo "login mapbox" >> ~/.netrc
           echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
-          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
-          ABLY_CLIENT_ID: "-"
 
       - name: Install bundle
         run: |
           bundle install
-
-      - name: Configure Cocoapods-Keys
-        run: |
-          bundle exec pod keys set ablyApiKey "${ABLY_API_KEY}" AblyAssetTrackingKeys
-          bundle exec pod keys set ablyClientId "${ABLY_CLIENT_ID}" AblyAssetTrackingKeys
-          bundle exec pod keys set mapboxAccessToken "${MAPBOX_ACCESS_TOKEN}" AblyAssetTrackingKeys
 
       - name: Execute all tests using Fastlane
         run: |

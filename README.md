@@ -86,40 +86,29 @@ The project follows standard Pods with subprojects architecture , so you'll find
 
 Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
 
-1. Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials). You can skip public token configuration for now. This is needed to obtain the Mapbox SDK dependency.
-2. Install bundler using:
+Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials). You can skip public token configuration for now. This is needed to obtain the Mapbox SDK dependency.
+
+Install bundler using:
+
 ```
 gem install bundler
 ```
-3. Navigate to the project directory (one with .xcodeproj file) and execute:
+
+Navigate to the project directory (one with .xcodeproj file) and execute:
+
 ```
 bundle install
 bundle exec pod install
 ```
-4. API Keys and Access Tokens for Example Apps:
 
-During the pods installation you will be asked to provide:
-- `ablyApiKey` :
-```
-What is the key for ablyApiKey
-> <INSERT_API_KEY_HERE>
-```
+During the pods installation you will be asked to provide secret keys for use by integration tests and the example apps:
 
-- `ablyClienId`:
-```
-What is the key for ablyClientId
-> <INSERT_CLIENT_ID_HERE>
-```
+- `ABLY_API_KEY`: The API key to use with the Ably service
+- `MAPBOX_ACCESS_TOKEN`: The to use with the MapBox service
 
-- `mapboxAccessToken`:
-```
-What is the key for mapboxAccessToken
-> <INSERT_MAPBOX_ACCESS_TOKEN_HERE>
-```
+Open the `AblyAssetTracking.xcworkspace` file.
 
-5. Open `AblyAssetTracking.xcworkspace` file. After updating `Info.plist` with the MapBox public key, you should be ready to run the example apps.
-
-#### Why Bundler
+#### Why Bundler?
 
 It's common that several developers (or CI) will have different tool versions installed locally on their machines, and it may cause compatibility problems (some tools might work only on dedicated versions). So to avoid asking everyone to upgrade/downgrade their local tools it's easier to use some tool to execute needed commands with preset versions and that's what Bundler does. Of course, you are still free to execute all CLI commands directly if you wish.
 
