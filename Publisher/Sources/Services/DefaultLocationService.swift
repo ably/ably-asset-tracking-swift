@@ -18,7 +18,7 @@ class DefaultLocationService: LocationService {
         locationDataSource.startUpdatingLocation { [weak self] (error) in
             if let error = error,
                let self = self {
-                logger.error("Error while starting location updates: \(error)", source: "LocationService")
+                logger.error("Error while starting location updates: \(error)", source: "DefaultLocationService")
                 self.delegate?.locationService(sender: self, didFailWithError: error)
             }
         }
@@ -46,10 +46,10 @@ extension DefaultLocationService: PassiveLocationDataSourceDelegate {
     }
 
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didUpdateHeading newHeading: CLHeading) {
-        logger.debug("passiveLocationDataSource.didUpdateHeading", source: "LocationService")
+        logger.debug("passiveLocationDataSource.didUpdateHeading", source: "DefaultLocationService")
     }
 
     func passiveLocationDataSourceDidChangeAuthorization(_ dataSource: PassiveLocationDataSource) {
-        logger.debug("passiveLocationDataSource.passiveLocationDataSourceDidChangeAuthorization", source: "LocationService")
+        logger.debug("passiveLocationDataSource.passiveLocationDataSourceDidChangeAuthorization", source: "DefaultLocationService")
     }
 }

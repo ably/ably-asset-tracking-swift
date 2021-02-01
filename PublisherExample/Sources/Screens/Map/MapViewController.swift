@@ -16,6 +16,7 @@ class MapViewController: UIViewController {
     private var enhancedLocation: CLLocation?
     private var wasMapScrolled: Bool = false
     private var currentResolution: Resolution?
+    private var trackables: [Trackable] = []
 
     // MARK: Initialization
     init(trackingId: String) {
@@ -33,6 +34,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         title = "Publishing \(trackingId)"
         updateResolutionLabel()
+        setupNavigationBar()
         setupPublisher()
         setupMapView()
     }
@@ -41,9 +43,9 @@ class MapViewController: UIViewController {
     private func setupPublisher() {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         currentResolution = resolution
-        
+
         let keys = AblyAssetTrackingKeys.init()
-        
+
         publisher = try! PublisherFactory.publishers()
             .connection(ConnectionConfiguration(apiKey: keys.ablyApiKey, clientId: keys.ablyClientId))
             .mapboxConfiguration(MapboxConfiguration(mapboxKey: keys.mapboxAccessToken))
@@ -54,12 +56,26 @@ class MapViewController: UIViewController {
             .start()
 
         let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
-        publisher?.track(trackable: Trackable(id: trackingId, destination: destination), onSuccess: {  }, onError: { _ in })
+        let trackable = Trackable(id: trackingId, destination: destination)
+        publisher?.track(trackable: trackable,
+                         onSuccess: { [weak self] in
+                            self?.trackables = [trackable]
+                            logger.info("Initial trackable tracked successfully.")
+                         }, onError: { [weak self] error in
+                            let alertVC = UIAlertController(title: "Error", message: "Can't track trackable: \(error.localizedDescription)", preferredStyle: .alert)
+                            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self?.present(alertVC, animated: true, completion: nil)
+                         })
     }
 
     private func setupMapView() {
         mapView.register(AssetAnnotationView.self, forAnnotationViewWithReuseIdentifier: assetAnnotationReuseIdentifier)
         mapView.delegate = self
+    }
+
+    private func setupNavigationBar() {
+        title = "Publishing \(trackingId)"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(onEditButtonPressed))
     }
 
     // MARK: Utils
@@ -95,14 +111,14 @@ class MapViewController: UIViewController {
                                         longitudinalMeters: 600)
         mapView.setRegion(region, animated: true)
     }
-    
+
     private func updateResolutionLabel() {
         guard let resolution = currentResolution else {
             resolutionLabel.text = "Resolution: None"
             resolutionLabel.font = UIFont.systemFont(ofSize: 17)
             return
         }
-        
+
         resolutionLabel.font = UIFont.systemFont(ofSize: 14)
         resolutionLabel.text = """
             Resolution:
@@ -110,6 +126,22 @@ class MapViewController: UIViewController {
             Minimum displacement: \(resolution.minimumDisplacement)
             Desired interval: \(resolution.desiredInterval)
             """
+    }
+
+    @objc
+    func onEditButtonPressed() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Edit Trackables",
+                                                style: .default,
+                                                handler: { [weak self] _ in self?.navigateToTrackablesScreen() }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        navigationController?.present(alertController, animated: true, completion: nil)
+    }
+
+    private func navigateToTrackablesScreen() {
+        let viewController = TrackablesViewController(trackables: trackables)
+        viewController.delegate = self
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -145,9 +177,35 @@ extension MapViewController: PublisherDelegate {
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
         connectionStatusLabel.text = "Connection state: \(state)"
     }
-    
+
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
         currentResolution = resolution
         updateResolutionLabel()
+    }
+}
+
+extension MapViewController: TrackablesViewControllerDelegate {
+    func trackablesViewController(sender: TrackablesViewController, didAddTrackable trackable: Trackable) {
+        publisher?.add(trackable: trackable,
+                       onSuccess: { [weak self] in
+                        logger.info("Added trackable: \(trackable.id)")
+                        self?.trackables.append(trackable)
+                       }, onError: { [weak self] error in
+                        let alertVC = UIAlertController(title: "Error", message: "Can't add trackable: \(error.localizedDescription)", preferredStyle: .alert)
+                        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self?.present(alertVC, animated: true, completion: nil)
+                       })
+    }
+
+    func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable) {
+        publisher?.remove(trackable: trackable,
+                          onSuccess: { [weak self] wasPresent in
+                            self?.trackables.removeAll(where: { $0 == trackable })
+                            logger.info("Trackable removed: \(trackable.id). Was present: \(wasPresent)")
+                          }, onError: { [weak self] error in
+                            let alertVC = UIAlertController(title: "Error", message: "Can't add trackable: \(error.localizedDescription)", preferredStyle: .alert)
+                            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self?.present(alertVC, animated: true, completion: nil)
+                          })
     }
 }
