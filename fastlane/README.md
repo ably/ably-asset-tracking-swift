@@ -46,6 +46,11 @@ Build Subscriber SDK and export is as .framework file
 fastlane ios build_publisher
 ```
 Build Publisher SDK and export is as .framework file
+### ios build_example_apps
+```
+fastlane ios build_example_apps
+```
+Build example apps to validate that there are no build errors
 
 ----
 

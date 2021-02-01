@@ -7,7 +7,7 @@ protocol BatteryLevelProvider {
 class DefaultBatteryLevelProvider: BatteryLevelProvider {
     var currentBatteryPercentage: Float? {
         let level = UIDevice.current.batteryLevel
-        if level < 0 || level > 1.0 { return nil }
+        guard 0...1.0 ~= level else { return nil }
         return level * 100.0
     }
 

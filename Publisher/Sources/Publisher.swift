@@ -1,16 +1,6 @@
 import Foundation
 import CoreLocation
 
-/**
- Completion handler for success operations
- */
-public typealias SuccessHandler = () -> Void
-
-/**
- Completion handler for failed operations
- */
-public typealias ErrorHandler = (_ error: Error) -> Void
-
 public protocol PublisherDelegate: AnyObject {
     /**
      Called when the `Publisher` spot any (location, network or permissions) error
