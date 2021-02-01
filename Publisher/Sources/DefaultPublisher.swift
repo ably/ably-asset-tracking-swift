@@ -119,6 +119,12 @@ extension DefaultPublisher {
             case let event as ClearRemovedTrackableMetadataEvent: self?.performClearRemovedTrackableMetadataEvent(event)
             case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
+            case let event as DelegateResolutionUpdateEvent: self?.notifyDelegateResolutionUpdate(event)
+            case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
+            case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
+            case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)
+            case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
+            case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -357,6 +363,7 @@ extension DefaultPublisher {
 
     private func changeLocationEngineResolution(resolution: Resolution) {
         locationService.changeLocationEngineResolution(resolution: resolution)
+        enqueue(event: DelegateResolutionUpdateEvent(resolution: resolution))
     }
 
     private func checkThreshold(location: CLLocation) {
@@ -441,6 +448,42 @@ extension DefaultPublisher {
     private func performOnMainThread(_ operation: @escaping () -> Void) {
         DispatchQueue.main.async(execute: operation)
     }
+
+    // MARK: Delegate
+    private func notifyDelegateDidFailWithError(_ error: Error) {
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didFailWithError: error)
+        }
+    }
+
+    private func notifyDelegateRawLocationChanged(_ event: DelegateRawLocationChangedEvent) {
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didUpdateRawLocation: event.location)
+        }
+    }
+
+    private func notifyDelegateEnhancedLocationChanged(_ event: DelegateEnhancedLocationChangedEvent) {
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.location)
+        }
+    }
+
+    private func notifyDelegateConnectionStateChanged(_ event: DelegateConnectionStateChangedEvent) {
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+        }
+    }
+
+    private func notifyDelegateResolutionUpdate(_ event: DelegateResolutionUpdateEvent) {
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
+        }
+    }
 }
 
 // MARK: LocationServiceDelegate
@@ -480,7 +523,7 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
                           forTrackable trackable: Trackable,
                           presenceData: PresenceData,
                           clientId: String) {
-        logger.error("publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)",
+        logger.debug("publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)",
                      source: "DefaultPublisher")
         enqueue(event: PresenceUpdateEvent(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId))
     }

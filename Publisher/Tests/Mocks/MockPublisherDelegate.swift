@@ -46,4 +46,15 @@ class MockPublisherDelegate: PublisherDelegate {
         publisherDidChangeConnectionStateParamState = state
         publisherDidChangeConnectionStateCallback?()
     }
+    
+    var publisherDidUpdateResolutionCalled: Bool = false
+    var publisherDidUpdateResolutionParamSender: Publisher?
+    var publisherDidUpdateResolutionParamResolution: Resolution?
+    var publisherDidUpdateResolutionCallback: (() -> Void)?
+    func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
+        publisherDidUpdateResolutionCalled = true
+        publisherDidUpdateResolutionParamSender = sender
+        publisherDidUpdateResolutionParamResolution = resolution
+        publisherDidUpdateResolutionCallback?()
+    }
 }

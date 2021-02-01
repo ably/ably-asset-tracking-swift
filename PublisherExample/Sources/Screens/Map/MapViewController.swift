@@ -5,6 +5,7 @@ import AblyAssetTracking
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var connectionStatusLabel: UILabel!
+    @IBOutlet private weak var resolutionLabel: UILabel!
 
     private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
     private let trackingId: String
@@ -13,6 +14,7 @@ class MapViewController: UIViewController {
     private var rawLocation: CLLocation?
     private var enhancedLocation: CLLocation?
     private var wasMapScrolled: Bool = false
+    private var currentResolution: Resolution?
     private var trackables: [Trackable] = []
 
     // MARK: Initialization
@@ -29,6 +31,8 @@ class MapViewController: UIViewController {
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Publishing \(trackingId)"
+        updateResolutionLabel()
         setupNavigationBar()
         setupPublisher()
         setupMapView()
@@ -37,6 +41,8 @@ class MapViewController: UIViewController {
     // MARK: View setup
     private func setupPublisher() {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
+        currentResolution = resolution
+
         publisher = try! PublisherFactory.publishers()
             .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey, clientId: PublisherKeys.ablyClientId))
             .log(LogConfiguration())
@@ -102,6 +108,22 @@ class MapViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
 
+    private func updateResolutionLabel() {
+        guard let resolution = currentResolution else {
+            resolutionLabel.text = "Resolution: None"
+            resolutionLabel.font = UIFont.systemFont(ofSize: 17)
+            return
+        }
+
+        resolutionLabel.font = UIFont.systemFont(ofSize: 14)
+        resolutionLabel.text = """
+            Resolution:
+            Accuracy: \(resolution.accuracy)
+            Minimum displacement: \(resolution.minimumDisplacement)
+            Desired interval: \(resolution.desiredInterval)
+            """
+    }
+
     @objc
     func onEditButtonPressed() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -150,6 +172,11 @@ extension MapViewController: PublisherDelegate {
 
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
         connectionStatusLabel.text = "Connection state: \(state)"
+    }
+
+    func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
+        currentResolution = resolution
+        updateResolutionLabel()
     }
 }
 

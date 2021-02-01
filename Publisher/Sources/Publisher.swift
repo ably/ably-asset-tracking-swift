@@ -37,6 +37,15 @@ public protocol PublisherDelegate: AnyObject {
         - state: Most recent connection state
      */
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState)
+    
+    /**
+     Called when there is a resolution update directly in AblySDK.
+     
+     - Parameters:
+        - sender: `Publisher` instance.
+        - resolution: Most recent resolution.
+    */
+    func publisher(sender: Publisher, didUpdateResolution resolution: Resolution)
 }
 
 /**
