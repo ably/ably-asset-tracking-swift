@@ -2,7 +2,7 @@ import Foundation
 
 public protocol Proximity { }
 
-class DefaultProximity: Proximity {
+public class DefaultProximity: Proximity {
     /**
      Estimated time remaining to arrive at the destination, in milliseconds.
      */
@@ -13,12 +13,12 @@ class DefaultProximity: Proximity {
      */
     let spatial: Double?
 
-    init(spatial: Double) {
+    public init(spatial: Double) {
         self.spatial = spatial
         self.temporal = nil
     }
 
-    init(temporal: Double) {
+    public init(temporal: Double) {
         self.spatial = nil
         self.temporal = temporal
     }
