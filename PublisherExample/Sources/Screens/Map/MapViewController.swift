@@ -40,7 +40,7 @@ class MapViewController: UIViewController {
         publisher = try! PublisherFactory.publishers()
             .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey, clientId: PublisherKeys.ablyClientId))
             .log(LogConfiguration())
-            .transportationMode(TransportationMode())
+            .routingProfile(.driving)
             .delegate(self)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .start()
@@ -69,6 +69,10 @@ class MapViewController: UIViewController {
     }
 
     // MARK: Utils
+    private func changeRoutingProfile(to routingProfile: RoutingProfile) {
+        publisher?.changeRoutingProfile(profile: routingProfile, onSuccess: { }, onError: { _ in })
+    }
+
     private func refreshAnnotations() {
         mapView.annotations.forEach { mapView.removeAnnotation($0) }
 

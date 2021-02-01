@@ -46,10 +46,11 @@ Asset Subscribing SDK is used to receive the location of the required assets.
 Here is an example of how Asset Subscribing SDK can be used:
 
 ```swift
-subscriber = try? SubscriberFactory.subscribers() // Get a Subscriber Builder
+subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
   .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY,
                                       clientId: CLIENT_ID)) // provide Ably configuration with credentials
-  .trackingId(trackingId) // Provide a Tracking ID for the asset to be tracked
+  .trackingId(trackingId) // provide a Tracking ID for the asset to be tracked
+  .routingProfile(.cycling) // provide a routing profile for better location enhancements 
   .log(LogConfiguration()) // provide logging configuration
   .delegate(self) // provide a delegate to handle received location updates
   .start() // start listening to updates

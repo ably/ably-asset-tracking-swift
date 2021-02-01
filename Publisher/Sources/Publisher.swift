@@ -109,7 +109,17 @@ public protocol Publisher {
     /**
      The active means of transport for this publisher.
      */
-    var transportationMode: TransportationMode { get }
+    var routingProfile: RoutingProfile { get }
+
+    /**
+     Changes the current routing profile.
+     
+     - Parameters:
+        - profile: The routing profile to be used from now on.
+        - onSuccess: Called when changing RoutingProfile was successful.
+        - onError: Called when an error occurs.
+    */
+    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
 
     /**
      Stops this publisher from publishing locations. Once a publisher has been stopped, it cannot be restarted.

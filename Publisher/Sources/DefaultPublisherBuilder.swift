@@ -3,7 +3,7 @@ import UIKit
 class DefaultPublisherBuilder: PublisherBuilder {
     private var connection: ConnectionConfiguration?
     private var logConfiguration: LogConfiguration?
-    private var transportationMode: TransportationMode?
+    private var routingProfile: RoutingProfile?
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
     private weak var delegate: PublisherDelegate?
 
@@ -11,12 +11,12 @@ class DefaultPublisherBuilder: PublisherBuilder {
 
     private init(connection: ConnectionConfiguration?,
                  logConfiguration: LogConfiguration?,
-                 transportationMode: TransportationMode?,
+                 routingProfile: RoutingProfile?,
                  delegate: PublisherDelegate?,
                  resolutionPolicyFactory: ResolutionPolicyFactory?) {
         self.connection = connection
         self.logConfiguration = logConfiguration
-        self.transportationMode = transportationMode
+        self.routingProfile = routingProfile
         self.delegate = delegate
         self.resolutionPolicyFactory = resolutionPolicyFactory
     }
@@ -36,10 +36,10 @@ class DefaultPublisherBuilder: PublisherBuilder {
             )
         }
 
-        guard let transportationMode = transportationMode
+        guard let routingProfile = routingProfile
         else {
             throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: TransportationMode. Did you forgot to call `transportationMode` on builder object?"
+                "Missing mandatory property: RoutingProfile. Did you forgot to call `routingProfile` on builder object?"
             )
         }
 
@@ -52,7 +52,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
 
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
                                           logConfiguration: logConfiguration,
-                                          transportationMode: transportationMode,
+                                          routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyService: DefaultAblyPublisherService(configuration: connection),
                                           locationService: DefaultLocationService(),
@@ -64,7 +64,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: configuration,
                                        logConfiguration: logConfiguration,
-                                       transportationMode: transportationMode,
+                                       routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
@@ -72,15 +72,15 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func log(_ configuration: LogConfiguration) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: configuration,
-                                       transportationMode: transportationMode,
+                                       routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
-    func transportationMode(_ transportationMode: TransportationMode) -> PublisherBuilder {
+    func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: logConfiguration,
-                                       transportationMode: transportationMode,
+                                       routingProfile: profile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
@@ -88,7 +88,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: logConfiguration,
-                                       transportationMode: transportationMode,
+                                       routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
@@ -96,7 +96,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func resolutionPolicyFactory(_ resolutionPolicyFactory: ResolutionPolicyFactory) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        logConfiguration: logConfiguration,
-                                       transportationMode: transportationMode,
+                                       routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }

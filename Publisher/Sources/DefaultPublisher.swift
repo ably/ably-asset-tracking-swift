@@ -6,7 +6,7 @@ import MapboxDirections
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
-// swiftlint:disable cyclomatic_complexity 
+// swiftlint:disable cyclomatic_complexity
 class DefaultPublisher: Publisher {
     private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
@@ -32,21 +32,21 @@ class DefaultPublisher: Publisher {
     private var lastEnhancedTimestamps: [Trackable: Date]
     private var route: Route?
 
-    public let transportationMode: TransportationMode
     public weak var delegate: PublisherDelegate?
     private(set) public var activeTrackable: Trackable?
+    private(set) public var routingProfile: RoutingProfile
 
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
-         transportationMode: TransportationMode,
+         routingProfile: RoutingProfile,
          resolutionPolicyFactory: ResolutionPolicyFactory,
          ablyService: AblyPublisherService,
          locationService: LocationService,
          routeProvider: RouteProvider) {
         self.connectionConfiguration = connectionConfiguration
         self.logConfiguration = logConfiguration
-        self.transportationMode = transportationMode
-        self.workingQueue = DispatchQueue(label: "io.ably.tracking.Publisher.DefaultPublisher", qos: .default)
+        self.routingProfile = routingProfile
+        self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher", qos: .default)
         self.locationService = locationService
         self.ablyService = ablyService
         self.routeProvider = routeProvider
@@ -88,6 +88,11 @@ class DefaultPublisher: Publisher {
          enqueue(event: event)
      }
 
+    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler) {
+        let event = ChangeRoutingProfileEvent(profile: profile, onSuccess: onSuccess, onError: onError)
+        enqueue(event: event)
+    }
+
     func stop() {
         // TODO: Implement method
         failWithNotYetImplemented()
@@ -113,6 +118,7 @@ extension DefaultPublisher {
             case let event as PresenceUpdateEvent: self?.performPresenceUpdateEvent(event)
             case let event as ClearRemovedTrackableMetadataEvent: self?.performClearRemovedTrackableMetadataEvent(event)
             case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
+            case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -173,6 +179,7 @@ extension DefaultPublisher {
             if let destination = event.trackable.destination {
                 routeProvider.getRoute(
                     to: destination,
+                    withRoutingProfile: routingProfile,
                     onSuccess: { [weak self] route in self?.enqueue(event: SetDestinationSuccessEvent(route: route)) },
                     onError: { error in logger.error("Can't fetch route. Error: \(error)") }
                 )
@@ -190,6 +197,20 @@ extension DefaultPublisher {
         event.onComplete()
     }
 
+    // MARK: RoutingProfile
+    private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
+        routeProvider.changeRoutingProfile(to: routingProfile,
+                                           onSuccess: { [weak self] route in
+                                            self?.routingProfile = event.profile
+                                            self?.enqueue(event: SetDestinationSuccessEvent(route: route))
+                                            event.onSuccess()
+                                           }, onError: { error in
+                                            logger.error("Can't change RoutingProfile. Error: \(error)")
+                                            event.onError(error)
+                                           })
+    }
+
+    // MARK: Destination
     private func performSetDestinationSuccessEvent(_ event: SetDestinationSuccessEvent) {
         self.route = event.route
     }

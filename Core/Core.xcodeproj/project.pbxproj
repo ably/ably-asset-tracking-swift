@@ -11,7 +11,6 @@
 		180F61142586330C0014B310 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F6081258632360014B310 /* Core.framework */; };
 		180F6152258633C00014B310 /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6140258633C00014B310 /* ConnectionConfiguration.swift */; };
 		180F6153258633C00014B310 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6141258633C00014B310 /* Trackable.swift */; };
-		180F6154258633C00014B310 /* TransportationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6142258633C00014B310 /* TransportationMode.swift */; };
 		180F6155258633C00014B310 /* LogConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6143258633C00014B310 /* LogConfiguration.swift */; };
 		180F6156258633C00014B310 /* Decodable+FromJSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6145258633C00014B310 /* Decodable+FromJSONString.swift */; };
 		180F6157258633C00014B310 /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6146258633C00014B310 /* Codable+EncodedString.swift */; };
@@ -34,6 +33,7 @@
 		18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */; };
 		2B2E929B8D92D774D39CE786 /* Pods_asset_tracking_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */; };
 		45E464C268419CCC6EFE41C1 /* Pods_asset_tracking_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */; };
+		F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34025AF3E28002799BD /* RoutingProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +55,6 @@
 		180F61132586330C0014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		180F6140258633C00014B310 /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		180F6141258633C00014B310 /* Trackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
-		180F6142258633C00014B310 /* TransportationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportationMode.swift; sourceTree = "<group>"; };
 		180F6143258633C00014B310 /* LogConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogConfiguration.swift; sourceTree = "<group>"; };
 		180F6145258633C00014B310 /* Decodable+FromJSONString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+FromJSONString.swift"; sourceTree = "<group>"; };
 		180F6146258633C00014B310 /* Codable+EncodedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+EncodedString.swift"; sourceTree = "<group>"; };
@@ -85,6 +84,7 @@
 		B6779AD0ADA240AC512C4B24 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8D3F720FFF4D78877518EC /* Pods-asset_tracking-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Core.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Core/Pods-asset_tracking-Core.debug.xcconfig"; sourceTree = "<group>"; };
+		F65AC34025AF3E28002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,8 +155,8 @@
 			children = (
 				180F6140258633C00014B310 /* ConnectionConfiguration.swift */,
 				180F6141258633C00014B310 /* Trackable.swift */,
-				180F6142258633C00014B310 /* TransportationMode.swift */,
 				180F6143258633C00014B310 /* LogConfiguration.swift */,
+				F65AC34025AF3E28002799BD /* RoutingProfile.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -472,6 +472,7 @@
 				18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */,
 				180F615B258633C00014B310 /* GeoJSONProperties.swift in Sources */,
 				180F6155258633C00014B310 /* LogConfiguration.swift in Sources */,
+				F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

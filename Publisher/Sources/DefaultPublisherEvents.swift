@@ -57,6 +57,13 @@ struct RefreshResolutionPolicyEvent: PublisherEvent {}
 
 struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
 
+struct ChangeRoutingProfileEvent: PublisherEvent {
+    let profile: RoutingProfile
+    let onSuccess: SuccessHandler
+    let onError: ErrorHandler
+}
+
+
 struct PresenceUpdateEvent: PublisherEvent {
     let trackable: Trackable
     let presence: AblyPublisherPresence

@@ -24,7 +24,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      logConfiguration: LogConfiguration(),
-                                     transportationMode: TransportationMode(),
+                                     routingProfile: .driving,
                                      resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyService: ablyService,
                                      locationService: locationService,

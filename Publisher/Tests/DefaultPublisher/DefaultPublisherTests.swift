@@ -31,7 +31,7 @@ class DefaultPublisherTests: XCTestCase {
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      logConfiguration: LogConfiguration(),
-                                     transportationMode: TransportationMode(),
+                                     routingProfile: .driving,
                                      resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyService: ablyService,
                                      locationService: locationService,
@@ -392,4 +392,28 @@ class DefaultPublisherTests: XCTestCase {
     }
     
     // MARK: stop
+    
+    // MARK: ChangeRoutingProfile
+    func testChangeRoutingProfile_called() {
+        // Given: Default RoutingProfile set to .driving
+        publisher.changeRoutingProfile(profile: .cycling, onSuccess: {
+            XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
+            XCTAssertEqual(self.routeProvider.changeRoutingProfileParamRoutingProfile, .cycling)
+        }, onError: { error in
+            XCTAssertTrue(false, "onError callback shouldn't be called")
+        })
+    }
+    
+    func testChangeRoutingProfile_shouldCallGetRouteForDestination() {
+        // Given: Default destination set to:
+        let expectedDestination = CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182)
+        
+        publisher.changeRoutingProfile(profile: .cycling, onSuccess: {
+            XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
+            XCTAssertTrue(self.routeProvider.getRouteCalled)
+            XCTAssertEqual(self.routeProvider.getRouteParamDestination, expectedDestination)
+        }, onError: { error in
+            XCTAssertTrue(false, "onError callback shouldn't be called")
+        })
+    }
 }
