@@ -11,7 +11,6 @@ xcuserdata/
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
 Pods/
-Configurations/*.xcconfig
 
 # Build products
 archives/
@@ -26,3 +25,6 @@ archives/
 /coverage_subscriber/
 /coverage_publisher/
 
+# Secrets.xcconfig
+PublisherExample/Configurations/*.xcconfig
+SubscriberExample/Configurations/*.xcconfig
