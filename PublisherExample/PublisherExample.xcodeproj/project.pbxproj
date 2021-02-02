@@ -54,7 +54,6 @@
 		18FCE157258B7915005BC480 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B9333D6414A2A3550296030 /* Pods-asset_tracking-PublisherExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherExample.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample.debug.xcconfig"; sourceTree = "<group>"; };
 		47DB52A27D84E8297C6907BC /* Pods-asset_tracking-PublisherExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherExample.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample.release.xcconfig"; sourceTree = "<group>"; };
-		F6A7DAD025C96815001C094B /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		F6A7DADD25C96F26001C094B /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -187,7 +186,6 @@
 		F6A7DAD125C968D7001C094B /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				F6A7DAD025C96815001C094B /* Secrets.xcconfig */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -359,7 +357,6 @@
 /* Begin XCBuildConfiguration section */
 		180F6105258632DA0014B310 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F6A7DAD025C96815001C094B /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -421,7 +418,6 @@
 		};
 		180F6106258632DA0014B310 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F6A7DAD025C96815001C094B /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
