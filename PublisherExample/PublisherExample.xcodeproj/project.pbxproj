@@ -25,6 +25,7 @@
 		18A7FB7225AE1596005AC55E /* AddTrackableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A7FB7025AE1596005AC55E /* AddTrackableViewController.xib */; };
 		18A7FB7625AE3624005AC55E /* AccuracyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7FB7525AE3624005AC55E /* AccuracyPickerView.swift */; };
 		22C4B424466EAB516E4FD80F /* Pods_asset_tracking_PublisherExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */; };
+		F618BA8625C9939000B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7DADD25C96F26001C094B /* Environment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +113,7 @@
 		180F6192258634350014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				F6A7DADD25C96F26001C094B /* Environment.swift */,
 				180F619C258634350014B310 /* AppDelegate.swift */,
 				180F6194258634350014B310 /* Screens */,
 			);
@@ -186,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				F6A7DAD025C96815001C094B /* Secrets.xcconfig */,
-				F6A7DADD25C96F26001C094B /* Environment.swift */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -335,6 +336,7 @@
 				180F61A4258634350014B310 /* AssetAnnotationView.swift in Sources */,
 				180F61A3258634350014B310 /* SettingsViewController.swift in Sources */,
 				188F5DF625AF136700202C97 /* AddTrackableToolbar.swift in Sources */,
+				F618BA8625C9939000B69885 /* Environment.swift in Sources */,
 				18A7FB6A25AE07B4005AC55E /* TrackablesTableViewCell.swift in Sources */,
 				18A7FB6425AE05FD005AC55E /* TrackablesViewController.swift in Sources */,
 				180F61A5258634350014B310 /* MapViewController.swift in Sources */,
