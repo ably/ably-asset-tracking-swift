@@ -25,6 +25,9 @@ jobs:
         run: |
           bundle install
           
+          bundle exec fastlane run set_pod_key key:"ABLY_API_KEY" value:"${ABLY_API_KEY}" project:"AblyAssetTrackingKeys"
+          bundle exec fastlane run set_pod_key key:"MAPBOX_ACCESS_TOKEN" value:"${MAPBOX_ACCESS_TOKEN}" project:"AblyAssetTrackingKeys"
+          
           bundle exec fastlane run cocoapods
           
           bundle exec fastlane build_subscriber
