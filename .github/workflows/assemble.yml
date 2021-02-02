@@ -25,9 +25,6 @@ jobs:
         run: |
           bundle install
           
-          bundle exec pod keys set ABLY_API_KEY "${ABLY_API_KEY}" AblyAssetTrackingKeys
-          bundle exec pod keys set MAPBOX_ACCESS_TOKEN "${MAPBOX_ACCESS_TOKEN}" AblyAssetTrackingKeys
-          
           bundle exec pod install
           
           bundle exec fastlane build_subscriber
