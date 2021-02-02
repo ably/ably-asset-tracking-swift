@@ -26,5 +26,5 @@ archives/
 /coverage_publisher/
 
 # Secrets.xcconfig
-PublisherExample/Configurations/*.xcconfig
-SubscriberExample/Configurations/*.xcconfig
+PublisherExample/Configurations/Secrets.xcconfig
+SubscriberExample/Configurations/Secrets.xcconfig
