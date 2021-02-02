@@ -25,7 +25,7 @@ jobs:
         run: |
           bundle install
           
-          bundle exec pod install
+          bundle exec fastlane run cocoapods
           
           bundle exec fastlane build_subscriber
           bundle exec fastlane build_publisher
