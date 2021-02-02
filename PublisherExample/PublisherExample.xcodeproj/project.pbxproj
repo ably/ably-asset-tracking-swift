@@ -26,6 +26,7 @@
 		18A7FB7625AE3624005AC55E /* AccuracyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7FB7525AE3624005AC55E /* AccuracyPickerView.swift */; };
 		22C4B424466EAB516E4FD80F /* Pods_asset_tracking_PublisherExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */; };
 		F618BA8625C9939000B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7DADD25C96F26001C094B /* Environment.swift */; };
+		F618BA9225C9A6EA00B69885 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +55,7 @@
 		18FCE157258B7915005BC480 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B9333D6414A2A3550296030 /* Pods-asset_tracking-PublisherExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherExample.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample.debug.xcconfig"; sourceTree = "<group>"; };
 		47DB52A27D84E8297C6907BC /* Pods-asset_tracking-PublisherExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherExample.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample.release.xcconfig"; sourceTree = "<group>"; };
-		F618BA8925C996BD00B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		F6A7DADD25C96F26001C094B /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,7 +84,6 @@
 		180F60EA258632D90014B310 = {
 			isa = PBXGroup;
 			children = (
-				F6A7DAD125C968D7001C094B /* Configurations */,
 				180F6192258634350014B310 /* Sources */,
 				180F618B258634350014B310 /* Resources */,
 				180F60F4258632D90014B310 /* Products */,
@@ -113,6 +113,7 @@
 		180F6192258634350014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */,
 				F6A7DADD25C96F26001C094B /* Environment.swift */,
 				180F619C258634350014B310 /* AppDelegate.swift */,
 				180F6194258634350014B310 /* Screens */,
@@ -184,14 +185,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F6A7DAD125C968D7001C094B /* Configurations */ = {
-			isa = PBXGroup;
-			children = (
-				F618BA8925C996BD00B69885 /* Secrets.xcconfig */,
-			);
-			path = Configurations;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -252,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F618BA9225C9A6EA00B69885 /* Secrets.xcconfig in Resources */,
 				180F619D258634350014B310 /* Assets.xcassets in Resources */,
 				18A7FB6B25AE07B4005AC55E /* TrackablesTableViewCell.xib in Resources */,
 				18A7FB6525AE05FD005AC55E /* TrackablesViewController.xib in Resources */,
@@ -359,6 +353,7 @@
 /* Begin XCBuildConfiguration section */
 		180F6105258632DA0014B310 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -420,6 +415,7 @@
 		};
 		180F6106258632DA0014B310 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

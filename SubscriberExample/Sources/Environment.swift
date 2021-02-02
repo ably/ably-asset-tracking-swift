@@ -9,16 +9,9 @@ public enum Environment {
     }()
     
     static let ablyApiKey: String = {
-        guard let key = Environment.infoDictionary["ABLY_API_KEY"] as? String else {
+        guard let ablyApiKey = Environment.infoDictionary["ABLY_API_KEY"] as? String else {
             fatalError("ABLY_API_KEY not set in plist for this environment")
         }
-        return key
-    }()
-    
-    static let mapboxAccessToken: String = {
-        guard let token = Environment.infoDictionary["MAPBOX_ACCESS_TOKEN"] as? String else {
-            fatalError("MAPBOX_ACCESS_TOKEN not set in plist for this environment")
-        }
-        return token
+        return ablyApiKey
     }()
 }
