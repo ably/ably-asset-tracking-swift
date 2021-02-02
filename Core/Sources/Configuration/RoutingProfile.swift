@@ -1,5 +1,3 @@
-import UIKit
-
 /**
  Represents the means of transport that's being used.
  */

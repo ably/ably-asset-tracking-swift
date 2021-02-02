@@ -1,6 +1,30 @@
 import UIKit
 import MapKit
 import AblyAssetTracking
+import Foundation
+
+public enum Environment {
+    private static let infoDictionary: [String: Any] = {
+        guard let dict = Bundle.main.infoDictionary else {
+            fatalError("Plist file not found")
+        }
+        return dict
+    }()
+    
+    private let ablyApiKey: String = {
+        guard let ablyApiKey = Environment.infoDictionary["ABLY_API_KEY"] as? String else {
+            fatalError("ABLY_API_KEY not set in plist for this environment")
+        }
+        return ablyApiKey
+    }()
+    
+    private let mapboxAccessToken: String = {
+        guard let token = Environment.infoDictionary["MAPBOX_ACCESS_TOKEN"] as? String else {
+            fatalError("MAPBOX_ACCESS_TOKEN not set in plist for this environment")
+        }
+        return token
+    }()
+}
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
@@ -44,7 +68,8 @@ class MapViewController: UIViewController {
         currentResolution = resolution
 
         publisher = try! PublisherFactory.publishers()
-            .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey, clientId: PublisherKeys.ablyClientId))
+            .connection(ConnectionConfiguration(apiKey: "", clientId: ""))
+            .mapboxConfiguration(MapboxConfiguration(mapboxKey: ""))
             .log(LogConfiguration())
             .routingProfile(.driving)
             .delegate(self)
