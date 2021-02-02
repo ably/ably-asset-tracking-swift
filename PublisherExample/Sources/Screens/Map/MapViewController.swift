@@ -45,10 +45,9 @@ class MapViewController: UIViewController {
         currentResolution = resolution
 
         let keys = AblyAssetTrackingKeys.init()
-
         publisher = try! PublisherFactory.publishers()
-            .connection(ConnectionConfiguration(apiKey: keys.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example"))
-            .mapboxConfiguration(MapboxConfiguration(mapboxKey: keys.MAPBOX_ACCESS_TOKEN))
+            .connection(ConnectionConfiguration(apiKey: keys.aBLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example"))
+            .mapboxConfiguration(MapboxConfiguration(mapboxKey: keys.mAPBOX_ACCESS_TOKEN))
             .log(LogConfiguration())
             .routingProfile(.driving)
             .delegate(self)
