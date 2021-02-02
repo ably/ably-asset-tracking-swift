@@ -24,7 +24,8 @@ jobs:
       - name: Build All Projects
         run: |
           bundle install
-
+          
+          bundle exec pod keys generate AblyAssetTrackingKeys
           bundle exec pod keys set ABLY_API_KEY "${ABLY_API_KEY}" AblyAssetTrackingKeys
           bundle exec pod keys set MAPBOX_ACCESS_TOKEN "${MAPBOX_ACCESS_TOKEN}" AblyAssetTrackingKeys
           
