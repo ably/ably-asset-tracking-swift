@@ -45,12 +45,8 @@ struct SetDestinationSuccessEvent: PublisherEvent {
     let route: Route
 }
 
-struct RawLocationChangedEvent: PublisherEvent {
-    let location: CLLocation
-}
-
 struct EnhancedLocationChangedEvent: PublisherEvent {
-    let location: CLLocation
+    let locationUpdate: EnhancedLocationUpdate
 }
 
 struct RefreshResolutionPolicyEvent: PublisherEvent {}
@@ -63,7 +59,6 @@ struct ChangeRoutingProfileEvent: PublisherEvent {
     let onError: ErrorHandler
 }
 
-
 struct PresenceUpdateEvent: PublisherEvent {
     let trackable: Trackable
     let presence: AblyPublisherPresence
@@ -74,19 +69,15 @@ struct PresenceUpdateEvent: PublisherEvent {
 // MARK: Delegate handling events
 protocol PublisherDelegateEvent {}
 
-struct DelegateErrorEvent: PublisherDelegateEvent {
+struct DelegateErrorEvent: PublisherEvent, PublisherDelegateEvent {
     let error: Error
 }
 
-struct DelegateRawLocationChangedEvent: PublisherDelegateEvent {
-    let location: CLLocation
+struct DelegateEnhancedLocationChangedEvent: PublisherEvent, PublisherDelegateEvent {
+    let locationUpdate: EnhancedLocationUpdate
 }
 
-struct DelegateEnhancedLocationChangedEvent: PublisherDelegateEvent {
-    let location: CLLocation
-}
-
-struct DelegateConnectionStateChangedEvent: PublisherDelegateEvent {
+struct DelegateConnectionStateChangedEvent: PublisherEvent, PublisherDelegateEvent {
     let connectionState: ConnectionState
 }
 

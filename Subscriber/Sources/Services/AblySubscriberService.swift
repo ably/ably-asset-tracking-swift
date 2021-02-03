@@ -5,7 +5,6 @@ import CoreLocation
 protocol AblySubscriberServiceDelegate: AnyObject {
     func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus)
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error)
-    func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation)
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation)
 }
 
@@ -92,11 +91,12 @@ class AblySubscriberService {
             delegate?.subscriberService(sender: self, didFailWithError: error)
             return
         }
-
-        let locations = messages.map { $0.toCoreLocation() }
-        event == .raw ?
-            locations.forEach({ delegate?.subscriberService(sender: self, didReceiveRawLocation: $0) }) :
-            locations.forEach({ delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: $0) })
+        
+        messages.map {
+            $0.toCoreLocation()
+        }.forEach {
+            delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: $0)
+        }
     }
 
     private func handleIncomingPresenceMessage(_ message: ARTPresenceMessage) {

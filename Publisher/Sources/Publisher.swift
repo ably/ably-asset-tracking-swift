@@ -12,15 +12,6 @@ public protocol PublisherDelegate: AnyObject {
     func publisher(sender: Publisher, didFailWithError error: Error)
 
     /**
-     Called when the `Publisher` detect new Raw location. Same location will be sent to the Subscriber module
-     
-     - Parameters:
-        - sender:`Publisher` instance.
-        - location: Location object received from LocationManager
-     */
-    func publisher(sender: Publisher, didUpdateRawLocation location: CLLocation)
-
-    /**
      Called when the `Publisher` detect new enhanced (map matched) location. Same location will be sent to the Subscriber module
      
      - Parameters:

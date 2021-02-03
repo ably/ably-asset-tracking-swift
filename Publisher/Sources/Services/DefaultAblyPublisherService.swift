@@ -61,12 +61,24 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channels[trackable] = channel
     }
 
-    func sendRawAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
-        sendAssetLocation(location: location, forTrackable: trackable, withName: .raw, completion: completion)
-    }
+    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
+        guard let channel = channels[trackable] else {
+            completion?(AssetTrackingError.publisherError("Attempt to send location while not tracked channel"))
+            return
+        }
+        
+        let geoJson = EnhacedLocationUpdateMessage(locationUpdate: locationUpdate)
+        let data = try! [geoJson].toJSONString()
+        let message = ARTMessage(name: EventName.enhanced.rawValue, data: data)
+        
+        channel.publish([message]) { [weak self] error in
+            if let self = self, let error = error {
+                self.delegate?.publisherService(sender: self, didFailWithError: error)
+                return
+            }
 
-    func sendEnhancedAssetLocation(location: CLLocation, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
-        sendAssetLocation(location: location, forTrackable: trackable, withName: .enhanced, completion: completion)
+            logger.debug("ablyService.didSendEnhancedLocation.", source: "DefaultAblyService")
+        }
     }
 
     private func sendAssetLocation(location: CLLocation,

@@ -27,8 +27,6 @@ class DefaultPublisher: Publisher {
     private var resolutions: [Trackable: Resolution]
     private var locationEngineResolution: Resolution
 
-    private var lastRawLocations: [Trackable: CLLocation]
-    private var lastRawTimestamps: [Trackable: Date]
     private var lastEnhancedLocations: [Trackable: CLLocation]
     private var lastEnhancedTimestamps: [Trackable: Date]
     private var route: Route?
@@ -62,9 +60,7 @@ class DefaultPublisher: Publisher {
         self.requests = [:]
         self.subscribers = [:]
         self.resolutions = [:]
-        self.lastRawLocations = [:]
         self.lastEnhancedLocations = [:]
-        self.lastRawTimestamps = [:]
         self.lastEnhancedTimestamps = [:]
 
         self.ablyService.delegate = self
@@ -112,7 +108,6 @@ extension DefaultPublisher {
             case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
-            case let event as RawLocationChangedEvent: self?.performRawLocationChanged(event)
             case let event as AddTrackableEvent: self?.performAddTrackableEvent(event)
             case let event as RemoveTrackableEvent: self?.performRemoveTrackableEvent(event)
             case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
@@ -125,7 +120,6 @@ extension DefaultPublisher {
             case let event as DelegateResolutionUpdateEvent: self?.notifyDelegateResolutionUpdate(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
-            case let event as DelegateRawLocationChangedEvent: self?.notifyDelegateRawLocationChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
@@ -151,8 +145,7 @@ extension DefaultPublisher {
             switch event {
             case let event as DelegateErrorEvent: delegate.publisher(sender: self, didFailWithError: event.error)
             case let event as DelegateConnectionStateChangedEvent: delegate.publisher(sender: self, didChangeConnectionState: event.connectionState)
-            case let event as DelegateRawLocationChangedEvent: delegate.publisher(sender: self, didUpdateRawLocation: event.location)
-            case let event as DelegateEnhancedLocationChangedEvent: delegate.publisher(sender: self, didUpdateEnhancedLocation: event.location)
+            case let event as DelegateEnhancedLocationChangedEvent: delegate.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
             default: preconditionFailure("Unhandled delegate event in DefaultPublisher: \(event) ")
             }
         }
@@ -256,7 +249,6 @@ extension DefaultPublisher {
         removeAllSubscribers(forTrackable: event.trackable)
         resolutions.removeValue(forKey: event.trackable)
         requests.removeValue(forKey: event.trackable)
-        lastRawLocations.removeValue(forKey: event.trackable)
         lastEnhancedLocations.removeValue(forKey: event.trackable)
 
         enqueue(event: ClearActiveTrackableEvent(trackable: event.trackable, onSuccess: event.onSuccess))
@@ -287,46 +279,24 @@ extension DefaultPublisher {
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
         let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
-            return shouldSendLocation(location: event.location,
+            return shouldSendLocation(location: event.locationUpdate.location,
                                       lastLocation: lastEnhancedLocations[trackable],
                                       lastTimestamp: lastEnhancedTimestamps[trackable],
                                       resolution: resolutions[trackable])
         }
 
         trackablesToSend.forEach { trackable in
-            lastEnhancedLocations[trackable] = event.location
-            lastEnhancedTimestamps[trackable] = event.location.timestamp
+            lastEnhancedLocations[trackable] = event.locationUpdate.location
+            lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
 
-            ablyService.sendEnhancedAssetLocation(location: event.location, forTrackable: trackable) { [weak self] error in
+            ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, forTrackable: trackable) { [weak self] error in
                 if let error = error {
                     self?.callback(event: DelegateErrorEvent(error: error))
                 }
             }
         }
 
-        checkThreshold(location: event.location)
-    }
-
-    private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
-        let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
-            return shouldSendLocation(location: event.location,
-                                      lastLocation: lastRawLocations[trackable],
-                                      lastTimestamp: lastRawTimestamps[trackable],
-                                      resolution: resolutions[trackable])
-        }
-
-        trackablesToSend.forEach { trackable in
-            lastRawLocations[trackable] = event.location
-            lastRawTimestamps[trackable] = event.location.timestamp
-
-            ablyService.sendRawAssetLocation(location: event.location, forTrackable: trackable) { [weak self] error in
-                if let error = error {
-                    self?.callback(event: DelegateErrorEvent(error: error))
-                }
-            }
-        }
-
-        checkThreshold(location: event.location)
+        checkThreshold(location: event.locationUpdate.location)
     }
 
     private func shouldSendLocation(location: CLLocation,
@@ -460,17 +430,10 @@ extension DefaultPublisher {
         }
     }
 
-    private func notifyDelegateRawLocationChanged(_ event: DelegateRawLocationChangedEvent) {
-        performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateRawLocation: event.location)
-        }
-    }
-
     private func notifyDelegateEnhancedLocationChanged(_ event: DelegateEnhancedLocationChangedEvent) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.location)
+            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
         }
     }
 
@@ -495,17 +458,11 @@ extension DefaultPublisher: LocationServiceDelegate {
         logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }
-
-    func locationService(sender: LocationService, didUpdateRawLocation location: CLLocation) {
-        logger.debug("locationService.didUpdateRawLocation.", source: "DefaultPublisher")
-        enqueue(event: RawLocationChangedEvent(location: location))
-        callback(event: DelegateRawLocationChangedEvent(location: location))
-    }
-
-    func locationService(sender: LocationService, didUpdateEnhancedLocation location: CLLocation) {
+    
+    func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
-        enqueue(event: EnhancedLocationChangedEvent(location: location))
-        callback(event: DelegateEnhancedLocationChangedEvent(location: location))
+        enqueue(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate))
+        callback(event: DelegateEnhancedLocationChangedEvent(locationUpdate: locationUpdate))
     }
 }
 

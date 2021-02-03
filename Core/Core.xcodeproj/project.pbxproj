@@ -34,6 +34,7 @@
 		2B2E929B8D92D774D39CE786 /* Pods_asset_tracking_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */; };
 		45E464C268419CCC6EFE41C1 /* Pods_asset_tracking_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */; };
 		F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34025AF3E28002799BD /* RoutingProfile.swift */; };
+		F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */; };
 		F6A6B67825C9861B00A547D9 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,7 @@
 		DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8D3F720FFF4D78877518EC /* Pods-asset_tracking-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Core.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Core/Pods-asset_tracking-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		F65AC34025AF3E28002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
+		F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,6 +184,7 @@
 				180F614F258633C00014B310 /* PresenceData.swift */,
 				180F6150258633C00014B310 /* EventName.swift */,
 				180F6151258633C00014B310 /* AssetTrackingError.swift */,
+				F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				18C7B1AC25B61349000A1418 /* TrackableResolutionRequest.swift in Sources */,
 				180F6156258633C00014B310 /* Decodable+FromJSONString.swift in Sources */,
 				180F615E258633C00014B310 /* PresenceData.swift in Sources */,
+				F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */,
 				18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */,
 				180F615B258633C00014B310 /* GeoJSONProperties.swift in Sources */,
 				180F6155258633C00014B310 /* LogConfiguration.swift in Sources */,
