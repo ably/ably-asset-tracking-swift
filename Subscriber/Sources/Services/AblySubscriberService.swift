@@ -84,16 +84,16 @@ class AblySubscriberService {
             return
         }
 
-        var messages: [GeoJSONMessage] = []
+        var messages: [EnhacedLocationUpdateMessage] = []
         do {
-            messages = try [GeoJSONMessage].fromJSONString(json)
+            messages = try [EnhacedLocationUpdateMessage].fromJSONString(json)
         } catch let error {
             delegate?.subscriberService(sender: self, didFailWithError: error)
             return
         }
         
         messages.map {
-            $0.toCoreLocation()
+            $0.location.toCoreLocation()
         }.forEach {
             delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: $0)
         }

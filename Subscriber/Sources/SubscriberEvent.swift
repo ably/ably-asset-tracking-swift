@@ -20,10 +20,6 @@ struct DelegateErrorEvent: SubscriberDelegateEvent {
     let error: Error
 }
 
-struct DelegateRawLocationReceivedEvent: SubscriberDelegateEvent {
-    let location: CLLocation
-}
-
 struct DelegateEnhancedLocationReceivedEvent: SubscriberDelegateEvent {
     let location: CLLocation
 }
