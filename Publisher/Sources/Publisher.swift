@@ -70,7 +70,7 @@ public protocol Publisher {
      
      - Parameters:
         - trackable The object to be added to this publisher's tracked set, if it's not already there, and to be made the actively tracked object.
-        - completion: Called on completion of the `add` method. Ends with:
+        - completion: Called on completion of the `track` method. Ends with:
             - `success` when the trackable is successfully added and make the actively tracked object.
             - `failure` when an error occurs.
      */
@@ -96,7 +96,7 @@ public protocol Publisher {
      
      - Parameters:
         - trackable: The object to be removed from this publisher's tracked set, if it's there.
-        - completion: Called on completion of the `add` method. Ends with:
+        - completion: Called on completion of the `remove` method. Ends with:
             - `success` when the removing was successful, wasPresent is true when the object was known to this publisher, being that it was in the tracked set.
             - `failure` when an error occurs.
      */

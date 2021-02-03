@@ -77,8 +77,9 @@ public protocol Subscriber {
 
      - Parameters:
         - resolution: The resolution to request, or `null` to indicate that this subscriber should explicitly indicate that it has no preference in respect of resolution.
-        - onSuccess: Function to be called if the request was successfully registered with the server.
-        - onError: Function to be called if the request could not be sent or it was not possible to confirm that the server had processed the request.
+        - completion: Called on completion of the `sendChangeRequest` method. Ends with:
+            - `success` if the request was successfully registered with the server.
+            - `failure` if the request could not be sent or it was not possible to confirm that the server had processed the request.
      */
     func sendChangeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>)
 
