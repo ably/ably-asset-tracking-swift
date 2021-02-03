@@ -1,7 +1,7 @@
 import CoreLocation
 
 public enum LocationUpdateType: String, Codable {
-    case pradicted = "PREDICTED"
+    case predicted = "PREDICTED"
     case actual = "ACTUAL"
 }
 

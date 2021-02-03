@@ -3,15 +3,6 @@ use_frameworks!
 inhibit_all_warnings!
 workspace 'AblyAssetTracking.xcworkspace'
 
-plugin 'cocoapods-keys', {
-    :project => "AblyAssetTrackingKeys",
-    :keys => [
-        "ablyApiKey",
-        "ablyClientId",
-	"mapboxAccessToken"
-    ]
-}
-
 def ably_sdk
   pod 'Ably', '~> 1.2.0'
 end
