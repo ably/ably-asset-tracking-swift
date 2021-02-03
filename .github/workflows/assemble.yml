@@ -18,7 +18,7 @@ jobs:
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
           
-      - name: Update Ably and Mapbox keys from Secrets
+      - name: Configure Ably and MapBox Runtime Secrets for Xcode Build
         run: |
           echo "MAPBOX_ACCESS_TOKEN = $MAPBOX_ACCESS_TOKEN" >> Secrets.xcconfig
           echo "ABLY_API_KEY = $ABLY_API_KEY" >> Secrets.xcconfig

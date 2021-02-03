@@ -55,7 +55,7 @@ class MapViewController: UIViewController {
 
     private func setupSubscriber() {
         subscriber = try? SubscriberFactory.subscribers()
-            .connection(ConnectionConfiguration(apiKey: Environment.ablyApiKey,
+            .connection(ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY,
                                                 clientId: "Asset Tracking Cocoa Subscriber Example"))
             .trackingId(trackingId)
             .log(LogConfiguration())
