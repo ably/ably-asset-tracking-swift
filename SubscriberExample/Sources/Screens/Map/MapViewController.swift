@@ -117,16 +117,18 @@ class MapViewController: UIViewController {
         let resolution = resolutionForCurrentMapZoom()
         if resolution == currentResolution { return }
 
-        subscriber?.sendChangeRequest(resolution: resolution,
-                                      onSuccess: { [weak self] in
-                                        self?.currentResolution = resolution
-                                        self?.updateResolutionLabel()
-                                        logger.info("Updated resolution to: \(resolution)")
-                                      }, onError: { [weak self] error in
-                                        let alertVC = UIAlertController(title: "Error", message: "Can't change resolution: \(error.localizedDescription)", preferredStyle: .alert)
-                                        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                        self?.present(alertVC, animated: true, completion: nil)
-                                      })
+        subscriber?.sendChangeRequest(resolution: resolution) { [weak self] result in
+            switch result {
+            case .success:
+                self?.currentResolution = resolution
+                self?.updateResolutionLabel()
+                logger.info("Updated resolution to: \(resolution)")
+            case .failure(let error):
+                let alertVC = UIAlertController(title: "Error", message: "Can't change resolution: \(error.localizedDescription)", preferredStyle: .alert)
+                alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(alertVC, animated: true, completion: nil)
+            }
+        }
     }
 
     private func resolutionForCurrentMapZoom() -> Resolution {

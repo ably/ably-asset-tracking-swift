@@ -80,7 +80,7 @@ public protocol Subscriber {
         - onSuccess: Function to be called if the request was successfully registered with the server.
         - onError: Function to be called if the request could not be sent or it was not possible to confirm that the server had processed the request.
      */
-    func sendChangeRequest(resolution: Resolution?, onSuccess: @escaping SuccessHandler, onError: @escaping ErrorHandler)
+    func sendChangeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>)
 
     /**
      Stops asset subscriber from listening for asset location
