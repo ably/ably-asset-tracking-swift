@@ -16,7 +16,10 @@
 		180F61C0258634420014B310 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61B3258634420014B310 /* AppDelegate.swift */; };
 		180F61C2258634420014B310 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B6258634420014B310 /* Assets.xcassets */; };
 		180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B7258634420014B310 /* LaunchScreen.storyboard */; };
+		188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */; };
 		AD1A2941DA0611830A033DC6 /* Pods_asset_tracking_SubscriberExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE9C779EED7B3BB95CF6565 /* Pods_asset_tracking_SubscriberExample.framework */; };
+		F618BA8E25C99EF800B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F618BA8D25C99EF800B69885 /* Environment.swift */; };
+		F618BA9E25C9A73500B69885 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F618BA9D25C9A73500B69885 /* Secrets.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,9 +36,12 @@
 		180F61B8258634420014B310 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		180F61B9258634420014B310 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		184E87D025878881000DF408 /* Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Zoom.swift"; sourceTree = "<group>"; };
 		18FCE15A258B7926005BC480 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE9C779EED7B3BB95CF6565 /* Pods_asset_tracking_SubscriberExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_SubscriberExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5461DE1BF97ADF21AEB1AF3 /* Pods-asset_tracking-SubscriberExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberExample.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberExample/Pods-asset_tracking-SubscriberExample.debug.xcconfig"; sourceTree = "<group>"; };
+		F618BA8D25C99EF800B69885 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		F618BA9D25C9A73500B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +88,11 @@
 		180F61A9258634420014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				188F5ED925AF6FC900202C97 /* Utils */,
 				180F61AA258634420014B310 /* Screens */,
 				180F61B3258634420014B310 /* AppDelegate.swift */,
+				F618BA8D25C99EF800B69885 /* Environment.swift */,
+				F618BA9D25C9A73500B69885 /* Secrets.xcconfig */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -125,6 +134,14 @@
 				180F61B9258634420014B310 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		188F5ED925AF6FC900202C97 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		D8E7ACFB43B945847EF8DCA4 /* Frameworks */ = {
@@ -198,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				180F61BF258634420014B310 /* MapViewController.xib in Resources */,
+				F618BA9E25C9A73500B69885 /* Secrets.xcconfig in Resources */,
 				180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */,
 				180F61C2258634420014B310 /* Assets.xcassets in Resources */,
 				180F61BA258634420014B310 /* SettingsViewController.xib in Resources */,
@@ -274,7 +292,9 @@
 				180F61C0258634420014B310 /* AppDelegate.swift in Sources */,
 				180F61BE258634420014B310 /* TruckAnnotationView.swift in Sources */,
 				180F61BD258634420014B310 /* MapViewController.swift in Sources */,
+				F618BA8E25C99EF800B69885 /* Environment.swift in Sources */,
 				180F61BC258634420014B310 /* TruckAnnotation.swift in Sources */,
+				188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */,
 				180F61BB258634420014B310 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +315,7 @@
 /* Begin XCBuildConfiguration section */
 		180F60E4258632B50014B310 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F618BA9D25C9A73500B69885 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -356,6 +377,7 @@
 		};
 		180F60E5258632B50014B310 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F618BA9D25C9A73500B69885 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -421,7 +443,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.SubscriberExample";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.SubscriberExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -440,7 +462,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ably.asset-tracking.SubscriberExample";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.SubscriberExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -13,11 +13,11 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     private var destination: CLLocationCoordinate2D?
     private var routingProfile: RoutingProfile?
     private var directions: Directions?
-    
+
     init(mapboxConfiguration: MapboxConfiguration) {
         locationManager = CLLocationManager()
         directions = Directions(credentials: mapboxConfiguration.getCredentians())
-        
+
         super.init()
     }
 
@@ -53,13 +53,13 @@ class DefaultRouteProvider: NSObject, RouteProvider {
             self.handleErrorCallback(error: AssetTrackingError.publisherError("Missing Directions object."))
             return
         }
-        
+
         guard let destination = destination,
               let routingProfile = routingProfile else { return }
 
         let options = RouteOptions(coordinates: [destination, location.coordinate],
                                    profileIdentifier: routingProfile.toMapboxProfileIdentifier())
-        
+                                   
         directions.calculate(options) { [weak self] (_, result) in
             guard let self = self else { return }
             switch result {
@@ -93,7 +93,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         self.onSuccess = nil
         self.onError = nil
     }
-    
+
     private func isCalculating(onErrorHandler onError: ErrorHandler) -> Bool {
         guard self.onError == nil,
               self.onSuccess == nil

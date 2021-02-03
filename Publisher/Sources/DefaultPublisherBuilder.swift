@@ -31,7 +31,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                 "Missing mandatory property: ConnectionConfiguration. Did you forgot to call `connection` on builder object?"
             )
         }
-        
+
         guard let mapboxConfiguration = mapboxConfiguration
         else {
             throw AssetTrackingError.incompleteConfiguration(
@@ -80,14 +80,14 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
-    
+
     func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
-                                              mapboxConfiguration: mapboxConfiguration,
-                                              logConfiguration: logConfiguration,
-                                              routingProfile: routingProfile,
-                                              delegate: delegate,
-                                              resolutionPolicyFactory: resolutionPolicyFactory)
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
     func log(_ configuration: LogConfiguration) -> PublisherBuilder {

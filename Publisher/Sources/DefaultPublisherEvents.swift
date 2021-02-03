@@ -1,17 +1,7 @@
-import Foundation
 import CoreLocation
 import MapboxDirections
 
 protocol PublisherEvent {}
-
-struct SuccessEvent: PublisherEvent {
-    let onSuccess: SuccessHandler
-}
-
-struct ErrorEvent: PublisherEvent {
-    let error: Error
-    let onError: ErrorHandler
-}
 
 struct TrackTrackableEvent: PublisherEvent {
     let trackable: Trackable
@@ -51,10 +41,6 @@ struct TrackableReadyToTrackEvent: PublisherEvent {
     let onSuccess: SuccessHandler
 }
 
-struct SetDestinationEvent: PublisherEvent {
-    let destination: CLLocationCoordinate2D?
-}
-
 struct SetDestinationSuccessEvent: PublisherEvent {
     let route: Route
 }
@@ -73,16 +59,25 @@ struct ChangeRoutingProfileEvent: PublisherEvent {
     let onError: ErrorHandler
 }
 
+struct PresenceUpdateEvent: PublisherEvent {
+    let trackable: Trackable
+    let presence: AblyPublisherPresence
+    let presenceData: PresenceData
+    let clientId: String
+}
+
 // MARK: Delegate handling events
-struct DelegateErrorEvent: PublisherEvent {
+protocol PublisherDelegateEvent {}
+
+struct DelegateErrorEvent: PublisherEvent, PublisherDelegateEvent {
     let error: Error
 }
 
-struct DelegateEnhancedLocationChangedEvent: PublisherEvent {
+struct DelegateEnhancedLocationChangedEvent: PublisherEvent, PublisherDelegateEvent {
     let locationUpdate: EnhancedLocationUpdate
 }
 
-struct DelegateConnectionStateChangedEvent: PublisherEvent {
+struct DelegateConnectionStateChangedEvent: PublisherEvent, PublisherDelegateEvent {
     let connectionState: ConnectionState
 }
 

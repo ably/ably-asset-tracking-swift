@@ -22,14 +22,17 @@ struct ChangeResolutionEvent: SubscriberEvent {
 }
 
 // MARK: Delegate handling events
-struct DelegateErrorEvent: SubscriberEvent {
+
+protocol SubscriberDelegateEvent {}
+
+struct DelegateErrorEvent: SubscriberDelegateEvent {
     let error: Error
 }
 
-struct DelegateEnhancedLocationReceivedEvent: SubscriberEvent {
+struct DelegateEnhancedLocationReceivedEvent: SubscriberDelegateEvent, SubscriberEvent {
     let location: CLLocation
 }
 
-struct DelegateConnectionStatusChangedEvent: SubscriberEvent {
+struct DelegateConnectionStatusChangedEvent: SubscriberDelegateEvent {
     let status: AssetConnectionStatus
 }

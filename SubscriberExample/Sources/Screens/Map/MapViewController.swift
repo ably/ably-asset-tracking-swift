@@ -1,18 +1,20 @@
 import UIKit
 import MapKit
 import AblyAssetTracking
-import Keys
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var assetStatusLabel: UILabel!
     @IBOutlet private weak var animationSwitch: UISwitch!
     @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var resolutionLabel: UILabel!
 
     private let truckAnnotationViewIdentifier = "MapTruckAnnotationViewIdentifier"
     private let trackingId: String
     private var subscriber: Subscriber?
     private var errors: [Error] = []
 
+    private var currentResolution: Resolution?
+    private var resolutionDebounceTimer: Timer?
     private var location: CLLocation? { didSet { updateLocationAnnotation() } }
 
     // MARK: Initialization
@@ -36,18 +38,23 @@ class MapViewController: UIViewController {
 
         mapView.delegate = self
         mapView.register(TruckAnnotationView.self, forAnnotationViewWithReuseIdentifier: truckAnnotationViewIdentifier)
+
+        updateResolutionLabel()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         subscriber?.stop()
+        resolutionDebounceTimer?.invalidate()
+        resolutionDebounceTimer = nil
     }
 
+    // MARK: View setup
+
     private func setupSubscriber() {
-        let keys = AblyAssetTrackingKeys.init()
         subscriber = try? SubscriberFactory.subscribers()
-            .connection(ConnectionConfiguration(apiKey: keys.ablyApiKey,
-                                                clientId: keys.ablyClientId))
+            .connection(ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY,
+                                                clientId: "Asset Tracking Cocoa Subscriber Example"))
             .trackingId(trackingId)
             .log(LogConfiguration())
             .resolution(Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100))
@@ -96,6 +103,60 @@ class MapViewController: UIViewController {
                                         longitudinalMeters: 600)
         mapView.setRegion(region, animated: true)
     }
+
+    // MARK: Request new resolution based on zoom
+    private func scheduleResolutionUpdate() {
+        resolutionDebounceTimer?.invalidate()
+        resolutionDebounceTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
+            self?.performResolutionUpdate()
+        })
+    }
+
+    private func performResolutionUpdate() {
+        let resolution = resolutionForCurrentMapZoom()
+        if resolution == currentResolution { return }
+
+        subscriber?.sendChangeRequest(resolution: resolution,
+                                      onSuccess: { [weak self] in
+                                        self?.currentResolution = resolution
+                                        self?.updateResolutionLabel()
+                                        logger.info("Updated resolution to: \(resolution)")
+                                      }, onError: { [weak self] error in
+                                        let alertVC = UIAlertController(title: "Error", message: "Can't change resolution: \(error.localizedDescription)", preferredStyle: .alert)
+                                        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        self?.present(alertVC, animated: true, completion: nil)
+                                      })
+    }
+
+    private func resolutionForCurrentMapZoom() -> Resolution {
+        let zoom = mapView.getZoomLevel()
+        if zoom < 10 {
+            return Resolution(accuracy: .minimum, desiredInterval: 120 * 1000, minimumDisplacement: 10000)
+        } else if 10.0...12.0 ~= zoom {
+            return Resolution(accuracy: .low, desiredInterval: 60 * 1000, minimumDisplacement: 5000)
+        } else if 12.0...14.0 ~= zoom {
+            return Resolution(accuracy: .balanced, desiredInterval: 30 * 1000, minimumDisplacement: 100)
+        } else if 14.0...16.0 ~= zoom {
+            return Resolution(accuracy: .high, desiredInterval: 10 * 1000, minimumDisplacement: 30)
+        }
+        return Resolution(accuracy: .maximum, desiredInterval: 5 * 1000, minimumDisplacement: 1)
+    }
+
+    private func updateResolutionLabel() {
+        guard let resolution = currentResolution
+        else {
+            resolutionLabel.text = "Resolution: None"
+            resolutionLabel.font = UIFont.systemFont(ofSize: 17)
+            return
+        }
+        resolutionLabel.font = UIFont.systemFont(ofSize: 14)
+        resolutionLabel.text = """
+            Resolution:
+            Accuracy: \(resolution.accuracy)
+            Minimum displacement: \(resolution.minimumDisplacement)
+            Desired interval: \(resolution.desiredInterval)
+            """
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -107,8 +168,14 @@ extension MapViewController: MKMapViewDelegate {
                              TruckAnnotationView(annotation: annotation, reuseIdentifier: truckAnnotationViewIdentifier)
         annotationView.bearing = annotation.bearing
         annotationView.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
-                                                 
+
         return annotationView
+    }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let zoom = mapView.getZoomLevel()
+        logger.debug("Current map zoom level: \(zoom)")
+        scheduleResolutionUpdate()
     }
 }
 
@@ -126,4 +193,3 @@ extension MapViewController: SubscriberDelegate {
         assetStatusLabel.text = status == .online ? "The asset is online" : "The asset is offline"
     }
 }
-

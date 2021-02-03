@@ -59,7 +59,6 @@ abstract_target 'asset_tracking' do
 
   target 'PublisherTests' do
     project 'Publisher/Publisher.xcodeproj'
-    mapbox_sdk
   end
 
   target 'SubscriberTests' do

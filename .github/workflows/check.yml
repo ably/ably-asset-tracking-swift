@@ -24,17 +24,21 @@ jobs:
       - name: Install bundle
         run: |
           bundle install
-          
+
       - name: Configure Cocoapods-Keys
         run: |
           bundle exec pod keys set ablyApiKey "${ABLY_API_KEY}" AblyAssetTrackingKeys
           bundle exec pod keys set ablyClientId "${ABLY_CLIENT_ID}" AblyAssetTrackingKeys
           bundle exec pod keys set mapboxAccessToken "${MAPBOX_ACCESS_TOKEN}" AblyAssetTrackingKeys
-          
+
       - name: Execute all tests using Fastlane
         run: |
           bundle exec fastlane test_all
-    
+
+      - name: Ensure Pod Install Works
+        run: |
+          bundle exec pod install
+
       - uses: actions/upload-artifact@v2
         with:
           name: coverage-core

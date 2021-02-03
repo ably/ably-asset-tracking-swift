@@ -1,0 +1,34 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure MapBox Secret Token for Download
+        run: |
+          echo "machine api.mapbox.com" >> ~/.netrc
+          echo "login mapbox" >> ~/.netrc
+          echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
+        env:
+          MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+          
+      - name: Configure Ably and MapBox Runtime Secrets for Xcode Build
+        run: |
+          echo "MAPBOX_ACCESS_TOKEN = $MAPBOX_ACCESS_TOKEN" >> Secrets.xcconfig
+          echo "ABLY_API_KEY = $ABLY_API_KEY" >> Secrets.xcconfig
+        env:
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
+
+      - name: Build All Projects
+        run: |
+          bundle install
+          bundle exec fastlane build_subscriber
+          bundle exec fastlane build_publisher
+          bundle exec fastlane build_example_apps

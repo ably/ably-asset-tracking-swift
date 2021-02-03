@@ -25,7 +25,7 @@ class DefaultPublisherTests: XCTestCase {
         locationService = MockLocationService()
         ablyService = MockAblyPublisherService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
-        mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_KEY")
+        mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         routeProvider = MockRouteProvider()
         trackable = Trackable(id: "TrackableId",
@@ -140,7 +140,7 @@ class DefaultPublisherTests: XCTestCase {
                         },
                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
         wait(for: [expectation], timeout: 5.0)
-        
+
         expectation = XCTestExpectation()
         publisher.track(trackable: trackable,
                         onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
@@ -393,9 +393,9 @@ class DefaultPublisherTests: XCTestCase {
                          })
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     // MARK: stop
-    
+
     // MARK: ChangeRoutingProfile
     func testChangeRoutingProfile_called() {
         // Given: Default RoutingProfile set to .driving
@@ -406,11 +406,11 @@ class DefaultPublisherTests: XCTestCase {
             XCTAssertTrue(false, "onError callback shouldn't be called")
         })
     }
-    
+
     func testChangeRoutingProfile_shouldCallGetRouteForDestination() {
         // Given: Default destination set to:
         let expectedDestination = CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182)
-        
+
         publisher.changeRoutingProfile(profile: .cycling, onSuccess: {
             XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
             XCTAssertTrue(self.routeProvider.getRouteCalled)

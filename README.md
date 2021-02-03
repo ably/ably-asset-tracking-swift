@@ -69,9 +69,8 @@ To build the apps you will need to specify credentials properties.
 
 ### Project structure
 
-The project follows standard Pods architecture, so you'll find `AblyAssetTracking.xcworkspace` file which, after opening in Xcode reveals `AblyAssetTracking` and `Pods` projects. We'll skip the description of `Pods` as it's pretty standard and focus on `AblyAssetTracking`.
+The project follows standard Pods with subprojects architecture , so you'll find `AblyAssetTracking.xcworkspace` file which, after opening in Xcode reveals `Core`, `Publisher`, `Subscriber`, `PublisherExample`, `SubscriberExample` and `Pods` projects. We'll skip the description of `Pods` as it's pretty standard and focus on rest of projects:
 
-There are 3 framework targets with dedicated tests and 2 example apps:
 - `Core` (and tests)
   <br> Contains all shared logic and models (i.e. GeoJSON mappers) used by Publisher and Subscriber. Notice that there is no direct dependency between Publisher/Subscriber and Core. Instead of that, all files from Core should be also included in Publisher/Subscriber targets (by a tick in the Target Membership in Xcode's File Inspector tab). It's designed like that to avoid creating Umbrella Frameworks (as recommended in `Don't Create Umbrella Frameworks` in [Framework Creation Guidelines](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/CreationGuidelines.html)) - there are some shared sources which we want to be publicly visible for client apps and it won't work with direct dependencies.
 - `Publisher` (and tests)
@@ -157,21 +156,19 @@ bundle exec fastlane test_all
 
 Additionally, when you run tests using `Fastlane` you will see three new directories created: `coverage_core`, `coverage_publisher`, `coverage_subscriber`. Each contains an `index.html` file with a full test coverage report for the given target.
 
+### Coding Conventions and Style Guide
+
+- The SDKs are written in Swift, however they still have to be compatible for use from Objective-C based apps.
+- Favor Protocol Oriented Programming with Dependency Injection when writing any code. We're unable to create automatic mocks in Swift, so it'll be helpful for writing unit tests.
+- SwiftLint is integrated into the project. Make sure that your code does not add any SwiftLint related warning.
+- Please remove default Xcode header comments (with author, license and creation date) as they're not necessary.
+- If you're adding or modifying any part of the public interface of SDK, please also update [QuickHelp](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/SymbolDocumentation.html#//apple_ref/doc/uid/TP40016497-CH51-SW1) documentation.
+
 ### Concepts and assumptions
 
-- The SDKs are written in Swift, however they still have to be compatible for use from Objective-C based apps
-- It should be structured as monorepo with publishing SDK and demo app and subscribing SDK and demo app.
-- Both SDK are well tested
-- We’re following Protocol Oriented Programming with Dependency Injection for easy testing and stubbing.
-- Demo apps are written using MVC pattern as they won't contain any heavy logic
-- There should be some static analysis built-in (SwiftLint)
 - SDK’s should be distributed using CocoaPods (at the beginning), later we’ll add support for Carthage and Swift Package Manager
 - At the beginning, we aim only to support iOS, but we need to keep in mind macOS and tvOS
-- Project dependencies (ably SDK and MapBox) are fetched using CocoaPods
 - Docs are written for both Swift and ObjC
-- SDK instances are created using the Builder pattern.
-- We’re supporting iOS 12 and higher
-- There is a Fastlane setup for testing and archiving SDKs
 
 ### iOS version requirements
 
@@ -180,3 +177,15 @@ These SDKs require a minimum of iOS 12+ / iPadOS 12+
 ### Working on code shared between Publisher and Subscriber
 
 To speed up CocoaPods setup we removed framework/project linking in Xcode and we're just referencing files from the `Core` framework in `Publisher` and `Subscriber` SDK. There is a [ticket](https://github.com/ably/ably-asset-tracking-cocoa/issues/43) to fix it in the future, but for now, if you need to add or move any file in the `Core` SDK make sure that you also reference them in `Publisher` and `Subscriber`.
+
+### Release Procedure
+
+#### Bumping the Version
+
+To increment the version information for each release from the `main` branch:
+
+1. Search for all instances of the `CFBundleShortVersionString` key in `Info.plist` files and increment according to release requirements, conforming to the [Semantic Versioning Specification](https://semver.org/) version 2.0.0.
+2. Search for all instances of the `CFBundleVersion` key in `Info.plist` files and increment the integer value by 1, ignoring those indirected via `$(CURRENT_PROJECT_VERSION)` (see next step).
+3. Search for all instances of the `CURRENT_PROJECT_VERSION` key in `project.pbxproj` filesand increment the integer value by 1.
+
+The version, both in SemVer string form and as an integer, **MUST** be the same across all projects in this repository (e.g. example app project versions must match those of the library they're built on top of).

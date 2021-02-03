@@ -17,7 +17,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         locationService = MockLocationService()
         ablyService = MockAblyPublisherService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
-        mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_KEY")
+        mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         routeProvider = MockRouteProvider()
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         delegate = MockPublisherDelegate()
@@ -53,7 +53,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     func testLocationService_didUpdateEnhancedLocation() {
         let location = CLLocation(latitude: 1.234, longitude: 3.456)
         let locationUpdate = EnhancedLocationUpdate(location: location)
-        
+
         let expectation = XCTestExpectation()
 
         ablyService.trackablesGetValue = [trackable]
@@ -85,7 +85,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         resolutionPolicyFactory.resolutionPolicy?.resolveRequestReturnValue = Resolution(accuracy: .balanced,
                                                                                          desiredInterval: 500,
                                                                                          minimumDisplacement: 500)
-        
+
         // After tracking trackable (to trigger resolution resolve refresh)
         ablyService.trackCompletionHandler = { callback in
             callback?(nil)
