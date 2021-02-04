@@ -24,23 +24,17 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     func start() throws -> Subscriber {
         guard let connection = connection
         else {
-            throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: ConnectionConfiguration. Did you forgot to call `connection` on builder object?"
-            )
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
         }
 
         guard let logConfiguration = logConfiguration
         else {
-            throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: LogConfiguration. Did you forgot to call `log` on builder object?"
-            )
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
         }
 
         guard let trackingId = trackingId
         else {
-            throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: TrackingId. Did you forgot to call `trackingId` on builder object?"
-            )
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
         }
 
         let subscriber = DefaultSubscriber(connectionConfiguration: connection,

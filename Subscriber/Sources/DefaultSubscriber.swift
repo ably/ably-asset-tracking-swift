@@ -56,7 +56,7 @@ extension DefaultSubscriber {
         performOnMainThread { handler(.success(value)) }
     }
 
-    private func callback<T: Any>(error: AssetTrackingError, handler: @escaping ResultHandler<T>) {
+    private func callback<T: Any>(error: ErrorInformation, handler: @escaping ResultHandler<T>) {
         performOnMainThread { handler(.failure(error)) }
     }
 
@@ -80,7 +80,7 @@ extension DefaultSubscriber {
     private func performStart() {
         ablyService.start { [weak self] error in
             guard let error = error else { return }
-            self?.callback(event: DelegateErrorEvent(error: error))
+            self?.callback(event: DelegateErrorEvent(error: ErrorInformation(error: error)))
         }
     }
 
@@ -115,7 +115,7 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
         callback(event: DelegateConnectionStatusChangedEvent(status: status))
     }
 
-    func subscriberService(sender: AblySubscriberService, didFailWithError error: Error) {
+    func subscriberService(sender: AblySubscriberService, didFailWithError error: ErrorInformation) {
         logger.error("subscriberService.didFailWithError. Error: \(error)", source: "DefaultSubscriber")
         callback(event: DelegateErrorEvent(error: error))
     }

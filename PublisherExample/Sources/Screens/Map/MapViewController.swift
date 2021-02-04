@@ -159,7 +159,7 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 extension MapViewController: PublisherDelegate {
-    func publisher(sender: Publisher, didFailWithError error: Error) {
+    func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
     }
 
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
