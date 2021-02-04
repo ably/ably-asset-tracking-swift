@@ -36,18 +36,18 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
 
     func testLocationService_didFailWithError() {
-        let error = AssetTrackingError.publisherError("TestError")
+        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "TestError"))
         let expectation = XCTestExpectation()
         delegate.publisherDidFailWithErrorCallback = { expectation.fulfill() }
 
         // When receiving error from location service
-        publisher.locationService(sender: MockLocationService(), didFailWithError: error)
+        publisher.locationService(sender: MockLocationService(), didFailWithError: errorInformation)
 
         wait(for: [expectation], timeout: 5.0)
 
         // It should notify delegate
         XCTAssertTrue(delegate.publisherDidFailWithErrorCalled)
-        XCTAssertEqual( delegate.publisherDidFailWithErrorParamError as? AssetTrackingError, error)
+        XCTAssertEqual(delegate.publisherDidFailWithErrorParamError, errorInformation)
     }
 
     func testLocationService_didUpdateEnhancedLocation() {

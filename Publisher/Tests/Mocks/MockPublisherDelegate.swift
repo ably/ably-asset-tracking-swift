@@ -5,9 +5,9 @@ import Foundation
 class MockPublisherDelegate: PublisherDelegate {
     var publisherDidFailWithErrorCalled: Bool = false
     var publisherDidFailWithErrorParamSender: Publisher?
-    var publisherDidFailWithErrorParamError: Error?
+    var publisherDidFailWithErrorParamError: ErrorInformation?
     var publisherDidFailWithErrorCallback: (() -> Void)?
-    func publisher(sender: Publisher, didFailWithError error: Error) {
+    func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
         publisherDidFailWithErrorCalled = true
         publisherDidFailWithErrorParamSender = sender
         publisherDidFailWithErrorParamError = error

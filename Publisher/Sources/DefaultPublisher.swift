@@ -441,7 +441,7 @@ extension DefaultPublisher {
     }
 
     // MARK: Delegate
-    private func notifyDelegateDidFailWithError(_ error: Error) {
+    private func notifyDelegateDidFailWithError(_ error: ErrorInformation) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didFailWithError: error)
@@ -472,7 +472,7 @@ extension DefaultPublisher {
 
 // MARK: LocationServiceDelegate
 extension DefaultPublisher: LocationServiceDelegate {
-    func locationService(sender: LocationService, didFailWithError error: Error) {
+    func locationService(sender: LocationService, didFailWithError error: ErrorInformation) {
         logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }

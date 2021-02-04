@@ -62,7 +62,6 @@
 		18FCE1E7258B8264005BC480 /* GeoJSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D8258B8264005BC480 /* GeoJSONType.swift */; };
 		18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1D9258B8264005BC480 /* PresenceData.swift */; };
 		18FCE1E9258B8264005BC480 /* EventName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DA258B8264005BC480 /* EventName.swift */; };
-		18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DB258B8264005BC480 /* AssetTrackingError.swift */; };
 		18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */; };
 		18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */; };
 		18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */; };
@@ -72,6 +71,7 @@
 		F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */; };
 		F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */; };
 		F6A2CFFD25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */; };
+		F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */; };
 		F6A6B67C25C9862600A547D9 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67B25C9862600A547D9 /* MapboxConfiguration.swift */; };
 		F6A6B68025C9883E00A547D9 /* MapboxConfiguration+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -147,7 +147,6 @@
 		18FCE1D8258B8264005BC480 /* GeoJSONType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONType.swift; sourceTree = "<group>"; };
 		18FCE1D9258B8264005BC480 /* PresenceData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceData.swift; sourceTree = "<group>"; };
 		18FCE1DA258B8264005BC480 /* EventName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
-		18FCE1DB258B8264005BC480 /* AssetTrackingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingError.swift; sourceTree = "<group>"; };
 		18FCE1DD258B8264005BC480 /* Decodable+FromJSONString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+FromJSONString.swift"; sourceTree = "<group>"; };
 		18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+EncodedString.swift"; sourceTree = "<group>"; };
 		18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnimplementedSupport.swift; sourceTree = "<group>"; };
@@ -163,6 +162,7 @@
 		F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+Extensions.swift"; sourceTree = "<group>"; };
 		F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
+		F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		F6A6B67B25C9862600A547D9 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
 		F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapboxConfiguration+Extensions.swift"; sourceTree = "<group>"; };
 		F9B1CBDB707C22DF88ACEF73 /* Pods-asset_tracking-Publisher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.debug.xcconfig"; sourceTree = "<group>"; };
@@ -365,8 +365,8 @@
 				18FCE1D4258B8264005BC480 /* GeoJSON */,
 				18FCE1D9258B8264005BC480 /* PresenceData.swift */,
 				18FCE1DA258B8264005BC480 /* EventName.swift */,
-				18FCE1DB258B8264005BC480 /* AssetTrackingError.swift */,
 				F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */,
+				F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */,
 			);
 			name = Model;
 			path = ../../Core/Sources/Model;
@@ -638,7 +638,6 @@
 				F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */,
 				18C7B16A25B61131000A1418 /* AblyPublisherPresence.swift in Sources */,
 				18C7B16325B6109E000A1418 /* DefaultResolutionPolicy.swift in Sources */,
-				18FCE1EA258B8264005BC480 /* AssetTrackingError.swift in Sources */,
 				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
 				18A4C1CD25B2E0780092CC70 /* ResultHandler.swift in Sources */,
@@ -669,6 +668,7 @@
 				F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */,
 				F6A2CFFD25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */,
 				F6A6B68025C9883E00A547D9 /* MapboxConfiguration+Extensions.swift in Sources */,
+				F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */,
 				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,
 				18C7B1C025B6135A000A1418 /* Accuracy.swift in Sources */,
 				18C7B1BE25B6135A000A1418 /* ResolutionConstraints.swift in Sources */,
