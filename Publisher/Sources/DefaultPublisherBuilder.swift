@@ -27,36 +27,27 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func start() throws -> Publisher {
         guard let connection = connection
         else {
-            throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: ConnectionConfiguration. Did you forgot to call `connection` on builder object?"
-            )
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
         }
         
-        guard let mapboxConfiguration = mapboxConfiguration else {
-            throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: MapboxConfiguration. Did you forgot to call `mapboxConfiguration` on builder object?"
-            )
+        guard let mapboxConfiguration = mapboxConfiguration
+        else {
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "MapboxConfiguration", forBuilderOption: "mapboxConfiguration"))
         }
 
         guard let logConfiguration = logConfiguration
         else {
-            throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: LogConfiguration. Did you forgot to call `log` on builder object?"
-            )
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
         }
 
         guard let routingProfile = routingProfile
         else {
-            throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: RoutingProfile. Did you forgot to call `routingProfile` on builder object?"
-            )
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "RoutingProfile", forBuilderOption: "routingProfile"))
         }
 
         guard let resolutionPolicyFactory = resolutionPolicyFactory
         else {
-            throw AssetTrackingError.incompleteConfiguration(
-                "Missing mandatory property: ResolutionPolicyFactory. Did you forgot to call `resolutionPolicyFactory` on builder object?"
-            )
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }
 
         let publisher =  DefaultPublisher(connectionConfiguration: connection,

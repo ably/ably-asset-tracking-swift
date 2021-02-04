@@ -60,15 +60,15 @@ class DefaultAblyPublisherService: AblyPublisherService {
             }
 
             logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
-            completion?(.failure(error))
+            completion?(.failure(error.toErrorInformation()))
         }
         channels[trackable] = channel
     }
 
     func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
         guard let channel = channels[trackable] else {
-            let error = AssetTrackingError.publisherError("Attempt to send location while not tracked channel")
-            completion?(.failure(error))
+            let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Attempt to send location while not tracked channel"))
+            completion?(.failure(errorInformation))
             return
         }
         
@@ -77,12 +77,13 @@ class DefaultAblyPublisherService: AblyPublisherService {
         let message = ARTMessage(name: EventName.enhanced.rawValue, data: data)
         
         channel.publish([message]) { [weak self] error in
-            if let self = self, let error = error {
-                self.delegate?.publisherService(sender: self, didFailWithError: error)
+            guard let self = self,
+                  let error = error else {
+                logger.debug("ablyService.didSendEnhancedLocation.", source: "DefaultAblyService")
                 return
             }
-
-            logger.debug("ablyService.didSendEnhancedLocation.", source: "DefaultAblyService")
+            
+            self.delegate?.publisherService(sender: self, didFailWithError:error.toErrorInformation())
         }
     }
 
@@ -104,7 +105,8 @@ class DefaultAblyPublisherService: AblyPublisherService {
                 completion?(.success(true))
                 return
             }
-            completion?(.failure(error))
+            let errorInformation = error.toErrorInformation()
+            completion?(.failure(errorInformation))
         }
     }
 }

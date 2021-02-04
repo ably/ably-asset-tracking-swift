@@ -68,11 +68,13 @@ class AblySubscriberService {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
         channel.presence.updateClient(configuration.clientId, data: data) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
+            guard let error = error else {
                 completion(.success(()))
+                return
             }
+            
+            let assetError = AssetTrackingError.errorInformation(ErrorInformation(error: error))
+            completion(.failure(assetError))
         }
     }
 

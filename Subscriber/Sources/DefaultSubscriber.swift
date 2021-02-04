@@ -56,7 +56,7 @@ extension DefaultSubscriber {
         performOnMainThread { handler(.success(value)) }
     }
 
-    private func callback<T: Any>(error: Error, handler: @escaping ResultHandler<T>) {
+    private func callback<T: Any>(error: AssetTrackingError, handler: @escaping ResultHandler<T>) {
         performOnMainThread { handler(.failure(error)) }
     }
 
