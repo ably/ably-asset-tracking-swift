@@ -32,9 +32,9 @@ public class DefaultResolutionConstraints: ResolutionConstraints {
     let lowBatteryMultiplier: Float
 
     public init(resolutions: DefaultResolutionSet,
-         proximityThreshold: Proximity,
-         batteryLevelThreshold: Float,
-         lowBatteryMultiplier: Float) {
+                proximityThreshold: Proximity,
+                batteryLevelThreshold: Float,
+                lowBatteryMultiplier: Float) {
         self.resolutions = resolutions
         self.proximityThreshold = proximityThreshold
         self.batteryLevelThreshold = batteryLevelThreshold
@@ -71,10 +71,13 @@ public class DefaultResolutionSet {
      */
     let nearWithSubscriber: Resolution
 
+    /**
+     `ResolutionConstraints` initializer.
+     */
     public init(farWithoutSubscriber: Resolution,
-         farWithSubscriber: Resolution,
-         nearWithoutSubscriber: Resolution,
-         nearWithSubscriber: Resolution) {
+                farWithSubscriber: Resolution,
+                nearWithoutSubscriber: Resolution,
+                nearWithSubscriber: Resolution) {
         self.farWithSubscriber = farWithSubscriber
         self.farWithoutSubscriber = farWithoutSubscriber
         self.nearWithSubscriber = nearWithSubscriber

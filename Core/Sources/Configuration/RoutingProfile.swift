@@ -1,3 +1,5 @@
+// swiftlint:disable trailing_whitespace
+
 /**
  Represents the means of transport that's being used.
  */
@@ -11,7 +13,7 @@ public enum RoutingProfile: String, Codable {
      For bicycle routing. This profile prefers routes that are safe for cyclist, avoiding highways and preferring streets with bike lanes.
     */
     case cycling
-    
+
     /**
      For pedestrian and hiking routing. This profile prefers sidewalks and trails.
     */

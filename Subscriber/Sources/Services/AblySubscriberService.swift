@@ -72,7 +72,6 @@ class AblySubscriberService {
                 completion(.success(()))
                 return
             }
-            
             completion(.failure(error.toErrorInformation()))
         }
     }
@@ -93,7 +92,7 @@ class AblySubscriberService {
                 delegate?.subscriberService(sender: self, didFailWithError: ErrorInformation(error: error))
                 return
             }
-            
+
             delegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             return
         }
