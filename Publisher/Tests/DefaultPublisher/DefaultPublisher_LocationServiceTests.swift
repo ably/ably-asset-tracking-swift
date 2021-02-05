@@ -6,6 +6,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var locationService: MockLocationService!
     var ablyService: MockAblyPublisherService!
     var configuration: ConnectionConfiguration!
+    var mapboxConfiguration: MapboxConfiguration!
     var resolutionPolicyFactory: MockResolutionPolicyFactory!
     var routeProvider: MockRouteProvider!
     var trackable: Trackable!
@@ -16,13 +17,15 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         locationService = MockLocationService()
         ablyService = MockAblyPublisherService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
+        mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         routeProvider = MockRouteProvider()
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         delegate = MockPublisherDelegate()
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
-        publisher = DefaultPublisher(connectionConfiguration: configuration,
+        publisher = DefaultPublisher(connectionConfiguration:configuration,
+                                     mapboxConfiguration: mapboxConfiguration,
                                      logConfiguration: LogConfiguration(),
                                      routingProfile: .driving,
                                      resolutionPolicyFactory: resolutionPolicyFactory,

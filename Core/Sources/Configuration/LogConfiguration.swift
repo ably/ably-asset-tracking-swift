@@ -1,5 +1,3 @@
-import UIKit
-
 /**
  Configuration class to control logging behavior (TBD).
  */

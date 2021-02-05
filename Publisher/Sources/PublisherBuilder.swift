@@ -1,5 +1,3 @@
-import UIKit
-
 /**
  Default and preferred way to create the `Publisher`.
  */
@@ -17,6 +15,11 @@ public protocol PublisherBuilder {
      Sets the mandatory `ConnectionConfiguration` property
      */
     func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder
+    
+    /**
+     Sets the mandatory `MapboxConfiguration` property
+    */
+    func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilder
 
     /**
      Sets the mandatory `LogConfiguration` property

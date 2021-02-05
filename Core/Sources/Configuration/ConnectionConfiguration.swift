@@ -1,5 +1,3 @@
-import UIKit
-
 public class ConnectionConfiguration: NSObject {
     public let apiKey: String
     public let clientId: String

@@ -34,6 +34,7 @@
 		2B2E929B8D92D774D39CE786 /* Pods_asset_tracking_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */; };
 		45E464C268419CCC6EFE41C1 /* Pods_asset_tracking_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */; };
 		F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34025AF3E28002799BD /* RoutingProfile.swift */; };
+		F6A6B67825C9861B00A547D9 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8D3F720FFF4D78877518EC /* Pods-asset_tracking-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Core.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Core/Pods-asset_tracking-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		F65AC34025AF3E28002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
+		F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 				180F6141258633C00014B310 /* Trackable.swift */,
 				180F6143258633C00014B310 /* LogConfiguration.swift */,
 				F65AC34025AF3E28002799BD /* RoutingProfile.swift */,
+				F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -455,7 +458,6 @@
 				180F6159258633C00014B310 /* GeoJSONMessage.swift in Sources */,
 				180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */,
 				18C7B1B025B61349000A1418 /* Resolution.swift in Sources */,
-				180F6154258633C00014B310 /* TransportationMode.swift in Sources */,
 				18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */,
 				180F615A258633C00014B310 /* GeoJSONGeometry.swift in Sources */,
 				18C7B1AB25B61349000A1418 /* ResolutionPolicy.swift in Sources */,
@@ -463,6 +465,7 @@
 				180F615F258633C00014B310 /* EventName.swift in Sources */,
 				180F6157258633C00014B310 /* Codable+EncodedString.swift in Sources */,
 				180F6153258633C00014B310 /* Trackable.swift in Sources */,
+				F6A6B67825C9861B00A547D9 /* MapboxConfiguration.swift in Sources */,
 				18C7B1AD25B61349000A1418 /* ResolutionConstraints.swift in Sources */,
 				180F615C258633C00014B310 /* GeoJSONType.swift in Sources */,
 				18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */,

@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import AblyAssetTracking
+import Foundation
 
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
@@ -44,7 +45,8 @@ class MapViewController: UIViewController {
         currentResolution = resolution
 
         publisher = try! PublisherFactory.publishers()
-            .connection(ConnectionConfiguration(apiKey: PublisherKeys.ablyApiKey, clientId: PublisherKeys.ablyClientId))
+            .connection(ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example"))
+            .mapboxConfiguration(MapboxConfiguration(mapboxKey: Environment.MAPBOX_ACCESS_TOKEN))
             .log(LogConfiguration())
             .routingProfile(.driving)
             .delegate(self)

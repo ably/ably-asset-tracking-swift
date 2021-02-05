@@ -12,12 +12,15 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     private var onError: ErrorHandler?
     private var destination: CLLocationCoordinate2D?
     private var routingProfile: RoutingProfile?
+    private var directions: Directions?
 
-    override init() {
+    init(mapboxConfiguration: MapboxConfiguration) {
         locationManager = CLLocationManager()
+        directions = Directions(credentials: mapboxConfiguration.getCredentians())
+
         super.init()
     }
-
+    
     func changeRoutingProfile(to routingProfile: RoutingProfile, onSuccess: @escaping (Route) -> Void, onError: @escaping ErrorHandler) {
         self.routingProfile = routingProfile
         guard let destination = self.destination,
@@ -46,12 +49,17 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     private func handleLocationUpdate(location: CLLocation) {
+        guard let directions = self.directions else {
+            self.handleErrorCallback(error: AssetTrackingError.publisherError("Missing Directions object."))
+            return
+        }
+        
         guard let destination = destination,
               let routingProfile = routingProfile else { return }
 
         let options = RouteOptions(coordinates: [destination, location.coordinate],
                                    profileIdentifier: routingProfile.toMapboxProfileIdentifier())
-        Directions.shared.calculate(options) { [weak self] (_, result) in
+        directions.calculate(options) { [weak self] (_, result) in
             guard let self = self else { return }
             switch result {
             case .failure(let error):

@@ -25,3 +25,5 @@ archives/
 /coverage_subscriber/
 /coverage_publisher/
 
+# User defined configuration
+Secrets.xcconfig
