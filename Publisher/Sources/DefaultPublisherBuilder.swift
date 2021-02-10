@@ -1,26 +1,30 @@
 import UIKit
 
-class DefaultPublisherBuilder: PublisherBuilder {
+@objc
+class DefaultPublisherBuilder: NSObject, PublisherBuilder {
     private var connection: ConnectionConfiguration?
     private var mapboxConfiguration: MapboxConfiguration?
     private var logConfiguration: LogConfiguration?
     private var routingProfile: RoutingProfile?
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
     private weak var delegate: PublisherDelegate?
+    private weak var delegateObjectiveC: PublisherDelegateObjectiveC?
 
-    init() { }
+    override init() { }
 
     private init(connection: ConnectionConfiguration?,
                  mapboxConfiguration: MapboxConfiguration?,
                  logConfiguration: LogConfiguration?,
                  routingProfile: RoutingProfile?,
                  delegate: PublisherDelegate?,
+                 delegateObjectiveC: PublisherDelegateObjectiveC?,
                  resolutionPolicyFactory: ResolutionPolicyFactory?) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
         self.logConfiguration = logConfiguration
         self.routingProfile = routingProfile
         self.delegate = delegate
+        self.delegateObjectiveC = delegateObjectiveC
         self.resolutionPolicyFactory = resolutionPolicyFactory
     }
 
@@ -59,6 +63,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                           locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration))
         publisher.delegate = delegate
+        publisher.delegateObjectiveC = delegateObjectiveC
         return publisher
     }
 
@@ -68,6 +73,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logConfiguration: logConfiguration,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
     
@@ -77,6 +83,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logConfiguration: logConfiguration,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
@@ -86,6 +93,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logConfiguration: configuration,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
@@ -95,6 +103,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logConfiguration: logConfiguration,
                                        routingProfile: profile,
                                        delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
@@ -104,6 +113,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logConfiguration: logConfiguration,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
 
@@ -113,6 +123,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logConfiguration: logConfiguration,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
 }

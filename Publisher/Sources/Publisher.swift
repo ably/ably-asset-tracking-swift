@@ -1,6 +1,45 @@
 import Foundation
 import CoreLocation
 
+@objc
+public protocol PublisherDelegateObjectiveC: AnyObject {
+    /**
+     Called when the `PublisherObjectiveC` spot any (location, network or permissions) error
+     
+     - Parameters:
+        - sender: `PublisherObjectiveC` instance.
+        - error: Detected error.
+     */
+    func publisher(sender: PublisherObjectiveC, didFailWithError error: ErrorInformation)
+    
+    /**
+     Called when the `PublisherObjectiveC` detect new enhanced (map matched) location. Same location will be sent to the Subscriber module
+     
+     - Parameters:
+        - sender:`PublisherObjectiveC` instance.
+        - location: Location object received from LocationManager
+     */
+    func publisher(sender: PublisherObjectiveC, didUpdateEnhancedLocation location: CLLocation)
+    
+    /**
+     Called when there is a connection update directly in AblySDK.
+     
+     - Parameters:
+        - sender:`PublisherObjectiveC` instance.
+        - state: Most recent connection state
+     */
+    func publisher(sender: PublisherObjectiveC, didChangeConnectionState state: ConnectionState)
+    
+    /**
+     Called when there is a resolution update directly in AblySDK.
+     
+     - Parameters:
+        - sender: `PublisherObjectiveC` instance.
+        - resolution: Most recent resolution.
+    */
+    func publisher(sender: PublisherObjectiveC, didUpdateResolution resolution: Resolution)
+}
+
 public protocol PublisherDelegate: AnyObject {
     /**
      Called when the `Publisher` spot any (location, network or permissions) error
@@ -42,7 +81,7 @@ public protocol PublisherDelegate: AnyObject {
 /**
  Factory class used only to get `PublisherBuilder`
  */
-public class PublisherFactory {
+public class PublisherFactory: NSObject {
     /**
      Returns the default state of the publisher `PublisherBuilder`, which is incapable of starting of  `Publisher`
      instances until it has been configured fully.
@@ -50,6 +89,32 @@ public class PublisherFactory {
     static public func publishers() -> PublisherBuilder {
         return DefaultPublisherBuilder()
     }
+}
+
+/**
+ Main `Publisher` interface implemented in SDK by `DefaultPublisher`
+ */
+@objc
+public protocol PublisherObjectiveC {
+    /**
+     Delegate object to receive events from `Publisher`.
+     It holds a weak reference so make sure to keep your delegate object in memory.
+     */
+    var delegateObjectiveC: PublisherDelegateObjectiveC? { get set }
+
+    @objc func track(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    
+    @objc func add(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    
+    @objc func remove(trackable: Trackable, onSuccess: @escaping ((Bool) -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    
+    @objc var activeTrackable: Trackable? { get }
+    
+    @objc var routingProfile: RoutingProfile { get }
+    
+    @objc func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    
+    @objc func stop()
 }
 
 /**

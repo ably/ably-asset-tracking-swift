@@ -3,7 +3,8 @@
 /**
  Represents the means of transport that's being used.
  */
-public enum RoutingProfile: String, Codable {
+@objc
+public enum RoutingProfile: Int {
     /**
      For car and motorcycle routing. This profile prefers high-speed roads like highways.
     */

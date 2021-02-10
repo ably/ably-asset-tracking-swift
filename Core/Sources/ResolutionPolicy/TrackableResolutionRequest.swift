@@ -1,7 +1,7 @@
 /**
   A request for a tracking `Resolution` for a `Trackable` object.
  */
-public class TrackableResolutionRequest {
+public class TrackableResolutionRequest: NSObject {
     /**
       The `Trackable` object that holds optional constraints.
      */

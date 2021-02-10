@@ -44,7 +44,7 @@ public enum ErrorInformationType {
 /**
  Information about an error reported by the Ably service.
  */
-public class ErrorInformation: Error {
+public class ErrorInformation: NSObject, Error {
     /**
      Ably specific error code. Defined [here](https://github.com/ably/ably-common/blob/main/protocol/errors.json).
      */
@@ -90,12 +90,12 @@ public class ErrorInformation: Error {
         self.cause = nil
     }
 }
-
-extension ErrorInformation: Equatable {
-    public static func == (lhs: ErrorInformation, rhs: ErrorInformation) -> Bool {
-        return lhs.code == rhs.code &&
-               lhs.statusCode == rhs.statusCode &&
-               lhs.message == rhs.message &&
-               lhs.cause?.localizedDescription == rhs.cause?.localizedDescription
-    }
-}
+//
+//extension ErrorInformation: Equatable {
+//    public static func == (lhs: ErrorInformation, rhs: ErrorInformation) -> Bool {
+//        return lhs.code == rhs.code &&
+//               lhs.statusCode == rhs.statusCode &&
+//               lhs.message == rhs.message &&
+//               lhs.cause?.localizedDescription == rhs.cause?.localizedDescription
+//    }
+//}

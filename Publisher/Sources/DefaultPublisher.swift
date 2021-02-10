@@ -7,7 +7,7 @@ import MapboxDirections
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
 // swiftlint:disable cyclomatic_complexity
-class DefaultPublisher: Publisher {
+class DefaultPublisher: Publisher, PublisherObjectiveC {
     private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
     private let mapboxConfiguration: MapboxConfiguration
@@ -32,6 +32,7 @@ class DefaultPublisher: Publisher {
     private var route: Route?
 
     public weak var delegate: PublisherDelegate?
+    public weak var delegateObjectiveC: PublisherDelegateObjectiveC?
     private(set) public var activeTrackable: Trackable?
     private(set) public var routingProfile: RoutingProfile
 
@@ -69,6 +70,17 @@ class DefaultPublisher: Publisher {
 
         DefaultBatteryLevelProvider.setup()
     }
+    
+    func track(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        self.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                onSuccess()
+            case .failure(let error):
+                onError(error)
+            }
+        }
+    }
 
     func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
         let event = TrackTrackableEvent(trackable: trackable,
@@ -76,21 +88,54 @@ class DefaultPublisher: Publisher {
         enqueue(event: event)
     }
 
+    func add(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        self.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                onSuccess()
+            case .failure(let error):
+                onError(error)
+            }
+        }
+    }
+    
     func add(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
          let event = AddTrackableEvent(trackable: trackable, resultHandler: completion)
         enqueue(event: event)
-     }
+    }
+    
+    func remove(trackable: Trackable, onSuccess: @escaping ((Bool) -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        self.remove(trackable: trackable) { result in
+            switch result {
+            case .success(let wasPresent):
+                onSuccess(wasPresent)
+            case .failure(let error):
+                onError(error)
+            }
+        }
+    }
 
     func remove(trackable: Trackable, completion: @escaping ResultHandler<Bool>) {
          let event = RemoveTrackableEvent(trackable: trackable, resultHandler: completion)
          enqueue(event: event)
-     }
+    }
+    
+    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        self.changeRoutingProfile(profile: profile) { result in
+            switch result {
+            case .success:
+                onSuccess()
+            case .failure(let error):
+                onError(error)
+            }
+        }
+    }
 
     func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>) {
         let event = ChangeRoutingProfileEvent(profile: profile, resultHandler: completion)
         enqueue(event: event)
     }
-
+    
     func stop() {
         // TODO: Implement method
         failWithNotYetImplemented()
@@ -103,7 +148,7 @@ extension DefaultPublisher {
         logger.trace("Received event: \(event)")
         performOnWorkingThread { [weak self] in
             switch event {
-            case let event as TrackTrackableEvent:  self?.performTrackTrackableEvent(event)
+            case let event as TrackTrackableEvent: self?.performTrackTrackableEvent(event)
             case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
@@ -140,15 +185,21 @@ extension DefaultPublisher {
 
     private func callback(event: PublisherDelegateEvent) {
         logger.trace("Received delegate event: \(event)")
+        
         performOnMainThread { [weak self] in
-            guard let self = self,
-                  let delegate = self.delegate
+            guard let self = self
             else { return }
 
             switch event {
-            case let event as DelegateErrorEvent: delegate.publisher(sender: self, didFailWithError: event.error)
-            case let event as DelegateConnectionStateChangedEvent: delegate.publisher(sender: self, didChangeConnectionState: event.connectionState)
-            case let event as DelegateEnhancedLocationChangedEvent: delegate.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
+            case let event as DelegateErrorEvent:
+                self.delegate?.publisher(sender: self, didFailWithError: event.error)
+                self.delegateObjectiveC?.publisher(sender: self, didFailWithError: event.error)
+            case let event as DelegateConnectionStateChangedEvent:
+                self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+                self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+            case let event as DelegateEnhancedLocationChangedEvent:
+                self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
+                self.delegateObjectiveC?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
             default: preconditionFailure("Unhandled delegate event in DefaultPublisher: \(event) ")
             }
         }
@@ -445,6 +496,7 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didFailWithError: error)
+            self.delegateObjectiveC?.publisher(sender: self, didFailWithError: error)
         }
     }
 
@@ -452,6 +504,7 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
+            self.delegateObjectiveC?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
         }
     }
 
@@ -459,6 +512,7 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+            self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
         }
     }
 
@@ -466,6 +520,7 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
+            self.delegateObjectiveC?.publisher(sender: self, didUpdateResolution: event.resolution)
         }
     }
 }

@@ -2,7 +2,7 @@
  Governs how often to sample locations, at what level of positional accuracy, and how often to send them to
  subscribers.
  */
-public class Resolution: Codable {
+public class Resolution: NSObject, Codable {
     /**
      The general priority for accuracy of location updates, used to govern any trade-off between power usage and
      positional accuracy.
@@ -40,20 +40,20 @@ public class Resolution: Codable {
         self.minimumDisplacement = minimumDisplacement
     }
 }
-
-extension Resolution: Hashable {
-    public static func == (lhs: Resolution, rhs: Resolution) -> Bool {
-        return lhs.accuracy == rhs.accuracy &&
-            lhs.desiredInterval == rhs.desiredInterval &&
-            lhs.minimumDisplacement == rhs.minimumDisplacement
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(accuracy)
-        hasher.combine(desiredInterval)
-        hasher.combine(minimumDisplacement)
-    }
-}
+//
+//extension Resolution: Hashable {
+//    public static func == (lhs: Resolution, rhs: Resolution) -> Bool {
+//        return lhs.accuracy == rhs.accuracy &&
+//            lhs.desiredInterval == rhs.desiredInterval &&
+//            lhs.minimumDisplacement == rhs.minimumDisplacement
+//    }
+//
+//    public func hash(into hasher: inout Hasher) {
+//        hasher.combine(accuracy)
+//        hasher.combine(desiredInterval)
+//        hasher.combine(minimumDisplacement)
+//    }
+//}
 
 extension Resolution {
     static var `default`: Resolution {
@@ -62,8 +62,8 @@ extension Resolution {
                           minimumDisplacement: 500)
     }
 }
-extension Resolution: CustomDebugStringConvertible {
-    public var debugDescription: String {
+extension Resolution {
+    public override var debugDescription: String {
         return "Publisher.Resolution accuracy: \(accuracy), desiredInterval: \(desiredInterval), minimumDisplacement: \(minimumDisplacement)"
     }
 }
