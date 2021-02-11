@@ -47,12 +47,21 @@ public class Resolution: NSObject, Codable {
 }
 
 extension Resolution {
+    public static func == (lhs: Resolution, rhs: Resolution) -> Bool {
+        return lhs.accuracy == rhs.accuracy &&
+            lhs.desiredInterval == rhs.desiredInterval &&
+            lhs.minimumDisplacement == rhs.minimumDisplacement
+    }
+}
+
+extension Resolution {
     static var `default`: Resolution {
         return Resolution(accuracy: .balanced,
                           desiredInterval: 500,
                           minimumDisplacement: 500)
     }
 }
+
 extension Resolution {
     public override var debugDescription: String {
         return "Publisher.Resolution accuracy: \(accuracy), desiredInterval: \(desiredInterval), minimumDisplacement: \(minimumDisplacement)"
