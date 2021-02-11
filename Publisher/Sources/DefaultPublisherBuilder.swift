@@ -63,10 +63,10 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
                                           locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration))
         publisher.delegate = delegate
-        publisher.delegateObjectiveC = delegateObjectiveC
+        publisher.delegateObjectiveC = nil
         return publisher
     }
-
+    
     func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: configuration,
                                        mapboxConfiguration: mapboxConfiguration,
@@ -86,7 +86,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
                                        delegateObjectiveC: delegateObjectiveC,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
-
+    
     func log(_ configuration: LogConfiguration) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
@@ -96,7 +96,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
                                        delegateObjectiveC: delegateObjectiveC,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
-
+    
     func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
@@ -113,10 +113,10 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
                                        logConfiguration: logConfiguration,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
-                                       delegateObjectiveC: delegateObjectiveC,
+                                       delegateObjectiveC: nil,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
-
+    
     func resolutionPolicyFactory(_ resolutionPolicyFactory: ResolutionPolicyFactory) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
@@ -124,6 +124,114 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
+    }
+}
+
+extension DefaultPublisherBuilder: PublisherBuilderObjectiveC {
+    @objc
+    func start() throws -> PublisherObjectiveC {
+        guard let connection = connection
+        else {
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
+        }
+        
+        guard let mapboxConfiguration = mapboxConfiguration
+        else {
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "MapboxConfiguration", forBuilderOption: "mapboxConfiguration"))
+        }
+
+        guard let logConfiguration = logConfiguration
+        else {
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
+        }
+
+        guard let routingProfile = routingProfile
+        else {
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "RoutingProfile", forBuilderOption: "routingProfile"))
+        }
+
+        guard let resolutionPolicyFactory = resolutionPolicyFactory
+        else {
+            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
+        }
+        
+        let publisher =  DefaultPublisher(connectionConfiguration: connection,
+                                          mapboxConfiguration: mapboxConfiguration,
+                                          logConfiguration: logConfiguration,
+                                          routingProfile: routingProfile,
+                                          resolutionPolicyFactory: resolutionPolicyFactory,
+                                          ablyService: DefaultAblyPublisherService(configuration: connection),
+                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration),
+                                          routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration))
+        publisher.delegate = nil
+        publisher.delegateObjectiveC = delegateObjectiveC
+        return publisher
+    }
+    
+    @objc
+    func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilderObjectiveC {
+        return DefaultPublisherBuilder(connection: configuration,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
+    }
+    
+    @objc
+    func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilderObjectiveC {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
+    }
+    
+    @objc
+    func log(_ configuration: LogConfiguration) -> PublisherBuilderObjectiveC {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: configuration,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
+    }
+    
+    @objc
+    func routingProfile(_ profile: RoutingProfile) -> PublisherBuilderObjectiveC {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       routingProfile: profile,
+                                       delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
+    }
+    
+    @objc
+    func resolutionPolicyFactory(_ factory: ResolutionPolicyFactory) -> PublisherBuilderObjectiveC {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
+                                       resolutionPolicyFactory: factory)
+    }
+    
+    @objc
+    func delegate(_ delegate: PublisherDelegateObjectiveC) -> PublisherBuilderObjectiveC {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       routingProfile: routingProfile,
+                                       delegate: nil,
+                                       delegateObjectiveC: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory)
     }
 }

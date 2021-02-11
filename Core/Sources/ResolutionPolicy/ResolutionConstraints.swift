@@ -1,6 +1,7 @@
 /**
  Specifies factors which contribute towards deciding the tracking `Resolution` for a `Trackable`.
  */
+@objc
 public protocol ResolutionConstraints { }
 
 /**
@@ -9,7 +10,7 @@ public protocol ResolutionConstraints { }
  `resolutionPolicy` `Publisher.Builder.resolutionPolicy` method, providing it with an instance of the
  `DefaultResolutionPolicyFactory` class.
  */
-public class DefaultResolutionConstraints: ResolutionConstraints {
+public class DefaultResolutionConstraints: NSObject, ResolutionConstraints {
     /**
      Tracking `Resolution` specifications which are to be used according to thresholds.
      */
@@ -31,6 +32,7 @@ public class DefaultResolutionConstraints: ResolutionConstraints {
      */
     let lowBatteryMultiplier: Float
 
+    @objc
     public init(resolutions: DefaultResolutionSet,
                 proximityThreshold: Proximity,
                 batteryLevelThreshold: Float,
@@ -46,7 +48,7 @@ public class DefaultResolutionConstraints: ResolutionConstraints {
  * The set of resolutions which must be defined in order to specify `DefaultResolutionConstraints`, which are required
  * to use the default `ResolutionPolicy`, as created by instances of the `DefaultResolutionPolicyFactory` class.
  */
-public class DefaultResolutionSet {
+public class DefaultResolutionSet: NSObject {
     /**
      The resolution to select if above the `proximityThreshold` `DefaultResolutionConstraints.proximityThreshold`,
      with no subscribers.

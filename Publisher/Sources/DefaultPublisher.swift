@@ -7,7 +7,7 @@ import MapboxDirections
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
 // swiftlint:disable cyclomatic_complexity
-class DefaultPublisher: Publisher, PublisherObjectiveC {
+class DefaultPublisher: Publisher {
     private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
     private let mapboxConfiguration: MapboxConfiguration
@@ -70,7 +70,36 @@ class DefaultPublisher: Publisher, PublisherObjectiveC {
 
         DefaultBatteryLevelProvider.setup()
     }
+
+    func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
+        let event = TrackTrackableEvent(trackable: trackable,
+                                        resultHandler: completion)
+        enqueue(event: event)
+    }
     
+    func add(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
+         let event = AddTrackableEvent(trackable: trackable, resultHandler: completion)
+        enqueue(event: event)
+    }
+
+    func remove(trackable: Trackable, completion: @escaping ResultHandler<Bool>) {
+         let event = RemoveTrackableEvent(trackable: trackable, resultHandler: completion)
+         enqueue(event: event)
+    }
+
+    func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>) {
+        let event = ChangeRoutingProfileEvent(profile: profile, resultHandler: completion)
+        enqueue(event: event)
+    }
+    
+    func stop() {
+        // TODO: Implement method
+        failWithNotYetImplemented()
+    }
+}
+
+extension DefaultPublisher: PublisherObjectiveC {
+    @objc
     func track(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         self.track(trackable: trackable) { result in
             switch result {
@@ -81,13 +110,8 @@ class DefaultPublisher: Publisher, PublisherObjectiveC {
             }
         }
     }
-
-    func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
-        let event = TrackTrackableEvent(trackable: trackable,
-                                        resultHandler: completion)
-        enqueue(event: event)
-    }
-
+    
+    @objc
     func add(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         self.add(trackable: trackable) { result in
             switch result {
@@ -99,11 +123,7 @@ class DefaultPublisher: Publisher, PublisherObjectiveC {
         }
     }
     
-    func add(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
-         let event = AddTrackableEvent(trackable: trackable, resultHandler: completion)
-        enqueue(event: event)
-    }
-    
+    @objc
     func remove(trackable: Trackable, onSuccess: @escaping ((Bool) -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         self.remove(trackable: trackable) { result in
             switch result {
@@ -114,12 +134,8 @@ class DefaultPublisher: Publisher, PublisherObjectiveC {
             }
         }
     }
-
-    func remove(trackable: Trackable, completion: @escaping ResultHandler<Bool>) {
-         let event = RemoveTrackableEvent(trackable: trackable, resultHandler: completion)
-         enqueue(event: event)
-    }
     
+    @objc
     func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         self.changeRoutingProfile(profile: profile) { result in
             switch result {
@@ -129,16 +145,6 @@ class DefaultPublisher: Publisher, PublisherObjectiveC {
                 onError(error)
             }
         }
-    }
-
-    func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>) {
-        let event = ChangeRoutingProfileEvent(profile: profile, resultHandler: completion)
-        enqueue(event: event)
-    }
-    
-    func stop() {
-        // TODO: Implement method
-        failWithNotYetImplemented()
     }
 }
 
@@ -528,7 +534,7 @@ extension DefaultPublisher {
 // MARK: LocationServiceDelegate
 extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: ErrorInformation) {
-        logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
+        logger.error("locationService.didFailWithError. Error: \(error.message)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }
     

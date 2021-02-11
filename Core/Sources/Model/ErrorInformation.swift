@@ -48,23 +48,23 @@ public class ErrorInformation: NSObject, Error {
     /**
      Ably specific error code. Defined [here](https://github.com/ably/ably-common/blob/main/protocol/errors.json).
      */
-    public let code: Int
+    @objc public let code: Int
     
     /**
      Analogous to HTTP status code.
      */
-    public let statusCode: Int
+    @objc public let statusCode: Int
     
     /**
      An explanation of what went wrong, in a format readable by humans.
      Can be written to logs or presented to users, but is not intended to be machine parsed.
      */
-    public let message: String
+    @objc public let message: String
     
     /**
      An error underlying this error which caused this failure.
      */
-    public let cause: Error?
+    @objc public let cause: Error?
     
     /**
      Creates an ErrorInformation instance representing an error generated internally from within the Ably Asset Tracking SDK.
@@ -90,12 +90,3 @@ public class ErrorInformation: NSObject, Error {
         self.cause = nil
     }
 }
-//
-//extension ErrorInformation: Equatable {
-//    public static func == (lhs: ErrorInformation, rhs: ErrorInformation) -> Bool {
-//        return lhs.code == rhs.code &&
-//               lhs.statusCode == rhs.statusCode &&
-//               lhs.message == rhs.message &&
-//               lhs.cause?.localizedDescription == rhs.cause?.localizedDescription
-//    }
-//}

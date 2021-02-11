@@ -1,8 +1,8 @@
 import Foundation
 import CoreLocation
 
-@objc
-public protocol PublisherDelegateObjectiveC: AnyObject {
+@objc(PublisherDelegate)
+public protocol PublisherDelegateObjectiveC {
     /**
      Called when the `PublisherObjectiveC` spot any (location, network or permissions) error
      
@@ -81,7 +81,22 @@ public protocol PublisherDelegate: AnyObject {
 /**
  Factory class used only to get `PublisherBuilder`
  */
-public class PublisherFactory: NSObject {
+@objc(PublisherFactory)
+public class PublisherFactoryObjectiveC: NSObject {
+    /**
+     Returns the default state of the publisher `PublisherBuilder`, which is incapable of starting of  `Publisher`
+     instances until it has been configured fully.
+     */
+    @objc
+    static public func publishers() -> PublisherBuilderObjectiveC {
+        return DefaultPublisherBuilder()
+    }
+}
+
+/**
+ Factory class used only to get `PublisherBuilder`
+ */
+public class PublisherFactory {
     /**
      Returns the default state of the publisher `PublisherBuilder`, which is incapable of starting of  `Publisher`
      instances until it has been configured fully.
@@ -94,27 +109,32 @@ public class PublisherFactory: NSObject {
 /**
  Main `Publisher` interface implemented in SDK by `DefaultPublisher`
  */
-@objc
-public protocol PublisherObjectiveC {
+@objc(Publisher)
+public protocol PublisherObjectiveC: AnyObject {
     /**
      Delegate object to receive events from `Publisher`.
      It holds a weak reference so make sure to keep your delegate object in memory.
      */
-    var delegateObjectiveC: PublisherDelegateObjectiveC? { get set }
-
-    @objc func track(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
-    
-    @objc func add(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
-    
-    @objc func remove(trackable: Trackable, onSuccess: @escaping ((Bool) -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    @objc var delegateObjectiveC: PublisherDelegateObjectiveC? { get set }
     
     @objc var activeTrackable: Trackable? { get }
     
     @objc var routingProfile: RoutingProfile { get }
+
+    @objc
+    func track(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
     
-    @objc func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    @objc
+    func add(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
     
-    @objc func stop()
+    @objc
+    func remove(trackable: Trackable, onSuccess: @escaping ((Bool) -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    
+    @objc
+    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    
+    @objc
+    func stop()
 }
 
 /**
