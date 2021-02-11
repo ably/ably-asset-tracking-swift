@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.m
-//  PublisherExampleObjectiveC
-//
-//  Created by Robert  Kuraj on 10/02/2021.
-//
-
 #import "SceneDelegate.h"
 
 @interface SceneDelegate ()
