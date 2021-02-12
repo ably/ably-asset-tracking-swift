@@ -5,12 +5,13 @@ import Logging
 // Default logger used in Subscriber SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Subscriber")
 
-class DefaultSubscriber: Subscriber {
+class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     private let workingQueue: DispatchQueue
     private let logConfiguration: LogConfiguration
     private let trackingId: String
     private let ablyService: AblySubscriberService
     weak var delegate: SubscriberDelegate?
+    weak var delegateObjectiveC: SubscriberDelegateObjectiveC?
 
     init(connectionConfiguration: ConnectionConfiguration,
          logConfiguration: LogConfiguration,
@@ -24,6 +25,18 @@ class DefaultSubscriber: Subscriber {
                                                  resolution: resolution)
         self.ablyService.delegate = self
     }
+    
+    @objc
+    func sendChangeRequest(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        sendChangeRequest(resolution: resolution) { result in
+            switch result {
+            case .success:
+                onSuccess()
+            case .failure(let error):
+                onError(error)
+            }
+        }
+    }
 
     func sendChangeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
         enqueue(event: ChangeResolutionEvent(resolution: resolution, resultHandler: completion))
@@ -33,6 +46,7 @@ class DefaultSubscriber: Subscriber {
         enqueue(event: StartEvent())
     }
 
+    @objc
     func stop() {
         enqueue(event: StopEvent())
         ablyService.stop()

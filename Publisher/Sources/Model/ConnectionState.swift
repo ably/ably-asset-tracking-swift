@@ -6,7 +6,6 @@ import Ably
  */
 @objc
 public enum ConnectionState: Int {
-    // swiftlint:disable missing_docs
     case initialized
     case connecting
     case connected

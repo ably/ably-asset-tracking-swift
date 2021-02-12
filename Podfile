@@ -48,6 +48,11 @@ abstract_target 'asset_tracking' do
     pod 'AblyAssetTracking/Publisher', :path => 'AblyAssetTracking.podspec'
   end
 
+  target 'SubscriberExampleObjectiveC' do
+    project 'SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj'
+    pod 'AblyAssetTracking/Subscriber', :path => 'AblyAssetTracking.podspec'
+  end
+
   # Tests
   target 'CoreTests' do
     project 'Core/Core.xcodeproj'

@@ -3,7 +3,6 @@
 
 @interface ViewController ()
     @property id<Publisher> _Nullable publisher;
-    - (void) publisherUsageExample;
 @end
 
 @implementation ViewController
@@ -16,6 +15,7 @@
     [self publisherAddUsageExample];
     [self publisherChangeRoutingProfileUsageExample];
     [self publisherRemoveUsageExample];
+    [self publisherStopUsageExample];
 }
 
 - (void) publisherUsageExample {
@@ -96,6 +96,11 @@
     } onError:^(ErrorInformation * _Nonnull error) {
         NSLog(@"Remove trackable ERROR: %@", error.message);
     }];
+}
+
+- (void) publisherStopUsageExample {
+    // TODO: To be changeda after stop method update.
+    //[self.publisher stop];
 }
 
 @end
