@@ -6,8 +6,7 @@
 public protocol PublisherBuilderObjectiveC: AnyObject {
     /**
      Creates a `Publisher` which is ready to publish the asset location to subscribers.
-     Notice that it needs asset to to track - it can be set using `Publisher.track()` function.
-
+     Notice that it needs asset to track - it can be set using `Publisher.track()` function.
      - throws: `AssetTrackingError.incompleteConfiguration`  in case of missing mandatory property
      - Returns: `Publisher`  ready to `track` the asset.
      */
