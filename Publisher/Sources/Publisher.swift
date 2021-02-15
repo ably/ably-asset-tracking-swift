@@ -19,7 +19,7 @@ public protocol PublisherObjectiveC: AnyObject {
     @objc var activeTrackable: Trackable? { get }
     
     /**
-     The active means of transport for this publisher.
+     Represents active mean of transport used by the publisher.
      */
     @objc var routingProfile: RoutingProfile { get }
 
@@ -139,7 +139,7 @@ public protocol Publisher {
     var activeTrackable: Trackable? { get }
 
     /**
-     The active means of transport for this publisher.
+     Represents active mean of transport used by the publisher.
      */
     var routingProfile: RoutingProfile { get }
 

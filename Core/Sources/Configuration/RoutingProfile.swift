@@ -1,7 +1,7 @@
 // swiftlint:disable trailing_whitespace
 
 /**
- Represents the means of transport that's being used.
+ Represents the mean of transport that's being used.
  */
 @objc
 public enum RoutingProfile: Int {
