@@ -3,7 +3,6 @@ import CoreLocation
 
 class DefaultAblyPublisherService: AblyPublisherService {
     private let client: ARTRealtime
-    private let configuration: ConnectionConfiguration
     private let presenceData: PresenceData
     private var channels: [Trackable: ARTRealtimeChannel]
 
@@ -11,7 +10,6 @@ class DefaultAblyPublisherService: AblyPublisherService {
     var trackables: [Trackable] { return Array(channels.keys) }
 
     init(configuration: ConnectionConfiguration) {
-        self.configuration = configuration
         self.client = ARTRealtime(options: configuration.getClientOptions())
         self.presenceData = PresenceData(type: .publisher)
         self.channels = [:]
@@ -101,7 +99,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         let data = try! presenceData.toJSONString()
 
         channel.presence.unsubscribe()
-        channel.presence.leaveClient(configuration.clientId, data: data) { error in
+        channel.presence.leave(data) { error in
             guard let error = error else {
                 completion?(.success(true))
                 return
