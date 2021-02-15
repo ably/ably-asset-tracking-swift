@@ -10,17 +10,14 @@ protocol AblySubscriberServiceDelegate: AnyObject {
 
 class AblySubscriberService {
     private let client: ARTRealtime
-    private let configuration: ConnectionConfiguration
     private var presenceData: PresenceData
     private let channel: ARTRealtimeChannel
 
     weak var delegate: AblySubscriberServiceDelegate?
 
     init(configuration: ConnectionConfiguration, trackingId: String, resolution: Resolution?) {
-        self.client = ARTRealtime(key: configuration.apiKey)
+        self.client = ARTRealtime(options: configuration.getClientOptions())
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
-        self.configuration = configuration
-
         let options = ARTRealtimeChannelOptions()
         options.params = ["rewind": "1"]
         channel = client.channels.get(trackingId, options: options)
@@ -37,7 +34,7 @@ class AblySubscriberService {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
-        channel.presence.enterClient(configuration.clientId, data: data) { error in
+        channel.presence.enter(data) { error in
             error == nil ?
                 logger.debug("Entered to channel presence successfully", source: "AblySubscriberService") :
                 logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblySubscriberService")
@@ -67,7 +64,7 @@ class AblySubscriberService {
 
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
-        channel.presence.updateClient(configuration.clientId, data: data) { error in
+        channel.presence.update(data) { error in
             guard let error = error else {
                 completion(.success(()))
                 return
@@ -130,7 +127,7 @@ class AblySubscriberService {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
-        channel.presence.leaveClient(configuration.clientId, data: data) { [weak self] error in
+        channel.presence.leave(data) { [weak self] error in
             error == nil ?
                 logger.debug("Left channel presence successfully", source: "AblySubscriberService") :
                 logger.error("Error during leaving to channel presence: \(String(describing: error))", source: "AblySubscriberService")

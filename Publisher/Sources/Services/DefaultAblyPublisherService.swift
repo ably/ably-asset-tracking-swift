@@ -12,7 +12,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
     init(configuration: ConnectionConfiguration) {
         self.configuration = configuration
-        self.client = ARTRealtime(key: configuration.apiKey)
+        self.client = ARTRealtime(options: configuration.getClientOptions())
         self.presenceData = PresenceData(type: .publisher)
         self.channels = [:]
 
@@ -52,7 +52,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                                              clientId: clientId)
         }
 
-        channel.presence.enterClient(configuration.clientId, data: data) { error in
+        channel.presence.enter(data) { error in
             guard let error = error else {
                 logger.debug("Entered to presence successfully", source: "AblyPublisherService")
                 completion?(.success(()))
@@ -62,6 +62,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
             logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
             completion?(.failure(error.toErrorInformation()))
         }
+        
         channels[trackable] = channel
     }
 
