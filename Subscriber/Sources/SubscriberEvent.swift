@@ -24,5 +24,5 @@ struct DelegateEnhancedLocationReceivedEvent: SubscriberDelegateEvent {
 }
 
 struct DelegateConnectionStatusChangedEvent: SubscriberDelegateEvent {
-    let status: AssetConnectionStatus
+    let status: ConnectionState
 }

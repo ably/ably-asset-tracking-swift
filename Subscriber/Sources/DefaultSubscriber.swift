@@ -125,7 +125,7 @@ extension DefaultSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberServiceDelegate {
-    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus) {
+    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: ConnectionState) {
         logger.debug("subscriberService.didChangeAssetConnectionStatus. Status: \(status)", source: "DefaultSubscriber")
         callback(event: DelegateConnectionStatusChangedEvent(status: status))
     }

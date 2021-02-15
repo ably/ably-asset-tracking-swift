@@ -37,13 +37,13 @@
 		18FCE210258B8336005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE202258B8336005BC480 /* UnimplementedSupport.swift */; };
 		1F9298B18A4CD0599098401B /* Pods_asset_tracking_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */; };
 		2375C3D9FBC87E4236B66FA6 /* Pods_asset_tracking_Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B94C2AA15165F9680C282FE /* Pods_asset_tracking_Subscriber.framework */; };
+		F617C46925DA5EF9005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C46825DA5EF9005E92A2 /* ConnectionState.swift */; };
 		F65AC34925AF3E41002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34825AF3E41002799BD /* RoutingProfile.swift */; };
 		F65C5CBD25CAB50500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */; };
 		F6A2D02E25CC2A34008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */; };
 		F6A2D03525CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */; };
 		F6D4CFD725D6752F0071A6A9 /* SubscriberFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFD625D6752F0071A6A9 /* SubscriberFactory.swift */; };
 		F6D4CFDD25D675C90071A6A9 /* SubscriberDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFDC25D675C90071A6A9 /* SubscriberDelegate.swift */; };
-		F6D4CFE325D676550071A6A9 /* AssetConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFE225D676550071A6A9 /* AssetConnectionStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,13 +100,13 @@
 		B0C194B8C93C37753B28F4C4 /* Pods-SubscriberTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubscriberTests.debug.xcconfig"; path = "Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B35382D91FBE9FB98C137BB8 /* Pods-asset_tracking-SubscriberTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DACEA3FB594D43A74240A868 /* Pods-SubscriberTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubscriberTests.release.xcconfig"; path = "Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests.release.xcconfig"; sourceTree = "<group>"; };
+		F617C46825DA5EF9005E92A2 /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		F65AC34825AF3E41002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
 		F6D4CFD625D6752F0071A6A9 /* SubscriberFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberFactory.swift; sourceTree = "<group>"; };
 		F6D4CFDC25D675C90071A6A9 /* SubscriberDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberDelegate.swift; sourceTree = "<group>"; };
-		F6D4CFE225D676550071A6A9 /* AssetConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetConnectionStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,7 +177,6 @@
 				180375202599E8AA001387BA /* SubscriberEvent.swift */,
 				185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */,
 				180F617D258634290014B310 /* DefaultSubscriber.swift */,
-				F6D4CFE225D676550071A6A9 /* AssetConnectionStatus.swift */,
 				180F60B0258632740014B310 /* Subscriber.h */,
 				180F60B1258632740014B310 /* Info.plist */,
 			);
@@ -232,6 +231,7 @@
 				18FCE1FD258B8336005BC480 /* EventName.swift */,
 				F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */,
 				F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */,
+				F617C46825DA5EF9005E92A2 /* ConnectionState.swift */,
 			);
 			name = Model;
 			path = ../../Core/Sources/Model;
@@ -490,6 +490,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18FCE20E258B8336005BC480 /* Decodable+FromJSONString.swift in Sources */,
+				F617C46925DA5EF9005E92A2 /* ConnectionState.swift in Sources */,
 				18FCE20C258B8336005BC480 /* EventName.swift in Sources */,
 				180795CB25A4AF790026F4C1 /* ResolutionPolicy.swift in Sources */,
 				180795F625A4AFF50026F4C1 /* TrackableResolutionRequest.swift in Sources */,
@@ -499,7 +500,6 @@
 				F65AC34925AF3E41002799BD /* RoutingProfile.swift in Sources */,
 				180F6183258634290014B310 /* AblySubscriberService.swift in Sources */,
 				18FCE204258B8336005BC480 /* Trackable.swift in Sources */,
-				F6D4CFE325D676550071A6A9 /* AssetConnectionStatus.swift in Sources */,
 				18FCE209258B8336005BC480 /* GeoJSONProperties.swift in Sources */,
 				18FCE210258B8336005BC480 /* UnimplementedSupport.swift in Sources */,
 				F6D4CFD725D6752F0071A6A9 /* SubscriberFactory.swift in Sources */,

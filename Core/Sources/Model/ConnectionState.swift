@@ -2,7 +2,7 @@
  Indicates Asset connection status (i.e. if courier is publishing his location)
  */
 @objc
-public enum AssetConnectionStatus: Int {
+public enum ConnectionState: Int {
     /**
      Asset is connected to tracking system and we're receiving his position
      */
@@ -12,4 +12,9 @@ public enum AssetConnectionStatus: Int {
      Asset is not connected
      */
     case offline
+    
+    /**
+     Connection has failed
+     */
+    case failed
 }
