@@ -208,7 +208,8 @@ extension MapViewController: PublisherDelegate {
     }
 
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
-        connectionStatusLabel.text = "Connection state: \(state.description)"
+        connectionStatusLabel.textColor = state.color
+        connectionStatusLabel.text = state.description
     }
 
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
@@ -234,6 +235,13 @@ extension ConnectionState {
         case .online: return "Online"
         case .offline: return "Offline"
         case .failed: return "Failed"
+        }
+    }
+    
+    var color: UIColor {
+        switch self {
+        case .online: return .systemGreen
+        case .offline, .failed: return .systemRed
         }
     }
 }

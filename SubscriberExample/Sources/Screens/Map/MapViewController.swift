@@ -149,7 +149,7 @@ class MapViewController: UIViewController {
         guard let resolution = currentResolution
         else {
             resolutionLabel.text = "Resolution: None"
-            resolutionLabel.font = UIFont.systemFont(ofSize: 17)
+            resolutionLabel.font = UIFont.systemFont(ofSize: 14)
             return
         }
         resolutionLabel.font = UIFont.systemFont(ofSize: 14)
@@ -192,6 +192,8 @@ extension MapViewController: SubscriberDelegate {
     }
 
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
-        assetStatusLabel.text = status == .online ? "The asset is online" : "The asset is offline"
+        assetStatusLabel.font = UIFont.systemFont(ofSize: 14)
+        assetStatusLabel.textColor = status == .online ? .systemGreen : .systemRed
+        assetStatusLabel.text = status == .online ? "online" : "offline"
     }
 }
