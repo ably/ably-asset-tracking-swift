@@ -18,6 +18,7 @@ abstract_target 'asset_tracking' do
 
   target 'Core' do
     project 'Core/Core.xcodeproj'
+    ably_sdk
   end
 
   target 'Publisher' do
