@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,9 +11,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="PublisherExample" customModuleProvider="target">
             <connections>
+                <outlet property="changeRoutingProfileButton" destination="iZ5-3K-le3" id="Ti8-VG-BCF"/>
                 <outlet property="connectionStatusLabel" destination="G8H-ht-TKp" id="fgz-RG-mfa"/>
                 <outlet property="mapView" destination="kC3-Gn-KHW" id="hvp-Ya-370"/>
                 <outlet property="resolutionLabel" destination="2y7-9T-Juh" id="juI-5K-lya"/>
+                <outlet property="routingProfileAvtivityIndicator" destination="OHM-Yo-ALv" id="osW-JD-MF6"/>
+                <outlet property="routingProfileLabel" destination="gES-kT-9eL" id="K1Y-sS-6wE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,10 +26,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="kC3-Gn-KHW">
-                    <rect key="frame" x="0.0" y="166" width="414" height="696"/>
+                    <rect key="frame" x="0.0" y="200" width="414" height="662"/>
                 </mapView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connection status: Offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8H-ht-TKp">
-                    <rect key="frame" x="16" y="56" width="168.5" height="17"/>
+                    <rect key="frame" x="16" y="56" width="382" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -39,7 +42,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2y7-9T-Juh">
-                    <rect key="frame" x="16" y="98" width="382" height="56"/>
+                    <rect key="frame" x="16" y="132" width="382" height="56"/>
                     <attributedString key="attributedText">
                         <fragment>
                             <string key="content">Resolution:
@@ -62,27 +65,70 @@ Desired interval: 1000</string>
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3TJ-Ec-hss" userLabel="Separator">
+                    <rect key="frame" x="16" y="119" width="398" height="1"/>
+                    <color key="backgroundColor" systemColor="separatorColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="WLB-fG-LRl"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Routing profile: Driving" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gES-kT-9eL" userLabel="Routing profile: Driving">
+                    <rect key="frame" x="16" y="94" width="148" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iZ5-3K-le3">
+                    <rect key="frame" x="229" y="86" width="169" height="33"/>
+                    <state key="normal" title="CHANGE &gt;"/>
+                    <connections>
+                        <action selector="onChangeRoutingProfileButtonTapped:" destination="-1" eventType="touchUpInside" id="aHp-xJ-Ydn"/>
+                    </connections>
+                </button>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="OHM-Yo-ALv">
+                    <rect key="frame" x="179" y="92.5" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="fjh-rJ-6l0"/>
+                        <constraint firstAttribute="width" constant="20" id="rCr-wm-kvG"/>
+                    </constraints>
+                    <color key="color" systemColor="linkColor"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="kC3-Gn-KHW" secondAttribute="bottom" id="2MZ-Cc-5Mq"/>
+                <constraint firstItem="OHM-Yo-ALv" firstAttribute="centerY" secondItem="gES-kT-9eL" secondAttribute="centerY" id="5mc-nr-i1d"/>
                 <constraint firstItem="G8H-ht-TKp" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="6YF-3I-GEH"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iZ5-3K-le3" secondAttribute="trailing" constant="16" id="CyC-1l-1e6"/>
                 <constraint firstItem="kC3-Gn-KHW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="D4E-oL-Ktz"/>
+                <constraint firstItem="gES-kT-9eL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="HjU-sB-Tch"/>
                 <constraint firstItem="nUN-Jb-1CU" firstAttribute="top" secondItem="G8H-ht-TKp" secondAttribute="bottom" constant="12" id="JUd-vW-grX"/>
+                <constraint firstItem="3TJ-Ec-hss" firstAttribute="top" secondItem="iZ5-3K-le3" secondAttribute="bottom" id="KTV-bL-8J7"/>
                 <constraint firstItem="G8H-ht-TKp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="LLu-7s-WJA"/>
+                <constraint firstItem="OHM-Yo-ALv" firstAttribute="leading" secondItem="gES-kT-9eL" secondAttribute="trailing" constant="15" id="Lnp-cc-Dou"/>
+                <constraint firstItem="2y7-9T-Juh" firstAttribute="top" secondItem="3TJ-Ec-hss" secondAttribute="bottom" constant="12" id="OQJ-Gq-JFi"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="G8H-ht-TKp" secondAttribute="trailing" constant="16" id="Rc0-Ql-PXb"/>
                 <constraint firstItem="kC3-Gn-KHW" firstAttribute="top" secondItem="2y7-9T-Juh" secondAttribute="bottom" constant="12" id="SIL-Ra-SNu"/>
+                <constraint firstItem="3TJ-Ec-hss" firstAttribute="top" secondItem="gES-kT-9eL" secondAttribute="bottom" constant="8" id="TK3-5m-xND"/>
+                <constraint firstItem="gES-kT-9eL" firstAttribute="top" secondItem="nUN-Jb-1CU" secondAttribute="bottom" constant="8" id="YfJ-al-VUw"/>
+                <constraint firstItem="3TJ-Ec-hss" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="ZNn-QO-8Uh"/>
                 <constraint firstItem="nUN-Jb-1CU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="b7A-WD-AcU"/>
-                <constraint firstItem="2y7-9T-Juh" firstAttribute="top" secondItem="nUN-Jb-1CU" secondAttribute="bottom" constant="12" id="fBx-vA-MRb"/>
+                <constraint firstItem="iZ5-3K-le3" firstAttribute="top" secondItem="nUN-Jb-1CU" secondAttribute="bottom" id="cYU-Jt-I13"/>
                 <constraint firstItem="nUN-Jb-1CU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gDa-zr-SVK"/>
+                <constraint firstItem="iZ5-3K-le3" firstAttribute="leading" secondItem="OHM-Yo-ALv" secondAttribute="trailing" constant="30" id="hFa-cV-eWD"/>
                 <constraint firstItem="2y7-9T-Juh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="q9g-qD-B8H"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kC3-Gn-KHW" secondAttribute="trailing" id="qfA-oE-wwQ"/>
+                <constraint firstAttribute="trailing" secondItem="3TJ-Ec-hss" secondAttribute="trailing" id="vIW-m4-5Wx"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2y7-9T-Juh" secondAttribute="trailing" constant="16" id="zBa-cE-9ex"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="99.776785714285708"/>
         </view>
     </objects>
     <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

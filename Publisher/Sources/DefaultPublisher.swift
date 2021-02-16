@@ -166,7 +166,6 @@ extension DefaultPublisher {
             case let event as PresenceUpdateEvent: self?.performPresenceUpdateEvent(event)
             case let event as ClearRemovedTrackableMetadataEvent: self?.performClearRemovedTrackableMetadataEvent(event)
             case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
-            case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             case let event as DelegateResolutionUpdateEvent: self?.notifyDelegateResolutionUpdate(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
@@ -274,6 +273,7 @@ extension DefaultPublisher {
             case .success(let route):
                 self?.routingProfile = event.profile
                 self?.enqueue(event: SetDestinationSuccessEvent(route: route))
+                event.resultHandler(.success(()))
             case .failure(let error):
                 logger.error("Can't change RoutingProfile. Error: \(error)")
                 event.resultHandler(.failure(error))

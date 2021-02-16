@@ -7,7 +7,11 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var connectionStatusLabel: UILabel!
     @IBOutlet private weak var resolutionLabel: UILabel!
-
+    @IBOutlet private weak var changeRoutingProfileButton: UIButton!
+    @IBOutlet private weak var routingProfileLabel: UILabel!
+    @IBOutlet private weak var routingProfileAvtivityIndicator: UIActivityIndicatorView!
+    
+    
     private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
     private let trackingId: String
     private var publisher: Publisher?
@@ -36,6 +40,7 @@ class MapViewController: UIViewController {
         setupNavigationBar()
         setupPublisher()
         setupMapView()
+        routingProfileAvtivityIndicator.stopAnimating()
     }
 
     // MARK: View setup
@@ -78,17 +83,12 @@ class MapViewController: UIViewController {
     }
 
     // MARK: Utils
-    private func changeRoutingProfile(to routingProfile: RoutingProfile) {
-        publisher?.changeRoutingProfile(profile: routingProfile) { result in
-            switch result {
-            case .success:
-                logger.info("Change routingProfile success.")
-            case .failure(let error):
-                logger.info("Change routingProfile error: \(error).")
-            }
-        }
+    private func showError(error: ErrorInformation) {
+        let alertVC = UIAlertController(title: "Error", message: "\(error.message)", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
     }
-
+    
     private func refreshAnnotations() {
         mapView.annotations.forEach { mapView.removeAnnotation($0) }
 
@@ -115,7 +115,7 @@ class MapViewController: UIViewController {
     private func updateResolutionLabel() {
         guard let resolution = currentResolution else {
             resolutionLabel.text = "Resolution: None"
-            resolutionLabel.font = UIFont.systemFont(ofSize: 17)
+            resolutionLabel.font = UIFont.systemFont(ofSize: 14)
             return
         }
 
@@ -126,6 +126,45 @@ class MapViewController: UIViewController {
             Minimum displacement: \(resolution.minimumDisplacement)
             Desired interval: \(resolution.desiredInterval)
             """
+    }
+    
+    // MARK: - RoutingProfile
+    @IBAction func onChangeRoutingProfileButtonTapped(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Choose routing profile", message: nil, preferredStyle: .actionSheet)
+        let driving = UIAlertAction(title: RoutingProfile.driving.description, style: .default) { [weak self] _ in
+            self?.changeRoutingProfile(.driving)
+        }
+        let cycling = UIAlertAction(title: RoutingProfile.cycling.description, style: .default) { [weak self] _ in
+            self?.changeRoutingProfile(.cycling)
+        }
+        let walking = UIAlertAction(title: RoutingProfile.walking.description, style: .default) { [weak self] _ in
+            self?.changeRoutingProfile(.walking)
+        }
+        let drivingTraffic = UIAlertAction(title: RoutingProfile.drivingTraffic.description, style: .default) { [weak self] _ in
+            self?.changeRoutingProfile(.drivingTraffic)
+        }
+        
+        alertController.addAction(driving)
+        alertController.addAction(cycling)
+        alertController.addAction(walking)
+        alertController.addAction(drivingTraffic)
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        navigationController?.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func changeRoutingProfile(_ routingProfile: RoutingProfile) {
+        routingProfileAvtivityIndicator.startAnimating()
+        publisher?.changeRoutingProfile(profile: routingProfile) { [weak self] result in
+            self?.routingProfileAvtivityIndicator.stopAnimating()
+            switch result {
+            case .success:
+                self?.routingProfileLabel.text = "Routing profile: \(routingProfile.description)"
+            case .failure(let error):
+                self?.showError(error: error)
+            }
+        }
     }
 
     @objc
@@ -178,6 +217,17 @@ extension MapViewController: PublisherDelegate {
     }
 }
 
+extension RoutingProfile {
+    var description: String {
+        switch self {
+        case .driving: return "Driving"
+        case .cycling: return "Cycling"
+        case .walking: return "Walking"
+        case .drivingTraffic: return "Driving traffic"
+        }
+    }
+}
+
 extension ConnectionState {
     var description: String {
         switch self {
@@ -210,9 +260,7 @@ extension MapViewController: TrackablesViewControllerDelegate {
                 self?.trackables.removeAll(where: { $0 == trackable })
                 logger.info("Trackable removed: \(trackable.id). Was present: \(wasPresent)")
             case .failure(let error):
-                let alertVC = UIAlertController(title: "Error", message: "Can't add trackable: \(error.localizedDescription)", preferredStyle: .alert)
-                alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self?.present(alertVC, animated: true, completion: nil)
+                self?.showError(error: error)
             }
         }
     }
