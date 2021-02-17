@@ -17,6 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = navVC
         window.makeKeyAndVisible()
         self.window = window
+        
+        S3Service().configure { result in
+            switch result {
+            case .success:
+                logger.info("AWS S3 configured successfully.")
+            case .failure(let error):
+                logger.error("AWS S3 configuration error: \(error.message ?? "Unknown")")
+            }
+        }
 
         return true
     }
