@@ -11,7 +11,6 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var routingProfileLabel: UILabel!
     @IBOutlet private weak var routingProfileAvtivityIndicator: UIActivityIndicatorView!
     
-    
     private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
     private let trackingId: String
     private var publisher: Publisher?
@@ -143,14 +142,14 @@ class MapViewController: UIViewController {
         let drivingTraffic = UIAlertAction(title: RoutingProfile.drivingTraffic.description, style: .default) { [weak self] _ in
             self?.changeRoutingProfile(.drivingTraffic)
         }
-        
+
         alertController.addAction(driving)
         alertController.addAction(cycling)
         alertController.addAction(walking)
         alertController.addAction(drivingTraffic)
-        
+
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
+
         navigationController?.present(alertController, animated: true, completion: nil)
     }
     
@@ -166,7 +165,7 @@ class MapViewController: UIViewController {
             }
         }
     }
-
+    
     @objc
     func onEditButtonPressed() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

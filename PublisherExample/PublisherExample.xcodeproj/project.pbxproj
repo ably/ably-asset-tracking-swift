@@ -28,6 +28,10 @@
 		F618BA8625C9939000B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7DADD25C96F26001C094B /* Environment.swift */; };
 		F618BA9225C9A6EA00B69885 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */; };
 		F66DE12525DD2EE600E06806 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = F66DE12425DD2EE600E06806 /* amplifyconfiguration.json */; };
+		F6994D1625DE646300F222AD /* S3FilesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6994D1425DE646300F222AD /* S3FilesListViewController.swift */; };
+		F6994D1725DE646300F222AD /* S3FilesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6994D1525DE646300F222AD /* S3FilesListViewController.xib */; };
+		F6994D1B25DE663000F222AD /* S3FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6994D1925DE663000F222AD /* S3FileTableViewCell.swift */; };
+		F6994D1C25DE663000F222AD /* S3FileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6994D1A25DE663000F222AD /* S3FileTableViewCell.xib */; };
 		F6B7E14125DCF9380098F03A /* S3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7E14025DCF9380098F03A /* S3Service.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +63,10 @@
 		47DB52A27D84E8297C6907BC /* Pods-asset_tracking-PublisherExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherExample.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample.release.xcconfig"; sourceTree = "<group>"; };
 		F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		F66DE12425DD2EE600E06806 /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
+		F6994D1425DE646300F222AD /* S3FilesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3FilesListViewController.swift; sourceTree = "<group>"; };
+		F6994D1525DE646300F222AD /* S3FilesListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = S3FilesListViewController.xib; sourceTree = "<group>"; };
+		F6994D1925DE663000F222AD /* S3FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3FileTableViewCell.swift; sourceTree = "<group>"; };
+		F6994D1A25DE663000F222AD /* S3FileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = S3FileTableViewCell.xib; sourceTree = "<group>"; };
 		F6A7DADD25C96F26001C094B /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		F6B7E14025DCF9380098F03A /* S3Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Service.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +149,7 @@
 		180F6195258634350014B310 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				F6994D1225DE619D00F222AD /* S3FilesList */,
 				180F6196258634350014B310 /* SettingsViewController.xib */,
 				180F6197258634350014B310 /* SettingsViewController.swift */,
 			);
@@ -189,6 +198,17 @@
 				18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F6994D1225DE619D00F222AD /* S3FilesList */ = {
+			isa = PBXGroup;
+			children = (
+				F6994D1425DE646300F222AD /* S3FilesListViewController.swift */,
+				F6994D1525DE646300F222AD /* S3FilesListViewController.xib */,
+				F6994D1925DE663000F222AD /* S3FileTableViewCell.swift */,
+				F6994D1A25DE663000F222AD /* S3FileTableViewCell.xib */,
+			);
+			path = S3FilesList;
 			sourceTree = "<group>";
 		};
 		F6B7E14625DD1A0A0098F03A /* S3Service */ = {
@@ -265,9 +285,11 @@
 				18A7FB6525AE05FD005AC55E /* TrackablesViewController.xib in Resources */,
 				180F61A2258634350014B310 /* SettingsViewController.xib in Resources */,
 				180F61A6258634350014B310 /* MapViewController.xib in Resources */,
+				F6994D1725DE646300F222AD /* S3FilesListViewController.xib in Resources */,
 				18A7FB7225AE1596005AC55E /* AddTrackableViewController.xib in Resources */,
 				F66DE12525DD2EE600E06806 /* amplifyconfiguration.json in Resources */,
 				180F619E258634350014B310 /* LaunchScreen.storyboard in Resources */,
+				F6994D1C25DE663000F222AD /* S3FileTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,7 +361,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				188F5DFA25AF181E00202C97 /* AddTrackableError.swift in Sources */,
+				F6994D1625DE646300F222AD /* S3FilesListViewController.swift in Sources */,
 				18A7FB7125AE1596005AC55E /* AddTrackableViewController.swift in Sources */,
+				F6994D1B25DE663000F222AD /* S3FileTableViewCell.swift in Sources */,
 				180F61A7258634350014B310 /* AppDelegate.swift in Sources */,
 				18A7FB7625AE3624005AC55E /* AccuracyPickerView.swift in Sources */,
 				180F61A4258634350014B310 /* AssetAnnotationView.swift in Sources */,

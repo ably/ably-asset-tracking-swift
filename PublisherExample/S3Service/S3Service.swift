@@ -14,15 +14,21 @@ struct S3Error: Error {
     }
 }
 
+struct S3File {
+    let name: String
+    let size: Int?
+    
+    var sizeDescription: String {
+        "\(size ?? 0) kB"
+    }
+}
+
 class S3Service {
     private var isInitialized = false;
     private var dateFormatter: DateFormatter?
+    private let version_prefix = "v1.0_"
     
-    init() {
-        setupDateFormatter()
-    }
-    
-    func configure(_ completion: ((Result<Void, S3Error>) -> Void)?) {
+    func configure(completion: ((Result<Void, S3Error>) -> Void)?) {
         if !isConfigurationFile() {
             completion?(.failure(S3Error(message: "Configuration file does not exist or is empty.")))
             return
@@ -36,6 +42,7 @@ class S3Service {
             completion?(.failure(S3Error(error: error)))
         }
         
+        setupDateFormatter()
         isInitialized.toggle()
         completion?(.success(()))
     }
@@ -60,16 +67,35 @@ class S3Service {
         }
     }
     
+    func getFilesList(completion: ((Result<[S3File], S3Error>) -> Void)?) {
+        guard isInitialized else {
+            completion?(.failure(S3Error(message: "Service not available.")))
+            return
+        }
+        
+        Amplify.Storage.list { result in
+            switch result {
+            case .success(let list):
+                completion?(.success(list.items.compactMap { S3File(name: $0.key, size: $0.size) }))
+            case .failure(let error):
+                completion?(.failure(S3Error(message: error.errorDescription)))
+            }
+        }
+    }
+    
     func uploadHistoryData(_ historyData: String, completion: ((Result<Void, S3Error>) -> Void)?) {
         
         guard isInitialized,
               let fileName = dateFormatter?.string(from: Date()),
               let dataToUpload = historyData.data(using: .utf8)
         else {
+            completion?(.failure(S3Error(message: "Cannot upload data.")))
             return
         }
         
-        Amplify.Storage.uploadData(key: fileName, data: dataToUpload, progressListener: { progress in
+        let fileKey = version_prefix + fileName
+        
+        Amplify.Storage.uploadData(key: fileKey, data: dataToUpload, progressListener: { progress in
             print("Upload progress: \(progress)")
         }) { result in
             switch result {

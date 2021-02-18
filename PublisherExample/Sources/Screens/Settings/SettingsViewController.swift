@@ -1,17 +1,36 @@
 import UIKit
 import CoreLocation
 
+enum LocationSource: String, CaseIterable {
+    case s3File = "S3 File"
+    case phone = "Phone"
+}
+
 class SettingsViewController: UIViewController {
     @IBOutlet private weak var locationPermissionButton: UIButton!
     @IBOutlet private weak var trackingIdTextField: UITextField!
     @IBOutlet private weak var startButton: UIButton!
-
+    @IBOutlet private weak var locationSourceButton: UIButton!
+    @IBOutlet private weak var locationSourceLabel: UILabel!
+    @IBOutlet private weak var fileS3Button: UIButton!
+    @IBOutlet private weak var fileS3Label: UILabel!
+    
+    private let awsS3Service: S3Service?
     private let locationManager = CLLocationManager()
+    private var locationSource: LocationSource = .phone {
+        didSet {
+            if locationSource != oldValue {
+                handleLocationSourceChange()
+            }
+        }
+    }
 
     // MARK: Initialization
     init() {
         let viewControllerType = SettingsViewController.self
+        awsS3Service = S3Service()
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
+        setupS3Service()
     }
 
     required init?(coder: NSCoder) {
@@ -26,13 +45,27 @@ class SettingsViewController: UIViewController {
 
     private func setupView() {
         self.title = "Ably Asset Tracking Publisher"
-        locationPermissionButton.layer.borderWidth = 1
-        locationPermissionButton.layer.borderColor = UIColor.systemBlue.cgColor
-        locationPermissionButton.layer.cornerRadius = locationPermissionButton.bounds.height / 2
-
-        startButton.layer.borderWidth = 1
-        startButton.layer.borderColor = UIColor.systemBlue.cgColor
-        startButton.layer.cornerRadius = locationPermissionButton.bounds.height / 2
+        setButtonBorder(locationPermissionButton)
+        setButtonBorder(startButton)
+        setButtonBorder(locationSourceButton)
+        setButtonBorder(fileS3Button)
+    }
+    
+    private func setButtonBorder(_ button: UIButton) {
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemBlue.cgColor
+        button.layer.cornerRadius = button.bounds.height / 2
+    }
+    
+    private func setupS3Service() {
+        awsS3Service?.configure { result in
+            switch result {
+            case .success:
+                logger.info("AWS S3 configured successfully.")
+            case .failure(let error):
+                logger.error("AWS S3 configuration error: \(error.message ?? "Unknown")")
+            }
+        }
     }
 
     // MARK: Actions
@@ -61,6 +94,21 @@ class SettingsViewController: UIViewController {
         navigationController?.pushViewController(mapVC, animated: true)
     }
 
+    @IBAction func onLocationSourceButtonTapped(_ sender: UIButton) {
+        showLocationSourceAlert()
+    }
+    
+    @IBAction func onFileS3ButtonTapped(_ sender: UIButton) {
+        showS3FilesListViewController()
+    }
+    
+    // MARK: Private
+    private func handleLocationSourceChange() {
+        locationSourceLabel.text = locationSource.rawValue
+        fileS3Button.isHidden = locationSource != .s3File
+        fileS3Label.isHidden = locationSource != .s3File
+    }
+    
     // MARK: Utils
     private func showPermissionSettingsAlert() {
         let alert = UIAlertController(
@@ -77,5 +125,33 @@ class SettingsViewController: UIViewController {
         }))
 
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func showLocationSourceAlert() {
+        let alertController = UIAlertController(title: "Choose location source", message: "", preferredStyle: .actionSheet)
+        
+        LocationSource.allCases.forEach { locationSource in
+            let action = UIAlertAction(title: locationSource.rawValue, style: .default) { _ in
+                self.locationSource = locationSource
+            }
+            alertController.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showS3FilesListViewController() {
+        guard let awsS3Service = awsS3Service else {
+            return
+        }
+        
+        let listVC = S3FilesListViewController(awsS3Service: awsS3Service) { [weak self] selectedFile in
+            self?.fileS3Label.text = selectedFile.name
+        }
+        
+        navigationController?.pushViewController(listVC, animated: true)
     }
 }
