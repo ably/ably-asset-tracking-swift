@@ -1,6 +1,7 @@
 import Amplify
 import AmplifyPlugins
 import CoreLocation
+import AblyAssetTracking
 
 struct S3Error: Error {
     let message: String?
@@ -21,6 +22,10 @@ struct S3File {
     var sizeDescription: String {
         "\(size ?? 0) kB"
     }
+}
+
+struct S3FileEvents: Decodable {
+    var events: [GeoJSONMessage]
 }
 
 class S3Service {
@@ -109,23 +114,32 @@ class S3Service {
         }
     }
     
-    func downloadHistoryData(_ fileName: String, completion: ((Result<String, S3Error>) -> Void)?) {
+    func downloadHistoryData(_ fileName: String, completion: ((Result<[CLLocation], S3Error>) -> Void)?) {
         guard isInitialized,
               !fileName.isEmpty else {
             return
         }
         
-        
         Amplify.Storage.downloadData(key: fileName) { result in
             switch result {
             case .success(let data):
                 print("Download completed: \(data)")
-                completion?(.success(("")))
+                do {
+                    let events = try self.decode(data)
+                    let locations = events.events.compactMap { $0.toCoreLocation() }
+                    completion?(.success(locations))
+                } catch {
+                    completion?(.failure(S3Error(error: error)))
+                }
             case .failure(let error):
                 print("Download failed: \(error.errorDescription)")
                 completion?(.failure(S3Error(message: error.errorDescription)))
             }
         }
+    }
+    
+    private func decode(_ data: Data) throws -> S3FileEvents {
+        return try JSONDecoder().decode(S3FileEvents.self, from: data)
     }
     
     private func setupDateFormatter() {

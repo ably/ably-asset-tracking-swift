@@ -1,7 +1,7 @@
 import UIKit
 import CoreLocation
 
-enum LocationSource: String, CaseIterable {
+enum LocationSourceType: String, CaseIterable {
     case s3File = "S3 File"
     case phone = "Phone"
 }
@@ -17,13 +17,15 @@ class SettingsViewController: UIViewController {
     
     private let awsS3Service: S3Service?
     private let locationManager = CLLocationManager()
-    private var locationSource: LocationSource = .phone {
+    private var locationSource: LocationSourceType = .phone {
         didSet {
             if locationSource != oldValue {
                 handleLocationSourceChange()
             }
         }
     }
+    
+    private var selectedS3FileName: String?
 
     // MARK: Initialization
     init() {
@@ -89,8 +91,32 @@ class SettingsViewController: UIViewController {
             present(alert, animated: true, completion: nil)
             return
         }
-
-        let mapVC = MapViewController(trackingId: trackingId)
+        
+        locationSource == .s3File
+            ? showMapWithForS3file(trackingId)
+            : showMapWithTrackableId(trackingId)
+    }
+    
+    private func showMapWithForS3file(_ trackableId: String) {
+        guard let selectedFileName = selectedS3FileName else {
+            return
+        }
+        awsS3Service?.downloadHistoryData(selectedFileName) { result in
+            switch result {
+            case .success(let locations):
+                logger.info("AWS S3 \(selectedFileName) downloaded successfully.")
+                DispatchQueue.main.async {
+                    let mapVC = MapViewController(trackingId: trackableId, historyLocation: locations)
+                    self.navigationController?.pushViewController(mapVC, animated: true)
+                }
+            case .failure(let error):
+                logger.error("AWS S3 downloading error: \(error.message ?? "Unknown")")
+            }
+        }
+    }
+    
+    private func showMapWithTrackableId(_ trackableId: String) {
+        let mapVC = MapViewController(trackingId: trackableId, historyLocation: nil)
         navigationController?.pushViewController(mapVC, animated: true)
     }
 
@@ -107,6 +133,10 @@ class SettingsViewController: UIViewController {
         locationSourceLabel.text = locationSource.rawValue
         fileS3Button.isHidden = locationSource != .s3File
         fileS3Label.isHidden = locationSource != .s3File
+        trackingIdTextField.text = ""
+        if locationSource == .phone {
+            selectedS3FileName = nil
+        }
     }
     
     // MARK: Utils
@@ -130,7 +160,7 @@ class SettingsViewController: UIViewController {
     private func showLocationSourceAlert() {
         let alertController = UIAlertController(title: "Choose location source", message: "", preferredStyle: .actionSheet)
         
-        LocationSource.allCases.forEach { locationSource in
+        LocationSourceType.allCases.forEach { locationSource in
             let action = UIAlertAction(title: locationSource.rawValue, style: .default) { _ in
                 self.locationSource = locationSource
             }
@@ -150,7 +180,8 @@ class SettingsViewController: UIViewController {
         
         let listVC = S3FilesListViewController(awsS3Service: awsS3Service) { [weak self] selectedFile in
             self?.fileS3Label.text = selectedFile.name
-            self?.trackingIdTextField.text = "simulation_trackable_id"
+            self?.selectedS3FileName = selectedFile.name
+            self?.trackingIdTextField.text = "simulation_id"
         }
         
         navigationController?.pushViewController(listVC, animated: true)

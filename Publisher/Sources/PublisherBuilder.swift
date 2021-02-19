@@ -31,6 +31,9 @@ public protocol PublisherBuilderObjectiveC: AnyObject {
     @objc
     func log(_ configuration: LogConfiguration) -> PublisherBuilderObjectiveC
     
+    @objc
+    func locationSource(_ source: LocationSource?) -> PublisherBuilderObjectiveC
+    
     /**
      Sets the mandatory `RoutingProfile` property
      */
@@ -78,6 +81,8 @@ public protocol PublisherBuilder {
      Sets the mandatory `LogConfiguration` property
      */
     func log(_ configuration: LogConfiguration) -> PublisherBuilder
+    
+    func locationSource(_ source: LocationSource?) -> PublisherBuilder
 
     /**
      Sets the mandatory `RoutingProfile` property
