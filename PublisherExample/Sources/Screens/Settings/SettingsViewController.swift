@@ -150,6 +150,7 @@ class SettingsViewController: UIViewController {
         
         let listVC = S3FilesListViewController(awsS3Service: awsS3Service) { [weak self] selectedFile in
             self?.fileS3Label.text = selectedFile.name
+            self?.trackingIdTextField.text = "simulation_trackable_id"
         }
         
         navigationController?.pushViewController(listVC, animated: true)
