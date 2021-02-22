@@ -31,6 +31,9 @@ public protocol PublisherBuilderObjectiveC: AnyObject {
     @objc
     func log(_ configuration: LogConfiguration) -> PublisherBuilderObjectiveC
     
+    /**
+     Sets the optional `LocationSource` property
+     */
     @objc
     func locationSource(_ source: LocationSource?) -> PublisherBuilderObjectiveC
     
@@ -82,6 +85,9 @@ public protocol PublisherBuilder {
      */
     func log(_ configuration: LogConfiguration) -> PublisherBuilder
     
+    /**
+     Sets the optional `LocationSource` property
+     */
     func locationSource(_ source: LocationSource?) -> PublisherBuilder
 
     /**
