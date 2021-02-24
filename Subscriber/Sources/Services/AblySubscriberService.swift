@@ -81,9 +81,9 @@ class AblySubscriberService {
             return
         }
 
-        var messages: [EnhacedLocationUpdateMessage] = []
+        var messages: [EnhancedLocationUpdateMessage] = []
         do {
-            messages = try [EnhacedLocationUpdateMessage].fromJSONString(json)
+            messages = try [EnhancedLocationUpdateMessage].fromJSONString(json)
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
                 delegate?.subscriberService(sender: self, didFailWithError: ErrorInformation(error: error))
