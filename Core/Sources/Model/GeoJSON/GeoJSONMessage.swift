@@ -9,7 +9,7 @@ import CoreLocation
    "type": "Feature",
    "geometry": {
      "type": "Point",
-     "coordinates": [1.0, 2.0]   // [Lon, Lat]
+     "coordinates": [1.0, 2.0, 3.0]   // [Lon, Lat, Alt]
    },
    "properties": {
      "accuracyHorizontal": 1.0,
@@ -37,7 +37,7 @@ public class GeoJSONMessage: Codable {
     public func toCoreLocation() -> CLLocation {
         return CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: geometry.latitude, longitude: geometry.longitude),
-            altitude: properties.altitude,
+            altitude: geometry.altitude,
             horizontalAccuracy: properties.accuracyHorizontal,
             verticalAccuracy: properties.accuracyVertical ?? -1,
             course: properties.bearing ?? -1,

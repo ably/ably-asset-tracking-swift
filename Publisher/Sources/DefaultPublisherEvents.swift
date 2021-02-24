@@ -44,6 +44,7 @@ struct SetDestinationSuccessEvent: PublisherEvent {
 
 struct EnhancedLocationChangedEvent: PublisherEvent {
     let locationUpdate: EnhancedLocationUpdate
+    let batteryLevel: Float?
 }
 
 struct RefreshResolutionPolicyEvent: PublisherEvent {}

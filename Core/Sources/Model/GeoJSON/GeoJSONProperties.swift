@@ -17,11 +17,6 @@ class GeoJSONProperties: Codable {
     let time: Double
 
     /**
-     Object altitude in meters. May be positive or negative for abowe and below sea level measurement.
-     */
-    let altitude: Double
-
-    /**
      Object vertical accuracy in meters.
      */
     let accuracyVertical: Double?
@@ -61,7 +56,6 @@ class GeoJSONProperties: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         accuracyHorizontal = try container.decode(Double.self, forKey: .accuracyHorizontal)
         time = try container.decode(Double.self, forKey: .time)
-        altitude = try container.decode(Double.self, forKey: .altitude)
 
         floor = try? container.decode(Int.self, forKey: .floor)
         speed = try? container.decode(Double.self, forKey: .speed)
@@ -78,7 +72,6 @@ class GeoJSONProperties: Codable {
     init(location: CLLocation) {
         time = location.timestamp.timeIntervalSince1970
         floor = location.floor?.level
-        altitude = location.altitude
         accuracyHorizontal = location.horizontalAccuracy
 
         speed = location.speed >= 0 ? location.speed : nil
