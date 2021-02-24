@@ -79,7 +79,7 @@ public class ErrorInformation: NSObject, Error {
     public init(error: Error) {
         self.code = 100000
         self.statusCode = 0
-        self.message = error.localizedDescription
+        self.message = (error as? ErrorInformation)?.message ?? error.localizedDescription
         self.cause = error
     }
     

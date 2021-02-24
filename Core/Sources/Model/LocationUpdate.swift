@@ -27,8 +27,8 @@ public class EnhancedLocationUpdateMessage: Codable {
     let location: GeoJSONMessage
     let batteryStatus: Float
 
-    init(locationUpdate: EnhancedLocationUpdate, batteryLevel: Float?) {
-        self.location = GeoJSONMessage(location: locationUpdate.location)
+    init(locationUpdate: EnhancedLocationUpdate, batteryLevel: Float?) throws {
+        self.location = try GeoJSONMessage(location: locationUpdate.location)
         self.batteryStatus = batteryLevel ?? 0
     }
 }

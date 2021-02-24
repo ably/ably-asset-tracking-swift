@@ -40,15 +40,9 @@ class GeoJSONGeometry: Codable {
         else {
             throw ErrorInformation(type: .commonError(errorMessage: "Invalid count of coordinates in GeoJSONGeometry. Received: \(coordinates)"))
         }
-
-        guard latitude >= -90.0 && latitude <= 90.0
-        else {
-            throw ErrorInformation(type: .commonError(errorMessage: "Latitude out of range [-90, 90]. Received: (\(latitude))"))
-        }
-
-        guard  longitude >= -180.0 && longitude <= 180.0
-        else {
-            throw ErrorInformation(type: .commonError(errorMessage: "Longitude out of range [-180, 180]. Received (\(longitude))"))
+        
+        if let validationError = LocationValidator.validate(latitude: latitude, longitude: longitude) {
+            throw validationError
         }
 
         self.latitude = latitude
@@ -62,8 +56,13 @@ class GeoJSONGeometry: Codable {
         try container.encode([longitude, latitude, altitude], forKey: .coordinates)
     }
 
-    init(location: CLLocation) {
+    init(location: CLLocation) throws {
         type = .point
+        
+        if let validationError = LocationValidator.validate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) {
+            throw validationError
+        }
+        
         latitude = location.coordinate.latitude
         longitude = location.coordinate.longitude
         altitude = location.altitude

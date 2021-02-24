@@ -71,9 +71,11 @@ class DefaultAblyPublisherService: AblyPublisherService {
             return
         }
         
-        let geoJson = EnhancedLocationUpdateMessage(locationUpdate: locationUpdate, batteryLevel: batteryLevel)
-        let data = try! [geoJson].toJSONString()
-        let message = ARTMessage(name: EventName.enhanced.rawValue, data: data)
+        guard let message = createARTMessage(for: locationUpdate, and: batteryLevel) else {
+            let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Cannot create location update message."))
+            self.delegate?.publisherService(sender: self, didFailWithError: errorInformation)
+            return
+        }
         
         channel.publish([message]) { [weak self] error in
             guard let self = self,
@@ -83,6 +85,17 @@ class DefaultAblyPublisherService: AblyPublisherService {
             }
             
             self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+        }
+    }
+    
+    private func createARTMessage(for locationUpdate: EnhancedLocationUpdate, and batteryLevel: Float?) -> ARTMessage? {
+        do {
+            let geoJson = try EnhancedLocationUpdateMessage(locationUpdate: locationUpdate, batteryLevel: batteryLevel)
+            let data = try [geoJson].toJSONString()
+            return ARTMessage(name: EventName.enhanced.rawValue, data: data)
+        } catch let error {
+            self.delegate?.publisherService(sender: self, didFailWithError: ErrorInformation(error: error))
+            return nil
         }
     }
 
