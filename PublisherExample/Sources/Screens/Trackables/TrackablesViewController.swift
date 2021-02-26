@@ -3,19 +3,21 @@ import UIKit
 
 protocol TrackablesViewControllerDelegate: AnyObject {
     func trackablesViewController(sender: TrackablesViewController, didAddTrackable trackable: Trackable)
-    func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable)
+    func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable, wasPresent: Bool)
 }
 
 class TrackablesViewController: UIViewController {
     private let cellIdentifier = "TrackablesTableViewCellIdentifier"
     private var trackables: [Trackable]
+    private let publisher: Publisher?
     @IBOutlet private weak var tableView: UITableView!
 
     weak var delegate: TrackablesViewControllerDelegate?
 
     // MARK: Initialization
-    init(trackables: [Trackable]) {
+    init(trackables: [Trackable], publisher: Publisher?) {
         self.trackables = trackables
+        self.publisher = publisher
         let viewControllerType = TrackablesViewController.self
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
     }
@@ -48,9 +50,16 @@ class TrackablesViewController: UIViewController {
     // MARK: Actions
     @objc
     private func onAddTrackableButtonPress() {
-        let viewController = AddTrackableViewController()
+        let viewController = AddTrackableViewController(publisher: publisher)
         viewController.delegate = self
         navigationController?.present(viewController, animated: true, completion: nil)
+    }
+    
+    // MARK: Private
+    private func showError(_ error: Error) {
+        let alert = UIAlertController(title: "Alert", message: (error as? ErrorInformation)?.message ?? error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -73,9 +82,21 @@ extension TrackablesViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-        let trackable = trackables.remove(at: indexPath.row)
-        tableView.reloadData()
-        delegate?.trackablesViewController(sender: self, didRemoveTrackable: trackable)
+        
+        let trackableToRemove = trackables[indexPath.row]
+        
+        publisher?.remove(trackable: trackableToRemove) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let wasPresent):
+                let trackable = self.trackables.remove(at: indexPath.row)
+                self.tableView.reloadData()
+                self.delegate?.trackablesViewController(sender: self, didRemoveTrackable: trackable, wasPresent: wasPresent)
+            case .failure(let error):
+                self.showError(error)
+            }
+        }
     }
 }
 

@@ -7,7 +7,6 @@ class DefaultAblyPublisherService: AblyPublisherService {
     private var channels: [Trackable: ARTRealtimeChannel]
 
     weak var delegate: AblyPublisherServiceDelegate?
-    var trackables: [Trackable] { return Array(channels.keys) }
 
     init(configuration: ConnectionConfiguration) {
         self.client = ARTRealtime(options: configuration.getClientOptions())
@@ -54,14 +53,13 @@ class DefaultAblyPublisherService: AblyPublisherService {
             guard let error = error else {
                 logger.debug("Entered to presence successfully", source: "AblyPublisherService")
                 completion?(.success(()))
+                self.channels[trackable] = channel
                 return
             }
 
             logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
             completion?(.failure(error.toErrorInformation()))
         }
-        
-        channels[trackable] = channel
     }
 
     func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, batteryLevel: Float?, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {

@@ -12,7 +12,6 @@ protocol AblyPublisherServiceDelegate: AnyObject {
 
 protocol AblyPublisherService: AnyObject {
     var delegate: AblyPublisherServiceDelegate? { get set }
-    var trackables: [Trackable] { get }
 
     func track(trackable: Trackable, completion: ResultHandler<Void>?)
     func stopTracking(trackable: Trackable, completion: ResultHandler<Bool>?)

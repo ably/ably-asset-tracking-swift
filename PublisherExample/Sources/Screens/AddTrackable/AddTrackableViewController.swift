@@ -41,9 +41,12 @@ class AddTrackableViewController: UIViewController {
     @IBOutlet weak var resolutionConstraintsZeroHeightConstraint: NSLayoutConstraint!
 
     weak var delegate: AddTrackableViewControllerDelegate?
+    
+    private let publisher: Publisher?
 
     // MARK: Initialization
-    init() {
+    init(publisher: Publisher?) {
+        self.publisher = publisher
         let viewControllerType = AddTrackableViewController.self
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
     }
@@ -135,16 +138,32 @@ class AddTrackableViewController: UIViewController {
     @IBAction private func onAddButtonPress(_ sender: Any) {
         do {
             let trackable = try createTrackableFromCurrentData()
-            delegate?.addTrackableViewController(sender: self, onTrackableAdded: trackable)
+            publisher?.add(trackable: trackable) { [weak self] result in
+                guard let self = self else {
+                    return
+                }
+                
+                switch result {
+                case .success:
+                    self.delegate?.addTrackableViewController(sender: self, onTrackableAdded: trackable)
+                    self.dismiss(animated: true, completion: nil)
+                case .failure(let error):
+                    self.showError(error)
+                }
+            }
+            
             if saveAsDefaultSwitch.isOn {
                 saveCurrentDataAsDefault()
             }
-            dismiss(animated: true, completion: nil)
         } catch let err {
-            let alert = UIAlertController(title: "Alert", message: err.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+            showError(err)
         }
+    }
+    
+    private func showError(_ error: Error) {
+        let alert = UIAlertController(title: "Alert", message: (error as? ErrorInformation)?.message ?? error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 
     @IBAction private func onCancelButtonPress(_ sender: Any) {

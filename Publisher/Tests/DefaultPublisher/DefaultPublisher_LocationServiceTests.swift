@@ -53,14 +53,16 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     func testLocationService_didUpdateEnhancedLocation() {
         let location = CLLocation(latitude: 1.234, longitude: 3.456)
         let locationUpdate = EnhancedLocationUpdate(location: location)
-        let expectation = XCTestExpectation()
+        let expectationAddTrackable = XCTestExpectation()
+        let expectationUpdateLocation = XCTestExpectation()
 
-        ablyService.trackablesGetValue = [trackable]
-        delegate.publisherDidUpdateEnhancedLocationCallback = { expectation.fulfill() }
+        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        publisher.add(trackable: trackable) { _ in expectationAddTrackable.fulfill() }
+        delegate.publisherDidUpdateEnhancedLocationCallback = { expectationUpdateLocation.fulfill() }
 
         // When receiving enhanced position update
         publisher.locationService(sender: MockLocationService(), didUpdateEnhancedLocationUpdate: locationUpdate)
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectationAddTrackable, expectationUpdateLocation], timeout: 5.0)
 
         // It should notify delegate
         XCTAssertTrue(delegate.publisherDidUpdateEnhancedLocationCalled)
@@ -79,7 +81,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let location3 = CLLocation(latitude: 51.50076810088975, longitude: -0.11582583421022277)
 
         var expectation = XCTestExpectation()
-        ablyService.trackablesGetValue = [trackable]
+        publisher.add(trackable: trackable) { _ in } 
         delegate.publisherDidUpdateEnhancedLocationCallback = { expectation.fulfill() }
         resolutionPolicyFactory.resolutionPolicy?.resolveRequestReturnValue = Resolution(accuracy: .balanced,
                                                                                          desiredInterval: 500,

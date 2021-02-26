@@ -27,6 +27,7 @@ class DefaultPublisher: Publisher {
     private var subscribers: [Trackable: Set<Subscriber>]
     private var resolutions: [Trackable: Resolution]
     private var locationEngineResolution: Resolution
+    private var trackables: Set<Trackable>
 
     private var lastEnhancedLocations: [Trackable: CLLocation]
     private var lastEnhancedTimestamps: [Trackable: Date]
@@ -66,6 +67,7 @@ class DefaultPublisher: Publisher {
         self.resolutions = [:]
         self.lastEnhancedLocations = [:]
         self.lastEnhancedTimestamps = [:]
+        self.trackables = []
 
         self.ablyService.delegate = self
         self.locationService.delegate = self
@@ -79,7 +81,7 @@ class DefaultPublisher: Publisher {
     }
     
     func add(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
-         let event = AddTrackableEvent(trackable: trackable, resultHandler: completion)
+        let event = AddTrackableEvent(trackable: trackable, resultHandler: completion)
         enqueue(event: event)
     }
 
@@ -261,6 +263,7 @@ extension DefaultPublisher {
     }
 
     private func performPresenceJoinedSuccessfullyEvent(_ event: PresenceJoinedSuccessfullyEvent) {
+        trackables.insert(event.trackable)
         locationService.startUpdatingLocation()
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
@@ -287,8 +290,14 @@ extension DefaultPublisher {
         self.route = event.route
     }
 
-    // MARK: Add/Remove trackable
+    // MARK: Add trackable
     private func performAddTrackableEvent(_ event: AddTrackableEvent) {
+        guard !trackables.contains(event.trackable) else {
+            let error = ErrorInformation(type: .trackableAlreadyExists(trackableId: event.trackable.id))
+            callback(error: error, handler: event.resultHandler)
+            return
+        }
+        
         self.ablyService.track(trackable: event.trackable) { [weak self] result in
             switch result {
             case .success:
@@ -297,12 +306,11 @@ extension DefaultPublisher {
                 })
             case .failure(let error):
                 self?.callback(error: error, handler: event.resultHandler)
-                return
             }
         }
     }
 
-    // MARK: Remove
+    // MARK: Remove trackable
     private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] result in
             switch result {
@@ -317,6 +325,7 @@ extension DefaultPublisher {
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
+        trackables.remove(event.trackable)
         hooks.trackables?.onTrackableRemoved(trackable: event.trackable)
         removeAllSubscribers(forTrackable: event.trackable)
         resolutions.removeValue(forKey: event.trackable)
@@ -332,7 +341,8 @@ extension DefaultPublisher {
             hooks.trackables?.onActiveTrackableChanged(trackable: nil)
             route = nil
         }
-        if ablyService.trackables.isEmpty {
+        
+        if trackables.isEmpty {
             locationService.stopUpdatingLocation()
         }
         
@@ -351,7 +361,7 @@ extension DefaultPublisher {
 
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
-        let trackablesToSend = ablyService.trackables.filter { trackable -> Bool in
+        let trackablesToSend = trackables.filter { trackable in
             return shouldSendLocation(location: event.locationUpdate.location,
                                       lastLocation: lastEnhancedLocations[trackable],
                                       lastTimestamp: lastEnhancedTimestamps[trackable],
@@ -394,7 +404,7 @@ extension DefaultPublisher {
 
     // MARK: ResolutionPolicy
     private func performRefreshResolutionPolicyEvent(_ event: RefreshResolutionPolicyEvent) {
-        ablyService.trackables.forEach { resolveResolution(trackable: $0) }
+        trackables.forEach { resolveResolution(trackable: $0)}
     }
 
     private func resolveResolution(trackable: Trackable) {
