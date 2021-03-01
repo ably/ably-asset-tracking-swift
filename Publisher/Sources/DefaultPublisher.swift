@@ -293,7 +293,7 @@ extension DefaultPublisher {
     // MARK: Add trackable
     private func performAddTrackableEvent(_ event: AddTrackableEvent) {
         guard !trackables.contains(event.trackable) else {
-            let error = ErrorInformation(type: .trackableAlreadyExists(trackableId: event.trackable.id))
+            let error = ErrorInformation(type: .trackableAlreadyExist(trackableId: event.trackable.id))
             callback(error: error, handler: event.resultHandler)
             return
         }
