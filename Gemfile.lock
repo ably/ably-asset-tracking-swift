@@ -246,6 +246,7 @@ GEM
 
 PLATFORMS
   ruby
+  universal-darwin-19
 
 DEPENDENCIES
   cocoapods
@@ -253,4 +254,4 @@ DEPENDENCIES
   slather
 
 BUNDLED WITH
-   2.1.4
+   2.2.0

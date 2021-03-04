@@ -43,6 +43,7 @@
 		F68E172E25E7A206009AECEB /* GeoJSONPropertiesCLLocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E172D25E7A206009AECEB /* GeoJSONPropertiesCLLocationTests.swift */; };
 		F6A2B75425E64DEB00153CF4 /* LocationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2B75325E64DEB00153CF4 /* LocationValidator.swift */; };
 		F6A6B67825C9861B00A547D9 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */; };
+		F6AEA70525F0E46500E9F357 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AEA70425F0E46500E9F357 /* ARTErrorInfo+Extensions.swift */; };
 		F6DC46C125E78C74002E7691 /* GeoJSONMessageCLLocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DC46C025E78C74002E7691 /* GeoJSONMessageCLLocationTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,7 @@
 		F68E172D25E7A206009AECEB /* GeoJSONPropertiesCLLocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONPropertiesCLLocationTests.swift; sourceTree = "<group>"; };
 		F6A2B75325E64DEB00153CF4 /* LocationValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationValidator.swift; sourceTree = "<group>"; };
 		F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
+		F6AEA70425F0E46500E9F357 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
 		F6DC46C025E78C74002E7691 /* GeoJSONMessageCLLocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONMessageCLLocationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +153,7 @@
 		180F6083258632360014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				F6AEA70325F0E3E700E9F357 /* Extensions */,
 				18C7B1A425B61349000A1418 /* ResolutionPolicy */,
 				180F613F258633C00014B310 /* Configuration */,
 				180F6144258633C00014B310 /* Utils */,
@@ -285,6 +288,14 @@
 				0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F6AEA70325F0E3E700E9F357 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F6AEA70425F0E46500E9F357 /* ARTErrorInfo+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -501,6 +512,7 @@
 				180F6156258633C00014B310 /* Decodable+FromJSONString.swift in Sources */,
 				F617C43125DA54AF005E92A2 /* ConnectionState.swift in Sources */,
 				180F615E258633C00014B310 /* PresenceData.swift in Sources */,
+				F6AEA70525F0E46500E9F357 /* ARTErrorInfo+Extensions.swift in Sources */,
 				F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */,
 				18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */,
 				180F615B258633C00014B310 /* GeoJSONProperties.swift in Sources */,

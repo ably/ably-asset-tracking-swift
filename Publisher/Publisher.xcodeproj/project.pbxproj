@@ -73,10 +73,10 @@
 		F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */; };
 		F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */; };
 		F6A2B75825E656D600153CF4 /* LocationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2B75725E656D600153CF4 /* LocationValidator.swift */; };
-		F6A2CFFD25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */; };
 		F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */; };
 		F6A6B67C25C9862600A547D9 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67B25C9862600A547D9 /* MapboxConfiguration.swift */; };
 		F6A6B68025C9883E00A547D9 /* MapboxConfiguration+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */; };
+		F6AEA70B25F0E4CF00E9F357 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AEA70A25F0E4CF00E9F357 /* ARTErrorInfo+Extensions.swift */; };
 		F6D4CFE925D677560071A6A9 /* PublisherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFE825D677560071A6A9 /* PublisherDelegate.swift */; };
 		F6D4CFEF25D678220071A6A9 /* PublisherFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFEE25D678220071A6A9 /* PublisherFactory.swift */; };
 /* End PBXBuildFile section */
@@ -169,10 +169,10 @@
 		F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+Extensions.swift"; sourceTree = "<group>"; };
 		F6A2B75725E656D600153CF4 /* LocationValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationValidator.swift; sourceTree = "<group>"; };
-		F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
 		F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		F6A6B67B25C9862600A547D9 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
 		F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapboxConfiguration+Extensions.swift"; sourceTree = "<group>"; };
+		F6AEA70A25F0E4CF00E9F357 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
 		F6D4CFE825D677560071A6A9 /* PublisherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherDelegate.swift; sourceTree = "<group>"; };
 		F6D4CFEE25D678220071A6A9 /* PublisherFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherFactory.swift; sourceTree = "<group>"; };
 		F9B1CBDB707C22DF88ACEF73 /* Pods-asset_tracking-Publisher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.debug.xcconfig"; sourceTree = "<group>"; };
@@ -342,6 +342,7 @@
 		18FCE195258B7FBB005BC480 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F6AEA70925F0E4CF00E9F357 /* Extensions */,
 				18C7B1B525B6135A000A1418 /* ResolutionPolicy */,
 				18FCE1CE258B8264005BC480 /* Configuration */,
 				18FCE1D3258B8264005BC480 /* Model */,
@@ -432,10 +433,18 @@
 			children = (
 				F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */,
 				F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */,
-				F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */,
 				F617C43E25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F6AEA70925F0E4CF00E9F357 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F6AEA70A25F0E4CF00E9F357 /* ARTErrorInfo+Extensions.swift */,
+			);
+			name = Extensions;
+			path = ../../Core/Sources/Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -659,6 +668,7 @@
 				18C7B15F25B6109E000A1418 /* DefaultTrackableSetListener.swift in Sources */,
 				18C7B16025B6109E000A1418 /* DefaultResolutionPolicyFactory.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
+				F6AEA70B25F0E4CF00E9F357 /* ARTErrorInfo+Extensions.swift in Sources */,
 				F617C43525DA5848005E92A2 /* ConnectionState.swift in Sources */,
 				F6D4CFE925D677560071A6A9 /* PublisherDelegate.swift in Sources */,
 				18C7B1BC25B6135A000A1418 /* ResolutionPolicy.swift in Sources */,
@@ -679,7 +689,6 @@
 				180F617A2586341E0014B310 /* LocationService.swift in Sources */,
 				F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */,
 				F617C43F25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift in Sources */,
-				F6A2CFFD25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */,
 				F6A6B68025C9883E00A547D9 /* MapboxConfiguration+Extensions.swift in Sources */,
 				F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */,
 				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,
