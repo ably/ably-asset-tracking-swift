@@ -11,6 +11,12 @@ def mapbox_sdk
   pod 'MapboxCoreNavigation', '~> 1.1.0'
 end
 
+def aws_s3
+  pod 'Amplify', '~> 1.6.0', :modular_headers => true
+  pod 'AmplifyPlugins/AWSS3StoragePlugin', '~> 1.6.0', :modular_headers => true
+  pod 'AmplifyPlugins/AWSCognitoAuthPlugin', '~> 1.6.0', :modular_headers => true
+end
+
 abstract_target 'asset_tracking' do
   # Official Apple SwiftLog pod
   pod 'Logging', '~> 1.4.0'
@@ -36,6 +42,7 @@ abstract_target 'asset_tracking' do
   # Example apps
   target 'PublisherExample' do
     project 'PublisherExample/PublisherExample.xcodeproj'
+    aws_s3	 
     pod 'AblyAssetTracking/Publisher', :path => 'AblyAssetTracking.podspec'
   end
 

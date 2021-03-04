@@ -6,46 +6,43 @@ PODS:
     - ULID (= 1.1.0)
   - AblyAssetTracking/Publisher (0.0.1):
     - Ably (~> 1.2.0)
-    - Amplify (~> 1.6.0)
-    - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.6.0)
-    - AmplifyPlugins/AWSS3StoragePlugin (~> 1.6.0)
     - Logging (~> 1.4.0)
     - MapboxCoreNavigation (~> 1.1.0)
   - AblyAssetTracking/Subscriber (0.0.1):
     - Ably (~> 1.2.0)
     - Logging (~> 1.4.0)
   - AblyDeltaCodec (1.2.0)
-  - Amplify (1.6.0):
-    - Amplify/Default (= 1.6.0)
-  - Amplify/Default (1.6.0)
-  - AmplifyPlugins/AWSCognitoAuthPlugin (1.6.0):
-    - AWSAuthCore (~> 2.22.0)
-    - AWSCognitoIdentityProvider (~> 2.22.0)
-    - AWSCognitoIdentityProviderASF (~> 2.22.0)
-    - AWSCore (~> 2.22.0)
-    - AWSMobileClient (~> 2.22.0)
-    - AWSPluginsCore (= 1.6.0)
-  - AmplifyPlugins/AWSS3StoragePlugin (1.6.0):
-    - AWSCore (~> 2.22.0)
-    - AWSPluginsCore (= 1.6.0)
-    - AWSS3 (~> 2.22.0)
-  - AWSAuthCore (2.22.3):
-    - AWSCore (= 2.22.3)
-  - AWSCognitoIdentityProvider (2.22.3):
-    - AWSCognitoIdentityProviderASF (= 2.22.3)
-    - AWSCore (= 2.22.3)
-  - AWSCognitoIdentityProviderASF (2.22.3)
-  - AWSCore (2.22.3)
-  - AWSMobileClient (2.22.3):
-    - AWSAuthCore (= 2.22.3)
-    - AWSCognitoIdentityProvider (= 2.22.3)
-    - AWSCognitoIdentityProviderASF (= 2.22.3)
-    - AWSCore (= 2.22.3)
-  - AWSPluginsCore (1.6.0):
-    - Amplify (= 1.6.0)
-    - AWSCore (~> 2.22.0)
-  - AWSS3 (2.22.3):
-    - AWSCore (= 2.22.3)
+  - Amplify (1.6.1):
+    - Amplify/Default (= 1.6.1)
+  - Amplify/Default (1.6.1)
+  - AmplifyPlugins/AWSCognitoAuthPlugin (1.6.1):
+    - AWSAuthCore (~> 2.23.0)
+    - AWSCognitoIdentityProvider (~> 2.23.0)
+    - AWSCognitoIdentityProviderASF (~> 2.23.0)
+    - AWSCore (~> 2.23.0)
+    - AWSMobileClient (~> 2.23.0)
+    - AWSPluginsCore (= 1.6.1)
+  - AmplifyPlugins/AWSS3StoragePlugin (1.6.1):
+    - AWSCore (~> 2.23.0)
+    - AWSPluginsCore (= 1.6.1)
+    - AWSS3 (~> 2.23.0)
+  - AWSAuthCore (2.23.0):
+    - AWSCore (= 2.23.0)
+  - AWSCognitoIdentityProvider (2.23.0):
+    - AWSCognitoIdentityProviderASF (= 2.23.0)
+    - AWSCore (= 2.23.0)
+  - AWSCognitoIdentityProviderASF (2.23.0)
+  - AWSCore (2.23.0)
+  - AWSMobileClient (2.23.0):
+    - AWSAuthCore (= 2.23.0)
+    - AWSCognitoIdentityProvider (= 2.23.0)
+    - AWSCognitoIdentityProviderASF (= 2.23.0)
+    - AWSCore (= 2.23.0)
+  - AWSPluginsCore (1.6.1):
+    - Amplify (= 1.6.1)
+    - AWSCore (~> 2.23.0)
+  - AWSS3 (2.23.0):
+    - AWSCore (= 2.23.0)
   - Logging (1.4.0)
   - MapboxAccounts (2.3.0)
   - MapboxCommon (7.1.2)
@@ -72,6 +69,9 @@ DEPENDENCIES:
   - Ably (~> 1.2.0)
   - AblyAssetTracking/Publisher (from `AblyAssetTracking.podspec`)
   - AblyAssetTracking/Subscriber (from `AblyAssetTracking.podspec`)
+  - Amplify (~> 1.6.0)
+  - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.6.0)
+  - AmplifyPlugins/AWSS3StoragePlugin (~> 1.6.0)
   - Logging (~> 1.4.0)
   - MapboxCoreNavigation (~> 1.1.0)
   - SwiftLint
@@ -109,17 +109,17 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Ably: 9f143677993cb6df20fce4551b9b6b2e55ad2f4d
-  AblyAssetTracking: 80d0c2482e603ef14f3c2ef5134c2bb870a6a9ae
+  AblyAssetTracking: a2adac51dca6cfc6ee2a543278bafcdb722b364b
   AblyDeltaCodec: 6123f31df5b04a0f5452968505a46ba16a9eb689
-  Amplify: fe8cbe6fcd0e6468f537bd49e6c3d15437442576
-  AmplifyPlugins: 85fa4fa7d0eb78a4f4f44dcf107993a8c13fdf2a
-  AWSAuthCore: 5a2e6c939281a56c30f68896bc68ee44044400bc
-  AWSCognitoIdentityProvider: 5aefe4cbfdecc2f9335fb0e2236d334b2d438d59
-  AWSCognitoIdentityProviderASF: 455fb74bf1b0b5aeab9800495f2060f391f2e38e
-  AWSCore: c86b71ff60747c4058769af64ed871ebfae16ddb
-  AWSMobileClient: 6f63dd57d3df2ebcac1be074144f029e0db90536
-  AWSPluginsCore: d21990b54729e2a95620922ea83e123adaa678cd
-  AWSS3: 4c5de623861eb2f660465084829b22abfcdf5644
+  Amplify: 4d0c3b0871e1f268c81ce5e9b65532df0a013900
+  AmplifyPlugins: 51dfaeafe662cd571c4d4dfd3bdc5987fef2d5a7
+  AWSAuthCore: 037e5faef3f7a0b4501eddcc382f9c74a22c0a77
+  AWSCognitoIdentityProvider: c078ed88e0f8d2df52850acfa2dae91c451ae47e
+  AWSCognitoIdentityProviderASF: fa862263b46ce6dcd28b85a906d21874fb28b15a
+  AWSCore: 589ad0bd5b72e9a95ce33834f12339b50cfc9f14
+  AWSMobileClient: 5701d5ac51ec0de781d848754f9d9952ead1c639
+  AWSPluginsCore: f41f8a478fe3fd8839ec16278b86dededefb0628
+  AWSS3: 7f89c85b958d0979a39069003a2fe06facf78373
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
   MapboxAccounts: 84abfdde95d9dc483f604c1b0fe1861edf691ce7
   MapboxCommon: e469f6c62de29e1906c37e0bce65f6826e7fb9ac
@@ -134,6 +134,6 @@ SPEC CHECKSUMS:
   Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: c8d2e470f695b916ec78e902bf439cc1933a8127
+PODFILE CHECKSUM: 7fd9b978b3f16c5ebf49f4cfab7aaf6aee30bf0e
 
 COCOAPODS: 1.10.0
