@@ -43,7 +43,7 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: track
     func testTrack_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(()))}
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
         let expectation = XCTestExpectation()
 
         // When tracking a trackable
@@ -79,7 +79,7 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: track
     func testTrack_destination() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(()))}
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
         let expectation = XCTestExpectation()
 
         let destination = CLLocationCoordinate2D(latitude: 12.3456, longitude: 56.789)
@@ -102,7 +102,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testTrack_error_duplicate_track() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(()))}
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
         var expectation = XCTestExpectation()
 
         // When tracking a trackable
@@ -149,7 +149,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testTrack_thread() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
 
         var expectation = XCTestExpectation()
         // Both `onSuccess` and `onError` callbacks should be called on main thread
@@ -182,7 +182,7 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: add
     func testAdd_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
 
         // When adding a trackable
@@ -215,7 +215,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_track_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
         expectation.expectedFulfillmentCount = 2
 
@@ -264,7 +264,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_success_thread() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
         // `onSuccess` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
@@ -340,7 +340,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_activeTrackable() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(()))}
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
         ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true)) }
         ablyService.trackablesGetValue = []
         var expectation = XCTestExpectation(description: "Handler for `track` call")
@@ -387,7 +387,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_nonActiveTrackable() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
         ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true)) }
 
         var expectation = XCTestExpectation(description: "Handler for `track` call")

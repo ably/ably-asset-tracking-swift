@@ -157,7 +157,7 @@ extension DefaultPublisher {
     // MARK: Track
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
-            let error =  AssetTrackingError.publisherError("For this preview version of the SDK, track() method may only be called once for any given instance of this class.")
+            let error = AssetTrackingError.publisherError("For this preview version of the SDK, track() method may only be called once for any given instance of this class.")
             callback(error: error, handler: event.resultHandler)
             return
         }
@@ -198,14 +198,14 @@ extension DefaultPublisher {
             }
         }
         
-        callback(value: (), handler: event.resultHandler)
+        callback(value: Void(), handler: event.resultHandler)
     }
 
     private func performPresenceJoinedSuccessfullyEvent(_ event: PresenceJoinedSuccessfullyEvent) {
         locationService.startUpdatingLocation()
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
-        event.resultHandler(.success(()))
+        event.resultHandler(.success)
     }
 
     // MARK: RoutingProfile
@@ -233,7 +233,7 @@ extension DefaultPublisher {
             switch result {
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] _ in
-                    self?.callback(value: (), handler: event.resultHandler)
+                    self?.callback(value: Void(), handler: event.resultHandler)
                 })
             case .failure(let error):
                 self?.callback(error: error, handler: event.resultHandler)

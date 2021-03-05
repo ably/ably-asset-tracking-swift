@@ -61,7 +61,6 @@ class DefaultRouteProvider: NSObject, RouteProvider {
             switch result {
             case .failure(let error):
                 self.handleErrorCallback(error: error)
-
             case .success(let response):
                 guard let route = response.routes?.first else {
                     self.handleErrorCallback(error: AssetTrackingError.publisherError("Missing route in Directions response."))
@@ -83,7 +82,6 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     private func handleRouteCallback(route: Route) {
         guard let resultHandler = self.resultHandler else { return }
         resultHandler(.success(route))
-        
         self.destination = nil
         self.resultHandler = nil
     }

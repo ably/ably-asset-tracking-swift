@@ -87,7 +87,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         // After tracking trackable (to trigger resolution resolve refresh)
         ablyService.trackCompletionHandler = { callback in
-            callback?(.success(()))
+            callback?(.success)
             expectation.fulfill()
         }
         publisher.track(trackable: trackable) { _ in }
