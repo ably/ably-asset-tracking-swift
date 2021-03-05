@@ -55,7 +55,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channel.presence.enterClient(configuration.clientId, data: data) { error in
             guard let error = error else {
                 logger.debug("Entered to presence successfully", source: "AblyPublisherService")
-                completion?(.success(()))
+                completion?(.success)
                 return
             }
 

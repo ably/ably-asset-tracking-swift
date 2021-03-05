@@ -19,7 +19,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
 
         super.init()
     }
-    
+
     func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
         self.routingProfile = routingProfile
         guard let destination = self.destination,
@@ -51,7 +51,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
             self.handleErrorCallback(error: errorInformation)
             return
         }
-        
+
         guard let destination = destination,
               let routingProfile = routingProfile else { return }
 
@@ -84,11 +84,10 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     private func handleRouteCallback(route: Route) {
         guard let resultHandler = self.resultHandler else { return }
         resultHandler(.success(route))
-        
         self.destination = nil
         self.resultHandler = nil
     }
-    
+
     private func isCalculating(resultHandler: ResultHandler<Route>) -> Bool {
         guard self.resultHandler == nil
         else {
