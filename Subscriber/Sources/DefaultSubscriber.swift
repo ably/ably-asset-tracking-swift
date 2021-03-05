@@ -94,7 +94,7 @@ extension DefaultSubscriber {
             case .success:
                 self?.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):
-                self?.callback(error: error, handler: event.resultHandler)
+                self?.callback(error: ErrorInformation(error: error), handler: event.resultHandler)
             }
         }
     }
