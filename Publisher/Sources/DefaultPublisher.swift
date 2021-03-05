@@ -166,7 +166,7 @@ extension DefaultPublisher {
         self.ablyService.track(trackable: event.trackable) { [weak self] result in
             switch result {
             case .failure(let error):
-                self?.callback(error: ErrorInformation(error: error), handler: event.resultHandler)
+                self?.callback(error: error, handler: event.resultHandler)
                 return
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] result in
