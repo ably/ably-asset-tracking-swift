@@ -48,6 +48,12 @@ private enum LocationState {
     }
 }
 
+private struct MapConstraints {
+    static let regionLatitude: CLLocationDistance = 600
+    static let regionLongitude: CLLocationDistance = 600
+    static let minimumDistanceToCenter: CLLocationDistance = 300
+}
+
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var connectionStatusLabel: UILabel!
@@ -167,25 +173,20 @@ class MapViewController: UIViewController {
     private func scrollToReceivedLocation(isInitialLocation: Bool = false) {
         guard let location = self.location else { return }
         
-        let minimumDistanceToCenter: Double = 300
         let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
                                    longitude: mapView.region.center.longitude)
         
+        let region = MKCoordinateRegion(center: location.coordinate,
+                                        latitudinalMeters: MapConstraints.regionLatitude,
+                                        longitudinalMeters: MapConstraints.regionLongitude)
+        
         if isInitialLocation {
-            let region = MKCoordinateRegion(center: location.coordinate,
-                                            latitudinalMeters: 600,
-                                            longitudinalMeters: 600)
-            
             mapView.setRegion(region, animated: true)
             
             return
         }
         
-        guard location.distance(from: mapCenter) > minimumDistanceToCenter else { return }
-        
-        let region = MKCoordinateRegion(center: location.coordinate,
-                                        latitudinalMeters: 600,
-                                        longitudinalMeters: 600)
+        guard location.distance(from: mapCenter) > MapConstraints.minimumDistanceToCenter else { return }
         
         mapView.setRegion(region, animated: true)
     }
@@ -283,10 +284,8 @@ extension MapViewController: PublisherDelegate {
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
         self.location = location
         self.locationState = .active
-        DispatchQueue.main.async {
-            self.refreshAnnotations()
-            self.scrollToReceivedLocation()
-        }
+        self.refreshAnnotations()
+        self.scrollToReceivedLocation()
     }
 
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
