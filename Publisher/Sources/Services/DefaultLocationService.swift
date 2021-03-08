@@ -26,7 +26,7 @@ class DefaultLocationService: LocationService {
             if let error = error,
                let self = self {
                 logger.error("Error while starting location updates: \(error)", source: "DefaultLocationService")
-                let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Error while starting location updates: \(error)"))
+                let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Error while starting location updates: \(error)"))
                 self.delegate?.locationService(sender: self, didFailWithError: errorInformation)
                 return
             }
@@ -52,7 +52,7 @@ extension DefaultLocationService: PassiveLocationDataSourceDelegate {
 
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didFailWithError error: Error) {
         logger.error("passiveLocationDataSource.didFailWithError", source: "DefaultLocationService")
-        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: error.localizedDescription))
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: error.localizedDescription))
         delegate?.locationService(sender: self, didFailWithError: errorInformation)
     }
 
