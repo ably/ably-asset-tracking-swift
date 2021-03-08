@@ -107,9 +107,9 @@ extension DefaultSubscriber {
         ablyService.changeRequest(resolution: event.resolution) { [weak self] result in
             switch result {
             case .success:
-                self?.callback(value: (), handler: event.resultHandler)
+                self?.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):
-                self?.callback(error: error, handler: event.resultHandler)
+                self?.callback(error: ErrorInformation(error: error), handler: event.resultHandler)
             }
         }
     }
