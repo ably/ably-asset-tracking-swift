@@ -130,7 +130,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testTrack_error_ably_service_error() {
-        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Test AblyPublisherService error"))
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
         ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
@@ -244,7 +244,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_track_error() {
-        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Test AblyPublisherService error"))
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
         ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
@@ -282,7 +282,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_error_thread() {
-        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Test AblyPublisherService error"))
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
         ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
@@ -429,7 +429,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_error() {
-        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Test AblyPublisherService error"))
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
         ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
         let expectation = XCTestExpectation()
 
@@ -468,7 +468,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_error_thread() {
-        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Test AblyPublisherService error"))
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
         ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
         
         let expectation = XCTestExpectation()

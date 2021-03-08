@@ -79,7 +79,7 @@ class AblySubscriberService {
     // MARK: Utils
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
-            let errorInformation = ErrorInformation(type: .subscriberError(inObject: self, errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"))
+            let errorInformation = ErrorInformation(type: .subscriberError(errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"))
             delegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             return
         }

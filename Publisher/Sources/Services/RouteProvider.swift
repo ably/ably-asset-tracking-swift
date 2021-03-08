@@ -47,7 +47,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
 
     private func handleLocationUpdate(location: CLLocation) {
         guard let directions = self.directions else {
-            let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Missing Directions object."))
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Missing Directions object."))
             self.handleErrorCallback(error: errorInformation)
             return
         }
@@ -64,7 +64,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
                 self.handleErrorCallback(error: ErrorInformation(error: error))
             case .success(let response):
                 guard let route = response.routes?.first else {
-                    let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Missing route in Directions response."))
+                    let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Missing route in Directions response."))
                     self.handleErrorCallback(error: errorInformation)
                     return
                 }
@@ -91,7 +91,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     private func isCalculating(resultHandler: ResultHandler<Route>) -> Bool {
         guard self.resultHandler == nil
         else {
-            let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Provider is already calculating route."))
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Provider is already calculating route."))
             resultHandler(.failure(errorInformation))
             return true
         }

@@ -36,7 +36,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
 
     func testLocationService_didFailWithError() {
-        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "TestError"))
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "TestError"))
         let expectation = XCTestExpectation()
         delegate.publisherDidFailWithErrorCallback = { expectation.fulfill() }
 
