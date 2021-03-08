@@ -179,7 +179,7 @@ extension DefaultPublisher {
     private func callback<T: Any>(value: T, handler: @escaping ResultHandler<T>) {
         performOnMainThread { handler(.success(value)) }
     }
-    
+
     private func callback(_ handler: @escaping ResultHandler<Bool>) {
         performOnMainThread { handler(.success(true)) }
     }
@@ -214,7 +214,7 @@ extension DefaultPublisher {
     // swiftlint:disable line_length
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
-            let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "For this preview version of the SDK, track() method may only be called once for any given instance of this class."))
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "For this preview version of the SDK, track() method may only be called once for any given instance of this class."))
             callback(error: errorInformation, handler: event.resultHandler)
             return
         }
@@ -255,15 +255,15 @@ extension DefaultPublisher {
                 self.route = nil
             }
         }
-        
-        callback(value: (), handler: event.resultHandler)
+
+        callback(value: Void(), handler: event.resultHandler)
     }
 
     private func performPresenceJoinedSuccessfullyEvent(_ event: PresenceJoinedSuccessfullyEvent) {
         locationService.startUpdatingLocation()
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
-        event.resultHandler(.success(()))
+        event.resultHandler(.success)
     }
 
     // MARK: RoutingProfile
@@ -292,7 +292,7 @@ extension DefaultPublisher {
             switch result {
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] _ in
-                    self?.callback(value: (), handler: event.resultHandler)
+                    self?.callback(value: Void(), handler: event.resultHandler)
                 })
             case .failure(let error):
                 self?.callback(error: error, handler: event.resultHandler)
@@ -334,7 +334,7 @@ extension DefaultPublisher {
         if ablyService.trackables.isEmpty {
             locationService.stopUpdatingLocation()
         }
-        
+
         callback(value: true, handler: event.resultHandler)
     }
 
@@ -537,7 +537,7 @@ extension DefaultPublisher: LocationServiceDelegate {
         logger.error("locationService.didFailWithError. Error: \(error.message)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }
-    
+
     func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
         enqueue(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate))

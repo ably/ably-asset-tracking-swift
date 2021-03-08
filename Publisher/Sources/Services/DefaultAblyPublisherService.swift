@@ -53,7 +53,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channel.presence.enter(data) { error in
             guard let error = error else {
                 logger.debug("Entered to presence successfully", source: "AblyPublisherService")
-                completion?(.success(()))
+                completion?(.success)
                 return
             }
 
@@ -66,7 +66,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
     func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
         guard let channel = channels[trackable] else {
-            let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Attempt to send location while not tracked channel"))
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Attempt to send location while not tracked channel"))
             completion?(.failure(errorInformation))
             return
         }

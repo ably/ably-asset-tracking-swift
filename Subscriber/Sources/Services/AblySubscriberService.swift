@@ -65,18 +65,18 @@ class AblySubscriberService {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
         channel.presence.update(data) { error in
-            guard let error = error else {
-                completion(.success(()))
-                return
+            if let error = error {
+                completion(.failure(error.toErrorInformation()))
+            } else {
+                completion(.success)
             }
-            completion(.failure(error.toErrorInformation()))
         }
     }
 
     // MARK: Utils
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
-            let errorInformation = ErrorInformation(type: .subscriberError(inObject: self, errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"))
+            let errorInformation = ErrorInformation(type: .subscriberError(errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"))
             delegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             return
         }
@@ -93,7 +93,7 @@ class AblySubscriberService {
             delegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             return
         }
-        
+
         messages.map {
             $0.location.toCoreLocation()
         }.forEach {
