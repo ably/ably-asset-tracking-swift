@@ -72,7 +72,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
         
         guard let message = createARTMessage(for: locationUpdate, and: batteryLevel) else {
-            let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "Cannot create location update message."))
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Cannot create location update message."))
             self.delegate?.publisherService(sender: self, didFailWithError: errorInformation)
             return
         }
