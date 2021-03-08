@@ -13,12 +13,12 @@ public enum ErrorInformationType {
     /**
      General purpose error for Publisher SDK
      */
-    case publisherError(inObject: Any, errorMessage: String)
+    case publisherError(errorMessage: String)
     
     /**
      General purpose error for Subscriber SDK
      */
-    case subscriberError(inObject: Any, errorMessage: String)
+    case subscriberError(errorMessage: String)
     
     /**
      Thrown in case of failed JSON Encoding/Decoding using `Codable+EncodedString` or `Decodable+FromJSONString`
@@ -33,8 +33,8 @@ public enum ErrorInformationType {
     var message: String {
         switch self {
         case .commonError(let errorMessage): return "Error: \(errorMessage)"
-        case .publisherError(let object, let errorMessage): return "PublisherError in: \(object.self) || ErrorMessage: \(errorMessage)"
-        case .subscriberError(let object, let errorMessage): return "SubscriberError in: \(object.self) || ErrorMessage: \(errorMessage)"
+        case .publisherError(let errorMessage): return "PublisherError || ErrorMessage: \(errorMessage)"
+        case .subscriberError(let errorMessage): return "SubscriberError || ErrorMessage: \(errorMessage)"
         case .JSONCodingError(let object): return "Error while parsing: \(object)"
         case .incompleteConfiguration(let missingProperty, let builderOption): return "Missing mandatory property: \(missingProperty). Did you forgot to call `\(builderOption)` on builder object?"
         }
@@ -44,7 +44,7 @@ public enum ErrorInformationType {
 /**
  Information about an error reported by the Ably service.
  */
-public class ErrorInformation: Error {
+public class ErrorInformation: Error, CustomNSError, CustomStringConvertible {
     /**
      Ably specific error code. Defined [here](https://github.com/ably/ably-common/blob/main/protocol/errors.json).
      */
@@ -65,6 +65,13 @@ public class ErrorInformation: Error {
      An error underlying this error which caused this failure.
      */
     public let cause: Error?
+    
+    
+    public var description: String {
+        return message.isEmpty
+            ? localizedDescription
+            : message
+    }
     
     /**
      Creates an ErrorInformation instance representing an error generated internally from within the Ably Asset Tracking SDK.
