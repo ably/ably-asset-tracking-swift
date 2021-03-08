@@ -14,7 +14,6 @@ class GeoJSONMessageTests: XCTestCase {
             "properties": {
                 "accuracyHorizontal": 1.2,
                 "accuracyVertical": 2.3,
-                "altitude": 3.2,
                 "bearing": 4.3,
                 "speed": 5.3,
                 "time": 1607365170.0,
