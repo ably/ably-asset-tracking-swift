@@ -63,7 +63,5 @@ class GeoJsonMessageCLLocationTests: XCTestCase {
             XCTAssertNil(message.properties.accuracyBearing)
             XCTAssertNil(message.properties.bearing)
         }
-        
-        
     }
 }

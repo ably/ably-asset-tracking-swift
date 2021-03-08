@@ -36,7 +36,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
 
     func testLocationService_didFailWithError() {
-        let errorInformation = ErrorInformation(type: .publisherError(inObject: self, errorMessage: "TestError"))
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "TestError"))
         let expectation = XCTestExpectation()
         delegate.publisherDidFailWithErrorCallback = { expectation.fulfill() }
 
@@ -89,7 +89,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         // After tracking trackable (to trigger resolution resolve refresh)
         ablyService.trackCompletionHandler = { callback in
-            callback?(.success(()))
+            callback?(.success)
             expectation.fulfill()
         }
         publisher.track(trackable: trackable) { _ in }
