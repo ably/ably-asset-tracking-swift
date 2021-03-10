@@ -20,6 +20,8 @@
 		AD1A2941DA0611830A033DC6 /* Pods_asset_tracking_SubscriberExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE9C779EED7B3BB95CF6565 /* Pods_asset_tracking_SubscriberExample.framework */; };
 		F618BA8E25C99EF800B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F618BA8D25C99EF800B69885 /* Environment.swift */; };
 		F618BA9E25C9A73500B69885 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F618BA9D25C9A73500B69885 /* Secrets.xcconfig */; };
+		F67E661525F8C221001CF9BB /* ResolutionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661425F8C221001CF9BB /* ResolutionHelper.swift */; };
+		F67E661825F8C507001CF9BB /* DescriptionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661725F8C507001CF9BB /* DescriptionsHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		E5461DE1BF97ADF21AEB1AF3 /* Pods-asset_tracking-SubscriberExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberExample.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberExample/Pods-asset_tracking-SubscriberExample.debug.xcconfig"; sourceTree = "<group>"; };
 		F618BA8D25C99EF800B69885 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		F618BA9D25C9A73500B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
+		F67E661425F8C221001CF9BB /* ResolutionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionHelper.swift; sourceTree = "<group>"; };
+		F67E661725F8C507001CF9BB /* DescriptionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionsHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 		180F61AE258634420014B310 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				F67E661325F8C214001CF9BB /* Helpers */,
 				180F61AF258634420014B310 /* TruckAnnotation.swift */,
 				180F61B0258634420014B310 /* MapViewController.swift */,
 				180F61B1258634420014B310 /* TruckAnnotationView.swift */,
@@ -156,6 +161,15 @@
 				1FE9C779EED7B3BB95CF6565 /* Pods_asset_tracking_SubscriberExample.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F67E661325F8C214001CF9BB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F67E661425F8C221001CF9BB /* ResolutionHelper.swift */,
+				F67E661725F8C507001CF9BB /* DescriptionsHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +311,9 @@
 				180F61BE258634420014B310 /* TruckAnnotationView.swift in Sources */,
 				180F61BD258634420014B310 /* MapViewController.swift in Sources */,
 				F618BA8E25C99EF800B69885 /* Environment.swift in Sources */,
+				F67E661825F8C507001CF9BB /* DescriptionsHelper.swift in Sources */,
 				180F61BC258634420014B310 /* TruckAnnotation.swift in Sources */,
+				F67E661525F8C221001CF9BB /* ResolutionHelper.swift in Sources */,
 				188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */,
 				180F61BB258634420014B310 /* SettingsViewController.swift in Sources */,
 			);

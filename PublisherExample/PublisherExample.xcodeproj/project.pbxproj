@@ -28,6 +28,8 @@
 		F618BA8625C9939000B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7DADD25C96F26001C094B /* Environment.swift */; };
 		F618BA9225C9A6EA00B69885 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */; };
 		F66DE12525DD2EE600E06806 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = F66DE12425DD2EE600E06806 /* amplifyconfiguration.json */; };
+		F67E661C25F8E21B001CF9BB /* DescriptionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */; };
+		F67E661F25F8EA2C001CF9BB /* AssetStateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */; };
 		F6994D1625DE646300F222AD /* S3FilesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6994D1425DE646300F222AD /* S3FilesListViewController.swift */; };
 		F6994D1725DE646300F222AD /* S3FilesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6994D1525DE646300F222AD /* S3FilesListViewController.xib */; };
 		F6994D1B25DE663000F222AD /* S3FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6994D1925DE663000F222AD /* S3FileTableViewCell.swift */; };
@@ -63,6 +65,8 @@
 		47DB52A27D84E8297C6907BC /* Pods-asset_tracking-PublisherExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherExample.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherExample/Pods-asset_tracking-PublisherExample.release.xcconfig"; sourceTree = "<group>"; };
 		F618BA9125C9A6EA00B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		F66DE12425DD2EE600E06806 /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
+		F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionsHelper.swift; sourceTree = "<group>"; };
+		F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStateHelper.swift; sourceTree = "<group>"; };
 		F6994D1425DE646300F222AD /* S3FilesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3FilesListViewController.swift; sourceTree = "<group>"; };
 		F6994D1525DE646300F222AD /* S3FilesListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = S3FilesListViewController.xib; sourceTree = "<group>"; };
 		F6994D1925DE663000F222AD /* S3FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3FileTableViewCell.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 		180F6198258634350014B310 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				F67E661A25F8E1F1001CF9BB /* Helpers */,
 				180F6199258634350014B310 /* AssetAnnotationView.swift */,
 				180F619A258634350014B310 /* MapViewController.swift */,
 				180F619B258634350014B310 /* MapViewController.xib */,
@@ -198,6 +203,15 @@
 				18A5505FF13353DAD75BEDDC /* Pods_asset_tracking_PublisherExample.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F67E661A25F8E1F1001CF9BB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */,
+				F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		F6994D1225DE619D00F222AD /* S3FilesList */ = {
@@ -362,8 +376,10 @@
 			files = (
 				188F5DFA25AF181E00202C97 /* AddTrackableError.swift in Sources */,
 				F6994D1625DE646300F222AD /* S3FilesListViewController.swift in Sources */,
+				F67E661F25F8EA2C001CF9BB /* AssetStateHelper.swift in Sources */,
 				18A7FB7125AE1596005AC55E /* AddTrackableViewController.swift in Sources */,
 				F6994D1B25DE663000F222AD /* S3FileTableViewCell.swift in Sources */,
+				F67E661C25F8E21B001CF9BB /* DescriptionsHelper.swift in Sources */,
 				180F61A7258634350014B310 /* AppDelegate.swift in Sources */,
 				18A7FB7625AE3624005AC55E /* AccuracyPickerView.swift in Sources */,
 				180F61A4258634350014B310 /* AssetAnnotationView.swift in Sources */,

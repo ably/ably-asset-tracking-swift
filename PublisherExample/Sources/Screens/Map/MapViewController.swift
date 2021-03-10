@@ -3,58 +3,18 @@ import MapKit
 import AblyAssetTracking
 import Foundation
 
-extension RoutingProfile {
-    var description: String {
-        switch self {
-        case .driving: return "Driving"
-        case .cycling: return "Cycling"
-        case .walking: return "Walking"
-        case .drivingTraffic: return "Driving traffic"
-        }
-    }
-}
-
-extension ConnectionState {
-    var description: String {
-        switch self {
-        case .online: return "Online"
-        case .offline: return "Offline"
-        case .failed: return "Failed"
-        }
-    }
-    
-    var color: UIColor {
-        switch self {
-        case .online: return .systemGreen
-        case .offline, .failed: return .systemRed
-        }
-    }
-}
-
-private enum LocationState {
-    case active
-    case pending
-    case failed
-    
-    var color: UIColor {
-        switch self {
-        case .active:
-            return .systemGreen
-        case .pending:
-            return .systemOrange
-        case .failed:
-            return .systemRed
-        }
-    }
-}
-
 private struct MapConstraints {
     static let regionLatitude: CLLocationDistance = 600
     static let regionLongitude: CLLocationDistance = 600
     static let minimumDistanceToCenter: CLLocationDistance = 300
 }
 
+private struct Identifiers {
+    static let assetAnnotation = "AssetAnnotationViewReuseIdentifier"
+}
+
 class MapViewController: UIViewController {
+    // MARK: - Outlets
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var connectionStatusLabel: UILabel!
     @IBOutlet private weak var resolutionLabel: UILabel!
@@ -62,13 +22,13 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var routingProfileLabel: UILabel!
     @IBOutlet private weak var routingProfileAvtivityIndicator: UIActivityIndicatorView!
     
-    private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
+    // MARK: - Properties
     private let trackingId: String
     private let historyLocation: [CLLocation]?
     
     private var publisher: Publisher?
 
-    private var location: CLLocation?
+    private var currentLocation: CLLocation?
     private var locationState: LocationState = .pending {
         didSet {
             refreshAnnotations()
@@ -79,7 +39,7 @@ class MapViewController: UIViewController {
     private var currentResolution: Resolution?
     private var trackables: [Trackable] = []
 
-    // MARK: Initialization
+    // MARK: - Initialization
     init(trackingId: String, historyLocation: [CLLocation]?) {
         self.trackingId = trackingId
         self.historyLocation = historyLocation
@@ -91,18 +51,39 @@ class MapViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: View lifecycle
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Publishing \(trackingId)"
         updateResolutionLabel()
         setupNavigationBar()
+        setupControlsBehaviour()
         setupPublisher()
         setupMapView()
         routingProfileAvtivityIndicator.stopAnimating()
+        startTracking()
     }
 
     // MARK: View setup
+    private func setupControlsBehaviour() {
+        resolutionLabel.font = UIFont.systemFont(ofSize: 14)
+    }
+
+    private func setupMapView() {
+        mapView.register(AssetAnnotationView.self, forAnnotationViewWithReuseIdentifier: Identifiers.assetAnnotation)
+        mapView.delegate = self
+        
+        currentLocation = historyLocation?.first ?? CLLocationManager().location
+        refreshAnnotations()
+        scrollToReceivedLocation(isInitialLocation: true)
+    }
+
+    private func setupNavigationBar() {
+        title = "Publishing \(trackingId)"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(onEditButtonPressed))
+    }
+    
+    // MARK: - Publisher setup
     private func setupPublisher() {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         currentResolution = resolution
@@ -116,7 +97,9 @@ class MapViewController: UIViewController {
             .delegate(self)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .start()
-
+    }
+    
+    private func startTracking() {
         let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
         let trackable = Trackable(id: trackingId, destination: destination)
         
@@ -130,84 +113,12 @@ class MapViewController: UIViewController {
             case .failure(let error):
                 self?.locationState = .failed
                 self?.refreshAnnotations()
-                
-                let alertVC = UIAlertController(title: "Error", message: "Can't track trackable: \(error.message)", preferredStyle: .alert)
-                alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self?.present(alertVC, animated: true, completion: nil)
+                self?.showErrorDialog(error: error)
             }
         }
     }
-
-    private func setupMapView() {
-        mapView.register(AssetAnnotationView.self, forAnnotationViewWithReuseIdentifier: assetAnnotationReuseIdentifier)
-        mapView.delegate = self
-        
-        location = historyLocation?.first ?? CLLocationManager().location
-        refreshAnnotations()
-        scrollToReceivedLocation(isInitialLocation: true)
-    }
-
-    private func setupNavigationBar() {
-        title = "Publishing \(trackingId)"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(onEditButtonPressed))
-    }
-
-    // MARK: Utils
-    private func showError(error: ErrorInformation) {
-        let alertVC = UIAlertController(title: "Error", message: "\(error.message)", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alertVC, animated: true, completion: nil)
-    }
     
-    private func refreshAnnotations() {
-        mapView.annotations.forEach { mapView.removeAnnotation($0) }
-
-        if let location = self.location {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = location.coordinate
-            annotation.title = "Location"
-            mapView.addAnnotation(annotation)
-        }
-    }
-
-    private func scrollToReceivedLocation(isInitialLocation: Bool = false) {
-        guard let location = self.location else { return }
-        
-        let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
-                                   longitude: mapView.region.center.longitude)
-        
-        let region = MKCoordinateRegion(center: location.coordinate,
-                                        latitudinalMeters: MapConstraints.regionLatitude,
-                                        longitudinalMeters: MapConstraints.regionLongitude)
-        
-        if isInitialLocation {
-            mapView.setRegion(region, animated: true)
-            
-            return
-        }
-        
-        guard location.distance(from: mapCenter) > MapConstraints.minimumDistanceToCenter else { return }
-        
-        mapView.setRegion(region, animated: true)
-    }
-
-    private func updateResolutionLabel() {
-        guard let resolution = currentResolution else {
-            resolutionLabel.text = "Resolution: None"
-            resolutionLabel.font = UIFont.systemFont(ofSize: 14)
-            return
-        }
-
-        resolutionLabel.font = UIFont.systemFont(ofSize: 14)
-        resolutionLabel.text = """
-            Resolution:
-            Accuracy: \(resolution.accuracy)
-            Minimum displacement: \(resolution.minimumDisplacement)
-            Desired interval: \(resolution.desiredInterval)
-            """
-    }
-    
-    // MARK: - RoutingProfile
+    // MARK: - Actions
     @IBAction func onChangeRoutingProfileButtonTapped(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Choose routing profile", message: nil, preferredStyle: .actionSheet)
         let driving = UIAlertAction(title: RoutingProfile.driving.description, style: .default) { [weak self] _ in
@@ -232,16 +143,58 @@ class MapViewController: UIViewController {
 
         navigationController?.present(alertController, animated: true, completion: nil)
     }
-    
+
+    // MARK: - Utils
+    private func refreshAnnotations() {
+        mapView.annotations.forEach { mapView.removeAnnotation($0) }
+
+        if let location = self.currentLocation {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location.coordinate
+            annotation.title = "Location"
+            mapView.addAnnotation(annotation)
+        }
+    }
+
+    private func scrollToReceivedLocation(isInitialLocation: Bool = false) {
+        guard let location = self.currentLocation else { return }
+        
+        let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
+                                   longitude: mapView.region.center.longitude)
+        
+        let region = MKCoordinateRegion(center: location.coordinate,
+                                        latitudinalMeters: MapConstraints.regionLatitude,
+                                        longitudinalMeters: MapConstraints.regionLongitude)
+        
+        if isInitialLocation {
+            mapView.setRegion(region, animated: true)
+            
+            return
+        }
+        
+        guard location.distance(from: mapCenter) > MapConstraints.minimumDistanceToCenter else { return }
+        
+        mapView.setRegion(region, animated: true)
+    }
+
+    private func updateResolutionLabel() {
+        guard let resolution = currentResolution else {
+            resolutionLabel.text = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .none)
+            return
+        }
+        
+        resolutionLabel.text = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .notEmpty(resolution))
+    }
+
     private func changeRoutingProfile(_ routingProfile: RoutingProfile) {
         routingProfileAvtivityIndicator.startAnimating()
         publisher?.changeRoutingProfile(profile: routingProfile) { [weak self] result in
             self?.routingProfileAvtivityIndicator.stopAnimating()
             switch result {
             case .success:
-                self?.routingProfileLabel.text = "Routing profile: \(routingProfile.description)"
+                self?.routingProfileLabel.text = DescriptionsHelper.RoutingProfileDescHelper.getDescription(for: routingProfile)
             case .failure(let error):
-                self?.showError(error: error)
+                self?.showErrorDialog(error: error)
             }
         }
     }
@@ -261,37 +214,45 @@ class MapViewController: UIViewController {
         viewController.delegate = self
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    private func showErrorDialog(error: ErrorInformation) {
+        let alertVC = UIAlertController(title: "Error", message: "\(error.message)", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
 }
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
 
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: assetAnnotationReuseIdentifier) ??
-                            AssetAnnotationView(annotation: annotation, reuseIdentifier: assetAnnotationReuseIdentifier)
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Identifiers.assetAnnotation) ??
+            AssetAnnotationView(annotation: annotation, reuseIdentifier: Identifiers.assetAnnotation)
         
-        annotationView.backgroundColor = locationState.color
+        annotationView.backgroundColor = AssetStateHelper.getColor(for: locationState)
         return annotationView
     }
 }
 
 extension MapViewController: PublisherDelegate {
     func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
-        self.locationState = .failed
+        locationState = .failed
         refreshAnnotations()
-        showError(error: error)
+        showErrorDialog(error: error)
     }
 
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
-        self.location = location
-        self.locationState = .active
-        self.refreshAnnotations()
-        self.scrollToReceivedLocation()
+        currentLocation = location
+        locationState = .active
+        refreshAnnotations()
+        scrollToReceivedLocation()
     }
 
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
-        connectionStatusLabel.textColor = state.color
-        connectionStatusLabel.text = state.description
+        let stateColorAndDesc = DescriptionsHelper.ConnectionStateHelper.getDescriptionAndColor(for: state)
+        connectionStatusLabel.textColor = stateColorAndDesc.color
+        connectionStatusLabel.text = stateColorAndDesc.desc
     }
 
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {

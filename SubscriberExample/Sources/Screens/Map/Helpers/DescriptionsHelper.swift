@@ -1,0 +1,54 @@
+import AblyAssetTracking
+import UIKit
+
+class DescriptionsHelper {
+    
+    // MARK: - ResolutionState
+    enum ResolutionState {
+        case none
+        case notEmpty(_: Resolution)
+        case changeError(_: ErrorInformation)
+    }
+    
+    class ResolutionStateHelper {
+        static func getDescription(for state: ResolutionState) -> String {
+            switch state {
+            case .none:
+                return "Resolution: None"
+            case .notEmpty(let resolution):
+                return """
+                    Resolution:
+                    Accuracy: \(resolution.accuracy)
+                    Minimum displacement: \(resolution.minimumDisplacement)
+                    Desired interval: \(resolution.desiredInterval)
+                    """
+            case .changeError(let errorInformation):
+                return "Cannot change resolution. Error message: \(errorInformation.description)"
+            }
+        }
+    }
+    
+    enum AssetState {
+        case connectionState(_: ConnectionState)
+        case none
+    }
+    
+    // MARK: - AssetConnectionState
+    class AssetStateHelper {
+        static func getDescriptionAndColor(for state: AssetState) -> (desc: String, color: UIColor) {
+            switch state {
+            case .connectionState(let connectionState):
+                switch connectionState {
+                case .online:
+                    return ("online", .systemGreen)
+                case .offline, .failed:
+                    return ("offline", .systemRed)
+                }
+            case .none:
+                return ("The asset connection status is not determined", .black)
+            }
+            
+            
+        }
+    }
+}
