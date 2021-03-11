@@ -11,6 +11,18 @@ extension RoutingProfile {
     }
 }
 
+extension Accuracy {
+    var description: String {
+        switch self {
+        case .minimum: return "Minimum"
+        case .low: return "Low"
+        case .balanced: return "Balanced"
+        case .high: return "High"
+        case .maximum: return "Maximum"
+        }
+    }
+}
+
 class DescriptionsHelper {
     // MARK: - RoutingProfile
     class RoutingProfileDescHelper {
@@ -33,7 +45,7 @@ class DescriptionsHelper {
             case .notEmpty(let resolution):
                 return """
                     Resolution:
-                    Accuracy: \(resolution.accuracy)
+                    Accuracy: \(resolution.accuracy.description)
                     Minimum displacement: \(resolution.minimumDisplacement)
                     Desired interval: \(resolution.desiredInterval)
                     """
