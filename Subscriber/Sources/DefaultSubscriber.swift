@@ -70,7 +70,6 @@ extension DefaultSubscriber {
             switch event {
             case let event as DelegateErrorEvent: delegate.subscriber(sender: self, didFailWithError: event.error)
             case let event as DelegateConnectionStatusChangedEvent: delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
-            case let event as DelegateRawLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateRawLocation: event.location)
             case let event as DelegateEnhancedLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.location)
             default: preconditionFailure("Unhandled delegate event in DefaultSubscriber: \(event) ")
             }
@@ -116,11 +115,6 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
     func subscriberService(sender: AblySubscriberService, didFailWithError error: Error) {
         logger.error("subscriberService.didFailWithError. Error: \(error)", source: "DefaultSubscriber")
         callback(event: DelegateErrorEvent(error: error))
-    }
-
-    func subscriberService(sender: AblySubscriberService, didReceiveRawLocation location: CLLocation) {
-        logger.debug("subscriberService.didReceiveRawLocation.", source: "DefaultSubscriber")
-        callback(event: DelegateRawLocationReceivedEvent(location: location))
     }
 
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation) {

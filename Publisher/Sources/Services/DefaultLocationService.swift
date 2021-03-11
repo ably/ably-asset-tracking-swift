@@ -37,8 +37,7 @@ extension DefaultLocationService: PassiveLocationDataSourceDelegate {
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource,
                                    didUpdateLocation location: CLLocation,
                                    rawLocation: CLLocation) {
-        delegate?.locationService(sender: self, didUpdateRawLocation: rawLocation)
-        delegate?.locationService(sender: self, didUpdateEnhancedLocation: location)
+        delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location))
     }
 
     func passiveLocationDataSource(_ dataSource: PassiveLocationDataSource, didFailWithError error: Error) {

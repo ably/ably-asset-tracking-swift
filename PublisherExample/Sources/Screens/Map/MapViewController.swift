@@ -12,8 +12,7 @@ class MapViewController: UIViewController {
     private let trackingId: String
     private var publisher: Publisher?
 
-    private var rawLocation: CLLocation?
-    private var enhancedLocation: CLLocation?
+    private var location: CLLocation?
     private var wasMapScrolled: Bool = false
     private var currentResolution: Resolution?
     private var trackables: [Trackable] = []
@@ -84,22 +83,16 @@ class MapViewController: UIViewController {
     private func refreshAnnotations() {
         mapView.annotations.forEach { mapView.removeAnnotation($0) }
 
-        if let location = rawLocation {
+        if let location = self.location {
             let annotation = MKPointAnnotation()
             annotation.coordinate = location.coordinate
-            annotation.title = "Raw"
-            mapView.addAnnotation(annotation)
-        }
-        if let location = enhancedLocation {
-            let annotation = MKPointAnnotation()
-            annotation.title = "Enhanced"
-            annotation.coordinate = location.coordinate
+            annotation.title = "Enhanced location"
             mapView.addAnnotation(annotation)
         }
     }
 
     private func scrollToReceivedLocation() {
-        guard let location = rawLocation ?? enhancedLocation,
+        guard let location = self.location,
               !wasMapScrolled
         else { return }
 
@@ -160,14 +153,8 @@ extension MapViewController: PublisherDelegate {
     func publisher(sender: Publisher, didFailWithError error: Error) {
     }
 
-    func publisher(sender: Publisher, didUpdateRawLocation location: CLLocation) {
-        rawLocation = location
-        refreshAnnotations()
-        scrollToReceivedLocation()
-    }
-
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
-        enhancedLocation = location
+        self.location = location
         refreshAnnotations()
         scrollToReceivedLocation()
     }
