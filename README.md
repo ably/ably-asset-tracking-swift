@@ -1,4 +1,4 @@
-# AblyAssetTracking SDK
+# Ably Asset Tracking SDKs for Cocoa
 
 ![.github/workflows/check.yml](https://github.com/ably/ably-asset-tracking-cocoa/workflows/.github/workflows/check.yml/badge.svg)
 
