@@ -63,6 +63,10 @@ struct PresenceUpdateEvent: PublisherEvent {
     let clientId: String
 }
 
+struct CloseEvent: PublisherEvent {
+    let resultHandler: ResultHandler<Void>
+}
+
 // MARK: Delegate handling events
 protocol PublisherDelegateEvent {}
 

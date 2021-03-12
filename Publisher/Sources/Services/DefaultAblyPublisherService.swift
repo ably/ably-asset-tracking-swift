@@ -96,8 +96,24 @@ class DefaultAblyPublisherService: AblyPublisherService {
             return nil
         }
     }
-
-    func stop() {
+    
+    func close(completion: @escaping ResultHandler<Void>) {
+        client.connection.on { connectionChange in
+            guard let connectionState = connectionChange?.current else {
+                return
+            }
+            
+            switch connectionState {
+            case .closed:
+                completion(.success)
+            case .failed:
+                let errorInfo = connectionChange?.reason?.toErrorInformation() ?? ErrorInformation(type: .publisherError(errorMessage: "Cannot close connection"))
+                completion(.failure(errorInfo))
+            default:
+                return
+            }
+        }
+        
         client.close()
     }
 

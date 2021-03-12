@@ -95,9 +95,9 @@ class DefaultPublisher: Publisher {
         enqueue(event: event)
     }
     
-    func stop() {
-        // TODO: Implement method
-        failWithNotYetImplemented()
+    func close(completion: @escaping ResultHandler<Void>) {
+        let event = CloseEvent(resultHandler: completion)
+        enqueue(event: event)
     }
 }
 
@@ -149,6 +149,18 @@ extension DefaultPublisher: PublisherObjectiveC {
             }
         }
     }
+    
+    @objc
+    func close(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        self.close { result in
+            switch result {
+            case .success:
+                onSuccess()
+            case .failure(let error):
+                onError(error)
+            }
+        }
+    }
 }
 
 // MARK: Threading events handling
@@ -174,6 +186,7 @@ extension DefaultPublisher {
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
+            case let event as CloseEvent: self?.performClosePublisherEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -323,6 +336,11 @@ extension DefaultPublisher {
             }
         }
     }
+    
+    // MARK: Stop publisher
+    private func performClosePublisherEvent(_ event: CloseEvent) {
+        
+    }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
         trackables.remove(event.trackable)
@@ -404,7 +422,9 @@ extension DefaultPublisher {
 
     // MARK: ResolutionPolicy
     private func performRefreshResolutionPolicyEvent(_ event: RefreshResolutionPolicyEvent) {
-        trackables.forEach { resolveResolution(trackable: $0)}
+        trackables.forEach {
+            resolveResolution(trackable: $0)
+        }
     }
 
     private func resolveResolution(trackable: Trackable) {

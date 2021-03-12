@@ -1,1 +1,28 @@
-
+{
+  "storage": {
+    "plugins": {
+      "awsS3StoragePlugin": {
+        "bucket": "ably-mapbox-demo",
+        "region": "eu-west-2",
+        "defaultAccessLevel": "guest"
+      }
+    }
+  },
+  "auth": {
+    "plugins": {
+      "awsCognitoAuthPlugin": {
+        "IdentityManager": {
+          "Default": {}
+        },
+        "CredentialsProvider": {
+          "CognitoIdentity": {
+            "Default": {
+              "PoolId": "eu-west-2:72158079-d8c1-4338-ab55-eb95d00c6174",
+              "Region": "eu-west-2"
+            }
+          }
+        }
+      }
+    }
+  }
+}
