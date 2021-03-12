@@ -129,7 +129,7 @@ extension DefaultPublisher {
     private func callback<T: Any>(value: T, handler: @escaping ResultHandler<T>) {
         performOnMainThread { handler(.success(value)) }
     }
-    
+
     private func callback(_ handler: @escaping ResultHandler<Bool>) {
         performOnMainThread { handler(.success(true)) }
     }
@@ -157,8 +157,9 @@ extension DefaultPublisher {
     // MARK: Track
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
-            let error = AssetTrackingError.publisherError("For this preview version of the SDK, track() method may only be called once for any given instance of this class.")
-            callback(error: error, handler: event.resultHandler)
+            let error = AssetTrackingError.publisherError("For this beta version of the SDK, track() method may only be called once for any given instance of this class.")
+            callback(error: error, handler: event.onError)
+
             return
         }
 
@@ -197,7 +198,7 @@ extension DefaultPublisher {
                 self.route = nil
             }
         }
-        
+
         callback(value: Void(), handler: event.resultHandler)
     }
 
@@ -275,7 +276,7 @@ extension DefaultPublisher {
         if ablyService.trackables.isEmpty {
             locationService.stopUpdatingLocation()
         }
-        
+
         callback(value: true, handler: event.resultHandler)
     }
 
@@ -474,7 +475,7 @@ extension DefaultPublisher: LocationServiceDelegate {
         logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }
-    
+
     func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
         enqueue(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate))
