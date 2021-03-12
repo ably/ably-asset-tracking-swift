@@ -158,7 +158,7 @@ extension DefaultPublisher {
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
             let error = AssetTrackingError.publisherError("For this beta version of the SDK, track() method may only be called once for any given instance of this class.")
-            callback(error: error, handler: event.onError)
+            callback(error: error, handler: event.resultHandler)
 
             return
         }
