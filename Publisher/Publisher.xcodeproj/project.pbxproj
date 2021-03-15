@@ -74,6 +74,8 @@
 		F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */; };
 		F6A6B67C25C9862600A547D9 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67B25C9862600A547D9 /* MapboxConfiguration.swift */; };
 		F6A6B68025C9883E00A547D9 /* MapboxConfiguration+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */; };
+		F6D4CFE925D677560071A6A9 /* PublisherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFE825D677560071A6A9 /* PublisherDelegate.swift */; };
+		F6D4CFEF25D678220071A6A9 /* PublisherFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFEE25D678220071A6A9 /* PublisherFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +167,8 @@
 		F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		F6A6B67B25C9862600A547D9 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
 		F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapboxConfiguration+Extensions.swift"; sourceTree = "<group>"; };
+		F6D4CFE825D677560071A6A9 /* PublisherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherDelegate.swift; sourceTree = "<group>"; };
+		F6D4CFEE25D678220071A6A9 /* PublisherFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherFactory.swift; sourceTree = "<group>"; };
 		F9B1CBDB707C22DF88ACEF73 /* Pods-asset_tracking-Publisher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -219,9 +223,11 @@
 				F67002E125B1C85600325244 /* Extensions */,
 				18C7B15225B6109E000A1418 /* DefaultResolutionPolicy */,
 				185094DD25889EBB00E2D2E2 /* Publisher.swift */,
+				F6D4CFE825D677560071A6A9 /* PublisherDelegate.swift */,
+				F6D4CFEE25D678220071A6A9 /* PublisherFactory.swift */,
+				180F61702586341E0014B310 /* PublisherBuilder.swift */,
 				180F61712586341E0014B310 /* DefaultPublisher.swift */,
 				18E9CCAD259495F900860A6E /* DefaultPublisherEvents.swift */,
-				180F61702586341E0014B310 /* PublisherBuilder.swift */,
 				185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */,
 				180F609A258632510014B310 /* Publisher.h */,
 				180F609B258632510014B310 /* Info.plist */,
@@ -496,6 +502,7 @@
 				TargetAttributes = {
 					180F6096258632510014B310 = {
 						CreatedOnToolsVersion = 12.2;
+						LastSwiftMigration = 1220;
 					};
 					180F611F258633140014B310 = {
 						CreatedOnToolsVersion = 12.2;
@@ -628,6 +635,7 @@
 				18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */,
 				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
 				18C7B16125B6109E000A1418 /* DefaultResolutionPolicyHooks.swift in Sources */,
+				F6D4CFEF25D678220071A6A9 /* PublisherFactory.swift in Sources */,
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,
 				18C7B10825B60D5F000A1418 /* DefaultAblyPublisherService.swift in Sources */,
 				18C7B15D25B6109E000A1418 /* DefaultProximityHandler.swift in Sources */,
@@ -649,6 +657,7 @@
 				18C7B15F25B6109E000A1418 /* DefaultTrackableSetListener.swift in Sources */,
 				18C7B16025B6109E000A1418 /* DefaultResolutionPolicyFactory.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
+				F6D4CFE925D677560071A6A9 /* PublisherDelegate.swift in Sources */,
 				18C7B1BC25B6135A000A1418 /* ResolutionPolicy.swift in Sources */,
 				18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */,
 				185D6D1B258F573300935049 /* ResolutionPolicyFactory.swift in Sources */,
@@ -836,6 +845,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F9B1CBDB707C22DF88ACEF73 /* Pods-asset_tracking-Publisher.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -852,6 +862,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -861,6 +872,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C8859F81CDD7390E11741B66 /* Pods-asset_tracking-Publisher.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

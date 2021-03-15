@@ -41,6 +41,9 @@
 		F65C5CBD25CAB50500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */; };
 		F6A2D02E25CC2A34008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */; };
 		F6A2D03525CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */; };
+		F6D4CFD725D6752F0071A6A9 /* SubscriberFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFD625D6752F0071A6A9 /* SubscriberFactory.swift */; };
+		F6D4CFDD25D675C90071A6A9 /* SubscriberDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFDC25D675C90071A6A9 /* SubscriberDelegate.swift */; };
+		F6D4CFE325D676550071A6A9 /* AssetConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFE225D676550071A6A9 /* AssetConnectionStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +104,9 @@
 		F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
+		F6D4CFD625D6752F0071A6A9 /* SubscriberFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberFactory.swift; sourceTree = "<group>"; };
+		F6D4CFDC25D675C90071A6A9 /* SubscriberDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberDelegate.swift; sourceTree = "<group>"; };
+		F6D4CFE225D676550071A6A9 /* AssetConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetConnectionStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,10 +171,13 @@
 				18FCE1F0258B8321005BC480 /* Common */,
 				180F617E258634290014B310 /* Services */,
 				185094D725889E9E00E2D2E2 /* Subscriber.swift */,
+				F6D4CFDC25D675C90071A6A9 /* SubscriberDelegate.swift */,
+				F6D4CFD625D6752F0071A6A9 /* SubscriberFactory.swift */,
 				180F6180258634290014B310 /* SubscriberBuilder.swift */,
 				180375202599E8AA001387BA /* SubscriberEvent.swift */,
 				185094D825889E9E00E2D2E2 /* DefaultSubscriberBuilder.swift */,
 				180F617D258634290014B310 /* DefaultSubscriber.swift */,
+				F6D4CFE225D676550071A6A9 /* AssetConnectionStatus.swift */,
 				180F60B0258632740014B310 /* Subscriber.h */,
 				180F60B1258632740014B310 /* Info.plist */,
 			);
@@ -490,8 +499,11 @@
 				F65AC34925AF3E41002799BD /* RoutingProfile.swift in Sources */,
 				180F6183258634290014B310 /* AblySubscriberService.swift in Sources */,
 				18FCE204258B8336005BC480 /* Trackable.swift in Sources */,
+				F6D4CFE325D676550071A6A9 /* AssetConnectionStatus.swift in Sources */,
 				18FCE209258B8336005BC480 /* GeoJSONProperties.swift in Sources */,
 				18FCE210258B8336005BC480 /* UnimplementedSupport.swift in Sources */,
+				F6D4CFD725D6752F0071A6A9 /* SubscriberFactory.swift in Sources */,
+				F6D4CFDD25D675C90071A6A9 /* SubscriberDelegate.swift in Sources */,
 				1807959025A4AF040026F4C1 /* ResolutionConstraints.swift in Sources */,
 				18FCE20B258B8336005BC480 /* PresenceData.swift in Sources */,
 				18A4C1D325B2E2880092CC70 /* ResultHandler.swift in Sources */,

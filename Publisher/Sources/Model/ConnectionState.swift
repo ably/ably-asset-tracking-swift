@@ -4,8 +4,8 @@ import Ably
 /**
  Public wrapper for ARTRealtimeConnectionState, as we don't want to pass it to our clients
  */
-public enum ConnectionState {
-    // swiftlint:disable missing_docs
+@objc
+public enum ConnectionState: Int {
     case initialized
     case connecting
     case connected

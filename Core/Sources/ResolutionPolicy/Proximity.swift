@@ -1,9 +1,10 @@
 import Foundation
 
 // swiftlint:disable missing_docs
+@objc
 public protocol Proximity { }
 
-public class DefaultProximity: Proximity {
+public class DefaultProximity: NSObject, Proximity {
     /**
      Estimated time remaining to arrive at the destination, in milliseconds.
      */
@@ -28,6 +29,7 @@ public class DefaultProximity: Proximity {
 /**
  Defines the methods to be implemented by proximity handlers.
 */
+@objc
 public protocol ProximityHandler {
     /**
      The desired proximity has been reached.

@@ -17,7 +17,13 @@
       location = "group:PublisherExample/PublisherExample.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:PublisherExampleObjectiveC/PublisherExampleObjectiveC.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:SubscriberExample/SubscriberExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

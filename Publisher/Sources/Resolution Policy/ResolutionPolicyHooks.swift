@@ -3,6 +3,7 @@
  Methods on this interface may only be called from within implementations of
  `createResolutionPolicy` `Factory.createResolutionPolicy`.
  */
+@objc
 public protocol ResolutionPolicyHooks {
     /**
      Register a handler for the addition, removal and activation of `Trackable` objects for the `Publisher`
@@ -33,7 +34,8 @@ public protocol ResolutionPolicyHooks {
   A handler of events relating to the addition, removal and activation of `Trackable` objects for a
   `Publisher` instance.
   */
- public protocol TrackableSetListener {
+@objc
+public protocol TrackableSetListener {
     /**
      A `Trackable` object has been added to the `Publisher`'s set of tracked objects.
      If the operation adding `trackable` is also making it the `actively` `Publisher.active` tracked object
@@ -66,7 +68,8 @@ public protocol ResolutionPolicyHooks {
 /**
 A handler of events relating to the addition or removal of remote `Subscriber`s to a `Publisher` instance.
 */
- public protocol SubscriberSetListener {
+@objc
+public protocol SubscriberSetListener {
     /**
      A `Subscriber` has subscribed to receive updates for one or more `Trackable` objects from the
      `Publisher`'s set of tracked objects.

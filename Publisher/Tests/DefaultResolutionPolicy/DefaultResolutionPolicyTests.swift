@@ -44,7 +44,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return a resolution from trackable constraints
-        XCTAssertEqual(result, resolution)
+        XCTAssertTrue(result == resolution)
     }
 
     func testResolutionPolicy_resolveRequest_batteryMultiplier() {
@@ -65,7 +65,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return a resolution with desiredInterval multiplied by lowBatteryMultiplier
-        XCTAssertEqual(result, Resolution(accuracy: .balanced, desiredInterval: 30, minimumDisplacement: 10))
+        XCTAssertTrue(result == Resolution(accuracy: .balanced, desiredInterval: 30, minimumDisplacement: 10))
     }
 
     func testResolutionPolicy_resolveRequest_oneRemoteResolution() {
@@ -76,7 +76,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return it
-        XCTAssertEqual(result, resolution)
+        XCTAssertTrue(result == resolution)
     }
 
     func testResolutionPolicy_resolveRequest_multipleRemoteResolutions() {
@@ -94,7 +94,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return best combination (highest accuracy with lowest desiredInterval and lowest minimumDisplacement)
-        XCTAssertEqual(result, Resolution(accuracy: .maximum, desiredInterval: 4, minimumDisplacement: 3))
+        XCTAssertTrue(result == Resolution(accuracy: .maximum, desiredInterval: 4, minimumDisplacement: 3))
     }
 
     func testResolutionPolicy_resolveRequest_constrained_multipleRemoteResolutions() {
@@ -121,7 +121,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return best combination (highest accuracy with lowest desiredInterval and lowest minimumDisplacement)
-        XCTAssertEqual(result, Resolution(accuracy: .maximum, desiredInterval: 2, minimumDisplacement: 3))
+        XCTAssertTrue(result == Resolution(accuracy: .maximum, desiredInterval: 2, minimumDisplacement: 3))
     }
 
     func testResolutionPolicy_resolveRequest_constrained_multipleRemoteResolutions_battery() {
@@ -149,7 +149,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return best combination - highest accuracy with lowest minimumDisplacement and multiplied lowest desiredInterval
-        XCTAssertEqual(result, Resolution(accuracy: .maximum, desiredInterval: 40, minimumDisplacement: 3))
+        XCTAssertTrue(result == Resolution(accuracy: .maximum, desiredInterval: 40, minimumDisplacement: 3))
     }
 
     func testResolutionPolicy_resolveResolutions_farWithoutSubscriber() {
@@ -172,7 +172,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return farWithoutSubscriber
-        XCTAssertEqual(result, resolutionSet.farWithoutSubscriber)
+        XCTAssertTrue(result == resolutionSet.farWithoutSubscriber)
     }
 
     func testResolutionPolicy_resolveResolutions_farWithSubscriber() {
@@ -196,7 +196,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return farWithSubscriber
-        XCTAssertEqual(result, resolutionSet.farWithSubscriber)
+        XCTAssertTrue(result == resolutionSet.farWithSubscriber)
     }
 
     func testResolutionPolicy_resolveResolutions_nearWithoutSubscriber() {
@@ -223,7 +223,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return nearWithoutSubscriber
-        XCTAssertEqual(result, resolutionSet.nearWithoutSubscriber)
+        XCTAssertTrue(result == resolutionSet.nearWithoutSubscriber)
     }
 
     func testResolutionPolicy_resolveResolutions_nearWithSubscriber() {
@@ -250,6 +250,6 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let result = resolutionPolicy.resolve(request: request)
 
         // Should return nearWithSubscriber
-        XCTAssertEqual(result, resolutionSet.nearWithSubscriber)
+        XCTAssertTrue(result == resolutionSet.nearWithSubscriber)
     }
 }

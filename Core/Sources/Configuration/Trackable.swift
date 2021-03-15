@@ -3,6 +3,7 @@ import CoreLocation
 /**
  Main class used to track assets in SDK
  */
+@objc
 public class Trackable: NSObject {
     /**
      Trackable identifier
@@ -31,6 +32,18 @@ public class Trackable: NSObject {
         self.id = id
         self.metadata = metadata
         self.destination = destination
+        self.constraints = constraints
+        super.init()
+    }
+    
+    @objc
+    public init(id: String,
+                metadata: String? = nil,
+                destination: CLLocationCoordinate2D,
+                constraints: ResolutionConstraints? = nil) {
+        self.id = id
+        self.metadata = metadata
+        self.destination = (destination.latitude == 0 && destination.longitude == 0) ? nil : destination
         self.constraints = constraints
         super.init()
     }
