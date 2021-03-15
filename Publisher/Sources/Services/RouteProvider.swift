@@ -84,7 +84,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     private func handleRouteCallback(route: Route) {
         guard let resultHandler = self.resultHandler else { return }
         resultHandler(.success(route))
-        self.destination = nil
+
         self.resultHandler = nil
     }
 
