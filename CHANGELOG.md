@@ -1,5 +1,23 @@
 # Changelog
 
+
+## [1.0.0-beta.1](https://github.com/ably/ably-asset-tracking-cocoa/tree/v1.0.0-beta.1)
+
+[Full Changelog](https://github.com/ably/ably-asset-tracking-cocoa/compare/v1.0.0-preview.2...v1.0.0-beta.1)
+
+**Closed issues:**
+
+- Setup CocoaPods-Keys or similar tool to manage apiKeys locally [\#25](https://github.com/ably/ably-asset-tracking-cocoa/issues/25)
+
+**Merged pull requests:**
+
+- \[ATS-119\] Set up secrets using .xcconfig file. [\#78](https://github.com/ably/ably-asset-tracking-cocoa/pull/78) ([robertkuraj](https://github.com/robertkuraj))
+- Add maintainers file [\#72](https://github.com/ably/ably-asset-tracking-cocoa/pull/72) ([niksilver](https://github.com/niksilver))
+- \[ATS-180\] Displaying resolution info in PublisherExample app. [\#67](https://github.com/ably/ably-asset-tracking-cocoa/pull/67) ([robertkuraj](https://github.com/robertkuraj))
+- \[ATS-179\] Setting and changing RoutingProfile in Publisher. [\#61](https://github.com/ably/ably-asset-tracking-cocoa/pull/61) ([robertkuraj](https://github.com/robertkuraj))
+- \[ATS-178\] Request resolution change from Subscriber Example app [\#60](https://github.com/ably/ably-asset-tracking-cocoa/pull/60) ([mmiedlarz](https://github.com/mmiedlarz))
+- \[ATS-183\] Add support for adding multiple assets in Publisher Example App [\#59](https://github.com/ably/ably-asset-tracking-cocoa/pull/59) ([mmiedlarz](https://github.com/mmiedlarz))
+
 ## [1.0.0-preview.2](https://github.com/ably/ably-asset-tracking-cocoa/tree/v1.0.0-preview.2)
 
 [Full Changelog](https://github.com/ably/ably-asset-tracking-cocoa/compare/v1.0.0-preview.1...v1.0.0-preview.2)
