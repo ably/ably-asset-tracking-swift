@@ -60,7 +60,7 @@ class MapViewController: UIViewController {
                 self?.trackables = [trackable]
                 logger.info("Initial trackable tracked successfully.")
             case .failure(let error):
-                let alertVC = UIAlertController(title: "Error", message: "Can't track trackable: \(error.localizedDescription)", preferredStyle: .alert)
+                let alertVC = UIAlertController(title: "Error", message: "Can't track trackable: \(error.message)", preferredStyle: .alert)
                 alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self?.present(alertVC, animated: true, completion: nil)
             }
@@ -159,7 +159,7 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 extension MapViewController: PublisherDelegate {
-    func publisher(sender: Publisher, didFailWithError error: Error) {
+    func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
     }
 
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {

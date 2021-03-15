@@ -24,7 +24,7 @@ public protocol SubscriberDelegate: AnyObject {
         - sender: `Subscriber` instance.
         - error: Detected error.
      */
-    func subscriber(sender: Subscriber, didFailWithError error: Error)
+    func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation)
 
     /**
      Called when the `Subscriber` receive any Enhanced Location (matched to road) update for observed trackable

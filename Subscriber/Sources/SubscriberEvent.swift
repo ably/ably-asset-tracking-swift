@@ -16,7 +16,7 @@ struct ChangeResolutionEvent: SubscriberEvent {
 protocol SubscriberDelegateEvent {}
 
 struct DelegateErrorEvent: SubscriberDelegateEvent {
-    let error: Error
+    let error: ErrorInformation
 }
 
 struct DelegateEnhancedLocationReceivedEvent: SubscriberDelegateEvent {

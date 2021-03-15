@@ -19,7 +19,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
 
         super.init()
     }
-    
+
     func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
         self.routingProfile = routingProfile
         guard let destination = self.destination,
@@ -47,10 +47,11 @@ class DefaultRouteProvider: NSObject, RouteProvider {
 
     private func handleLocationUpdate(location: CLLocation) {
         guard let directions = self.directions else {
-            self.handleErrorCallback(error: AssetTrackingError.publisherError("Missing Directions object."))
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Missing Directions object."))
+            self.handleErrorCallback(error: errorInformation)
             return
         }
-        
+
         guard let destination = destination,
               let routingProfile = routingProfile else { return }
 
@@ -60,10 +61,11 @@ class DefaultRouteProvider: NSObject, RouteProvider {
             guard let self = self else { return }
             switch result {
             case .failure(let error):
-                self.handleErrorCallback(error: error)
+                self.handleErrorCallback(error: ErrorInformation(error: error))
             case .success(let response):
                 guard let route = response.routes?.first else {
-                    self.handleErrorCallback(error: AssetTrackingError.publisherError("Missing route in Directions response."))
+                    let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Missing route in Directions response."))
+                    self.handleErrorCallback(error: errorInformation)
                     return
                 }
                 self.handleRouteCallback(route: route)
@@ -71,7 +73,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         }
     }
 
-    private func handleErrorCallback(error: Error) {
+    private func handleErrorCallback(error: ErrorInformation) {
         guard let resultHandler = self.resultHandler else { return }
         resultHandler(.failure(error))
 
@@ -85,11 +87,12 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         self.destination = nil
         self.resultHandler = nil
     }
-    
+
     private func isCalculating(resultHandler: ResultHandler<Route>) -> Bool {
         guard self.resultHandler == nil
         else {
-            resultHandler(.failure(AssetTrackingError.publisherError("Provider is already calculating route.")))
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Provider is already calculating route."))
+            resultHandler(.failure(errorInformation))
             return true
         }
         return false
@@ -105,6 +108,6 @@ extension DefaultRouteProvider: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.delegate = nil
-        handleErrorCallback(error: error)
+        handleErrorCallback(error: ErrorInformation(error: error))
     }
 }

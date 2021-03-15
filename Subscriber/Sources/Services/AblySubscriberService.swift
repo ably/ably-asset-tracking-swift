@@ -4,7 +4,7 @@ import CoreLocation
 
 protocol AblySubscriberServiceDelegate: AnyObject {
     func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: AssetConnectionStatus)
-    func subscriberService(sender: AblySubscriberService, didFailWithError error: Error)
+    func subscriberService(sender: AblySubscriberService, didFailWithError error: ErrorInformation)
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation)
 }
 
@@ -69,7 +69,7 @@ class AblySubscriberService {
         let data = try! presenceData.toJSONString()
         channel.presence.updateClient(configuration.clientId, data: data) { error in
             if let error = error {
-                completion(.failure(error))
+                completion(.failure(error.toErrorInformation()))
             } else {
                 completion(.success)
             }
@@ -79,8 +79,8 @@ class AblySubscriberService {
     // MARK: Utils
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
-            let error = AssetTrackingError.inconsistentData("Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))")
-            delegate?.subscriberService(sender: self, didFailWithError: error)
+            let errorInformation = ErrorInformation(type: .subscriberError(errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"))
+            delegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             return
         }
 
@@ -88,10 +88,15 @@ class AblySubscriberService {
         do {
             messages = try [EnhacedLocationUpdateMessage].fromJSONString(json)
         } catch let error {
-            delegate?.subscriberService(sender: self, didFailWithError: error)
+            guard let errorInformation = error as? ErrorInformation else {
+                delegate?.subscriberService(sender: self, didFailWithError: ErrorInformation(error: error))
+                return
+            }
+
+            delegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             return
         }
-        
+
         messages.map {
             $0.location.toCoreLocation()
         }.forEach {
@@ -131,7 +136,7 @@ class AblySubscriberService {
                 logger.error("Error during leaving to channel presence: \(String(describing: error))", source: "AblySubscriberService")
             if let error = error,
                let self = self {
-                self.delegate?.subscriberService(sender: self, didFailWithError: error)
+                self.delegate?.subscriberService(sender: self, didFailWithError: error.toErrorInformation())
             }
         }
     }

@@ -11,7 +11,7 @@ class MapViewController: UIViewController {
     private let truckAnnotationViewIdentifier = "MapTruckAnnotationViewIdentifier"
     private let trackingId: String
     private var subscriber: Subscriber?
-    private var errors: [Error] = []
+    private var errors: [ErrorInformation] = []
 
     private var currentResolution: Resolution?
     private var resolutionDebounceTimer: Timer?
@@ -182,7 +182,7 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 extension MapViewController: SubscriberDelegate {
-    func subscriber(sender: Subscriber, didFailWithError error: Error) {
+    func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
         errors.append(error)
     }
 

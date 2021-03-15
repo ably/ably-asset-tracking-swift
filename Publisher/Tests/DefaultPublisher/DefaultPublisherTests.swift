@@ -121,17 +121,17 @@ class DefaultPublisherTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Success callback shouldn't be called")
-            case .failure(let error):
-                XCTAssertTrue(error is AssetTrackingError)
+            case .failure:
                 expectation.fulfill()
             }
         }
+        
         wait(for: [expectation], timeout: 5.0)
     }
 
     func testTrack_error_ably_service_error() {
-        let ablyError = AssetTrackingError.publisherError("Test AblyPublisherService error")
-        ablyService.trackCompletionHandler = { completion in completion?(.failure(ablyError)) }
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
+        ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
         // When tracking a trackable and receive error response from AblyPublisherService
@@ -140,8 +140,8 @@ class DefaultPublisherTests: XCTestCase {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure(let error):
-                // It should call onError callback with received error
-                XCTAssertEqual(error as? AssetTrackingError, ablyError)
+                // It should call failure callback with received error
+                XCTAssertEqual(error, errorInformation)
                 expectation.fulfill()
             }
         }
@@ -159,7 +159,7 @@ class DefaultPublisherTests: XCTestCase {
             case .success:
                 dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
                 expectation.fulfill()
-            case .failure(let error):
+            case .failure:
                 XCTFail("Failure callback shouldn't be called")
             }
         }
@@ -171,7 +171,7 @@ class DefaultPublisherTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Success callback shouldn't be called")
-            case .failure(let error):
+            case .failure:
                 dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
                 expectation.fulfill()
             }
@@ -244,8 +244,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_track_error() {
-        let ablyError = AssetTrackingError.publisherError("Test AblyPublisherService error")
-        ablyService.trackCompletionHandler = { completion in completion?(.failure(ablyError)) }
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
+        ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
         // When adding a trackable and receive error response from AblyPublisherService
@@ -255,7 +255,7 @@ class DefaultPublisherTests: XCTestCase {
                 XCTFail("Success callback shouldn't be called")
             case .failure(let error):
                 // It should call onError callback with received error
-                XCTAssertEqual(error as? AssetTrackingError, ablyError)
+                XCTAssertEqual(error, errorInformation)
                 expectation.fulfill()
             }
         }
@@ -282,7 +282,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_error_thread() {
-        ablyService.trackCompletionHandler = { completion in completion?(.failure(AssetTrackingError.publisherError("TestError"))) }
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
+        ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
         // `onError` callback should be called on main thread
@@ -428,8 +429,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_error() {
-        let error = AssetTrackingError.publisherError("TestError")
-        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(error))}
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
+        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
         let expectation = XCTestExpectation()
 
         // When removing trackable and receive error from AblyPublisherService
@@ -438,7 +439,7 @@ class DefaultPublisherTests: XCTestCase {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure(let receivedError):
-                XCTAssertEqual(receivedError as? AssetTrackingError, error)
+                XCTAssertEqual(receivedError, errorInformation)
                 expectation.fulfill()
             }
         }
@@ -467,7 +468,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_error_thread() {
-        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(AssetTrackingError.publisherError("TestError")))}
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
+        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
         
         let expectation = XCTestExpectation()
 

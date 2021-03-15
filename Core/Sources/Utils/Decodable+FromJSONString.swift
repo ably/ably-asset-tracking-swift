@@ -6,14 +6,14 @@ public extension Decodable {
      - Parameters:
         - json: JSON string encoded with UTF-8
      - Throws:
-        - AssetTrackingError.JSONCodingError: Thrown when we are not able to create `Data`object from string
+        - ErrorInformation of JSONCodingError type when we are not able to create `Data`object from string
         - Any JSONDecoder error: Thrown by the `JSONDecoder` and just passed forward
      - Returns: Decodable object instance.
      */
     static func fromJSONString<T>(_ json: String) throws -> T where T: Decodable {
         guard let data = json.data(using: .utf8)
         else {
-            throw AssetTrackingError.JSONCodingError("Unable to convert given json string to data. json: \(json)")
+            throw ErrorInformation(type: .JSONCodingError(for: "\(json)"))
         }
         return try JSONDecoder().decode(T.self, from: data)
     }

@@ -9,7 +9,7 @@ public protocol PublisherDelegate: AnyObject {
         - sender: `Publisher` instance.
         - error: Detected error.
      */
-    func publisher(sender: Publisher, didFailWithError error: Error)
+    func publisher(sender: Publisher, didFailWithError error: ErrorInformation)
 
     /**
      Called when the `Publisher` detect new enhanced (map matched) location. Same location will be sent to the Subscriber module

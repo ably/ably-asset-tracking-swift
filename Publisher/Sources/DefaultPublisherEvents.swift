@@ -66,7 +66,7 @@ struct PresenceUpdateEvent: PublisherEvent {
 protocol PublisherDelegateEvent {}
 
 struct DelegateErrorEvent: PublisherEvent, PublisherDelegateEvent {
-    let error: Error
+    let error: ErrorInformation
 }
 
 struct DelegateEnhancedLocationChangedEvent: PublisherEvent, PublisherDelegateEvent {

@@ -21,7 +21,7 @@
 		180F615C258633C00014B310 /* GeoJSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F614D258633C00014B310 /* GeoJSONType.swift */; };
 		180F615E258633C00014B310 /* PresenceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F614F258633C00014B310 /* PresenceData.swift */; };
 		180F615F258633C00014B310 /* EventName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6150258633C00014B310 /* EventName.swift */; };
-		180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6151258633C00014B310 /* AssetTrackingError.swift */; };
+		180F6160258633C00014B310 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F6151258633C00014B310 /* ErrorInformation.swift */; };
 		180F616C2586340D0014B310 /* GeoJSONMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F616B2586340D0014B310 /* GeoJSONMessageTests.swift */; };
 		18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */; };
 		18C7B1AB25B61349000A1418 /* ResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A525B61349000A1418 /* ResolutionPolicy.swift */; };
@@ -67,7 +67,7 @@
 		180F614D258633C00014B310 /* GeoJSONType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONType.swift; sourceTree = "<group>"; };
 		180F614F258633C00014B310 /* PresenceData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceData.swift; sourceTree = "<group>"; };
 		180F6150258633C00014B310 /* EventName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
-		180F6151258633C00014B310 /* AssetTrackingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTrackingError.swift; sourceTree = "<group>"; };
+		180F6151258633C00014B310 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		180F616B2586340D0014B310 /* GeoJSONMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONMessageTests.swift; sourceTree = "<group>"; };
 		1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PresenceData_CodableTests.swift; path = Tests/Sources/PresenceData_CodableTests.swift; sourceTree = SOURCE_ROOT; };
 		18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 				180F6149258633C00014B310 /* GeoJSON */,
 				180F614F258633C00014B310 /* PresenceData.swift */,
 				180F6150258633C00014B310 /* EventName.swift */,
-				180F6151258633C00014B310 /* AssetTrackingError.swift */,
+				180F6151258633C00014B310 /* ErrorInformation.swift */,
 				F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */,
 			);
 			path = Model;
@@ -459,7 +459,7 @@
 			files = (
 				180F6158258633C00014B310 /* UnimplementedSupport.swift in Sources */,
 				180F6159258633C00014B310 /* GeoJSONMessage.swift in Sources */,
-				180F6160258633C00014B310 /* AssetTrackingError.swift in Sources */,
+				180F6160258633C00014B310 /* ErrorInformation.swift in Sources */,
 				18C7B1B025B61349000A1418 /* Resolution.swift in Sources */,
 				18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */,
 				180F615A258633C00014B310 /* GeoJSONGeometry.swift in Sources */,

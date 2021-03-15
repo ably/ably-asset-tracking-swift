@@ -134,7 +134,7 @@ extension DefaultPublisher {
         performOnMainThread { handler(.success(true)) }
     }
 
-    private func callback<T: Any>(error: Error, handler: @escaping ResultHandler<T>) {
+    private func callback<T: Any>(error: ErrorInformation, handler: @escaping ResultHandler<T>) {
         performOnMainThread { handler(.failure(error)) }
     }
 
@@ -155,9 +155,10 @@ extension DefaultPublisher {
     }
 
     // MARK: Track
+    // swiftlint:disable line_length
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
-            let error = AssetTrackingError.publisherError("For this beta version of the SDK, track() method may only be called once for any given instance of this class.")
+            let error = ErrorInformation(type: .publisherError(errorMessage: "For this beta version of the SDK, track() method may only be called once for any given instance of this class."))
             callback(error: error, handler: event.resultHandler)
 
             return
@@ -191,7 +192,8 @@ extension DefaultPublisher {
                     case .success(let route):
                         self?.enqueue(event: SetDestinationSuccessEvent(route: route))
                     case .failure(let error):
-                        logger.error("Can't fetch route. Error: \(error)")
+                        logger.error("Can't fetch route. Error: \(error.message)")
+                        event.resultHandler(.failure(error))
                     }
                 }
             } else {
@@ -440,7 +442,7 @@ extension DefaultPublisher {
     }
 
     // MARK: Delegate
-    private func notifyDelegateDidFailWithError(_ error: Error) {
+    private func notifyDelegateDidFailWithError(_ error: ErrorInformation) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didFailWithError: error)
@@ -471,7 +473,7 @@ extension DefaultPublisher {
 
 // MARK: LocationServiceDelegate
 extension DefaultPublisher: LocationServiceDelegate {
-    func locationService(sender: LocationService, didFailWithError error: Error) {
+    func locationService(sender: LocationService, didFailWithError error: ErrorInformation) {
         logger.error("locationService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }
@@ -485,8 +487,8 @@ extension DefaultPublisher: LocationServiceDelegate {
 
 // MARK: AblyPublisherServiceDelegate
 extension DefaultPublisher: AblyPublisherServiceDelegate {
-    func publisherService(sender: AblyPublisherService, didFailWithError error: Error) {
-        logger.error("publisherService.didFailWithError. Error: \(error)", source: "DefaultPublisher")
+    func publisherService(sender: AblyPublisherService, didFailWithError error: ErrorInformation) {
+        logger.error("publisherService.didFailWithError. Error: \(error.message)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }
 
