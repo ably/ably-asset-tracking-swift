@@ -60,7 +60,7 @@ class MapViewController: UIViewController {
         setupControlsBehaviour()
         setupPublisher()
         setupMapView()
-        routingProfileAvtivityIndicator.stopAnimating()
+        setRoutingProfileAvtivityIndicatorState(isLoading: false)
         startTracking()
     }
 
@@ -81,6 +81,9 @@ class MapViewController: UIViewController {
     private func setupNavigationBar() {
         title = "Publishing \(trackingId)"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(onEditButtonPressed))
+        
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(onBackButtonPressed))
     }
     
     // MARK: - Publisher setup
@@ -118,6 +121,23 @@ class MapViewController: UIViewController {
         }
     }
     
+    private func closePublisher(completion: ResultHandler<Void>?) {
+        trackables.removeAll()
+        publisher?.close { [weak self] result in
+            switch result {
+            case .success:
+                logger.info("Publisher closed successfully.")
+                self?.locationState = .failed
+                self?.publisher = nil
+                completion?(.success(()))
+            case .failure(let error):
+                logger.info("Publisher closing failed. Error: \(error.message).")
+                self?.showErrorDialog(error: error)
+                completion?(.failure(error))
+            }
+        }
+    }
+    
     // MARK: - Actions
     @IBAction func onChangeRoutingProfileButtonTapped(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Choose routing profile", message: nil, preferredStyle: .actionSheet)
@@ -145,6 +165,12 @@ class MapViewController: UIViewController {
     }
 
     // MARK: - Utils
+    private func setRoutingProfileAvtivityIndicatorState(isLoading: Bool) {
+        isLoading
+            ? self.routingProfileAvtivityIndicator.startAnimating()
+            : self.routingProfileAvtivityIndicator.stopAnimating()
+    }
+    
     private func refreshAnnotations() {
         mapView.annotations.forEach { mapView.removeAnnotation($0) }
 
@@ -187,9 +213,9 @@ class MapViewController: UIViewController {
     }
 
     private func changeRoutingProfile(_ routingProfile: RoutingProfile) {
-        routingProfileAvtivityIndicator.startAnimating()
+        setRoutingProfileAvtivityIndicatorState(isLoading: true)
         publisher?.changeRoutingProfile(profile: routingProfile) { [weak self] result in
-            self?.routingProfileAvtivityIndicator.stopAnimating()
+            self?.setRoutingProfileAvtivityIndicatorState(isLoading: false)
             switch result {
             case .success:
                 self?.routingProfileLabel.text = DescriptionsHelper.RoutingProfileDescHelper.getDescription(for: routingProfile)
@@ -208,6 +234,23 @@ class MapViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         navigationController?.present(alertController, animated: true, completion: nil)
     }
+    
+    @objc
+    func onBackButtonPressed() {
+        guard publisher != nil else {
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
+        
+        closePublisher { result in
+            switch result {
+            case .success:
+                self.navigationController?.popViewController(animated: true)
+            default:
+                return
+            }
+        }
+    }
 
     private func navigateToTrackablesScreen() {
         let viewController = TrackablesViewController(trackables: trackables, publisher: publisher)
@@ -220,7 +263,6 @@ class MapViewController: UIViewController {
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
-    
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -270,5 +312,10 @@ extension MapViewController: TrackablesViewControllerDelegate {
     func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable, wasPresent: Bool) {
         self.trackables.removeAll(where: { $0 == trackable })
         logger.info("Trackable removed: \(trackable.id). Was present: \(wasPresent)")
+    }
+    
+    func trackablesViewController(sender: TrackablesViewController, didRemoveLastTrackable trackable: Trackable) {
+        logger.info("Publisher did remove last trackable.")
+        self.closePublisher(completion: nil)
     }
 }

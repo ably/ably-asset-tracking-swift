@@ -290,10 +290,10 @@ extension DefaultPublisher {
             case .success(let route):
                 self?.routingProfile = event.profile
                 self?.enqueue(event: SetDestinationSuccessEvent(route: route))
-                event.resultHandler(.success(()))
+                self?.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):
                 logger.error("Can't change RoutingProfile. Error: \(error)")
-                event.resultHandler(.failure(error))
+                self?.callback(error: error, handler: event.resultHandler)
             }
         }
     }
@@ -339,7 +339,8 @@ extension DefaultPublisher {
     
     // MARK: Stop publisher
     private func performClosePublisherEvent(_ event: CloseEvent) {
-        
+        locationService.stopUpdatingLocation()
+        ablyService.close(completion: event.resultHandler)
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
