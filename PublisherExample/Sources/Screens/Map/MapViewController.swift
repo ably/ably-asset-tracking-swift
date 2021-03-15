@@ -279,6 +279,7 @@ extension MapViewController: PublisherDelegate {
     func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
         self.locationState = .failed
         refreshAnnotations()
+        showError(error: error)
     }
 
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {

@@ -55,25 +55,28 @@ class GeoJSONProperties: Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         accuracyHorizontal = try container.decode(Double.self, forKey: .accuracyHorizontal)
+        if let accuracyValidationError = LocationValidator.isAccuracyValid(accuracyHorizontal) {
+            throw accuracyValidationError
+        }
+        
         time = try container.decode(Double.self, forKey: .time)
-
         floor = try? container.decode(Int.self, forKey: .floor)
         speed = try? container.decode(Double.self, forKey: .speed)
         accuracySpeed = try? container.decode(Double.self, forKey: .accuracySpeed)
         accuracyVertical = try? container.decode(Double.self, forKey: .accuracyVertical)
         accuracyBearing = try? container.decode(Double.self, forKey: .accuracyBearing)
         bearing = try? container.decode(Double.self, forKey: .bearing)
-
-        guard accuracyHorizontal >= 0 else {
-            throw ErrorInformation(type: .commonError(errorMessage: "Invalid horizontal accuracy got \(accuracyHorizontal)"))
-        }
     }
 
-    init(location: CLLocation) {
+    init(location: CLLocation) throws {
         time = location.timestamp.timeIntervalSince1970
         floor = location.floor?.level
+        
+        if let accuracyValidationError = LocationValidator.isAccuracyValid(location.horizontalAccuracy) {
+            throw accuracyValidationError
+        }
+        
         accuracyHorizontal = location.horizontalAccuracy
-
         speed = location.speed >= 0 ? location.speed : nil
         accuracySpeed = location.speedAccuracy >= 0 ? location.speedAccuracy : nil
         accuracyVertical = location.verticalAccuracy >= 0 ? location.verticalAccuracy : nil

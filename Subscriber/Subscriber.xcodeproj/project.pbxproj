@@ -40,6 +40,7 @@
 		F617C46925DA5EF9005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C46825DA5EF9005E92A2 /* ConnectionState.swift */; };
 		F65AC34925AF3E41002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34825AF3E41002799BD /* RoutingProfile.swift */; };
 		F65C5CBD25CAB50500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */; };
+		F6A2B81825E66FDA00153CF4 /* LocationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2B81725E66FDA00153CF4 /* LocationValidator.swift */; };
 		F6A2D02E25CC2A34008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */; };
 		F6A2D03525CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */; };
 		F6D4CFD725D6752F0071A6A9 /* SubscriberFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4CFD625D6752F0071A6A9 /* SubscriberFactory.swift */; };
@@ -103,6 +104,7 @@
 		F617C46825DA5EF9005E92A2 /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		F65AC34825AF3E41002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
+		F6A2B81725E66FDA00153CF4 /* LocationValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationValidator.swift; sourceTree = "<group>"; };
 		F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
 		F6D4CFD625D6752F0071A6A9 /* SubscriberFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberFactory.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 		18FCE1FF258B8336005BC480 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				F6A2B81725E66FDA00153CF4 /* LocationValidator.swift */,
 				18A4C1D225B2E2880092CC70 /* ResultHandler.swift */,
 				18FCE200258B8336005BC480 /* Decodable+FromJSONString.swift */,
 				18FCE201258B8336005BC480 /* Codable+EncodedString.swift */,
@@ -511,6 +514,7 @@
 				18FCE206258B8336005BC480 /* LogConfiguration.swift in Sources */,
 				180795CD25A4AF790026F4C1 /* Resolution.swift in Sources */,
 				18FCE203258B8336005BC480 /* ConnectionConfiguration.swift in Sources */,
+				F6A2B81825E66FDA00153CF4 /* LocationValidator.swift in Sources */,
 				180375212599E8AA001387BA /* SubscriberEvent.swift in Sources */,
 				180795D725A4AFA80026F4C1 /* Proximity.swift in Sources */,
 				180F6182258634290014B310 /* DefaultSubscriber.swift in Sources */,

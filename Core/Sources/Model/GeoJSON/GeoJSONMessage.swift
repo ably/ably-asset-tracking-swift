@@ -27,11 +27,10 @@ public class GeoJSONMessage: Codable {
     let geometry: GeoJSONGeometry
     let properties: GeoJSONProperties
 
-    public init(location: CLLocation) {
+    public init(location: CLLocation) throws {
         type = .feature
-        geometry = GeoJSONGeometry(location: location)
-        properties = GeoJSONProperties(location: location)
-        // TODO: Handle data correctness in https://github.com/ably/ably-asset-tracking-cocoa/issues/10
+        geometry = try GeoJSONGeometry(location: location)
+        properties = try GeoJSONProperties(location: location)
     }
 
     public func toCoreLocation() -> CLLocation {

@@ -36,6 +36,7 @@
 		F617C43125DA54AF005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C43025DA54AF005E92A2 /* ConnectionState.swift */; };
 		F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34025AF3E28002799BD /* RoutingProfile.swift */; };
 		F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */; };
+		F6A2B75425E64DEB00153CF4 /* LocationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2B75325E64DEB00153CF4 /* LocationValidator.swift */; };
 		F6A6B67825C9861B00A547D9 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		F617C43025DA54AF005E92A2 /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		F65AC34025AF3E28002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
+		F6A2B75325E64DEB00153CF4 /* LocationValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationValidator.swift; sourceTree = "<group>"; };
 		F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,6 +177,7 @@
 				180F6145258633C00014B310 /* Decodable+FromJSONString.swift */,
 				180F6146258633C00014B310 /* Codable+EncodedString.swift */,
 				180F6147258633C00014B310 /* UnimplementedSupport.swift */,
+				F6A2B75325E64DEB00153CF4 /* LocationValidator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 				18C7B1B025B61349000A1418 /* Resolution.swift in Sources */,
 				18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */,
 				180F615A258633C00014B310 /* GeoJSONGeometry.swift in Sources */,
+				F6A2B75425E64DEB00153CF4 /* LocationValidator.swift in Sources */,
 				18C7B1AB25B61349000A1418 /* ResolutionPolicy.swift in Sources */,
 				180F6152258633C00014B310 /* ConnectionConfiguration.swift in Sources */,
 				180F615F258633C00014B310 /* EventName.swift in Sources */,
