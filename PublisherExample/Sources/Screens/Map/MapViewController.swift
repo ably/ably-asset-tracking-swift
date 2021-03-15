@@ -3,6 +3,57 @@ import MapKit
 import AblyAssetTracking
 import Foundation
 
+extension RoutingProfile {
+    var description: String {
+        switch self {
+        case .driving: return "Driving"
+        case .cycling: return "Cycling"
+        case .walking: return "Walking"
+        case .drivingTraffic: return "Driving traffic"
+        }
+    }
+}
+
+extension ConnectionState {
+    var description: String {
+        switch self {
+        case .online: return "Online"
+        case .offline: return "Offline"
+        case .failed: return "Failed"
+        }
+    }
+    
+    var color: UIColor {
+        switch self {
+        case .online: return .systemGreen
+        case .offline, .failed: return .systemRed
+        }
+    }
+}
+
+private enum LocationState {
+    case active
+    case pending
+    case failed
+    
+    var color: UIColor {
+        switch self {
+        case .active:
+            return .systemGreen
+        case .pending:
+            return .systemOrange
+        case .failed:
+            return .systemRed
+        }
+    }
+}
+
+private struct MapConstraints {
+    static let regionLatitude: CLLocationDistance = 600
+    static let regionLongitude: CLLocationDistance = 600
+    static let minimumDistanceToCenter: CLLocationDistance = 300
+}
+
 class MapViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var connectionStatusLabel: UILabel!
@@ -18,6 +69,12 @@ class MapViewController: UIViewController {
     private var publisher: Publisher?
 
     private var location: CLLocation?
+    private var locationState: LocationState = .pending {
+        didSet {
+            refreshAnnotations()
+        }
+    }
+    
     private var wasMapScrolled: Bool = false
     private var currentResolution: Resolution?
     private var trackables: [Trackable] = []
@@ -62,12 +119,18 @@ class MapViewController: UIViewController {
 
         let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
         let trackable = Trackable(id: trackingId, destination: destination)
+        
+        locationState = .pending
+        
         publisher?.track(trackable: trackable) { [weak self] result in
             switch result {
             case .success:
                 self?.trackables = [trackable]
                 logger.info("Initial trackable tracked successfully.")
             case .failure(let error):
+                self?.locationState = .failed
+                self?.refreshAnnotations()
+                
                 let alertVC = UIAlertController(title: "Error", message: "Can't track trackable: \(error.message)", preferredStyle: .alert)
                 alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self?.present(alertVC, animated: true, completion: nil)
@@ -78,6 +141,10 @@ class MapViewController: UIViewController {
     private func setupMapView() {
         mapView.register(AssetAnnotationView.self, forAnnotationViewWithReuseIdentifier: assetAnnotationReuseIdentifier)
         mapView.delegate = self
+        
+        location = historyLocation?.first ?? CLLocationManager().location
+        refreshAnnotations()
+        scrollToReceivedLocation(isInitialLocation: true)
     }
 
     private func setupNavigationBar() {
@@ -98,20 +165,29 @@ class MapViewController: UIViewController {
         if let location = self.location {
             let annotation = MKPointAnnotation()
             annotation.coordinate = location.coordinate
-            annotation.title = "Enhanced location"
+            annotation.title = "Location"
             mapView.addAnnotation(annotation)
         }
     }
 
-    private func scrollToReceivedLocation() {
-        guard let location = self.location,
-              !wasMapScrolled
-        else { return }
-
-        wasMapScrolled = true
+    private func scrollToReceivedLocation(isInitialLocation: Bool = false) {
+        guard let location = self.location else { return }
+        
+        let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
+                                   longitude: mapView.region.center.longitude)
+        
         let region = MKCoordinateRegion(center: location.coordinate,
-                                        latitudinalMeters: 600,
-                                        longitudinalMeters: 600)
+                                        latitudinalMeters: MapConstraints.regionLatitude,
+                                        longitudinalMeters: MapConstraints.regionLongitude)
+        
+        if isInitialLocation {
+            mapView.setRegion(region, animated: true)
+            
+            return
+        }
+        
+        guard location.distance(from: mapCenter) > MapConstraints.minimumDistanceToCenter else { return }
+        
         mapView.setRegion(region, animated: true)
     }
 
@@ -193,21 +269,23 @@ extension MapViewController: MKMapViewDelegate {
 
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: assetAnnotationReuseIdentifier) ??
                             AssetAnnotationView(annotation: annotation, reuseIdentifier: assetAnnotationReuseIdentifier)
-        let isRaw = annotation.title == "Raw"
-        annotationView.backgroundColor = isRaw ? UIColor.yellow.withAlphaComponent(0.7) :
-                                                 UIColor.blue.withAlphaComponent(0.7)
+        
+        annotationView.backgroundColor = locationState.color
         return annotationView
     }
 }
 
 extension MapViewController: PublisherDelegate {
     func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
+        self.locationState = .failed
+        refreshAnnotations()
     }
 
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
         self.location = location
-        refreshAnnotations()
-        scrollToReceivedLocation()
+        self.locationState = .active
+        self.refreshAnnotations()
+        self.scrollToReceivedLocation()
     }
 
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
@@ -218,34 +296,6 @@ extension MapViewController: PublisherDelegate {
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
         currentResolution = resolution
         updateResolutionLabel()
-    }
-}
-
-extension RoutingProfile {
-    var description: String {
-        switch self {
-        case .driving: return "Driving"
-        case .cycling: return "Cycling"
-        case .walking: return "Walking"
-        case .drivingTraffic: return "Driving traffic"
-        }
-    }
-}
-
-extension ConnectionState {
-    var description: String {
-        switch self {
-        case .online: return "Online"
-        case .offline: return "Offline"
-        case .failed: return "Failed"
-        }
-    }
-    
-    var color: UIColor {
-        switch self {
-        case .online: return .systemGreen
-        case .offline, .failed: return .systemRed
-        }
     }
 }
 
