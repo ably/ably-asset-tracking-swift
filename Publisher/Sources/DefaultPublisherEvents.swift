@@ -5,40 +5,37 @@ protocol PublisherEvent {}
 
 struct TrackTrackableEvent: PublisherEvent {
     let trackable: Trackable
-    let onSuccess: SuccessHandler
-    let onError: ErrorHandler
+    let resultHandler: ResultHandler<Void>
 }
 
 struct AddTrackableEvent: PublisherEvent {
     let trackable: Trackable
-    let onSuccess: SuccessHandler
-    let onError: ErrorHandler
+    let resultHandler: ResultHandler<Void>
 }
 
 struct RemoveTrackableEvent: PublisherEvent {
     let trackable: Trackable
-    let onSuccess: (_ wasPresent: Bool) -> Void
-    let onError: ErrorHandler
+    let resultHandler: ResultHandler<Bool>
 }
 
 struct ClearActiveTrackableEvent: PublisherEvent {
     let trackable: Trackable
-    let onSuccess: (_ wasPresent: Bool) -> Void
+    let resultHandler: ResultHandler<Bool>
 }
 
 struct ClearRemovedTrackableMetadataEvent: PublisherEvent {
     let trackable: Trackable
-    let onSuccess: (_ wasPresent: Bool) -> Void
+    let resultHandler: ResultHandler<Bool>
 }
 
 struct PresenceJoinedSuccessfullyEvent: PublisherEvent {
     let trackable: Trackable
-    let onComplete: SuccessHandler
+    let resultHandler: ResultHandler<Void>
 }
 
 struct TrackableReadyToTrackEvent: PublisherEvent {
     let trackable: Trackable
-    let onSuccess: SuccessHandler
+    let resultHandler: ResultHandler<Void>
 }
 
 struct SetDestinationSuccessEvent: PublisherEvent {
@@ -55,8 +52,7 @@ struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
 
 struct ChangeRoutingProfileEvent: PublisherEvent {
     let profile: RoutingProfile
-    let onSuccess: SuccessHandler
-    let onError: ErrorHandler
+    let resultHandler: ResultHandler<Void>
 }
 
 struct PresenceUpdateEvent: PublisherEvent {

@@ -33,7 +33,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
     }
 
     // MARK: Main interface
-    func track(trackable: Trackable, completion: ((Error?) -> Void)?) {
+    func track(trackable: Trackable, completion: ResultHandler<Void>?) {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
@@ -53,17 +53,22 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
 
         channel.presence.enterClient(configuration.clientId, data: data) { error in
-            error == nil ?
-                logger.debug("Entered to presence successfully", source: "AblyPublisherService") :
-                logger.error("Error during joining to channel presence: \(String(describing: error))", source: "DefaultAblyPublisherService")
-            completion?(error)
+            guard let error = error else {
+                logger.debug("Entered to presence successfully", source: "AblyPublisherService")
+                completion?(.success)
+                return
+            }
+
+            logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
+            completion?(.failure(error))
         }
         channels[trackable] = channel
     }
 
-    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?) {
+    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
         guard let channel = channels[trackable] else {
-            completion?(AssetTrackingError.publisherError("Attempt to send location while not tracked channel"))
+            let error = AssetTrackingError.publisherError("Attempt to send location while not tracked channel")
+            completion?(.failure(error))
             return
         }
         
@@ -81,35 +86,13 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
     }
 
-    private func sendAssetLocation(location: CLLocation,
-                                   forTrackable trackable: Trackable,
-                                   withName name: EventName,
-                                   completion: ((Error?) -> Void)?) {
-        guard let channel = channels[trackable] else {
-            completion?(AssetTrackingError.publisherError("Attempt to send location while not tracked channel"))
-            return
-        }
-
-        // Force cast intentional here. It's a fatal error if we are unable to create JSON String from GeoJSONMessage
-        let geoJSON = GeoJSONMessage(location: location)
-        let data = try! [geoJSON].toJSONString()
-
-        let message = ARTMessage(name: name.rawValue, data: data)
-        channel.publish([message]) { [weak self] error in
-            if let self = self,
-               let error = error {
-                self.delegate?.publisherService(sender: self, didFailWithError: error)
-            }
-        }
-    }
-
     func stop() {
         client.close()
     }
 
-    func stopTracking(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler) {
+    func stopTracking(trackable: Trackable, completion: ResultHandler<Bool>?) {
         guard let channel = channels.removeValue(forKey: trackable) else {
-            onSuccess(false)
+            completion?(.success(false))
             return
         }
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
@@ -117,7 +100,11 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
         channel.presence.unsubscribe()
         channel.presence.leaveClient(configuration.clientId, data: data) { error in
-            error == nil ? onSuccess(true) : onError(error!)
+            guard let error = error else {
+                completion?(.success(true))
+                return
+            }
+            completion?(.failure(error))
         }
     }
 }

@@ -61,7 +61,7 @@ class AblySubscriberService {
         client.close()
     }
 
-    func changeRequest(resolution: Resolution?, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+    func changeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
         logger.debug("Changing resolution to: \(String(describing: resolution))", source: "AblySubscriberService")
         presenceData = PresenceData(type: presenceData.type, resolution: resolution)
 
@@ -69,9 +69,9 @@ class AblySubscriberService {
         let data = try! presenceData.toJSONString()
         channel.presence.updateClient(configuration.clientId, data: data) { error in
             if let error = error {
-                onError(error)
+                completion(.failure(error))
             } else {
-                onSuccess()
+                completion(.success)
             }
         }
     }

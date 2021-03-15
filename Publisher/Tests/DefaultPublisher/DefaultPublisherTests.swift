@@ -43,13 +43,19 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: track
     func testTrack_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
         let expectation = XCTestExpectation()
 
         // When tracking a trackable
-        publisher.track(trackable: trackable,
-                        onSuccess: { expectation.fulfill() },
-                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+                      
         wait(for: [expectation], timeout: 5.0)
 
         // It should set active trackable
@@ -73,16 +79,21 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: track
     func testTrack_destination() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
         let expectation = XCTestExpectation()
 
         let destination = CLLocationCoordinate2D(latitude: 12.3456, longitude: 56.789)
         let trackable = Trackable(id: "TrackableId", destination: destination)
 
         // When tracking a trackable with given destination
-        publisher.track(trackable: trackable,
-                        onSuccess: { expectation.fulfill() },
-                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
         wait(for: [expectation], timeout: 5.0)
 
         // It should ask RouteProvider to calculate route to given destination
@@ -91,76 +102,98 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testTrack_error_duplicate_track() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
         var expectation = XCTestExpectation()
 
         // When tracking a trackable
-        publisher.track(trackable: trackable,
-                        onSuccess: { expectation.fulfill() },
-                        onError: { _ in })
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
         wait(for: [expectation], timeout: 5.0)
         expectation = XCTestExpectation()
         // And tracking it once again
-        publisher.track(trackable: Trackable(id: "DuplicateTrackableId"),
-                        onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
-                        onError: { error in
-                            // It should call onError callback with AssetTrackingError
-                            XCTAssertTrue(error is AssetTrackingError)
-                            expectation.fulfill()
-                        })
+        publisher.track(trackable: Trackable(id: "DuplicateTrackableId")) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure(let error):
+                XCTAssertTrue(error is AssetTrackingError)
+                expectation.fulfill()
+            }
+        }
         wait(for: [expectation], timeout: 5.0)
     }
 
     func testTrack_error_ably_service_error() {
         let ablyError = AssetTrackingError.publisherError("Test AblyPublisherService error")
-        ablyService.trackCompletionHandler = { completion in completion?(ablyError) }
+        ablyService.trackCompletionHandler = { completion in completion?(.failure(ablyError)) }
         let expectation = XCTestExpectation()
 
         // When tracking a trackable and receive error response from AblyPublisherService
-        publisher.track(trackable: trackable,
-                        onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
-                        onError: { error in
-                            // It should call onError callback with received error
-                            XCTAssertEqual(error as? AssetTrackingError, ablyError)
-                            expectation.fulfill()
-                        })
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure(let error):
+                // It should call onError callback with received error
+                XCTAssertEqual(error as? AssetTrackingError, ablyError)
+                expectation.fulfill()
+            }
+        }
         wait(for: [expectation], timeout: 5.0)
     }
 
     func testTrack_thread() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
 
         var expectation = XCTestExpectation()
         // Both `onSuccess` and `onError` callbacks should be called on main thread
         // Notice - in case of failure it will crash whole test suite
-        publisher.track(trackable: trackable,
-                        onSuccess: {
-                            dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
-                            expectation.fulfill()
-                        },
-                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
         
         expectation = XCTestExpectation()
-        publisher.track(trackable: trackable,
-                        onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
-                        onError: { _ in
-                            dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
-                            expectation.fulfill()
-                        })
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure(let error):
+                dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                expectation.fulfill()
+            }
+        }
 
         wait(for: [expectation], timeout: 5.0)
     }
 
     // MARK: add
     func testAdd_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
 
         // When adding a trackable
-        publisher.add(trackable: trackable,
-                      onSuccess: { expectation.fulfill() },
-                      onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
         wait(for: [expectation], timeout: 5.0)
 
         // It should NOT set active trackable
@@ -182,19 +215,28 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_track_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
         expectation.expectedFulfillmentCount = 2
 
         // When tracking a trackable
-        publisher.track(trackable: trackable,
-                        onSuccess: { expectation.fulfill() },
-                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
-
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
         // And then adding another trackable
-        publisher.add(trackable: Trackable(id: "TestAddedTrackableId1"),
-                      onSuccess: { expectation.fulfill() },
-                      onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.add(trackable: Trackable(id: "TestAddedTrackableId1")) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
         wait(for: [expectation], timeout: 5.0)
 
         // It should NOT change active trackable
@@ -203,46 +245,58 @@ class DefaultPublisherTests: XCTestCase {
 
     func testAdd_track_error() {
         let ablyError = AssetTrackingError.publisherError("Test AblyPublisherService error")
-        ablyService.trackCompletionHandler = { completion in completion?(ablyError) }
+        ablyService.trackCompletionHandler = { completion in completion?(.failure(ablyError)) }
         let expectation = XCTestExpectation()
 
         // When adding a trackable and receive error response from AblyPublisherService
-        publisher.add(trackable: trackable,
-                      onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
-                      onError: { error in
-                        // It should call onError callback with received error
-                        XCTAssertEqual(error as? AssetTrackingError, ablyError)
-                        expectation.fulfill()
-                      })
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure(let error):
+                // It should call onError callback with received error
+                XCTAssertEqual(error as? AssetTrackingError, ablyError)
+                expectation.fulfill()
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
     }
 
     func testAdd_success_thread() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
         // `onSuccess` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
-        publisher.add(trackable: trackable,
-                      onSuccess: {
-                        dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
-                        expectation.fulfill()
-                      },
-                      onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
     }
 
     func testAdd_error_thread() {
-        ablyService.trackCompletionHandler = { completion in completion?(AssetTrackingError.publisherError("TestError")) }
+        ablyService.trackCompletionHandler = { completion in completion?(.failure(AssetTrackingError.publisherError("TestError"))) }
         let expectation = XCTestExpectation()
 
         // `onError` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
-        publisher.add(trackable: trackable,
-                      onSuccess: { XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
-                      onError: { _ in
-                        dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
-                        expectation.fulfill()
-                      })
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure:
+                dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                expectation.fulfill()
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
     }
 
@@ -250,18 +304,22 @@ class DefaultPublisherTests: XCTestCase {
     func testRemove_success() {
         let wasPresent = true
         var receivedWasPresent: Bool?
-        ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(wasPresent) }
+        ablyService.stopTrackingResultCompletionHandler = { completion in completion?(.success(wasPresent))}
         ablyService.trackablesGetValue = [Trackable(id: "Trackable1"), Trackable(id: "Trackable2")]
 
         let expectation = XCTestExpectation()
 
         // When removing trackable
-        publisher.remove(trackable: trackable,
-                         onSuccess: { present in
-                            receivedWasPresent = present
-                            expectation.fulfill()
-                         },
-                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.remove(trackable: trackable) { result in
+            switch result {
+            case .success(let present):
+                receivedWasPresent = present
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
 
         // It should ask ablyService to stop tracking
@@ -282,23 +340,35 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_activeTrackable() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
-        ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(true) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
+        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true)) }
         ablyService.trackablesGetValue = []
         var expectation = XCTestExpectation(description: "Handler for `track` call")
         expectation.expectedFulfillmentCount = 1
 
         // When removing trackable which was tracked before (so it's set as the activeTrackable)
-        publisher.track(trackable: trackable,
-                        onSuccess: { expectation.fulfill() },
-                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
         XCTAssertEqual(publisher.activeTrackable, trackable)
 
         expectation = XCTestExpectation(description: "Handler for `remove` call")
-        publisher.remove(trackable: publisher.activeTrackable!,
-                         onSuccess: { _ in expectation.fulfill() },
-                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.remove(trackable: publisher.activeTrackable!) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
 
         // It should clear activeTrackable
@@ -317,23 +387,33 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_nonActiveTrackable() {
-        ablyService.trackCompletionHandler = { completion in completion?(nil) }
-        ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(true) }
+        ablyService.trackCompletionHandler = { completion in completion?(.success) }
+        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true)) }
 
         var expectation = XCTestExpectation(description: "Handler for `track` call")
 
         // When removing trackable which was no tracked before (so it's NOT set as the activeTrackable)
-        publisher.track(trackable: trackable,
-                        onSuccess: { expectation.fulfill() },
-                        onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
         wait(for: [expectation], timeout: 5.0)
         XCTAssertEqual(publisher.activeTrackable, trackable)
 
         expectation = XCTestExpectation(description: "Handler for `remove` call")
         let removedTrackable = Trackable(id: "AnotherTrackableId")
-        publisher.remove(trackable: removedTrackable,
-                         onSuccess: { _ in expectation.fulfill() },
-                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.remove(trackable: removedTrackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
         wait(for: [expectation], timeout: 5.0)
 
         // It should NOT modify activeTrackable
@@ -349,48 +429,60 @@ class DefaultPublisherTests: XCTestCase {
 
     func testRemove_error() {
         let error = AssetTrackingError.publisherError("TestError")
-        ablyService.stopTrackingOnErrorCompletionHandler = { handler in handler(error) }
+        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(error))}
         let expectation = XCTestExpectation()
 
         // When removing trackable and receive error from AblyPublisherService
-        publisher.remove(trackable: trackable,
-                         onSuccess: { _ in XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
-                         onError: { receivedError in
-                            // It should call onError callback with received error
-                            XCTAssertEqual(receivedError as? AssetTrackingError, error)
-                            expectation.fulfill()
-                         })
+        publisher.remove(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure(let receivedError):
+                XCTAssertEqual(receivedError as? AssetTrackingError, error)
+                expectation.fulfill()
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
     }
 
 
     func testRemove_success_thread() {
-        ablyService.stopTrackingOnSuccessCompletionHandler = { handler in handler(true) }
+        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true))}
         let expectation = XCTestExpectation()
 
         // When removing trackable `onSuccess` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
-        publisher.remove(trackable: trackable,
-                         onSuccess: { present in
-                            dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
-                            expectation.fulfill()
-                         },
-                         onError: { _ in XCTAssertTrue(false, "onError callback shouldn't be called") })
+        publisher.remove(trackable: trackable) { result in
+            switch result {
+            case .success:
+                dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
     }
 
     func testRemove_error_thread() {
-        ablyService.stopTrackingOnErrorCompletionHandler = { handler in handler(AssetTrackingError.publisherError("TestError")) }
+        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(AssetTrackingError.publisherError("TestError")))}
+        
         let expectation = XCTestExpectation()
 
         // When removing trackable `onError` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
-        publisher.remove(trackable: trackable,
-                         onSuccess: { _ in XCTAssertTrue(false, "onSuccess callback shouldn't be called") },
-                         onError: { receivedError in
-                            dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
-                            expectation.fulfill()
-                         })
+        publisher.remove(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure:
+                dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                expectation.fulfill()
+            }
+        }
+        
         wait(for: [expectation], timeout: 5.0)
     }
     
@@ -399,24 +491,30 @@ class DefaultPublisherTests: XCTestCase {
     // MARK: ChangeRoutingProfile
     func testChangeRoutingProfile_called() {
         // Given: Default RoutingProfile set to .driving
-        publisher.changeRoutingProfile(profile: .cycling, onSuccess: {
-            XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
-            XCTAssertEqual(self.routeProvider.changeRoutingProfileParamRoutingProfile, .cycling)
-        }, onError: { error in
-            XCTAssertTrue(false, "onError callback shouldn't be called")
-        })
+        publisher.changeRoutingProfile(profile: .cycling) { result in
+            switch result {
+            case .success:
+                XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
+                XCTAssertEqual(self.routeProvider.changeRoutingProfileParamRoutingProfile, .cycling)
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
     }
     
     func testChangeRoutingProfile_shouldCallGetRouteForDestination() {
         // Given: Default destination set to:
         let expectedDestination = CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182)
         
-        publisher.changeRoutingProfile(profile: .cycling, onSuccess: {
-            XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
-            XCTAssertTrue(self.routeProvider.getRouteCalled)
-            XCTAssertEqual(self.routeProvider.getRouteParamDestination, expectedDestination)
-        }, onError: { error in
-            XCTAssertTrue(false, "onError callback shouldn't be called")
-        })
+        publisher.changeRoutingProfile(profile: .cycling) { result in
+            switch result {
+            case .success:
+                XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
+                XCTAssertTrue(self.routeProvider.getRouteCalled)
+                XCTAssertEqual(self.routeProvider.getRouteParamDestination, expectedDestination)
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
     }
 }

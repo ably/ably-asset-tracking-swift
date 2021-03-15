@@ -1,9 +1,10 @@
 /**
- Completion handler for success operations
+ Completion handler for operations
  */
-public typealias SuccessHandler = () -> Void
+public typealias ResultHandler<T: Any> = (Result<T, Error>) -> Void
 
-/**
- Completion handler for failed operations
- */
-public typealias ErrorHandler = (_ error: Error) -> Void
+extension Result where Success == Void {
+    static var success: Result {
+        return .success(Void())
+    }
+}

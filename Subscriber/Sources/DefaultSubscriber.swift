@@ -25,8 +25,8 @@ class DefaultSubscriber: Subscriber {
         self.ablyService.delegate = self
     }
 
-    func sendChangeRequest(resolution: Resolution?, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        enqueue(event: ChangeResolutionEvent(resolution: resolution, onSuccess: onSuccess, onError: onError))
+    func sendChangeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+        enqueue(event: ChangeResolutionEvent(resolution: resolution, resultHandler: completion))
     }
 
     func start() {
@@ -52,12 +52,12 @@ extension DefaultSubscriber {
         }
     }
 
-    private func callback(_ handler: @escaping SuccessHandler) {
-        performOnMainThread(handler)
+    private func callback<T: Any>(value: T, handler: @escaping ResultHandler<T>) {
+        performOnMainThread { handler(.success(value)) }
     }
 
-    private func callback(error: Error, handler: @escaping ErrorHandler) {
-        performOnMainThread { handler(error) }
+    private func callback<T: Any>(error: Error, handler: @escaping ResultHandler<T>) {
+        performOnMainThread { handler(.failure(error)) }
     }
 
     private func callback(event: SubscriberDelegateEvent) {
@@ -89,11 +89,14 @@ extension DefaultSubscriber {
     }
 
     private func performChangeResolution(_ event: ChangeResolutionEvent) {
-        ablyService.changeRequest(
-            resolution: event.resolution,
-            onSuccess: { [weak self] in self?.callback(event.onSuccess) },
-            onError: { [weak self] error in self?.callback(error: error, handler: event.onError) }
-        )
+        ablyService.changeRequest(resolution: event.resolution) { [weak self] result in
+            switch result {
+            case .success:
+                self?.callback(value: Void(), handler: event.resultHandler)
+            case .failure(let error):
+                self?.callback(error: error, handler: event.resultHandler)
+            }
+        }
     }
 
     // MARK: Utils

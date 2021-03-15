@@ -54,15 +54,17 @@ class MapViewController: UIViewController {
 
         let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
         let trackable = Trackable(id: trackingId, destination: destination)
-        publisher?.track(trackable: trackable,
-                         onSuccess: { [weak self] in
-                            self?.trackables = [trackable]
-                            logger.info("Initial trackable tracked successfully.")
-                         }, onError: { [weak self] error in
-                            let alertVC = UIAlertController(title: "Error", message: "Can't track trackable: \(error.localizedDescription)", preferredStyle: .alert)
-                            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self?.present(alertVC, animated: true, completion: nil)
-                         })
+        publisher?.track(trackable: trackable) { [weak self] result in
+            switch result {
+            case .success:
+                self?.trackables = [trackable]
+                logger.info("Initial trackable tracked successfully.")
+            case .failure(let error):
+                let alertVC = UIAlertController(title: "Error", message: "Can't track trackable: \(error.localizedDescription)", preferredStyle: .alert)
+                alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(alertVC, animated: true, completion: nil)
+            }
+        }
     }
 
     private func setupMapView() {
@@ -77,7 +79,14 @@ class MapViewController: UIViewController {
 
     // MARK: Utils
     private func changeRoutingProfile(to routingProfile: RoutingProfile) {
-        publisher?.changeRoutingProfile(profile: routingProfile, onSuccess: { }, onError: { _ in })
+        publisher?.changeRoutingProfile(profile: routingProfile) { result in
+            switch result {
+            case .success:
+                logger.info("Change routingProfile success.")
+            case .failure(let error):
+                logger.info("Change routingProfile error: \(error).")
+            }
+        }
     }
 
     private func refreshAnnotations() {
@@ -171,26 +180,30 @@ extension MapViewController: PublisherDelegate {
 
 extension MapViewController: TrackablesViewControllerDelegate {
     func trackablesViewController(sender: TrackablesViewController, didAddTrackable trackable: Trackable) {
-        publisher?.add(trackable: trackable,
-                       onSuccess: { [weak self] in
-                        logger.info("Added trackable: \(trackable.id)")
-                        self?.trackables.append(trackable)
-                       }, onError: { [weak self] error in
-                        let alertVC = UIAlertController(title: "Error", message: "Can't add trackable: \(error.localizedDescription)", preferredStyle: .alert)
-                        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self?.present(alertVC, animated: true, completion: nil)
-                       })
+        publisher?.add(trackable: trackable) { [weak self] result in
+            switch result {
+            case .success:
+                logger.info("Added trackable: \(trackable.id)")
+                self?.trackables.append(trackable)
+            case .failure(let error):
+                let alertVC = UIAlertController(title: "Error", message: "Can't add trackable: \(error.localizedDescription)", preferredStyle: .alert)
+                alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(alertVC, animated: true, completion: nil)
+            }
+        }
     }
 
     func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable) {
-        publisher?.remove(trackable: trackable,
-                          onSuccess: { [weak self] wasPresent in
-                            self?.trackables.removeAll(where: { $0 == trackable })
-                            logger.info("Trackable removed: \(trackable.id). Was present: \(wasPresent)")
-                          }, onError: { [weak self] error in
-                            let alertVC = UIAlertController(title: "Error", message: "Can't add trackable: \(error.localizedDescription)", preferredStyle: .alert)
-                            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self?.present(alertVC, animated: true, completion: nil)
-                          })
+        publisher?.remove(trackable: trackable) { [weak self] result in
+            switch result {
+            case .success(let wasPresent):
+                self?.trackables.removeAll(where: { $0 == trackable })
+                logger.info("Trackable removed: \(trackable.id). Was present: \(wasPresent)")
+            case .failure(let error):
+                let alertVC = UIAlertController(title: "Error", message: "Can't add trackable: \(error.localizedDescription)", preferredStyle: .alert)
+                alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(alertVC, animated: true, completion: nil)
+            }
+        }
     }
 }

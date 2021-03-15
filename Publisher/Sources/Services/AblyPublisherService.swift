@@ -14,8 +14,8 @@ protocol AblyPublisherService: AnyObject {
     var delegate: AblyPublisherServiceDelegate? { get set }
     var trackables: [Trackable] { get }
 
-    func track(trackable: Trackable, completion: ((Error?) -> Void)?)
-    func stopTracking(trackable: Trackable, onSuccess: @escaping (_ wasPresent: Bool) -> Void, onError: @escaping ErrorHandler)
-    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ((Error?) -> Void)?)
+    func track(trackable: Trackable, completion: ResultHandler<Void>?)
+    func stopTracking(trackable: Trackable, completion: ResultHandler<Bool>?)
+    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?)
     func stop()
 }
