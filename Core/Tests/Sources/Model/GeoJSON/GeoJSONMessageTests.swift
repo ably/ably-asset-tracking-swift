@@ -14,7 +14,6 @@ class GeoJSONMessageTests: XCTestCase {
             "properties": {
                 "accuracyHorizontal": 1.2,
                 "accuracyVertical": 2.3,
-                "altitude": 3.2,
                 "bearing": 4.3,
                 "speed": 5.3,
                 "time": 1607365170.0,
@@ -30,7 +29,7 @@ class GeoJSONMessageTests: XCTestCase {
         // Instead of comparing JSON strings, try to:
         // Decode original message => Encode decoded message => Re-decode encoded message => Compare original and re-decoded messages
 
-        let json = jsonWithCoordinates("[1.0, 2.0]")
+        let json = jsonWithCoordinates("[1.0, 2.0, 3.0]")
         let data = json.data(using: .utf8)!
         let message =  try! JSONDecoder().decode(GeoJSONMessage.self, from: data)
 
@@ -42,11 +41,11 @@ class GeoJSONMessageTests: XCTestCase {
 
         XCTAssertEqual(message.geometry.longitude, decodedMessage.geometry.longitude, accuracy: .ulpOfOne)
         XCTAssertEqual(message.geometry.latitude, decodedMessage.geometry.latitude, accuracy: .ulpOfOne)
+        XCTAssertEqual(message.geometry.altitude, decodedMessage.geometry.altitude, accuracy: .ulpOfOne)
         XCTAssertEqual(message.type, decodedMessage.type)
         XCTAssertEqual(message.geometry.type, decodedMessage.geometry.type)
         XCTAssertEqual(message.properties.accuracyHorizontal, decodedMessage.properties.accuracyHorizontal, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.accuracyVertical!, decodedMessage.properties.accuracyVertical!, accuracy: .ulpOfOne)
-        XCTAssertEqual(message.properties.altitude, decodedMessage.properties.altitude, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.bearing!, decodedMessage.properties.bearing!, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.speed!, decodedMessage.properties.speed!, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.time, decodedMessage.properties.time, accuracy: .ulpOfOne)
@@ -56,16 +55,16 @@ class GeoJSONMessageTests: XCTestCase {
     }
 
     func testValidJSON() throws {
-        let json = jsonWithCoordinates("[1.0, 2.0]")
+        let json = jsonWithCoordinates("[1.0, 2.0, 3.0]")
         let data = json.data(using: .utf8)!
         let message =  try! JSONDecoder().decode(GeoJSONMessage.self, from: data)
         XCTAssertEqual(message.geometry.longitude, 1.0, accuracy: .ulpOfOne)
         XCTAssertEqual(message.geometry.latitude, 2.0, accuracy: .ulpOfOne)
+        XCTAssertEqual(message.geometry.altitude, 3.0, accuracy: .ulpOfOne)
         XCTAssertEqual(message.type, .feature)
         XCTAssertEqual(message.geometry.type, .point)
         XCTAssertEqual(message.properties.accuracyHorizontal, 1.2, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.accuracyVertical!, 2.3, accuracy: .ulpOfOne)
-        XCTAssertEqual(message.properties.altitude, 3.2, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.bearing!, 4.3, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.speed!, 5.3, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.time, 1607365170, accuracy: .ulpOfOne)

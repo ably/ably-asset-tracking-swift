@@ -6,7 +6,7 @@ import CoreLocation
  ````
  {
     "type": "Point",
-    "coordinates": [1.0, 2.0] // [Lon, Lat]
+    "coordinates": [1.0, 2.0, 3.0] // [Lon, Lat, Alt]
  }
  ````
  */
@@ -14,11 +14,17 @@ class GeoJSONGeometry: Codable {
     let type: GeoJSONType
     let latitude: Double
     let longitude: Double
+    let altitude: Double
+    
+    private let longitudeIndex = 0
+    private let latitudeIndex = 1
+    private let altitudeIndex = 2
 
     enum CodingKeys: String, CodingKey {
         case coordinates
         case latitude
         case longitude
+        case altitude
         case type
     }
 
@@ -27,9 +33,10 @@ class GeoJSONGeometry: Codable {
         type = try container.decode(GeoJSONType.self, forKey: .type)
 
         let coordinates = try container.decode(Array<Double>.self, forKey: .coordinates)
-        guard coordinates.count == 2,
-              let longitude = coordinates.first,
-              let latitude = coordinates.last
+        guard coordinates.count == 3,
+              let longitude = coordinates.element(at: longitudeIndex),
+              let latitude = coordinates.element(at: latitudeIndex),
+              let altitude = coordinates.element(at: altitudeIndex)
         else {
             throw ErrorInformation(type: .commonError(errorMessage: "Invalid count of coordinates in GeoJSONGeometry. Received: \(coordinates)"))
         }
@@ -46,17 +53,25 @@ class GeoJSONGeometry: Codable {
 
         self.latitude = latitude
         self.longitude = longitude
+        self.altitude = altitude
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
-        try container.encode([longitude, latitude], forKey: .coordinates)
+        try container.encode([longitude, latitude, altitude], forKey: .coordinates)
     }
 
     init(location: CLLocation) {
         type = .point
         latitude = location.coordinate.latitude
         longitude = location.coordinate.longitude
+        altitude = location.altitude
+    }
+}
+
+private extension Collection {
+    func element(at index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }

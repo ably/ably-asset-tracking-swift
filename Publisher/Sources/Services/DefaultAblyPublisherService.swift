@@ -64,14 +64,14 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channels[trackable] = channel
     }
 
-    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
+    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, batteryLevel: Float?, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
         guard let channel = channels[trackable] else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Attempt to send location while not tracked channel"))
             completion?(.failure(errorInformation))
             return
         }
         
-        let geoJson = EnhacedLocationUpdateMessage(locationUpdate: locationUpdate)
+        let geoJson = EnhancedLocationUpdateMessage(locationUpdate: locationUpdate, batteryLevel: batteryLevel)
         let data = try! [geoJson].toJSONString()
         let message = ARTMessage(name: EventName.enhanced.rawValue, data: data)
         
