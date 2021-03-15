@@ -44,9 +44,9 @@ class MockAblyPublisherService: AblyPublisherService {
         sendEnhancedAssetLocationUpdateParamTrackable = trackable
         sendEnhancedAssetLocationUpdateParamCompletion = completion
     }
-
-    var stopCalled: Bool = false
-    func stop() {
-        stopCalled = true
+    
+    var closeCalled: Bool = false
+    func close(completion: @escaping ResultHandler<Void>) {
+        closeCalled = true
     }
 }
