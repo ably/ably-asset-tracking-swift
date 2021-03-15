@@ -1,5 +1,6 @@
 import Foundation
 
+// swiftlint:disable missing_docs
 public protocol Proximity { }
 
 public class DefaultProximity: Proximity {
@@ -24,6 +25,9 @@ public class DefaultProximity: Proximity {
     }
 }
 
+/**
+ Defines the methods to be implemented by proximity handlers.
+*/
 public protocol ProximityHandler {
     /**
      The desired proximity has been reached.

@@ -1,6 +1,7 @@
 import Foundation
 
 // swiftlint:disable identifier_name
+// swiftlint:disable missing_docs
 public enum Environment {
     private static let infoDictionary: [String: Any] = {
         guard let dict = Bundle.main.infoDictionary else {

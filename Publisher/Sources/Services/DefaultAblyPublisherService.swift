@@ -83,7 +83,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                 return
             }
             
-            self.delegate?.publisherService(sender: self, didFailWithError:error.toErrorInformation())
+            self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
         }
     }
 

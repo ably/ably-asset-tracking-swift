@@ -1,4 +1,5 @@
 import Foundation
+// swiftlint:disable trailing_whitespace
 
 /**
  Default error types used in SDK error calls.
