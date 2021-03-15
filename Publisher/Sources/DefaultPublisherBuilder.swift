@@ -4,6 +4,7 @@ import UIKit
 class DefaultPublisherBuilder: NSObject, PublisherBuilder {
     private var connection: ConnectionConfiguration?
     private var mapboxConfiguration: MapboxConfiguration?
+    private var locationSource: LocationSource?
     private var logConfiguration: LogConfiguration?
     private var routingProfile: RoutingProfile?
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
@@ -15,6 +16,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
     private init(connection: ConnectionConfiguration?,
                  mapboxConfiguration: MapboxConfiguration?,
                  logConfiguration: LogConfiguration?,
+                 locationSource: LocationSource?,
                  routingProfile: RoutingProfile?,
                  delegate: PublisherDelegate?,
                  delegateObjectiveC: PublisherDelegateObjectiveC?,
@@ -22,6 +24,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
         self.logConfiguration = logConfiguration
+        self.locationSource = locationSource
         self.routingProfile = routingProfile
         self.delegate = delegate
         self.delegateObjectiveC = delegateObjectiveC
@@ -53,14 +56,14 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
         else {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }
-
+        
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
                                           mapboxConfiguration: mapboxConfiguration,
                                           logConfiguration: logConfiguration,
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyService: DefaultAblyPublisherService(configuration: connection),
-                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration),
+                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locationSource),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration))
         publisher.delegate = delegate
         publisher.delegateObjectiveC = nil
@@ -71,6 +74,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
         return DefaultPublisherBuilder(connection: configuration,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -81,6 +85,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -91,6 +96,18 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: configuration,
+                                       locationSource: locationSource,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
+    }
+    
+    func locationSource(_ source: LocationSource?) -> PublisherBuilder {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       locationSource: source,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -101,6 +118,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: profile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -111,6 +129,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: nil,
@@ -121,6 +140,7 @@ class DefaultPublisherBuilder: NSObject, PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -162,7 +182,7 @@ extension DefaultPublisherBuilder: PublisherBuilderObjectiveC {
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyService: DefaultAblyPublisherService(configuration: connection),
-                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration),
+                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locationSource),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration))
         publisher.delegate = nil
         publisher.delegateObjectiveC = delegateObjectiveC
@@ -174,6 +194,7 @@ extension DefaultPublisherBuilder: PublisherBuilderObjectiveC {
         return DefaultPublisherBuilder(connection: configuration,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -185,6 +206,7 @@ extension DefaultPublisherBuilder: PublisherBuilderObjectiveC {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -196,6 +218,19 @@ extension DefaultPublisherBuilder: PublisherBuilderObjectiveC {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: configuration,
+                                       locationSource: locationSource,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       delegateObjectiveC: delegateObjectiveC,
+                                       resolutionPolicyFactory: resolutionPolicyFactory)
+    }
+    
+    @objc
+    func locationSource(_ source: LocationSource?) -> PublisherBuilderObjectiveC {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       locationSource: source,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -207,6 +242,7 @@ extension DefaultPublisherBuilder: PublisherBuilderObjectiveC {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: profile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -218,6 +254,7 @@ extension DefaultPublisherBuilder: PublisherBuilderObjectiveC {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        delegateObjectiveC: delegateObjectiveC,
@@ -229,6 +266,7 @@ extension DefaultPublisherBuilder: PublisherBuilderObjectiveC {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: nil,
                                        delegateObjectiveC: delegate,

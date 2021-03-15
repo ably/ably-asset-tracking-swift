@@ -11,9 +11,10 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var routingProfileLabel: UILabel!
     @IBOutlet private weak var routingProfileAvtivityIndicator: UIActivityIndicatorView!
     
-    
     private let assetAnnotationReuseIdentifier = "AssetAnnotationViewReuseIdentifier"
     private let trackingId: String
+    private let historyLocation: [CLLocation]?
+    
     private var publisher: Publisher?
 
     private var location: CLLocation?
@@ -22,12 +23,13 @@ class MapViewController: UIViewController {
     private var trackables: [Trackable] = []
 
     // MARK: Initialization
-    init(trackingId: String) {
+    init(trackingId: String, historyLocation: [CLLocation]?) {
         self.trackingId = trackingId
-        let viewControllerType = MapViewController.self
-        super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
+        self.historyLocation = historyLocation
+        
+        super.init(nibName: String(describing: MapViewController.self), bundle: Bundle(for: MapViewController.self))
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -47,11 +49,12 @@ class MapViewController: UIViewController {
     private func setupPublisher() {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         currentResolution = resolution
-
+        
         publisher = try! PublisherFactory.publishers()
             .connection(ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example"))
             .mapboxConfiguration(MapboxConfiguration(mapboxKey: Environment.MAPBOX_ACCESS_TOKEN))
             .log(LogConfiguration())
+            .locationSource(LocationSource(locationSource: historyLocation))
             .routingProfile(.driving)
             .delegate(self)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
@@ -143,14 +146,14 @@ class MapViewController: UIViewController {
         let drivingTraffic = UIAlertAction(title: RoutingProfile.drivingTraffic.description, style: .default) { [weak self] _ in
             self?.changeRoutingProfile(.drivingTraffic)
         }
-        
+
         alertController.addAction(driving)
         alertController.addAction(cycling)
         alertController.addAction(walking)
         alertController.addAction(drivingTraffic)
-        
+
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
+
         navigationController?.present(alertController, animated: true, completion: nil)
     }
     
@@ -166,7 +169,7 @@ class MapViewController: UIViewController {
             }
         }
     }
-
+    
     @objc
     func onEditButtonPressed() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
