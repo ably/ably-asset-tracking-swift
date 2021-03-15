@@ -1,3 +1,5 @@
+import Ably
+
 public class ConnectionConfiguration: NSObject {
     public let apiKey: String
     public let clientId: String
@@ -6,5 +8,11 @@ public class ConnectionConfiguration: NSObject {
     public init(apiKey: String, clientId: String) {
         self.apiKey = apiKey
         self.clientId = clientId
+    }
+    
+    func getClientOptions() -> ARTClientOptions {
+        let clientOptions = ARTClientOptions(key: apiKey)
+        clientOptions.clientId = clientId
+        return clientOptions
     }
 }
