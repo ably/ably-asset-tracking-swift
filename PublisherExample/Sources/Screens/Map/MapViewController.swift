@@ -169,12 +169,22 @@ extension MapViewController: PublisherDelegate {
     }
 
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
-        connectionStatusLabel.text = "Connection state: \(state)"
+        connectionStatusLabel.text = "Connection state: \(state.description)"
     }
 
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
         currentResolution = resolution
         updateResolutionLabel()
+    }
+}
+
+extension ConnectionState {
+    var description: String {
+        switch self {
+        case .online: return "Online"
+        case .offline: return "Offline"
+        case .failed: return "Failed"
+        }
     }
 }
 

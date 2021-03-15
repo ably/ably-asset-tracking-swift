@@ -30,7 +30,7 @@ public protocol SubscriberDelegateObjectiveC: AnyObject {
         - status: Updated connection status.
      */
     @objc
-    func subscriber(sender: SubscriberObjectiveC, didChangeAssetConnectionStatus status: AssetConnectionStatus)
+    func subscriber(sender: SubscriberObjectiveC, didChangeAssetConnectionStatus status: ConnectionState)
 }
 
 public protocol SubscriberDelegate: AnyObject {
@@ -59,5 +59,5 @@ public protocol SubscriberDelegate: AnyObject {
         - sender: `Subscriber` instance.
         - status: Updated connection status.
      */
-    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: AssetConnectionStatus)
+    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState)
 }

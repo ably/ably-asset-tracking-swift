@@ -191,7 +191,7 @@ extension MapViewController: SubscriberDelegate {
         scrollToReceivedLocation()
     }
 
-    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: AssetConnectionStatus) {
+    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
         assetStatusLabel.text = status == .online ? "The asset is online" : "The asset is offline"
     }
 }

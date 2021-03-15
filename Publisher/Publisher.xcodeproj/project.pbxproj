@@ -13,7 +13,6 @@
 		180F61772586341E0014B310 /* DefaultPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61712586341E0014B310 /* DefaultPublisher.swift */; };
 		180F61792586341E0014B310 /* AblyPublisherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61742586341E0014B310 /* AblyPublisherService.swift */; };
 		180F617A2586341E0014B310 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61752586341E0014B310 /* LocationService.swift */; };
-		183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183BE6B72588AC8D0097A30B /* ConnectionState.swift */; };
 		185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DD25889EBB00E2D2E2 /* Publisher.swift */; };
 		185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */; };
 		185D6D1B258F573300935049 /* ResolutionPolicyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D6D1A258F573300935049 /* ResolutionPolicyFactory.swift */; };
@@ -67,6 +66,8 @@
 		18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */; };
 		BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FF3FC4C81DED6B6A5792B3 /* Pods_asset_tracking_Publisher.framework */; };
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
+		F617C43525DA5848005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C43425DA5848005E92A2 /* ConnectionState.swift */; };
+		F617C43F25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C43E25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift */; };
 		F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34425AF3E35002799BD /* RoutingProfile.swift */; };
 		F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */; };
 		F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */; };
@@ -99,7 +100,6 @@
 		180F61712586341E0014B310 /* DefaultPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisher.swift; sourceTree = "<group>"; };
 		180F61742586341E0014B310 /* AblyPublisherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblyPublisherService.swift; sourceTree = "<group>"; };
 		180F61752586341E0014B310 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		183BE6B72588AC8D0097A30B /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		184E873225877C6D000DF408 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		185094DD25889EBB00E2D2E2 /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		185094DE25889EBB00E2D2E2 /* DefaultPublisherBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisherBuilder.swift; sourceTree = "<group>"; };
@@ -160,6 +160,8 @@
 		8B412391C99428EFFA9D511B /* Pods-asset_tracking-PublisherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherTests/Pods-asset_tracking-PublisherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		96BA6252D49C6BAA02CFF7B7 /* Pods-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Publisher.release.xcconfig"; path = "Target Support Files/Pods-Publisher/Pods-Publisher.release.xcconfig"; sourceTree = "<group>"; };
 		C8859F81CDD7390E11741B66 /* Pods-asset_tracking-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.release.xcconfig"; sourceTree = "<group>"; };
+		F617C43425DA5848005E92A2 /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
+		F617C43E25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeConnectionState+Extensions.swift"; sourceTree = "<group>"; };
 		F65AC34425AF3E35002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+Extensions.swift"; sourceTree = "<group>"; };
@@ -217,7 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				18FCE195258B7FBB005BC480 /* Common */,
-				185094E325889ED200E2D2E2 /* Model */,
 				180F61732586341E0014B310 /* Services */,
 				185D6D13258F55F800935049 /* Resolution Policy */,
 				F67002E125B1C85600325244 /* Extensions */,
@@ -257,14 +258,6 @@
 				180F61752586341E0014B310 /* LocationService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		185094E325889ED200E2D2E2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				183BE6B72588AC8D0097A30B /* ConnectionState.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		185D6D13258F55F800935049 /* Resolution Policy */ = {
@@ -373,6 +366,7 @@
 				18FCE1DA258B8264005BC480 /* EventName.swift */,
 				F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */,
 				F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */,
+				F617C43425DA5848005E92A2 /* ConnectionState.swift */,
 			);
 			name = Model;
 			path = ../../Core/Sources/Model;
@@ -433,6 +427,7 @@
 				F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */,
 				F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */,
 				F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */,
+				F617C43E25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -657,11 +652,11 @@
 				18C7B15F25B6109E000A1418 /* DefaultTrackableSetListener.swift in Sources */,
 				18C7B16025B6109E000A1418 /* DefaultResolutionPolicyFactory.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
+				F617C43525DA5848005E92A2 /* ConnectionState.swift in Sources */,
 				F6D4CFE925D677560071A6A9 /* PublisherDelegate.swift in Sources */,
 				18C7B1BC25B6135A000A1418 /* ResolutionPolicy.swift in Sources */,
 				18FCE1E4258B8264005BC480 /* GeoJSONMessage.swift in Sources */,
 				185D6D1B258F573300935049 /* ResolutionPolicyFactory.swift in Sources */,
-				183BE6B82588AC8D0097A30B /* ConnectionState.swift in Sources */,
 				18C7B1BD25B6135A000A1418 /* TrackableResolutionRequest.swift in Sources */,
 				185094E025889EBB00E2D2E2 /* DefaultPublisherBuilder.swift in Sources */,
 				18C7B16425B6109E000A1418 /* BatteryLevelProvider.swift in Sources */,
@@ -675,6 +670,7 @@
 				18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */,
 				180F617A2586341E0014B310 /* LocationService.swift in Sources */,
 				F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */,
+				F617C43F25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift in Sources */,
 				F6A2CFFD25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */,
 				F6A6B68025C9883E00A547D9 /* MapboxConfiguration+Extensions.swift in Sources */,
 				F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */,
