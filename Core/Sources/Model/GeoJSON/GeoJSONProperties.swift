@@ -54,38 +54,56 @@ class GeoJSONProperties: Codable {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        accuracyHorizontal = try container.decode(Double.self, forKey: .accuracyHorizontal)
-        if let accuracyValidationError = LocationValidator.isAccuracyValid(accuracyHorizontal) {
+        let horizontalAccuracy = try container.decode(Double.self, forKey: .accuracyHorizontal)
+        if let accuracyValidationError = LocationValidator.isAccuracyValid(horizontalAccuracy) {
             throw accuracyValidationError
         }
         
+        accuracyHorizontal = horizontalAccuracy
         time = try container.decode(Double.self, forKey: .time)
+        
         floor = try? container.decode(Int.self, forKey: .floor)
-        speed = try? container.decode(Double.self, forKey: .speed)
-        accuracySpeed = try? container.decode(Double.self, forKey: .accuracySpeed)
-        accuracyVertical = try? container.decode(Double.self, forKey: .accuracyVertical)
-        accuracyBearing = try? container.decode(Double.self, forKey: .accuracyBearing)
-        bearing = try? container.decode(Double.self, forKey: .bearing)
+        speed = try? container.decode(Double.self, forKey: .speed).isLessThanZeroThenNil()
+        accuracySpeed = try? container.decode(Double.self, forKey: .accuracySpeed).isLessThanZeroThenNil()
+        accuracyVertical = try? container.decode(Double.self, forKey: .accuracyVertical).isLessThanZeroThenNil()
+        accuracyBearing = try? container.decode(Double.self, forKey: .accuracyBearing).isLessThanZeroThenNil()
+        bearing = try? container.decode(Double.self, forKey: .bearing).isLessThanZeroThenNil()
     }
 
     init(location: CLLocation) throws {
-        time = location.timestamp.timeIntervalSince1970
-        floor = location.floor?.level
-        
         if let accuracyValidationError = LocationValidator.isAccuracyValid(location.horizontalAccuracy) {
             throw accuracyValidationError
         }
         
         accuracyHorizontal = location.horizontalAccuracy
-        speed = location.speed >= 0 ? location.speed : nil
-        accuracySpeed = location.speedAccuracy >= 0 ? location.speedAccuracy : nil
-        accuracyVertical = location.verticalAccuracy >= 0 ? location.verticalAccuracy : nil
-
-        bearing = location.course >= 0 ? location.course : nil
+        time = location.timestamp.timeIntervalSince1970
+        
+        floor = location.floor?.level
+        speed = location.speed.isLessThanZeroThenNil()
+        accuracySpeed = location.speedAccuracy.isLessThanZeroThenNil()
+        accuracyVertical = location.verticalAccuracy.isLessThanZeroThenNil()
+        bearing = location.course.isLessThanZeroThenNil()
+        
         if #available(iOS 13.4, *) {
-            accuracyBearing = location.courseAccuracy
+            accuracyBearing = location.courseAccuracy.isLessThanZeroThenNil()
         } else {
             accuracyBearing = nil
         }
+    }
+}
+
+private extension Optional where Wrapped == Double {
+    func isLessThanZeroThenNil() -> Double? {
+        guard let value = self else {
+            return nil
+        }
+        
+        return value.isLessThanZeroThenNil()
+    }
+}
+
+private extension Double {
+    func isLessThanZeroThenNil() -> Double? {
+        return self.isLess(than: 0) ? nil : self
     }
 }
