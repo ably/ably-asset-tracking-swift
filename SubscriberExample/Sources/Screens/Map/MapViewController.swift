@@ -2,13 +2,24 @@ import UIKit
 import MapKit
 import AblyAssetTracking
 
+private struct MapConstraints {
+    static let regionLatitude: CLLocationDistance = 600
+    static let regionLongitude: CLLocationDistance = 600
+    static let minimumDistanceToCenter: CLLocationDistance = 300
+}
+
+private struct Identifiers {
+    static let truckAnnotation = "MapTruckAnnotationViewIdentifier"
+}
+
 class MapViewController: UIViewController {
+    // MARK: - Outlets
     @IBOutlet private weak var assetStatusLabel: UILabel!
     @IBOutlet private weak var animationSwitch: UISwitch!
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var resolutionLabel: UILabel!
 
-    private let truckAnnotationViewIdentifier = "MapTruckAnnotationViewIdentifier"
+    // MARK: - Properties
     private let trackingId: String
     private var subscriber: Subscriber?
     private var errors: [ErrorInformation] = []
@@ -18,7 +29,7 @@ class MapViewController: UIViewController {
 
     private var location: CLLocation? { didSet { updateLocationAnnotation() } }
 
-    // MARK: Initialization
+    // MARK: - Initialization
     init(trackingId: String) {
         self.trackingId = trackingId
 
@@ -30,16 +41,14 @@ class MapViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: View lifecycle
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Tracking \(trackingId)"
-        assetStatusLabel.text = "The asset connection status is not determined"
+        assetStatusLabel.text = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .none).desc
         setupSubscriber()
-
-        mapView.delegate = self
-        mapView.register(TruckAnnotationView.self, forAnnotationViewWithReuseIdentifier: truckAnnotationViewIdentifier)
-
+        setupMapView()
+        setupControlsBehaviour()
         updateResolutionLabel()
     }
 
@@ -50,8 +59,18 @@ class MapViewController: UIViewController {
         resolutionDebounceTimer = nil
     }
 
-    // MARK: View setup
+    // MARK: - View setup
+    private func setupMapView() {
+        mapView.delegate = self
+        mapView.register(TruckAnnotationView.self, forAnnotationViewWithReuseIdentifier: Identifiers.truckAnnotation)
+    }
 
+    private func setupControlsBehaviour() {
+        resolutionLabel.font = UIFont.systemFont(ofSize: 14)
+        assetStatusLabel.font = UIFont.systemFont(ofSize: 14)
+    }
+    
+    // MARK: - Subscriber setup
     private func setupSubscriber() {
         subscriber = try? SubscriberFactory.subscribers()
             .connection(ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY,
@@ -62,7 +81,7 @@ class MapViewController: UIViewController {
             .delegate(self)
             .start()
     }
-
+    
     // MARK: Utils
     private func updateLocationAnnotation() {
         guard let location = self.location else {
@@ -92,16 +111,17 @@ class MapViewController: UIViewController {
     }
 
     private func scrollToReceivedLocation() {
-        let minimumDistanceToCenter: Double = 300
         let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
                                    longitude: mapView.region.center.longitude)
+        
         guard let location = self.location,
-              location.distance(from: mapCenter) > minimumDistanceToCenter
+              location.distance(from: mapCenter) > MapConstraints.minimumDistanceToCenter
         else { return }
 
         let region = MKCoordinateRegion(center: location.coordinate,
-                                        latitudinalMeters: 600,
-                                        longitudinalMeters: 600)
+                                        latitudinalMeters: MapConstraints.regionLatitude,
+                                        longitudinalMeters: MapConstraints.regionLongitude)
+        
         mapView.setRegion(region, animated: true)
     }
 
@@ -114,8 +134,11 @@ class MapViewController: UIViewController {
     }
 
     private func performResolutionUpdate() {
-        let resolution = resolutionForCurrentMapZoom()
-        if resolution == currentResolution { return }
+        let resolution = ResolutionHelper.createResolution(forZoom: mapView.getZoomLevel())
+        
+        guard resolution != currentResolution else {
+            return
+        }
 
         subscriber?.sendChangeRequest(resolution: resolution) { [weak self] result in
             switch result {
@@ -124,54 +147,33 @@ class MapViewController: UIViewController {
                 self?.updateResolutionLabel()
                 logger.info("Updated resolution to: \(resolution)")
             case .failure(let error):
-                let alertVC = UIAlertController(title: "Error", message: "Can't change resolution: \(error.localizedDescription)", preferredStyle: .alert)
-                alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self?.present(alertVC, animated: true, completion: nil)
+                let errorDescription = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .changeError(error))
+                self?.showErrorDialog(withMessage: errorDescription)
             }
         }
     }
 
-    private func resolutionForCurrentMapZoom() -> Resolution {
-        let zoom = mapView.getZoomLevel()
-        if zoom < 10 {
-            return Resolution(accuracy: .minimum, desiredInterval: 120 * 1000, minimumDisplacement: 10000)
-        } else if 10.0...12.0 ~= zoom {
-            return Resolution(accuracy: .low, desiredInterval: 60 * 1000, minimumDisplacement: 5000)
-        } else if 12.0...14.0 ~= zoom {
-            return Resolution(accuracy: .balanced, desiredInterval: 30 * 1000, minimumDisplacement: 100)
-        } else if 14.0...16.0 ~= zoom {
-            return Resolution(accuracy: .high, desiredInterval: 10 * 1000, minimumDisplacement: 30)
-        }
-        return Resolution(accuracy: .maximum, desiredInterval: 5 * 1000, minimumDisplacement: 1)
-    }
-
     private func updateResolutionLabel() {
-        guard let resolution = currentResolution
-        else {
-            resolutionLabel.text = "Resolution: None"
-            resolutionLabel.font = UIFont.systemFont(ofSize: 14)
+        guard let resolution = currentResolution else {
+            resolutionLabel.text = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .none)
             return
         }
-        resolutionLabel.font = UIFont.systemFont(ofSize: 14)
-        resolutionLabel.text = """
-            Resolution:
-            Accuracy: \(resolution.accuracy)
-            Minimum displacement: \(resolution.minimumDisplacement)
-            Desired interval: \(resolution.desiredInterval)
-            """
+        
+        resolutionLabel.text = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .notEmpty(resolution))
+    }
+    
+    private func showErrorDialog(withMessage message: String) {
+        let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
     }
 }
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? TruckAnnotation
-        else { return nil }
+        guard let annotation = annotation as? TruckAnnotation else { return nil }
 
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: truckAnnotationViewIdentifier) as? TruckAnnotationView ??
-            TruckAnnotationView(annotation: annotation, reuseIdentifier: truckAnnotationViewIdentifier)
-        annotationView.bearing = annotation.bearing
-        annotationView.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
-        return annotationView
+        return createAnnotationView(for: annotation)
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -179,10 +181,26 @@ extension MapViewController: MKMapViewDelegate {
         logger.debug("Current map zoom level: \(zoom)")
         scheduleResolutionUpdate()
     }
+    
+    private func createAnnotationView(for annotation: TruckAnnotation) -> MKAnnotationView {
+        let annotationView = getAnnotationView(for: annotation)
+        annotationView.bearing = annotation.bearing
+        annotationView.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
+        return annotationView
+    }
+        
+    private func getAnnotationView(for annotation: TruckAnnotation) -> TruckAnnotationView {
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Identifiers.truckAnnotation) as? TruckAnnotationView else {
+            return TruckAnnotationView(annotation: annotation, reuseIdentifier: Identifiers.truckAnnotation)
+        }
+        
+        return annotationView
+    }
 }
 
 extension MapViewController: SubscriberDelegate {
     func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
+        showErrorDialog(withMessage: error.description)
         errors.append(error)
     }
 
@@ -192,8 +210,8 @@ extension MapViewController: SubscriberDelegate {
     }
 
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
-        assetStatusLabel.font = UIFont.systemFont(ofSize: 14)
-        assetStatusLabel.textColor = status == .online ? .systemGreen : .systemRed
-        assetStatusLabel.text = status == .online ? "online" : "offline"
+        let statusDescAndColor = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .connectionState(status))
+        assetStatusLabel.textColor = statusDescAndColor.color
+        assetStatusLabel.text = statusDescAndColor.desc
     }
 }
