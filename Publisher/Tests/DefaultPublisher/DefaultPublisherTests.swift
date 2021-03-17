@@ -306,7 +306,9 @@ class DefaultPublisherTests: XCTestCase {
         let wasPresent = true
         var receivedWasPresent: Bool?
         ablyService.stopTrackingResultCompletionHandler = { completion in completion?(.success(wasPresent))}
-        ablyService.trackablesGetValue = [Trackable(id: "Trackable1"), Trackable(id: "Trackable2")]
+        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        publisher.add(trackable: Trackable(id: "Trackable1")) { _ in }
+        publisher.add(trackable: Trackable(id: "Trackable2")) { _ in }
 
         let expectation = XCTestExpectation()
 
@@ -343,7 +345,7 @@ class DefaultPublisherTests: XCTestCase {
     func testRemove_activeTrackable() {
         ablyService.trackCompletionHandler = { completion in completion?(.success)}
         ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true)) }
-        ablyService.trackablesGetValue = []
+
         var expectation = XCTestExpectation(description: "Handler for `track` call")
         expectation.expectedFulfillmentCount = 1
 

@@ -47,4 +47,18 @@ public class Trackable: NSObject {
         self.constraints = constraints
         super.init()
     }
+    
+    public override var hash: Int {
+        var hasher = Hasher()
+        hasher.combine(id)
+        return hasher.finalize()
+    }
+    
+    public override func isEqual(_ object: Any?) -> Bool {
+        guard let otherObject = object as? Trackable else {
+            return false
+        }
+        
+        return otherObject.id == self.id
+    }
 }

@@ -36,6 +36,7 @@
 		F617C43125DA54AF005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C43025DA54AF005E92A2 /* ConnectionState.swift */; };
 		F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34025AF3E28002799BD /* RoutingProfile.swift */; };
 		F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */; };
+		F66491BD25E909BE0035F45A /* TrackableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66491BC25E909BE0035F45A /* TrackableTests.swift */; };
 		F68E171E25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E171D25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift */; };
 		F68E172425E79D8E009AECEB /* GeoJSONGeometryCLLocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E172325E79D8E009AECEB /* GeoJSONGeometryCLLocationTests.swift */; };
 		F68E172A25E79E4F009AECEB /* GeoJSONPropertiesCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E172925E79E4F009AECEB /* GeoJSONPropertiesCodableTests.swift */; };
@@ -96,6 +97,7 @@
 		F617C43025DA54AF005E92A2 /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		F65AC34025AF3E28002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
+		F66491BC25E909BE0035F45A /* TrackableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableTests.swift; sourceTree = "<group>"; };
 		F68E171D25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometryCodableTests.swift; sourceTree = "<group>"; };
 		F68E172325E79D8E009AECEB /* GeoJSONGeometryCLLocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometryCLLocationTests.swift; sourceTree = "<group>"; };
 		F68E172925E79E4F009AECEB /* GeoJSONPropertiesCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONPropertiesCodableTests.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			children = (
 				180F616A2586340D0014B310 /* GeoJSON */,
 				1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */,
+				F66491BC25E909BE0035F45A /* TrackableTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				180F616C2586340D0014B310 /* GeoJSONMessageCodableTests.swift in Sources */,
 				F68E172A25E79E4F009AECEB /* GeoJSONPropertiesCodableTests.swift in Sources */,
 				18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */,
+				F66491BD25E909BE0035F45A /* TrackableTests.swift in Sources */,
 				F68E172E25E7A206009AECEB /* GeoJSONPropertiesCLLocationTests.swift in Sources */,
 				F68E171E25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift in Sources */,
 				F68E172425E79D8E009AECEB /* GeoJSONGeometryCLLocationTests.swift in Sources */,

@@ -26,6 +26,11 @@ public enum ErrorInformationType {
     case JSONCodingError(for: String)
 
     /**
+     Thrown in case when Trackable with provided identifier already exist.
+     */
+    case trackableAlreadyExist(trackableId: String)
+    
+    /**
      Thrown in case of missing properties in builder
      */
     case incompleteConfiguration(missingProperty: String, forBuilderOption: String)
@@ -37,6 +42,7 @@ public enum ErrorInformationType {
         case .subscriberError(let errorMessage): return "SubscriberError || ErrorMessage: \(errorMessage)"
         case .JSONCodingError(let object): return "Error while parsing: \(object)"
         case .incompleteConfiguration(let missingProperty, let builderOption): return "Missing mandatory property: \(missingProperty). Did you forgot to call `\(builderOption)` on builder object?"
+        case .trackableAlreadyExist(let trackableId): return "Trackable with id: \(trackableId) already exist."
         }
     }
 }

@@ -257,7 +257,7 @@ class MapViewController: UIViewController {
     }
 
     private func navigateToTrackablesScreen() {
-        let viewController = TrackablesViewController(trackables: trackables)
+        let viewController = TrackablesViewController(trackables: trackables, publisher: publisher)
         viewController.delegate = self
         navigationController?.pushViewController(viewController, animated: true)
     }
@@ -302,28 +302,12 @@ extension MapViewController: PublisherDelegate {
 
 extension MapViewController: TrackablesViewControllerDelegate {
     func trackablesViewController(sender: TrackablesViewController, didAddTrackable trackable: Trackable) {
-        publisher?.add(trackable: trackable) { [weak self] result in
-            switch result {
-            case .success:
-                logger.info("Added trackable: \(trackable.id)")
-                self?.trackables.append(trackable)
-            case .failure(let error):
-                let alertVC = UIAlertController(title: "Error", message: "Can't add trackable: \(error.localizedDescription)", preferredStyle: .alert)
-                alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self?.present(alertVC, animated: true, completion: nil)
-            }
-        }
+        logger.info("Added trackable: \(trackable.id)")
+        self.trackables.append(trackable)
     }
 
-    func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable) {
-        publisher?.remove(trackable: trackable) { [weak self] result in
-            switch result {
-            case .success(let wasPresent):
-                self?.trackables.removeAll(where: { $0 == trackable })
-                logger.info("Trackable removed: \(trackable.id). Was present: \(wasPresent)")
-            case .failure(let error):
-                self?.showError(error: error)
-            }
-        }
+    func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable, wasPresent: Bool) {
+        self.trackables.removeAll(where: { $0 == trackable })
+        logger.info("Trackable removed: \(trackable.id). Was present: \(wasPresent)")
     }
 }

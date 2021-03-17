@@ -26,9 +26,6 @@ class MockAblyPublisherService: AblyPublisherService {
 
         stopTrackingResultCompletionHandler?(completion)
     }
-    
-    var trackablesGetValue: [Trackable] = []
-    var trackables: [Trackable] { return trackablesGetValue }
 
     var wasDelegateSet: Bool = false
     var delegate: AblyPublisherServiceDelegate? {

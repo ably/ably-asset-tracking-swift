@@ -7,7 +7,6 @@ class DefaultAblyPublisherService: AblyPublisherService {
     private var channels: [Trackable: ARTRealtimeChannel]
 
     weak var delegate: AblyPublisherServiceDelegate?
-    var trackables: [Trackable] { return Array(channels.keys) }
 
     init(configuration: ConnectionConfiguration) {
         self.client = ARTRealtime(options: configuration.getClientOptions())
@@ -53,6 +52,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channel.presence.enter(data) { error in
             guard let error = error else {
                 logger.debug("Entered to presence successfully", source: "AblyPublisherService")
+                self.channels[trackable] = channel
                 completion?(.success)
                 return
             }
@@ -60,8 +60,6 @@ class DefaultAblyPublisherService: AblyPublisherService {
             logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
             completion?(.failure(error.toErrorInformation()))
         }
-        
-        channels[trackable] = channel
     }
 
     func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, batteryLevel: Float?, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
@@ -70,24 +68,24 @@ class DefaultAblyPublisherService: AblyPublisherService {
             completion?(.failure(errorInformation))
             return
         }
-        
+
         guard let message = createARTMessage(for: locationUpdate, and: batteryLevel) else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Cannot create location update message."))
             self.delegate?.publisherService(sender: self, didFailWithError: errorInformation)
             return
         }
-        
+
         channel.publish([message]) { [weak self] error in
             guard let self = self,
                   let error = error else {
                 logger.debug("ablyService.didSendEnhancedLocation.", source: "DefaultAblyService")
                 return
             }
-            
+
             self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
         }
     }
-    
+
     private func createARTMessage(for locationUpdate: EnhancedLocationUpdate, and batteryLevel: Float?) -> ARTMessage? {
         do {
             let geoJson = try EnhancedLocationUpdateMessage(locationUpdate: locationUpdate, batteryLevel: batteryLevel)
