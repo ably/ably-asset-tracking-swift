@@ -230,8 +230,9 @@ extension DefaultPublisher {
     // swiftlint:disable line_length
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard activeTrackable == nil else {
-            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "For this preview version of the SDK, track() method may only be called once for any given instance of this class."))
-            callback(error: errorInformation, handler: event.resultHandler)
+            let error = ErrorInformation(type: .publisherError(errorMessage: "For this beta version of the SDK, track() method may only be called once for any given instance of this class."))
+            callback(error: error, handler: event.resultHandler)
+
             return
         }
 
