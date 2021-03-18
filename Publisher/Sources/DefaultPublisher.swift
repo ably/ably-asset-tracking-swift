@@ -168,17 +168,7 @@ extension DefaultPublisher: PublisherObjectiveC {
 extension DefaultPublisher {
     private func enqueue(event: PublisherEvent) {
         logger.trace("Received event: \(event)")
-        performOnWorkingThread { [weak self] in
-            if self?.isStopped ?? true {
-                guard let stopEvent = event as? StopEvent else {
-                    let error = ErrorInformation(type: .publisherStoppedException)
-                    self?.notifyDelegateDidFailWithError(error)
-                    return
-                }
-                self?.performStopPublisherEvent(stopEvent)
-                return
-            }
-            
+        performOnWorkingThread { [weak self] in            
             switch event {
             case let event as TrackTrackableEvent: self?.performTrackTrackableEvent(event)
             case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
@@ -236,6 +226,11 @@ extension DefaultPublisher {
     // MARK: Track
     // swiftlint:disable line_length
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
+        guard !isStopped else {
+            callback(error: ErrorInformation(type: .publisherStoppedException), handler: event.resultHandler)
+            return
+        }
+        
         guard activeTrackable == nil else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "For this preview version of the SDK, track() method may only be called once for any given instance of this class."))
             callback(error: errorInformation, handler: event.resultHandler)
@@ -261,6 +256,11 @@ extension DefaultPublisher {
     }
 
     private func performTrackableReadyToTrack(_ event: TrackableReadyToTrackEvent) {
+        guard !isStopped else {
+            callback(error: ErrorInformation(type: .publisherStoppedException), handler: event.resultHandler)
+            return
+        }
+        
         if activeTrackable != event.trackable {
             activeTrackable = event.trackable
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
@@ -283,6 +283,11 @@ extension DefaultPublisher {
     }
 
     private func performPresenceJoinedSuccessfullyEvent(_ event: PresenceJoinedSuccessfullyEvent) {
+        guard !isStopped else {
+            callback(error: ErrorInformation(type: .publisherStoppedException), handler: event.resultHandler)
+            return
+        }
+        
         trackables.insert(event.trackable)
         locationService.startUpdatingLocation()
         resolveResolution(trackable: event.trackable)
@@ -292,6 +297,11 @@ extension DefaultPublisher {
 
     // MARK: RoutingProfile
     private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
+        guard !isStopped else {
+            callback(error: ErrorInformation(type: .publisherStoppedException), handler: event.resultHandler)
+            return
+        }
+        
         routeProvider.changeRoutingProfile(to: routingProfile) { [weak self] result in
             switch result {
             case .success(let route):
@@ -312,6 +322,11 @@ extension DefaultPublisher {
 
     // MARK: Add trackable
     private func performAddTrackableEvent(_ event: AddTrackableEvent) {
+        guard !isStopped else {
+            callback(error: ErrorInformation(type: .publisherStoppedException), handler: event.resultHandler)
+            return
+        }
+        
         guard !trackables.contains(event.trackable) else {
             let error = ErrorInformation(type: .trackableAlreadyExist(trackableId: event.trackable.id))
             callback(error: error, handler: event.resultHandler)
@@ -332,6 +347,11 @@ extension DefaultPublisher {
 
     // MARK: Remove trackable
     private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
+        guard !isStopped else {
+            callback(error: ErrorInformation(type: .publisherStoppedException), handler: event.resultHandler)
+            return
+        }
+        
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] result in
             switch result {
             case .success(let wasPresent):
@@ -364,6 +384,11 @@ extension DefaultPublisher {
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
+        guard !isStopped else {
+            callback(error: ErrorInformation(type: .publisherStoppedException), handler: event.resultHandler)
+            return
+        }
+        
         trackables.remove(event.trackable)
         hooks.trackables?.onTrackableRemoved(trackable: event.trackable)
         removeAllSubscribers(forTrackable: event.trackable)
@@ -375,6 +400,11 @@ extension DefaultPublisher {
     }
 
     private func performClearActiveTrackableEvent(_ event: ClearActiveTrackableEvent) {
+        guard !isStopped else {
+            callback(error: ErrorInformation(type: .publisherStoppedException), handler: event.resultHandler)
+            return
+        }
+        
         if activeTrackable == event.trackable {
             activeTrackable = nil
             hooks.trackables?.onActiveTrackableChanged(trackable: nil)
