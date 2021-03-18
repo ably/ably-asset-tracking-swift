@@ -63,7 +63,7 @@ struct PresenceUpdateEvent: PublisherEvent {
     let clientId: String
 }
 
-struct CloseEvent: PublisherEvent {
+struct StopEvent: PublisherEvent {
     let resultHandler: ResultHandler<Void>
 }
 

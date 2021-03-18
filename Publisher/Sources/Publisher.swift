@@ -78,7 +78,7 @@ public protocol PublisherObjectiveC: AnyObject {
      Stops this publisher from publishing locations. Once a publisher has been stopped, it cannot be restarted.
      */
     @objc
-    func close(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
 }
 
 /**
@@ -157,5 +157,5 @@ public protocol Publisher {
     /**
      Stops this publisher from publishing locations. Once a publisher has been stopped, it cannot be restarted.
      */
-    func close(completion: @escaping ResultHandler<Void>) 
+    func stop(completion: @escaping ResultHandler<Void>) 
 }

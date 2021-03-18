@@ -17,6 +17,7 @@ class DefaultPublisher: Publisher {
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
     private let batteryLevelProvider: BatteryLevelProvider
+    private var isStopped: Bool = false
 
     // ResolutionPolicy
     private let hooks: DefaultResolutionPolicyHooks
@@ -95,8 +96,8 @@ class DefaultPublisher: Publisher {
         enqueue(event: event)
     }
     
-    func close(completion: @escaping ResultHandler<Void>) {
-        let event = CloseEvent(resultHandler: completion)
+    func stop(completion: @escaping ResultHandler<Void>) {
+        let event = StopEvent(resultHandler: completion)
         enqueue(event: event)
     }
 }
@@ -151,8 +152,8 @@ extension DefaultPublisher: PublisherObjectiveC {
     }
     
     @objc
-    func close(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.close { result in
+    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        self.stop { result in
             switch result {
             case .success:
                 onSuccess()
@@ -168,6 +169,16 @@ extension DefaultPublisher {
     private func enqueue(event: PublisherEvent) {
         logger.trace("Received event: \(event)")
         performOnWorkingThread { [weak self] in
+            if self?.isStopped ?? true {
+                guard let stopEvent = event as? StopEvent else {
+                    let error = ErrorInformation(type: .publisherStoppedException)
+                    self?.notifyDelegateDidFailWithError(error)
+                    return
+                }
+                self?.performStopPublisherEvent(stopEvent)
+                return
+            }
+            
             switch event {
             case let event as TrackTrackableEvent: self?.performTrackTrackableEvent(event)
             case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
@@ -186,7 +197,7 @@ extension DefaultPublisher {
             case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
-            case let event as CloseEvent: self?.performClosePublisherEvent(event)
+            case let event as StopEvent: self?.performStopPublisherEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -194,10 +205,6 @@ extension DefaultPublisher {
 
     private func callback<T: Any>(value: T, handler: @escaping ResultHandler<T>) {
         performOnMainThread { handler(.success(value)) }
-    }
-
-    private func callback(_ handler: @escaping ResultHandler<Bool>) {
-        performOnMainThread { handler(.success(true)) }
     }
 
     private func callback<T: Any>(error: ErrorInformation, handler: @escaping ResultHandler<T>) {
@@ -338,9 +345,22 @@ extension DefaultPublisher {
     }
     
     // MARK: Stop publisher
-    private func performClosePublisherEvent(_ event: CloseEvent) {
-        locationService.stopUpdatingLocation()
-        ablyService.close(completion: event.resultHandler)
+    private func performStopPublisherEvent(_ event: StopEvent) {
+        if isStopped {
+            callback(value: Void(), handler: event.resultHandler)
+            return
+        }
+        
+        ablyService.close { [weak self] result in
+            switch result {
+            case .success:
+                self?.locationService.stopUpdatingLocation()
+                self?.isStopped = true
+                self?.callback(value: Void(), handler: event.resultHandler)
+            case .failure(let error):
+                self?.callback(error: error, handler: event.resultHandler)
+            }
+        }
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
