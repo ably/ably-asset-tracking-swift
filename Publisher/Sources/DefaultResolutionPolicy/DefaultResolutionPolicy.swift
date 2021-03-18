@@ -73,7 +73,7 @@ class DefaultResolutionPolicy: ResolutionPolicy {
     }
 
     private func higher(_ lhs: Accuracy, _ rhs: Accuracy) -> Accuracy {
-        return lhs.rawValue > rhs.rawValue ? lhs : rhs
+        return lhs > rhs ? lhs : rhs
     }
 
     private func adjustToBatteryLevel(resolution: Resolution, constraints: DefaultResolutionConstraints) -> Resolution {

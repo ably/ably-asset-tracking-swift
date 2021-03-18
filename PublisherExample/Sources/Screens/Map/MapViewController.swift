@@ -123,12 +123,11 @@ class MapViewController: UIViewController {
     
     private func closePublisher(completion: ResultHandler<Void>?) {
         trackables.removeAll()
-        publisher?.close { [weak self] result in
+        publisher?.stop { [weak self] result in
             switch result {
             case .success:
                 logger.info("Publisher closed successfully.")
                 self?.locationState = .failed
-                self?.publisher = nil
                 completion?(.success(()))
             case .failure(let error):
                 logger.info("Publisher closing failed. Error: \(error.message).")
@@ -237,11 +236,6 @@ class MapViewController: UIViewController {
     
     @objc
     func onBackButtonPressed() {
-        guard publisher != nil else {
-            self.navigationController?.popViewController(animated: true)
-            return
-        }
-        
         closePublisher { result in
             switch result {
             case .success:

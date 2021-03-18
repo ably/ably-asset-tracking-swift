@@ -31,6 +31,11 @@ public enum ErrorInformationType {
     case trackableAlreadyExist(trackableId: String)
     
     /**
+     Thrown in case when Publisher has already stopped.
+     */
+    case publisherStoppedException
+    
+    /**
      Thrown in case of missing properties in builder
      */
     case incompleteConfiguration(missingProperty: String, forBuilderOption: String)
@@ -43,6 +48,7 @@ public enum ErrorInformationType {
         case .JSONCodingError(let object): return "Error while parsing: \(object)"
         case .incompleteConfiguration(let missingProperty, let builderOption): return "Missing mandatory property: \(missingProperty). Did you forgot to call `\(builderOption)` on builder object?"
         case .trackableAlreadyExist(let trackableId): return "Trackable with id: \(trackableId) already exist."
+        case .publisherStoppedException: return "Cannot perform this action when publisher is stopped."
         }
     }
 }
