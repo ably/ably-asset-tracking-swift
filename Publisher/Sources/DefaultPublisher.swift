@@ -97,8 +97,7 @@ class DefaultPublisher: Publisher {
     }
     
     func stop(completion: @escaping ResultHandler<Void>) {
-        let event = StopEvent(resultHandler: completion)
-        enqueue(event: event)
+        enqueue(event: StopEvent(resultHandler: completion))
     }
 }
 
