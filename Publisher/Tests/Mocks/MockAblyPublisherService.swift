@@ -45,8 +45,14 @@ class MockAblyPublisherService: AblyPublisherService {
         sendEnhancedAssetLocationUpdateParamCompletion = completion
     }
     
+    
     var closeCalled: Bool = false
+    var closeParamCompletion: ResultHandler<Void>?
+    var closeResultCompletionHandler: ((ResultHandler<Void>?) -> Void)?
     func close(completion: @escaping ResultHandler<Void>) {
         closeCalled = true
+        closeParamCompletion = completion
+        
+        closeResultCompletionHandler?(completion)
     }
 }

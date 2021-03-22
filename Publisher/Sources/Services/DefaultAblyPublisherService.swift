@@ -98,13 +98,8 @@ class DefaultAblyPublisherService: AblyPublisherService {
     }
     
     func close(completion: @escaping ResultHandler<Void>) {
-        closeAllChannels { result in
-            switch result {
-            case .success:
-                self.closeClientConnection(completion: completion)
-            case .failure(let error):
-                completion(.failure(error))
-            }
+        closeAllChannels { _ in
+            self.closeClientConnection(completion: completion)
         }
     }
     
@@ -145,7 +140,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                     closingDispatchGroup.leave()
                 case .failure(let error):
                     logger.error("Removing trackable \(channel.key) failed. Error \(error.message)")
-                    completion(.failure(error))
+                    closingDispatchGroup.leave()
                 }
             }
         }
