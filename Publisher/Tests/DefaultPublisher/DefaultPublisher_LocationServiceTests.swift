@@ -131,41 +131,4 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         // It should send enhanced location update to AblyService
         XCTAssertTrue(ablyService.sendEnhancedAssetLocationUpdateCalled)
     }
-    
-    func test_closeConnection_success() {
-        let expectation = XCTestExpectation()
-        ablyService.closeResultCompletionHandler = { callback in
-            callback?(.success)
-            expectation.fulfill()
-        }
-        
-        ablyService.close(completion: { _ in })
-        wait(for: [expectation], timeout: 5.0)
-        
-        XCTAssertTrue(ablyService.closeCalled)
-        XCTAssertNotNil(ablyService.closeParamCompletion)
-    }
-    
-    func test_closeConnection_failure() {
-        let expectation = XCTestExpectation()
-        let closeError = ErrorInformation(type: .publisherError(errorMessage: "TestError."))
-        ablyService.closeResultCompletionHandler = { callback in
-            callback?(.failure(closeError))
-            expectation.fulfill()
-        }
-        
-        ablyService.close { result in
-            switch result {
-            case .success:
-                XCTFail("Success not expected.")
-            case .failure(let error):
-                XCTAssertEqual(error.message, closeError.message)
-            }
-        }
-        
-        wait(for: [expectation], timeout: 5.0)
-        
-        XCTAssertTrue(ablyService.closeCalled)
-        XCTAssertNotNil(ablyService.closeParamCompletion)
-    }
 }
