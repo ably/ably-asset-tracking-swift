@@ -135,7 +135,7 @@ class DefaultPublisherTests: XCTestCase {
     func test_trackCalledMultipleTimes_shouldPass() {
         ablyService.trackCompletionHandler = { completion in completion?(.success)}
         var expectations = [XCTestExpectation]()
-        let trackMethodCalls = Int.random(in: 2...5)
+        let trackMethodCalls = 5
         
         for trackableIndex in 0...trackMethodCalls {
             let expectation = XCTestExpectation()
