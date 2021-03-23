@@ -104,6 +104,7 @@ class DefaultPublisherTests: XCTestCase {
     func testTrack_error_duplicate_track() {
         ablyService.trackCompletionHandler = { completion in completion?(.success)}
         var expectation = XCTestExpectation()
+        let expectedError = ErrorInformation(type: .trackableAlreadyExist(trackableId: self.trackable.id))
 
         // When tracking a trackable
         publisher.track(trackable: trackable) { result in
@@ -116,17 +117,43 @@ class DefaultPublisherTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 5.0)
         expectation = XCTestExpectation()
+        
         // And tracking it once again
-        publisher.track(trackable: Trackable(id: "DuplicateTrackableId")) { result in
+        publisher.track(trackable: trackable) { result in
             switch result {
             case .success:
                 XCTFail("Success callback shouldn't be called")
-            case .failure:
+            case .failure(let error):
                 expectation.fulfill()
+                XCTAssertEqual(error.message, expectedError.message)
             }
         }
         
         wait(for: [expectation], timeout: 5.0)
+    }
+    
+    func test_trackCalledMultipleTimes_shouldPass() {
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
+        var expectations = [XCTestExpectation]()
+        let trackMethodCalls = Int.random(in: 2...5)
+        
+        for trackableIndex in 0...trackMethodCalls {
+            let expectation = XCTestExpectation()
+            let trackable = Trackable(id: "\(trackableIndex)")
+            
+            publisher.track(trackable: trackable) { result in
+                switch result {
+                case .success:
+                    expectation.fulfill()
+                case .failure:
+                    XCTFail("Failure callback shouldn't be called")
+                }
+            }
+            
+            expectations.append(expectation)
+        }
+        
+        wait(for: expectations, timeout: 5.0)
     }
 
     func testTrack_error_ably_service_error() {
