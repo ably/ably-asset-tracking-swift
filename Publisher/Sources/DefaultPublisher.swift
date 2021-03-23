@@ -198,6 +198,7 @@ extension DefaultPublisher {
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             case let event as StopEvent: self?.performStopPublisherEvent(event)
+            case let event as AblyConnectionClosedEvent: self?.performAblyConnectionClosedEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -294,8 +295,7 @@ extension DefaultPublisher {
                 self.route = nil
             }
         }
-
-        publisherState = .working
+        
         callback(value: Void(), handler: event.resultHandler)
     }
 
@@ -394,12 +394,16 @@ extension DefaultPublisher {
             switch result {
             case .success:
                 self?.locationService.stopUpdatingLocation()
-                self?.publisherState = .stopped
-                self?.callback(value: Void(), handler: event.resultHandler)
+                self?.enqueue(event: AblyConnectionClosedEvent(resultHandler: event.resultHandler))
             case .failure(let error):
                 self?.callback(error: error, handler: event.resultHandler)
             }
         }
+    }
+    
+    private func performAblyConnectionClosedEvent(_ event: AblyConnectionClosedEvent) {
+        publisherState = .stopped
+        callback(value: Void(), handler: event.resultHandler)
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
