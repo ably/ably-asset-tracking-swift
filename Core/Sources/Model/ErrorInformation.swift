@@ -40,7 +40,6 @@ public enum ErrorInformationType {
      */
     case subscriberStoppedException
     
-    
     /**
      Thrown in case of missing properties in builder
      */
