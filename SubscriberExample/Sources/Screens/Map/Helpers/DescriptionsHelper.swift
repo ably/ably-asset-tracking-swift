@@ -52,14 +52,14 @@ class DescriptionsHelper {
                 switch connectionState {
                 case .online:
                     return ("online", .systemGreen)
-                case .offline, .failed:
+                case .offline:
                     return ("offline", .systemRed)
+                case .failed:
+                    return ("failed", .systemRed)
                 }
             case .none:
                 return ("The asset connection status is not determined", .black)
             }
-            
-            
         }
     }
 }

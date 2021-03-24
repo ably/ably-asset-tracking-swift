@@ -15,7 +15,6 @@
 		180795D725A4AFA80026F4C1 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795D625A4AFA80026F4C1 /* Proximity.swift */; };
 		180795F625A4AFF50026F4C1 /* TrackableResolutionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180795F525A4AFF50026F4C1 /* TrackableResolutionRequest.swift */; };
 		180F60BE258632750014B310 /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F60B0258632740014B310 /* Subscriber.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		180F61322586332B0014B310 /* SubscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61312586332B0014B310 /* SubscriberTests.swift */; };
 		180F61342586332B0014B310 /* Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180F60AD258632740014B310 /* Subscriber.framework */; };
 		180F6182258634290014B310 /* DefaultSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F617D258634290014B310 /* DefaultSubscriber.swift */; };
 		180F6183258634290014B310 /* AblySubscriberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F617F258634290014B310 /* AblySubscriberService.swift */; };
@@ -38,6 +37,9 @@
 		1F9298B18A4CD0599098401B /* Pods_asset_tracking_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */; };
 		2375C3D9FBC87E4236B66FA6 /* Pods_asset_tracking_Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B94C2AA15165F9680C282FE /* Pods_asset_tracking_Subscriber.framework */; };
 		F617C46925DA5EF9005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C46825DA5EF9005E92A2 /* ConnectionState.swift */; };
+		F63F8FE7260B4BCB009B5353 /* MockAblySubscriberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F8FDC260B48F0009B5353 /* MockAblySubscriberService.swift */; };
+		F63F8FEC260B4BCE009B5353 /* DefaultSubscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F8FD3260B36C4009B5353 /* DefaultSubscriberTests.swift */; };
+		F63F8FF0260B5629009B5353 /* DefaultAblySubscriberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F8FEF260B5629009B5353 /* DefaultAblySubscriberService.swift */; };
 		F65AC34925AF3E41002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34825AF3E41002799BD /* RoutingProfile.swift */; };
 		F65C5CBD25CAB50500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */; };
 		F6A2B81825E66FDA00153CF4 /* LocationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2B81725E66FDA00153CF4 /* LocationValidator.swift */; };
@@ -70,7 +72,6 @@
 		180F60B0258632740014B310 /* Subscriber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Subscriber.h; sourceTree = "<group>"; };
 		180F60B1258632740014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		180F612F2586332B0014B310 /* SubscriberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubscriberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		180F61312586332B0014B310 /* SubscriberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberTests.swift; sourceTree = "<group>"; };
 		180F61332586332B0014B310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		180F617D258634290014B310 /* DefaultSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSubscriber.swift; sourceTree = "<group>"; };
 		180F617F258634290014B310 /* AblySubscriberService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblySubscriberService.swift; sourceTree = "<group>"; };
@@ -102,6 +103,9 @@
 		B35382D91FBE9FB98C137BB8 /* Pods-asset_tracking-SubscriberTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DACEA3FB594D43A74240A868 /* Pods-SubscriberTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubscriberTests.release.xcconfig"; path = "Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests.release.xcconfig"; sourceTree = "<group>"; };
 		F617C46825DA5EF9005E92A2 /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
+		F63F8FD3260B36C4009B5353 /* DefaultSubscriberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSubscriberTests.swift; sourceTree = "<group>"; };
+		F63F8FDC260B48F0009B5353 /* MockAblySubscriberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAblySubscriberService.swift; sourceTree = "<group>"; };
+		F63F8FEF260B5629009B5353 /* DefaultAblySubscriberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAblySubscriberService.swift; sourceTree = "<group>"; };
 		F65AC34825AF3E41002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F6A2B81725E66FDA00153CF4 /* LocationValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationValidator.swift; sourceTree = "<group>"; };
@@ -188,7 +192,8 @@
 		180F61302586332B0014B310 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				180F61312586332B0014B310 /* SubscriberTests.swift */,
+				F63F8FE0260B4B89009B5353 /* DefaultSubscriber */,
+				F63F8FD9260B36D5009B5353 /* Mocks */,
 				180F61332586332B0014B310 /* Info.plist */,
 			);
 			path = Tests;
@@ -198,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				180F617F258634290014B310 /* AblySubscriberService.swift */,
+				F63F8FEF260B5629009B5353 /* DefaultAblySubscriberService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -288,6 +294,22 @@
 				8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F63F8FD9260B36D5009B5353 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				F63F8FDC260B48F0009B5353 /* MockAblySubscriberService.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		F63F8FE0260B4B89009B5353 /* DefaultSubscriber */ = {
+			isa = PBXGroup;
+			children = (
+				F63F8FD3260B36C4009B5353 /* DefaultSubscriberTests.swift */,
+			);
+			path = DefaultSubscriber;
 			sourceTree = "<group>";
 		};
 		F6A2D03325CC2B4B008D44F7 /* Extensions */ = {
@@ -501,6 +523,7 @@
 				18FCE208258B8336005BC480 /* GeoJSONGeometry.swift in Sources */,
 				F6A2D03525CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */,
 				F65AC34925AF3E41002799BD /* RoutingProfile.swift in Sources */,
+				F63F8FF0260B5629009B5353 /* DefaultAblySubscriberService.swift in Sources */,
 				180F6183258634290014B310 /* AblySubscriberService.swift in Sources */,
 				18FCE204258B8336005BC480 /* Trackable.swift in Sources */,
 				18FCE209258B8336005BC480 /* GeoJSONProperties.swift in Sources */,
@@ -532,7 +555,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180F61322586332B0014B310 /* SubscriberTests.swift in Sources */,
+				F63F8FE7260B4BCB009B5353 /* MockAblySubscriberService.swift in Sources */,
+				F63F8FEC260B4BCE009B5353 /* DefaultSubscriberTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

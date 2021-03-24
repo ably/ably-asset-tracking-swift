@@ -4,10 +4,16 @@ protocol SubscriberEvent {}
 
 struct StartEvent: SubscriberEvent {}
 
-struct StopEvent: SubscriberEvent {}
+struct StopEvent: SubscriberEvent {
+    let resultHandler: ResultHandler<Void>
+}
 
 struct ChangeResolutionEvent: SubscriberEvent {
     let resolution: Resolution?
+    let resultHandler: ResultHandler<Void>
+}
+
+struct AblyConnectionClosedEvent: SubscriberEvent {
     let resultHandler: ResultHandler<Void>
 }
 

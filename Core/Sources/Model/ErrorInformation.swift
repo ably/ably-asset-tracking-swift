@@ -36,6 +36,12 @@ public enum ErrorInformationType {
     case publisherStoppedException
     
     /**
+     Thrown in case when Subscriber has already stopped.
+     */
+    case subscriberStoppedException
+    
+    
+    /**
      Thrown in case of missing properties in builder
      */
     case incompleteConfiguration(missingProperty: String, forBuilderOption: String)
@@ -49,6 +55,7 @@ public enum ErrorInformationType {
         case .incompleteConfiguration(let missingProperty, let builderOption): return "Missing mandatory property: \(missingProperty). Did you forgot to call `\(builderOption)` on builder object?"
         case .trackableAlreadyExist(let trackableId): return "Trackable with id: \(trackableId) already exist."
         case .publisherStoppedException: return "Cannot perform this action when publisher is stopped."
+        case .subscriberStoppedException: return "Cannot perform this action when subscriber is stopped."
         }
     }
 }

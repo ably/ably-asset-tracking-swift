@@ -31,7 +31,7 @@ public protocol SubscriberObjectiveC {
      Stops asset subscriber from listening for asset location
      */
     @objc
-    func stop()
+    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
 }
 
 /**
@@ -62,5 +62,5 @@ public protocol Subscriber {
     /**
      Stops asset subscriber from listening for asset location
      */
-    func stop()
+    func stop(completion: @escaping ResultHandler<Void>)
 }
