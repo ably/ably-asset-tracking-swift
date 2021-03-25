@@ -71,6 +71,10 @@ struct AblyConnectionClosedEvent: PublisherEvent {
     let resultHandler: ResultHandler<Void>
 }
 
+struct AblyClientConnectionChangedEvent: PublisherEvent {
+    let connectionState: ConnectionState
+}
+
 // MARK: Delegate handling events
 protocol PublisherDelegateEvent {}
 

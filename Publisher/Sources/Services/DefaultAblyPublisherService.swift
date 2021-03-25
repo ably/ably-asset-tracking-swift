@@ -5,8 +5,6 @@ class DefaultAblyPublisherService: AblyPublisherService {
     private let client: ARTRealtime
     private let presenceData: PresenceData
     private var channels: [Trackable: ARTRealtimeChannel]
-    private var clientConnectionState: ConnectionState = .offline
-    private var channelConnectionState: ConnectionState = .offline
 
     weak var delegate: AblyPublisherServiceDelegate?
 
@@ -21,13 +19,11 @@ class DefaultAblyPublisherService: AblyPublisherService {
     private func setup() {
         client.connection.on { [weak self] stateChange in
             guard let self = self,
-                  let receivedConnectionState = stateChange?.current.toConnectionState(),
-                  receivedConnectionState != self.clientConnectionState else {
+                  let receivedConnectionState = stateChange?.current.toConnectionState() else {
                 return
             }
-            
+
             logger.debug("Connection to Ably changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
-            self.clientConnectionState = receivedConnectionState
             self.delegate?.publisherService(
                 sender: self,
                 didChangeConnectionState: receivedConnectionState
@@ -102,19 +98,19 @@ class DefaultAblyPublisherService: AblyPublisherService {
             return nil
         }
     }
-    
+
     func close(completion: @escaping ResultHandler<Void>) {
         closeAllChannels { _ in
             self.closeClientConnection(completion: completion)
         }
     }
-    
+
     private func closeClientConnection(completion: @escaping ResultHandler<Void>) {
         client.connection.on { connectionChange in
             guard let connectionState = connectionChange?.current else {
                 return
             }
-            
+
             switch connectionState {
             case .closed:
                 logger.info("Ably connection closed successfully.")
@@ -126,16 +122,16 @@ class DefaultAblyPublisherService: AblyPublisherService {
                 return
             }
         }
-        
+
         client.close()
     }
-    
+
     private func closeAllChannels(completion: @escaping ResultHandler<Void>) {
         guard !channels.isEmpty else {
             completion(.success)
             return
         }
-        
+
         let closingDispatchGroup = DispatchGroup()
         channels.forEach { channel in
             closingDispatchGroup.enter()
@@ -150,7 +146,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                 }
             }
         }
-        
+
         closingDispatchGroup.notify(queue: .main) {
             logger.info("All trackables removed.")
             completion(.success)
