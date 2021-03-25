@@ -110,7 +110,7 @@ class DefaultSubscriberTests: XCTestCase {
         XCTAssertTrue(isSuccess)
     }
     
-    func test_subscriberReturnsErrorAfterStopped() {
+    func test_subscriberReturnsError_afterStopped() {
         // Given
         var expectation = XCTestExpectation()
         ablyService.stopCompletionHandler = { completion in completion?(.success)}
