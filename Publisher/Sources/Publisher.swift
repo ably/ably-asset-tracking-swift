@@ -76,9 +76,13 @@ public protocol PublisherObjectiveC: AnyObject {
     
     /**
      Stops this publisher from publishing locations. Once a publisher has been stopped, it cannot be restarted.
+     
+     - Parameters:
+        - onSuccess: called when the Publisher stopped successfuly.
+        - onError: called when an error occurs.
      */
     @objc
-    func stop()
+    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
 }
 
 /**
@@ -156,6 +160,11 @@ public protocol Publisher {
 
     /**
      Stops this publisher from publishing locations. Once a publisher has been stopped, it cannot be restarted.
-     */
-    func stop()
+     
+     - Parameters:
+        - completion: Called on completion of the `stop` method. Ends with:
+            - `success` called when the Publisher stopped successfuly.
+            - `failure` when an error occurs.
+    */
+    func stop(completion: @escaping ResultHandler<Void>) 
 }

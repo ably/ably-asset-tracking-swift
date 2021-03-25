@@ -16,5 +16,5 @@ protocol AblyPublisherService: AnyObject {
     func track(trackable: Trackable, completion: ResultHandler<Void>?)
     func stopTracking(trackable: Trackable, completion: ResultHandler<Bool>?)
     func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, batteryLevel: Float?, forTrackable trackable: Trackable, completion: ResultHandler<Void>?)
-    func stop()
+    func close(completion: @escaping ResultHandler<Void>)
 }

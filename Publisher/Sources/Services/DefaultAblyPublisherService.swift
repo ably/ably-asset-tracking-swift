@@ -96,9 +96,59 @@ class DefaultAblyPublisherService: AblyPublisherService {
             return nil
         }
     }
-
-    func stop() {
+    
+    func close(completion: @escaping ResultHandler<Void>) {
+        closeAllChannels { _ in
+            self.closeClientConnection(completion: completion)
+        }
+    }
+    
+    private func closeClientConnection(completion: @escaping ResultHandler<Void>) {
+        client.connection.on { connectionChange in
+            guard let connectionState = connectionChange?.current else {
+                return
+            }
+            
+            switch connectionState {
+            case .closed:
+                logger.info("Ably connection closed successfully.")
+                completion(.success)
+            case .failed:
+                let errorInfo = connectionChange?.reason?.toErrorInformation() ?? ErrorInformation(type: .publisherError(errorMessage: "Cannot close connection"))
+                completion(.failure(errorInfo))
+            default:
+                return
+            }
+        }
+        
         client.close()
+    }
+    
+    private func closeAllChannels(completion: @escaping ResultHandler<Void>) {
+        guard !channels.isEmpty else {
+            completion(.success)
+            return
+        }
+        
+        let closingDispatchGroup = DispatchGroup()
+        channels.forEach { channel in
+            closingDispatchGroup.enter()
+            self.stopTracking(trackable: channel.key) { result in
+                switch result {
+                case .success(let wasPresent):
+                    logger.info("Trackable \(channel.key.id) removed successfully. Was present \(wasPresent)")
+                    closingDispatchGroup.leave()
+                case .failure(let error):
+                    logger.error("Removing trackable \(channel.key) failed. Error \(error.message)")
+                    closingDispatchGroup.leave()
+                }
+            }
+        }
+        
+        closingDispatchGroup.notify(queue: .main) {
+            logger.info("All trackables removed.")
+            completion(.success)
+        }
     }
 
     func stopTracking(trackable: Trackable, completion: ResultHandler<Bool>?) {

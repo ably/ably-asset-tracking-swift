@@ -4,6 +4,7 @@ import UIKit
 protocol TrackablesViewControllerDelegate: AnyObject {
     func trackablesViewController(sender: TrackablesViewController, didAddTrackable trackable: Trackable)
     func trackablesViewController(sender: TrackablesViewController, didRemoveTrackable trackable: Trackable, wasPresent: Bool)
+    func trackablesViewController(sender: TrackablesViewController, didRemoveLastTrackable trackable: Trackable)
 }
 
 class TrackablesViewController: UIViewController {
@@ -93,6 +94,10 @@ extension TrackablesViewController: UITableViewDelegate, UITableViewDataSource {
                 let trackable = self.trackables.remove(at: indexPath.row)
                 self.tableView.reloadData()
                 self.delegate?.trackablesViewController(sender: self, didRemoveTrackable: trackable, wasPresent: wasPresent)
+                
+                if self.trackables.isEmpty {
+                    self.delegate?.trackablesViewController(sender: self, didRemoveLastTrackable: trackable)
+                }
             case .failure(let error):
                 self.showError(error)
             }
