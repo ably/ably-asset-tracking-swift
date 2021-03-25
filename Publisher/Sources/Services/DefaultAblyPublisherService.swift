@@ -6,6 +6,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
     private let presenceData: PresenceData
     private var channels: [Trackable: ARTRealtimeChannel]
     private var clientConnectionState: ConnectionState = .offline
+    private var channelConnectionState: ConnectionState = .offline
 
     weak var delegate: AblyPublisherServiceDelegate?
 
