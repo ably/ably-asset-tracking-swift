@@ -247,10 +247,9 @@ extension DefaultPublisher {
             return
         }
         
-        guard activeTrackable == nil else {
-            let error = ErrorInformation(type: .publisherError(errorMessage: "For this beta version of the SDK, track() method may only be called once for any given instance of this class."))
+        guard !trackables.contains(event.trackable) else {
+            let error = ErrorInformation(type: .trackableAlreadyExist(trackableId: event.trackable.id))
             callback(error: error, handler: event.resultHandler)
-
             return
         }
 
