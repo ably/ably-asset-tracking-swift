@@ -5,24 +5,30 @@ import Logging
 // Default logger used in Subscriber SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Subscriber")
 
+private enum SubscriberState {
+    case working
+    case stopping
+    case stopped
+    
+    var isStoppingOrStopped: Bool {
+        self == .stopping || self == .stopped
+    }
+}
+
 class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     private let workingQueue: DispatchQueue
     private let logConfiguration: LogConfiguration
-    private let trackingId: String
     private let ablyService: AblySubscriberService
+    private var subscriberState: SubscriberState = .working
+    
     weak var delegate: SubscriberDelegate?
     weak var delegateObjectiveC: SubscriberDelegateObjectiveC?
 
-    init(connectionConfiguration: ConnectionConfiguration,
-         logConfiguration: LogConfiguration,
-         trackingId: String,
-         resolution: Resolution?) {
-        self.trackingId = trackingId
+    init(logConfiguration: LogConfiguration,
+         ablyService: AblySubscriberService) {
         self.logConfiguration = logConfiguration
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
-        self.ablyService = AblySubscriberService(configuration: connectionConfiguration,
-                                                 trackingId: trackingId,
-                                                 resolution: resolution)
+        self.ablyService = ablyService
         self.ablyService.delegate = self
     }
     
@@ -39,17 +45,37 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     }
 
     func sendChangeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+        guard !subscriberState.isStoppingOrStopped else {
+            callback(error: ErrorInformation(type: .subscriberStoppedException), handler: completion)
+            return
+        }
+        
         enqueue(event: ChangeResolutionEvent(resolution: resolution, resultHandler: completion))
     }
 
     func start() {
         enqueue(event: StartEvent())
     }
+    
+    func stop(completion: @escaping ResultHandler<Void>) {
+        guard !subscriberState.isStoppingOrStopped else {
+            callback(value: Void(), handler: completion)
+            return
+        }
+        
+        enqueue(event: StopEvent(resultHandler: completion))
+    }
 
     @objc
-    func stop() {
-        enqueue(event: StopEvent())
-        ablyService.stop()
+    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        stop { result in
+            switch result {
+            case .success:
+                onSuccess()
+            case .failure(let error):
+                onError(error)
+            }
+        }
     }
 }
 
@@ -59,8 +85,9 @@ extension DefaultSubscriber {
         performOnWorkingThread { [weak self] in
             switch event {
             case _ as StartEvent: self?.performStart()
-            case _ as StopEvent: self?.performStop()
+            case let event as StopEvent: self?.performStop(event)
             case let event as ChangeResolutionEvent: self?.performChangeResolution(event)
+            case let event as AblyConnectionClosedEvent: self?.performStopped(event)
             default: preconditionFailure("Unhandled event in DefaultSubscriber: \(event) ")
             }
         }
@@ -98,8 +125,22 @@ extension DefaultSubscriber {
         }
     }
 
-    private func performStop() {
-        ablyService.stop()
+    private func performStop(_ event: StopEvent) {
+        subscriberState = .stopping
+        
+        ablyService.stop { [weak self] result in
+            switch result {
+            case .success:
+                self?.enqueue(event: AblyConnectionClosedEvent(resultHandler: event.resultHandler))
+            case .failure(let error):
+                self?.callback(error: ErrorInformation(error: error), handler: event.resultHandler)
+            }
+        }
+    }
+    
+    private func performStopped(_ event: AblyConnectionClosedEvent) {
+        subscriberState = .stopped
+        callback(value: Void(), handler: event.resultHandler)
     }
 
     // swiftlint:disable vertical_whitespace_between_cases
