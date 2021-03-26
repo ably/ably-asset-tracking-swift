@@ -46,6 +46,7 @@ class DefaultPublisher: Publisher {
     private var route: Route?
     
     private var ablyClientConnectionState: ConnectionState = .offline
+    private var ablyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
 
     public weak var delegate: PublisherDelegate?
     public weak var delegateObjectiveC: PublisherDelegateObjectiveC?
@@ -196,12 +197,13 @@ extension DefaultPublisher {
             case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
             case let event as DelegateResolutionUpdateEvent: self?.notifyDelegateResolutionUpdate(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
-            case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
+            case let event as DelegateTrackableConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             case let event as StopEvent: self?.performStopPublisherEvent(event)
             case let event as AblyConnectionClosedEvent: self?.performAblyConnectionClosedEvent(event)
-            case let event as AblyClientConnectionChangedEvent: self?.performAblyClientConnectionChangedEvent(event)
+            case let event as AblyClientConnectionStateChangedEvent: self?.performAblyClientConnectionChangedEvent(event)
+            case let event as AblyChannelConnectionStateChangedEvent: self?.performAblyChannelConnectionStateChangedEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -231,8 +233,8 @@ extension DefaultPublisher {
             case let event as DelegateErrorEvent:
                 self.delegate?.publisher(sender: self, didFailWithError: event.error)
                 self.delegateObjectiveC?.publisher(sender: self, didFailWithError: event.error)
-            case let event as DelegateConnectionStateChangedEvent:
-                self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+            case let event as DelegateTrackableConnectionStateChangedEvent:
+                self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
                 self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
             case let event as DelegateEnhancedLocationChangedEvent:
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
@@ -408,13 +410,54 @@ extension DefaultPublisher {
         callback(value: Void(), handler: event.resultHandler)
     }
     
-    private func performAblyClientConnectionChangedEvent(_ event: AblyClientConnectionChangedEvent) {
-        guard event.connectionState != ablyClientConnectionState else {
+    private func performAblyClientConnectionChangedEvent(_ event: AblyClientConnectionStateChangedEvent) {
+        guard ablyClientConnectionState != event.connectionState else {
             return
         }
         
         ablyClientConnectionState = event.connectionState
-        callback(event: DelegateConnectionStateChangedEvent(connectionState: event.connectionState))
+        trackables.forEach {
+            handleConnectionStateChange(forTrackable: $0)
+        }
+    }
+    
+    private func performAblyChannelConnectionStateChangedEvent(_ event: AblyChannelConnectionStateChangedEvent) {
+        if ablyChannelsConnectionStates[event.trackable] == nil {
+            ablyChannelsConnectionStates[event.trackable] = event.connectionState
+        }
+
+        handleConnectionStateChange(forTrackable: event.trackable)
+    }
+    
+    private func handleConnectionStateChange(forTrackable trackable: Trackable) {
+        var newTrackableState: ConnectionState = .offline
+        let lastChannelConnectionState = ablyChannelsConnectionStates[trackable] ?? .offline
+        
+        switch ablyClientConnectionState {
+        case .online:
+            switch lastChannelConnectionState {
+            case .online:
+                newTrackableState = hasSentAtLeastOneLocation(forTrackable: trackable)
+                    ? .online
+                    : .offline
+            case .offline:
+                newTrackableState = .offline
+            case .failed:
+                newTrackableState = .failed
+            }
+        case .offline:
+            newTrackableState = .offline
+        case .failed:
+            newTrackableState = .failed
+        }
+        
+        if newTrackableState != lastChannelConnectionState {
+            callback(event: DelegateTrackableConnectionStateChangedEvent(trackable: trackable, connectionState: newTrackableState))
+        }
+    }
+    
+    private func hasSentAtLeastOneLocation(forTrackable trackable: Trackable) -> Bool {
+        return lastEnhancedLocations[trackable] != nil
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
@@ -650,10 +693,10 @@ extension DefaultPublisher {
         }
     }
 
-    private func notifyDelegateConnectionStateChanged(_ event: DelegateConnectionStateChangedEvent) {
+    private func notifyDelegateConnectionStateChanged(_ event: DelegateTrackableConnectionStateChangedEvent) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+            self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
             self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
         }
     }
@@ -690,7 +733,12 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
 
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
-        enqueue(event: AblyClientConnectionChangedEvent(connectionState: state))
+        enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
+    }
+    
+    func publisherService(sender: AblyPublisherService, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+        logger.debug("publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: "DefaultPublisher")
+        enqueue(event: AblyChannelConnectionStateChangedEvent(trackable: trackable, connectionState: state))
     }
 
     func publisherService(sender: AblyPublisherService,

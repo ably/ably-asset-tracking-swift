@@ -14,17 +14,6 @@ class MockPublisherDelegate: PublisherDelegate {
         publisherDidFailWithErrorCallback?()
     }
 
-    var publisherDidUpdateRawLocationCalled: Bool = false
-    var publisherDidUpdateRawLocationParamSender: Publisher?
-    var publisherDidUpdateRawLocationParamLocation: CLLocation?
-    var publisherDidUpdateRawLocationCallback: (() -> Void)?
-    func publisher(sender: Publisher, didUpdateRawLocation location: CLLocation) {
-        publisherDidUpdateRawLocationCalled = true
-        publisherDidUpdateRawLocationParamSender = sender
-        publisherDidUpdateRawLocationParamLocation = location
-        publisherDidUpdateRawLocationCallback?()
-    }
-
     var publisherDidUpdateEnhancedLocationCalled: Bool = false
     var publisherDidUpdateEnhancedLocationParamSender: Publisher?
     var publisherDidUpdateEnhancedLocationParamLocation: CLLocation?
@@ -36,15 +25,17 @@ class MockPublisherDelegate: PublisherDelegate {
         publisherDidUpdateEnhancedLocationCallback?()
     }
 
-    var publisherDidChangeConnectionStateCalled: Bool = false
-    var publisherDidChangeConnectionStateParamSender: Publisher?
-    var publisherDidChangeConnectionStateParamState: ConnectionState?
-    var publisherDidChangeConnectionStateCallback: (() -> Void)?
-    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
-        publisherDidChangeConnectionStateCalled = true
-        publisherDidChangeConnectionStateParamSender = sender
-        publisherDidChangeConnectionStateParamState = state
-        publisherDidChangeConnectionStateCallback?()
+    var publisherDidChangeTrackableConnectionStateCalled: Bool = false
+    var publisherDidChangeTrackableConnectionStateParamSender: Publisher?
+    var publisherDidChangeTrackableConnectionStateParamState: ConnectionState?
+    var publisherDidChangeTrackableConnectionStateParamTrackable: Trackable?
+    var publisherDidChangeTrackableConnectionStateCallback: (() -> Void)?
+    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+        publisherDidChangeTrackableConnectionStateCalled = true
+        publisherDidChangeTrackableConnectionStateParamSender = sender
+        publisherDidChangeTrackableConnectionStateParamState = state
+        publisherDidChangeTrackableConnectionStateParamTrackable = trackable
+        publisherDidChangeTrackableConnectionStateCallback?()
     }
     
     var publisherDidUpdateResolutionCalled: Bool = false
