@@ -40,10 +40,11 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
         }
 
-        let subscriber = DefaultSubscriber(connectionConfiguration: connection,
-                                           logConfiguration: logConfiguration,
-                                           trackingId: trackingId,
-                                           resolution: resolution)
+        let ablyService = DefaultAblySubscriberService(configuration: connection,
+                                                trackingId: trackingId,
+                                                resolution: resolution)
+        let subscriber = DefaultSubscriber(logConfiguration: logConfiguration,
+                                           ablyService: ablyService)
         subscriber.delegate = delegate
         subscriber.delegateObjectiveC = nil
         subscriber.start()
@@ -113,10 +114,11 @@ extension DefaultSubscriberBuilder: SubscriberBuilderObjectiveC {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
         }
 
-        let subscriber = DefaultSubscriber(connectionConfiguration: connection,
-                                           logConfiguration: logConfiguration,
-                                           trackingId: trackingId,
-                                           resolution: resolution)
+        let subscriber = DefaultSubscriber(logConfiguration: logConfiguration,
+                                           ablyService: DefaultAblySubscriberService(configuration: connection,
+                                                                              trackingId: trackingId,
+                                                                              resolution: resolution))
+        
         subscriber.delegate = nil
         subscriber.delegateObjectiveC = delegateObjectiveC
         subscriber.start()

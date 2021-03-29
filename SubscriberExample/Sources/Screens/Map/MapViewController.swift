@@ -54,9 +54,10 @@ class MapViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        subscriber?.stop()
-        resolutionDebounceTimer?.invalidate()
-        resolutionDebounceTimer = nil
+        subscriber?.stop { [weak self] _ in
+            self?.resolutionDebounceTimer?.invalidate()
+            self?.resolutionDebounceTimer = nil
+        }
     }
 
     // MARK: - View setup
