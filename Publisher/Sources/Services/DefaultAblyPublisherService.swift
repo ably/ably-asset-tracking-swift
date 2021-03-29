@@ -43,12 +43,18 @@ class DefaultAblyPublisherService: AblyPublisherService {
                   let data: PresenceData = try? PresenceData.fromJSONString(json),
                   let clientId = message.clientId
             else { return }
+            
+            let presence = message.action.toAblyPublisherPresence()
 
             self.delegate?.publisherService(sender: self,
-                                             didReceivePresenceUpdate: message.action.toAblyPublisherPresence(),
-                                             forTrackable: trackable,
-                                             presenceData: data,
-                                             clientId: clientId)
+                                            didChangeChannelConnectionState: presence.toConnectionState(),
+                                            forTrackable: trackable)
+            
+            self.delegate?.publisherService(sender: self,
+                                            didReceivePresenceUpdate: presence,
+                                            forTrackable: trackable,
+                                            presenceData: data,
+                                            clientId: clientId)
         }
 
         channel.presence.enter(data) { error in
@@ -61,6 +67,16 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
             logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
             completion?(.failure(error.toErrorInformation()))
+        }
+        
+        channel.on { [weak self] stateChange in
+            guard let self = self,
+                  let receivedConnectionState = stateChange?.current.toConnectionState() else {
+                return
+            }
+            
+            logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
     }
 

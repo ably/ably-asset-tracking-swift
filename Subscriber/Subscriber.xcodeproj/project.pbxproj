@@ -42,6 +42,9 @@
 		F63F8FF0260B5629009B5353 /* DefaultAblySubscriberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F8FEF260B5629009B5353 /* DefaultAblySubscriberService.swift */; };
 		F65AC34925AF3E41002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34825AF3E41002799BD /* RoutingProfile.swift */; };
 		F65C5CBD25CAB50500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */; };
+		F69527992611A2830076648A /* ARTRealtimeConnectionState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69527982611A2830076648A /* ARTRealtimeConnectionState+Extensions.swift */; };
+		F69527A12611D8E00076648A /* ARTRealtimeChannelState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69527A02611D8E00076648A /* ARTRealtimeChannelState+Extensions.swift */; };
+		F69527A92611E6D50076648A /* AblyPublisherPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69527A82611E6D50076648A /* AblyPublisherPresence.swift */; };
 		F6A2B81825E66FDA00153CF4 /* LocationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2B81725E66FDA00153CF4 /* LocationValidator.swift */; };
 		F6A2D02E25CC2A34008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */; };
 		F6A2D03525CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */; };
@@ -108,6 +111,9 @@
 		F63F8FEF260B5629009B5353 /* DefaultAblySubscriberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAblySubscriberService.swift; sourceTree = "<group>"; };
 		F65AC34825AF3E41002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CBC25CAB50500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
+		F69527982611A2830076648A /* ARTRealtimeConnectionState+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeConnectionState+Extensions.swift"; sourceTree = "<group>"; };
+		F69527A02611D8E00076648A /* ARTRealtimeChannelState+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeChannelState+Extensions.swift"; sourceTree = "<group>"; };
+		F69527A82611E6D50076648A /* AblyPublisherPresence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyPublisherPresence.swift; sourceTree = "<group>"; };
 		F6A2B81725E66FDA00153CF4 /* LocationValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationValidator.swift; sourceTree = "<group>"; };
 		F6A2D02D25CC2A34008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
@@ -204,6 +210,7 @@
 			children = (
 				180F617F258634290014B310 /* AblySubscriberService.swift */,
 				F63F8FEF260B5629009B5353 /* DefaultAblySubscriberService.swift */,
+				F69527A82611E6D50076648A /* AblyPublisherPresence.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -316,6 +323,8 @@
 			isa = PBXGroup;
 			children = (
 				F6A2D03425CC2B7E008D44F7 /* ARTErrorInfo+Extensions.swift */,
+				F69527982611A2830076648A /* ARTRealtimeConnectionState+Extensions.swift */,
+				F69527A02611D8E00076648A /* ARTRealtimeChannelState+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -533,12 +542,15 @@
 				1807959025A4AF040026F4C1 /* ResolutionConstraints.swift in Sources */,
 				18FCE20B258B8336005BC480 /* PresenceData.swift in Sources */,
 				18A4C1D325B2E2880092CC70 /* ResultHandler.swift in Sources */,
+				F69527992611A2830076648A /* ARTRealtimeConnectionState+Extensions.swift in Sources */,
 				180F6184258634290014B310 /* SubscriberBuilder.swift in Sources */,
 				18FCE206258B8336005BC480 /* LogConfiguration.swift in Sources */,
+				F69527A92611E6D50076648A /* AblyPublisherPresence.swift in Sources */,
 				180795CD25A4AF790026F4C1 /* Resolution.swift in Sources */,
 				18FCE203258B8336005BC480 /* ConnectionConfiguration.swift in Sources */,
 				F6A2B81825E66FDA00153CF4 /* LocationValidator.swift in Sources */,
 				180375212599E8AA001387BA /* SubscriberEvent.swift in Sources */,
+				F69527A12611D8E00076648A /* ARTRealtimeChannelState+Extensions.swift in Sources */,
 				180795D725A4AFA80026F4C1 /* Proximity.swift in Sources */,
 				180F6182258634290014B310 /* DefaultSubscriber.swift in Sources */,
 				18FCE20F258B8336005BC480 /* Codable+EncodedString.swift in Sources */,

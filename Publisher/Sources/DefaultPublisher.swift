@@ -726,6 +726,11 @@ extension DefaultPublisher: LocationServiceDelegate {
 
 // MARK: AblyPublisherServiceDelegate
 extension DefaultPublisher: AblyPublisherServiceDelegate {
+    func publisherService(sender: AblyPublisherService, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+        logger.debug("publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: "DefaultPublisher")
+        enqueue(event: AblyChannelConnectionStateChangedEvent(trackable: trackable, connectionState: state))
+    }
+    
     func publisherService(sender: AblyPublisherService, didFailWithError error: ErrorInformation) {
         logger.error("publisherService.didFailWithError. Error: \(error.message)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
@@ -734,11 +739,6 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
         enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
-    }
-    
-    func publisherService(sender: AblyPublisherService, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        logger.debug("publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: "DefaultPublisher")
-        enqueue(event: AblyChannelConnectionStateChangedEvent(trackable: trackable, connectionState: state))
     }
 
     func publisherService(sender: AblyPublisherService,

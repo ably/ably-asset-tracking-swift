@@ -72,6 +72,7 @@
 		F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34425AF3E35002799BD /* RoutingProfile.swift */; };
 		F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */; };
 		F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */; };
+		F695279D2611C38E0076648A /* ARTRealtimeChannelState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F695279C2611C38E0076648A /* ARTRealtimeChannelState+Extensions.swift */; };
 		F6A2B75825E656D600153CF4 /* LocationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2B75725E656D600153CF4 /* LocationValidator.swift */; };
 		F6A2CFFD25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */; };
 		F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */; };
@@ -168,6 +169,7 @@
 		F65AC34425AF3E35002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+Extensions.swift"; sourceTree = "<group>"; };
+		F695279C2611C38E0076648A /* ARTRealtimeChannelState+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeChannelState+Extensions.swift"; sourceTree = "<group>"; };
 		F6A2B75725E656D600153CF4 /* LocationValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationValidator.swift; sourceTree = "<group>"; };
 		F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
 		F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */,
 				F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */,
 				F617C43E25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift */,
+				F695279C2611C38E0076648A /* ARTRealtimeChannelState+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 			files = (
 				18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */,
 				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
+				F695279D2611C38E0076648A /* ARTRealtimeChannelState+Extensions.swift in Sources */,
 				18C7B16125B6109E000A1418 /* DefaultResolutionPolicyHooks.swift in Sources */,
 				F6D4CFEF25D678220071A6A9 /* PublisherFactory.swift in Sources */,
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,

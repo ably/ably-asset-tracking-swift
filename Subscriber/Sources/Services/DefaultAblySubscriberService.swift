@@ -3,7 +3,9 @@ import Ably
 import CoreLocation
 
 protocol AblySubscriberServiceDelegate: AnyObject {
-    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: ConnectionState)
+    func subscriberService(sender: AblySubscriberService, didChangeClientConnectionStatus status: ConnectionState)
+    func subscriberService(sender: AblySubscriberService, didChangeChannelConnectionStatus status: ConnectionState)
+    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: AblyPublisherPresence)
     func subscriberService(sender: AblySubscriberService, didFailWithError error: ErrorInformation)
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation)
 }
@@ -21,11 +23,13 @@ class DefaultAblySubscriberService: AblySubscriberService {
         let options = ARTRealtimeChannelOptions()
         options.params = ["rewind": "1"]
         channel = client.channels.get(trackingId, options: options)
+        
+        setup()
     }
 
     func start(completion: ((Error?) -> Void)?) {
         // Trigger offline event at start
-        delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .offline)
+        delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: .offline)
         channel.presence.subscribe({ [weak self] message in
             logger.debug("Received presence update from channel", source: "AblySubscriberService")
             self?.handleIncomingPresenceMessage(message)
@@ -74,6 +78,28 @@ class DefaultAblySubscriberService: AblySubscriberService {
     }
 
     // MARK: Utils
+    private func setup() {
+        client.connection.on { [weak self] connectionState in
+            guard let self = self,
+                  let receivedConnectionState = connectionState?.current.toConnectionState() else {
+                return
+            }
+            
+            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            self.delegate?.subscriberService(sender: self, didChangeClientConnectionStatus: receivedConnectionState)
+        }
+        
+        channel.on { [weak self] channelStatus in
+            guard let self = self,
+                  let receivedConnectionState = channelStatus?.current.toConnectionState() else {
+                return
+            }
+            
+            logger.debug("Channel connection state changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            self.delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: receivedConnectionState)
+        }
+    }
+    
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
             let errorInformation = ErrorInformation(type: .subscriberError(errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"))
@@ -109,20 +135,16 @@ class DefaultAblySubscriberService: AblySubscriberService {
               let presenceData = try? JSONDecoder().decode(PresenceData.self, from: data),
               presenceData.type == .publisher
         else { return }
+        
+        let presence = message.action.toAblyPublisherPresence()
 
-        switch message.action {
-        case .present, .enter:
-            delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .online)
-
-        case .leave:
-            delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .offline)
-        default: break
-        }
+        delegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
+        delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: presence.toConnectionState())
     }
 
     private func leaveChannelPresence(completion: @escaping ResultHandler<Void>) {
         channel.presence.unsubscribe()
-        delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .offline)
+        delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: .offline)
         
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
@@ -136,7 +158,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
             
             if let error = error {
                 logger.error("Error during leaving to channel presence: \(String(describing: error))", source: "AblySubscriberService")
-                self.delegate?.subscriberService(sender: self, didChangeAssetConnectionStatus: .failed)
+                self.delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: .failed)
                 completion(.failure(error.toErrorInformation()))
                 return
             }
