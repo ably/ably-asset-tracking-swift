@@ -44,14 +44,8 @@ class DefaultAblyPublisherService: AblyPublisherService {
                   let clientId = message.clientId
             else { return }
             
-            let presence = message.action.toAblyPublisherPresence()
-
             self.delegate?.publisherService(sender: self,
-                                            didChangeChannelConnectionState: presence.toConnectionState(),
-                                            forTrackable: trackable)
-            
-            self.delegate?.publisherService(sender: self,
-                                            didReceivePresenceUpdate: presence,
+                                            didReceivePresenceUpdate: message.action.toAblyPublisherPresence(),
                                             forTrackable: trackable,
                                             presenceData: data,
                                             clientId: clientId)
@@ -94,13 +88,16 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
 
         channel.publish([message]) { [weak self] error in
-            guard let self = self,
-                  let error = error else {
-                logger.debug("ablyService.didSendEnhancedLocation.", source: "DefaultAblyService")
+            guard let self = self else {
                 return
             }
-
-            self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+            
+            if let error = error {
+                self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+                return
+            }
+            
+            self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: .online, forTrackable: trackable)
         }
     }
 

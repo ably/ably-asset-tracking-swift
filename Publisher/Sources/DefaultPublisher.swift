@@ -422,20 +422,21 @@ extension DefaultPublisher {
     }
     
     private func performAblyChannelConnectionStateChangedEvent(_ event: AblyChannelConnectionStateChangedEvent) {
-        if ablyChannelsConnectionStates[event.trackable] == nil {
-            ablyChannelsConnectionStates[event.trackable] = event.connectionState
+        guard ablyChannelsConnectionStates[event.trackable] ?? .offline != event.connectionState else {
+            return
         }
-
+        
+        ablyChannelsConnectionStates[event.trackable] = event.connectionState
         handleConnectionStateChange(forTrackable: event.trackable)
     }
     
     private func handleConnectionStateChange(forTrackable trackable: Trackable) {
         var newTrackableState: ConnectionState = .offline
-        let lastChannelConnectionState = ablyChannelsConnectionStates[trackable] ?? .offline
+        let channelConnectionState = ablyChannelsConnectionStates[trackable] ?? .offline
         
         switch ablyClientConnectionState {
         case .online:
-            switch lastChannelConnectionState {
+            switch channelConnectionState {
             case .online:
                 newTrackableState = hasSentAtLeastOneLocation(forTrackable: trackable)
                     ? .online
@@ -451,9 +452,8 @@ extension DefaultPublisher {
             newTrackableState = .failed
         }
         
-        if newTrackableState != lastChannelConnectionState {
-            callback(event: DelegateTrackableConnectionStateChangedEvent(trackable: trackable, connectionState: newTrackableState))
-        }
+        ablyChannelsConnectionStates[trackable] = newTrackableState
+        callback(event: DelegateTrackableConnectionStateChangedEvent(trackable: trackable, connectionState: newTrackableState))
     }
     
     private func hasSentAtLeastOneLocation(forTrackable trackable: Trackable) -> Bool {

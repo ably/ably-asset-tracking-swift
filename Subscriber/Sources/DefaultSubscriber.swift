@@ -197,9 +197,8 @@ extension DefaultSubscriber {
             newConnectionState = .failed
         }
         
-        if newConnectionState != lastConnectionState {
-            callback(event: DelegateConnectionStatusChangedEvent(status: newConnectionState))
-        }
+        ablyChannelConnectionState = newConnectionState
+        callback(event: DelegateConnectionStatusChangedEvent(status: newConnectionState))
     }
 
     // swiftlint:disable vertical_whitespace_between_cases

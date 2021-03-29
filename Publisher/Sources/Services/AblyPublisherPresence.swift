@@ -10,15 +10,6 @@ enum AblyPublisherPresence {
     case leave
     case update
     case unknown
-    
-    func toConnectionState() -> ConnectionState {
-        switch self {
-        case .enter, .present, .update:
-            return .online
-        default:
-            return .offline
-        }
-    }
 }
 
 extension ARTPresenceAction {
