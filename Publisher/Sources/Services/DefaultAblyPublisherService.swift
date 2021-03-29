@@ -18,13 +18,15 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
     private func setup() {
         client.connection.on { [weak self] stateChange in
-            guard let current = stateChange?.current,
-                  let self = self
-            else { return }
-            logger.debug("Connection to Ably changed. New state: \(current)", source: "DefaultAblyPublisherService")
+            guard let self = self,
+                  let receivedConnectionState = stateChange?.current.toConnectionState() else {
+                return
+            }
+            
+            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(
                 sender: self,
-                didChangeConnectionState: current.toConnectionState()
+                didChangeConnectionState: receivedConnectionState
             )
         }
     }

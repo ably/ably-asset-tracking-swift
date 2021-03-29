@@ -44,6 +44,8 @@ class DefaultPublisher: Publisher {
     private var lastEnhancedLocations: [Trackable: CLLocation]
     private var lastEnhancedTimestamps: [Trackable: Date]
     private var route: Route?
+    
+    private var ablyClientConnectionState: ConnectionState = .offline
 
     public weak var delegate: PublisherDelegate?
     public weak var delegateObjectiveC: PublisherDelegateObjectiveC?
@@ -199,6 +201,7 @@ extension DefaultPublisher {
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             case let event as StopEvent: self?.performStopPublisherEvent(event)
             case let event as AblyConnectionClosedEvent: self?.performAblyConnectionClosedEvent(event)
+            case let event as AblyClientConnectionChangedEvent: self?.performAblyClientConnectionChangedEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -403,6 +406,15 @@ extension DefaultPublisher {
     private func performAblyConnectionClosedEvent(_ event: AblyConnectionClosedEvent) {
         publisherState = .stopped
         callback(value: Void(), handler: event.resultHandler)
+    }
+    
+    private func performAblyClientConnectionChangedEvent(_ event: AblyClientConnectionChangedEvent) {
+        guard event.connectionState != ablyClientConnectionState else {
+            return
+        }
+        
+        ablyClientConnectionState = event.connectionState
+        callback(event: DelegateConnectionStateChangedEvent(connectionState: event.connectionState))
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
@@ -678,7 +690,7 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
 
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
-        callback(event: DelegateConnectionStateChangedEvent(connectionState: state))
+        enqueue(event: AblyClientConnectionChangedEvent(connectionState: state))
     }
 
     func publisherService(sender: AblyPublisherService,
