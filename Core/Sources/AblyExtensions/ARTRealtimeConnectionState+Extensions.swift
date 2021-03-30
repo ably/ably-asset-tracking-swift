@@ -1,8 +1,7 @@
-import Foundation
 import Ably
 
 /**
- Public wrapper for ARTRealtimeConnectionState, as we don't want to pass it to our clients
+Wrapper for ARTRealtimeConnectionState, as we don't want to pass it to our clients
  */
 
 extension ARTRealtimeConnectionState {
