@@ -28,3 +28,6 @@ archives/
 # User defined configuration
 Secrets.xcconfig
 PublisherExample/amplifyconfiguration.json
+
+# Documentation output from Jazzy - see jazzy/build.sh
+/docs/
