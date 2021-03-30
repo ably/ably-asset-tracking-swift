@@ -43,7 +43,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                   let data: PresenceData = try? PresenceData.fromJSONString(json),
                   let clientId = message.clientId
             else { return }
-            
+
             self.delegate?.publisherService(sender: self,
                                             didReceivePresenceUpdate: message.action.toAblyPublisherPresence(),
                                             forTrackable: trackable,
@@ -62,13 +62,13 @@ class DefaultAblyPublisherService: AblyPublisherService {
             logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
             completion?(.failure(error.toErrorInformation()))
         }
-        
+
         channel.on { [weak self] stateChange in
             guard let self = self,
                   let receivedConnectionState = stateChange?.current.toConnectionState() else {
                 return
             }
-            
+
             logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
@@ -91,12 +91,12 @@ class DefaultAblyPublisherService: AblyPublisherService {
             guard let self = self else {
                 return
             }
-            
+
             if let error = error {
                 self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
                 return
             }
-            
+
             self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: .online, forTrackable: trackable)
         }
     }
