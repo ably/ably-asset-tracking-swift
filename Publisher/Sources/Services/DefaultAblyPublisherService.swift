@@ -45,7 +45,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
             else { return }
 
             self.delegate?.publisherService(sender: self,
-                                            didReceivePresenceUpdate: message.action.toAblyPublisherPresence(),
+                                            didReceivePresenceUpdate: message.action.toAblyPresence(),
                                             forTrackable: trackable,
                                             presenceData: data,
                                             clientId: clientId)

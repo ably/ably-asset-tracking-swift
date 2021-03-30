@@ -1,7 +1,7 @@
 import Ably
 
 /**
- Public wrapper for ARTRealtimeChannelState, as we don't want to pass it to our clients
+Wrapper for ARTRealtimeChannelState, as we don't want to pass it to our clients
  */
 
 extension ARTRealtimeChannelState {

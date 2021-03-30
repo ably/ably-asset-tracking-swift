@@ -5,7 +5,7 @@ import CoreLocation
 protocol AblySubscriberServiceDelegate: AnyObject {
     func subscriberService(sender: AblySubscriberService, didChangeClientConnectionStatus status: ConnectionState)
     func subscriberService(sender: AblySubscriberService, didChangeChannelConnectionStatus status: ConnectionState)
-    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: AblyPublisherPresence)
+    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: AblyPresence)
     func subscriberService(sender: AblySubscriberService, didFailWithError error: ErrorInformation)
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation)
 }
@@ -136,7 +136,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
               presenceData.type == .publisher
         else { return }
         
-        let presence = message.action.toAblyPublisherPresence()
+        let presence = message.action.toAblyPresence()
 
         delegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
         delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: presence.toConnectionState())

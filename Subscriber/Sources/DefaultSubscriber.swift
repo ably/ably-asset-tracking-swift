@@ -224,7 +224,7 @@ extension DefaultSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberServiceDelegate {
-    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: AblyPublisherPresence) {
+    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: AblyPresence) {
         logger.debug("subscriberService.didReceivePresenceUpdate. Presence: \(presence)", source: "DefaultSubscriber")
         enqueue(event: PresenceUpdateEvent(presence: presence))
     }
