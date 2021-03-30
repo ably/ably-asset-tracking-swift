@@ -25,6 +25,7 @@ sourcekitten doc \
   -workspace ./AblyAssetTracking.xcworkspace \
   -scheme Core \
   -destination generic/platform=iOS \
+  -verbose \
   > jazzy/build/core.json
 
 sourcekitten doc \
@@ -33,6 +34,7 @@ sourcekitten doc \
   -workspace ./AblyAssetTracking.xcworkspace \
   -scheme Publisher \
   -destination generic/platform=iOS \
+  -verbose \
   > jazzy/build/publisher.json
 
 sourcekitten doc \
@@ -41,6 +43,7 @@ sourcekitten doc \
   -workspace ./AblyAssetTracking.xcworkspace \
   -scheme Subscriber \
   -destination generic/platform=iOS \
+  -verbose \
   > jazzy/build/subscriber.json
 
 bundle exec jazzy --config jazzy/config.yml
