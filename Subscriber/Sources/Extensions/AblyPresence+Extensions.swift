@@ -7,4 +7,12 @@ extension AblyPresence {
             return .offline
         }
     }
+    
+    var isLeaveOrAbsent: Bool {
+        return self == .leave || self == .absent
+    }
+    
+    var isPresentOrEnter: Bool {
+        return self == .present || self == .enter
+    }
 }

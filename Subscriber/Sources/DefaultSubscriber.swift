@@ -24,7 +24,7 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     private var ablyClientConnectionState: ConnectionState = .offline
     private var ablyChannelConnectionState: ConnectionState = .offline
     private var lastConnectionState: ConnectionState = .offline
-    private var isOnline: Bool = false
+    private var isPublisherOnline: Bool = false
     
     weak var delegate: SubscriberDelegate?
     weak var delegateObjectiveC: SubscriberDelegateObjectiveC?
@@ -147,11 +147,10 @@ extension DefaultSubscriber {
     }
     
     private func performPresenceUpdated(_ event: PresenceUpdateEvent) {
-        switch event.presence {
-        case .enter, .present:
-            isOnline = true
-        default:
-            isOnline = false
+        if event.presence.isPresentOrEnter {
+            isPublisherOnline = true
+        } else if event.presence.isLeaveOrAbsent {
+            isPublisherOnline = false
         }
     }
     
@@ -185,7 +184,7 @@ extension DefaultSubscriber {
         case .online:
             switch ablyChannelConnectionState {
             case .online:
-                newConnectionState = isOnline ? .online : .offline
+                newConnectionState = isPublisherOnline ? .online : .offline
             case .offline:
                 newConnectionState = .offline
             case .failed:
