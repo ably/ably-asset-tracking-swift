@@ -21,9 +21,9 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     private let ablyService: AblySubscriberService
     private var subscriberState: SubscriberState = .working
     
-    private var ablyClientConnectionState: ConnectionState = .offline
-    private var ablyChannelConnectionState: ConnectionState = .offline
-    private var lastConnectionState: ConnectionState = .offline
+    private var receivedAblyClientConnectionState: ConnectionState = .offline
+    private var receivedAblyChannelConnectionState: ConnectionState = .offline
+    private var currentTrackableConnectionState: ConnectionState = .offline
     private var isPublisherOnline: Bool = false
     
     weak var delegate: SubscriberDelegate?
@@ -160,29 +160,21 @@ extension DefaultSubscriber {
     }
     
     private func performClientConnectionChanged(_ event: AblyClientConnectionStateChangedEvent) {
-        guard ablyClientConnectionState != event.connectionState else {
-            return
-        }
-        
-        ablyClientConnectionState = event.connectionState
+        receivedAblyClientConnectionState = event.connectionState
         handleConnectionStateChange()
     }
     
     private func performChannelConnectionChanged(_ event: AblyChannelConnectionStateChangedEvent) {
-        guard ablyChannelConnectionState != event.connectionState else {
-            return
-        }
-        
-        ablyChannelConnectionState = event.connectionState
+        receivedAblyChannelConnectionState = event.connectionState
         handleConnectionStateChange()
     }
     
     private func handleConnectionStateChange() {
         var newConnectionState: ConnectionState = .offline
         
-        switch ablyClientConnectionState {
+        switch receivedAblyClientConnectionState {
         case .online:
-            switch ablyChannelConnectionState {
+            switch receivedAblyChannelConnectionState {
             case .online:
                 newConnectionState = isPublisherOnline ? .online : .offline
             case .offline:
@@ -196,8 +188,10 @@ extension DefaultSubscriber {
             newConnectionState = .failed
         }
         
-        ablyChannelConnectionState = newConnectionState
-        callback(event: DelegateConnectionStatusChangedEvent(status: newConnectionState))
+        if newConnectionState != currentTrackableConnectionState {
+            currentTrackableConnectionState = newConnectionState
+            callback(event: DelegateConnectionStatusChangedEvent(status: newConnectionState))
+        }
     }
 
     // swiftlint:disable vertical_whitespace_between_cases
