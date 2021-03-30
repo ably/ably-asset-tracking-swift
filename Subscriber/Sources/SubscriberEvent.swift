@@ -14,7 +14,7 @@ struct ChangeResolutionEvent: SubscriberEvent {
 }
 
 struct PresenceUpdateEvent: SubscriberEvent {
-    let presence: AblyPublisherPresence
+    let presence: AblyPresence
 }
 
 struct AblyConnectionClosedEvent: SubscriberEvent {
