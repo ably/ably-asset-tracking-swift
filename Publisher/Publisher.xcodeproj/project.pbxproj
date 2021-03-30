@@ -33,7 +33,6 @@
 		18C7B16225B6109E000A1418 /* ThresholdChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15925B6109E000A1418 /* ThresholdChecker.swift */; };
 		18C7B16325B6109E000A1418 /* DefaultResolutionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15A25B6109E000A1418 /* DefaultResolutionPolicy.swift */; };
 		18C7B16425B6109E000A1418 /* BatteryLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B15B25B6109E000A1418 /* BatteryLevelProvider.swift */; };
-		18C7B16A25B61131000A1418 /* AblyPublisherPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B16925B61131000A1418 /* AblyPublisherPresence.swift */; };
 		18C7B16F25B611D1000A1418 /* DefaultResolutionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B16E25B611D1000A1418 /* DefaultResolutionPolicyTests.swift */; };
 		18C7B17325B611D9000A1418 /* DefaultPublisher_LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17225B611D9000A1418 /* DefaultPublisher_LocationServiceTests.swift */; };
 		18C7B17F25B611E4000A1418 /* MockPublisherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B17825B611E4000A1418 /* MockPublisherDelegate.swift */; };
@@ -67,13 +66,15 @@
 		BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FF3FC4C81DED6B6A5792B3 /* Pods_asset_tracking_Publisher.framework */; };
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
 		F617C43525DA5848005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C43425DA5848005E92A2 /* ConnectionState.swift */; };
-		F617C43F25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C43E25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift */; };
 		F656005B25DFAED100491E6A /* LocationSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F656005A25DFAED100491E6A /* LocationSource.swift */; };
 		F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34425AF3E35002799BD /* RoutingProfile.swift */; };
 		F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */; };
 		F67002DE25B1C7B500325244 /* RoutingProfile+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */; };
+		F688F988261353B00051914A /* AblyPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F688F987261353B00051914A /* AblyPresence.swift */; };
+		F688F9B8261355BB0051914A /* ARTRealtimeConnectionState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F688F9B5261355BB0051914A /* ARTRealtimeConnectionState+Extensions.swift */; };
+		F688F9B9261355BB0051914A /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F688F9B6261355BB0051914A /* ARTErrorInfo+Extensions.swift */; };
+		F688F9BA261355BB0051914A /* ARTRealtimeChannelState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F688F9B7261355BB0051914A /* ARTRealtimeChannelState+Extensions.swift */; };
 		F6A2B75825E656D600153CF4 /* LocationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2B75725E656D600153CF4 /* LocationValidator.swift */; };
-		F6A2CFFD25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */; };
 		F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */; };
 		F6A6B67C25C9862600A547D9 /* MapboxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67B25C9862600A547D9 /* MapboxConfiguration.swift */; };
 		F6A6B68025C9883E00A547D9 /* MapboxConfiguration+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */; };
@@ -123,7 +124,6 @@
 		18C7B15925B6109E000A1418 /* ThresholdChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdChecker.swift; sourceTree = "<group>"; };
 		18C7B15A25B6109E000A1418 /* DefaultResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicy.swift; sourceTree = "<group>"; };
 		18C7B15B25B6109E000A1418 /* BatteryLevelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryLevelProvider.swift; sourceTree = "<group>"; };
-		18C7B16925B61131000A1418 /* AblyPublisherPresence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblyPublisherPresence.swift; sourceTree = "<group>"; };
 		18C7B16E25B611D1000A1418 /* DefaultResolutionPolicyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResolutionPolicyTests.swift; sourceTree = "<group>"; };
 		18C7B17225B611D9000A1418 /* DefaultPublisher_LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPublisher_LocationServiceTests.swift; sourceTree = "<group>"; };
 		18C7B17825B611E4000A1418 /* MockPublisherDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPublisherDelegate.swift; sourceTree = "<group>"; };
@@ -163,13 +163,15 @@
 		96BA6252D49C6BAA02CFF7B7 /* Pods-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Publisher.release.xcconfig"; path = "Target Support Files/Pods-Publisher/Pods-Publisher.release.xcconfig"; sourceTree = "<group>"; };
 		C8859F81CDD7390E11741B66 /* Pods-asset_tracking-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.release.xcconfig"; sourceTree = "<group>"; };
 		F617C43425DA5848005E92A2 /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
-		F617C43E25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeConnectionState+Extensions.swift"; sourceTree = "<group>"; };
 		F656005A25DFAED100491E6A /* LocationSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSource.swift; sourceTree = "<group>"; };
 		F65AC34425AF3E35002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CB625CA9F2A00913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+Extensions.swift"; sourceTree = "<group>"; };
+		F688F987261353B00051914A /* AblyPresence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AblyPresence.swift; sourceTree = "<group>"; };
+		F688F9B5261355BB0051914A /* ARTRealtimeConnectionState+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeConnectionState+Extensions.swift"; sourceTree = "<group>"; };
+		F688F9B6261355BB0051914A /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
+		F688F9B7261355BB0051914A /* ARTRealtimeChannelState+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeChannelState+Extensions.swift"; sourceTree = "<group>"; };
 		F6A2B75725E656D600153CF4 /* LocationValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationValidator.swift; sourceTree = "<group>"; };
-		F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
 		F6A2D02725CC2231008D44F7 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		F6A6B67B25C9862600A547D9 /* MapboxConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxConfiguration.swift; sourceTree = "<group>"; };
 		F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapboxConfiguration+Extensions.swift"; sourceTree = "<group>"; };
@@ -256,7 +258,6 @@
 			isa = PBXGroup;
 			children = (
 				18C7B24525B6187B000A1418 /* RouteProvider.swift */,
-				18C7B16925B61131000A1418 /* AblyPublisherPresence.swift */,
 				18C7B10625B60D5F000A1418 /* DefaultAblyPublisherService.swift */,
 				18C7B10525B60D5F000A1418 /* DefaultLocationService.swift */,
 				180F61742586341E0014B310 /* AblyPublisherService.swift */,
@@ -342,6 +343,7 @@
 		18FCE195258B7FBB005BC480 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F688F9B4261355BB0051914A /* AblyExtensions */,
 				18C7B1B525B6135A000A1418 /* ResolutionPolicy */,
 				18FCE1CE258B8264005BC480 /* Configuration */,
 				18FCE1D3258B8264005BC480 /* Model */,
@@ -366,6 +368,7 @@
 		18FCE1D3258B8264005BC480 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F688F986261353B00051914A /* Ably */,
 				18FCE1D4258B8264005BC480 /* GeoJSON */,
 				18FCE1D9258B8264005BC480 /* PresenceData.swift */,
 				18FCE1DA258B8264005BC480 /* EventName.swift */,
@@ -432,10 +435,27 @@
 			children = (
 				F67002DD25B1C7B500325244 /* RoutingProfile+Extensions.swift */,
 				F6A6B67F25C9883E00A547D9 /* MapboxConfiguration+Extensions.swift */,
-				F6A2CFFC25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift */,
-				F617C43E25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F688F986261353B00051914A /* Ably */ = {
+			isa = PBXGroup;
+			children = (
+				F688F987261353B00051914A /* AblyPresence.swift */,
+			);
+			path = Ably;
+			sourceTree = "<group>";
+		};
+		F688F9B4261355BB0051914A /* AblyExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				F688F9B5261355BB0051914A /* ARTRealtimeConnectionState+Extensions.swift */,
+				F688F9B6261355BB0051914A /* ARTErrorInfo+Extensions.swift */,
+				F688F9B7261355BB0051914A /* ARTRealtimeChannelState+Extensions.swift */,
+			);
+			name = AblyExtensions;
+			path = ../../Core/Sources/AblyExtensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -635,6 +655,9 @@
 			files = (
 				18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */,
 				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
+				F688F9BA261355BB0051914A /* ARTRealtimeChannelState+Extensions.swift in Sources */,
+				F688F9B8261355BB0051914A /* ARTRealtimeConnectionState+Extensions.swift in Sources */,
+				F688F988261353B00051914A /* AblyPresence.swift in Sources */,
 				18C7B16125B6109E000A1418 /* DefaultResolutionPolicyHooks.swift in Sources */,
 				F6D4CFEF25D678220071A6A9 /* PublisherFactory.swift in Sources */,
 				185094DF25889EBB00E2D2E2 /* Publisher.swift in Sources */,
@@ -646,7 +669,6 @@
 				F6A6B67C25C9862600A547D9 /* MapboxConfiguration.swift in Sources */,
 				F6A2B75825E656D600153CF4 /* LocationValidator.swift in Sources */,
 				F65AC34525AF3E35002799BD /* RoutingProfile.swift in Sources */,
-				18C7B16A25B61131000A1418 /* AblyPublisherPresence.swift in Sources */,
 				18C7B16325B6109E000A1418 /* DefaultResolutionPolicy.swift in Sources */,
 				18FCE1E1258B8264005BC480 /* Trackable.swift in Sources */,
 				18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */,
@@ -658,6 +680,7 @@
 				18E9CCAE259495F900860A6E /* DefaultPublisherEvents.swift in Sources */,
 				18C7B15F25B6109E000A1418 /* DefaultTrackableSetListener.swift in Sources */,
 				18C7B16025B6109E000A1418 /* DefaultResolutionPolicyFactory.swift in Sources */,
+				F688F9B9261355BB0051914A /* ARTErrorInfo+Extensions.swift in Sources */,
 				18FCE1E9258B8264005BC480 /* EventName.swift in Sources */,
 				F617C43525DA5848005E92A2 /* ConnectionState.swift in Sources */,
 				F6D4CFE925D677560071A6A9 /* PublisherDelegate.swift in Sources */,
@@ -678,8 +701,6 @@
 				18FCE1EB258B8264005BC480 /* Decodable+FromJSONString.swift in Sources */,
 				180F617A2586341E0014B310 /* LocationService.swift in Sources */,
 				F65C5CB725CA9F2A00913A09 /* LocationUpdate.swift in Sources */,
-				F617C43F25DA5AA2005E92A2 /* ARTRealtimeConnectionState+Extensions.swift in Sources */,
-				F6A2CFFD25CC08EC008D44F7 /* ARTErrorInfo+Extensions.swift in Sources */,
 				F6A6B68025C9883E00A547D9 /* MapboxConfiguration+Extensions.swift in Sources */,
 				F6A2D02825CC2231008D44F7 /* ErrorInformation.swift in Sources */,
 				18FCE1E8258B8264005BC480 /* PresenceData.swift in Sources */,

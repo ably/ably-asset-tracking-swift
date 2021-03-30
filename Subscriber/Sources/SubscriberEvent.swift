@@ -13,8 +13,20 @@ struct ChangeResolutionEvent: SubscriberEvent {
     let resultHandler: ResultHandler<Void>
 }
 
+struct PresenceUpdateEvent: SubscriberEvent {
+    let presence: AblyPresence
+}
+
 struct AblyConnectionClosedEvent: SubscriberEvent {
     let resultHandler: ResultHandler<Void>
+}
+
+struct AblyClientConnectionStateChangedEvent: SubscriberEvent {
+    let connectionState: ConnectionState
+}
+
+struct AblyChannelConnectionStateChangedEvent: SubscriberEvent {
+    let connectionState: ConnectionState
 }
 
 // MARK: Delegate handling events

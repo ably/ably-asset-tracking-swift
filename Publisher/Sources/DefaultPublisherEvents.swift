@@ -58,7 +58,7 @@ struct ChangeRoutingProfileEvent: PublisherEvent {
 
 struct PresenceUpdateEvent: PublisherEvent {
     let trackable: Trackable
-    let presence: AblyPublisherPresence
+    let presence: AblyPresence
     let presenceData: PresenceData
     let clientId: String
 }
@@ -71,7 +71,12 @@ struct AblyConnectionClosedEvent: PublisherEvent {
     let resultHandler: ResultHandler<Void>
 }
 
-struct AblyClientConnectionChangedEvent: PublisherEvent {
+struct AblyClientConnectionStateChangedEvent: PublisherEvent {
+    let connectionState: ConnectionState
+}
+
+struct AblyChannelConnectionStateChangedEvent: PublisherEvent {
+    let trackable: Trackable
     let connectionState: ConnectionState
 }
 
@@ -86,7 +91,8 @@ struct DelegateEnhancedLocationChangedEvent: PublisherEvent, PublisherDelegateEv
     let locationUpdate: EnhancedLocationUpdate
 }
 
-struct DelegateConnectionStateChangedEvent: PublisherEvent, PublisherDelegateEvent {
+struct DelegateTrackableConnectionStateChangedEvent: PublisherEvent, PublisherDelegateEvent {
+    let trackable: Trackable
     let connectionState: ConnectionState
 }
 
@@ -96,7 +102,7 @@ struct DelegateResolutionUpdateEvent: PublisherEvent {
 
 struct DelegatePresenceUpdateEvent: PublisherEvent {
     let trackable: Trackable
-    let presence: AblyPublisherPresence
+    let presence: AblyPresence
     let presenceData: PresenceData
     let clientId: String
 }

@@ -22,7 +22,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                   let receivedConnectionState = stateChange?.current.toConnectionState() else {
                 return
             }
-            
+
             logger.debug("Connection to Ably changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(
                 sender: self,
@@ -45,10 +45,10 @@ class DefaultAblyPublisherService: AblyPublisherService {
             else { return }
 
             self.delegate?.publisherService(sender: self,
-                                             didReceivePresenceUpdate: message.action.toAblyPublisherPresence(),
-                                             forTrackable: trackable,
-                                             presenceData: data,
-                                             clientId: clientId)
+                                            didReceivePresenceUpdate: message.action.toAblyPresence(),
+                                            forTrackable: trackable,
+                                            presenceData: data,
+                                            clientId: clientId)
         }
 
         channel.presence.enter(data) { error in
@@ -61,6 +61,16 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
             logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblyPublisherService")
             completion?(.failure(error.toErrorInformation()))
+        }
+
+        channel.on { [weak self] stateChange in
+            guard let self = self,
+                  let receivedConnectionState = stateChange?.current.toConnectionState() else {
+                return
+            }
+
+            logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
     }
 
@@ -78,13 +88,16 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
 
         channel.publish([message]) { [weak self] error in
-            guard let self = self,
-                  let error = error else {
-                logger.debug("ablyService.didSendEnhancedLocation.", source: "DefaultAblyService")
+            guard let self = self else {
                 return
             }
 
-            self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+            if let error = error {
+                self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+                return
+            }
+
+            self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: .online, forTrackable: trackable)
         }
     }
 
@@ -98,19 +111,19 @@ class DefaultAblyPublisherService: AblyPublisherService {
             return nil
         }
     }
-    
+
     func close(completion: @escaping ResultHandler<Void>) {
         closeAllChannels { _ in
             self.closeClientConnection(completion: completion)
         }
     }
-    
+
     private func closeClientConnection(completion: @escaping ResultHandler<Void>) {
         client.connection.on { connectionChange in
             guard let connectionState = connectionChange?.current else {
                 return
             }
-            
+
             switch connectionState {
             case .closed:
                 logger.info("Ably connection closed successfully.")
@@ -122,16 +135,16 @@ class DefaultAblyPublisherService: AblyPublisherService {
                 return
             }
         }
-        
+
         client.close()
     }
-    
+
     private func closeAllChannels(completion: @escaping ResultHandler<Void>) {
         guard !channels.isEmpty else {
             completion(.success)
             return
         }
-        
+
         let closingDispatchGroup = DispatchGroup()
         channels.forEach { channel in
             closingDispatchGroup.enter()
@@ -146,7 +159,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                 }
             }
         }
-        
+
         closingDispatchGroup.notify(queue: .main) {
             logger.info("All trackables removed.")
             completion(.success)

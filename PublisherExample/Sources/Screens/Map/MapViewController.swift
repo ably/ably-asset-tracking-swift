@@ -272,6 +272,12 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 extension MapViewController: PublisherDelegate {
+    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+        let stateColorAndDesc = DescriptionsHelper.ConnectionStateHelper.getDescriptionAndColor(for: state)
+        connectionStatusLabel.textColor = stateColorAndDesc.color
+        connectionStatusLabel.text = stateColorAndDesc.desc
+    }
+    
     func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
         locationState = .failed
         refreshAnnotations()
@@ -283,12 +289,6 @@ extension MapViewController: PublisherDelegate {
         locationState = .active
         refreshAnnotations()
         scrollToReceivedLocation()
-    }
-
-    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState) {
-        let stateColorAndDesc = DescriptionsHelper.ConnectionStateHelper.getDescriptionAndColor(for: state)
-        connectionStatusLabel.textColor = stateColorAndDesc.color
-        connectionStatusLabel.text = stateColorAndDesc.desc
     }
 
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {

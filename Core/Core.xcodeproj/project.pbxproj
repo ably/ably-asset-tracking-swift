@@ -37,6 +37,10 @@
 		F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34025AF3E28002799BD /* RoutingProfile.swift */; };
 		F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */; };
 		F66491BD25E909BE0035F45A /* TrackableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66491BC25E909BE0035F45A /* TrackableTests.swift */; };
+		F688F97A2613530B0051914A /* AblyPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F688F9792613530B0051914A /* AblyPresence.swift */; };
+		F688F998261354F70051914A /* ARTRealtimeChannelState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F688F997261354F70051914A /* ARTRealtimeChannelState+Extensions.swift */; };
+		F688F99C2613550E0051914A /* ARTRealtimeConnectionState+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F688F99B2613550E0051914A /* ARTRealtimeConnectionState+Extensions.swift */; };
+		F688F9A0261355550051914A /* ARTErrorInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F688F99F261355550051914A /* ARTErrorInfo+Extensions.swift */; };
 		F68E171E25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E171D25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift */; };
 		F68E172425E79D8E009AECEB /* GeoJSONGeometryCLLocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E172325E79D8E009AECEB /* GeoJSONGeometryCLLocationTests.swift */; };
 		F68E172A25E79E4F009AECEB /* GeoJSONPropertiesCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E172925E79E4F009AECEB /* GeoJSONPropertiesCodableTests.swift */; };
@@ -98,6 +102,10 @@
 		F65AC34025AF3E28002799BD /* RoutingProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
 		F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUpdate.swift; sourceTree = "<group>"; };
 		F66491BC25E909BE0035F45A /* TrackableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableTests.swift; sourceTree = "<group>"; };
+		F688F9792613530B0051914A /* AblyPresence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyPresence.swift; sourceTree = "<group>"; };
+		F688F997261354F70051914A /* ARTRealtimeChannelState+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeChannelState+Extensions.swift"; sourceTree = "<group>"; };
+		F688F99B2613550E0051914A /* ARTRealtimeConnectionState+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeConnectionState+Extensions.swift"; sourceTree = "<group>"; };
+		F688F99F261355550051914A /* ARTErrorInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTErrorInfo+Extensions.swift"; sourceTree = "<group>"; };
 		F68E171D25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometryCodableTests.swift; sourceTree = "<group>"; };
 		F68E172325E79D8E009AECEB /* GeoJSONGeometryCLLocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONGeometryCLLocationTests.swift; sourceTree = "<group>"; };
 		F68E172925E79E4F009AECEB /* GeoJSONPropertiesCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONPropertiesCodableTests.swift; sourceTree = "<group>"; };
@@ -151,6 +159,7 @@
 		180F6083258632360014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				F688F996261354DE0051914A /* AblyExtensions */,
 				18C7B1A425B61349000A1418 /* ResolutionPolicy */,
 				180F613F258633C00014B310 /* Configuration */,
 				180F6144258633C00014B310 /* Utils */,
@@ -197,6 +206,7 @@
 		180F6148258633C00014B310 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F688F978261352FE0051914A /* Ably */,
 				180F6149258633C00014B310 /* GeoJSON */,
 				180F614F258633C00014B310 /* PresenceData.swift */,
 				180F6150258633C00014B310 /* EventName.swift */,
@@ -285,6 +295,24 @@
 				0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F688F978261352FE0051914A /* Ably */ = {
+			isa = PBXGroup;
+			children = (
+				F688F9792613530B0051914A /* AblyPresence.swift */,
+			);
+			path = Ably;
+			sourceTree = "<group>";
+		};
+		F688F996261354DE0051914A /* AblyExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				F688F997261354F70051914A /* ARTRealtimeChannelState+Extensions.swift */,
+				F688F99B2613550E0051914A /* ARTRealtimeConnectionState+Extensions.swift */,
+				F688F99F261355550051914A /* ARTErrorInfo+Extensions.swift */,
+			);
+			path = AblyExtensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -493,14 +521,18 @@
 				180F615F258633C00014B310 /* EventName.swift in Sources */,
 				180F6157258633C00014B310 /* Codable+EncodedString.swift in Sources */,
 				180F6153258633C00014B310 /* Trackable.swift in Sources */,
+				F688F99C2613550E0051914A /* ARTRealtimeConnectionState+Extensions.swift in Sources */,
+				F688F97A2613530B0051914A /* AblyPresence.swift in Sources */,
 				F6A6B67825C9861B00A547D9 /* MapboxConfiguration.swift in Sources */,
 				18C7B1AD25B61349000A1418 /* ResolutionConstraints.swift in Sources */,
 				180F615C258633C00014B310 /* GeoJSONType.swift in Sources */,
 				18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */,
+				F688F998261354F70051914A /* ARTRealtimeChannelState+Extensions.swift in Sources */,
 				18C7B1AC25B61349000A1418 /* TrackableResolutionRequest.swift in Sources */,
 				180F6156258633C00014B310 /* Decodable+FromJSONString.swift in Sources */,
 				F617C43125DA54AF005E92A2 /* ConnectionState.swift in Sources */,
 				180F615E258633C00014B310 /* PresenceData.swift in Sources */,
+				F688F9A0261355550051914A /* ARTErrorInfo+Extensions.swift in Sources */,
 				F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */,
 				18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */,
 				180F615B258633C00014B310 /* GeoJSONProperties.swift in Sources */,

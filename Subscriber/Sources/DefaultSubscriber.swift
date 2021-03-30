@@ -21,6 +21,11 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     private let ablyService: AblySubscriberService
     private var subscriberState: SubscriberState = .working
     
+    private var receivedAblyClientConnectionState: ConnectionState = .offline
+    private var receivedAblyChannelConnectionState: ConnectionState = .offline
+    private var currentTrackableConnectionState: ConnectionState = .offline
+    private var isPublisherOnline: Bool = false
+    
     weak var delegate: SubscriberDelegate?
     weak var delegateObjectiveC: SubscriberDelegateObjectiveC?
 
@@ -88,6 +93,9 @@ extension DefaultSubscriber {
             case let event as StopEvent: self?.performStop(event)
             case let event as ChangeResolutionEvent: self?.performChangeResolution(event)
             case let event as AblyConnectionClosedEvent: self?.performStopped(event)
+            case let event as AblyClientConnectionStateChangedEvent: self?.performClientConnectionChanged(event)
+            case let event as AblyChannelConnectionStateChangedEvent: self?.performChannelConnectionChanged(event)
+            case let event as PresenceUpdateEvent: self?.performPresenceUpdated(event)
             default: preconditionFailure("Unhandled event in DefaultSubscriber: \(event) ")
             }
         }
@@ -138,9 +146,52 @@ extension DefaultSubscriber {
         }
     }
     
+    private func performPresenceUpdated(_ event: PresenceUpdateEvent) {
+        if event.presence.isPresentOrEnter {
+            isPublisherOnline = true
+        } else if event.presence.isLeaveOrAbsent {
+            isPublisherOnline = false
+        }
+    }
+    
     private func performStopped(_ event: AblyConnectionClosedEvent) {
         subscriberState = .stopped
         callback(value: Void(), handler: event.resultHandler)
+    }
+    
+    private func performClientConnectionChanged(_ event: AblyClientConnectionStateChangedEvent) {
+        receivedAblyClientConnectionState = event.connectionState
+        handleConnectionStateChange()
+    }
+    
+    private func performChannelConnectionChanged(_ event: AblyChannelConnectionStateChangedEvent) {
+        receivedAblyChannelConnectionState = event.connectionState
+        handleConnectionStateChange()
+    }
+    
+    private func handleConnectionStateChange() {
+        var newConnectionState: ConnectionState = .offline
+        
+        switch receivedAblyClientConnectionState {
+        case .online:
+            switch receivedAblyChannelConnectionState {
+            case .online:
+                newConnectionState = isPublisherOnline ? .online : .offline
+            case .offline:
+                newConnectionState = .offline
+            case .failed:
+                newConnectionState = .failed
+            }
+        case .offline:
+            newConnectionState = .offline
+        case .failed:
+            newConnectionState = .failed
+        }
+        
+        if newConnectionState != currentTrackableConnectionState {
+            currentTrackableConnectionState = newConnectionState
+            callback(event: DelegateConnectionStatusChangedEvent(status: newConnectionState))
+        }
     }
 
     // swiftlint:disable vertical_whitespace_between_cases
@@ -166,9 +217,19 @@ extension DefaultSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberServiceDelegate {
-    func subscriberService(sender: AblySubscriberService, didChangeAssetConnectionStatus status: ConnectionState) {
-        logger.debug("subscriberService.didChangeAssetConnectionStatus. Status: \(status)", source: "DefaultSubscriber")
-        callback(event: DelegateConnectionStatusChangedEvent(status: status))
+    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: AblyPresence) {
+        logger.debug("subscriberService.didReceivePresenceUpdate. Presence: \(presence)", source: "DefaultSubscriber")
+        enqueue(event: PresenceUpdateEvent(presence: presence))
+    }
+    
+    func subscriberService(sender: AblySubscriberService, didChangeClientConnectionStatus status: ConnectionState) {
+        logger.debug("subscriberService.didChangeClientConnectionStatus. Status: \(status)", source: "DefaultSubscriber")
+        enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: status))
+    }
+    
+    func subscriberService(sender: AblySubscriberService, didChangeChannelConnectionStatus status: ConnectionState) {
+        logger.debug("subscriberService.didChangeChannelConnectionStatus. Status: \(status)", source: "DefaultSubscriber")
+        enqueue(event: AblyChannelConnectionStateChangedEvent(connectionState: status))
     }
 
     func subscriberService(sender: AblySubscriberService, didFailWithError error: ErrorInformation) {

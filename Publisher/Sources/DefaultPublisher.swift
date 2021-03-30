@@ -11,7 +11,7 @@ private enum PublisherState {
     case working
     case stopping
     case stopped
-    
+
     var isStoppingOrStopped: Bool {
         self == .stopping || self == .stopped
     }
@@ -44,8 +44,10 @@ class DefaultPublisher: Publisher {
     private var lastEnhancedLocations: [Trackable: CLLocation]
     private var lastEnhancedTimestamps: [Trackable: Date]
     private var route: Route?
-    
-    private var ablyClientConnectionState: ConnectionState = .offline
+
+    private var receivedAblyClientConnectionState: ConnectionState = .offline
+    private var receivedAblyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
+    private var currentTrackablesConnectionStates: [Trackable: ConnectionState] = [:]
 
     public weak var delegate: PublisherDelegate?
     public weak var delegateObjectiveC: PublisherDelegateObjectiveC?
@@ -68,7 +70,7 @@ class DefaultPublisher: Publisher {
         self.locationService = locationService
         self.ablyService = ablyService
         self.routeProvider = routeProvider
-        
+
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
 
         self.hooks = DefaultResolutionPolicyHooks()
@@ -93,7 +95,7 @@ class DefaultPublisher: Publisher {
                                         resultHandler: completion)
         enqueue(event: event)
     }
-    
+
     func add(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
         let event = AddTrackableEvent(trackable: trackable, resultHandler: completion)
         enqueue(event: event)
@@ -108,7 +110,7 @@ class DefaultPublisher: Publisher {
         let event = ChangeRoutingProfileEvent(profile: profile, resultHandler: completion)
         enqueue(event: event)
     }
-    
+
     func stop(completion: @escaping ResultHandler<Void>) {
         enqueue(event: StopEvent(resultHandler: completion))
     }
@@ -126,7 +128,7 @@ extension DefaultPublisher: PublisherObjectiveC {
             }
         }
     }
-    
+
     @objc
     func add(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         self.add(trackable: trackable) { result in
@@ -138,7 +140,7 @@ extension DefaultPublisher: PublisherObjectiveC {
             }
         }
     }
-    
+
     @objc
     func remove(trackable: Trackable, onSuccess: @escaping ((Bool) -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         self.remove(trackable: trackable) { result in
@@ -150,7 +152,7 @@ extension DefaultPublisher: PublisherObjectiveC {
             }
         }
     }
-    
+
     @objc
     func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         self.changeRoutingProfile(profile: profile) { result in
@@ -162,7 +164,7 @@ extension DefaultPublisher: PublisherObjectiveC {
             }
         }
     }
-    
+
     @objc
     func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         self.stop { result in
@@ -180,7 +182,7 @@ extension DefaultPublisher: PublisherObjectiveC {
 extension DefaultPublisher {
     private func enqueue(event: PublisherEvent) {
         logger.trace("Received event: \(event)")
-        performOnWorkingThread { [weak self] in            
+        performOnWorkingThread { [weak self] in
             switch event {
             case let event as TrackTrackableEvent: self?.performTrackTrackableEvent(event)
             case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
@@ -196,12 +198,13 @@ extension DefaultPublisher {
             case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
             case let event as DelegateResolutionUpdateEvent: self?.notifyDelegateResolutionUpdate(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
-            case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
+            case let event as DelegateTrackableConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             case let event as StopEvent: self?.performStopPublisherEvent(event)
             case let event as AblyConnectionClosedEvent: self?.performAblyConnectionClosedEvent(event)
-            case let event as AblyClientConnectionChangedEvent: self?.performAblyClientConnectionChangedEvent(event)
+            case let event as AblyClientConnectionStateChangedEvent: self?.performAblyClientConnectionChangedEvent(event)
+            case let event as AblyChannelConnectionStateChangedEvent: self?.performAblyChannelConnectionStateChangedEvent(event)
             default: preconditionFailure("Unhandled event in DefaultPublisher: \(event) ")
             }
         }
@@ -214,7 +217,7 @@ extension DefaultPublisher {
     private func callback<T: Any>(error: ErrorInformation, handler: @escaping ResultHandler<T>) {
         performOnMainThread { handler(.failure(error)) }
     }
-    
+
     private func publisherStoppedCallback<T: Any>(handler: @escaping ResultHandler<T>) {
         let error = ErrorInformation(type: .publisherStoppedException)
         performOnMainThread { handler(.failure(error)) }
@@ -222,7 +225,7 @@ extension DefaultPublisher {
 
     private func callback(event: PublisherDelegateEvent) {
         logger.trace("Received delegate event: \(event)")
-        
+
         performOnMainThread { [weak self] in
             guard let self = self
             else { return }
@@ -231,8 +234,8 @@ extension DefaultPublisher {
             case let event as DelegateErrorEvent:
                 self.delegate?.publisher(sender: self, didFailWithError: event.error)
                 self.delegateObjectiveC?.publisher(sender: self, didFailWithError: event.error)
-            case let event as DelegateConnectionStateChangedEvent:
-                self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+            case let event as DelegateTrackableConnectionStateChangedEvent:
+                self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
                 self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
             case let event as DelegateEnhancedLocationChangedEvent:
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
@@ -249,7 +252,7 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-        
+
         guard !trackables.contains(event.trackable) else {
             let error = ErrorInformation(type: .trackableAlreadyExist(trackableId: event.trackable.id))
             callback(error: error, handler: event.resultHandler)
@@ -279,7 +282,7 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-        
+
         if activeTrackable != event.trackable {
             activeTrackable = event.trackable
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
@@ -297,7 +300,7 @@ extension DefaultPublisher {
                 self.route = nil
             }
         }
-        
+
         callback(value: Void(), handler: event.resultHandler)
     }
 
@@ -306,7 +309,7 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-        
+
         trackables.insert(event.trackable)
         locationService.startUpdatingLocation()
         resolveResolution(trackable: event.trackable)
@@ -320,7 +323,7 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-        
+
         routeProvider.changeRoutingProfile(to: routingProfile) { [weak self] result in
             switch result {
             case .success(let route):
@@ -345,13 +348,13 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-        
+
         guard !trackables.contains(event.trackable) else {
             let error = ErrorInformation(type: .trackableAlreadyExist(trackableId: event.trackable.id))
             callback(error: error, handler: event.resultHandler)
             return
         }
-        
+
         self.ablyService.track(trackable: event.trackable) { [weak self] result in
             switch result {
             case .success:
@@ -370,7 +373,7 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-        
+
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] result in
             switch result {
             case .success(let wasPresent):
@@ -382,16 +385,16 @@ extension DefaultPublisher {
             }
         }
     }
-    
+
     // MARK: Stop publisher
     private func performStopPublisherEvent(_ event: StopEvent) {
         if publisherState.isStoppingOrStopped {
             callback(value: Void(), handler: event.resultHandler)
             return
         }
-        
+
         publisherState = .stopping
-        
+
         ablyService.close { [weak self] result in
             switch result {
             case .success:
@@ -402,19 +405,54 @@ extension DefaultPublisher {
             }
         }
     }
-    
+
     private func performAblyConnectionClosedEvent(_ event: AblyConnectionClosedEvent) {
         publisherState = .stopped
         callback(value: Void(), handler: event.resultHandler)
     }
-    
-    private func performAblyClientConnectionChangedEvent(_ event: AblyClientConnectionChangedEvent) {
-        guard event.connectionState != ablyClientConnectionState else {
-            return
+
+    private func performAblyClientConnectionChangedEvent(_ event: AblyClientConnectionStateChangedEvent) {
+        receivedAblyClientConnectionState = event.connectionState
+        trackables.forEach {
+            handleConnectionStateChange(forTrackable: $0)
         }
-        
-        ablyClientConnectionState = event.connectionState
-        callback(event: DelegateConnectionStateChangedEvent(connectionState: event.connectionState))
+    }
+
+    private func performAblyChannelConnectionStateChangedEvent(_ event: AblyChannelConnectionStateChangedEvent) {
+        receivedAblyChannelsConnectionStates[event.trackable] = event.connectionState
+        handleConnectionStateChange(forTrackable: event.trackable)
+    }
+
+    private func handleConnectionStateChange(forTrackable trackable: Trackable) {
+        var newTrackableState: ConnectionState = .offline
+        let channelConnectionState = receivedAblyChannelsConnectionStates[trackable] ?? .offline
+
+        switch receivedAblyClientConnectionState {
+        case .online:
+            switch channelConnectionState {
+            case .online:
+                newTrackableState = hasSentAtLeastOneLocation(forTrackable: trackable)
+                    ? .online
+                    : .offline
+            case .offline:
+                newTrackableState = .offline
+            case .failed:
+                newTrackableState = .failed
+            }
+        case .offline:
+            newTrackableState = .offline
+        case .failed:
+            newTrackableState = .failed
+        }
+
+        if newTrackableState != currentTrackablesConnectionStates[trackable] {
+            currentTrackablesConnectionStates[trackable] = newTrackableState
+            callback(event: DelegateTrackableConnectionStateChangedEvent(trackable: trackable, connectionState: newTrackableState))
+        }
+    }
+
+    private func hasSentAtLeastOneLocation(forTrackable trackable: Trackable) -> Bool {
+        return lastEnhancedLocations[trackable] != nil
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
@@ -422,7 +460,7 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-        
+
         trackables.remove(event.trackable)
         hooks.trackables?.onTrackableRemoved(trackable: event.trackable)
         removeAllSubscribers(forTrackable: event.trackable)
@@ -438,13 +476,13 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-        
+
         if activeTrackable == event.trackable {
             activeTrackable = nil
             hooks.trackables?.onActiveTrackableChanged(trackable: nil)
             route = nil
         }
-        
+
         if trackables.isEmpty {
             locationService.stopUpdatingLocation()
         }
@@ -468,7 +506,7 @@ extension DefaultPublisher {
             logger.error("Cannot perform EnhancedLocationChangedEvent. Publisher is not working.")
             return
         }
-        
+
         let trackablesToSend = trackables.filter { trackable in
             return shouldSendLocation(location: event.locationUpdate.location,
                                       lastLocation: lastEnhancedLocations[trackable],
@@ -516,7 +554,7 @@ extension DefaultPublisher {
             logger.error("Cannot perform RefreshResolutionPolicyEvent. Publisher is not working.")
             return
         }
-        
+
         trackables.forEach {
             resolveResolution(trackable: $0)
         }
@@ -540,7 +578,7 @@ extension DefaultPublisher {
             logger.error("Cannot perform changeLocationEngineResolution. Publisher is not working.")
             return
         }
-        
+
         locationService.changeLocationEngineResolution(resolution: resolution)
         enqueue(event: DelegateResolutionUpdateEvent(resolution: resolution))
     }
@@ -572,7 +610,7 @@ extension DefaultPublisher {
             logger.error("Cannot perform PresenceUpdateEvent. Publisher is not working.")
             return
         }
-        
+
         guard event.presenceData.type == .subscriber else { return }
         if event.presence == .enter {
             addSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
@@ -650,10 +688,10 @@ extension DefaultPublisher {
         }
     }
 
-    private func notifyDelegateConnectionStateChanged(_ event: DelegateConnectionStateChangedEvent) {
+    private func notifyDelegateConnectionStateChanged(_ event: DelegateTrackableConnectionStateChangedEvent) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState)
+            self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
             self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
         }
     }
@@ -683,6 +721,11 @@ extension DefaultPublisher: LocationServiceDelegate {
 
 // MARK: AblyPublisherServiceDelegate
 extension DefaultPublisher: AblyPublisherServiceDelegate {
+    func publisherService(sender: AblyPublisherService, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+        logger.debug("publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: "DefaultPublisher")
+        enqueue(event: AblyChannelConnectionStateChangedEvent(trackable: trackable, connectionState: state))
+    }
+
     func publisherService(sender: AblyPublisherService, didFailWithError error: ErrorInformation) {
         logger.error("publisherService.didFailWithError. Error: \(error.message)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
@@ -690,11 +733,11 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
 
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
-        enqueue(event: AblyClientConnectionChangedEvent(connectionState: state))
+        enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
     }
 
     func publisherService(sender: AblyPublisherService,
-                          didReceivePresenceUpdate presence: AblyPublisherPresence,
+                          didReceivePresenceUpdate presence: AblyPresence,
                           forTrackable trackable: Trackable,
                           presenceData: PresenceData,
                           clientId: String) {
