@@ -1,9 +1,9 @@
 private enum AccuracyKeys: String {
-    case minimum = "MINIMUM_ACCURACY"
-    case low = "LOW_ACCURACY"
-    case balanced = "BALANCED_ACCURACY"
-    case high = "HIGH_ACCURACY"
-    case maximum = "MAXIMUM_ACCURACY"
+    case minimum = "MINIMUM"
+    case low = "LOW"
+    case balanced = "BALANCED"
+    case high = "HIGH"
+    case maximum = "MAXIMUM"
 }
 
 /**

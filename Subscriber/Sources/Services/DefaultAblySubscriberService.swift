@@ -106,10 +106,10 @@ class DefaultAblySubscriberService: AblySubscriberService {
             delegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             return
         }
-
-        var messages: [EnhancedLocationUpdateMessage] = []
+        
         do {
-            messages = try [EnhancedLocationUpdateMessage].fromJSONString(json)
+            let message: EnhancedLocationUpdateMessage = try EnhancedLocationUpdateMessage.fromJSONString(json)
+            delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: message.location.toCoreLocation())
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
                 delegate?.subscriberService(sender: self, didFailWithError: ErrorInformation(error: error))
@@ -118,12 +118,6 @@ class DefaultAblySubscriberService: AblySubscriberService {
 
             delegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             return
-        }
-
-        messages.map {
-            $0.location.toCoreLocation()
-        }.forEach {
-            delegate?.subscriberService(sender: self, didReceiveEnhancedLocation: $0)
         }
     }
 

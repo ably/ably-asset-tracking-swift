@@ -104,7 +104,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
     private func createARTMessage(for locationUpdate: EnhancedLocationUpdate, and batteryLevel: Float?) -> ARTMessage? {
         do {
             let geoJson = try EnhancedLocationUpdateMessage(locationUpdate: locationUpdate, batteryLevel: batteryLevel)
-            let data = try [geoJson].toJSONString()
+            let data = try geoJson.toJSONString()
             return ARTMessage(name: EventName.enhanced.rawValue, data: data)
         } catch let error {
             self.delegate?.publisherService(sender: self, didFailWithError: ErrorInformation(error: error))
