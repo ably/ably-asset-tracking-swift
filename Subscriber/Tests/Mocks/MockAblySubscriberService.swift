@@ -7,9 +7,14 @@ class MockAblySubscriberService: AblySubscriberService {
         didSet { wasDelegateSet = true }
     }
     
+    var startCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    var startResultHandler: ResultHandler<Void>?
     var startWasCalled: Bool = false
-    func start(completion: ((Error?) -> Void)?) {
+    func start(completion: @escaping ResultHandler<Void>) {
         startWasCalled = true
+        startResultHandler = completion
+        
+        startCompletionHandler?(completion)
     }
     
     var stopResultHandler: ResultHandler<Void>?

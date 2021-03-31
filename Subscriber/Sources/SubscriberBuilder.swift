@@ -8,7 +8,7 @@ public protocol SubscriberBuilderObjectiveC: AnyObject {
      - Returns: `AssetTrackingSubscriber` with passed all configuration properties.
      */
     @objc
-    func start() throws -> SubscriberObjectiveC
+    func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) -> SubscriberObjectiveC?
     
     /**
      Sets the mandatory `ConnectionConfiguration` property
@@ -57,7 +57,7 @@ public protocol SubscriberBuilder {
      - throws: `AssetTrackingError.incompleteConfiguration`  in case of missing mandatory property
      - Returns: `AssetTrackingSubscriber` with passed all configuration properties.
      */
-    func start() throws -> Subscriber
+    func start(completion: @escaping ResultHandler<Void>) -> Subscriber?
 
     /**
      Sets the mandatory `ConnectionConfiguration` property

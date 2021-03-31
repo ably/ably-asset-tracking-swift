@@ -36,6 +36,15 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
         self.ablyService = ablyService
         self.ablyService.delegate = self
     }
+
+    func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+        guard !subscriberState.isStoppingOrStopped else {
+            callback(error: ErrorInformation(type: .subscriberStoppedException), handler: completion)
+            return
+        }
+        
+        enqueue(event: ChangeResolutionEvent(resolution: resolution, resultHandler: completion))
+    }
     
     @objc
     func resolutionPreference(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
@@ -49,17 +58,20 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
         }
     }
 
-    func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
-        guard !subscriberState.isStoppingOrStopped else {
-            callback(error: ErrorInformation(type: .subscriberStoppedException), handler: completion)
-            return
-        }
-        
-        enqueue(event: ChangeResolutionEvent(resolution: resolution, resultHandler: completion))
+    func start(completion: @escaping ResultHandler<Void>) {
+        enqueue(event: StartEvent(resultHandler: completion))
     }
-
-    func start() {
-        enqueue(event: StartEvent())
+    
+    @objc
+    func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        start { result in
+            switch result {
+            case .success:
+                onSuccess()
+            case .failure(let error):
+                onError(error)
+            }
+        }
     }
     
     func stop(completion: @escaping ResultHandler<Void>) {
@@ -89,7 +101,7 @@ extension DefaultSubscriber {
         logger.trace("Received event: \(event)")
         performOnWorkingThread { [weak self] in
             switch event {
-            case _ as StartEvent: self?.performStart()
+            case let event as StartEvent: self?.performStart(event)
             case let event as StopEvent: self?.performStop(event)
             case let event as ChangeResolutionEvent: self?.performChangeResolution(event)
             case let event as AblyConnectionClosedEvent: self?.performStopped(event)
@@ -126,10 +138,14 @@ extension DefaultSubscriber {
     }
 
     // MARK: Start/Stop
-    private func performStart() {
-        ablyService.start { [weak self] error in
-            guard let error = error else { return }
-            self?.callback(event: DelegateErrorEvent(error: ErrorInformation(error: error)))
+    private func performStart(_ event: StartEvent) {
+        ablyService.start { [weak self] result in
+            switch result {
+            case .success:
+                self?.callback(value: Void(), handler: event.resultHandler)
+            case .failure(let error):
+                self?.callback(error: error, handler: event.resultHandler)
+            }
         }
     }
 

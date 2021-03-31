@@ -32,7 +32,11 @@
                         log:logConfiguration]
                         resolution:resolution]
                         delegate:delegate]
-                        startAndReturnError:NULL];
+                        startOnSuccess:^() {
+                            NSLog(@"Subscriber start SUCCESS");
+                        } onError:^(ErrorInformation * _Nonnull error) {
+                            NSLog(@"Subscriber start ERROR: %@", error.message);
+    }];
     
     NSLog(@"Subscriber created: %s", self.subscriber == NULL ? "FALSE" : "TRUE");
 }
@@ -42,17 +46,20 @@
                                                   desiredInterval:1000
                                               minimumDisplacement:1000];
     
-    [self.subscriber sendChangeRequestWithResolution:resolution
-      onSuccess:^() {
-        NSLog(@"Send change request SUCCESS");
-    } onError:^(ErrorInformation * _Nonnull error) {
-        NSLog(@"Send change request ERROR: %@", error.message);
+    [self.subscriber resolutionPreferenceWithResolution:resolution
+                                              onSuccess:^() {
+                                                NSLog(@"Send resolution preference SUCCESS");
+                                              } onError:^(ErrorInformation * _Nonnull error) {
+                                                NSLog(@"Send resolution preference ERROR: %@", error.message);
     }];
 }
 
 - (void) subscriberStopUsageExample {
-    // TODO: To be changeda after stop method update.
-    [self.subscriber stop];
+    [self.subscriber stopOnSuccess:^() {
+        NSLog(@"Subscriber stop SUCCESS");
+    } onError:^(ErrorInformation * _Nonnull error) {
+        NSLog(@"Subscriber stop ERROR: %@", error.message);
+    }];
 }
 
 @end
