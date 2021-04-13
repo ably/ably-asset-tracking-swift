@@ -27,6 +27,10 @@ jobs:
           bundle install
           ./jazzy/build.sh
           ls -al docs
+      
+      - name: Debug Build Failure
+        if: ${{ failure() }}
+        run: |
           tree -sD jazzy/build/xcodebuildDerivedData
           tree -sD /var/folders
 
