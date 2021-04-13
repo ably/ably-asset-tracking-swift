@@ -25,6 +25,7 @@ sourcekitten doc \
   -workspace ./AblyAssetTracking.xcworkspace \
   -scheme Core \
   -destination generic/platform=iOS \
+  -derivedDataPath jazzy/build/xcodebuildDerivedData \
   -verbose \
   > jazzy/build/core.json
 
@@ -34,6 +35,7 @@ sourcekitten doc \
   -workspace ./AblyAssetTracking.xcworkspace \
   -scheme Publisher \
   -destination generic/platform=iOS \
+  -derivedDataPath jazzy/build/xcodebuildDerivedData \
   -verbose \
   > jazzy/build/publisher.json
 
@@ -43,6 +45,7 @@ sourcekitten doc \
   -workspace ./AblyAssetTracking.xcworkspace \
   -scheme Subscriber \
   -destination generic/platform=iOS \
+  -derivedDataPath jazzy/build/xcodebuildDerivedData \
   -verbose \
   > jazzy/build/subscriber.json
 
