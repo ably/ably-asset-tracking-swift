@@ -233,4 +233,72 @@ class DefaultSubscriberTests: XCTestCase {
         XCTAssertTrue(isFailure)
         XCTAssertEqual(receivedError?.message, expectedError.message)
     }
+    
+    func test_subscriberStart_called() {
+        // Given
+        let expectation = XCTestExpectation()
+        ablyService.startCompletionHandler = { completion in completion?(.success)}
+        
+        // When
+        subscriber.start { _ in
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Then
+        XCTAssertTrue(ablyService.startWasCalled)
+        XCTAssertNotNil(ablyService.startResultHandler)
+    }
+    
+    func test_subscriberStart_success() {
+        // Given
+        let expectation = XCTestExpectation()
+        ablyService.startCompletionHandler = { completion in completion?(.success)}
+        var isSuccess = false
+        
+        // When
+        subscriber.start { result in
+            switch result {
+            case .success:
+                isSuccess.toggle()
+            case .failure:
+                XCTFail("Error not expected.")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Then
+        XCTAssertTrue(isSuccess)
+    }
+    
+    func test_subscriberStart_failure() {
+        // Given
+        let expectation = XCTestExpectation()
+        let stopError = ErrorInformation(type: .subscriberError(errorMessage: "test_start_error"))
+        ablyService.startCompletionHandler = { completion in completion?(.failure(stopError))}
+        var isFailure = false
+        var receivedError: ErrorInformation?
+        
+        // When
+        subscriber.start { result in
+            switch result {
+            case .success:
+                XCTFail("Success not expected.")
+            case .failure(let error):
+                receivedError = error
+                isFailure.toggle()
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Then
+        XCTAssertTrue(isFailure)
+        XCTAssertNotNil(receivedError)
+        XCTAssertEqual(receivedError?.message, stopError.message)
+    }
 }

@@ -72,15 +72,22 @@ class MapViewController: UIViewController {
     }
     
     // MARK: - Subscriber setup
-    private func setupSubscriber() {
-        subscriber = try? SubscriberFactory.subscribers()
+    private func setupSubscriber() {        
+        subscriber = SubscriberFactory.subscribers()
             .connection(ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY,
                                                 clientId: "Asset Tracking Cocoa Subscriber Example"))
             .trackingId(trackingId)
             .log(LogConfiguration())
             .resolution(Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500))
             .delegate(self)
-            .start()
+            .start { [weak self] result in
+                switch result {
+                case .success:
+                    logger.info("Subscriber started successfully.")
+                case .failure(let error):
+                    self?.showErrorDialog(withMessage: error.message)
+                }
+            }
     }
     
     // MARK: Utils

@@ -2,7 +2,9 @@ import CoreLocation
 
 protocol SubscriberEvent {}
 
-struct StartEvent: SubscriberEvent {}
+struct StartEvent: SubscriberEvent {
+    let resultHandler: ResultHandler<Void>
+}
 
 struct StopEvent: SubscriberEvent {
     let resultHandler: ResultHandler<Void>

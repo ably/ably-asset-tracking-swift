@@ -27,7 +27,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
         setup()
     }
 
-    func start(completion: ((Error?) -> Void)?) {
+    func start(completion: @escaping ResultHandler<Void>) {
         // Trigger offline event at start
         delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: .offline)
         channel.presence.subscribe({ [weak self] message in
@@ -39,10 +39,14 @@ class DefaultAblySubscriberService: AblySubscriberService {
         let data = try! presenceData.toJSONString()
 
         channel.presence.enter(data) { error in
-            error == nil ?
-                logger.debug("Entered to channel presence successfully", source: "AblySubscriberService") :
-                logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblySubscriberService")
-            completion?(error)
+            guard let error = error else {
+                logger.debug("Entered to channel presence successfully", source: "AblySubscriberService")
+                completion(.success)
+                return
+            }
+            
+            logger.error("Error during joining to channel presence: \(String(describing: error))", source: "AblySubscriberService")
+            completion(.failure(error.toErrorInformation()))
         }
 
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in

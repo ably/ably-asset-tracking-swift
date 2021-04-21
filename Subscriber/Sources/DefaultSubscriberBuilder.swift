@@ -24,20 +24,26 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
         self.delegateObjectiveC = delegateObjectiveC
     }
 
-    func start() throws -> Subscriber {
+    func start(completion: @escaping ResultHandler<Void>) -> Subscriber? {
         guard let connection = connection
         else {
-            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
+            let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
+            completion(.failure(error))
+            return nil
         }
 
         guard let logConfiguration = logConfiguration
         else {
-            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
+            let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
+            completion(.failure(error))
+            return nil
         }
 
         guard let trackingId = trackingId
         else {
-            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
+            let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
+            completion(.failure(error))
+            return nil
         }
 
         let ablyService = DefaultAblySubscriberService(configuration: connection,
@@ -47,7 +53,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
                                            ablyService: ablyService)
         subscriber.delegate = delegate
         subscriber.delegateObjectiveC = nil
-        subscriber.start()
+        subscriber.start(completion: completion)
         return subscriber
     }
 
@@ -98,20 +104,26 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
 }
 
 extension DefaultSubscriberBuilder: SubscriberBuilderObjectiveC {
-    func start() throws -> SubscriberObjectiveC {
+    func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) -> SubscriberObjectiveC? {
         guard let connection = connection
         else {
-            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
+            let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
+            onError(error)
+            return nil
         }
 
         guard let logConfiguration = logConfiguration
         else {
-            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
+            let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
+            onError(error)
+            return nil
         }
 
         guard let trackingId = trackingId
         else {
-            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
+            let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
+            onError(error)
+            return nil
         }
 
         let subscriber = DefaultSubscriber(logConfiguration: logConfiguration,
@@ -121,7 +133,7 @@ extension DefaultSubscriberBuilder: SubscriberBuilderObjectiveC {
         
         subscriber.delegate = nil
         subscriber.delegateObjectiveC = delegateObjectiveC
-        subscriber.start()
+        subscriber.start(onSuccess: onSuccess, onError: onError)
         return subscriber
     }
     
