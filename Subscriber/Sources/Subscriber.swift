@@ -25,7 +25,7 @@ public protocol SubscriberObjectiveC {
             - `onError` if the request could not be sent or it was not possible to confirm that the server had processed the request.
      */
     @objc
-    func sendChangeRequest(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
+    func resolutionPreference(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void))
     
     /**
      Stops asset subscriber from listening for asset location
@@ -57,7 +57,7 @@ public protocol Subscriber {
             - `success` if the request was successfully registered with the server.
             - `failure` if the request could not be sent or it was not possible to confirm that the server had processed the request.
      */
-    func sendChangeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>)
+    func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>)
 
     /**
      Stops asset subscriber from listening for asset location

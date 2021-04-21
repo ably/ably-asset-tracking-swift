@@ -141,7 +141,7 @@ class MapViewController: UIViewController {
             return
         }
 
-        subscriber?.sendChangeRequest(resolution: resolution) { [weak self] result in
+        subscriber?.resolutionPreference(resolution: resolution) { [weak self] result in
             switch result {
             case .success:
                 self?.currentResolution = resolution

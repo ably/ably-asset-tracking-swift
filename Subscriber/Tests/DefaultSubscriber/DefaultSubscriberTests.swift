@@ -126,7 +126,7 @@ class DefaultSubscriberTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         expectation = XCTestExpectation()
         
-        subscriber.sendChangeRequest(resolution: nil) { result in
+        subscriber.resolutionPreference(resolution: nil) { result in
             switch result {
             case .success:
                 XCTFail("Success not expected.")
@@ -143,5 +143,94 @@ class DefaultSubscriberTests: XCTestCase {
         XCTAssertTrue(isFailure)
         XCTAssertNotNil(receivedError)
         XCTAssertEqual(expectedError.message, receivedError?.message)
+    }
+    
+    func test_subscriberResolutionPreference_paramsCheck_resolutionIsNotNil() {
+        // Given
+        let expectation = XCTestExpectation()
+        let resolution = Resolution(accuracy: .high, desiredInterval: 1.0, minimumDisplacement: 1.0)
+        ablyService.sendResolutionPreferenceCompletionHandler = { completion in completion?(.success)}
+        
+        // When
+        subscriber.resolutionPreference(resolution: resolution) { _ in
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Then
+        XCTAssertTrue(ablyService.sendResolutionPreferenceWasCalled)
+        XCTAssertNotNil(ablyService.sendResolutionPreferenceResolutionParam)
+        XCTAssertNotNil(ablyService.sendResolutionPreferenceResultHander)
+    }
+    
+    func test_subscriberResolutionPreference_paramsCheck_resolutionIsNil() {
+        // Given
+        let expectation = XCTestExpectation()
+        ablyService.sendResolutionPreferenceCompletionHandler = { completion in completion?(.success)}
+        
+        // When
+        subscriber.resolutionPreference(resolution: nil) { _ in
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Then
+        XCTAssertTrue(ablyService.sendResolutionPreferenceWasCalled)
+        XCTAssertNil(ablyService.sendResolutionPreferenceResolutionParam)
+        XCTAssertNotNil(ablyService.sendResolutionPreferenceResultHander)
+    }
+    
+    func test_subscriberResolutionPreference_success() {
+        // Given
+        let expectation = XCTestExpectation()
+        let resolution = Resolution(accuracy: .high, desiredInterval: 1.0, minimumDisplacement: 1.0)
+        var isSuccess = false
+        ablyService.sendResolutionPreferenceCompletionHandler = { completion in completion?(.success)}
+        
+        // When
+        subscriber.resolutionPreference(resolution: resolution) { result in
+            switch result {
+            case .success:
+                isSuccess.toggle()
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure not expected")
+            }
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Then
+        XCTAssertTrue(isSuccess)
+    }
+    
+    func test_subscriberResolutionPreference_failure() {
+        // Given
+        let expectation = XCTestExpectation()
+        let resolution = Resolution(accuracy: .high, desiredInterval: 1.0, minimumDisplacement: 1.0)
+        var isFailure = false
+        let expectedError = ErrorInformation(type: .subscriberError(errorMessage: "SendResolutionPreferenceTestError"))
+        var receivedError: ErrorInformation?
+        ablyService.sendResolutionPreferenceCompletionHandler = { completion in completion?(.failure(expectedError))}
+        
+        // When
+        subscriber.resolutionPreference(resolution: resolution) { result in
+            switch result {
+            case .success:
+                XCTFail("Success not expected")
+            case .failure(let error):
+                receivedError = error
+                isFailure.toggle()
+                expectation.fulfill()
+            }
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Then
+        XCTAssertTrue(isFailure)
+        XCTAssertEqual(receivedError?.message, expectedError.message)
     }
 }

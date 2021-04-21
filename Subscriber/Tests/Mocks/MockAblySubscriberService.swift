@@ -22,8 +22,15 @@ class MockAblySubscriberService: AblySubscriberService {
         stopCompletionHandler?(completion)
     }
     
-    var changeRequestWasCalled: Bool = false
-    func changeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
-        changeRequestWasCalled = true
+    var sendResolutionPreferenceWasCalled: Bool = false
+    var sendResolutionPreferenceResolutionParam: Resolution?
+    var sendResolutionPreferenceResultHander: ResultHandler<Void>?
+    var sendResolutionPreferenceCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    func sendResolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+        sendResolutionPreferenceWasCalled = true
+        sendResolutionPreferenceResolutionParam = resolution
+        sendResolutionPreferenceResultHander = completion
+        
+        sendResolutionPreferenceCompletionHandler?(completion)
     }
 }

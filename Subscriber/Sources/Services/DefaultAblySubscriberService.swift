@@ -62,7 +62,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
         client.close()
     }
 
-    func changeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+    func sendResolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
         logger.debug("Changing resolution to: \(String(describing: resolution))", source: "AblySubscriberService")
         presenceData = PresenceData(type: presenceData.type, resolution: resolution)
 

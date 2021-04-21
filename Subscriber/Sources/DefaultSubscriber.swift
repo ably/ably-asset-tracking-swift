@@ -38,8 +38,8 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     }
     
     @objc
-    func sendChangeRequest(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        sendChangeRequest(resolution: resolution) { result in
+    func resolutionPreference(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+        resolutionPreference(resolution: resolution) { result in
             switch result {
             case .success:
                 onSuccess()
@@ -49,7 +49,7 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
         }
     }
 
-    func sendChangeRequest(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+    func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
         guard !subscriberState.isStoppingOrStopped else {
             callback(error: ErrorInformation(type: .subscriberStoppedException), handler: completion)
             return
@@ -196,7 +196,7 @@ extension DefaultSubscriber {
 
     // swiftlint:disable vertical_whitespace_between_cases
     private func performChangeResolution(_ event: ChangeResolutionEvent) {
-        ablyService.changeRequest(resolution: event.resolution) { [weak self] result in
+        ablyService.sendResolutionPreference(resolution: event.resolution) { [weak self] result in
             switch result {
             case .success:
                 self?.callback(value: Void(), handler: event.resultHandler)
