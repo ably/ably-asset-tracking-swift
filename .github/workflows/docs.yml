@@ -28,12 +28,11 @@ jobs:
           ./jazzy/build.sh
           ls -al docs
       
-      - name: Debug Build Failure
+      - uses: actions/upload-artifact@v2
         if: ${{ failure() }}
-        run: |
-          brew install tree
-          tree -sD jazzy/build/xcodebuildDerivedData
-          tree -sD /var/folders
+        with:
+          name: var-folders
+          path: /var/folders/
 
       # -- COPY-PASTED TEMPLATE WORKFLOW! --
       # Most of what's below has been copied from:
