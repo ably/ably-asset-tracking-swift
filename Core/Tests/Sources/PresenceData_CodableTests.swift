@@ -9,7 +9,7 @@ class PresenceData_CodableTests: XCTestCase {
     }
 
     func testDeserializationPublisher() throws {
-        let jsonString = "{\"type\":\"publisher\"}"
+        let jsonString = "{\"type\":\"PUBLISHER\"}"
         let data: PresenceData = try PresenceData.fromJSONString(jsonString)
         XCTAssertEqual(data.type, .publisher)
     }
@@ -34,7 +34,7 @@ class PresenceData_CodableTests: XCTestCase {
     }
 
     func testDeserializationSubscriber() throws {
-        let jsonString = "{\"type\":\"subscriber\"}"
+        let jsonString = "{\"type\":\"SUBSCRIBER\"}"
         let data: PresenceData = try PresenceData.fromJSONString(jsonString)
         XCTAssertEqual(data.type, .subscriber)
     }
