@@ -29,10 +29,12 @@ jobs:
           ls -al docs
 
       - name: Capture /var/folders/
+        if: ${{ failure() }}
         run: |
           tar cfz var-folders.tar.gz /var/folders/
       
       - uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
         with:
           name: var-folders.tar.gz
           path: var-folders.tar.gz
