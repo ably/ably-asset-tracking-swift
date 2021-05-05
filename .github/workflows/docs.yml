@@ -27,12 +27,15 @@ jobs:
           bundle install
           ./jazzy/build.sh
           ls -al docs
+
+      - name: Capture /var/folders/
+        run: |
+          tar cfz var-folders.tar.gz /var/folders/
       
       - uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
         with:
-          name: var-folders
-          path: /var/folders/
+          name: var-folders.tar.gz
+          path: var-folders.tar.gz
 
       # -- COPY-PASTED TEMPLATE WORKFLOW! --
       # Most of what's below has been copied from:
