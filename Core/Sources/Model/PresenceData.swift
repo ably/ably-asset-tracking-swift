@@ -1,8 +1,8 @@
 import UIKit
 
 public enum ClientType: String, Codable {
-    case publisher
-    case subscriber
+    case publisher = "PUBLISHER"
+    case subscriber = "SUBSCRIBER"
 }
 
 public class PresenceData: Codable {
