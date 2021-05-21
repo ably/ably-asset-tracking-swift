@@ -36,7 +36,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
-        let channel = client.channels.get(trackable.id)
+        let channel = client.channels.get(ablyChannelNameFromTrackableId(trackable.id))
         channel.presence.subscribe { [weak self] message in
             guard let self = self,
                   let json = message.data as? String,

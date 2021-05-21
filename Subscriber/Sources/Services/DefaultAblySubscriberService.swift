@@ -22,7 +22,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
         let options = ARTRealtimeChannelOptions()
         options.params = ["rewind": "1"]
-        channel = client.channels.get(trackingId, options: options)
+        channel = client.channels.get(ablyChannelNameFromTrackableId(trackingId), options: options)
         
         setup()
     }
