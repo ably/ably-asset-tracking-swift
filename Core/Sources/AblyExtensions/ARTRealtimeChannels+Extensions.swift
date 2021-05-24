@@ -7,7 +7,7 @@ extension ARTRealtimeChannels {
         let segments = [trackingChannelNamespace, trackingId]
         let channelName = segments.joined(separator: ":")
         if let options = options {
-            return self.get(channelName, options: options);
+            return self.get(channelName, options: options)
         }
         return self.get(channelName)
     }
