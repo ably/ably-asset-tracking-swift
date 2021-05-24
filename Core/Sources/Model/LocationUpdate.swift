@@ -3,7 +3,7 @@ import CoreLocation
 /**
  Enumeration used to determine enhanced location type.
  */
-public enum LocationUpdateType: String, Codable {
+enum LocationUpdateType: String, Codable {
     case predicted = "PREDICTED"
     case actual = "ACTUAL"
 }
@@ -11,7 +11,7 @@ public enum LocationUpdateType: String, Codable {
 /**
  Model used to handle location updates.
  */
-public class EnhancedLocationUpdate {
+class EnhancedLocationUpdate {
     let location: CLLocation
 
     var type: LocationUpdateType {
@@ -23,15 +23,13 @@ public class EnhancedLocationUpdate {
     }
 }
 
-public class EnhancedLocationUpdateMessage: Codable {
+class EnhancedLocationUpdateMessage: Codable {
     let location: GeoJSONMessage
-    let batteryLevel: Float?
     let intermediateLocations: [GeoJSONMessage]
     let type: LocationUpdateType
 
-    init(locationUpdate: EnhancedLocationUpdate, batteryLevel: Float?) throws {
+    init(locationUpdate: EnhancedLocationUpdate) throws {
         self.location = try GeoJSONMessage(location: locationUpdate.location)
-        self.batteryLevel = batteryLevel
         self.intermediateLocations = []
         self.type = locationUpdate.type
     }
