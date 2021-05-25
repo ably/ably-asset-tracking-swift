@@ -518,7 +518,7 @@ extension DefaultPublisher {
             lastEnhancedLocations[trackable] = event.locationUpdate.location
             lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
 
-            ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, batteryLevel: event.batteryLevel, forTrackable: trackable) { [weak self] result in
+            ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, forTrackable: trackable) { [weak self] result in
                 switch result {
                 case .failure(let error):
                     self?.callback(event: DelegateErrorEvent(error: error))
@@ -714,7 +714,7 @@ extension DefaultPublisher: LocationServiceDelegate {
 
     func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
         logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
-        enqueue(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate, batteryLevel: batteryLevelProvider.currentBatteryPercentage))
+        enqueue(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate))
         callback(event: DelegateEnhancedLocationChangedEvent(locationUpdate: locationUpdate))
     }
 }
