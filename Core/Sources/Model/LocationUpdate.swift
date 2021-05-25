@@ -3,7 +3,7 @@ import CoreLocation
 /**
  Enumeration used to determine enhanced location type.
  */
-enum LocationUpdateType: String, Codable {
+public enum LocationUpdateType: String, Codable {
     case predicted = "PREDICTED"
     case actual = "ACTUAL"
 }
@@ -11,7 +11,7 @@ enum LocationUpdateType: String, Codable {
 /**
  Model used to handle location updates.
  */
-class EnhancedLocationUpdate {
+public class EnhancedLocationUpdate {
     let location: CLLocation
 
     var type: LocationUpdateType {
