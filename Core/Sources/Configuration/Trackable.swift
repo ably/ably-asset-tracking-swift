@@ -11,11 +11,6 @@ public class Trackable: NSObject {
     public let id: String
 
     /**
-     Metadata sent together with asset (TBD)
-     */
-    public let metadata: String?
-
-    /**
      Asset destination. Used to increase accuracy of GPS map matching feature
      */
     public let destination: CLLocationCoordinate2D?
@@ -26,11 +21,9 @@ public class Trackable: NSObject {
     public let constraints: ResolutionConstraints?
 
     public init(id: String,
-                metadata: String? = nil,
                 destination: CLLocationCoordinate2D? = nil,
                 constraints: ResolutionConstraints? = nil) {
         self.id = id
-        self.metadata = metadata
         self.destination = destination
         self.constraints = constraints
         super.init()
@@ -42,7 +35,6 @@ public class Trackable: NSObject {
                 destination: CLLocationCoordinate2D,
                 constraints: ResolutionConstraints? = nil) {
         self.id = id
-        self.metadata = metadata
         self.destination = (destination.latitude == 0 && destination.longitude == 0) ? nil : destination
         self.constraints = constraints
         super.init()
