@@ -74,14 +74,14 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
     }
 
-    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, batteryLevel: Float?, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
+    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
         guard let channel = channels[trackable] else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Attempt to send location while not tracked channel"))
             completion?(.failure(errorInformation))
             return
         }
 
-        guard let message = createARTMessage(for: locationUpdate, and: batteryLevel) else {
+        guard let message = createARTMessage(for: locationUpdate) else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Cannot create location update message."))
             self.delegate?.publisherService(sender: self, didFailWithError: errorInformation)
             return
@@ -101,9 +101,9 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
     }
 
-    private func createARTMessage(for locationUpdate: EnhancedLocationUpdate, and batteryLevel: Float?) -> ARTMessage? {
+    private func createARTMessage(for locationUpdate: EnhancedLocationUpdate) -> ARTMessage? {
         do {
-            let geoJson = try EnhancedLocationUpdateMessage(locationUpdate: locationUpdate, batteryLevel: batteryLevel)
+            let geoJson = try EnhancedLocationUpdateMessage(locationUpdate: locationUpdate)
             let data = try geoJson.toJSONString()
             return ARTMessage(name: EventName.enhanced.rawValue, data: data)
         } catch let error {
