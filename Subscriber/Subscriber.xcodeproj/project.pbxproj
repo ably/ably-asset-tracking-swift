@@ -36,6 +36,7 @@
 		18FCE210258B8336005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE202258B8336005BC480 /* UnimplementedSupport.swift */; };
 		1F9298B18A4CD0599098401B /* Pods_asset_tracking_SubscriberTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CCB14452A0115A255689664 /* Pods_asset_tracking_SubscriberTests.framework */; };
 		2375C3D9FBC87E4236B66FA6 /* Pods_asset_tracking_Subscriber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B94C2AA15165F9680C282FE /* Pods_asset_tracking_Subscriber.framework */; };
+		ADA1EE3E265A4E9E00FCC669 /* ARTRealtimeChannels+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1EE3D265A4E9E00FCC669 /* ARTRealtimeChannels+Extensions.swift */; };
 		F617C46925DA5EF9005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C46825DA5EF9005E92A2 /* ConnectionState.swift */; };
 		F63F8FE7260B4BCB009B5353 /* MockAblySubscriberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F8FDC260B48F0009B5353 /* MockAblySubscriberService.swift */; };
 		F63F8FEC260B4BCE009B5353 /* DefaultSubscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F8FD3260B36C4009B5353 /* DefaultSubscriberTests.swift */; };
@@ -103,6 +104,7 @@
 		8E84C9527E90EEB26AA8FE61 /* Pods-asset_tracking-Subscriber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Subscriber.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Subscriber/Pods-asset_tracking-Subscriber.debug.xcconfig"; sourceTree = "<group>"; };
 		A243740C463C9796525DDC55 /* Pods-Subscriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.release.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.release.xcconfig"; sourceTree = "<group>"; };
 		A77BDA31C9F103BB99CE1A31 /* Pods-Subscriber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Subscriber.debug.xcconfig"; path = "Target Support Files/Pods-Subscriber/Pods-Subscriber.debug.xcconfig"; sourceTree = "<group>"; };
+		ADA1EE3D265A4E9E00FCC669 /* ARTRealtimeChannels+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ARTRealtimeChannels+Extensions.swift"; path = "../Core/Sources/AblyExtensions/ARTRealtimeChannels+Extensions.swift"; sourceTree = "<group>"; };
 		B0C194B8C93C37753B28F4C4 /* Pods-SubscriberTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubscriberTests.debug.xcconfig"; path = "Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B35382D91FBE9FB98C137BB8 /* Pods-asset_tracking-SubscriberTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-SubscriberTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-SubscriberTests/Pods-asset_tracking-SubscriberTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DACEA3FB594D43A74240A868 /* Pods-SubscriberTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubscriberTests.release.xcconfig"; path = "Target Support Files/Pods-SubscriberTests/Pods-SubscriberTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		180F60A3258632740014B310 = {
 			isa = PBXGroup;
 			children = (
+				ADA1EE3D265A4E9E00FCC669 /* ARTRealtimeChannels+Extensions.swift */,
 				180F60AF258632740014B310 /* Sources */,
 				180F61302586332B0014B310 /* Tests */,
 				180F60AE258632740014B310 /* Products */,
@@ -543,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADA1EE3E265A4E9E00FCC669 /* ARTRealtimeChannels+Extensions.swift in Sources */,
 				18FCE20E258B8336005BC480 /* Decodable+FromJSONString.swift in Sources */,
 				F617C46925DA5EF9005E92A2 /* ConnectionState.swift in Sources */,
 				18FCE20C258B8336005BC480 /* EventName.swift in Sources */,
