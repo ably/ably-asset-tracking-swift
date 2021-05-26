@@ -80,7 +80,7 @@ To build the apps you will need to specify credentials properties.
 
 ### Project structure
 
-The project follows standard Pods with subprojects architecture , so you'll find `AblyAssetTracking.xcworkspace` file which, after opening in Xcode reveals `Core`, `Publisher`, `Subscriber`, `PublisherExample`, `SubscriberExample` and `Pods` projects. We'll skip the description of `Pods` as it's pretty standard and focus on rest of projects:
+The project follows standard Pods with subprojects architecture , so you'll find `AblyAssetTracking.xcworkspace` file which, after opening in Xcode reveals `Core`, `Publisher`, `Subscriber`, `PublisherExample`, `SubscriberExample` and `Pods` projects.
 
 - `Core` (and tests)
   <br> Contains all shared logic and models (i.e. GeoJSON mappers) used by Publisher and Subscriber. Notice that there is no direct dependency between Publisher/Subscriber and Core. Instead of that, all files from Core should be also included in Publisher/Subscriber targets (by a tick in the Target Membership in Xcode's File Inspector tab). It's designed like that to avoid creating Umbrella Frameworks (as recommended in `Don't Create Umbrella Frameworks` in [Framework Creation Guidelines](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/CreationGuidelines.html)) - there are some shared sources which we want to be publicly visible for client apps and it won't work with direct dependencies.
@@ -92,6 +92,8 @@ The project follows standard Pods with subprojects architecture , so you'll find
   <br> Example app demonstrating Publisher SDK usage
 - `SubscriberExample` (without tests)
   <br> Example app demonstrating Subscriber SDK usage and presenting asset locations on the map
+- `Pods`
+  <br> The additional Xcode project generated for Cocoapods
 
 ### API Keys and Access Tokens for Example Apps
 
