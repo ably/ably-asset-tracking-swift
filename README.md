@@ -39,7 +39,6 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 - Swift 5.3+
 - Cocoapods: 1.10+ (SPM support [planned](https://github.com/ably/ably-asset-tracking-cocoa/issues/148))
 
-
 ## Installation
 
 ### Manual installation
