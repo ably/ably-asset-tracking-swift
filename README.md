@@ -74,7 +74,10 @@ This repository also contains example apps that showcase how Ably Asset Tracking
 - the [Asset Publishing example app](PublisherExample/)
 - the [Asset Subscribing example app](SubscriberExample/)
 
-To build the apps you will need to specify credentials properties.
+To build the apps you will need to specify credentials properties. Create a file called `Secrets.xconfig` in the root project directory (You can copy `Example.Secrets.xcconfig`, e.g. using `cp Example.Secrets.xcconfig Secrets.xcconfig`) and update the following values in the file:
+
+- `ABLY_API_KEY`: Used by publishing and subscribing example apps to authenticate with Ably using basic authentication. Not recommended in production.
+- `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs.
 
 ## Development
 
@@ -94,14 +97,6 @@ The project follows standard Pods with subprojects architecture , so you'll find
   <br> Example app demonstrating Subscriber SDK usage and presenting asset locations on the map
 - `Pods`
   <br> The additional Xcode project generated for Cocoapods
-
-### API Keys and Access Tokens for Example Apps
-
-The following secrets must be specified in order to run the example apps:
-
-- `ABLY_API_KEY`: this needs to be provided in `PublisherKeys.swift` or `SubscriberKeys.swift` respectively for publishing and subscribing example apps.
-- `MAPBOX_ACCESS_TOKEN` needs to be set in the `Info.plist` file for `MGLMapboxAccessToken` key.
-
 ### Build instructions
 
 Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
@@ -128,10 +123,6 @@ Here is the list of tools versioned with the Bundler with their versions:
 - `Slather` (2.6.0)
 
 You may always check `Gemfile.lock` as it's the source of truth for versions of used libraries.
-
-#### Xcode 12 and Apple M1 compability
-
-Due to [MapBox CoreNavigation SDK issue](https://github.com/ably/ably-asset-tracking-cocoa/issues/40), to be able to build example apps for physical devices, we needed to exclude the `arm64` architecture from supported simulator architectures (check post install script in `Podfile`). It means, that if you are using Apple M1 based computer, you **will not** be able run example app on simulator.
 
 ### Running tests
 
@@ -168,10 +159,6 @@ Additionally, when you run tests using `Fastlane` you will see three new directo
 - SDK’s should be distributed using CocoaPods (at the beginning), later we’ll add support for Carthage and Swift Package Manager
 - At the beginning, we aim only to support iOS, but we need to keep in mind macOS and tvOS
 - Docs are written for both Swift and ObjC
-
-### iOS version requirements
-
-These SDKs require a minimum of iOS 12+ / iPadOS 12+
 
 ### Working on code shared between Publisher and Subscriber
 
