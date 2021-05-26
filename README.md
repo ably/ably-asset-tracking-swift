@@ -35,13 +35,14 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 ## Requirements
 
 - iOS 12.0+ / iPadOS 12.0+
-- Xcode 12.5+
+- Xcode 12.4+
 - Swift 5.3+
-- Cocoapods: 1.10+ (SPM support [planned](https://github.com/ably/ably-asset-tracking-cocoa/issues/148))
+- Cocoapods: 1.10+ (Swift Package manager support [planned](https://github.com/ably/ably-asset-tracking-cocoa/issues/148))
 
 ## Installation
 
 ### Manual installation
+
 This is a draft PR. This section in progress, to resolve [#149](https://github.com/ably/ably-asset-tracking-cocoa/issues/149).
 
 ## Usage
