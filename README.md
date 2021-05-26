@@ -127,10 +127,6 @@ Here is the list of tools versioned with the Bundler with their versions:
 
 You may always check `Gemfile.lock` as it's the source of truth for versions of used libraries.
 
-#### Xcode 12 and Apple M1 compability
-
-Due to [MapBox CoreNavigation SDK issue](https://github.com/ably/ably-asset-tracking-cocoa/issues/40), to be able to build example apps for physical devices, we needed to exclude the `arm64` architecture from supported simulator architectures (check post install script in `Podfile`). It means, that if you are using Apple M1 based computer, you **will not** be able run example app on simulator.
-
 ### Running tests
 
 There are two ways of running tests in the project. The first one is standard for all Xcode projects and requires only selecting the correct active scheme in Xcode (`Core`/`Subscriber`/`Publisher`) and running tests from the `Product` -> `Test` menu.
