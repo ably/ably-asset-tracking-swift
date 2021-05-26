@@ -10,7 +10,7 @@ PODS:
     - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.6.0)
     - AmplifyPlugins/AWSS3StoragePlugin (~> 1.6.0)
     - Logging (~> 1.4.0)
-    - MapboxCoreNavigation (~> 1.1.0)
+    - MapboxCoreNavigation
   - AblyAssetTracking/Subscriber (0.0.1):
     - Ably (~> 1.2.0)
     - Logging (~> 1.4.0)
@@ -47,25 +47,23 @@ PODS:
   - AWSS3 (2.22.3):
     - AWSCore (= 2.22.3)
   - Logging (1.4.0)
-  - MapboxAccounts (2.3.0)
-  - MapboxCommon (7.1.2)
-  - MapboxCoreNavigation (1.1.0):
-    - MapboxAccounts (~> 2.3.0)
-    - MapboxDirections (~> 1.0)
+  - MapboxCommon (11.0.2)
+  - MapboxCoreNavigation (2.0.0-beta.10):
+    - MapboxDirections-pre (= 2.0.0-beta.3)
     - MapboxMobileEvents (~> 0.10.2)
-    - MapboxNavigationNative (~> 22.0)
-    - Turf (~> 1.0)
-  - MapboxDirections (1.1.0):
+    - MapboxNavigationNative (~> 49.0)
+    - Turf (= 2.0.0-alpha.3)
+  - MapboxDirections-pre (2.0.0-beta.3):
     - Polyline (~> 5.0)
-    - Turf (~> 1.0)
-  - MapboxMobileEvents (0.10.6)
-  - MapboxNavigationNative (22.0.5):
-    - MapboxCommon (= 7.1.2)
+    - Turf (~> 2.0.0-alpha.3)
+  - MapboxMobileEvents (0.10.8)
+  - MapboxNavigationNative (49.0.1):
+    - MapboxCommon (= 11.0.2)
   - msgpack (0.3.1)
   - Polyline (5.0.2)
   - SocketRocketAblyFork (0.5.2-ably-7)
   - SwiftLint (0.41.0)
-  - Turf (1.1.0)
+  - Turf (2.0.0-alpha.3)
   - ULID (1.1.0)
 
 DEPENDENCIES:
@@ -73,7 +71,7 @@ DEPENDENCIES:
   - AblyAssetTracking/Publisher (from `AblyAssetTracking.podspec`)
   - AblyAssetTracking/Subscriber (from `AblyAssetTracking.podspec`)
   - Logging (~> 1.4.0)
-  - MapboxCoreNavigation (~> 1.1.0)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, tag `v2.0.0-beta.10`)
   - SwiftLint
 
 SPEC REPOS:
@@ -90,10 +88,8 @@ SPEC REPOS:
     - AWSPluginsCore
     - AWSS3
     - Logging
-    - MapboxAccounts
     - MapboxCommon
-    - MapboxCoreNavigation
-    - MapboxDirections
+    - MapboxDirections-pre
     - MapboxMobileEvents
     - MapboxNavigationNative
     - msgpack
@@ -106,10 +102,18 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   AblyAssetTracking:
     :path: AblyAssetTracking.podspec
+  MapboxCoreNavigation:
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+    :tag: v2.0.0-beta.10
+
+CHECKOUT OPTIONS:
+  MapboxCoreNavigation:
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+    :tag: v2.0.0-beta.10
 
 SPEC CHECKSUMS:
   Ably: 9f143677993cb6df20fce4551b9b6b2e55ad2f4d
-  AblyAssetTracking: 80d0c2482e603ef14f3c2ef5134c2bb870a6a9ae
+  AblyAssetTracking: 6f0a7c929c4fc6856ed8e6e371a2e438568484f2
   AblyDeltaCodec: 6123f31df5b04a0f5452968505a46ba16a9eb689
   Amplify: fe8cbe6fcd0e6468f537bd49e6c3d15437442576
   AmplifyPlugins: 85fa4fa7d0eb78a4f4f44dcf107993a8c13fdf2a
@@ -121,19 +125,18 @@ SPEC CHECKSUMS:
   AWSPluginsCore: d21990b54729e2a95620922ea83e123adaa678cd
   AWSS3: 4c5de623861eb2f660465084829b22abfcdf5644
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
-  MapboxAccounts: 84abfdde95d9dc483f604c1b0fe1861edf691ce7
-  MapboxCommon: e469f6c62de29e1906c37e0bce65f6826e7fb9ac
-  MapboxCoreNavigation: 1e859a9660eb8558fe5ab2dbe7d6ef396d9d9b0c
-  MapboxDirections: f47e5648051967c502897cf808090874e3f81c5d
-  MapboxMobileEvents: 5ef561e6b6f9cbff2900d62a52322e75d1a7dfdf
-  MapboxNavigationNative: 88f243e0460fc7d1d50035bf13583355da6e4c26
+  MapboxCommon: 721b98b188a4d540b930d6964a934586d7d9dc63
+  MapboxCoreNavigation: 88990b9378a4963a2b2fdc2b6d1a2fa9d530b13a
+  MapboxDirections-pre: 221ad1f4ee428346923654f55898c5a7c6e79ecb
+  MapboxMobileEvents: 36ff53b135aac486eed94b61f813c7967a0c2c6f
+  MapboxNavigationNative: fc5f23cf3a1874c70f6434e226de7b5ce55063d6
   msgpack: a14de9216d29cfd0a7aff5af5150601a27e899a4
   Polyline: fce41d72e1146c41c6d081f7656827226f643dff
   SocketRocketAblyFork: 33ff506ecb565498051b8f358d60ae44274c3981
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
-  Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
+  Turf: ec9b01ef9386ab53545a1f763b7296c9ce3590d1
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: c8d2e470f695b916ec78e902bf439cc1933a8127
+PODFILE CHECKSUM: e8d6d00b860449e5c5d1aead418dc234521bfd4a
 
 COCOAPODS: 1.10.0
