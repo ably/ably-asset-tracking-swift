@@ -5,33 +5,25 @@ import MapboxDirections
 class DefaultLocationService: LocationService {
     private let locationDataSource: PassiveLocationDataSource
     private let replayLocationManager: ReplayLocationManager?
-    
+
     weak var delegate: LocationServiceDelegate?
-    
+
     init(mapboxConfiguration: MapboxConfiguration, historyLocation: [CLLocation]?) {
         if let historyLocation = historyLocation {
             replayLocationManager = ReplayLocationManager(locations: historyLocation)
         } else {
             replayLocationManager = nil
         }
-        
+
         let directions = Directions(credentials: mapboxConfiguration.getCredentians())
         self.locationDataSource = PassiveLocationDataSource(directions: directions, systemLocationManager: replayLocationManager)
-    
+
         self.locationDataSource.delegate = self
     }
 
     func startUpdatingLocation() {
-        locationDataSource.startUpdatingLocation { [weak self] (error) in
-            if let error = error,
-               let self = self {
-                logger.error("Error while starting location updates: \(error)", source: "DefaultLocationService")
-                let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Error while starting location updates: \(error)"))
-                self.delegate?.locationService(sender: self, didFailWithError: errorInformation)
-                return
-            }
-            self?.replayLocationManager?.startUpdatingLocation()
-        }
+        locationDataSource.startUpdatingLocation()
+        replayLocationManager?.startUpdatingLocation()
     }
 
     func stopUpdatingLocation() {
