@@ -2,7 +2,7 @@ Pod::Spec.new do |spec|
   spec.name = 'AblyAssetTracking'
   spec.version = '0.0.1'
   spec.summary = 'Ably Asset Tracking Client'
-  spec.homepage = "https://www.ably.io"
+  spec.homepage = "https://www.ably.com"
   spec.license = { :type => 'Apache 2.0', :file => 'LICENSE' }
   spec.author = { "Ably" => "support@ably.io" }
   spec.source = { :git => "." }
