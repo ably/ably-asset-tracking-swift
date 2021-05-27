@@ -6,9 +6,6 @@ PODS:
     - ULID (= 1.1.0)
   - AblyAssetTracking/Publisher (0.0.1):
     - Ably (~> 1.2.0)
-    - Amplify (~> 1.6.0)
-    - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.6.0)
-    - AmplifyPlugins/AWSS3StoragePlugin (~> 1.6.0)
     - Logging (~> 1.4.0)
     - MapboxCoreNavigation (~> 1.1.0)
   - AblyAssetTracking/Subscriber (0.0.1):
@@ -72,6 +69,9 @@ DEPENDENCIES:
   - Ably (~> 1.2.0)
   - AblyAssetTracking/Publisher (from `AblyAssetTracking.podspec`)
   - AblyAssetTracking/Subscriber (from `AblyAssetTracking.podspec`)
+  - Amplify (~> 1.6.0)
+  - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.6.0)
+  - AmplifyPlugins/AWSS3StoragePlugin (~> 1.6.0)
   - Logging (~> 1.4.0)
   - MapboxCoreNavigation (~> 1.1.0)
   - SwiftLint
@@ -109,7 +109,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Ably: 9f143677993cb6df20fce4551b9b6b2e55ad2f4d
-  AblyAssetTracking: 80d0c2482e603ef14f3c2ef5134c2bb870a6a9ae
+  AblyAssetTracking: bfdf3dba553f05d89bb980a22e3ad8d5691b9d51
   AblyDeltaCodec: 6123f31df5b04a0f5452968505a46ba16a9eb689
   Amplify: fe8cbe6fcd0e6468f537bd49e6c3d15437442576
   AmplifyPlugins: 85fa4fa7d0eb78a4f4f44dcf107993a8c13fdf2a
@@ -134,6 +134,6 @@ SPEC CHECKSUMS:
   Turf: 62a818ddce6c1af8d54da9d56232088d170ab27b
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: c8d2e470f695b916ec78e902bf439cc1933a8127
+PODFILE CHECKSUM: d24a2fa9d9fc5b74df1fda76e4f3fe6bf3d483b3
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

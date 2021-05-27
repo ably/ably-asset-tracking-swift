@@ -13,9 +13,6 @@ Pod::Spec.new do |spec|
     ss.dependency 'Ably', '~> 1.2.0'
     ss.dependency 'MapboxCoreNavigation', '~> 1.1.0'
     ss.dependency 'Logging', '~> 1.4.0'
-    ss.dependency 'Amplify', '~> 1.6.0'
-    ss.dependency 'AmplifyPlugins/AWSS3StoragePlugin', '~> 1.6.0'
-    ss.dependency 'AmplifyPlugins/AWSCognitoAuthPlugin', '~> 1.6.0'
     ss.source_files = 'Publisher/Sources/**/*.swift', 'Core/Sources/**/*.swift'
     ss.ios.deployment_target = '12.0'
   end
