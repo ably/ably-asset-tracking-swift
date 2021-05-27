@@ -27,7 +27,7 @@ In this repository there are two SDKs for iOS devices:
 
 Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) documentation for a complete API reference and code examples.
 
-###  Useful Resources
+### Useful Resources
 
 - [Introducing Ably Asset Tracking - public beta now available](https://ably.com/blog/ably-asset-tracking-beta)
 - [Accurate Delivery Tracking with Navigation SDK + Ably Realtime Network](https://www.mapbox.com/blog/accurate-delivery-tracking)
@@ -37,13 +37,25 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 - iOS 12.0+ / iPadOS 12.0+
 - Xcode 12.4+
 - Swift 5.3+
-- Cocoapods: 1.10+ (Swift Package manager support [planned](https://github.com/ably/ably-asset-tracking-cocoa/issues/148))
+- Cocoapods: 1.10+
 
 ## Installation
 
-### Manual installation
+### Cocoapods
 
-This is a draft PR. This section in progress, to resolve [#149](https://github.com/ably/ably-asset-tracking-cocoa/issues/149).
+- The SDK has not been released to Cocoapods.org, but you can use it by downloading it from the GitHub repository:
+- To use the Asset Tracking Publisher or Subscriber SDKs, add the relevant following lines to your Podfile
+  ```
+  target 'Your App Name' do
+    pod 'AblyAssetTracking/Publisher', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Publisher SDK
+    pod 'AblyAssetTracking/Subscriber', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Subscriber SDK
+  end
+  ```
+- `pod install`
+
+### Swift package manager
+
+Not currently supported, but [planned](https://github.com/ably/ably-asset-tracking-cocoa/issues/148).
 
 ## Usage
 
@@ -74,7 +86,7 @@ subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
   .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY,
                                       clientId: CLIENT_ID)) // provide Ably configuration with credentials
   .trackingId(trackingId) // provide a Tracking ID for the asset to be tracked
-  .routingProfile(.cycling) // provide a routing profile for better location enhancements 
+  .routingProfile(.cycling) // provide a routing profile for better location enhancements
   .log(LogConfiguration()) // provide logging configuration
   .delegate(self) // provide a delegate to handle received location updates
   .start() // start listening to updates
@@ -110,20 +122,25 @@ The project follows standard Pods with subprojects architecture , so you'll find
   <br> Example app demonstrating Subscriber SDK usage and presenting asset locations on the map
 - `Pods`
   <br> The additional Xcode project generated for Cocoapods
+
 ### Build instructions
 
 Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
 
 1. Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials). You can skip public token configuration for now. This is needed to obtain the Mapbox SDK dependency.
 2. Install bundler using:
+
 ```
 gem install bundler
 ```
+
 3. Navigate to the project directory (one with .xcodeproj file) and execute:
+
 ```
 bundle install
 bundle exec pod install
 ```
+
 4. Open `AblyAssetTracking.xcworkspace` file. After updating `Info.plist` with the MapBox public key, you should be ready to run the example apps.
 
 #### Why Bundler
@@ -131,6 +148,7 @@ bundle exec pod install
 It's common that several developers (or CI) will have different tool versions installed locally on their machines, and it may cause compatibility problems (some tools might work only on dedicated versions). So to avoid asking everyone to upgrade/downgrade their local tools it's easier to use some tool to execute needed commands with preset versions and that's what Bundler does. Of course, you are still free to execute all CLI commands directly if you wish.
 
 Here is the list of tools versioned with the Bundler with their versions:
+
 - `CocoaPods` (1.10.0)
 - `Fastlane` (2.169.0)
 - `Slather` (2.6.0)
