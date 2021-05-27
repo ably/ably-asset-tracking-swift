@@ -8,7 +8,8 @@ def ably_sdk
 end
 
 def mapbox_sdk
-  pod 'MapboxCoreNavigation', '~> 1.1.0'
+  pod 'MapboxCoreNavigation', :git => 'https://github.com/mapbox/mapbox-navigation-ios.git', :tag => 'v2.0.0-beta.10'
+  # pod 'MapboxCoreNavigation', '~> 2.0.0' # Use this once its released to cocoapods
 end
 
 abstract_target 'asset_tracking' do
@@ -69,17 +70,4 @@ abstract_target 'asset_tracking' do
   target 'SubscriberTests' do
     project 'Subscriber/Subscriber.xcodeproj'
   end
-end
-
-# Due to issue on Xcode 12 we need to add 'arm64' as Excluded Architecture. Without it app will fail when built for device using Xcode12.
-# As a downside, it won't be possible to run it on iOS simulator on MacBooks with M1 cpu.
-# Check https://github.com/ably/ably-asset-tracking-cocoa/issues/40 for details.
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-      if target.name  == "MapboxCoreNavigation"
-        target.build_configurations.each do |config|
-          config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
-        end
-      end
-    end
 end

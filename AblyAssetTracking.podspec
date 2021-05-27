@@ -11,7 +11,8 @@ Pod::Spec.new do |spec|
 
   spec.subspec 'Publisher' do |ss|
     ss.dependency 'Ably', '~> 1.2.0'
-    ss.dependency 'MapboxCoreNavigation', '~> 1.1.0'
+    ss.dependency 'MapboxCoreNavigation'
+    # ss.dependency 'MapboxCoreNavigation', '~> 2.0.0' # Use this once its released to cocoapods
     ss.dependency 'Logging', '~> 1.4.0'
     ss.source_files = 'Publisher/Sources/**/*.swift', 'Core/Sources/**/*.swift'
     ss.ios.deployment_target = '12.0'
@@ -23,9 +24,4 @@ Pod::Spec.new do |spec|
     ss.source_files = 'Subscriber/Sources/**/*.swift', 'Core/Sources/**/*.swift'
     ss.ios.deployment_target = '12.0'
   end
-
-  # Following lines will add warnings during execution of `pod install`
-  # Check https://github.com/ably/ably-asset-tracking-cocoa/issues/40 for more details
-  spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 end
