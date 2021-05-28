@@ -30,7 +30,7 @@
 		18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A825B61349000A1418 /* Proximity.swift */; };
 		18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A925B61349000A1418 /* Accuracy.swift */; };
 		18C7B1B025B61349000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1AA25B61349000A1418 /* Resolution.swift */; };
-		18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */; };
+		18F7B7D725B5AB9B0003E13C /* PresenceDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceDataTests.swift */; };
 		AD5806992657FE73000BE2FB /* ARTRealtimeChannels+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5806982657FE73000BE2FB /* ARTRealtimeChannels+Extensions.swift */; };
 		AD741CC32661482A00B11B49 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AD741CC22661482A00B11B49 /* Logging */; };
 		AD741CCB26614C3500B11B49 /* Turf in Frameworks */ = {isa = PBXBuildFile; productRef = AD741CCA26614C3500B11B49 /* Turf */; };
@@ -81,7 +81,7 @@
 		180F6150258633C00014B310 /* EventName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
 		180F6151258633C00014B310 /* ErrorInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInformation.swift; sourceTree = "<group>"; };
 		180F616B2586340D0014B310 /* GeoJSONMessageCodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONMessageCodableTests.swift; sourceTree = "<group>"; };
-		1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PresenceData_CodableTests.swift; path = Tests/Sources/PresenceData_CodableTests.swift; sourceTree = SOURCE_ROOT; };
+		1885CB5A25B5A27B000D8CAA /* PresenceDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PresenceDataTests.swift; path = Tests/Sources/PresenceDataTests.swift; sourceTree = SOURCE_ROOT; };
 		18A4C1C625B2E04D0092CC70 /* ResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
 		18C7B1A525B61349000A1418 /* ResolutionPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionPolicy.swift; sourceTree = "<group>"; };
 		18C7B1A625B61349000A1418 /* TrackableResolutionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackableResolutionRequest.swift; sourceTree = "<group>"; };
@@ -232,7 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				180F616A2586340D0014B310 /* GeoJSON */,
-				1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */,
+				1885CB5A25B5A27B000D8CAA /* PresenceDataTests.swift */,
 				F66491BC25E909BE0035F45A /* TrackableTests.swift */,
 			);
 			path = Model;
@@ -365,7 +365,7 @@
 			);
 			mainGroup = 180F6077258632360014B310;
 			packageReferences = (
-				AD741CC12661482A00B11B49 /* XCRemoteSwiftPackageReference "swift-log" */,
+				AD741CC12661482A00B11B49 /* XCRemoteSwiftPackageReference "swift-log.git" */,
 				AD741CC926614C3500B11B49 /* XCRemoteSwiftPackageReference "turf-swift" */,
 			);
 			productRefGroup = 180F6082258632360014B310 /* Products */;
@@ -412,7 +412,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint lint --config \"../.swiftlint.yml\"\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -460,7 +460,7 @@
 			files = (
 				180F616C2586340D0014B310 /* GeoJSONMessageCodableTests.swift in Sources */,
 				F68E172A25E79E4F009AECEB /* GeoJSONPropertiesCodableTests.swift in Sources */,
-				18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */,
+				18F7B7D725B5AB9B0003E13C /* PresenceDataTests.swift in Sources */,
 				F66491BD25E909BE0035F45A /* TrackableTests.swift in Sources */,
 				F68E172E25E7A206009AECEB /* GeoJSONPropertiesCLLocationTests.swift in Sources */,
 				F68E171E25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift in Sources */,
@@ -718,7 +718,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AD741CC12661482A00B11B49 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+		AD741CC12661482A00B11B49 /* XCRemoteSwiftPackageReference "swift-log.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
 			requirement = {
@@ -739,7 +739,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		AD741CC22661482A00B11B49 /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AD741CC12661482A00B11B49 /* XCRemoteSwiftPackageReference "swift-log" */;
+			package = AD741CC12661482A00B11B49 /* XCRemoteSwiftPackageReference "swift-log.git" */;
 			productName = Logging;
 		};
 		AD741CCA26614C3500B11B49 /* Turf */ = {

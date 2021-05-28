@@ -1,7 +1,7 @@
 import XCTest
 @testable import Core
 
-class PresenceData_CodableTests: XCTestCase {
+class PresenceDataTests: XCTestCase {
     func testSerializationPublisher() throws {
         let data = PresenceData(type: .publisher)
         let jsonString = try data.toJSONString()

@@ -4,7 +4,13 @@ import CoreLocation
 @testable import Core
 
 class GeoJSONPropertiesCLLocationTests: XCTestCase {
-    private func getLocation(horizontalAccuracy: Double? = nil, accuracyVertical: Double? = nil, bearing: Double? = nil, accuracyBearing: Double? = nil, speed: Double? = nil, accuracySpeed: Double? = nil, timestamp: Date? = nil) -> CLLocation {
+    private func getLocation(horizontalAccuracy: Double? = nil,
+                             accuracyVertical: Double? = nil,
+                             bearing: Double? = nil,
+                             accuracyBearing: Double? = nil,
+                             speed: Double? = nil,
+                             accuracySpeed: Double? = nil,
+                             timestamp: Date? = nil) -> CLLocation {
         let coordinate = CLLocationCoordinate2D(latitude: 1.0, longitude: 1.0)
         
         if #available(iOS 13.4, *) {
