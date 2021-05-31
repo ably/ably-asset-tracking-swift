@@ -1,6 +1,9 @@
 ## User settings
 xcuserdata/
 
+## Swift packages
+.build
+
 ## Obj-C/Swift specific
 *.hmap
 
@@ -31,3 +34,4 @@ PublisherExample/amplifyconfiguration.json
 
 # AppCode IDE
 .idea
+

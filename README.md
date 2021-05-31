@@ -41,21 +41,31 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 
 ## Installation
 
+### Swift package manager
+
+- Follow [this](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) Apple guide on adding package dependencies, or
+
+  - Paste `https://github.com/ably/ably-asset-tracking-cocoa` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
+  - Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
+
+- To install the AblyAssetTracking package in another package rather than an application, run `swift package init` to create a Package.swift, then add the following dependency:
+
+  ```swift
+  .package(url: "https://github.com/ably/ably-asset-tracking-cocoa", from: "0.0.1"),
+  ```
+
 ### Cocoapods
 
-- The SDK has not been released to Cocoapods.org, but you can use it by downloading it from the GitHub repository:
-- To use the Asset Tracking Publisher or Subscriber SDKs, add the relevant following lines to your Podfile
+- The SDK has not been released to Cocoapods.org trunk, but you can still use it by adding the relevant lines below to your Podfile:
+
   ```
   target 'Your App Name' do
     pod 'AblyAssetTracking/Publisher', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Publisher SDK
     pod 'AblyAssetTracking/Subscriber', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Subscriber SDK
   end
   ```
-- `pod install`
 
-### Swift package manager
-
-Not currently supported, but [planned](https://github.com/ably/ably-asset-tracking-cocoa/issues/148).
+- Run `pod install` to update your Xcode project with these new Podfile dependencies
 
 ## Usage
 
@@ -106,22 +116,12 @@ To build the apps you will need to specify credentials properties. Create a file
 
 ## Development
 
-### Project structure
+### Getting started
 
-The project follows standard Pods with subprojects architecture , so you'll find `AblyAssetTracking.xcworkspace` file which, after opening in Xcode reveals `Core`, `Publisher`, `Subscriber`, `PublisherExample`, `SubscriberExample` and `Pods` projects.
+The SDKs are provided via a Swift Package, so it does not use `xcodeproj` or `xcworkspace`. Example apps are contained in 1 `xcworkspace`, each one being an `xcodeproj` .Therefore, 
 
-- `Core` (and tests)
-  <br> Contains all shared logic and models (i.e. GeoJSON mappers) used by Publisher and Subscriber. Notice that there is no direct dependency between Publisher/Subscriber and Core. Instead of that, all files from Core should be also included in Publisher/Subscriber targets (by a tick in the Target Membership in Xcode's File Inspector tab). It's designed like that to avoid creating Umbrella Frameworks (as recommended in `Don't Create Umbrella Frameworks` in [Framework Creation Guidelines](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/CreationGuidelines.html)) - there are some shared sources which we want to be publicly visible for client apps and it won't work with direct dependencies.
-- `Publisher` (and tests)
-  <br> Contains all sources needed to get the user's location and send it to Ably network.
-- `Subscriber` (and tests)
-  <br> Contains all sources needed to listen Ably's network for updated asset locations
-- `PublisherExample` (without tests)
-  <br> Example app demonstrating Publisher SDK usage
-- `SubscriberExample` (without tests)
-  <br> Example app demonstrating Subscriber SDK usage and presenting asset locations on the map
-- `Pods`
-  <br> The additional Xcode project generated for Cocoapods
+- To develop the SDK, open the repo directory in Xcode (`xed .` when in the repo directory)
+- To develop the example apps, open the Xcode workspace file (`xed AblyAssetTracking.xcworkspace` or double click the workspace file). 
 
 ### Build instructions
 
@@ -187,13 +187,12 @@ Additionally, when you run tests using `Fastlane` you will see three new directo
 
 ### Concepts and assumptions
 
-- SDK’s should be distributed using CocoaPods (at the beginning), later we’ll add support for Carthage and Swift Package Manager
 - At the beginning, we aim only to support iOS, but we need to keep in mind macOS and tvOS
 - Docs are written for both Swift and ObjC
 
 ### Working on code shared between Publisher and Subscriber
 
-To speed up CocoaPods setup we removed framework/project linking in Xcode and we're just referencing files from the `Core` framework in `Publisher` and `Subscriber` SDK. There is a [ticket](https://github.com/ably/ably-asset-tracking-cocoa/issues/43) to fix it in the future, but for now, if you need to add or move any file in the `Core` SDK make sure that you also reference them in `Publisher` and `Subscriber`.
+**Core target:** Contains all shared logic and models (i.e. GeoJSON mappers) used by Publisher and Subscriber. Notice that there is no direct dependency between Publisher/Subscriber and Core. Instead of that, all files from Core should be also included in Publisher/Subscriber targets (by a tick in the Target Membership in Xcode's File Inspector tab). It's designed like that to avoid creating Umbrella Frameworks (as recommended in `Don't Create Umbrella Frameworks` in [Framework Creation Guidelines](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/CreationGuidelines.html)) - there are some shared sources which we want to be publicly visible for client apps and it won't work with direct dependencies.
 
 ### Release Procedure
 

@@ -26,6 +26,16 @@
 		F67E661825F8C507001CF9BB /* DescriptionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661725F8C507001CF9BB /* DescriptionsHelper.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AD0096CF2664F2E90081E4DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD0096CB2664F2E90081E4DA /* SubscriberExampleObjectiveC.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F6D4CF1E25D661EA0071A6A9;
+			remoteInfo = SubscriberExampleObjectiveC;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		AD529E13266154160084A50F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -54,6 +64,7 @@
 		180F61B8258634420014B310 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		180F61B9258634420014B310 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Zoom.swift"; sourceTree = "<group>"; };
+		AD0096CB2664F2E90081E4DA /* SubscriberExampleObjectiveC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SubscriberExampleObjectiveC.xcodeproj; path = ../SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj; sourceTree = "<group>"; };
 		ADAAE6192661562B00A8F214 /* Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAAE61F266157C800A8F214 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F618BA8D25C99EF800B69885 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -78,6 +89,7 @@
 		180F60C9258632B40014B310 = {
 			isa = PBXGroup;
 			children = (
+				AD0096CB2664F2E90081E4DA /* SubscriberExampleObjectiveC.xcodeproj */,
 				180F61B5258634420014B310 /* Resources */,
 				180F61A9258634420014B310 /* Sources */,
 				180F60D3258632B40014B310 /* Products */,
@@ -153,6 +165,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		AD0096CC2664F2E90081E4DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD0096D02664F2E90081E4DA /* SubscriberExampleObjectiveC.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D8E7ACFB43B945847EF8DCA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,12 +238,28 @@
 			mainGroup = 180F60C9258632B40014B310;
 			productRefGroup = 180F60D3258632B40014B310 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AD0096CC2664F2E90081E4DA /* Products */;
+					ProjectRef = AD0096CB2664F2E90081E4DA /* SubscriberExampleObjectiveC.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				180F60D1258632B40014B310 /* SubscriberExample */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AD0096D02664F2E90081E4DA /* SubscriberExampleObjectiveC.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SubscriberExampleObjectiveC.app;
+			remoteRef = AD0096CF2664F2E90081E4DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		180F60D0258632B40014B310 /* Resources */ = {
