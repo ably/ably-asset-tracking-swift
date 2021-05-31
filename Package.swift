@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "AblyAssetTracking",
+    name: "ably-asset-tracking-swift",
     platforms: [.iOS(.v12)],
     products: [
         .library(
@@ -23,17 +23,17 @@ let package = Package(
         .target(
             name: "AblyAssetTracking-Subscriber",
             dependencies: [
-//                .product(name: "ably", package: "ably-cocoa"),
+//                .product(name: "ably-cocoa", package: "ably-cocoa"),
                 .product(name: "Logging", package: "swift-log")
             ]),
         .target(name: "AblyAssetTracking-Publisher",
             dependencies: [
-//                .product(name: "ably", package: "ably"),
+//                .product(name: "ably-cocoa", package: "ably-cocoa"),
                 .product(name: "MapboxNavigation", package: "MapboxNavigation"),
                 .product(name: "Logging", package: "swift-log")
             ]),
         .target(name: "AblyAssetTracking-Core", dependencies: [
-//                    .product(name: "ably", package: "ably-cocoa"),
+//                    .product(name: "ably-cocoa", package: "ably-cocoa"),
                     .product(name: "Logging", package: "swift-log")]),
         // TODO do i need to depend on the SDKs in the test targets?
         .testTarget(
