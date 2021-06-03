@@ -21,11 +21,11 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var changeRoutingProfileButton: UIButton!
     @IBOutlet private weak var routingProfileLabel: UILabel!
     @IBOutlet private weak var routingProfileAvtivityIndicator: UIActivityIndicatorView!
-    
+
     // MARK: - Properties
     private let trackingId: String
     private let historyLocation: [CLLocation]?
-    
+
     private var publisher: Publisher?
 
     private var currentLocation: CLLocation?
@@ -34,7 +34,7 @@ class MapViewController: UIViewController {
             refreshAnnotations()
         }
     }
-    
+
     private var wasMapScrolled: Bool = false
     private var currentResolution: Resolution?
     private var trackables: [Trackable] = []
@@ -43,10 +43,10 @@ class MapViewController: UIViewController {
     init(trackingId: String, historyLocation: [CLLocation]?) {
         self.trackingId = trackingId
         self.historyLocation = historyLocation
-        
+
         super.init(nibName: String(describing: MapViewController.self), bundle: Bundle(for: MapViewController.self))
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -72,7 +72,7 @@ class MapViewController: UIViewController {
     private func setupMapView() {
         mapView.register(AssetAnnotationView.self, forAnnotationViewWithReuseIdentifier: Identifiers.assetAnnotation)
         mapView.delegate = self
-        
+
         currentLocation = historyLocation?.first ?? CLLocationManager().location
         refreshAnnotations()
         scrollToReceivedLocation(isInitialLocation: true)
@@ -81,33 +81,88 @@ class MapViewController: UIViewController {
     private func setupNavigationBar() {
         title = "Publishing \(trackingId)"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(onEditButtonPressed))
-        
+
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(onBackButtonPressed))
     }
-    
+
     // MARK: - Publisher setup
     private func setupPublisher() {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         currentResolution = resolution
-        
+
+//        let connectionConfiguration = ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example")
+
+        // Or Alternatively, use a custom auth callback
+        let connectionConfiguration = ConnectionConfiguration(
+                clientId: "Asset Tracking Cocoa Publisher Example",
+                authCallback: AuthCallback(callback: { tokenParams, tokenRequestHandler in
+                    self.getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { tokenRequestString, error in
+                        if let error = error as NSError? {
+                            tokenRequestHandler(nil, error)
+                            return
+                        }
+                        guard error != nil else {
+                            tokenRequestHandler(nil, NSError())
+                            return
+                        }
+                        do {
+                            if let tokenRequestString = tokenRequestString {
+                                let tokenRequest: TokenRequest = try TokenRequest.fromJSONString(tokenRequestString)
+                                tokenRequestHandler(tokenRequest, nil)
+                            }
+                        } catch {
+                            tokenRequestHandler(nil, error as NSError)
+                        }
+                    }
+                }
+                ))
+
+//        // Or Alternatively, use a custom Auth endpoint
+//        let connectionConfiguration = ConnectionConfiguration(authUrl: "https://authEndpoint.com/createTokenRequest", clientId: "Asset Tracking Cocoa Publisher Example")
+
         publisher = try! PublisherFactory.publishers()
-            .connection(ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example"))
-            .mapboxConfiguration(MapboxConfiguration(mapboxKey: Environment.MAPBOX_ACCESS_TOKEN))
-            .log(LogConfiguration())
-            .locationSource(LocationSource(locationSource: historyLocation))
-            .routingProfile(.driving)
-            .delegate(self)
-            .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
-            .start()
+                .connection(connectionConfiguration)
+                .mapboxConfiguration(MapboxConfiguration(mapboxKey: Environment.MAPBOX_ACCESS_TOKEN))
+                .log(LogConfiguration())
+                .locationSource(LocationSource(locationSource: historyLocation))
+                .routingProfile(.driving)
+                .delegate(self)
+                .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
+                .start()
     }
-    
+
+    private func getTokenRequestJSONFromYourServer(tokenParams: TokenParams,
+                                                   callback: @escaping (String?, Error?) -> Void) {
+        let url = URL(string: "https://europe-west2-club2d-app.cloudfunctions.net/app/")
+        guard let url = url else {
+            callback(nil, NSError(domain: "Domain", code: 0, userInfo: ["description": "URL wasn't valid"]))
+            return
+        }
+        let task = URLSession.init()
+                .dataTask(with: url, completionHandler: { data, _, error in
+                    guard error != nil else {
+                        callback(nil, error)
+                        return
+                    }
+                    do {
+                        let jsonString = try data.toJSONString()
+                        callback(jsonString, nil)
+                    } catch {
+                        // TODO where does error come from?
+                        callback(nil, error)
+                    }
+                }
+                )
+        task.resume()
+    }
+
     private func startTracking() {
         let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
         let trackable = Trackable(id: trackingId, destination: destination)
-        
+
         locationState = .pending
-        
+
         publisher?.track(trackable: trackable) { [weak self] result in
             switch result {
             case .success:
@@ -120,7 +175,7 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
+
     private func closePublisher(completion: ResultHandler<Void>?) {
         trackables.removeAll()
         publisher?.stop { [weak self] result in
@@ -136,8 +191,8 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
-    // MARK: - Actions
+
+// MARK: - Actions
     @IBAction func onChangeRoutingProfileButtonTapped(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Choose routing profile", message: nil, preferredStyle: .actionSheet)
         let driving = UIAlertAction(title: RoutingProfile.driving.description, style: .default) { [weak self] _ in
@@ -163,15 +218,17 @@ class MapViewController: UIViewController {
         navigationController?.present(alertController, animated: true, completion: nil)
     }
 
-    // MARK: - Utils
+// MARK: - Utils
     private func setRoutingProfileAvtivityIndicatorState(isLoading: Bool) {
         isLoading
-            ? self.routingProfileAvtivityIndicator.startAnimating()
-            : self.routingProfileAvtivityIndicator.stopAnimating()
+                ? self.routingProfileAvtivityIndicator.startAnimating()
+                : self.routingProfileAvtivityIndicator.stopAnimating()
     }
-    
+
     private func refreshAnnotations() {
-        mapView.annotations.forEach { mapView.removeAnnotation($0) }
+        mapView.annotations.forEach {
+            mapView.removeAnnotation($0)
+        }
 
         if let location = self.currentLocation {
             let annotation = MKPointAnnotation()
@@ -182,23 +239,27 @@ class MapViewController: UIViewController {
     }
 
     private func scrollToReceivedLocation(isInitialLocation: Bool = false) {
-        guard let location = self.currentLocation else { return }
-        
-        let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
-                                   longitude: mapView.region.center.longitude)
-        
-        let region = MKCoordinateRegion(center: location.coordinate,
-                                        latitudinalMeters: MapConstraints.regionLatitude,
-                                        longitudinalMeters: MapConstraints.regionLongitude)
-        
-        if isInitialLocation {
-            mapView.setRegion(region, animated: true)
-            
+        guard let location = self.currentLocation else {
             return
         }
-        
-        guard location.distance(from: mapCenter) > MapConstraints.minimumDistanceToCenter else { return }
-        
+
+        let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
+                longitude: mapView.region.center.longitude)
+
+        let region = MKCoordinateRegion(center: location.coordinate,
+                latitudinalMeters: MapConstraints.regionLatitude,
+                longitudinalMeters: MapConstraints.regionLongitude)
+
+        if isInitialLocation {
+            mapView.setRegion(region, animated: true)
+
+            return
+        }
+
+        guard location.distance(from: mapCenter) > MapConstraints.minimumDistanceToCenter else {
+            return
+        }
+
         mapView.setRegion(region, animated: true)
     }
 
@@ -207,7 +268,7 @@ class MapViewController: UIViewController {
             resolutionLabel.text = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .none)
             return
         }
-        
+
         resolutionLabel.text = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .notEmpty(resolution))
     }
 
@@ -223,17 +284,17 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
+
     @objc
     func onEditButtonPressed() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "Edit Trackables",
-                                                style: .default,
-                                                handler: { [weak self] _ in self?.navigateToTrackablesScreen() }))
+                style: .default,
+                handler: { [weak self] _ in self?.navigateToTrackablesScreen() }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         navigationController?.present(alertController, animated: true, completion: nil)
     }
-    
+
     @objc
     func onBackButtonPressed() {
         closePublisher { result in
@@ -251,7 +312,7 @@ class MapViewController: UIViewController {
         viewController.delegate = self
         navigationController?.pushViewController(viewController, animated: true)
     }
-    
+
     private func showErrorDialog(error: ErrorInformation) {
         let alertVC = UIAlertController(title: "Error", message: "\(error.message)", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -261,11 +322,13 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
+        guard annotation is MKPointAnnotation else {
+            return nil
+        }
 
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Identifiers.assetAnnotation) ??
-            AssetAnnotationView(annotation: annotation, reuseIdentifier: Identifiers.assetAnnotation)
-        
+                AssetAnnotationView(annotation: annotation, reuseIdentifier: Identifiers.assetAnnotation)
+
         annotationView.backgroundColor = AssetStateHelper.getColor(for: locationState)
         return annotationView
     }
@@ -277,7 +340,7 @@ extension MapViewController: PublisherDelegate {
         connectionStatusLabel.textColor = stateColorAndDesc.color
         connectionStatusLabel.text = stateColorAndDesc.desc
     }
-    
+
     func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
         locationState = .failed
         refreshAnnotations()
@@ -307,7 +370,7 @@ extension MapViewController: TrackablesViewControllerDelegate {
         self.trackables.removeAll(where: { $0 == trackable })
         logger.info("Trackable removed: \(trackable.id). Was present: \(wasPresent)")
     }
-    
+
     func trackablesViewController(sender: TrackablesViewController, didRemoveLastTrackable trackable: Trackable) {
         logger.info("Publisher did remove last trackable.")
         self.closePublisher(completion: nil)

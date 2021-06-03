@@ -31,6 +31,8 @@
 		18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A925B61349000A1418 /* Accuracy.swift */; };
 		18C7B1B025B61349000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1AA25B61349000A1418 /* Resolution.swift */; };
 		18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */; };
+		1D6A302BCBE12B282DF18DAC /* TokenParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A33E4D1F7DBECC3BE5FCB /* TokenParams.swift */; };
+		1D6A3C27546047E865D39823 /* TokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A38E57181B5F496ED20C9 /* TokenRequest.swift */; };
 		2B2E929B8D92D774D39CE786 /* Pods_asset_tracking_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */; };
 		45E464C268419CCC6EFE41C1 /* Pods_asset_tracking_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */; };
 		AD5806992657FE73000BE2FB /* ARTRealtimeChannels+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5806982657FE73000BE2FB /* ARTRealtimeChannels+Extensions.swift */; };
@@ -90,6 +92,8 @@
 		18C7B1A825B61349000A1418 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
 		18C7B1A925B61349000A1418 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
 		18C7B1AA25B61349000A1418 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
+		1D6A33E4D1F7DBECC3BE5FCB /* TokenParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenParams.swift; sourceTree = "<group>"; };
+		1D6A38E57181B5F496ED20C9 /* TokenRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenRequest.swift; sourceTree = "<group>"; };
 		35A374438110A61B786B1EEE /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
 		58262A249E17B4E4FC6049FA /* Pods-asset_tracking-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-CoreTests/Pods-asset_tracking-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		69B3E7FEA13419A414562A29 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +193,8 @@
 				180F6143258633C00014B310 /* LogConfiguration.swift */,
 				F65AC34025AF3E28002799BD /* RoutingProfile.swift */,
 				F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */,
+				1D6A33E4D1F7DBECC3BE5FCB /* TokenParams.swift */,
+				1D6A38E57181B5F496ED20C9 /* TokenRequest.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -542,6 +548,8 @@
 				180F615B258633C00014B310 /* GeoJSONProperties.swift in Sources */,
 				180F6155258633C00014B310 /* LogConfiguration.swift in Sources */,
 				F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */,
+				1D6A302BCBE12B282DF18DAC /* TokenParams.swift in Sources */,
+				1D6A3C27546047E865D39823 /* TokenRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

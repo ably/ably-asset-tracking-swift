@@ -64,6 +64,8 @@
 		18FCE1EC258B8264005BC480 /* Codable+EncodedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DE258B8264005BC480 /* Codable+EncodedString.swift */; };
 		18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCE1DF258B8264005BC480 /* UnimplementedSupport.swift */; };
 		ADA1EE3C265A4E7D00FCC669 /* ARTRealtimeChannels+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1EE3B265A4E7D00FCC669 /* ARTRealtimeChannels+Extensions.swift */; };
+		ADF046A72669176500F3A34B /* TokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF046A52669176500F3A34B /* TokenRequest.swift */; };
+		ADF046A82669176500F3A34B /* TokenParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF046A62669176500F3A34B /* TokenParams.swift */; };
 		BE1856D9ECD8A5729CCB72B2 /* Pods_asset_tracking_Publisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FF3FC4C81DED6B6A5792B3 /* Pods_asset_tracking_Publisher.framework */; };
 		C2C546A210DC13668DE92C4E /* Pods_asset_tracking_PublisherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5322F2D00ECE77D2B1F89D57 /* Pods_asset_tracking_PublisherTests.framework */; };
 		F617C43525DA5848005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C43425DA5848005E92A2 /* ConnectionState.swift */; };
@@ -163,6 +165,8 @@
 		8B412391C99428EFFA9D511B /* Pods-asset_tracking-PublisherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-PublisherTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-PublisherTests/Pods-asset_tracking-PublisherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		96BA6252D49C6BAA02CFF7B7 /* Pods-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Publisher.release.xcconfig"; path = "Target Support Files/Pods-Publisher/Pods-Publisher.release.xcconfig"; sourceTree = "<group>"; };
 		ADA1EE3B265A4E7D00FCC669 /* ARTRealtimeChannels+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ARTRealtimeChannels+Extensions.swift"; path = "../Core/Sources/AblyExtensions/ARTRealtimeChannels+Extensions.swift"; sourceTree = "<group>"; };
+		ADF046A52669176500F3A34B /* TokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TokenRequest.swift; path = ../Core/Sources/Configuration/TokenRequest.swift; sourceTree = "<group>"; };
+		ADF046A62669176500F3A34B /* TokenParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TokenParams.swift; path = ../Core/Sources/Configuration/TokenParams.swift; sourceTree = "<group>"; };
 		C8859F81CDD7390E11741B66 /* Pods-asset_tracking-Publisher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Publisher.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Publisher/Pods-asset_tracking-Publisher.release.xcconfig"; sourceTree = "<group>"; };
 		F617C43425DA5848005E92A2 /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		F656005A25DFAED100491E6A /* LocationSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSource.swift; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 		180F608D258632510014B310 = {
 			isa = PBXGroup;
 			children = (
+				ADF046A62669176500F3A34B /* TokenParams.swift */,
+				ADF046A52669176500F3A34B /* TokenRequest.swift */,
 				ADA1EE3B265A4E7D00FCC669 /* ARTRealtimeChannels+Extensions.swift */,
 				180F6099258632510014B310 /* Sources */,
 				180F6121258633140014B310 /* Tests */,
@@ -656,6 +662,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADF046A72669176500F3A34B /* TokenRequest.swift in Sources */,
+				ADF046A82669176500F3A34B /* TokenParams.swift in Sources */,
 				ADA1EE3C265A4E7D00FCC669 /* ARTRealtimeChannels+Extensions.swift in Sources */,
 				18FCE1ED258B8264005BC480 /* UnimplementedSupport.swift in Sources */,
 				18FCE1E0258B8264005BC480 /* ConnectionConfiguration.swift in Sources */,
