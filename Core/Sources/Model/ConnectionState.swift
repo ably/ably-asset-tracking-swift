@@ -18,3 +18,21 @@ public enum ConnectionState: Int {
      */
     case failed
 }
+
+extension ConnectionState {
+    var string: String {
+        get {
+            switch self {
+            case .online:
+                return "online"
+            case .offline:
+                return "offline"
+            case .failed:
+                return "failed"
+            }
+        }
+    }
+    var description: String {
+        "ConnectionState.\(string)"
+    }
+}

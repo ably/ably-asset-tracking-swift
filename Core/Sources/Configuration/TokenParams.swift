@@ -1,17 +1,12 @@
 import Foundation
 import Ably
 
-@objc
-public class TokenParams: NSObject, ARTTokenDetailsCompatible, Codable {
-    public func toTokenDetails(_ auth: ARTAuth, callback: @escaping (ARTTokenDetails?, Error?) -> Void) {
-        // TODO implement this
-    }
-
-    private let ttl: Int?
-    private let capability: String?
-    private let clientId: String?
-    private let timestamp: Date?
-    private let nonce: String?
+public class TokenParams: NSObject, Codable {
+    public let ttl: Int?
+    public let capability: String?
+    public let clientId: String?
+    public let timestamp: Date?
+    public let nonce: String?
 
     init(ttl: Int?,
          capability: String?,

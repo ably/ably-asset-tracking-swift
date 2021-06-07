@@ -89,7 +89,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
                 return
             }
             
-            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.subscriberService(sender: self, didChangeClientConnectionStatus: receivedConnectionState)
         }
         
@@ -99,7 +99,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
                 return
             }
             
-            logger.debug("Channel connection state changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            logger.debug("Channel connection state changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: receivedConnectionState)
         }
     }

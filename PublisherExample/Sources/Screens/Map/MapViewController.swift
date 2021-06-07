@@ -97,22 +97,15 @@ class MapViewController: UIViewController {
         let connectionConfiguration = ConnectionConfiguration(
                 clientId: "Asset Tracking Cocoa Publisher Example",
                 authCallback: AuthCallback(callback: { tokenParams, tokenRequestHandler in
-                    self.getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { tokenRequestString, error in
+                    self.getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { tokenRequest, error in
+                        if let tokenRequest = tokenRequest {
+                            tokenRequestHandler(tokenRequest, nil)
+                            return
+                        }
                         if let error = error as NSError? {
                             tokenRequestHandler(nil, error)
-                            return
-                        }
-                        guard error != nil else {
+                        } else if error != nil {
                             tokenRequestHandler(nil, NSError())
-                            return
-                        }
-                        do {
-                            if let tokenRequestString = tokenRequestString {
-                                let tokenRequest: TokenRequest = try TokenRequest.fromJSONString(tokenRequestString)
-                                tokenRequestHandler(tokenRequest, nil)
-                            }
-                        } catch {
-                            tokenRequestHandler(nil, error as NSError)
                         }
                     }
                 }
@@ -133,28 +126,38 @@ class MapViewController: UIViewController {
     }
 
     private func getTokenRequestJSONFromYourServer(tokenParams: TokenParams,
-                                                   callback: @escaping (String?, Error?) -> Void) {
-        let url = URL(string: "https://europe-west2-club2d-app.cloudfunctions.net/app/")
-        guard let url = url else {
-            callback(nil, NSError(domain: "Domain", code: 0, userInfo: ["description": "URL wasn't valid"]))
-            return
-        }
-        let task = URLSession.init()
-                .dataTask(with: url, completionHandler: { data, _, error in
-                    guard error != nil else {
-                        callback(nil, error)
-                        return
-                    }
-                    do {
-                        let jsonString = try data.toJSONString()
-                        callback(jsonString, nil)
-                    } catch {
-                        // TODO where does error come from?
-                        callback(nil, error)
-                    }
-                }
-                )
-        task.resume()
+                                                   callback: @escaping (TokenRequest?, Error?) -> Void) {
+        // Local server:
+        let url = URL(string: "http://localhost:8000/createTokenRequest")!
+//        let url = URL(string: "https://your-domain.com/createTokenRequest")!
+
+//        // Using GET Request and specifying the clientId via a query param
+//        request.httpMethod = "GET"
+//        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+//        components.queryItems = [URLQueryItem(name: "clientId", value: tokenParams.clientId)]
+
+//        // Using POST Request and specifying the clientId (or TokenParams) via the HTTP body
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONEncoder().encode(tokenParams)
+        // Or Alternatively:
+//        request.httpBody = try? JSONSerialization.data(withJSONObject: ["clientId": tokenParams.clientId])
+
+        URLSession(configuration: URLSessionConfiguration.default).dataTask(with: request) { data, _, requestError in
+            guard let data = data else {
+                callback(nil, requestError)
+                return
+            }
+            do {
+                let decoder = JSONDecoder()
+                let tokenRequest = try decoder.decode(TokenRequest.self, from: data)
+                callback(tokenRequest, nil)
+            } catch {
+                print(error)
+                callback(nil, error)
+            }
+        }.resume()
     }
 
     private func startTracking() {

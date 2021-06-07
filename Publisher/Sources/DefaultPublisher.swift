@@ -732,7 +732,7 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
     }
 
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
-        logger.debug("publisherService.didChangeConnectionState. State: \(state)", source: "DefaultPublisher")
+        logger.debug("publisherService.didChangeConnectionState. State: \(state.description)", source: "DefaultPublisher")
         enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
     }
 

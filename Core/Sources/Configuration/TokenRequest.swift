@@ -2,21 +2,19 @@ import Foundation
 import Ably
 
 public class TokenRequest: NSObject, Codable {
-    public init(tokenParams: TokenParams, keyName: String, nonce: String, mac: String) {
-        self.tokenParams = tokenParams
-        self.keyName = keyName
-        self.nonce = nonce
-        self.mac = mac
-    }
-
-    private let tokenParams: TokenParams
-    private let keyName: String
-    private let nonce: String
-    private let mac: String
+    let keyName: String
+    let clientId: String
+    let capability: String
+    let timestamp: Int
+    let nonce: String
+    let mac: String
 }
 
 extension TokenRequest {
     func toARTTokenRequest() -> ARTTokenRequest {
-        ARTTokenRequest(tokenParams: tokenParams.toARTTokenParams(), keyName: keyName, nonce: nonce, mac: mac)
+        let artTokenParams = ARTTokenParams(clientId: clientId, nonce: nonce)
+        artTokenParams.timestamp = Date(timeIntervalSince1970: Double(timestamp) / 1000)
+        artTokenParams.capability = capability
+        return ARTTokenRequest(tokenParams: artTokenParams, keyName: keyName, nonce: nonce, mac: mac)
     }
 }

@@ -23,7 +23,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                 return
             }
 
-            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(
                 sender: self,
                 didChangeConnectionState: receivedConnectionState
@@ -69,7 +69,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
                 return
             }
 
-            logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
     }
