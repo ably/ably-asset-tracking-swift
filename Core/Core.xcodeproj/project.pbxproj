@@ -239,6 +239,7 @@
 		180F61682586340D0014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				ADB41945266F81DF00A32FE7 /* Configuration */,
 				180F61692586340D0014B310 /* Model */,
 			);
 			path = Sources;
@@ -303,6 +304,13 @@
 				0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ADB41945266F81DF00A32FE7 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		F688F978261352FE0051914A /* Ably */ = {
@@ -706,8 +714,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE8D3F720FFF4D78877518EC /* Pods-asset_tracking-Core.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = XXY98AVDR6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -731,8 +741,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 741D5DE0555062288A31F129 /* Pods-asset_tracking-Core.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = XXY98AVDR6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
