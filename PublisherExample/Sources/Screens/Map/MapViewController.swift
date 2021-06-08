@@ -91,25 +91,23 @@ class MapViewController: UIViewController {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         currentResolution = resolution
 
+        // Authentication to Ably with a private Ably API key
 //        let connectionConfiguration = ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example")
 
-        // Or Alternatively, use a custom auth callback
-        let connectionConfiguration = ConnectionConfiguration(
-                clientId: "Asset Tracking Cocoa Publisher Example",
-                authCallback: AuthCallback(callback: { tokenParams, tokenRequestHandler in
-                    self.getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { tokenRequest, error in
-                        if let tokenRequest = tokenRequest {
-                            tokenRequestHandler(tokenRequest, nil)
-                            return
-                        }
-                        if let error = error as NSError? {
-                            tokenRequestHandler(nil, error)
-                        } else if error != nil {
-                            tokenRequestHandler(nil, NSError())
-                        }
-                    }
+        // Authentication with Ably with an auth callback
+        let connectionConfiguration = ConnectionConfiguration(clientId: "Asset Tracking Cocoa Publisher Example") { tokenParams, tokenRequestHandler in
+            self.getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { tokenRequest, error in
+                if let tokenRequest = tokenRequest {
+                    tokenRequestHandler(tokenRequest, nil)
+                    return
                 }
-                ))
+                if let error = error as NSError? {
+                    tokenRequestHandler(nil, error)
+                } else if error != nil {
+                    tokenRequestHandler(nil, NSError())
+                }
+            }
+        }
 
 //        // Or Alternatively, use a custom Auth endpoint
 //        let connectionConfiguration = ConnectionConfiguration(authUrl: "https://authEndpoint.com/createTokenRequest", clientId: "Asset Tracking Cocoa Publisher Example")
@@ -141,7 +139,8 @@ class MapViewController: UIViewController {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try! JSONEncoder().encode(tokenParams)
-        // Or Alternatively:
+
+        // Or Alternatively, just send the clientId to your server:
 //        request.httpBody = try? JSONSerialization.data(withJSONObject: ["clientId": tokenParams.clientId])
 
         URLSession(configuration: URLSessionConfiguration.default).dataTask(with: request) { data, _, requestError in
