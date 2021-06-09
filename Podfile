@@ -1,5 +1,5 @@
 platform :ios, '12.0'
-use_frameworks!
+use_frameworks! # Needed for AWS Amplify https://cocoapods.org/pods/Amplify
 inhibit_all_warnings!
 workspace 'AblyAssetTracking.xcworkspace'
 
@@ -38,6 +38,9 @@ abstract_target 'asset_tracking' do
   target 'PublisherExample' do
     project 'PublisherExample/PublisherExample.xcodeproj'
     pod 'AblyAssetTracking/Publisher', :path => 'AblyAssetTracking.podspec'
+    pod 'Amplify', '~> 1.6.0'
+    pod 'AmplifyPlugins/AWSS3StoragePlugin', '~> 1.6.0'
+    pod 'AmplifyPlugins/AWSCognitoAuthPlugin', '~> 1.6.0'
   end
 
   target 'SubscriberExample' do

@@ -6,9 +6,6 @@ PODS:
     - ULID (= 1.1.0)
   - AblyAssetTracking/Publisher (0.0.1):
     - Ably (~> 1.2.0)
-    - Amplify (~> 1.6.0)
-    - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.6.0)
-    - AmplifyPlugins/AWSS3StoragePlugin (~> 1.6.0)
     - Logging (~> 1.4.0)
     - MapboxCoreNavigation
   - AblyAssetTracking/Subscriber (0.0.1):
@@ -70,6 +67,9 @@ DEPENDENCIES:
   - Ably (~> 1.2.0)
   - AblyAssetTracking/Publisher (from `AblyAssetTracking.podspec`)
   - AblyAssetTracking/Subscriber (from `AblyAssetTracking.podspec`)
+  - Amplify (~> 1.6.0)
+  - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.6.0)
+  - AmplifyPlugins/AWSS3StoragePlugin (~> 1.6.0)
   - Logging (~> 1.4.0)
   - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, tag `v2.0.0-beta.10`)
   - SwiftLint
@@ -113,7 +113,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Ably: 9f143677993cb6df20fce4551b9b6b2e55ad2f4d
-  AblyAssetTracking: 6f0a7c929c4fc6856ed8e6e371a2e438568484f2
+  AblyAssetTracking: 35d8c060d319cc4194e0d3210556c72599c4f4bc
   AblyDeltaCodec: 6123f31df5b04a0f5452968505a46ba16a9eb689
   Amplify: fe8cbe6fcd0e6468f537bd49e6c3d15437442576
   AmplifyPlugins: 85fa4fa7d0eb78a4f4f44dcf107993a8c13fdf2a
@@ -137,6 +137,6 @@ SPEC CHECKSUMS:
   Turf: ec9b01ef9386ab53545a1f763b7296c9ce3590d1
   ULID: b4714891a02819364faecd574a53e391c4c6de9d
 
-PODFILE CHECKSUM: e8d6d00b860449e5c5d1aead418dc234521bfd4a
+PODFILE CHECKSUM: d24a2fa9d9fc5b74df1fda76e4f3fe6bf3d483b3
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

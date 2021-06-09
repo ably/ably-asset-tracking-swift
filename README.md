@@ -27,10 +27,35 @@ In this repository there are two SDKs for iOS devices:
 
 Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) documentation for a complete API reference and code examples.
 
-###  Useful Resources
+### Useful Resources
 
 - [Introducing Ably Asset Tracking - public beta now available](https://ably.com/blog/ably-asset-tracking-beta)
 - [Accurate Delivery Tracking with Navigation SDK + Ably Realtime Network](https://www.mapbox.com/blog/accurate-delivery-tracking)
+
+## Requirements
+
+- iOS 12.0+ / iPadOS 12.0+
+- Xcode 12.4+
+- Swift 5.3+
+- Cocoapods: 1.10+
+
+## Installation
+
+### Cocoapods
+
+- The SDK has not been released to Cocoapods.org, but you can use it by downloading it from the GitHub repository:
+- To use the Asset Tracking Publisher or Subscriber SDKs, add the relevant following lines to your Podfile
+  ```
+  target 'Your App Name' do
+    pod 'AblyAssetTracking/Publisher', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Publisher SDK
+    pod 'AblyAssetTracking/Subscriber', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Subscriber SDK
+  end
+  ```
+- `pod install`
+
+### Swift package manager
+
+Not currently supported, but [planned](https://github.com/ably/ably-asset-tracking-cocoa/issues/148).
 
 ## Usage
 
@@ -61,7 +86,7 @@ subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
   .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY,
                                       clientId: CLIENT_ID)) // provide Ably configuration with credentials
   .trackingId(trackingId) // provide a Tracking ID for the asset to be tracked
-  .routingProfile(.cycling) // provide a routing profile for better location enhancements 
+  .routingProfile(.cycling) // provide a routing profile for better location enhancements
   .log(LogConfiguration()) // provide logging configuration
   .delegate(self) // provide a delegate to handle received location updates
   .start() // start listening to updates
@@ -74,7 +99,10 @@ This repository also contains example apps that showcase how Ably Asset Tracking
 - the [Asset Publishing example app](PublisherExample/)
 - the [Asset Subscribing example app](SubscriberExample/)
 
-To build the apps you will need to specify credentials properties.
+To build the apps you will need to specify credentials properties. Create a file called `Secrets.xconfig` in the root project directory (You can copy `Example.Secrets.xcconfig`, e.g. using `cp Example.Secrets.xcconfig Secrets.xcconfig`) and update the following values in the file:
+
+- `ABLY_API_KEY`: Used by publishing and subscribing example apps to authenticate with Ably using basic authentication. Not recommended in production.
+- `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs.
 
 ## Development
 
@@ -95,27 +123,24 @@ The project follows standard Pods with subprojects architecture , so you'll find
 - `Pods`
   <br> The additional Xcode project generated for Cocoapods
 
-### API Keys and Access Tokens for Example Apps
-
-The following secrets must be specified in order to run the example apps:
-
-- `ABLY_API_KEY`: this needs to be provided in `PublisherKeys.swift` or `SubscriberKeys.swift` respectively for publishing and subscribing example apps.
-- `MAPBOX_ACCESS_TOKEN` needs to be set in the `Info.plist` file for `MGLMapboxAccessToken` key.
-
 ### Build instructions
 
 Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
 
 1. Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials). You can skip public token configuration for now. This is needed to obtain the Mapbox SDK dependency.
 2. Install bundler using:
+
 ```
 gem install bundler
 ```
+
 3. Navigate to the project directory (one with .xcodeproj file) and execute:
+
 ```
 bundle install
 bundle exec pod install
 ```
+
 4. Open `AblyAssetTracking.xcworkspace` file. After updating `Info.plist` with the MapBox public key, you should be ready to run the example apps.
 
 #### Why Bundler
@@ -123,6 +148,7 @@ bundle exec pod install
 It's common that several developers (or CI) will have different tool versions installed locally on their machines, and it may cause compatibility problems (some tools might work only on dedicated versions). So to avoid asking everyone to upgrade/downgrade their local tools it's easier to use some tool to execute needed commands with preset versions and that's what Bundler does. Of course, you are still free to execute all CLI commands directly if you wish.
 
 Here is the list of tools versioned with the Bundler with their versions:
+
 - `CocoaPods` (1.10.0)
 - `Fastlane` (2.169.0)
 - `Slather` (2.6.0)
@@ -164,10 +190,6 @@ Additionally, when you run tests using `Fastlane` you will see three new directo
 - SDK’s should be distributed using CocoaPods (at the beginning), later we’ll add support for Carthage and Swift Package Manager
 - At the beginning, we aim only to support iOS, but we need to keep in mind macOS and tvOS
 - Docs are written for both Swift and ObjC
-
-### iOS version requirements
-
-These SDKs require a minimum of iOS 12+ / iPadOS 12+
 
 ### Working on code shared between Publisher and Subscriber
 
