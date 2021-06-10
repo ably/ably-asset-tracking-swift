@@ -24,7 +24,7 @@ public class TokenParams: NSObject, Codable {
 extension TokenParams {
     internal func toARTTokenParams() -> ARTTokenParams {
         let artTokenParams = ARTTokenParams(clientId: clientId, nonce: nonce)
-        artTokenParams.ttl = (ttl != nil) ? NSNumber(value: ttl!) : nil;
+        artTokenParams.ttl = (ttl != nil) ? NSNumber(value: ttl!) : nil
         artTokenParams.timestamp = timestamp
         artTokenParams.capability = try? capability?.toJSONString()
         return artTokenParams
@@ -33,8 +33,7 @@ extension TokenParams {
 
 extension ARTTokenParams {
     internal func toTokenParams() -> TokenParams {
-        let _ttl = ttl != nil ? Int(exactly: ttl!) : nil;
-        return TokenParams(ttl: _ttl,
+        return TokenParams(ttl: ttl != nil ? Int(exactly: ttl!) : nil,
                 capability: capability,
                 clientId: clientId,
                 timestamp: timestamp,
