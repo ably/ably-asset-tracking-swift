@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
         "state": {
           "branch": null,
-          "revision": "98ffc7f1483901338241b53b4cb6a2b3a4e4300d",
-          "version": "1.9.3"
+          "revision": "b448658c46e11e35e972d4de354e5a86d0d02afa",
+          "version": "1.10.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
         "state": {
           "branch": null,
-          "revision": "3dd4e255bef09e382057338312500e95cf56028d",
-          "version": "2.24.1"
+          "revision": "621dfbc1a53dc873d0aa8f7b9aa48c966d88d035",
+          "version": "2.24.2"
         }
       },
       {

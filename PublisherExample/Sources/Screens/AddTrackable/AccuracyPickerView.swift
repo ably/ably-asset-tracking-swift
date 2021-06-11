@@ -1,5 +1,5 @@
 import UIKit
-import AblyAssetTracking
+import AblyAssetTrackingPublisher
 
 class AccuracyPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     private let options: [Accuracy] = [.minimum, .low, .balanced, .high, .maximum]

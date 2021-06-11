@@ -1,5 +1,5 @@
 #import "ViewController.h"
-#import <AblyAssetTracking-Swift.h>
+#import <AblyAssetTrackingSubscriber-Swift.h>
 
 @interface ViewController ()
     @property id<Subscriber> _Nullable subscriber;

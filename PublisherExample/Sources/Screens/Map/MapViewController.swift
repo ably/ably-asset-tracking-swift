@@ -1,6 +1,6 @@
 import UIKit
 import MapKit
-import AblyAssetTracking
+import AblyAssetTrackingPublisher
 import Foundation
 
 private struct MapConstraints {

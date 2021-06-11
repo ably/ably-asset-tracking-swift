@@ -1,6 +1,6 @@
 import UIKit
 import MapKit
-import AblyAssetTracking
+import AblyAssetTrackingSubscriber
 
 private struct MapConstraints {
     static let regionLatitude: CLLocationDistance = 600

@@ -1,4 +1,4 @@
-import AblyAssetTracking
+import AblyAssetTrackingSubscriber
 import UIKit
 
 extension Accuracy {
