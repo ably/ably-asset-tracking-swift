@@ -11,6 +11,9 @@ public class TokenRequest: NSObject, Codable {
 }
 
 extension TokenRequest {
+    /**
+     Convert into ART (Ably Runtime representation)
+     */
     func toARTTokenRequest() -> ARTTokenRequest {
         let artTokenParams = ARTTokenParams(clientId: clientId, nonce: nonce)
         artTokenParams.timestamp = Date(timeIntervalSince1970: Double(timestamp) / 1000)

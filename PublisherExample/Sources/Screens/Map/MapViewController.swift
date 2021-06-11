@@ -98,13 +98,13 @@ class MapViewController: UIViewController {
         let connectionConfiguration = ConnectionConfiguration(clientId: "Asset Tracking Cocoa Publisher Example") { tokenParams, tokenRequestHandler in
             self.getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { tokenRequest, error in
                 if let tokenRequest = tokenRequest {
-                    tokenRequestHandler(tokenRequest, nil)
+                    tokenRequestHandler(tokenRequest, nil, nil)
                     return
                 }
                 if let error = error as NSError? {
-                    tokenRequestHandler(nil, error)
+                    tokenRequestHandler(nil, nil, error)
                 } else if error != nil {
-                    tokenRequestHandler(nil, NSError())
+                    tokenRequestHandler(nil, nil, NSError(domain: "Unknown error passed by Request function", code: 0, userInfo: [:]))
                 }
             }
         }
@@ -125,9 +125,9 @@ class MapViewController: UIViewController {
 
     private func getTokenRequestJSONFromYourServer(tokenParams: TokenParams,
                                                    callback: @escaping (TokenRequest?, Error?) -> Void) {
-        // Local server:
-        let url = URL(string: "http://localhost:8000/createTokenRequest")!
-//        let url = URL(string: "https://your-domain.com/createTokenRequest")!
+        let url = URL(string: "https://europe-west2-ably-testing.cloudfunctions.net/app/createTokenRequest")!
+        // Or use a local server (for debugging):
+//        let url = URL(string: "http://localhost:8000/ably-testing/europe-west2/app/createTokenRequest")!
 
 //        // Using GET Request and specifying the clientId via a query param
 //        request.httpMethod = "GET"

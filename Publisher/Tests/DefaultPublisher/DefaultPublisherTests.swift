@@ -3,6 +3,10 @@ import CoreLocation
 import Logging
 @testable import Publisher
 
+enum ClientConfigError : Error {
+    case redefinedConnectionConfiguration
+}
+
 class DefaultPublisherTests: XCTestCase {
     var locationService: MockLocationService!
     var ablyService: MockAblyPublisherService!
@@ -13,24 +17,32 @@ class DefaultPublisherTests: XCTestCase {
     var trackable: Trackable!
     var publisher: DefaultPublisher!
 
-    override class func setUp() {
+    override func setUpWithError() throws {
         LoggingSystem.bootstrap { label -> LogHandler in
             var handler = StreamLogHandler.standardOutput(label: label)
             handler.logLevel = .debug
             return handler
         }
-    }
-
-    override func setUpWithError() throws {
+        
         locationService = MockLocationService()
         ablyService = MockAblyPublisherService()
-        configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         routeProvider = MockRouteProvider()
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
+    }
+    
+    override func tearDownWithError() throws {
+        configuration = nil
+    }
+    
+    func setUpUsingAPIKeyWithError() throws {
+        if (configuration != nil) {
+            throw ClientConfigError.redefinedConnectionConfiguration
+        }
+        configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      mapboxConfiguration: mapboxConfiguration,
                                      logConfiguration: LogConfiguration(),
@@ -39,6 +51,23 @@ class DefaultPublisherTests: XCTestCase {
                                      ablyService: ablyService,
                                      locationService: locationService,
                                      routeProvider: routeProvider)
+    }
+    
+    func setUpUsingTokenAuthWithError() throws {
+        configuration = ConnectionConfiguration(clientId: "CLIENT_ID", authCallback: { tokenParams, resultHandler in
+            // TODO use tokenParams to create tokenRequest
+            // Use Ably authenticated with API_KEY to emulate a user creating tokenRequest serverside
+            
+            let tokenRequest = TokenRequest()
+            resultHandler(tokenRequest, nil, nil)
+        }
+    }
+    
+    func setUpUsingJWTAuthWithError() throws {
+        configuration = ConnectionConfiguration(clientId: "CLIENT_ID", authCallback: { tokenParams, resultHandler in
+            let token = "Some fake token which can also be a JWT"
+            resultHandler(nil, token, nil)
+        }
     }
 
     // MARK: track

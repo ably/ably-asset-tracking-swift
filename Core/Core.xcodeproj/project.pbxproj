@@ -31,11 +31,13 @@
 		18C7B1AF25B61349000A1418 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1A925B61349000A1418 /* Accuracy.swift */; };
 		18C7B1B025B61349000A1418 /* Resolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7B1AA25B61349000A1418 /* Resolution.swift */; };
 		18F7B7D725B5AB9B0003E13C /* PresenceData_CodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885CB5A25B5A27B000D8CAA /* PresenceData_CodableTests.swift */; };
-		1D6A302BCBE12B282DF18DAC /* TokenParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A33E4D1F7DBECC3BE5FCB /* TokenParams.swift */; };
-		1D6A3C27546047E865D39823 /* TokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A38E57181B5F496ED20C9 /* TokenRequest.swift */; };
 		2B2E929B8D92D774D39CE786 /* Pods_asset_tracking_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A46DA6EC3262F21A4A8D436 /* Pods_asset_tracking_CoreTests.framework */; };
 		45E464C268419CCC6EFE41C1 /* Pods_asset_tracking_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */; };
+		AD2C0F14267241E400FAEC9F /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2C0F13267241E400FAEC9F /* ConnectionConfiguration.swift */; };
 		AD5806992657FE73000BE2FB /* ARTRealtimeChannels+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5806982657FE73000BE2FB /* ARTRealtimeChannels+Extensions.swift */; };
+		ADA3C34726728B1900B252DD /* TokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA3C34526728B1800B252DD /* TokenRequest.swift */; };
+		ADA3C34826728B1900B252DD /* TokenParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA3C34426728B1800B252DD /* TokenParams.swift */; };
+		ADA3C34926728B1900B252DD /* TokenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA3C34626728B1900B252DD /* TokenDetails.swift */; };
 		F617C43125DA54AF005E92A2 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617C43025DA54AF005E92A2 /* ConnectionState.swift */; };
 		F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65AC34025AF3E28002799BD /* RoutingProfile.swift */; };
 		F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C5CB225CA9F0500913A09 /* LocationUpdate.swift */; };
@@ -92,15 +94,17 @@
 		18C7B1A825B61349000A1418 /* Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proximity.swift; sourceTree = "<group>"; };
 		18C7B1A925B61349000A1418 /* Accuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
 		18C7B1AA25B61349000A1418 /* Resolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolution.swift; sourceTree = "<group>"; };
-		1D6A33E4D1F7DBECC3BE5FCB /* TokenParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenParams.swift; sourceTree = "<group>"; };
-		1D6A38E57181B5F496ED20C9 /* TokenRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenRequest.swift; sourceTree = "<group>"; };
 		35A374438110A61B786B1EEE /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
 		58262A249E17B4E4FC6049FA /* Pods-asset_tracking-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-CoreTests/Pods-asset_tracking-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		69B3E7FEA13419A414562A29 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
 		741D5DE0555062288A31F129 /* Pods-asset_tracking-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Core.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Core/Pods-asset_tracking-Core.release.xcconfig"; sourceTree = "<group>"; };
 		75EF5D3EB9AF8EE52B9F5A8B /* Pods-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		9AB07ED4116EBBAD484FF8A7 /* Pods-asset_tracking-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-asset_tracking-CoreTests/Pods-asset_tracking-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
+		AD2C0F13267241E400FAEC9F /* ConnectionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionConfiguration.swift; sourceTree = "<group>"; };
 		AD5806982657FE73000BE2FB /* ARTRealtimeChannels+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARTRealtimeChannels+Extensions.swift"; sourceTree = "<group>"; };
+		ADA3C34426728B1800B252DD /* TokenParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenParams.swift; sourceTree = "<group>"; };
+		ADA3C34526728B1800B252DD /* TokenRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenRequest.swift; sourceTree = "<group>"; };
+		ADA3C34626728B1900B252DD /* TokenDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenDetails.swift; sourceTree = "<group>"; };
 		B6779AD0ADA240AC512C4B24 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DB2F6D7125031B6DCA1EFE63 /* Pods_asset_tracking_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_asset_tracking_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8D3F720FFF4D78877518EC /* Pods-asset_tracking-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-asset_tracking-Core.debug.xcconfig"; path = "Target Support Files/Pods-asset_tracking-Core/Pods-asset_tracking-Core.debug.xcconfig"; sourceTree = "<group>"; };
@@ -188,13 +192,14 @@
 		180F613F258633C00014B310 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				ADA3C34526728B1800B252DD /* TokenRequest.swift */,
+				ADA3C34426728B1800B252DD /* TokenParams.swift */,
+				ADA3C34626728B1900B252DD /* TokenDetails.swift */,
 				180F6140258633C00014B310 /* ConnectionConfiguration.swift */,
 				180F6141258633C00014B310 /* Trackable.swift */,
 				180F6143258633C00014B310 /* LogConfiguration.swift */,
 				F65AC34025AF3E28002799BD /* RoutingProfile.swift */,
 				F6A6B67725C9861B00A547D9 /* MapboxConfiguration.swift */,
-				1D6A33E4D1F7DBECC3BE5FCB /* TokenParams.swift */,
-				1D6A38E57181B5F496ED20C9 /* TokenRequest.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -239,7 +244,7 @@
 		180F61682586340D0014B310 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				ADB41945266F81DF00A32FE7 /* Configuration */,
+				AD2C0F12267241CE00FAEC9F /* Configuration */,
 				180F61692586340D0014B310 /* Model */,
 			);
 			path = Sources;
@@ -306,9 +311,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		ADB41945266F81DF00A32FE7 /* Configuration */ = {
+		AD2C0F12267241CE00FAEC9F /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				AD2C0F13267241E400FAEC9F /* ConnectionConfiguration.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -393,7 +399,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					180F6080258632360014B310 = {
 						CreatedOnToolsVersion = 12.2;
@@ -538,12 +544,14 @@
 				180F615F258633C00014B310 /* EventName.swift in Sources */,
 				180F6157258633C00014B310 /* Codable+EncodedString.swift in Sources */,
 				180F6153258633C00014B310 /* Trackable.swift in Sources */,
+				ADA3C34726728B1900B252DD /* TokenRequest.swift in Sources */,
 				F688F99C2613550E0051914A /* ARTRealtimeConnectionState+Extensions.swift in Sources */,
 				F688F97A2613530B0051914A /* AblyPresence.swift in Sources */,
 				F6A6B67825C9861B00A547D9 /* MapboxConfiguration.swift in Sources */,
 				18C7B1AD25B61349000A1418 /* ResolutionConstraints.swift in Sources */,
 				180F615C258633C00014B310 /* GeoJSONType.swift in Sources */,
 				18A4C1C725B2E04D0092CC70 /* ResultHandler.swift in Sources */,
+				ADA3C34926728B1900B252DD /* TokenDetails.swift in Sources */,
 				AD5806992657FE73000BE2FB /* ARTRealtimeChannels+Extensions.swift in Sources */,
 				F688F998261354F70051914A /* ARTRealtimeChannelState+Extensions.swift in Sources */,
 				18C7B1AC25B61349000A1418 /* TrackableResolutionRequest.swift in Sources */,
@@ -553,11 +561,10 @@
 				F688F9A0261355550051914A /* ARTErrorInfo+Extensions.swift in Sources */,
 				F65C5CB325CA9F0500913A09 /* LocationUpdate.swift in Sources */,
 				18C7B1AE25B61349000A1418 /* Proximity.swift in Sources */,
+				ADA3C34826728B1900B252DD /* TokenParams.swift in Sources */,
 				180F615B258633C00014B310 /* GeoJSONProperties.swift in Sources */,
 				180F6155258633C00014B310 /* LogConfiguration.swift in Sources */,
 				F65AC34125AF3E28002799BD /* RoutingProfile.swift in Sources */,
-				1D6A302BCBE12B282DF18DAC /* TokenParams.swift in Sources */,
-				1D6A3C27546047E865D39823 /* TokenRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +580,7 @@
 				F68E171E25E79B0C009AECEB /* GeoJSONGeometryCodableTests.swift in Sources */,
 				F68E172425E79D8E009AECEB /* GeoJSONGeometryCLLocationTests.swift in Sources */,
 				F6DC46C125E78C74002E7691 /* GeoJSONMessageCLLocationTests.swift in Sources */,
+				AD2C0F14267241E400FAEC9F /* ConnectionConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,7 +722,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE8D3F720FFF4D78877518EC /* Pods-asset_tracking-Core.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = XXY98AVDR6;
@@ -741,7 +749,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 741D5DE0555062288A31F129 /* Pods-asset_tracking-Core.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = XXY98AVDR6;

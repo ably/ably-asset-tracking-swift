@@ -1,6 +1,13 @@
 import Ably
 
-public typealias AuthCallback = (TokenParams, @escaping (TokenRequest?, NSError?) -> Void) -> Void
+public enum AuthResult {
+    case jwt(String)
+    case tokenRequest(TokenRequest)
+    case tokenDetails(TokenDetails)
+}
+
+public typealias Token = String
+public typealias AuthCallback = (TokenParams, @escaping (Result<AuthResult, Error>) -> Void) -> Void
 
 public class ConnectionConfiguration: NSObject {
     private let apiKey: String?
@@ -14,8 +21,9 @@ public class ConnectionConfiguration: NSObject {
        - clientId: Optional identifier to be assigned to this client.
          - authCallback:
      */
-    @objc
-    public init(apiKey: String?, clientId: String?, authCallback: AuthCallback?) {
+    private init(apiKey: String?,
+                clientId: String?,
+                authCallback: AuthCallback?) {
         self.apiKey = apiKey
         self.clientId = clientId
         self.authCallback = authCallback
@@ -23,19 +31,23 @@ public class ConnectionConfiguration: NSObject {
 
     // TODO make clientId optional [RSA7b2], and use the clientId provided in the auth callback. Pending ably-cocoa: https://github.com/ably/ably-cocoa/issues/1126
     /**
-     Connect to Ably with authCallback authentication
+     Connect to Ably with authCallback authentication, where the authCallback is passed a [TokenRequest]
 
      - Parameters:
-       - authCallback: A closure which generates a token request, token details or token string when
+       - authCallbackExpectingTokenRequest: A closure which generates a token request, token details or token string when
         given token parameters.
        - clientId: Optional identifier to be assigned to this client.
      */
     public convenience init(clientId: String? = nil, authCallback: @escaping AuthCallback) {
-        self.init(apiKey: nil, clientId: clientId, authCallback: authCallback)
+        self.init(apiKey: nil,
+                  clientId: clientId,
+                  authCallback: authCallback)
     }
 
     public convenience init(apiKey: String, clientId: String? = nil) {
-        self.init(apiKey: apiKey, clientId: clientId, authCallback: nil)
+        self.init(apiKey: apiKey,
+                  clientId: clientId,
+                  authCallback: nil)
     }
 
     func getClientOptions() -> ARTClientOptions {
@@ -63,12 +75,20 @@ public class ConnectionConfiguration: NSObject {
         func authCallbackTranslator(artTokenParams: ARTTokenParams, callback: @escaping (ARTTokenDetailsCompatible?, NSError?) -> Void?) -> Void {
             let tokenParams = artTokenParams.toTokenParams()
             // TODO use a Result<Success, CustomError> type instead
-            authCallback(tokenParams, { (tokenRequest: TokenRequest?, error: NSError?) -> Void in
-                guard let tokenRequest = tokenRequest else {
+            authCallback(tokenParams, { (result: Result<AuthResult, Error>) -> Void in
+                switch result {
+                case .success(.jwt(let jwt)):
+                    callback(NSString(utf8String: jwt), nil)
+                    return
+                case .success(.tokenRequest(let tokenRequest)):
+                    callback(tokenRequest.toARTTokenRequest(), nil)
+                    return
+                case .success(.tokenDetails(let tokenDetails)):
+                    callback(tokenDetails.toARTTokenDetails(), nil)
+                case .failure(let error as NSError):
                     callback(nil, error)
                     return
                 }
-                callback(tokenRequest.toARTTokenRequest(), nil)
             })
         }
 
