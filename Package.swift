@@ -9,9 +9,9 @@ let package = Package(
     products: [
         .library(
             name: "AblyAssetTrackingSubscriber",
-            targets: ["Subscriber"]),
+            targets: ["AblyAssetTrackingSubscriber"]),
         .library(name: "AblyAssetTrackingPublisher",
-                 targets: ["Publisher"])
+                 targets: ["AblyAssetTrackingPublisher"])
     ],
     dependencies: [
         .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.12")),
@@ -21,35 +21,40 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Subscriber",
+            name: "AblyAssetTrackingSubscriber",
             dependencies: [
-                "Core",
+                "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "Logging", package: "swift-log")
             ]),
-        .target(name: "Publisher",
+        .target(name: "AblyAssetTrackingPublisher",
             dependencies: [
-                "Core",
+                "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "MapboxNavigation", package: "MapboxNavigation"),
                 .product(name: "Logging", package: "swift-log")
             ]),
-        .target(name: "Core", dependencies: [
+        .target(name: "AblyAssetTrackingCore", dependencies: [
                     .product(name: "Ably", package: "ably-cocoa"),
                     .product(name: "Logging", package: "swift-log")
         ]),
         .testTarget(
             name: "SubscriberTests",
                     dependencies: [
-                        "Subscriber",
-                        .product(name: "Ably", package: "ably-cocoa"),
+                        "AblyAssetTrackingSubscriber",
                        .product(name: "Logging", package: "swift-log")
                     ]),
         .testTarget(
             name: "PublisherTests",
             dependencies: [
-                "Subscriber",
-                .product(name: "Ably", package: "ably-cocoa"),
+                "AblyAssetTrackingPublisher",
+               .product(name: "Logging", package: "swift-log")
+            ]),
+        .testTarget(
+            name: "SystemTests",
+            dependencies: [
+                "AblyAssetTrackingSubscriber",
+                "AblyAssetTrackingPublisher",
                .product(name: "Logging", package: "swift-log")
             ]),
     ]

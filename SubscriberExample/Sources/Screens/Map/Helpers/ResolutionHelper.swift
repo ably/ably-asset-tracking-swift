@@ -1,4 +1,4 @@
-import AblyAssetTracking
+import AblyAssetTrackingSubscriber
 
 enum ResolutionType {
     case minimum

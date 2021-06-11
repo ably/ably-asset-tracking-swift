@@ -1,4 +1,4 @@
-import AblyAssetTracking
+import AblyAssetTrackingPublisher
 import UIKit
 
 protocol TrackablesViewControllerDelegate: AnyObject {

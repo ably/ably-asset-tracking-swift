@@ -1,7 +1,7 @@
 import Amplify
 import AmplifyPlugins
 import CoreLocation
-import AblyAssetTracking
+import AblyAssetTrackingPublisher
 
 struct S3Error: Error {
     let message: String?

@@ -1,4 +1,4 @@
-import AblyAssetTracking
+import AblyAssetTrackingPublisher
 
 extension RoutingProfile {
     var description: String {

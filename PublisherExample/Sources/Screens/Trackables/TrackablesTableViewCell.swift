@@ -1,5 +1,5 @@
 import UIKit
-import AblyAssetTracking
+import AblyAssetTrackingPublisher
 
 class TrackablesTableViewCell: UITableViewCell {
     @IBOutlet private weak var trackableIdLabel: UILabel!
