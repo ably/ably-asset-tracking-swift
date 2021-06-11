@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-Subscriber"
-               BuildableName = "AblyAssetTracking-Subscriber"
-               BlueprintName = "AblyAssetTracking-Subscriber"
+               BlueprintIdentifier = "AblyAssetTrackingPublisher"
+               BuildableName = "AblyAssetTrackingPublisher"
+               BlueprintName = "AblyAssetTrackingPublisher"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,16 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-SubscriberTests"
-               BuildableName = "AblyAssetTracking-SubscriberTests"
-               BlueprintName = "AblyAssetTracking-SubscriberTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -60,9 +50,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AblyAssetTracking-Subscriber"
-            BuildableName = "AblyAssetTracking-Subscriber"
-            BlueprintName = "AblyAssetTracking-Subscriber"
+            BlueprintIdentifier = "AblyAssetTrackingPublisher"
+            BuildableName = "AblyAssetTrackingPublisher"
+            BlueprintName = "AblyAssetTrackingPublisher"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "ably-cocoa",
+        "repositoryURL": "https://github.com/ably/ably-cocoa",
+        "state": {
+          "branch": "feature/819-SPM-support",
+          "revision": "a3e330634e15fb231db4876b4e1050d2d4808c7d",
+          "version": null
+        }
+      },
+      {
+        "package": "AblyDeltaCodec",
+        "repositoryURL": "https://github.com/ably/delta-codec-cocoa",
+        "state": {
+          "branch": "main",
+          "revision": "d09d34a5489665a3c924a95791ce0a97ef26cc99",
+          "version": null
+        }
+      },
+      {
         "package": "MapboxCommon",
         "repositoryURL": "https://github.com/mapbox/mapbox-common-ios.git",
         "state": {
@@ -51,8 +69,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
         "state": {
           "branch": null,
-          "revision": "3d6af48b72e5cbb0a9cd4d2b88a9ff633b2e4926",
-          "version": "2.0.0-beta.11"
+          "revision": "48c312c3fd2830a08b2079a58db535dfcaa8508e",
+          "version": "2.0.0-beta.12"
         }
       },
       {
@@ -80,6 +98,15 @@
           "branch": null,
           "revision": "91fb908bb57c0fcddc0062b5d64ea2002e0ea789",
           "version": "0.14.0"
+        }
+      },
+      {
+        "package": "msgpack",
+        "repositoryURL": "https://github.com/rvi/msgpack-objective-C",
+        "state": {
+          "branch": null,
+          "revision": "3e36b48e04ecd756cb927bd5f5b9bf6d45e475f9",
+          "version": "0.4.0"
         }
       },
       {

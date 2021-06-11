@@ -8,39 +8,49 @@ let package = Package(
     platforms: [.iOS(.v12)],
     products: [
         .library(
-            name: "AblyAssetTracking-Subscriber",
-            targets: ["AblyAssetTracking-Subscriber"]),
-        .library(name: "AblyAssetTracking-Publisher",
-                 targets: ["AblyAssetTracking-Publisher"])
+            name: "AblyAssetTrackingSubscriber",
+            targets: ["AblyAssetTrackingSubscriber"]),
+        .library(name: "AblyAssetTrackingPublisher",
+                 targets: ["AblyAssetTrackingPublisher"])
     ],
     dependencies: [
-        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.11")),
+        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.12")),
         .package(url: "https://github.com/realm/SwiftLint", from: "0.43.1"),
         .package(url: "https://github.com/apple/swift-log", from: "1.4.2"),
-//        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.4")
+        .package(url: "https://github.com/ably/ably-cocoa", .branch("feature/819-SPM-support"))
     ],
     targets: [
         .target(
-            name: "AblyAssetTracking-Subscriber",
+            name: "AblyAssetTrackingSubscriber",
             dependencies: [
-//                .product(name: "ably-cocoa", package: "ably-cocoa"),
+                "AblyAssetTrackingCore",
+                .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "Logging", package: "swift-log")
             ]),
-        .target(name: "AblyAssetTracking-Publisher",
+        .target(name: "AblyAssetTrackingPublisher",
             dependencies: [
-//                .product(name: "ably-cocoa", package: "ably-cocoa"),
+                "AblyAssetTrackingCore",
+                .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "MapboxNavigation", package: "MapboxNavigation"),
                 .product(name: "Logging", package: "swift-log")
             ]),
-        .target(name: "AblyAssetTracking-Core", dependencies: [
-//                    .product(name: "ably-cocoa", package: "ably-cocoa"),
-                    .product(name: "Logging", package: "swift-log")]),
-        // TODO do i need to depend on the SDKs in the test targets?
+        .target(name: "AblyAssetTrackingCore", dependencies: [
+                    .product(name: "Ably", package: "ably-cocoa"),
+                    .product(name: "Logging", package: "swift-log")
+        ]),
         .testTarget(
-            name: "AblyAssetTracking-SubscriberTests",
-                    dependencies: ["AblyAssetTracking-Subscriber", .product(name: "Logging", package: "swift-log")]),
+            name: "AblyAssetTrackingSubscriberTests",
+                    dependencies: [
+                        "AblyAssetTrackingSubscriber",
+                        .product(name: "Ably", package: "ably-cocoa"),
+                       .product(name: "Logging", package: "swift-log")
+                    ]),
         .testTarget(
-            name: "AblyAssetTracking-PublisherTests",
-            dependencies: ["AblyAssetTracking-Publisher", .product(name: "Logging", package: "swift-log")]),
+            name: "AblyAssetTrackingPublisherTests",
+            dependencies: [
+                "AblyAssetTrackingSubscriber",
+                .product(name: "Ably", package: "ably-cocoa"),
+               .product(name: "Logging", package: "swift-log")
+            ]),
     ]
 )

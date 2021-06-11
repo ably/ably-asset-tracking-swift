@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-Publisher"
-               BuildableName = "AblyAssetTracking-Publisher"
-               BlueprintName = "AblyAssetTracking-Publisher"
+               BlueprintIdentifier = "AblyAssetTrackingPublisher"
+               BuildableName = "AblyAssetTrackingPublisher"
+               BlueprintName = "AblyAssetTrackingPublisher"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-Subscriber"
-               BuildableName = "AblyAssetTracking-Subscriber"
-               BlueprintName = "AblyAssetTracking-Subscriber"
+               BlueprintIdentifier = "AblyAssetTrackingSubscriber"
+               BuildableName = "AblyAssetTrackingSubscriber"
+               BlueprintName = "AblyAssetTrackingSubscriber"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-PublisherTests"
-               BuildableName = "AblyAssetTracking-PublisherTests"
-               BlueprintName = "AblyAssetTracking-PublisherTests"
+               BlueprintIdentifier = "AblyAssetTrackingPublisherTests"
+               BuildableName = "AblyAssetTrackingPublisherTests"
+               BlueprintName = "AblyAssetTrackingPublisherTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -56,9 +56,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-SubscriberTests"
-               BuildableName = "AblyAssetTracking-SubscriberTests"
-               BlueprintName = "AblyAssetTracking-SubscriberTests"
+               BlueprintIdentifier = "AblyAssetTrackingSubscriberTests"
+               BuildableName = "AblyAssetTrackingSubscriberTests"
+               BlueprintName = "AblyAssetTrackingSubscriberTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -70,9 +70,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-Core"
-               BuildableName = "AblyAssetTracking-Core"
-               BlueprintName = "AblyAssetTracking-Core"
+               BlueprintIdentifier = "AblyAssetTrackingCore"
+               BuildableName = "AblyAssetTrackingCore"
+               BlueprintName = "AblyAssetTrackingCore"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -88,9 +88,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-PublisherTests"
-               BuildableName = "AblyAssetTracking-PublisherTests"
-               BlueprintName = "AblyAssetTracking-PublisherTests"
+               BlueprintIdentifier = "AblyAssetTrackingPublisherTests"
+               BuildableName = "AblyAssetTrackingPublisherTests"
+               BlueprintName = "AblyAssetTrackingPublisherTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -98,9 +98,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AblyAssetTracking-SubscriberTests"
-               BuildableName = "AblyAssetTracking-SubscriberTests"
-               BlueprintName = "AblyAssetTracking-SubscriberTests"
+               BlueprintIdentifier = "AblyAssetTrackingSubscriberTests"
+               BuildableName = "AblyAssetTrackingSubscriberTests"
+               BlueprintName = "AblyAssetTrackingSubscriberTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -126,9 +126,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AblyAssetTracking-Publisher"
-            BuildableName = "AblyAssetTracking-Publisher"
-            BlueprintName = "AblyAssetTracking-Publisher"
+            BlueprintIdentifier = "AblyAssetTrackingPublisher"
+            BuildableName = "AblyAssetTrackingPublisher"
+            BlueprintName = "AblyAssetTrackingPublisher"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
