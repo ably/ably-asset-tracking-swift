@@ -29,9 +29,9 @@ struct S3FileEvents: Decodable {
 }
 
 class S3Service {
-    private var isInitialized = false;
+    private var isInitialized = false
     private var dateFormatter: DateFormatter?
-    private let version_prefix = "v1.0_"
+    private let versionPrefix = "v1.0_"
     
     func configure(completion: ((Result<Void, S3Error>) -> Void)?) {
         if !isConfigurationFile() {
@@ -98,20 +98,24 @@ class S3Service {
             return
         }
         
-        let fileKey = version_prefix + fileName
+        let fileKey = versionPrefix + fileName
         
-        Amplify.Storage.uploadData(key: fileKey, data: dataToUpload, progressListener: { progress in
-            print("Upload progress: \(progress)")
-        }) { result in
-            switch result {
-            case .success(let data):
-                print("Upload completed: \(data)")
-                completion?(.success(()))
-            case .failure(let error):
-                print("Upload failed: \(error.errorDescription)")
-                completion?(.failure(S3Error(message: error.errorDescription)))
-            }
-        }
+        Amplify.Storage.uploadData(key: fileKey,
+                                   data: dataToUpload,
+                                   progressListener: { progress in
+                                            print("Upload progress: \(progress)")
+                                        },
+                                   resultListener: { result in
+                                                switch result {
+                                                case .success(let data):
+                                                    print("Upload completed: \(data)")
+                                                    completion?(.success(()))
+                                                case .failure(let error):
+                                                    print("Upload failed: \(error.errorDescription)")
+                                                    completion?(.failure(S3Error(message: error.errorDescription)))
+                                                }
+                                            }
+        )
     }
     
     func downloadHistoryData(_ fileName: String, completion: ((Result<[CLLocation], S3Error>) -> Void)?) {
