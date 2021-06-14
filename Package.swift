@@ -9,11 +9,14 @@ let package = Package(
     products: [
         .library(
             name: "AblyAssetTrackingSubscriber",
-            targets: ["AblyAssetTrackingSubscriber"]
+            targets: ["AblyAssetTrackingSubscriber", "AblyAssetTrackingCore"]
         ),
         .library(name: "AblyAssetTrackingPublisher",
-                 targets: ["AblyAssetTrackingPublisher"]
-        )
+                 targets: ["AblyAssetTrackingPublisher", "AblyAssetTrackingCore"]
+        ),
+        // .library(name: "AblyAssetTrackingCore",
+        //          targets: ["AblyAssetTrackingCore"]
+        // )
     ],
     dependencies: [
         .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.13")),
@@ -22,7 +25,7 @@ let package = Package(
         // TODO Release a version of Ably-cocoa supporting SPM and use it here.
 //        .package(url: "https://github.com/ably/ably-cocoa", from: "NEW_VERSION"),
         .package(url: "/Users/zen/repos/ably/ably-cocoa", .branch("feature/ben-butterworth-spm-support"))
-    ],
+        ],
     targets: [
         .target(
             name: "AblyAssetTrackingSubscriber",

@@ -1,5 +1,6 @@
-import AblyAssetTrackingSubscriber
 import UIKit
+import AblyAssetTrackingCore
+import AblyAssetTrackingSubscriber
 
 extension Accuracy {
     var description: String {

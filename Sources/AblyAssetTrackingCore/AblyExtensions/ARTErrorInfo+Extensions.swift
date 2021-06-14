@@ -1,5 +1,4 @@
 import Ably
-import AblyAssetTrackingCore
 
 /**
 Wrapper for ARTErrorInfo, as we don't want to pass it to our clients
