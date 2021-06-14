@@ -1,5 +1,6 @@
 import Foundation
-@testable import Subscriber
+import AblyAssetTrackingCore
+@testable import AblyAssetTrackingSubscriber
 
 class MockAblySubscriberService: AblySubscriberService {
     var wasDelegateSet: Bool = false

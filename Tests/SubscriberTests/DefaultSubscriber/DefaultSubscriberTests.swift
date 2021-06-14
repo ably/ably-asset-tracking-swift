@@ -1,5 +1,6 @@
 import XCTest
-@testable import Subscriber
+import AblyAssetTrackingCore
+@testable import AblyAssetTrackingSubscriber
 
 class DefaultSubscriberTests: XCTestCase {
     private var ablyService: MockAblySubscriberService!

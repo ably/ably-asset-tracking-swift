@@ -1,7 +1,8 @@
 import XCTest
 import CoreLocation
 import Logging
-@testable import Publisher
+import AblyAssetTrackingCore
+@testable import AblyAssetTrackingPublisher
 
 class DefaultPublisherTests: XCTestCase {
     var locationService: MockLocationService!

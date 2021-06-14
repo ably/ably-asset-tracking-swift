@@ -1,6 +1,7 @@
 import CoreLocation
 import Foundation
-@testable import Publisher
+import AblyAssetTrackingCore
+@testable import AblyAssetTrackingPublisher
 
 class MockAblyPublisherService: AblyPublisherService {
     var trackCalled: Bool = false

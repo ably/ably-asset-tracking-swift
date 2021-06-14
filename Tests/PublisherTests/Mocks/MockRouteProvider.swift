@@ -1,6 +1,7 @@
 import MapboxDirections
 import CoreLocation
-@testable import Publisher
+import AblyAssetTrackingCore
+@testable import AblyAssetTrackingPublisher
 
 class MockRouteProvider: RouteProvider{
     var getRouteCalled: Bool = false

@@ -1,4 +1,4 @@
-@testable import Publisher
+@testable import AblyAssetTrackingPublisher
 
 class MockBatteryLevelProvider: BatteryLevelProvider {
     

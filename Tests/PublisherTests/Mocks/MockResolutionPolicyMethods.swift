@@ -1,4 +1,5 @@
-@testable import Publisher
+import AblyAssetTrackingCore
+@testable import AblyAssetTrackingPublisher
 
 class MockResolutionPolicyMethods: ResolutionPolicyMethods {
     var refreshCalled: Bool = false

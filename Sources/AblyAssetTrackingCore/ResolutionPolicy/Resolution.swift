@@ -48,15 +48,15 @@ public class Resolution: NSObject, Codable {
     }
 }
 
-extension Resolution {
-    public static func == (lhs: Resolution, rhs: Resolution) -> Bool {
+public extension Resolution {
+    static func == (lhs: Resolution, rhs: Resolution) -> Bool {
         return lhs.accuracy == rhs.accuracy &&
             lhs.desiredInterval == rhs.desiredInterval &&
             lhs.minimumDisplacement == rhs.minimumDisplacement
     }
 }
 
-extension Resolution {
+public extension Resolution {
     static var `default`: Resolution {
         return Resolution(accuracy: .balanced,
                           desiredInterval: 500,

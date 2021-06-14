@@ -1,4 +1,5 @@
-@testable import Publisher
+import AblyAssetTrackingCore
+@testable import AblyAssetTrackingPublisher
 
 class MockResolutionPolicy: ResolutionPolicy {
     let trackablesSetListener: MockTrackableSetListener

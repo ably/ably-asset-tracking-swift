@@ -1,5 +1,6 @@
 import Foundation
-@testable import Publisher
+import AblyAssetTrackingCore
+@testable import AblyAssetTrackingPublisher
 
 class MockLocationService: LocationService {
     var changeLocationEngineResolutionCalled: Bool = false
