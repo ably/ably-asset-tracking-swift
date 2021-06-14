@@ -12,23 +12,23 @@ public enum LocationUpdateType: String, Codable {
  Model used to handle location updates.
  */
 public class EnhancedLocationUpdate {
-    let location: CLLocation
+    public let location: CLLocation
 
-    var type: LocationUpdateType {
+    public var type: LocationUpdateType {
         return .actual
     }
 
-    init(location: CLLocation) {
+    public init(location: CLLocation) {
         self.location = location
     }
 }
 
-class EnhancedLocationUpdateMessage: Codable {
-    let location: GeoJSONMessage
-    let intermediateLocations: [GeoJSONMessage]
-    let type: LocationUpdateType
+public class EnhancedLocationUpdateMessage: Codable {
+    public let location: GeoJSONMessage
+    public let intermediateLocations: [GeoJSONMessage]
+    public let type: LocationUpdateType
 
-    init(locationUpdate: EnhancedLocationUpdate) throws {
+    public init(locationUpdate: EnhancedLocationUpdate) throws {
         self.location = try GeoJSONMessage(location: locationUpdate.location)
         self.intermediateLocations = []
         self.type = locationUpdate.type

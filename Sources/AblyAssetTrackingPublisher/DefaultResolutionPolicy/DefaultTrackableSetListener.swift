@@ -1,3 +1,5 @@
+import AblyAssetTrackingCore
+
 protocol DefaultTrackableSetListenerDelegate: AnyObject {
     func trackableSetListener(sender: DefaultTrackableSetListener, onTrackableAdded trackable: Trackable)
     func trackableSetListener(sender: DefaultTrackableSetListener, onTrackableRemoved trackable: Trackable)

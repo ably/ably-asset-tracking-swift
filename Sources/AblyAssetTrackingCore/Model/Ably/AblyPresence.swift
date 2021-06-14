@@ -3,7 +3,7 @@ import Ably
 /**
  Wrapper enum for `ARTPresenceAction` to avoid using `Ably SDK` classes in Publisher code
  */
-enum AblyPresence {
+public enum AblyPresence {
     case absent
     case present
     case enter
@@ -12,7 +12,7 @@ enum AblyPresence {
     case unknown
 }
 
-extension ARTPresenceAction {
+public extension ARTPresenceAction {
     func toAblyPresence() -> AblyPresence {
         switch self {
         case .absent: return .absent

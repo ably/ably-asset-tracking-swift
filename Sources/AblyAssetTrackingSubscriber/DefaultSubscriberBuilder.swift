@@ -1,4 +1,5 @@
 import UIKit
+import AblyAssetTrackingCore
 
 class DefaultSubscriberBuilder: SubscriberBuilder {
     private var connection: ConnectionConfiguration?

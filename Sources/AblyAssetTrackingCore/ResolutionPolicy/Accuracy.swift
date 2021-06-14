@@ -1,3 +1,5 @@
+import Foundation
+
 private enum AccuracyKeys: String {
     case minimum = "MINIMUM"
     case low = "LOW"

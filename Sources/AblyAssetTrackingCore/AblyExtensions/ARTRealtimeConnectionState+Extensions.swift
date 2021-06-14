@@ -5,7 +5,7 @@ Wrapper for ARTRealtimeConnectionState, as we don't want to pass it to our clien
  */
 
 extension ARTRealtimeConnectionState {
-    func toConnectionState() -> ConnectionState {
+    public func toConnectionState() -> ConnectionState {
         switch self {
         case .connected: return ConnectionState.online
         case .initialized, .connecting, .disconnected, .suspended, .closing, .closed: return ConnectionState.offline

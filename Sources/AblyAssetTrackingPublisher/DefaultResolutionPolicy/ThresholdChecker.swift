@@ -1,4 +1,5 @@
 import CoreLocation
+import AblyAssetTrackingCore
 
 class ThresholdChecker {
     func isThresholdReached(

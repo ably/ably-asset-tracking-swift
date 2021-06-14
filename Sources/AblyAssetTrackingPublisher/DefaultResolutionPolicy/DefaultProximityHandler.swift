@@ -1,3 +1,5 @@
+import AblyAssetTrackingCore
+
 protocol DefaultProximityHandlerDelegate: AnyObject {
     func proximityHandler(sender: DefaultProximityHandler, onProximityReachedWithThreshold threshold: Proximity)
     func proximityHandler(onProximityCancelled sender: DefaultProximityHandler)

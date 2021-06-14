@@ -1,3 +1,6 @@
+import Foundation
+import AblyAssetTrackingCore
+
 protocol AblySubscriberService: AnyObject {
     var delegate: AblySubscriberServiceDelegate? { get set }
     

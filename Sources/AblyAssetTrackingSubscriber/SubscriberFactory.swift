@@ -1,3 +1,6 @@
+import Foundation
+import AblyAssetTrackingCore
+
 @objc(SubscriberFactory)
 public class SubscriberFactoryObjectiveC: NSObject {
     /**

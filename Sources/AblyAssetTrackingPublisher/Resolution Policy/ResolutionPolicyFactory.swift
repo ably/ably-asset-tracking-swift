@@ -1,3 +1,6 @@
+import Foundation
+import AblyAssetTrackingCore
+
 /**
  Defines the methods to be implemented by resolution policy factories, whose responsibility it is to create
  a new `ResolutionPolicy` instance when a `Publisher` is `started` `Publisher.Builder.start`.

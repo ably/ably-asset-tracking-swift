@@ -1,4 +1,5 @@
 import CoreLocation
+import AblyAssetTrackingCore
 
 @objc(PublisherDelegate)
 public protocol PublisherDelegateObjectiveC: AnyObject {

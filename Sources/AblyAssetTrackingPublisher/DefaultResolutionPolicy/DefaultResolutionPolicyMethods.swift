@@ -1,3 +1,6 @@
+import Foundation
+import AblyAssetTrackingCore
+
 protocol DefaultResolutionPolicyMethodsDelegate: AnyObject {
     func resolutionPolicyMethods(refreshWithSender sender: DefaultResolutionPolicyMethods)
     func resolutionPolicyMethods(cancelProximityThresholdWithSender sender: DefaultResolutionPolicyMethods)

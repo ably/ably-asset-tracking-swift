@@ -10,7 +10,7 @@ public class ConnectionConfiguration: NSObject {
         self.clientId = clientId
     }
     
-    func getClientOptions() -> ARTClientOptions {
+    public func getClientOptions() -> ARTClientOptions {
         let clientOptions = ARTClientOptions(key: apiKey)
         clientOptions.clientId = clientId
         return clientOptions

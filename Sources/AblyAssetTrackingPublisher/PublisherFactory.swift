@@ -1,3 +1,6 @@
+import Foundation
+import AblyAssetTrackingCore
+
 /**
  Factory class used only to get `PublisherBuilder`
  */

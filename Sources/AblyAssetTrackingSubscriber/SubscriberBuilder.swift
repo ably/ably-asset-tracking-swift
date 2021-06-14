@@ -1,4 +1,6 @@
 import UIKit
+import Foundation
+import AblyAssetTrackingCore
 
 @objc(SubscriberBuilder)
 public protocol SubscriberBuilderObjectiveC: AnyObject {

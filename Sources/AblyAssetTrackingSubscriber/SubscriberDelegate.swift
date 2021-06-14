@@ -1,4 +1,6 @@
 import CoreLocation
+import Foundation
+import AblyAssetTrackingCore
 
 @objc(SubscriberDelegate)
 public protocol SubscriberDelegateObjectiveC: AnyObject {

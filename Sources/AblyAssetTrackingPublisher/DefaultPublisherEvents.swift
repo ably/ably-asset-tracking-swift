@@ -1,5 +1,6 @@
 import CoreLocation
 import MapboxDirections
+import AblyAssetTrackingCore
 
 protocol PublisherEvent {}
 

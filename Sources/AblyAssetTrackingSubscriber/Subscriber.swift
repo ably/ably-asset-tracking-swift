@@ -1,4 +1,6 @@
 import UIKit
+import Foundation
+import AblyAssetTrackingCore
 
 /**
  Main `SubscriberObjectiveC` interface implemented in SDK by `DefaultSubscriber`

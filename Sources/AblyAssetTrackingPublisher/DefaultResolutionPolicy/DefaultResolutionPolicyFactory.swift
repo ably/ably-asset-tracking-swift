@@ -1,4 +1,5 @@
 import Foundation
+import AblyAssetTrackingCore
 
 @objc
 public class DefaultResolutionPolicyFactory: NSObject, ResolutionPolicyFactory {

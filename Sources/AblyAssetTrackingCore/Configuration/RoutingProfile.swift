@@ -1,3 +1,5 @@
+import Foundation
+
 // swiftlint:disable trailing_whitespace
 
 /**

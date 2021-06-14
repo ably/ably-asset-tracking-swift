@@ -1,4 +1,5 @@
 import Foundation
+import AblyAssetTrackingCore
 
 /**
  Main `PublisherObjectiveC` interface implemented in SDK by `DefaultPublisher`

@@ -1,3 +1,6 @@
+import Foundation
+import AblyAssetTrackingCore
+
 @objc
 public protocol ResolutionPolicyMethods: AnyObject {
     /**

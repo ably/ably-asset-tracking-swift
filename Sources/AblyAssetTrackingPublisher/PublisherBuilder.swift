@@ -1,3 +1,6 @@
+import Foundation
+import AblyAssetTrackingCore
+
 /**
  Default and preferred way to create the `Publisher`.
  */

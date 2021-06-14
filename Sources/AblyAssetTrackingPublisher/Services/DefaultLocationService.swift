@@ -1,6 +1,7 @@
 import CoreLocation
 import MapboxCoreNavigation
 import MapboxDirections
+import AblyAssetTrackingCore
 
 class DefaultLocationService: LocationService {
     private let locationDataSource: PassiveLocationDataSource

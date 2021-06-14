@@ -1,3 +1,5 @@
+import Foundation
+
 /**
  Indicates Asset connection status (i.e. if courier is publishing his location)
  */

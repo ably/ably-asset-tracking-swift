@@ -1,6 +1,8 @@
 import Foundation
 import CoreLocation
 import Logging
+import Foundation
+import AblyAssetTrackingCore
 
 // Default logger used in Subscriber SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Subscriber")

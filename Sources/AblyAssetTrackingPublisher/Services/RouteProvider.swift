@@ -1,5 +1,6 @@
 import CoreLocation
 import MapboxDirections
+import AblyAssetTrackingCore
 
 protocol RouteProvider {
     func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)

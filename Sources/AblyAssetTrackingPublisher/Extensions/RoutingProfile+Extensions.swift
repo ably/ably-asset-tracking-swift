@@ -1,3 +1,4 @@
+import AblyAssetTrackingCore
 import MapboxDirections
 
 extension RoutingProfile {

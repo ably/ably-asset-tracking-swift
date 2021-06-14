@@ -1,4 +1,5 @@
 import UIKit
+import AblyAssetTrackingCore
 
 @objc
 class DefaultPublisherBuilder: NSObject, PublisherBuilder {

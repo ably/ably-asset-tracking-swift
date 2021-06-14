@@ -1,3 +1,5 @@
+import AblyAssetTrackingCore
+
 extension AblyPresence {
     func toConnectionState() -> ConnectionState {
         switch self {

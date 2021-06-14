@@ -8,12 +8,12 @@ public class DefaultProximity: NSObject, Proximity {
     /**
      Estimated time remaining to arrive at the destination, in milliseconds.
      */
-    let temporal: Double?
+    public let temporal: Double?
 
     /**
      Distance from the destination, in metres.
      */
-    let spatial: Double?
+    public let spatial: Double?
 
     public init(spatial: Double) {
         self.spatial = spatial

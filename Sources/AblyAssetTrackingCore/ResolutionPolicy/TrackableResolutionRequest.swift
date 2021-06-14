@@ -1,3 +1,5 @@
+import Foundation
+
 /**
   A request for a tracking `Resolution` for a `Trackable` object.
  */
@@ -5,13 +7,13 @@ public class TrackableResolutionRequest: NSObject {
     /**
       The `Trackable` object that holds optional constraints.
      */
-    let trackable: Trackable
+    public let trackable: Trackable
 
     /**
       Remote `Resolution` requests for the `Trackable` object.
       This set may be empty.
      */
-    let remoteRequests: Set<Resolution>
+    public let remoteRequests: Set<Resolution>
 
     /**
      Default constructor for the TrackableResolutionRequest

@@ -1,3 +1,5 @@
+import Foundation
+
 /**
  Governs how often to sample locations, at what level of positional accuracy, and how often to send them to
  subscribers.
