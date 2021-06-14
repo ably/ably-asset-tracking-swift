@@ -34,7 +34,8 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 
 ## Requirements
 
-- iOS 12.0+ / iPadOS 12.0+
+- Publisher SDK: iOS 12.0+ / iPadOS 12.0+
+- Subscriber SDK: iOS 12.0+ / iPadOS 12.0+ / macOS 10.11+ / tvOS 10.0+
 - Xcode 12.4+
 - Swift 5.3+
 - Cocoapods: 1.10+

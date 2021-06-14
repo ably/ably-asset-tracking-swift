@@ -5,19 +5,23 @@ import PackageDescription
 
 let package = Package(
     name: "ably-asset-tracking-swift",
-    platforms: [.iOS(.v12)],
+    platforms: [.iOS(.v12), .macOS(.v10_11), .tvOS(.v10)],
     products: [
         .library(
             name: "AblyAssetTrackingSubscriber",
-            targets: ["AblyAssetTrackingSubscriber"]),
+            targets: ["AblyAssetTrackingSubscriber"]
+        ),
         .library(name: "AblyAssetTrackingPublisher",
-                 targets: ["AblyAssetTrackingPublisher"])
+                 targets: ["AblyAssetTrackingPublisher"]
+        )
     ],
     dependencies: [
-        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.12")),
+        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.13")),
         .package(url: "https://github.com/realm/SwiftLint", from: "0.43.1"),
         .package(url: "https://github.com/apple/swift-log", from: "1.4.2"),
-        .package(url: "https://github.com/ably/ably-cocoa", .branch("feature/819-SPM-support"))
+        // TODO Release a version of Ably-cocoa supporting SPM and use it here.
+//        .package(url: "https://github.com/ably/ably-cocoa", from: "NEW_VERSION"),
+        .package(url: "/Users/zen/repos/ably/ably-cocoa", .branch("feature/ben-butterworth-spm-support"))
     ],
     targets: [
         .target(
