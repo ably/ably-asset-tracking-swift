@@ -42,13 +42,11 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 ## Installation
 
 ### Swift package manager
-
-- Follow [this](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) Apple guide on adding package dependencies, or
-
-  - Paste `https://github.com/ably/ably-asset-tracking-cocoa` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
-  - Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
-
-- To install the AblyAssetTracking package in another package rather than an application, run `swift package init` to create a Package.swift, then add the following dependency:
+- To install the AblyAssetTracking page in your **Xcode Project**:
+    - Paste `https://github.com/ably/ably-asset-tracking-cocoa` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
+    - Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
+    - [This apple guide](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) explains the steps in more detail.
+- To install the AblyAssetTracking package in another **Swift Package**, then add the following to your `Package.Swift`:
 
   ```swift
   .package(url: "https://github.com/ably/ably-asset-tracking-cocoa", from: "0.0.1"),
@@ -104,7 +102,7 @@ subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
 
 ## Example Apps
 
-This repository also contains example apps that showcase how Ably Asset Tracking SDKs can be used:
+Open `AblyAssetTracking.xcworkspace` to open a Xcode workspace containing example apps that showcase how Ably Asset Tracking SDKs can be used:
 
 - the [Asset Publishing example app](PublisherExample/)
 - the [Asset Subscribing example app](SubscriberExample/)
@@ -120,7 +118,7 @@ To build the apps you will need to specify credentials properties. Create a file
 
 The SDKs are provided via a Swift Package, so it does not use `xcodeproj` or `xcworkspace`. Example apps are contained in 1 `xcworkspace`, each one being an `xcodeproj` .Therefore, 
 
-- To develop the SDK, open the repo directory in Xcode (`xed .` when in the repo directory)
+- To develop the SDK, open the Swift Package in Xcode (`xed .` when in the repo directory, double click `Package.swift`, or open the directory in Xcode). To open the Swift Package using Jetbrains AppCode, you cannot use `appcode .` because it will automatically read the `.xcworkspace` file. Instead, you must go into AppCode and open the `Swift.package`.
 - To develop the example apps, open the Xcode workspace file (`xed AblyAssetTracking.xcworkspace` or double click the workspace file). 
 
 ### Build instructions
