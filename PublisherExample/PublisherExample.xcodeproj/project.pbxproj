@@ -265,6 +265,7 @@
 			mainGroup = 180F60EA258632D90014B310;
 			packageReferences = (
 				AD741CBA2661469300B11B49 /* XCRemoteSwiftPackageReference "amplify-ios" */,
+				ADC2BD732677946500E6ACD1 /* XCRemoteSwiftPackageReference "ably-asset-tracking-cocoa" */,
 			);
 			productRefGroup = 180F60F4258632D90014B310 /* Products */;
 			projectDirPath = "";
@@ -538,6 +539,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.9.3;
+			};
+		};
+		ADC2BD732677946500E6ACD1 /* XCRemoteSwiftPackageReference "ably-asset-tracking-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ably/ably-asset-tracking-cocoa";
+			requirement = {
+				branch = "148/swift-package-manager";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
