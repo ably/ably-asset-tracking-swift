@@ -42,6 +42,11 @@ let package = Package(
                 .product(name: "Logging", package: "swift-log")
             ]),
         .target(name: "AblyAssetTrackingCore", dependencies: [
+                    "AblyAssetTrackingInternal",
+                    .product(name: "Ably", package: "ably-cocoa"),
+                    .product(name: "Logging", package: "swift-log")
+        ]),
+        .target(name: "AblyAssetTrackingInternal", dependencies: [
                     .product(name: "Ably", package: "ably-cocoa"),
                     .product(name: "Logging", package: "swift-log")
         ]),
