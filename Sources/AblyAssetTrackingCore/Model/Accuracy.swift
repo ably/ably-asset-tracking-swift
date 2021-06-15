@@ -53,6 +53,7 @@ public enum Accuracy: Int {
     case maximum
 }
 
+// TODO investigate Int vs String rawValue
 extension Accuracy: Codable, RawRepresentable {
     public typealias RawValue = String
 
