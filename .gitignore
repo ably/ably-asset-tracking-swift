@@ -31,3 +31,5 @@ PublisherExample/amplifyconfiguration.json
 
 # AppCode IDE
 .idea
+.build
+
