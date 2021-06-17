@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "ably-asset-tracking-swift",
-    platforms: [.iOS(.v12), .macOS(.v10_11), .tvOS(.v10)],
+    platforms: [.iOS(.v12)],
     products: [
         .library(
             name: "AblyAssetTrackingSubscriber",
@@ -27,8 +27,8 @@ let package = Package(
         .target(
             name: "AblyAssetTrackingSubscriber",
             dependencies: [
-                "AblyAssetTrackingCore",
                 "AblyAssetTrackingInternal",
+                "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "Logging", package: "swift-log")
             ]),
@@ -65,6 +65,9 @@ let package = Package(
             dependencies: [
                 "AblyAssetTrackingSubscriber",
                 "AblyAssetTrackingPublisher",
+                "AblyAssetTrackingInternal",
+                "AblyAssetTrackingCore",
+                .product(name: "Ably", package: "ably-cocoa"),
                .product(name: "Logging", package: "swift-log")
             ]),
     ]

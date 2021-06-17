@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,7 +18,6 @@
 		180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B7258634420014B310 /* LaunchScreen.storyboard */; };
 		188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */; };
 		AD0F84B52677D6C900C15DB7 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */; };
-		AD8CA9992677A523008BBCAB /* AblyAssetTrackingSubscriber in Frameworks */ = {isa = PBXBuildFile; productRef = AD8CA9982677A523008BBCAB /* AblyAssetTrackingSubscriber */; };
 		F618BA8E25C99EF800B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F618BA8D25C99EF800B69885 /* Environment.swift */; };
 		F67E661525F8C221001CF9BB /* ResolutionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661425F8C221001CF9BB /* ResolutionHelper.swift */; };
 		F67E661825F8C507001CF9BB /* DescriptionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661725F8C507001CF9BB /* DescriptionsHelper.swift */; };
@@ -51,7 +50,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD8CA9992677A523008BBCAB /* AblyAssetTrackingSubscriber in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +171,6 @@
 			);
 			name = SubscriberExample;
 			packageProductDependencies = (
-				AD8CA9982677A523008BBCAB /* AblyAssetTrackingSubscriber */,
 			);
 			productName = SubscriberExample;
 			productReference = 180F60D2258632B40014B310 /* SubscriberExample.app */;
@@ -203,7 +200,6 @@
 			);
 			mainGroup = 180F60C9258632B40014B310;
 			packageReferences = (
-				AD8CA9972677A523008BBCAB /* XCRemoteSwiftPackageReference "ably-asset-tracking-cocoa" */,
 			);
 			productRefGroup = 180F60D3258632B40014B310 /* Products */;
 			projectDirPath = "";
@@ -458,25 +454,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		AD8CA9972677A523008BBCAB /* XCRemoteSwiftPackageReference "ably-asset-tracking-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ably/ably-asset-tracking-cocoa";
-			requirement = {
-				branch = "148/swift-package-manager";
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		AD8CA9982677A523008BBCAB /* AblyAssetTrackingSubscriber */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AD8CA9972677A523008BBCAB /* XCRemoteSwiftPackageReference "ably-asset-tracking-cocoa" */;
-			productName = AblyAssetTrackingSubscriber;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 180F60CA258632B40014B310 /* Project object */;
 }

@@ -1,22 +1,23 @@
 default_platform(:ios)
 
 platform :ios do
-  before_all do
-    cocoapods
-  end
-
+  # Do i have to download dependencies
+  
   desc 'Run tests on all targets'
-  lane :test_all do
-    test_core
-    test_publisher
-    test_subscriber
+  lane :test do
+    xcodebuild(
+      scheme: 'ably-asset-tracking-swift-Package',
+      configuration: 'Debug',
+      sdk: 'iphonesimulator',
+      arch: 'x86_64'
+    )
   end
 
   desc 'Run tests on the Core target'
   lane :test_core do
     scan(
-      workspace: './AblyAssetTracking.xcworkspace',
-      scheme: 'Core',
+      # workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'ably-asset-tracking-swift-Package',
       clean: true,
       code_coverage: true,
     )
@@ -102,8 +103,8 @@ platform :ios do
   lane :build_subscriber do
     xcodebuild(
       archive: true,
-      workspace: './AblyAssetTracking.xcworkspace',
-      scheme: 'Subscriber',
+      # workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'AblyAssetTrackingSubscriber',
       destination: 'generic/platform=iOS',
       archive_path: 'archives/Subscriber.xcarchive',
       xcargs: 'SKIP_INSTALL=NO',
@@ -114,8 +115,8 @@ platform :ios do
   lane :build_publisher do
     xcodebuild(
       archive: true,
-      workspace: './AblyAssetTracking.xcworkspace',
-      scheme: 'Publisher',
+      # workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'AblyAssetTrackingPublisher',
       destination: 'generic/platform=iOS',
       archive_path: 'archives/Publisher.xcarchive',
       xcargs: 'SKIP_INSTALL=NO',

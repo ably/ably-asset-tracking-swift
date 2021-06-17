@@ -16,21 +16,26 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
-### ios test_all
+### ios test
 ```
-fastlane ios test_all
+fastlane ios test
 ```
-Run tests on the Core framework of SDK
+Run tests on all targets
 ### ios test_core
 ```
 fastlane ios test_core
 ```
-Run tests on the Core framework of SDK
+Run tests on the Core target
+### ios test_internal
+```
+fastlane ios test_internal
+```
+Run tests on the Internal target
 ### ios test_publisher
 ```
 fastlane ios test_publisher
 ```
-Run tests on the Publisher framework of SDK
+Run tests on the Publisher target
 ### ios test_subscriber
 ```
 fastlane ios test_subscriber

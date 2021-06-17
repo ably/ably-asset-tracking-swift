@@ -2,24 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "ably-asset-tracking-cocoa",
-        "repositoryURL": "https://github.com/ably/ably-asset-tracking-cocoa",
-        "state": {
-          "branch": "148/swift-package-manager",
-          "revision": "d411e6c0db118a71b6ee4f0bd56882a049497325",
-          "version": null
-        }
-      },
-      {
-        "package": "ably-cocoa",
-        "repositoryURL": "/Users/zen/repos/ably/ably-cocoa",
-        "state": {
-          "branch": "feature/ben-butterworth-spm-support",
-          "revision": "7dabd3411118cefea586cf7f8716b0fde1bbc052",
-          "version": null
-        }
-      },
-      {
         "package": "amplify-ios",
         "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
         "state": {
@@ -47,123 +29,6 @@
         }
       },
       {
-        "package": "delta-codec-cocoa",
-        "repositoryURL": "https://github.com/ably/delta-codec-cocoa",
-        "state": {
-          "branch": "main",
-          "revision": "d09d34a5489665a3c924a95791ce0a97ef26cc99",
-          "version": null
-        }
-      },
-      {
-        "package": "mapbox-common-ios",
-        "repositoryURL": "https://github.com/mapbox/mapbox-common-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "16e7bb71288b7835e420ba8213c1c45276338839",
-          "version": "13.0.0"
-        }
-      },
-      {
-        "package": "mapbox-core-maps-ios",
-        "repositoryURL": "https://github.com/mapbox/mapbox-core-maps-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "b293ea5976b2b91d8aceff8096e24107de94afad",
-          "version": "10.0.0-beta.23"
-        }
-      },
-      {
-        "package": "mapbox-directions-swift",
-        "repositoryURL": "https://github.com/mapbox/mapbox-directions-swift.git",
-        "state": {
-          "branch": null,
-          "revision": "c2bfe34699721f1fbdb2a31fb62f00b036ffb248",
-          "version": "2.0.0-beta.3"
-        }
-      },
-      {
-        "package": "mapbox-events-ios",
-        "repositoryURL": "https://github.com/mapbox/mapbox-events-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "8e0c725271dee0a0c957b9b9738aef81b601f12b",
-          "version": "1.0.2"
-        }
-      },
-      {
-        "package": "mapbox-maps-ios",
-        "repositoryURL": "https://github.com/mapbox/mapbox-maps-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "ccf4cc26db8c7ace9b45fa72a5020c56ad0d0c30",
-          "version": "10.0.0-beta.21"
-        }
-      },
-      {
-        "package": "mapbox-navigation-ios",
-        "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "d506eed913134899547ff849cbe9a9578658d704",
-          "version": "2.0.0-beta.13"
-        }
-      },
-      {
-        "package": "mapbox-navigation-native-ios",
-        "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "3b748e2105b8358d000943d27493ca8559ae0a47",
-          "version": "52.0.0"
-        }
-      },
-      {
-        "package": "mapbox-speech-swift",
-        "repositoryURL": "https://github.com/mapbox/mapbox-speech-swift.git",
-        "state": {
-          "branch": null,
-          "revision": "4501b0cbf709ae9fdabb82a2942cd3d54295b411",
-          "version": "2.0.0-alpha.1"
-        }
-      },
-      {
-        "package": "MapboxGeocoder.swift",
-        "repositoryURL": "https://github.com/mapbox/MapboxGeocoder.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "91fb908bb57c0fcddc0062b5d64ea2002e0ea789",
-          "version": "0.14.0"
-        }
-      },
-      {
-        "package": "msgpack-objective-C",
-        "repositoryURL": "https://github.com/rvi/msgpack-objective-C",
-        "state": {
-          "branch": null,
-          "revision": "3e36b48e04ecd756cb927bd5f5b9bf6d45e475f9",
-          "version": "0.4.0"
-        }
-      },
-      {
-        "package": "Polyline",
-        "repositoryURL": "https://github.com/raphaelmor/Polyline.git",
-        "state": {
-          "branch": null,
-          "revision": "36f7b1222aaf8fa741d0d179c12e186998d97f42",
-          "version": "5.0.2"
-        }
-      },
-      {
-        "package": "Solar",
-        "repositoryURL": "https://github.com/ceeK/Solar.git",
-        "state": {
-          "branch": null,
-          "revision": "eacab01aa732612d97c723ceb77c748aaba54c82",
-          "version": "2.2.0"
-        }
-      },
-      {
         "package": "SQLite.swift",
         "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
         "state": {
@@ -182,39 +47,12 @@
         }
       },
       {
-        "package": "swift-log",
-        "repositoryURL": "https://github.com/apple/swift-log",
-        "state": {
-          "branch": null,
-          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
-          "version": "1.4.2"
-        }
-      },
-      {
         "package": "swift-nio-zlib-support",
         "repositoryURL": "https://github.com/apple/swift-nio-zlib-support.git",
         "state": {
           "branch": null,
           "revision": "37760e9a52030bb9011972c5213c3350fa9d41fd",
           "version": "1.0.0"
-        }
-      },
-      {
-        "package": "SwiftCLI",
-        "repositoryURL": "https://github.com/jakeheis/SwiftCLI",
-        "state": {
-          "branch": null,
-          "revision": "2816678bcc37f4833d32abeddbdf5e757fa891d8",
-          "version": "6.0.2"
-        }
-      },
-      {
-        "package": "turf-swift",
-        "repositoryURL": "https://github.com/mapbox/turf-swift.git",
-        "state": {
-          "branch": null,
-          "revision": "23e72d4174eacd76cc6414f063b427d2dac81cfb",
-          "version": "2.0.0-alpha.3"
         }
       }
     ]

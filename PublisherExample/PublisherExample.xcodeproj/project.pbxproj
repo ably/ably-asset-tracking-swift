@@ -28,7 +28,6 @@
 		AD5BCAF02677C3CB00836F16 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAEF2677C3CB00836F16 /* AWSCognitoAuthPlugin */; };
 		AD5BCAF22677C3CB00836F16 /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAF12677C3CB00836F16 /* AWSPluginsCore */; };
 		AD5BCAF42677C3CB00836F16 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAF32677C3CB00836F16 /* AWSS3StoragePlugin */; };
-		AD8CA9932677A3A2008BBCAB /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = AD8CA9922677A3A2008BBCAB /* AblyAssetTrackingPublisher */; };
 		F618BA8625C9939000B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7DADD25C96F26001C094B /* Environment.swift */; };
 		F67E661C25F8E21B001CF9BB /* DescriptionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */; };
 		F67E661F25F8EA2C001CF9BB /* AssetStateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */; };
@@ -59,7 +58,6 @@
 		18A7FB6F25AE1596005AC55E /* AddTrackableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackableViewController.swift; sourceTree = "<group>"; };
 		18A7FB7025AE1596005AC55E /* AddTrackableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTrackableViewController.xib; sourceTree = "<group>"; };
 		18A7FB7525AE3624005AC55E /* AccuracyPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccuracyPickerView.swift; sourceTree = "<group>"; };
-		AD003D942677CB890091DAB3 /* ably-asset-tracking-cocoa */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-cocoa"; path = ..; sourceTree = "<group>"; };
 		AD0F84B22677D67900C15DB7 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		ADAAE617266154FB00A8F214 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionsHelper.swift; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 			files = (
 				AD5BCAF42677C3CB00836F16 /* AWSS3StoragePlugin in Frameworks */,
 				AD5BCAF22677C3CB00836F16 /* AWSPluginsCore in Frameworks */,
-				AD8CA9932677A3A2008BBCAB /* AblyAssetTrackingPublisher in Frameworks */,
 				AD5BCAEE2677C3CB00836F16 /* Amplify in Frameworks */,
 				AD5BCAF02677C3CB00836F16 /* AWSCognitoAuthPlugin in Frameworks */,
 			);
@@ -91,7 +88,6 @@
 		180F60EA258632D90014B310 = {
 			isa = PBXGroup;
 			children = (
-				AD003D942677CB890091DAB3 /* ably-asset-tracking-cocoa */,
 				F6B7E14625DD1A0A0098F03A /* S3Service */,
 				180F6192258634350014B310 /* Sources */,
 				180F618B258634350014B310 /* Resources */,
@@ -238,7 +234,6 @@
 			);
 			name = PublisherExample;
 			packageProductDependencies = (
-				AD8CA9922677A3A2008BBCAB /* AblyAssetTrackingPublisher */,
 				AD5BCAED2677C3CB00836F16 /* Amplify */,
 				AD5BCAEF2677C3CB00836F16 /* AWSCognitoAuthPlugin */,
 				AD5BCAF12677C3CB00836F16 /* AWSPluginsCore */,
@@ -272,7 +267,6 @@
 			);
 			mainGroup = 180F60EA258632D90014B310;
 			packageReferences = (
-				AD8CA9912677A3A2008BBCAB /* XCRemoteSwiftPackageReference "ably-asset-tracking-cocoa" */,
 				AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */,
 			);
 			productRefGroup = 180F60F4258632D90014B310 /* Products */;
@@ -551,14 +545,6 @@
 				minimumVersion = 1.10.0;
 			};
 		};
-		AD8CA9912677A3A2008BBCAB /* XCRemoteSwiftPackageReference "ably-asset-tracking-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ably/ably-asset-tracking-cocoa";
-			requirement = {
-				branch = "148/swift-package-manager";
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -581,11 +567,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSS3StoragePlugin;
-		};
-		AD8CA9922677A3A2008BBCAB /* AblyAssetTrackingPublisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AD8CA9912677A3A2008BBCAB /* XCRemoteSwiftPackageReference "ably-asset-tracking-cocoa" */;
-			productName = AblyAssetTrackingPublisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

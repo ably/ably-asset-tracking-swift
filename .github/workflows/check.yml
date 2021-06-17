@@ -23,10 +23,6 @@ jobs:
           bundle install
           bundle exec fastlane test_all
 
-      - name: Ensure Pod Install Works
-        run: |
-          bundle exec pod install
-
       - uses: actions/upload-artifact@v2
         with:
           name: coverage-core

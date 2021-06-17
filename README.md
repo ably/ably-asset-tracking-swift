@@ -37,19 +37,18 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 - Subscriber SDK: iOS 12.0+ / iPadOS 12.0+
 - Xcode 12.4+
 - Swift 5.3+
-- Cocoapods: 1.10+
 
 ## Installation
 
 ### Swift package manager
-- To install the AblyAssetTracking page in your **Xcode Project**:
+- To install this package in an **Xcode Project**:
     - Paste `https://github.com/ably/ably-asset-tracking-cocoa` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
     - Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
     - [This apple guide](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) explains the steps in more detail.
-- To install the AblyAssetTracking package in another **Swift Package**, then add the following to your `Package.Swift`:
+- To install this package in a **Swift Package**, add the following to your `Package.Swift`:
 
   ```swift
-  .package(url: "https://github.com/ably/ably-asset-tracking-cocoa", from: "0.0.1"),
+  .package(url: "https://github.com/ably/ably-asset-tracking-swift", from: "VERSION"),
   ```
 
 ### Cocoapods
@@ -151,36 +150,17 @@ It's common that several developers (or CI) will have different tool versions in
 
 Here is the list of tools versioned with the Bundler with their versions:
 
-- `CocoaPods` (1.10.0)
 - `Fastlane` (2.169.0)
 - `Slather` (2.6.0)
 
-You may always check `Gemfile.lock` as it's the source of truth for versions of used libraries.
+### Running tests locally
 
-### Running tests
-
-There are two ways of running tests in the project. The first one is standard for all Xcode projects and requires only selecting the correct active scheme in Xcode (`Core`/`Subscriber`/`Publisher`) and running tests from the `Product` -> `Test` menu.
-
-Another one involves `Fastlane` and is executed from the command line:
-
-```zsh
-# run tests for all targets
-bundle exec fastlane test_all
-
-# run tests for the Core target
-bundle exec fastlane test_core
-
-# run tests for the Internal target
-bundle exec fastlane test_internal
-
-# run tests for the Publisher target
-bundle exec fastlane test_publisher
-
-# run tests for the Subscriber target
-bundle exec fastlane test_subscriber
-```
-
-Additionally, when you run tests using `Fastlane` you will see three new directories created: `coverage_core`, `coverage_internal`, `coverage_publisher`, `coverage_subscriber`. Each contains an `index.html` file with a full test coverage report for the given target.
+- Running in Xcode: Xcode automatically generates 1 Scheme (`ably-asset-tracking-swift-Package`) which will run all test targets specified in `Package.swift`. You can run those tests by selecting that scheme and pressing ⌘U or `Product` > `Test`.
+  - Xcode can automatically generate test coverage.
+- Running using Fastlane: 
+  - To run all tests, run `bundle exec fastlane test_all`
+  - To run only one target, run `bundle exec fastlane test_target_name`, where test_target_name can be `test_core`, `test_internal` or other test lanes are defined in `./Fastfile`.
+  - The fastlane test lanes also use Slather to generate test coverage report, Open the html files to view them, e.g. `coverage_core/index.html`.  
 
 ### Coding Conventions and Style Guide
 
