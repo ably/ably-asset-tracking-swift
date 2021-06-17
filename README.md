@@ -18,10 +18,9 @@ Ably Asset Tracking is:
     - persistence for later retrieval
 - **built for purpose** - the APIs and underlying functionality are designed specifically to meet the requirements of a range of common asset tracking use-cases
 
-In this repository there are two SDKs for iOS devices:
-
-- the [Asset Publishing SDK](Publisher/)
-- the [Asset Subscribing SDK](Subscriber/)
+`ably-asset-tracking-swift` is a Swift package, containing 2 libraries/ SDKs, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. These libraries each provide a set of importable targets a user can use as dependencies. 
+ - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingPublisher`.
+ - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingSubscriber`.
 
 ### Documentation
 
@@ -35,7 +34,7 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 ## Requirements
 
 - Publisher SDK: iOS 12.0+ / iPadOS 12.0+
-- Subscriber SDK: iOS 12.0+ / iPadOS 12.0+ / macOS 10.11+ / tvOS 10.0+
+- Subscriber SDK: iOS 12.0+ / iPadOS 12.0+
 - Xcode 12.4+
 - Swift 5.3+
 - Cocoapods: 1.10+
@@ -115,16 +114,22 @@ To build the apps you will need to specify credentials properties. Create a file
 
 ## Development
 
+### Package structure
+
+These libraries expose modules, which can be imported into a users source code file. We have 4 targets, `AblyAssetTrackingCore`, `AblyAssetTrackingInternal`, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. Internal is the only target not exposed to users, and is ideal for interfacing with Ably-cocoa in order to hide ably-cocoa interfaces from end users. All public entities in other targets, such as `AblyAssetTrackingCore`, are importable by users, by using `import AblyAssetTrackingCore`. All public entities in `AblyAssetTrackingInternal` are public to other targets in the same package, but not to users. 
+
+The user will have to import both targets in their code to use entities in both Core and Publisher (or Subscriber). In the future, we may expose both `AblyAssetTrackingCore` and `AblyAssetTrackingPublisher` through one target using `@_exported`, so users only need to import one module. Similarly, a new target that joins `AblyAssetTrackingCore` and `AblyAssetTrackingSubscriber` will be created. 
+
 ### Getting started
 
-The SDKs are provided via a Swift Package, so it does not use `xcodeproj` or `xcworkspace`. Example apps are contained in 1 `xcworkspace`, each one being an `xcodeproj` .Therefore, 
+The SDKs are bundled together in a Swift Package, which doesn't use a Xcode project (`xcodeproj`) or Xcode workspace (`xcworkspace`). Example apps are contained in 1 `xcworkspace`, each one being an `xcodeproj`.
 
-- To develop the SDK, open the Swift Package in Xcode (`xed .` when in the repo directory, double click `Package.swift`, or open the directory in Xcode). To open the Swift Package using Jetbrains AppCode, you cannot use `appcode .` because it will automatically read the `.xcworkspace` file. Instead, you must go into AppCode and open the `Swift.package`.
+- To develop the SDK, open the Swift Package in Xcode (You can either run `xed ably-asset-tracking-swift`, double click `Package.swift`, or open the directory in Xcode). To open the Swift Package using Jetbrains AppCode, you cannot use `appcode .` because it will automatically read the `.xcworkspace` file. Instead, you must go into AppCode and open the `Swift.package`.
 - To develop the example apps, open the Xcode workspace file (`xed AblyAssetTracking.xcworkspace` or double click the workspace file). 
 
 ### Build instructions
 
-Project use CocoaPods, Fastlane, and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
+This package uses Fastlane and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
 
 1. Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials). You can skip public token configuration for now. This is needed to obtain the Mapbox SDK dependency.
 2. Install bundler using:
@@ -139,8 +144,6 @@ gem install bundler
 bundle install
 bundle exec pod install
 ```
-
-4. Open `AblyAssetTracking.xcworkspace` file. After updating `Info.plist` with the MapBox public key, you should be ready to run the example apps.
 
 #### Why Bundler
 
@@ -161,20 +164,23 @@ There are two ways of running tests in the project. The first one is standard fo
 Another one involves `Fastlane` and is executed from the command line:
 
 ```zsh
+# run tests for all targets
+bundle exec fastlane test_all
+
 # run tests for the Core target
 bundle exec fastlane test_core
+
+# run tests for the Internal target
+bundle exec fastlane test_internal
 
 # run tests for the Publisher target
 bundle exec fastlane test_publisher
 
 # run tests for the Subscriber target
 bundle exec fastlane test_subscriber
-
-# run tests for all targets
-bundle exec fastlane test_all
 ```
 
-Additionally, when you run tests using `Fastlane` you will see three new directories created: `coverage_core`, `coverage_publisher`, `coverage_subscriber`. Each contains an `index.html` file with a full test coverage report for the given target.
+Additionally, when you run tests using `Fastlane` you will see three new directories created: `coverage_core`, `coverage_internal`, `coverage_publisher`, `coverage_subscriber`. Each contains an `index.html` file with a full test coverage report for the given target.
 
 ### Coding Conventions and Style Guide
 
@@ -188,10 +194,6 @@ Additionally, when you run tests using `Fastlane` you will see three new directo
 
 - At the beginning, we aim only to support iOS, but we need to keep in mind macOS and tvOS
 - Docs are written for both Swift and ObjC
-
-### Working on code shared between Publisher and Subscriber
-
-**Core target:** Contains all shared logic and models (i.e. GeoJSON mappers) used by Publisher and Subscriber. Notice that there is no direct dependency between Publisher/Subscriber and Core. Instead of that, all files from Core should be also included in Publisher/Subscriber targets (by a tick in the Target Membership in Xcode's File Inspector tab). It's designed like that to avoid creating Umbrella Frameworks (as recommended in `Don't Create Umbrella Frameworks` in [Framework Creation Guidelines](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/CreationGuidelines.html)) - there are some shared sources which we want to be publicly visible for client apps and it won't work with direct dependencies.
 
 ### Release Procedure
 

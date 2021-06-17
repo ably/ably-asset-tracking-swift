@@ -5,14 +5,14 @@ platform :ios do
     cocoapods
   end
 
-  desc 'Run tests on the Core framework of SDK'
+  desc 'Run tests on all targets'
   lane :test_all do
     test_core
     test_publisher
     test_subscriber
   end
 
-  desc 'Run tests on the Core framework of SDK'
+  desc 'Run tests on the Core target'
   lane :test_core do
     scan(
       workspace: './AblyAssetTracking.xcworkspace',
@@ -33,8 +33,30 @@ platform :ios do
       source_directory: './Core/Sources'
     )
   end
+  
+  desc 'Run tests on the Internal target'
+  lane :test_internal do
+    scan(
+      workspace: './AblyAssetTracking.xcworkspace',
+      scheme: 'Internal',
+      clean: true,
+      code_coverage: true,
+    )
 
-  desc 'Run tests on the Publisher framework of SDK'
+    # Clean previous test coverage and generate new one
+    sh('rm -rf ./coverage_internal')
+    slather(
+      workspace: './AblyAssetTracking.xcworkspace',
+      proj: 'Core/Core.xcodeproj',
+      scheme: 'Core',
+      output_directory: 'coverage_core',
+      html: true,
+      ignore: ['Internal/Tests/*'],
+      source_directory: './Core/Sources'
+    )
+  end
+
+  desc 'Run tests on the Publisher target'
   lane :test_publisher do
     scan(
       workspace: './AblyAssetTracking.xcworkspace',

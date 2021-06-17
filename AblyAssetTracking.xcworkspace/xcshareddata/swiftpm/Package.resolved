@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "ably-asset-tracking-cocoa",
+        "repositoryURL": "https://github.com/ably/ably-asset-tracking-cocoa",
+        "state": {
+          "branch": "148/swift-package-manager",
+          "revision": "d411e6c0db118a71b6ee4f0bd56882a049497325",
+          "version": null
+        }
+      },
+      {
         "package": "ably-cocoa",
         "repositoryURL": "/Users/zen/repos/ably/ably-cocoa",
         "state": {
@@ -155,15 +164,6 @@
         }
       },
       {
-        "package": "SourceKitten",
-        "repositoryURL": "https://github.com/jpsim/SourceKitten.git",
-        "state": {
-          "branch": null,
-          "revision": "7f4be006fe73211b0fd9666c73dc2f2303ffa756",
-          "version": "0.31.0"
-        }
-      },
-      {
         "package": "SQLite.swift",
         "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
         "state": {
@@ -179,15 +179,6 @@
           "branch": null,
           "revision": "e6b65c6d9077ea48b4a7bdda8994a1d3c6969c8d",
           "version": "3.1.1"
-        }
-      },
-      {
-        "package": "swift-argument-parser",
-        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
-        "state": {
-          "branch": null,
-          "revision": "9564d61b08a5335ae0a36f789a7d71493eacadfc",
-          "version": "0.3.2"
         }
       },
       {
@@ -218,48 +209,12 @@
         }
       },
       {
-        "package": "SwiftLint",
-        "repositoryURL": "https://github.com/realm/SwiftLint",
-        "state": {
-          "branch": null,
-          "revision": "180d94132758dd183124ab1e63d6aa8e10023ec2",
-          "version": "0.43.1"
-        }
-      },
-      {
-        "package": "SwiftyTextTable",
-        "repositoryURL": "https://github.com/scottrhoyt/SwiftyTextTable.git",
-        "state": {
-          "branch": null,
-          "revision": "c6df6cf533d120716bff38f8ff9885e1ce2a4ac3",
-          "version": "0.9.0"
-        }
-      },
-      {
-        "package": "SWXMLHash",
-        "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
-        "state": {
-          "branch": null,
-          "revision": "9183170d20857753d4f331b0ca63f73c60764bf3",
-          "version": "5.0.2"
-        }
-      },
-      {
         "package": "turf-swift",
         "repositoryURL": "https://github.com/mapbox/turf-swift.git",
         "state": {
           "branch": null,
           "revision": "23e72d4174eacd76cc6414f063b427d2dac81cfb",
           "version": "2.0.0-alpha.3"
-        }
-      },
-      {
-        "package": "Yams",
-        "repositoryURL": "https://github.com/jpsim/Yams.git",
-        "state": {
-          "branch": null,
-          "revision": "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
-          "version": "4.0.6"
         }
       }
     ]
