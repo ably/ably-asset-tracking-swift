@@ -13,16 +13,13 @@ let package = Package(
         ),
         .library(name: "AblyAssetTrackingPublisher",
                  targets: ["AblyAssetTrackingPublisher", "AblyAssetTrackingCore"]
-        ),
-        // .library(name: "AblyAssetTrackingCore",
-        //          targets: ["AblyAssetTrackingCore"]
-        // )
+        )
     ],
     dependencies: [
         .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.13")),
         .package(url: "https://github.com/realm/SwiftLint", from: "0.43.1"),
         .package(url: "https://github.com/apple/swift-log", from: "1.4.2"),
-        // TODO Release a version of Ably-cocoa supporting SPM and use it here.
+//        // TODO Release a version of Ably-cocoa supporting SPM, and use it here instead of using a branch.
 //        .package(url: "https://github.com/ably/ably-cocoa", from: "NEW_VERSION"),
         .package(url: "/Users/zen/repos/ably/ably-cocoa", .branch("feature/ben-butterworth-spm-support"))
         ],
@@ -31,23 +28,24 @@ let package = Package(
             name: "AblyAssetTrackingSubscriber",
             dependencies: [
                 "AblyAssetTrackingCore",
+                "AblyAssetTrackingInternal",
                 .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "Logging", package: "swift-log")
             ]),
         .target(name: "AblyAssetTrackingPublisher",
             dependencies: [
                 "AblyAssetTrackingCore",
+                "AblyAssetTrackingInternal",
                 .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "MapboxNavigation", package: "MapboxNavigation"),
                 .product(name: "Logging", package: "swift-log")
             ]),
-        .target(name: "AblyAssetTrackingCore", dependencies: [
-                    "AblyAssetTrackingInternal",
+        .target(name: "AblyAssetTrackingInternal", dependencies: [
+                    "AblyAssetTrackingCore",
                     .product(name: "Ably", package: "ably-cocoa"),
                     .product(name: "Logging", package: "swift-log")
         ]),
-        .target(name: "AblyAssetTrackingInternal", dependencies: [
-                    .product(name: "Ably", package: "ably-cocoa"),
+        .target(name: "AblyAssetTrackingCore", dependencies: [
                     .product(name: "Logging", package: "swift-log")
         ]),
         .testTarget(
