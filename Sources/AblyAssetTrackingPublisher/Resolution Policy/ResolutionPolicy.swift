@@ -1,4 +1,5 @@
 import Foundation
+import AblyAssetTrackingCore
 
 /**
   Defines the strategy by which the various `ResolutionRequest`s and preferences are translated by `Publisher`

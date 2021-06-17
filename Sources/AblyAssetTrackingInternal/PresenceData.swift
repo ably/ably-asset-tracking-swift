@@ -1,4 +1,5 @@
 import UIKit
+import AblyAssetTrackingCore
 
 public enum ClientType: String, Codable {
     case publisher = "PUBLISHER"

@@ -1,5 +1,6 @@
 import CoreLocation
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
 
 protocol AblyPublisherServiceDelegate: AnyObject {
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState)

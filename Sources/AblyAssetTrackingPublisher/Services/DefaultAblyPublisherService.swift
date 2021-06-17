@@ -1,6 +1,7 @@
 import Ably
 import CoreLocation
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
 
 class DefaultAblyPublisherService: AblyPublisherService {
     private let client: ARTRealtime

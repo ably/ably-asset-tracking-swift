@@ -1,5 +1,6 @@
 import CoreLocation
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
 
 protocol SubscriberEvent {}
 

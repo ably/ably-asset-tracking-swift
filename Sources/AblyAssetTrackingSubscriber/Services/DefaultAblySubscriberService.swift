@@ -3,6 +3,7 @@ import Ably
 import CoreLocation
 import Foundation
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
 
 protocol AblySubscriberServiceDelegate: AnyObject {
     func subscriberService(sender: AblySubscriberService, didChangeClientConnectionStatus status: ConnectionState)

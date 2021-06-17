@@ -1,4 +1,5 @@
 import Foundation
+import AblyAssetTrackingCore
 
 public extension Encodable {
     /**
@@ -8,7 +9,7 @@ public extension Encodable {
         - Any JSONDecoder error: Thrown by the `JSONEncoder` and just passed forward
      - Returns: JSON string encoded with UTF-8
      */
-    static func toJSONString() throws -> String {
+    func toJSONString() throws -> String {
         let data = try JSONEncoder().encode(self)
         if let result =  String(data: data, encoding: .utf8) {
             return result

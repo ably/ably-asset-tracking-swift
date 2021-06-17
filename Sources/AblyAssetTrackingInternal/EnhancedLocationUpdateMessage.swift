@@ -1,6 +1,6 @@
 import AblyAssetTrackingCore
 
-class EnhancedLocationUpdateMessage: Codable {
+public class EnhancedLocationUpdateMessage: Codable {
     public let location: GeoJSONMessage
     public let intermediateLocations: [GeoJSONMessage]
     public let type: LocationUpdateType

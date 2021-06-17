@@ -1,4 +1,5 @@
 import Ably
+import AblyAssetTrackingCore
 
 /**
 Wrapper for ARTRealtimeConnectionState, as we don't want to pass it to our clients
