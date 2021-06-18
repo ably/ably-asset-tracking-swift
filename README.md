@@ -1,12 +1,12 @@
 # Ably Asset Tracking SDKs for Cocoa
 
-![.github/workflows/check.yml](https://github.com/ably/ably-asset-tracking-cocoa/workflows/.github/workflows/check.yml/badge.svg)
+![.github/workflows/check.yml](https://github.com/ably/ably-asset-tracking-swift/workflows/.github/workflows/check.yml/badge.svg)
 
 ## Overview
 
 Ably Asset Tracking SDKs provide an easy way to track multiple assets with realtime location updates powered by [Ably](https://ably.com/) realtime network and Mapbox [Navigation SDK](https://docs.mapbox.com/android/navigation/overview/) with location enhancement.
 
-**Status:** this is a beta version of the SDKs. That means that it contains a subset of the final SDK functionality, and the APIs are subject to change. The latest release of the SDKs is available in the [Releases section](https://github.com/ably/ably-asset-tracking-cocoa/releases) of this repository.
+**Status:** this is a beta version of the SDKs. That means that it contains a subset of the final SDK functionality, and the APIs are subject to change. The latest release of the SDKs is available in the [Releases section](https://github.com/ably/ably-asset-tracking-swift/releases) of this repository.
 
 Ably Asset Tracking is:
 
@@ -42,7 +42,7 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 
 ### Swift package manager
 - To install this package in an **Xcode Project**:
-    - Paste `https://github.com/ably/ably-asset-tracking-cocoa` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
+    - Paste `https://github.com/ably/ably-asset-tracking-swift` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
     - Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
     - [This apple guide](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) explains the steps in more detail.
 - To install this package in a **Swift Package**, add the following to your `Package.Swift`:
@@ -57,8 +57,8 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 
   ```
   target 'Your App Name' do
-    pod 'AblyAssetTracking/Publisher', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Publisher SDK
-    pod 'AblyAssetTracking/Subscriber', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Subscriber SDK
+    pod 'AblyAssetTracking/Publisher', :git => 'https://github.com/ably/ably-asset-tracking-swift' // To use the Publisher SDK
+    pod 'AblyAssetTracking/Subscriber', :git => 'https://github.com/ably/ably-asset-tracking-swift' // To use the Subscriber SDK
   end
   ```
 
