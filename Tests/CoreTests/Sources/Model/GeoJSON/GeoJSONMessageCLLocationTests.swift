@@ -1,7 +1,7 @@
 import CoreLocation
 import XCTest
 
-@testable import Core
+@testable import AblyAssetTrackingCore
 
 class GeoJsonMessageCLLocationTests: XCTestCase {
     private func getLocation(isValid: Bool? = nil, timestamp: Date? = nil) -> CLLocation {

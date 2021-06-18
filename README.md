@@ -148,11 +148,6 @@ bundle exec pod install
 
 It's common that several developers (or CI) will have different tool versions installed locally on their machines, and it may cause compatibility problems (some tools might work only on dedicated versions). So to avoid asking everyone to upgrade/downgrade their local tools it's easier to use some tool to execute needed commands with preset versions and that's what Bundler does. Of course, you are still free to execute all CLI commands directly if you wish.
 
-Here is the list of tools versioned with the Bundler with their versions:
-
-- `Fastlane` (2.169.0)
-- `Slather` (2.6.0)
-
 ### Running tests locally
 
 - Running in Xcode: Xcode automatically generates 1 Scheme (`ably-asset-tracking-swift-Package`) which will run all test targets specified in `Package.swift`. You can run those tests by selecting that scheme and pressing ⌘U or `Product` > `Test`.

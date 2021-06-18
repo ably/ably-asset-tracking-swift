@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import Core
+@testable import AblyAssetTrackingCore
 
 class GeoJSONPropertiesCodableTests: XCTestCase {
     private func propertiesJson(horizontalAccuracy: Double? = nil,

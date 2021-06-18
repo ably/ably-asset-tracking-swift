@@ -4,7 +4,6 @@ import Foundation
  Governs how often to sample locations, at what level of positional accuracy, and how often to send them to
  subscribers.
  */
-@objc
 public class Resolution: NSObject, Codable {
     /**
      The general priority for accuracy of location updates, used to govern any trade-off between power usage and

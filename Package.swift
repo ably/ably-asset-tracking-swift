@@ -49,6 +49,15 @@ let package = Package(
                     .product(name: "Logging", package: "swift-log")
         ]),
         .testTarget(
+            name: "SystemTests",
+            dependencies: [
+                "AblyAssetTrackingSubscriber",
+                "AblyAssetTrackingPublisher",
+                "AblyAssetTrackingInternal",
+                "AblyAssetTrackingCore",
+               .product(name: "Logging", package: "swift-log")
+            ]),
+        .testTarget(
             name: "SubscriberTests",
                     dependencies: [
                         "AblyAssetTrackingSubscriber",
@@ -61,14 +70,18 @@ let package = Package(
                .product(name: "Logging", package: "swift-log")
             ]),
         .testTarget(
-            name: "SystemTests",
+            name: "InternalTests",
             dependencies: [
-                "AblyAssetTrackingSubscriber",
-                "AblyAssetTrackingPublisher",
                 "AblyAssetTrackingInternal",
                 "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa"),
                .product(name: "Logging", package: "swift-log")
             ]),
+        .testTarget(
+            name: "CoreTests",
+            dependencies: [
+                "AblyAssetTrackingPublisher",
+               .product(name: "Logging", package: "swift-log")
+            ])
     ]
 )

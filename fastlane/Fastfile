@@ -1,101 +1,51 @@
 default_platform(:ios)
 
 platform :ios do
-  # Do i have to download dependencies
-  
   desc 'Run tests on all targets'
-  lane :test do
-    xcodebuild(
-      scheme: 'ably-asset-tracking-swift-Package',
-      configuration: 'Debug',
-      sdk: 'iphonesimulator',
-      arch: 'x86_64'
-    )
+  lane :test_all do
+    test_core
+    test_internal
+    test_subscriber
+    test_publisher
   end
 
-  desc 'Run tests on the Core target'
+  desc 'Run Core tests'
   lane :test_core do
-    scan(
-      # workspace: './AblyAssetTracking.xcworkspace',
-      scheme: 'ably-asset-tracking-swift-Package',
-      clean: true,
-      code_coverage: true,
-    )
-
-    # Clean previous test coverage and generate new one
-    sh('rm -rf ./coverage_core')
-    slather(
-      workspace: './AblyAssetTracking.xcworkspace',
-      proj: 'Core/Core.xcodeproj',
-      scheme: 'Core',
-      output_directory: 'coverage_core',
-      html: true,
-      ignore: ['Core/Tests/*'],
-      source_directory: './Core/Sources'
+    xcodebuild(
+      scheme: 'CoreTests',
+      configuration: 'Debug',
+      destination: 'platform=iOS Simulator,OS=14.5,name=iPhone 12',
+      test: "test"
     )
   end
-  
-  desc 'Run tests on the Internal target'
+
+  desc 'Run Internal tests'
   lane :test_internal do
-    scan(
-      workspace: './AblyAssetTracking.xcworkspace',
-      scheme: 'Internal',
-      clean: true,
-      code_coverage: true,
-    )
-
-    # Clean previous test coverage and generate new one
-    sh('rm -rf ./coverage_internal')
-    slather(
-      workspace: './AblyAssetTracking.xcworkspace',
-      proj: 'Core/Core.xcodeproj',
-      scheme: 'Core',
-      output_directory: 'coverage_core',
-      html: true,
-      ignore: ['Internal/Tests/*'],
-      source_directory: './Core/Sources'
+    xcodebuild(
+      scheme: 'InternalTests',
+      configuration: 'Debug',
+      destination: 'platform=iOS Simulator,OS=14.5,name=iPhone 12',
+      test: "test"
     )
   end
 
-  desc 'Run tests on the Publisher target'
-  lane :test_publisher do
-    scan(
-      workspace: './AblyAssetTracking.xcworkspace',
-      scheme: 'Publisher',
-      clean: true,
-      code_coverage: true,
-    )
-
-    # Clean previous test coverage and generate new one
-    sh('rm -rf ./coverage_publisher')
-    slather(
-      workspace: './AblyAssetTracking.xcworkspace',
-      proj: 'Publisher/Publisher.xcodeproj',
-      scheme: 'Publisher',
-      output_directory: 'coverage_publisher',
-      html: true,
-      ignore: ['Core/*', 'Common/*', 'Publisher/Tests/*'],
-      source_directory: './Publisher/Sources'
-    )
-  end
-
-  desc 'Run tests on the Subscriber framework of SDK'
+  desc 'Run Subscriber tests'
   lane :test_subscriber do
-    scan(
-      workspace: './AblyAssetTracking.xcworkspace',
-      scheme: 'Subscriber',
-      clean: true,
-      code_coverage: true,
+    xcodebuild(
+      scheme: 'SubscriberTests',
+      configuration: 'Debug',
+      destination: 'platform=iOS Simulator,OS=14.5,name=iPhone 12',
+      test: "test"
     )
-    sh('rm -rf ./coverage_subscriber')
-    slather(
-      workspace: './AblyAssetTracking.xcworkspace',
-      proj: 'Subscriber/Subscriber.xcodeproj',
-      scheme: 'Subscriber',
-      output_directory: 'coverage_subscriber',
-      html: true,
-      ignore: ['Core/*', 'Common/*', 'Subscriber/Tests/*'],
-      source_directory: './Subscriber/Sources'
+  end
+
+  desc 'Run Publisher tests'
+  lane :test_publisher do
+    xcodebuild(
+      scheme: 'PublisherTests',
+      configuration: 'Debug',
+      destination: 'platform=iOS Simulator,OS=14.5,name=iPhone 12',
+      test: "test"
     )
   end
 
@@ -103,7 +53,7 @@ platform :ios do
   lane :build_subscriber do
     xcodebuild(
       archive: true,
-      # workspace: './AblyAssetTracking.xcworkspace',
+      workspace: './AblyAssetTracking.xcworkspace',
       scheme: 'AblyAssetTrackingSubscriber',
       destination: 'generic/platform=iOS',
       archive_path: 'archives/Subscriber.xcarchive',
@@ -115,7 +65,7 @@ platform :ios do
   lane :build_publisher do
     xcodebuild(
       archive: true,
-      # workspace: './AblyAssetTracking.xcworkspace',
+      workspace: './AblyAssetTracking.xcworkspace',
       scheme: 'AblyAssetTrackingPublisher',
       destination: 'generic/platform=iOS',
       archive_path: 'archives/Publisher.xcarchive',

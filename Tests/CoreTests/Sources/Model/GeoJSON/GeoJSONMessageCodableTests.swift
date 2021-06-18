@@ -1,6 +1,6 @@
 import XCTest
 import CoreLocation
-@testable import Core
+@testable import AblyAssetTrackingCore
 
 // GeoJSONMessage test also GeoJSONGeometry and GeoJSONProperties
 class GeoJSONMessageCodableTests: XCTestCase {

@@ -1,7 +1,7 @@
 import XCTest
 import CoreLocation
 
-@testable import Core
+@testable import AblyAssetTrackingCore
 
 class GeoJSONPropertiesCLLocationTests: XCTestCase {
     private func getLocation(horizontalAccuracy: Double? = nil,
