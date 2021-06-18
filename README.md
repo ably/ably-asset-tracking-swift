@@ -18,9 +18,11 @@ Ably Asset Tracking is:
     - persistence for later retrieval
 - **built for purpose** - the APIs and underlying functionality are designed specifically to meet the requirements of a range of common asset tracking use-cases
 
-`ably-asset-tracking-swift` is a Swift package, containing 2 libraries/ SDKs, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. These libraries each provide a set of importable targets a user can use as dependencies. 
- - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingPublisher`.
- - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingSubscriber`.
+This repo holds an Xcode workspace (`AblyAssetTracking.workspace`), containing:
+- One Swift Package (`ably-asset-tracking-swift`), containing 2 libraries/ SDKs.
+   - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingPublisher`.
+   - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingSubscriber`.
+- Multiple example apps/ Xcode projects
 
 ### Documentation
 
@@ -33,6 +35,7 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 
 ## Requirements
 
+These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be developed in the future, depending on interest/ demand.
 - Publisher SDK: iOS 12.0+ / iPadOS 12.0+
 - Subscriber SDK: iOS 12.0+ / iPadOS 12.0+
 - Xcode 12.4+
@@ -45,19 +48,23 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
     - Paste `https://github.com/ably/ably-asset-tracking-swift` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
     - Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
     - [This apple guide](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) explains the steps in more detail.
-- To install this package in a **Swift Package**, add the following to your `Package.Swift`:
+- To install this package into a **Swift Package**, add the following to your manifest (`Package.swift`):
 
   ```swift
-  .package(url: "https://github.com/ably/ably-asset-tracking-swift", from: "VERSION"),
+  .package(url: "https://github.com/ably/ably-asset-tracking-swift", from: LATEST_VERSION),
   ```
 
 ## Usage
 
-The Asset Publishing SDK is used to get the location of the assets that need to be tracked.
+### Publisher SDK
 
-Here is an example of how the Asset Publishing SDK can be used:
+The Asset Publisher SDK can be used to efficiently acquire the location data on a device, and publish location updates to other subscribers in real time. Here is an example of how the Asset Publisher SDK can be used:
 
 ```swift
+// Import relevant modules
+import AblyAssetTrackingCore
+import AblyAssetTrackingPublisher
+
 // Initialise a Publisher
 publisher = try? PublisherFactory.publishers() // get a Publisher Builder
   .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY,
@@ -71,11 +78,16 @@ publisher = try? PublisherFactory.publishers() // get a Publisher Builder
 publisher?.track(trackable: Trackable(id: trackingId)) // provide a tracking ID of the asset
 ```
 
-Asset Subscribing SDK is used to receive the location of the required assets.
+## Subscriber SDK 
 
-Here is an example of how Asset Subscribing SDK can be used:
+The Asset Subscriber SDK can be used to receive location updates from a publisher in realtime. Here is an example of how Asset Subscribing SDK can be used:
 
 ```swift
+// Import relevant modules
+import AblyAssetTrackingCore
+import AblyAssetTrackingSubscriber
+
+// Initialise a Subscriber
 subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
   .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY,
                                       clientId: CLIENT_ID)) // provide Ably configuration with credentials
@@ -88,61 +100,31 @@ subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
 
 ## Example Apps
 
-Open `AblyAssetTracking.xcworkspace` to open a Xcode workspace containing example apps that showcase how Ably Asset Tracking SDKs can be used:
+- Configure your mapbox credentials (`~/.netrc`) to download the Mapbox SDK by following [this](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) guide. You'll need a Mapbox account. 
 
-- the [Asset Publishing example app](PublisherExample/)
-- the [Asset Subscribing example app](SubscriberExample/)
-
-To build the apps you will need to specify credentials properties. Create a file called `Secrets.xconfig` in the root project directory (You can copy `Example.Secrets.xcconfig`, e.g. using `cp Example.Secrets.xcconfig Secrets.xcconfig`) and update the following values in the file:
-
-- `ABLY_API_KEY`: Used by publishing and subscribing example apps to authenticate with Ably using basic authentication. Not recommended in production.
-- `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs.
+- An `Examples/Secrets.xcconfig` file containing credentials (keys/ tokens) is required to build the example apps. (You can use the example `Examples/Example.Secrets.xcconfig`, e.g. by running `cp Examples/Example.Secrets.xcconfig Examples/Secrets.xcconfig`). Update the following values in `Examples/Secrets.xcconfig`:
+  - `ABLY_API_KEY`: Used by all example apps to authenticate with Ably using basic authentication. Not recommended in production, and can be taken from [here](https://ably.com/accounts).
+  - `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs, and can be taken from [here](https://account.mapbox.com/). This is only required to run the **Publisher** example apps.
+- Open `AblyAssetTracking.xcworkspace` to open a Xcode workspace containing example apps and the Swift Package containing the SDKs that showcase how Ably Asset Tracking SDKs can be used.
 
 ## Development
 
+### Getting started
+Set up a `~/.netrc` file by following the [Example Apps](#example-apps) section. You'll also need the `Examples/Secrets.xcconfig` to run the example applications. 
 ### Package structure
 
-These libraries expose modules, which can be imported into a users source code file. We have 4 targets, `AblyAssetTrackingCore`, `AblyAssetTrackingInternal`, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. Internal is the only target not exposed to users, and is ideal for interfacing with Ably-cocoa in order to hide ably-cocoa interfaces from end users. All public entities in other targets, such as `AblyAssetTrackingCore`, are importable by users, by using `import AblyAssetTrackingCore`. All public entities in `AblyAssetTrackingInternal` are public to other targets in the same package, but not to users. 
+These SDKs (libraries/ product in Swift Package terminology) expose targets, which can be imported into a users source code file. We have 4 targets, `AblyAssetTrackingCore`, `AblyAssetTrackingInternal`, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. Internal is the only target not exposed (not `import`able) to users, and is ideal for interfacing with Ably-cocoa in order to hide ably-cocoa interfaces from end users. All public entities in other targets, such as `AblyAssetTrackingCore`, are importable by users, by using `import AblyAssetTrackingCore`. All public entities in `AblyAssetTrackingInternal` are public to other targets in the same package, but not to users. 
 
-The user will have to import both targets in their code to use entities in both Core and Publisher (or Subscriber). In the future, we may expose both `AblyAssetTrackingCore` and `AblyAssetTrackingPublisher` through one target using `@_exported`, so users only need to import one module. Similarly, a new target that joins `AblyAssetTrackingCore` and `AblyAssetTrackingSubscriber` will be created. 
-
-### Getting started
-
-The SDKs are bundled together in a Swift Package, which doesn't use a Xcode project (`xcodeproj`) or Xcode workspace (`xcworkspace`). Example apps are contained in 1 `xcworkspace`, each one being an `xcodeproj`.
-
-- To develop the SDK, open the Swift Package in Xcode (You can either run `xed ably-asset-tracking-swift`, double click `Package.swift`, or open the directory in Xcode). To open the Swift Package using Jetbrains AppCode, you cannot use `appcode .` because it will automatically read the `.xcworkspace` file. Instead, you must go into AppCode and open the `Swift.package`.
-- To develop the example apps, open the Xcode workspace file (`xed AblyAssetTracking.xcworkspace` or double click the workspace file). 
-
-### Build instructions
-
-This package uses Fastlane and Bundler (to make sure that the same version of development tools is used) and is developed using Xcode 12.2. However, building it's not straightforward and requires some extra steps.
-
-1. Setup `.netrc` file as described in MapBox SDK documentation [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials). You can skip public token configuration for now. This is needed to obtain the Mapbox SDK dependency.
-2. Install bundler using:
-
-```
-gem install bundler
-```
-
-3. Navigate to the project directory (one with .xcodeproj file) and execute:
-
-```
-bundle install
-bundle exec pod install
-```
-
-#### Why Bundler
-
-It's common that several developers (or CI) will have different tool versions installed locally on their machines, and it may cause compatibility problems (some tools might work only on dedicated versions). So to avoid asking everyone to upgrade/downgrade their local tools it's easier to use some tool to execute needed commands with preset versions and that's what Bundler does. Of course, you are still free to execute all CLI commands directly if you wish.
+**Note:** The user currently has to import both targets in their code to use entities in both Core and Publisher (or Subscriber). In the future, we may expose both `AblyAssetTrackingCore` and `AblyAssetTrackingPublisher` through one target using `@_exported`, so users only need to import one module. Similarly, a new target that joins `AblyAssetTrackingCore` and `AblyAssetTrackingSubscriber` can be created in the future. 
 
 ### Running tests locally
 
-- Running in Xcode: Xcode automatically generates 1 Scheme (`ably-asset-tracking-swift-Package`) which will run all test targets specified in `Package.swift`. You can run those tests by selecting that scheme and pressing ⌘U or `Product` > `Test`.
-  - Xcode can automatically generate test coverage.
+- Install fastlane by running `gem install fastlane`
+- Running in Xcode: Xcode automatically generates schemes based on the Swift Package. Select `ably-asset-tracking-swift-Package` to run all test targets specified in `Package.swift` and press ⌘U or click `Product` > `Test. You can also the other autogenerated schemes to run individual test targets.
+  - Xcode can generate test coverage (go into the scheme's test settings).
 - Running using Fastlane: 
-  - To run all tests, run `bundle exec fastlane test_all`
-  - To run only one target, run `bundle exec fastlane test_target_name`, where test_target_name can be `test_core`, `test_internal` or other test lanes are defined in `./Fastfile`.
-  - The fastlane test lanes also use Slather to generate test coverage report, Open the html files to view them, e.g. `coverage_core/index.html`.  
+  - To run all tests, run `fastlane test_all`
+  - To run only one target, run `fastlane test_target_name`, where test_target_name can be `test_core`, `test_internal` or other test lanes are defined in `./Fastfile`.
 
 ### Coding Conventions and Style Guide
 
@@ -151,10 +133,6 @@ It's common that several developers (or CI) will have different tool versions in
 - SwiftLint is integrated into the project. Make sure that your code does not add any SwiftLint related warning.
 - Please remove default Xcode header comments (with author, license and creation date) as they're not necessary.
 - If you're adding or modifying any part of the public interface of SDK, please also update [QuickHelp](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/SymbolDocumentation.html#//apple_ref/doc/uid/TP40016497-CH51-SW1) documentation.
-
-### Concepts and assumptions
-
-- At the beginning, we aim only to support iOS, but we need to keep in mind macOS and tvOS
 - Docs are written for both Swift and ObjC
 
 ### Release Procedure
