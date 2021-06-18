@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure MapBox Secret Token for Download
+      - name: Configure Mapbox SDK download token
         run: |
           echo "machine api.mapbox.com" >> ~/.netrc
           echo "login mapbox" >> ~/.netrc
@@ -18,11 +18,11 @@ jobs:
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
           
-      - name: Configure Ably and MapBox Runtime Secrets for Xcode Build
+      - name: Configure runtime secrets
         run: |
           echo "MAPBOX_ACCESS_TOKEN = $MAPBOX_ACCESS_TOKEN" >> Secrets.xcconfig
           echo "ABLY_API_KEY = $ABLY_API_KEY" >> Secrets.xcconfig
-          echo "$AMPLIFY_CONFIGURATION" >> PublisherExample/amplifyconfiguration.json
+          echo "$AMPLIFY_CONFIGURATION" >> Examples/PublisherExample/amplifyconfiguration.json
         env:
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
