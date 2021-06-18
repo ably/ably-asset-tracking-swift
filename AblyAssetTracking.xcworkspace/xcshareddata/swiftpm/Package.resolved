@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "ably-cocoa",
-        "repositoryURL": "/Users/zen/repos/ably/ably-cocoa",
+        "repositoryURL": "https://github.com/ably/ably-cocoa",
         "state": {
           "branch": "feature/ben-butterworth-spm-support",
           "revision": "7ef47c423ae081c3bbe1186c1120f0761e896182",
