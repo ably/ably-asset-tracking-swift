@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Examples/Secrets.xcconfig">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/SubscriberExample/SubscriberExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/PublisherExampleObjectiveC/PublisherExampleObjectiveC.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/PublisherExample/PublisherExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:">
+   </FileRef>
+</Workspace>
