@@ -3,7 +3,6 @@ import AWSPluginsCore
 import AWSCognitoAuthPlugin
 import AWSS3StoragePlugin
 import CoreLocation
-import AblyAssetTrackingCore
 import AblyAssetTrackingPublisher
 
 struct S3Error: Error {

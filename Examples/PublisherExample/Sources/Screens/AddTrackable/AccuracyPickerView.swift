@@ -1,5 +1,4 @@
 import UIKit
-import AblyAssetTrackingCore
 import AblyAssetTrackingPublisher
 
 class AccuracyPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {

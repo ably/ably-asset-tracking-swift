@@ -9,10 +9,10 @@ let package = Package(
     products: [
         .library(
             name: "AblyAssetTrackingSubscriber",
-            targets: ["AblyAssetTrackingSubscriber", "AblyAssetTrackingCore"]
+            targets: ["AblyAssetTrackingSubscriber"]
         ),
         .library(name: "AblyAssetTrackingPublisher",
-                 targets: ["AblyAssetTrackingPublisher", "AblyAssetTrackingCore"]
+                 targets: ["AblyAssetTrackingPublisher"]
         )
     ],
     dependencies: [

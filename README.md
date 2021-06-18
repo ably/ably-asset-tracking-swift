@@ -21,8 +21,8 @@ Ably Asset Tracking is:
 This repo holds an Xcode workspace (`AblyAssetTracking.workspace`), containing:
 - Multiple example apps/ Xcode projects, and
 - One Swift Package (`ably-asset-tracking-swift`), containing 2 libraries/ SDKs:
-   - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingPublisher`.
-   - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingSubscriber`.
+   - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingPublisher`.
+   - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingSubscriber`.
 
 ### Documentation
 
@@ -61,8 +61,6 @@ These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be develo
 The Asset Publisher SDK can be used to efficiently acquire the location data on a device, and publish location updates to other subscribers in real time. Here is an example of how the Asset Publisher SDK can be used:
 
 ```swift
-// Import relevant modules
-import AblyAssetTrackingCore
 import AblyAssetTrackingPublisher
 
 // Initialise a Publisher
@@ -83,8 +81,6 @@ publisher?.track(trackable: Trackable(id: trackingId)) // provide a tracking ID 
 The Asset Subscriber SDK can be used to receive location updates from a publisher in realtime. Here is an example of how Asset Subscribing SDK can be used:
 
 ```swift
-// Import relevant modules
-import AblyAssetTrackingCore
 import AblyAssetTrackingSubscriber
 
 // Initialise a Subscriber
@@ -113,7 +109,7 @@ subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
 Set up a `~/.netrc` file by following the [Example Apps](#example-apps) section. You'll also need the `Examples/Secrets.xcconfig` to run the example applications. 
 ### Package structure
 
-These SDKs (libraries/ product in Swift Package terminology) expose targets, which can be imported into a users source code file. We have 4 targets, `AblyAssetTrackingCore`, `AblyAssetTrackingInternal`, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. Internal is the only target not exposed (not `import`able) to users, and is ideal for interfacing with Ably-cocoa in order to hide ably-cocoa interfaces from end users. All public entities in other targets, such as `AblyAssetTrackingCore`, are importable by users, by using `import AblyAssetTrackingCore`. All public entities in `AblyAssetTrackingInternal` are public to other targets in the same package, but not to users. 
+These SDKs (libraries/ product in Swift Package terminology) expose targets, which can be imported into a users source code file. We have 4 targets, `AblyAssetTrackingCore`, `AblyAssetTrackingInternal`, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. Internal is the only target not exposed (not `import`able) to users, and is ideal for interfacing with Ably-cocoa in order to hide ably-cocoa interfaces from end users. All public entities in other targets, such as `AblyAssetTrackingCore`, are importable by users, by using `import AblyAssetTrackingCore`. All public entities in `AblyAssetTrackingInternal` are public to other targets in the same package, but not to users. `AblyAssetTrackingCore` is exposed to users through both `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber` by using `@_exported`.
 
 **Note:** The user currently has to import both targets in their code to use entities in both Core and Publisher (or Subscriber). In the future, we may expose both `AblyAssetTrackingCore` and `AblyAssetTrackingPublisher` through one target using `@_exported`, so users only need to import one module. Similarly, a new target that joins `AblyAssetTrackingCore` and `AblyAssetTrackingSubscriber` can be created in the future. 
 

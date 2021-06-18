@@ -1,4 +1,3 @@
-import AblyAssetTrackingCore
 import AblyAssetTrackingSubscriber
 
 enum ResolutionType {

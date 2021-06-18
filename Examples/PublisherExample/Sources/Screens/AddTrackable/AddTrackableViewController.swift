@@ -1,6 +1,5 @@
 import UIKit
 import CoreLocation
-import AblyAssetTrackingCore
 import AblyAssetTrackingPublisher
 
 protocol AddTrackableViewControllerDelegate: AnyObject {
