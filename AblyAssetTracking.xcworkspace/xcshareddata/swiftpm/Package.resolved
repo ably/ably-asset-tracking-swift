@@ -2,11 +2,11 @@
   "object": {
     "pins": [
       {
-        "package": "Ably",
+        "package": "ably-cocoa",
         "repositoryURL": "https://github.com/ably/ably-cocoa",
         "state": {
-          "branch": "feature/SPM-rc",
-          "revision": "6d3351afa335df3249bc6138d46b50ef4d8cc976",
+          "branch": "feature/ben-butterworth-temporary-spm",
+          "revision": "035e4074b447018b1a25b8876a68d4a8146b79ec",
           "version": null
         }
       },
