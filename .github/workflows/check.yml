@@ -20,8 +20,8 @@ jobs:
 
       - name: Run All Tests using Fastlane
         run: |
-          bundle install
-          bundle exec fastlane test_all
+          gem install fastlane
+          fastlane test_all
 
       - uses: actions/upload-artifact@v2
         with:
