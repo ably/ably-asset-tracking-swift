@@ -1,3 +1,5 @@
+import UIKit
+import AblyAssetTrackingCore
 import AblyAssetTrackingPublisher
 
 extension RoutingProfile {

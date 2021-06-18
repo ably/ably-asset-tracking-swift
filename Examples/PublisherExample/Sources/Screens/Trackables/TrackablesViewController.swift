@@ -1,5 +1,6 @@
-import AblyAssetTrackingPublisher
 import UIKit
+import AblyAssetTrackingCore
+import AblyAssetTrackingPublisher
 
 protocol TrackablesViewControllerDelegate: AnyObject {
     func trackablesViewController(sender: TrackablesViewController, didAddTrackable trackable: Trackable)

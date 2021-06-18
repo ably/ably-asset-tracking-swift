@@ -1,4 +1,5 @@
 import UIKit
+import AblyAssetTrackingCore
 import AblyAssetTrackingPublisher
 
 class TrackablesTableViewCell: UITableViewCell {
