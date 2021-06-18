@@ -5,8 +5,8 @@
         "package": "ably-cocoa",
         "repositoryURL": "https://github.com/ably/ably-cocoa",
         "state": {
-          "branch": "feature/ben-butterworth-spm-support",
-          "revision": "7ef47c423ae081c3bbe1186c1120f0761e896182",
+          "branch": "feature/ben-butterworth-temporary-spm",
+          "revision": "2690c62b279a4975ba885913a914a3ff1d89536e",
           "version": null
         }
       },

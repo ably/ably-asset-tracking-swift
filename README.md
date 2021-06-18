@@ -19,10 +19,10 @@ Ably Asset Tracking is:
 - **built for purpose** - the APIs and underlying functionality are designed specifically to meet the requirements of a range of common asset tracking use-cases
 
 This repo holds an Xcode workspace (`AblyAssetTracking.workspace`), containing:
-- One Swift Package (`ably-asset-tracking-swift`), containing 2 libraries/ SDKs.
+- Multiple example apps/ Xcode projects, and
+- One Swift Package (`ably-asset-tracking-swift`), containing 2 libraries/ SDKs:
    - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingPublisher`.
    - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingCore` and `import AblyAssetTrackingSubscriber`.
-- Multiple example apps/ Xcode projects
 
 ### Documentation
 
