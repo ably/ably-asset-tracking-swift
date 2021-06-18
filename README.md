@@ -51,19 +51,6 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
   .package(url: "https://github.com/ably/ably-asset-tracking-swift", from: "VERSION"),
   ```
 
-### Cocoapods
-
-- The SDK has not been released to Cocoapods.org trunk, but you can still use it by adding the relevant lines below to your Podfile:
-
-  ```
-  target 'Your App Name' do
-    pod 'AblyAssetTracking/Publisher', :git => 'https://github.com/ably/ably-asset-tracking-swift' // To use the Publisher SDK
-    pod 'AblyAssetTracking/Subscriber', :git => 'https://github.com/ably/ably-asset-tracking-swift' // To use the Subscriber SDK
-  end
-  ```
-
-- Run `pod install` to update your Xcode project with these new Podfile dependencies
-
 ## Usage
 
 The Asset Publishing SDK is used to get the location of the assets that need to be tracked.
