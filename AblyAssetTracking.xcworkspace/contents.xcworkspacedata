@@ -2,30 +2,21 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Secrets.xcconfig">
+      location = "group:Examples/Secrets.xcconfig">
    </FileRef>
    <FileRef
-      location = "group:Core/Core.xcodeproj">
+      location = "group:Examples/SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Publisher/Publisher.xcodeproj">
+      location = "group:Examples/SubscriberExample/SubscriberExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Subscriber/Subscriber.xcodeproj">
+      location = "group:Examples/PublisherExampleObjectiveC/PublisherExampleObjectiveC.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:PublisherExample/PublisherExample.xcodeproj">
+      location = "group:Examples/PublisherExample/PublisherExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:PublisherExampleObjectiveC/PublisherExampleObjectiveC.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:SubscriberExample/SubscriberExample.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:">
    </FileRef>
 </Workspace>

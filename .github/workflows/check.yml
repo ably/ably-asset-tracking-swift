@@ -20,24 +20,5 @@ jobs:
 
       - name: Run All Tests using Fastlane
         run: |
-          bundle install
-          bundle exec fastlane test_all
-
-      - name: Ensure Pod Install Works
-        run: |
-          bundle exec pod install
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: coverage-core
-          path: coverage_core/
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: coverage-subscriber
-          path: coverage_subscriber/
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: coverage-publisher
-          path: coverage_publisher/
+          gem install fastlane
+          fastlane test_all
