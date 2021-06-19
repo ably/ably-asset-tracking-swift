@@ -94,17 +94,14 @@ class MapViewController: UIViewController {
         // Authentication to Ably with a private Ably API key
 //        let connectionConfiguration = ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example")
 
-        // Authentication with Ably with an auth callback
-        let connectionConfiguration = ConnectionConfiguration(clientId: "Asset Tracking Cocoa Publisher Example") { tokenParams, tokenRequestHandler in
-            self.getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { tokenRequest, error in
-                if let tokenRequest = tokenRequest {
-                    tokenRequestHandler(tokenRequest, nil, nil)
-                    return
-                }
-                if let error = error as NSError? {
-                    tokenRequestHandler(nil, nil, error)
-                } else if error != nil {
-                    tokenRequestHandler(nil, nil, NSError(domain: "Unknown error passed by Request function", code: 0, userInfo: [:]))
+        // Authentication with Ably with an AuthCallback, which is passed a TokenRequest.
+        let connectionConfiguration = ConnectionConfiguration(clientId: "Asset Tracking Cocoa Publisher Example") { tokenParams, resultHandler in
+            getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { result in
+                switch result {
+                case .success(let tokenRequest):
+                    resultHandler(.success(.tokenRequest(tokenRequest)))
+                case .failure(let error):
+                    resultHandler(.failure(error))
                 }
             }
         }
@@ -121,42 +118,6 @@ class MapViewController: UIViewController {
                 .delegate(self)
                 .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
                 .start()
-    }
-
-    private func getTokenRequestJSONFromYourServer(tokenParams: TokenParams,
-                                                   callback: @escaping (TokenRequest?, Error?) -> Void) {
-        let url = URL(string: "https://europe-west2-ably-testing.cloudfunctions.net/app/createTokenRequest")!
-        // Or use a local server (for debugging):
-//        let url = URL(string: "http://localhost:8000/ably-testing/europe-west2/app/createTokenRequest")!
-
-//        // Using GET Request and specifying the clientId via a query param
-//        request.httpMethod = "GET"
-//        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
-//        components.queryItems = [URLQueryItem(name: "clientId", value: tokenParams.clientId)]
-
-//        // Using POST Request and specifying the clientId (or TokenParams) via the HTTP body
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONEncoder().encode(tokenParams)
-
-        // Or Alternatively, just send the clientId to your server:
-//        request.httpBody = try? JSONSerialization.data(withJSONObject: ["clientId": tokenParams.clientId])
-
-        URLSession(configuration: URLSessionConfiguration.default).dataTask(with: request) { data, _, requestError in
-            guard let data = data else {
-                callback(nil, requestError)
-                return
-            }
-            do {
-                let decoder = JSONDecoder()
-                let tokenRequest = try decoder.decode(TokenRequest.self, from: data)
-                callback(tokenRequest, nil)
-            } catch {
-                print(error)
-                callback(nil, error)
-            }
-        }.resume()
     }
 
     private func startTracking() {

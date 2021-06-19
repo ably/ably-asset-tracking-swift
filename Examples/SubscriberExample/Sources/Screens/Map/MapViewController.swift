@@ -73,8 +73,8 @@ class MapViewController: UIViewController {
     
     // MARK: - Subscriber setup
     private func setupSubscriber() {
-        // Switch between authentication options using `AuthenticationMethod`
-        let connectionConfiguration = createConnectionConfiguration(clientId: "Asset Tracking Cocoa Subscriber Example", authMethod: .tokenDetails)
+        // An example of using AuthCallback is shown in the PublisherExample's MapViewController.swift
+        let connectionConfiguration = ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Subscriber Example")
 
         subscriber = SubscriberFactory.subscribers()
             .connection(connectionConfiguration)
@@ -93,73 +93,6 @@ class MapViewController: UIViewController {
     }
     
     // MARK: Utils
-    private func createConnectionConfiguration(clientId: String?,
-                                               authMethod: AuthenticationMethod,
-                                               callback: ( (TokenRequest?, Error?) -> Void)? = nil) -> ConnectionConfiguration {
-        if (authMethod == .basicAuthentication) {
-            return ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: clientId)
-        }
-
-        return ConnectionConfiguration(clientId: clientId) { tokenParams, resultHandler in
-            var url = URL(string: "https://europe-west2-ably-testing.cloudfunctions.net/app")!
-//            var url = URL(string: "http://localhost:8000/ably-testing/europe-west2/app/createTokenRequest")!
-            switch(authMethod) {
-            case .tokenRequest:
-                url.appendPathComponent("createTokenRequest")
-            case .tokenDetails:
-                url.appendPathComponent("createTokenDetails")
-            case .jwt:
-                url.appendPathComponent("createJwt")
-            case .basicAuthentication:
-                fatalError("There is no server required for basic authentication")
-            }
-
-//        // Using GET Request and specifying the clientId via a query param
-//        request.httpMethod = "GET"
-//        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
-//        components.queryItems = [URLQueryItem(name: "clientId", value: tokenParams.clientId)]
-
-//        // Using POST Request and specifying the clientId (or TokenParams) via the HTTP body
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = try! JSONEncoder().encode(tokenParams)
-
-            // Or Alternatively, just send the clientId to your server:
-//        request.httpBody = try? JSONSerialization.data(withJSONObject: ["clientId": tokenParams.clientId])
-
-            URLSession(configuration: URLSessionConfiguration.default).dataTask(with: request, completionHandler: { data, _, requestError in
-                guard let data = data else {
-                    if let error = requestError {
-                        resultHandler(.failure(error))
-                        return
-                    } else {
-                        resultHandler(.failure(NSError(domain: "Unknown error", code: 400, userInfo: [:])))
-                        return
-                    }
-                }
-                do {
-                    let decoder = JSONDecoder()
-                    switch (authMethod) {
-                    case .tokenRequest:
-                        let tokenRequest = try decoder.decode(TokenRequest.self, from: data)
-                        resultHandler(.success(.tokenRequest(tokenRequest)))
-                    case .tokenDetails:
-                        let tokenDetails = try decoder.decode(TokenDetails.self, from: data)
-                        resultHandler(.success(.tokenDetails(tokenDetails)))
-                    case .jwt:
-                        let jwtString = try decoder.decode(String.self, from: data)
-                        resultHandler(.success(.jwt(jwtString)))
-                    case .basicAuthentication:
-                        fatalError("There is no server required for basic authentication")
-                    }
-                } catch {
-                    resultHandler(.failure(error))
-                }
-            }).resume()
-        }
-    }
-
     private func updateLocationAnnotation() {
         guard let location = self.location else {
             mapView.annotations.forEach { mapView.removeAnnotation($0) }

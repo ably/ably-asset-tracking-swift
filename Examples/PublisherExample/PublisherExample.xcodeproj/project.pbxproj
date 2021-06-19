@@ -30,6 +30,7 @@
 		AD5BCAF42677C3CB00836F16 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAF32677C3CB00836F16 /* AWSS3StoragePlugin */; };
 		AD909F64267CD38A004247D6 /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = AD909F63267CD38A004247D6 /* AblyAssetTrackingPublisher */; };
 		AD909F66267CD3ED004247D6 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD909F65267CD3ED004247D6 /* AWSAPIPlugin */; };
+		ADBC61EE267DFD8900AD1AE5 /* AuthenticationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBC61ED267DFD8900AD1AE5 /* AuthenticationRequest.swift */; };
 		F618BA8625C9939000B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7DADD25C96F26001C094B /* Environment.swift */; };
 		F67E661C25F8E21B001CF9BB /* DescriptionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */; };
 		F67E661F25F8EA2C001CF9BB /* AssetStateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */; };
@@ -62,6 +63,7 @@
 		18A7FB7525AE3624005AC55E /* AccuracyPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccuracyPickerView.swift; sourceTree = "<group>"; };
 		AD0F84B22677D67900C15DB7 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		ADAAE617266154FB00A8F214 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADBC61ED267DFD8900AD1AE5 /* AuthenticationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationRequest.swift; sourceTree = "<group>"; };
 		F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionsHelper.swift; sourceTree = "<group>"; };
 		F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStateHelper.swift; sourceTree = "<group>"; };
 		F6994D1425DE646300F222AD /* S3FilesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3FilesListViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			children = (
 				F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */,
 				F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */,
+				ADBC61ED267DFD8900AD1AE5 /* AuthenticationRequest.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				188F5DFA25AF181E00202C97 /* AddTrackableError.swift in Sources */,
 				F6994D1625DE646300F222AD /* S3FilesListViewController.swift in Sources */,
 				F67E661F25F8EA2C001CF9BB /* AssetStateHelper.swift in Sources */,
+				ADBC61EE267DFD8900AD1AE5 /* AuthenticationRequest.swift in Sources */,
 				18A7FB7125AE1596005AC55E /* AddTrackableViewController.swift in Sources */,
 				F6994D1B25DE663000F222AD /* S3FileTableViewCell.swift in Sources */,
 				F67E661C25F8E21B001CF9BB /* DescriptionsHelper.swift in Sources */,
