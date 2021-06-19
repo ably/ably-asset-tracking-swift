@@ -11,7 +11,7 @@
         }
       },
       {
-        "package": "Amplify",
+        "package": "amplify-ios",
         "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
         "state": {
           "branch": null,
@@ -20,7 +20,7 @@
         }
       },
       {
-        "package": "AppSyncRealTimeClient",
+        "package": "aws-appsync-realtime-client-ios",
         "repositoryURL": "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git",
         "state": {
           "branch": null,
@@ -29,7 +29,7 @@
         }
       },
       {
-        "package": "AWSiOSSDKV2",
+        "package": "aws-sdk-ios-spm",
         "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
         "state": {
           "branch": null,
@@ -38,7 +38,7 @@
         }
       },
       {
-        "package": "AblyDeltaCodec",
+        "package": "delta-codec-cocoa",
         "repositoryURL": "https://github.com/ably/delta-codec-cocoa",
         "state": {
           "branch": "main",
@@ -47,7 +47,7 @@
         }
       },
       {
-        "package": "MapboxCommon",
+        "package": "mapbox-common-ios",
         "repositoryURL": "https://github.com/mapbox/mapbox-common-ios.git",
         "state": {
           "branch": null,
@@ -56,7 +56,7 @@
         }
       },
       {
-        "package": "MapboxCoreMaps",
+        "package": "mapbox-core-maps-ios",
         "repositoryURL": "https://github.com/mapbox/mapbox-core-maps-ios.git",
         "state": {
           "branch": null,
@@ -65,7 +65,7 @@
         }
       },
       {
-        "package": "MapboxDirections",
+        "package": "mapbox-directions-swift",
         "repositoryURL": "https://github.com/mapbox/mapbox-directions-swift.git",
         "state": {
           "branch": null,
@@ -74,7 +74,7 @@
         }
       },
       {
-        "package": "MapboxMobileEvents",
+        "package": "mapbox-events-ios",
         "repositoryURL": "https://github.com/mapbox/mapbox-events-ios.git",
         "state": {
           "branch": null,
@@ -83,7 +83,7 @@
         }
       },
       {
-        "package": "MapboxMaps",
+        "package": "mapbox-maps-ios",
         "repositoryURL": "https://github.com/mapbox/mapbox-maps-ios.git",
         "state": {
           "branch": null,
@@ -92,7 +92,7 @@
         }
       },
       {
-        "package": "MapboxNavigation",
+        "package": "mapbox-navigation-ios",
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
         "state": {
           "branch": null,
@@ -101,7 +101,7 @@
         }
       },
       {
-        "package": "MapboxNavigationNative",
+        "package": "mapbox-navigation-native-ios",
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
         "state": {
           "branch": null,
@@ -110,7 +110,7 @@
         }
       },
       {
-        "package": "MapboxSpeech",
+        "package": "mapbox-speech-swift",
         "repositoryURL": "https://github.com/mapbox/mapbox-speech-swift.git",
         "state": {
           "branch": null,
@@ -119,7 +119,7 @@
         }
       },
       {
-        "package": "MapboxGeocoder",
+        "package": "MapboxGeocoder.swift",
         "repositoryURL": "https://github.com/mapbox/MapboxGeocoder.swift.git",
         "state": {
           "branch": null,
@@ -128,7 +128,7 @@
         }
       },
       {
-        "package": "msgpack",
+        "package": "msgpack-objective-C",
         "repositoryURL": "https://github.com/rvi/msgpack-objective-C",
         "state": {
           "branch": null,
@@ -245,7 +245,7 @@
         }
       },
       {
-        "package": "Turf",
+        "package": "turf-swift",
         "repositoryURL": "https://github.com/mapbox/turf-swift.git",
         "state": {
           "branch": null,

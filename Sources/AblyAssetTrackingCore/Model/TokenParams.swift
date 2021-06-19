@@ -1,5 +1,4 @@
 import Foundation
-import Ably
 
 public class TokenParams: NSObject, Codable {
     public let ttl: Int?
@@ -8,7 +7,7 @@ public class TokenParams: NSObject, Codable {
     public let timestamp: Date?
     public let nonce: String?
 
-    init(ttl: Int?,
+    public init(ttl: Int?,
          capability: String?,
          clientId: String?,
          timestamp: Date?,
@@ -18,26 +17,5 @@ public class TokenParams: NSObject, Codable {
         self.clientId = clientId
         self.timestamp = timestamp
         self.nonce = nonce
-    }
-}
-
-extension TokenParams {
-    internal func toARTTokenParams() -> ARTTokenParams {
-        let artTokenParams = ARTTokenParams(clientId: clientId, nonce: nonce)
-        artTokenParams.ttl = (ttl != nil) ? NSNumber(value: ttl!) : nil
-        artTokenParams.timestamp = timestamp
-        artTokenParams.capability = try? capability?.toJSONString()
-        return artTokenParams
-    }
-}
-
-extension ARTTokenParams {
-    internal func toTokenParams() -> TokenParams {
-        return TokenParams(ttl: ttl != nil ? Int(exactly: ttl!) : nil,
-                capability: capability,
-                clientId: clientId,
-                timestamp: timestamp,
-                nonce: nonce
-        )
     }
 }

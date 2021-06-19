@@ -34,7 +34,7 @@ extension ConnectionState {
             }
         }
     }
-    var description: String {
+    public var description: String {
         "ConnectionState.\(string)"
     }
 }
