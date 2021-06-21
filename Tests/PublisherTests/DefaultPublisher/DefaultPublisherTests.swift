@@ -53,23 +53,6 @@ class DefaultPublisherTests: XCTestCase {
                                      locationService: locationService,
                                      routeProvider: routeProvider)
     }
-    
-    func setUpUsingTokenAuthWithError() throws {
-        configuration = ConnectionConfiguration(clientId: "CLIENT_ID", authCallback: { tokenParams, resultHandler in
-            // TODO use tokenParams to create tokenRequest
-            // Use Ably authenticated with API_KEY to emulate a user creating tokenRequest serverside
-            
-            let tokenRequest = TokenRequest()
-            resultHandler(tokenRequest, nil, nil)
-        }
-    }
-    
-    func setUpUsingJWTAuthWithError() throws {
-        configuration = ConnectionConfiguration(clientId: "CLIENT_ID", authCallback: { tokenParams, resultHandler in
-            let token = "Some fake token which can also be a JWT"
-            resultHandler(nil, token, nil)
-        }
-    }
 
     // MARK: track
     func testTrack_success() {

@@ -1,25 +1,31 @@
 import Foundation
 
+/// A container for specific types of ``AuthCallback`` results
 public enum AuthResult {
+    /// Json Web Token
     case jwt(String)
+    /// ``TokenRequest``
     case tokenRequest(TokenRequest)
+    /// ``TokenDetails``
     case tokenDetails(TokenDetails)
 }
 
 public typealias Token = String
 public typealias AuthCallback = (TokenParams, @escaping (Result<AuthResult, Error>) -> Void) -> Void
 
+/// A container for connection configuration data used when connecting to Ably
 public class ConnectionConfiguration: NSObject {
     public let apiKey: String?
     public let clientId: String?
     public let authCallback: AuthCallback?
-
+    
     /**
      Connect to Ably using basic authentication (API Key)
+     
      - Parameters:
        - apiKey: API key string obtained from application dashboard.
        - clientId: Optional identifier to be assigned to this client.
-         - authCallback:
+       - authCallback: A callback that will be used to authenticate with Ably, including at initial connection and for renewing an expired token.
      */
     private init(apiKey: String?,
                 clientId: String?,

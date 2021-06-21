@@ -4,7 +4,7 @@ import AblyAssetTrackingCore
 
 extension TokenRequest {
     /**
-     Convert into ART (Ably Runtime representation)
+     Convert into Ably Runtime (ART) type
      */
     func toARTTokenRequest() -> ARTTokenRequest {
         let artTokenParams = ARTTokenParams(clientId: clientId, nonce: nonce)
