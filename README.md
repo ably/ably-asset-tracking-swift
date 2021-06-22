@@ -122,6 +122,10 @@ These SDKs (libraries/ product in Swift Package terminology) expose targets, whi
   - To run all tests, run `fastlane test_all`
   - To run only one target, run `fastlane test_target_name`, where test_target_name can be `test_core`, `test_internal` or other test lanes are defined in `./Fastfile`.
 
+### Building/ viewing Jazzy documentation locally
+- Run `. ./jazzy/build.sh`
+- Open `docs/index.html`
+
 ### Coding Conventions and Style Guide
 
 - The SDKs are written in Swift, however they still have to be compatible for use from Objective-C based apps.
