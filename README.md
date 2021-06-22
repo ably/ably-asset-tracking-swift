@@ -1,12 +1,12 @@
-# Ably Asset Tracking SDKs for Cocoa
+# Ably Asset Tracking SDKs for Swift & Objective-C
 
-![.github/workflows/check.yml](https://github.com/ably/ably-asset-tracking-cocoa/workflows/.github/workflows/check.yml/badge.svg)
+![.github/workflows/check.yml](https://github.com/ably/ably-asset-tracking-swift/workflows/.github/workflows/check.yml/badge.svg)
 
 ## Overview
 
 Ably Asset Tracking SDKs provide an easy way to track multiple assets with realtime location updates powered by [Ably](https://ably.com/) realtime network and Mapbox [Navigation SDK](https://docs.mapbox.com/android/navigation/overview/) with location enhancement.
 
-**Status:** this is a beta version of the SDKs. That means that it contains a subset of the final SDK functionality, and the APIs are subject to change. The latest release of the SDKs is available in the [Releases section](https://github.com/ably/ably-asset-tracking-cocoa/releases) of this repository.
+**Status:** this is a beta version of the SDKs. That means that it contains a subset of the final SDK functionality, and the APIs are subject to change. The latest release of the SDKs is available in the [Releases section](https://github.com/ably/ably-asset-tracking-swift/releases) of this repository.
 
 Ably Asset Tracking is:
 
@@ -47,15 +47,15 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 - To use the Asset Tracking Publisher or Subscriber SDKs, add the relevant following lines to your Podfile
   ```
   target 'Your App Name' do
-    pod 'AblyAssetTracking/Publisher', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Publisher SDK
-    pod 'AblyAssetTracking/Subscriber', :git => 'https://github.com/ably/ably-asset-tracking-cocoa' // To use the Subscriber SDK
+    pod 'AblyAssetTracking/Publisher', :git => 'https://github.com/ably/ably-asset-tracking-swift' // To use the Publisher SDK
+    pod 'AblyAssetTracking/Subscriber', :git => 'https://github.com/ably/ably-asset-tracking-swift' // To use the Subscriber SDK
   end
   ```
 - `pod install`
 
 ### Swift package manager
 
-Not currently supported, but [planned](https://github.com/ably/ably-asset-tracking-cocoa/issues/148).
+Not currently supported, but [planned](https://github.com/ably/ably-asset-tracking-swift/issues/148).
 
 ## Usage
 
@@ -193,7 +193,7 @@ Additionally, when you run tests using `Fastlane` you will see three new directo
 
 ### Working on code shared between Publisher and Subscriber
 
-To speed up CocoaPods setup we removed framework/project linking in Xcode and we're just referencing files from the `Core` framework in `Publisher` and `Subscriber` SDK. There is a [ticket](https://github.com/ably/ably-asset-tracking-cocoa/issues/43) to fix it in the future, but for now, if you need to add or move any file in the `Core` SDK make sure that you also reference them in `Publisher` and `Subscriber`.
+To speed up CocoaPods setup we removed framework/project linking in Xcode and we're just referencing files from the `Core` framework in `Publisher` and `Subscriber` SDK. There is a [ticket](https://github.com/ably/ably-asset-tracking-swift/issues/43) to fix it in the future, but for now, if you need to add or move any file in the `Core` SDK make sure that you also reference them in `Publisher` and `Subscriber`.
 
 ### Release Procedure
 
