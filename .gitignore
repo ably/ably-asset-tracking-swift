@@ -1,6 +1,9 @@
 ## User settings
 xcuserdata/
 
+## Swift packages
+.build
+
 ## Obj-C/Swift specific
 *.hmap
 
@@ -26,8 +29,9 @@ archives/
 /coverage_publisher/
 
 # User defined configuration
-Secrets.xcconfig
+**/Secrets.xcconfig
 PublisherExample/amplifyconfiguration.json
 
 # AppCode IDE
 .idea
+
