@@ -50,7 +50,7 @@ platform :ios do
     )
   end
 
-    desc 'Run system tests'
+    desc 'Run System tests'
     lane :test_system do
       xcodebuild(
         scheme: 'SystemTests',
