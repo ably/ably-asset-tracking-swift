@@ -41,6 +41,11 @@ Run Subscriber tests
 fastlane ios test_publisher
 ```
 Run Publisher tests
+### ios test_system
+```
+fastlane ios test_system
+```
+Run system tests
 ### ios build_subscriber
 ```
 fastlane ios build_subscriber
