@@ -28,17 +28,6 @@ jobs:
           ./jazzy/build.sh
           ls -al docs
 
-      - name: Capture /var/folders/
-        if: ${{ failure() }}
-        run: |
-          tar cfz var-folders.tar.gz /var/folders/
-      
-      - uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: var-folders.tar.gz
-          path: var-folders.tar.gz
-
       - uses: ably/sdk-upload-action@v1
         with:
           s3AccessKeyId: ${{ secrets.SDK_S3_ACCESS_KEY_ID }}
