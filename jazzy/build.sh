@@ -28,6 +28,8 @@ sourcekitten doc \
   -destination generic/platform=iOS \
   > "$output_filepath"
 
+echo "Saved AblyAssetTrackingCore docs to $output_filepath"
+
 output_filepath=$BASEDIR/build/internal.json
 sourcekitten doc \
   --module-name AblyAssetTrackingInternal \
@@ -37,7 +39,7 @@ sourcekitten doc \
   -destination generic/platform=iOS \
   > "$output_filepath"
 
-  echo "Saved AblyAssetTrackingPublisher docs to $output_filepath"
+echo "Saved AblyAssetTrackingInternal docs to $output_filepath"
 
 output_filepath=$BASEDIR/build/publisher.json
 sourcekitten doc \
