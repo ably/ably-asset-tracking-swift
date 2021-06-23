@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# set -e
+set -e
 BASEDIR=$(dirname "$0")
 WORKSPACE_PATH="${BASEDIR}/../AblyAssetTracking.xcworkspace"
 
@@ -28,7 +28,7 @@ sourcekitten doc \
   -destination generic/platform=iOS \
   > "$output_filepath"
 
-echo "Saved AblyAssetTrackingCore docs to $output_filepath"
+echo "Saved AblyAssetTrackingCore docs JSON to $output_filepath"
 
 output_filepath=$BASEDIR/build/internal.json
 sourcekitten doc \
@@ -39,7 +39,7 @@ sourcekitten doc \
   -destination generic/platform=iOS \
   > "$output_filepath"
 
-echo "Saved AblyAssetTrackingInternal docs to $output_filepath"
+echo "Saved AblyAssetTrackingInternal docs JSON to $output_filepath"
 
 output_filepath=$BASEDIR/build/publisher.json
 sourcekitten doc \
@@ -50,7 +50,7 @@ sourcekitten doc \
   -destination generic/platform=iOS \
   > "$output_filepath"
 
-echo "Saved AblyAssetTrackingPublisher docs to $output_filepath"
+echo "Saved AblyAssetTrackingPublisher docs JSON to $output_filepath"
 
 output_filepath=$BASEDIR/build/subscriber.json
 sourcekitten doc \
@@ -59,8 +59,9 @@ sourcekitten doc \
   -workspace "$WORKSPACE_PATH" \
   -scheme AblyAssetTrackingSubscriber \
   -destination generic/platform=iOS \
-  > "$BASEDIR/build/subscriber.json"
+  > "$output_filepath"
 
-echo "Saved AblyAssetTrackingSubscriber docs to $output_filepath"
+echo "Saved AblyAssetTrackingSubscriber docs JSON to $output_filepath"
 
+echo "Generating docs based on multiple doc JSONs..."
 bundle exec jazzy --config "$BASEDIR/config.yml"
