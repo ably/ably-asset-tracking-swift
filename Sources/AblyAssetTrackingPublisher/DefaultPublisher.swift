@@ -739,7 +739,7 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
     }
 
     func publisherService(sender: AblyPublisherService,
-                          didReceivePresenceUpdate presence: AblyPresence,
+                          didReceivePresenceUpdate presence: Presence,
                           forTrackable trackable: Trackable,
                           presenceData: PresenceData,
                           clientId: String) {
