@@ -29,6 +29,7 @@ archives/
 /coverage_publisher/
 
 # User defined configuration
+**/Secrets.swift
 **/Secrets.xcconfig
 PublisherExample/amplifyconfiguration.json
 

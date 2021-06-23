@@ -92,22 +92,22 @@ class MapViewController: UIViewController {
         currentResolution = resolution
 
         // Authentication to Ably with a private Ably API key
-//        let connectionConfiguration = ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Cocoa Publisher Example")
+        let connectionConfiguration = ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Publisher Example")
 
         // Authentication with Ably with an AuthCallback, which is passed a TokenRequest.
-        let connectionConfiguration = ConnectionConfiguration(clientId: "Asset Tracking Cocoa Publisher Example") { tokenParams, resultHandler in
-            getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { result in
-                switch result {
-                case .success(let tokenRequest):
-                    resultHandler(.success(.tokenRequest(tokenRequest)))
-                case .failure(let error):
-                    resultHandler(.failure(error))
-                }
-            }
-        }
+//        let connectionConfiguration = ConnectionConfiguration(clientId: "Asset Tracking Publisher Example") { tokenParams, resultHandler in
+//            getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { result in
+//                switch result {
+//                case .success(let tokenRequest):
+//                    resultHandler(.success(.tokenRequest(tokenRequest)))
+//                case .failure(let error):
+//                    resultHandler(.failure(error))
+//                }
+//            }
+//        }
 
 //        // Or Alternatively, use a custom Auth endpoint
-//        let connectionConfiguration = ConnectionConfiguration(authUrl: "https://authEndpoint.com/createTokenRequest", clientId: "Asset Tracking Cocoa Publisher Example")
+//        let connectionConfiguration = ConnectionConfiguration(authUrl: "https://authEndpoint.com/createTokenRequest", clientId: "Asset Tracking Publisher Example")
 
         publisher = try! PublisherFactory.publishers()
                 .connection(connectionConfiguration)
