@@ -1,0 +1,37 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # https://github.com/jpsim/SourceKitten#installation
+      - name: Install SourceKitten via Homebrew
+        run: brew install sourcekitten
+
+      - name: Configure MapBox Secret Token for Download
+        run: |
+          echo "machine api.mapbox.com" >> ~/.netrc
+          echo "login mapbox" >> ~/.netrc
+          echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
+        env:
+          MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+
+      - name: Build Documentation
+        run: |
+          bundle install
+          ./jazzy/build.sh
+          ls -al docs
+
+      - uses: ably/sdk-upload-action@v1
+        with:
+          s3AccessKeyId: ${{ secrets.SDK_S3_ACCESS_KEY_ID }}
+          s3AccessKey: ${{ secrets.SDK_S3_ACCESS_KEY }}
+          sourcePath: docs
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          artifactName: jazzy

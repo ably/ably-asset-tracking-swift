@@ -1,0 +1,5 @@
+sourcekitten_sourcefile:
+  - build/core.json
+  - build/internal.json
+  - build/publisher.json
+  - build/subscriber.json

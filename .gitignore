@@ -7,14 +7,6 @@ xcuserdata/
 ## Obj-C/Swift specific
 *.hmap
 
-# CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
-#
-Pods/
-
 # Build products
 archives/
 
@@ -32,6 +24,8 @@ archives/
 **/Secrets.xcconfig
 PublisherExample/amplifyconfiguration.json
 
+# Documentation output from Jazzy - see jazzy/build.sh
+/docs/
+
 # AppCode IDE
 .idea
-
