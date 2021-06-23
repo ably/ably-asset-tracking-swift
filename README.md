@@ -53,6 +53,7 @@ These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be develo
   ```swift
   .package(url: "https://github.com/ably/ably-asset-tracking-swift", from: LATEST_VERSION),
   ```
+    - You can find a version in the [releases](https://github.com/ably/ably-asset-tracking-swift/releases) page. 
 
 ## Usage
 
@@ -76,7 +77,7 @@ publisher = try? PublisherFactory.publishers() // get a Publisher Builder
 publisher?.track(trackable: Trackable(id: trackingId)) // provide a tracking ID of the asset
 ```
 
-## Subscriber SDK 
+### Subscriber SDK 
 
 The Asset Subscriber SDK can be used to receive location updates from a publisher in realtime. Here is an example of how Asset Subscribing SDK can be used:
 
