@@ -20,5 +20,5 @@ jobs:
 
       - name: Run All Tests using Fastlane
         run: |
-          gem install fastlane
+          bundle install
           fastlane test_all

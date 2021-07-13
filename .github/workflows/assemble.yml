@@ -30,7 +30,7 @@ jobs:
 
       - name: Build All Projects
         run: |
-          gem install fastlane
+          bundle install
           fastlane build_subscriber
           fastlane build_publisher
           fastlane build_example_apps
