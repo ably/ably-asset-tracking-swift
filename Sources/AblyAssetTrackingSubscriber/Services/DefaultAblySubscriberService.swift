@@ -87,21 +87,21 @@ class DefaultAblySubscriberService: AblySubscriberService {
     // MARK: Utils
     private func setup() {
         client.connection.on { [weak self] connectionState in
-            guard let self = self,
-                  let receivedConnectionState = connectionState?.current.toConnectionState() else {
+            guard let self = self else {
                 return
             }
             
+            let receivedConnectionState = connectionState.current.toConnectionState()
             logger.debug("Connection to Ably changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
             self.delegate?.subscriberService(sender: self, didChangeClientConnectionStatus: receivedConnectionState)
         }
         
         channel.on { [weak self] channelStatus in
-            guard let self = self,
-                  let receivedConnectionState = channelStatus?.current.toConnectionState() else {
+            guard let self = self else {
                 return
             }
             
+            let receivedConnectionState = channelStatus.current.toConnectionState()
             logger.debug("Channel connection state changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
             self.delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: receivedConnectionState)
         }
