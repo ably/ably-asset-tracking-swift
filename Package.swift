@@ -22,7 +22,7 @@ let package = Package(
         .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.22")),
         .package(url: "https://github.com/realm/SwiftLint", from: "0.43.1"),
         .package(url: "https://github.com/apple/swift-log", from: "1.4.2"),
-        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.5")
+        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.6")
     ],
     targets: [
         //
