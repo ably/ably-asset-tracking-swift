@@ -43,11 +43,6 @@
 	</array>
 	<key>ABLY_API_KEY</key>
 	<string>$(ABLY_API_KEY)</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>MAPBOX_ACCESS_TOKEN</key>
 	<string>$(MAPBOX_ACCESS_TOKEN)</string>
 </dict>

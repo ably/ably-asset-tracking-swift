@@ -225,10 +225,3 @@ extension MapViewController: SubscriberDelegate {
         assetStatusLabel.text = statusDescAndColor.desc
     }
 }
-
-enum AuthenticationMethod {
-    case basicAuthentication
-    case jwt
-    case tokenDetails
-    case tokenRequest
-}
