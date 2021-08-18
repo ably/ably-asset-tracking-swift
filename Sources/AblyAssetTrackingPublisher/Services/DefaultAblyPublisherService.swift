@@ -20,11 +20,11 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
     private func setup() {
         client.connection.on { [weak self] stateChange in
-            guard let self = self,
-                  let receivedConnectionState = stateChange?.current.toConnectionState() else {
+            guard let self = self else {
                 return
             }
 
+            let receivedConnectionState = stateChange.current.toConnectionState()
             logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(
                 sender: self,
@@ -66,11 +66,11 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
 
         channel.on { [weak self] stateChange in
-            guard let self = self,
-                  let receivedConnectionState = stateChange?.current.toConnectionState() else {
+            guard let self = self else {
                 return
             }
 
+            let receivedConnectionState = stateChange.current.toConnectionState()
             logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
@@ -122,16 +122,12 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
     private func closeClientConnection(completion: @escaping ResultHandler<Void>) {
         client.connection.on { connectionChange in
-            guard let connectionState = connectionChange?.current else {
-                return
-            }
-
-            switch connectionState {
+            switch connectionChange.current {
             case .closed:
                 logger.info("Ably connection closed successfully.")
                 completion(.success)
             case .failed:
-                let errorInfo = connectionChange?.reason?.toErrorInformation() ?? ErrorInformation(type: .publisherError(errorMessage: "Cannot close connection"))
+                let errorInfo = connectionChange.reason?.toErrorInformation() ?? ErrorInformation(type: .publisherError(errorMessage: "Cannot close connection"))
                 completion(.failure(errorInfo))
             default:
                 return

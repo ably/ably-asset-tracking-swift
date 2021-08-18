@@ -61,6 +61,11 @@ Build Publisher SDK and export is as .framework file
 fastlane ios build_example_apps
 ```
 Build example apps to validate that there are no build errors
+### ios create_secrets
+```
+fastlane ios create_secrets
+```
+Create swift file with API keys
 
 ----
 

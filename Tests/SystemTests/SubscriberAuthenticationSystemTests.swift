@@ -6,6 +6,11 @@ import CoreLocation
 
 class SubscriberAuthenticationSystemTests: XCTestCase {
     
+    private let subscriberDelegate = SubscriberTestDelegate()
+    private let logConfiguration = LogConfiguration()
+    private let clientId: String = {
+        "Test-Subscriber_\(UUID().uuidString)"
+    }()
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -15,24 +20,148 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testPublisherConnectsWithApiKey() throws {
+    func testSubscriberConnectsWithApiKey() throws {
+        let connectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: clientId)
         
+        testSubscriberConnection(configuration: connectionConfiguration)
     }
 
-    func testPublisherConnectsWithTokenRequest() throws {
-        
+    func testSubscriberConnectsWithTokenRequest() throws {
+        let authCallbackCalledExpectation = self.expectation(description: "Auth Callback complete")
+        // When a user configures an AuthCallback
+        let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { tokenParams, authResultHandler in
+            // Here, users should make a network request to their auth servers, where their servers create the tokenRequest.
+            // To emulate this, we use the api key to create a tokenRequest on the client side.
+            let keyTokens = Secrets.ablyApiKey.split(separator: ":")
+            let keyName = String(keyTokens[0])
+            let keySecret = String(keyTokens[1])
+            let currentTimestamp = tokenParams.timestamp ?? Date()
+            let timestampEpochInMilliseconds = Int(currentTimestamp.timeIntervalSince1970 * 1000)
+            var hmacComponents = [keyName,
+                        tokenParams.ttl != nil ? String(tokenParams.ttl!) : "",
+                        tokenParams.capability ?? "",
+                        tokenParams.clientId ?? "",
+                        String(timestampEpochInMilliseconds),
+                        "Random nonce"
+            ].joined(separator: "\n")
+            hmacComponents.append("\n")
+
+            // https://ably.com/documentation/rest-api/token-request-spec#hmac
+            // perform hmac-sha-256 on hmacComponents, then pobase64 encode it.
+            let hmac = hmacComponents.hmac(key: keySecret)// This function doesn't exist yet
+            print("HMAC is \(hmac)\nKey: \(keySecret)")
+
+            let tokenRequest = TokenRequest(keyName: keyName,
+                         clientId: tokenParams.clientId,
+                         capability: tokenParams.capability,
+                         timestamp: timestampEpochInMilliseconds,
+                         nonce: "Random nonce",
+                         mac: hmac
+            )
+            authCallbackCalledExpectation.fulfill()
+            authResultHandler(.success(.tokenRequest(tokenRequest)))
+        }
+
+        testSubscriberConnection(configuration: connectionConfiguration)
     }
     
-    func testPublisherConnectsWithTokenDetails() throws {
+    func testSubscriberConnectsWithTokenDetails() throws {
+        let keyTokens = Secrets.ablyApiKey.split(separator: ":")
+        let keyName = String(keyTokens[0])
         
+        let fetchedTokenDetails = AuthHelper().requestToken(
+            options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
+            clientId: keyName
+        )
+        
+        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
+            guard let tokenDetails = fetchedTokenDetails else {
+                XCTFail("TokenDetails doesn't exist")
+                return
+            }
+            
+            resultHandler(.success(.tokenDetails(tokenDetails)))
+        })
+        
+        testSubscriberConnection(configuration: connectionConfiguration)
     }
     
-    func testPublisherConnectsWithTokenString() throws {
+    func testSubscriberConnectsWithTokenString() throws {
+        let keyTokens = Secrets.ablyApiKey.split(separator: ":")
+        let keyName = String(keyTokens[0])
         
+        let fetchedTokenString = AuthHelper().requestToken(
+            options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
+            clientId: keyName
+        )?.token
+                
+        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
+            guard let tokenString = fetchedTokenString else {
+                XCTFail("TokenDetails doesn't exist")
+                return
+            }
+            
+            resultHandler(.success(.jwt(tokenString)))
+        })
+        
+        testSubscriberConnection(configuration: connectionConfiguration)
     }
     
-    func testPublisherConnectsWithJWT() throws {
-        // TODO build a JWT here using the API key, and pass the JWT to ably-client.
+    func testSubscriberConnectsWithJWT() throws {
+        guard let jwtToken = JWTHelper().getToken(clientId: clientId) else {
+            XCTFail("Create JWT failed")
+            return
+        }
+        
+        let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { tokenParams, resultHandler in
+            resultHandler(.success(.jwt(jwtToken)))
+        }
+        
+        testSubscriberConnection(configuration: connectionConfiguration)
+    }
+    
+    private func testSubscriberConnection(configuration: ConnectionConfiguration) {
+        var resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
+        let subscriberStartExpectation = self.expectation(description: "Subscriber start expectation")
+        let subscriber = SubscriberFactory.subscribers()
+            .connection(configuration)
+            .resolution(resolution)
+            .delegate(subscriberDelegate)
+            .trackingId("Trackable ID")
+            .log(logConfiguration)
+            .start { result in
+                switch result {
+                case .success:
+                    subscriberStartExpectation.fulfill()
+                case .failure(let error):
+                    XCTFail("Subscriber start failed with error: \(error)")
+                }
+            }
+        waitForExpectations(timeout: 10.0)
+    
+        let resolutionCompletionExpectation = self.expectation(description: "Resolution completion expectation")
+        resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
+        subscriber?.resolutionPreference(resolution: resolution, completion: { result in
+            switch result {
+            case .success:
+                resolutionCompletionExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("Resolution completion failed with error: \(error)")
+            }
+        })
+        
+        waitForExpectations(timeout: 10.0)
+        
+        let subscriberStopExpectation = self.expectation(description: "Subscriber stop expectation")
+        subscriber?.stop(completion: { result in
+            switch result {
+            case .success:
+                subscriberStopExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("Subscriber stop failed with error: \(error)")
+            }
+        })
+        waitForExpectations(timeout: 10.0)
     }
 }
 

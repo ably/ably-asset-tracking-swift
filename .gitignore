@@ -1,6 +1,9 @@
 ## User settings
 xcuserdata/
 
+#Finder
+.DS_Store
+
 ## Swift packages
 .build
 

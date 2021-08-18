@@ -5,7 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "ably-asset-tracking-swift",
-    platforms: [.iOS(.v12)],
+    platforms: [
+        .iOS(.v12)
+    ],
     products: [
         .library(
             name: "AblyAssetTrackingSubscriber",
@@ -17,12 +19,10 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.14")),
+        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.22")),
         .package(url: "https://github.com/realm/SwiftLint", from: "0.43.1"),
         .package(url: "https://github.com/apple/swift-log", from: "1.4.2"),
-        //        // TODO Release a version of Ably-cocoa supporting SPM, and use it here instead of using a branch.
-        //        .package(url: "https://github.com/ably/ably-cocoa", from: "NEW_VERSION"),
-        .package(url: "https://github.com/ably/ably-cocoa", .branch("feature/SPM-rc"))
+        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.5")
     ],
     targets: [
         //
