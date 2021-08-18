@@ -6,7 +6,6 @@ import CoreLocation
 
 class SubscriberAuthenticationSystemTests: XCTestCase {
     
-    private let subscriberDelegate = SubscriberTestDelegate()
     private let logConfiguration = LogConfiguration()
     private let clientId: String = {
         "Test-Subscriber_\(UUID().uuidString)"
@@ -66,15 +65,12 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
     }
     
     func testSubscriberConnectsWithTokenDetails() throws {
-        let keyTokens = Secrets.ablyApiKey.split(separator: ":")
-        let keyName = String(keyTokens[0])
-        
         let fetchedTokenDetails = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
-            clientId: keyName
+            clientId: clientId
         )
         
-        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, resultHandler in
             guard let tokenDetails = fetchedTokenDetails else {
                 XCTFail("TokenDetails doesn't exist")
                 return
@@ -121,6 +117,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
     }
     
     private func testSubscriberConnection(configuration: ConnectionConfiguration) {
+        let subscriberDelegate = SubscriberTestDelegate()
         var resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         let subscriberStartExpectation = self.expectation(description: "Subscriber start expectation")
         let subscriber = SubscriberFactory.subscribers()
@@ -131,11 +128,11 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             .log(logConfiguration)
             .start { result in
                 switch result {
-                case .success:
-                    subscriberStartExpectation.fulfill()
+                case .success: ()
                 case .failure(let error):
                     XCTFail("Subscriber start failed with error: \(error)")
                 }
+                subscriberStartExpectation.fulfill()
             }
         waitForExpectations(timeout: 10.0)
     
@@ -143,23 +140,18 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
         subscriber?.resolutionPreference(resolution: resolution, completion: { result in
             switch result {
-            case .success:
-                resolutionCompletionExpectation.fulfill()
+            case .success: ()
             case .failure(let error):
                 XCTFail("Resolution completion failed with error: \(error)")
             }
+            resolutionCompletionExpectation.fulfill()
         })
         
         waitForExpectations(timeout: 10.0)
         
         let subscriberStopExpectation = self.expectation(description: "Subscriber stop expectation")
         subscriber?.stop(completion: { result in
-            switch result {
-            case .success:
-                subscriberStopExpectation.fulfill()
-            case .failure(let error):
-                XCTFail("Subscriber stop failed with error: \(error)")
-            }
+            subscriberStopExpectation.fulfill()
         })
         waitForExpectations(timeout: 10.0)
     }

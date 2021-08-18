@@ -18,13 +18,15 @@ class DefaultPublisherTests: XCTestCase {
     var trackable: Trackable!
     var publisher: DefaultPublisher!
 
-    override func setUpWithError() throws {
+    override class func setUp() {
         LoggingSystem.bootstrap { label -> LogHandler in
             var handler = StreamLogHandler.standardOutput(label: label)
             handler.logLevel = .debug
             return handler
         }
-        
+    }
+    
+    override func setUpWithError() throws {
         locationService = MockLocationService()
         ablyService = MockAblyPublisherService()
         mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
@@ -33,6 +35,7 @@ class DefaultPublisherTests: XCTestCase {
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
+        try setUpUsingAPIKeyWithError()
     }
     
     override func tearDownWithError() throws {
