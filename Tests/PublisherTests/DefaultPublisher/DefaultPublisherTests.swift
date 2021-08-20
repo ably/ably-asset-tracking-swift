@@ -5,7 +5,7 @@ import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 
 enum ClientConfigError : Error {
-    case redefinedConnectionConfiguration
+    case cannotRedefineConnectionConfiguration
 }
 
 class DefaultPublisherTests: XCTestCase {
@@ -44,7 +44,7 @@ class DefaultPublisherTests: XCTestCase {
     
     func setUpUsingAPIKeyWithError() throws {
         if (configuration != nil) {
-            throw ClientConfigError.redefinedConnectionConfiguration
+            throw ClientConfigError.cannotRedefineConnectionConfiguration
         }
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         publisher = DefaultPublisher(connectionConfiguration: configuration,
