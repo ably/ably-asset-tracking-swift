@@ -153,18 +153,18 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         })
         waitForExpectations(timeout: 10.0)
     }
-}
-
-private class SubscriberTestDelegate: SubscriberDelegate {
-    func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
-        
-    }
     
-    func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation) {
+    private class SubscriberTestDelegate: SubscriberDelegate {
+        func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
+            
+        }
         
-    }
-    
-    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
+        func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation) {
+            
+        }
         
+        func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
+            
+        }
     }
 }

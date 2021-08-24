@@ -6,7 +6,7 @@ import CoreLocation
 import Ably
 
 class PublisherAuthenticationSystemTests: XCTestCase {
-    
+
     private let publisherDelegate = PublisherTestDelegate()
     private let logConfiguration = LogConfiguration()
     private let clientId: String = {
