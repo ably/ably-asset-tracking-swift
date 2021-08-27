@@ -13,6 +13,9 @@ class DefaultPublisherTests: XCTestCase {
     var resolutionPolicyFactory: MockResolutionPolicyFactory!
     var trackable: Trackable!
     var publisher: DefaultPublisher!
+    var delegate: MockPublisherDelegate!
+    var trackableState: PublisherTrackableState!
+    let waitAsync = WaitAsync()
 
     override class func setUp() {
         LoggingSystem.bootstrap { label -> LogHandler in
@@ -32,6 +35,8 @@ class DefaultPublisherTests: XCTestCase {
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
+        delegate = MockPublisherDelegate()
+        trackableState = PublisherTrackableState()
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      mapboxConfiguration: mapboxConfiguration,
                                      logConfiguration: LogConfiguration(),
@@ -39,7 +44,9 @@ class DefaultPublisherTests: XCTestCase {
                                      resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyService: ablyService,
                                      locationService: locationService,
-                                     routeProvider: routeProvider)
+                                     routeProvider: routeProvider,
+                                     trackableState: trackableState)
+        publisher.delegate = delegate
     }
 
     // MARK: track
@@ -585,5 +592,88 @@ class DefaultPublisherTests: XCTestCase {
         
         XCTAssertTrue(ablyService.closeCalled)
         XCTAssertNotNil(ablyService.closeParamCompletion)
+    }
+    
+    func testTrackableState() {
+        let trackableId = "trackable_1"
+        let otherTrackableId = "trackable_2"
+        var state = PublisherTrackableState()
+        
+        /**
+         The `shouldRetry` method wraps few functionalities:
+         
+         1. It adding new `key` (trackableId) to dictionary if it not exists with `value` `0`
+         2. It checking if `value` for `key` (trackableId) is lower than `maxRetryCount`
+         */
+        
+        XCTAssertTrue(state.shouldRetry(trackableId: trackableId), "The retry counter for `trackableId` should be < `maxRetryCount` so it should be able to retry")
+        state.incrementCounter(for: trackableId) // counter == 1
+        
+        XCTAssertFalse(state.shouldRetry(trackableId: trackableId), "The counter for `trackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
+        XCTAssertEqual(state.getCounter(for: trackableId), 1)
+        
+        state.resetCounter(for: trackableId)
+        XCTAssertEqual(state.getCounter(for: trackableId), 0)
+                
+        XCTAssertTrue(state.shouldRetry(trackableId: otherTrackableId), "The retry counter for `otherTrackableId` should be < `maxRetryCount` so it should be able to retry")
+        state.incrementCounter(for: otherTrackableId) // counter == 1
+        
+        XCTAssertFalse(state.shouldRetry(trackableId: otherTrackableId), "The counter for `otherTrackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
+        state.incrementCounter(for: otherTrackableId) // counter == 2
+        
+        XCTAssertFalse(state.shouldRetry(trackableId: otherTrackableId), "The counter for `otherTrackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
+        
+        XCTAssertEqual(state.getCounter(for: otherTrackableId), 2)
+        XCTAssertEqual(state.getCounter(for: trackableId), 0)
+        
+    }
+    
+    func testPublisherWillRetryOnFailureOnSendEnhancedLocationUpdate() {
+        /**
+         Test that publisher will try to re-send enhanced location update on failure.
+         Re-sending is limited to `PublisherTrackableState.Constants.maxRetryCount` per `trackableId`
+         Retry counter is reset on `success`
+         */
+        let location1 = CLLocation(latitude: 51.50084974160386, longitude: -0.12460883599692132)
+        publisher.add(trackable: trackable) { _ in }
+        
+        resolutionPolicyFactory.resolutionPolicy?.resolveRequestReturnValue = Resolution(accuracy: .balanced,
+                                                                                         desiredInterval: 500,
+                                                                                         minimumDisplacement: 500)
+        
+        let trackCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
+        ablyService.trackCompletionHandler = { callback in
+            callback?(.success)
+            trackCompletionHandlerExpectation.fulfill()
+        }
+        publisher.track(trackable: trackable) { _ in }
+        
+        wait(for: [trackCompletionHandlerExpectation], timeout: 5.0)
+        
+        let expectationDidUpdateLocation = self.expectation(description: "Publisher did update location expectation")
+        delegate.publisherDidUpdateEnhancedLocationCallback = { expectationDidUpdateLocation.fulfill() }
+        
+        /**
+         On every `sendEnhancedAssetLocation` request, the `sendEnhancedAssetLocationUpdateCounter` is incremented by `1`
+         Initialy we need to reset this counter
+         */
+        ablyService.sendEnhancedAssetLocationUpdateCounter = .zero
+        
+        publisher.locationService(sender: MockLocationService(), didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location1))
+        
+        wait(for: [expectationDidUpdateLocation], timeout: 10.0)
+        
+        /**
+         Simulate failure for retry purpose
+         */
+        ablyService.sendEnhancedAssetLocationUpdateParamCompletion?(.failure(ErrorInformation(type: .commonError(errorMessage: "Failure on test 1"))))
+        
+        /**
+         After failure `ablyService` should retry request
+         */
+        let expectedResult: Int = 2
+        waitAsync.wait("Wait for retry") {
+            return self.ablyService.sendEnhancedAssetLocationUpdateCounter == expectedResult
+        }
     }
 }
