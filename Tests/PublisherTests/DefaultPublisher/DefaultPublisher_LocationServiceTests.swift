@@ -59,11 +59,13 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
 
         ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
         publisher.add(trackable: trackable) { _ in expectationAddTrackable.fulfill() }
+        wait(for: [expectationAddTrackable], timeout: 5.0)
+        
         delegate.publisherDidUpdateEnhancedLocationCallback = { expectationUpdateLocation.fulfill() }
 
         // When receiving enhanced position update
         publisher.locationService(sender: MockLocationService(), didUpdateEnhancedLocationUpdate: locationUpdate)
-        wait(for: [expectationAddTrackable, expectationUpdateLocation], timeout: 5.0)
+        wait(for: [expectationUpdateLocation], timeout: 5.0)
 
         // It should notify delegate
         XCTAssertTrue(delegate.publisherDidUpdateEnhancedLocationCalled)
