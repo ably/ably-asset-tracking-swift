@@ -45,9 +45,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             ].joined(separator: "\n")
             hmacComponents.append("\n")
 
-            // https://ably.com/documentation/rest-api/token-request-spec#hmac
-            // perform hmac-sha-256 on hmacComponents, then pobase64 encode it.
-            let hmac = hmacComponents.hmac(key: keySecret)// This function doesn't exist yet
+            let hmac = hmacComponents.hmac(key: keySecret)
             print("HMAC is \(hmac)\nKey: \(keySecret)")
 
             let tokenRequest = TokenRequest(keyName: keyName,
@@ -155,18 +153,18 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         })
         waitForExpectations(timeout: 10.0)
     }
-}
-
-private class SubscriberTestDelegate: SubscriberDelegate {
-    func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
-        
-    }
     
-    func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation) {
+    private class SubscriberTestDelegate: SubscriberDelegate {
+        func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
+            
+        }
         
-    }
-    
-    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
+        func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation) {
+            
+        }
         
+        func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
+            
+        }
     }
 }

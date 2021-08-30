@@ -1,15 +1,14 @@
-//
-//  File.swift
-//  
-//
-//  Created by Łukasz Szyszkowski on 16/08/2021.
-//
-
 import Foundation
 import XCTest
 
+/**
+ Helper class for synchronous URL requests.
+ */
 class URLSessionServerTrustSync: NSObject, URLSessionDelegate, URLSessionTaskDelegate {
 
+    /**
+     This method makes synchronous requests to the URL
+     */
     func get(_ request: NSMutableURLRequest) -> (Data?, NSError?, HTTPURLResponse?) {
         var responseError: NSError?
         var responseData: Data?
@@ -33,6 +32,10 @@ class URLSessionServerTrustSync: NSObject, URLSessionDelegate, URLSessionTaskDel
         })
         task.resume()
 
+        /**
+         This loop is checking if `dataTask`(async)  is finished, it uses `CFRunLoopRunInMode` with `CFTimeInterval(0.1)` to slowing down loop
+         on thread. This part of code makes this task synchronous.
+         */
         while !requestCompleted {
             CFRunLoopRunInMode(CFRunLoopMode.defaultMode, CFTimeInterval(0.1), false)
         }

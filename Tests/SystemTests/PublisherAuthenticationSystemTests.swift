@@ -6,7 +6,7 @@ import CoreLocation
 import Ably
 
 class PublisherAuthenticationSystemTests: XCTestCase {
-    
+
     private let publisherDelegate = PublisherTestDelegate()
     private let logConfiguration = LogConfiguration()
     private let clientId: String = {
@@ -43,9 +43,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             ].joined(separator: "\n")
             hmacComponents.append("\n")
 
-            // https://ably.com/documentation/rest-api/token-request-spec#hmac
-            // perform hmac-sha-256 on hmacComponents, then pobase64 encode it.
-            let hmac = hmacComponents.hmac(key: keySecret)// This function doesn't exist yet
+            let hmac = hmacComponents.hmac(key: keySecret)
             print("HMAC is \(hmac)\nKey: \(keySecret)")
 
             let tokenRequest = TokenRequest(keyName: keyName,

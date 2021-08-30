@@ -4,7 +4,7 @@ import MapboxDirections
 import AblyAssetTrackingCore
 
 class DefaultLocationService: LocationService {
-    private let locationDataSource: PassiveLocationManager
+    private let locationManager: PassiveLocationManager
     private let replayLocationManager: ReplayLocationManager?
 
     weak var delegate: LocationServiceDelegate?
@@ -17,18 +17,18 @@ class DefaultLocationService: LocationService {
         }
 
         let directions = Directions(credentials: mapboxConfiguration.getCredentians())
-        self.locationDataSource = PassiveLocationManager(directions: directions, systemLocationManager: replayLocationManager)
+        self.locationManager = PassiveLocationManager(directions: directions, systemLocationManager: replayLocationManager)
 
-        self.locationDataSource.delegate = self
+        self.locationManager.delegate = self
     }
 
     func startUpdatingLocation() {
-        locationDataSource.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
         replayLocationManager?.startUpdatingLocation()
     }
 
     func stopUpdatingLocation() {
-        locationDataSource.systemLocationManager.stopUpdatingLocation()
+        locationManager.systemLocationManager.stopUpdatingLocation()
     }
 
     func changeLocationEngineResolution(resolution: Resolution) {
