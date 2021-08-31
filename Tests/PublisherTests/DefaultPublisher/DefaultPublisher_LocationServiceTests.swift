@@ -13,6 +13,9 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var trackable: Trackable!
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
+    var waitAsync: WaitAsync!
+    var skippedLocationsState: PublisherSkippedLocationsState!
+    var trackableState: PublisherTrackableState!
 
     override func setUpWithError() throws {
         locationService = MockLocationService()
@@ -22,17 +25,26 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         routeProvider = MockRouteProvider()
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         delegate = MockPublisherDelegate()
-        trackable = Trackable(id: "TrackableId",
-                              metadata: "TrackableMetadata",
-                              destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
-        publisher = DefaultPublisher(connectionConfiguration:configuration,
-                                     mapboxConfiguration: mapboxConfiguration,
-                                     logConfiguration: LogConfiguration(),
-                                     routingProfile: .driving,
-                                     resolutionPolicyFactory: resolutionPolicyFactory,
-                                     ablyService: ablyService,
-                                     locationService: locationService,
-                                     routeProvider: routeProvider)
+        waitAsync = WaitAsync()
+        trackable = Trackable(
+            id: "TrackableId",
+            metadata: "TrackableMetadata",
+            destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182)
+        )
+        skippedLocationsState = DefaultSkippedLocatoinsState()
+        trackableState = DefaultTrackableState()
+        publisher = DefaultPublisher(
+            connectionConfiguration:configuration,
+            mapboxConfiguration: mapboxConfiguration,
+            logConfiguration: LogConfiguration(),
+            routingProfile: .driving,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            ablyService: ablyService,
+            locationService: locationService,
+            routeProvider: routeProvider,
+            trackableState: trackableState,
+            skippedLocationsState: skippedLocationsState
+        )
         publisher.delegate = delegate
     }
 
@@ -133,5 +145,75 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
 
         // It should send enhanced location update to AblyService
         XCTAssertTrue(ablyService.sendEnhancedAssetLocationUpdateCalled)
+    }
+    
+    func testPublisherWillRetryOnFailureOnSendEnhancedLocationUpdate() {
+        /**
+         Test that publisher will try to re-send enhanced location update on failure.
+         Re-sending is limited to `PublisherTrackableState.Constants.maxRetryCount` per `trackableId`
+         Retry counter is reset on `success`
+         */
+        let publisherHelper = PublisherHelper()
+        let location = CLLocation(latitude: 1, longitude: 1)
+        let locationUpdate = EnhancedLocationUpdate(location: location)
+        let trackable = Trackable(id: "Trackable_1")
+        
+        publisherHelper.sendLocationUpdate(
+            ablyService: ablyService,
+            publisher: publisher,
+            locationUpdate: locationUpdate,
+            trackable: trackable,
+            trackableState: trackableState,
+            resultPolicy: .retry
+        )
+                
+        /**
+         It means that failed request (counter 1) was retried (counter 2)
+         */
+        XCTAssertEqual(self.ablyService.sendEnhancedAssetLocationUpdateCounter, 2)
+        
+    }
+    
+    func testPublisherWillAttachSkippedLocationsToNextRequest() {
+        let publisherHelper = PublisherHelper()
+        let initialLocation = CLLocation(latitude: 1, longitude: 1)
+        var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
+        let trackable = Trackable(id: "Trackable_2")
+        
+        let publisherDidFailExpectation = XCTestExpectation(description: "Publisher did fail expectation")
+        delegate.publisherDidFailWithErrorCallback = {
+            publisherDidFailExpectation.fulfill()
+        }
+        
+        publisherHelper.sendLocationUpdate(
+            ablyService: ablyService,
+            publisher: publisher,
+            locationUpdate: locationUpdate,
+            trackable: trackable,
+            trackableState: trackableState,
+            resultPolicy: .fail
+        )
+                
+        wait(for: [publisherDidFailExpectation], timeout: 10.0)
+        
+        XCTAssertGreaterThan(self.skippedLocationsState.list(for: trackable.id).count, .zero, "Skipped locations state should has at least 1 skipped location")
+        
+        let newLocation = CLLocation(latitude: 1.1, longitude: 1.1)
+        locationUpdate = EnhancedLocationUpdate(location: newLocation)
+        
+        publisherHelper.sendLocationUpdate(
+            ablyService: ablyService,
+            publisher: publisher,
+            locationUpdate: locationUpdate,
+            trackable: trackable,
+            trackableState: trackableState,
+            resultPolicy: .success
+        )
+                
+        if let sentLocationUpdate =  ablyService.sendEnhancedAssetLocationUpdateParamLocationUpdate {
+            XCTAssertTrue(sentLocationUpdate.skippedLocations.contains(initialLocation))
+        } else {
+            XCTFail("sendEnhancedAssetLocationUpdateParamLocationUpdate is nil")
+        }
     }
 }

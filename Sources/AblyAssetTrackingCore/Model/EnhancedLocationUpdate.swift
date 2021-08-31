@@ -13,6 +13,7 @@ public enum LocationUpdateType: String, Codable {
  */
 public class EnhancedLocationUpdate {
     public let location: CLLocation
+    public var skippedLocations: [CLLocation] = []
 
     public var type: LocationUpdateType {
         return .actual
