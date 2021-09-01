@@ -520,11 +520,19 @@ extension DefaultPublisher {
             return
         }
 
-        let trackablesToSend = trackables.filter { trackable in
-            return shouldSendLocation(location: event.locationUpdate.location,
-                                      lastLocation: lastEnhancedLocations[trackable],
-                                      lastTimestamp: lastEnhancedTimestamps[trackable],
-                                      resolution: resolutions[trackable])
+        let trackablesToSend = trackables.filter { [weak self] trackable in
+            let shouldSend = shouldSendLocation(
+                location: event.locationUpdate.location,
+                lastLocation: lastEnhancedLocations[trackable],
+                lastTimestamp: lastEnhancedTimestamps[trackable],
+                resolution: resolutions[trackable]
+            )
+            
+            if !shouldSend {
+                self?.skippedLocationsState.add(trackableId: trackable.id, location: event.locationUpdate)
+            }
+            
+            return shouldSend
         }
 
         trackablesToSend.forEach { trackable in
