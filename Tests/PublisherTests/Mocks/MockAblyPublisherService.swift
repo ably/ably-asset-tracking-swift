@@ -59,4 +59,16 @@ class MockAblyPublisherService: AblyPublisherService {
         
         closeResultCompletionHandler?(completion)
     }
+    
+    var sendTripStartMetadataCalled: Bool = false
+    var sendTripStartMetadataParam: TripMetadata?
+    func sendTripStartMetadata(metadata: TripMetadata) {
+        sendTripStartMetadataParam = metadata
+    }
+    
+    var sendTripEndMetadataCalled: Bool = false
+    var sendTripEndMetadataParam: TripMetadata?
+    func sendTripEndMetadata(metadata: TripMetadata) {
+        sendTripEndMetadataParam = metadata
+    }
 }

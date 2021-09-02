@@ -48,6 +48,14 @@ struct EnhancedLocationChangedEvent: PublisherEvent {
     let locationUpdate: EnhancedLocationUpdate
 }
 
+struct TripStartEvent: PublisherEvent {
+    let trackable: Trackable
+}
+
+struct TripEndEvent: PublisherEvent {
+    let trackable: Trackable
+}
+
 struct SendEnhancedLocationSuccessEvent: PublisherEvent {
     let trackable: Trackable
     let location: CLLocation

@@ -104,6 +104,33 @@ class DefaultAblyPublisherService: AblyPublisherService {
             self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: .online, forTrackable: trackable)
         }
     }
+    
+    func sendTripStartMetadata(metadata: TripMetadata) {
+        sendTripMetadataMessage(with: metadata, name: EventName.tripStart.rawValue)
+    }
+    
+    func sendTripEndMetadata(metadata: TripMetadata) {
+        sendTripMetadataMessage(with: metadata, name: EventName.tripEnd.rawValue)
+    }
+    
+    private func sendTripMetadataMessage(with metadata: TripMetadata, name: String) {
+        guard let message = createARTMessage(for: metadata, with: name) else {
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Cannot create trip metadata message."))
+            self.delegate?.publisherService(sender: self, didFailWithError: errorInformation)
+            return
+        }
+        
+        client.channels.getMetaDataChannel().publish([message]) { [weak self] error in
+            guard let self = self else {
+                return
+            }
+
+            if let error = error {
+                self.delegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+                return
+            }
+        }
+    }
 
     private func createARTMessage(for locationUpdate: EnhancedLocationUpdate) -> ARTMessage? {
         do {
@@ -112,6 +139,19 @@ class DefaultAblyPublisherService: AblyPublisherService {
             return ARTMessage(name: EventName.enhanced.rawValue, data: data)
         } catch let error {
             self.delegate?.publisherService(sender: self, didFailWithError: ErrorInformation(error: error))
+            return nil
+        }
+    }
+    
+    private func createARTMessage(for tripMetadata: TripMetadata, with name: String) -> ARTMessage? {
+        do {
+            let message = try TripMetadataMessage(with: tripMetadata)
+            let data = try message.toJSONString()
+            
+            return ARTMessage(name: name, data: data)
+        } catch {
+            self.delegate?.publisherService(sender: self, didFailWithError: ErrorInformation(error: error))
+            
             return nil
         }
     }

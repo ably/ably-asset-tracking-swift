@@ -20,4 +20,12 @@ protocol AblyPublisherService: AnyObject {
     func stopTracking(trackable: Trackable, completion: ResultHandler<Bool>?)
     func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?)
     func close(completion: @escaping ResultHandler<Void>)
+    /**
+     Sends trip metadata when the trip starts.
+     */
+    func sendTripStartMetadata(metadata: TripMetadata)
+    /**
+     Sends trip metadata when the trip ends.
+     */
+    func sendTripEndMetadata(metadata: TripMetadata)
 }
