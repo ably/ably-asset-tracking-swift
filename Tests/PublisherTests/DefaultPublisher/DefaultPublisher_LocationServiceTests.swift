@@ -31,7 +31,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             metadata: "TrackableMetadata",
             destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182)
         )
-        skippedLocationsState = DefaultSkippedLocatoinsState()
+        skippedLocationsState = DefaultSkippedLocationsState()
         trackableState = DefaultTrackableState()
         publisher = DefaultPublisher(
             connectionConfiguration:configuration,

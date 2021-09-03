@@ -637,7 +637,7 @@ class DefaultPublisherTests: XCTestCase {
         let locationUpdate2 = EnhancedLocationUpdate(location: location2)
         let trackableId2 = "Trackable_2"
         
-        let state = DefaultSkippedLocatoinsState(maxSkippedLocationsSize: 10)
+        let state = DefaultSkippedLocationsState(maxSkippedLocationsSize: 10)
         
         var list = state.list(for: trackableId)
         XCTAssertEqual(list.count, .zero)

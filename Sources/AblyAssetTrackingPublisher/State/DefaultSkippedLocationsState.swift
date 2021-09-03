@@ -4,7 +4,7 @@
 
 import Foundation
 
-class DefaultSkippedLocatoinsState: PublisherSkippedLocationsState {
+class DefaultSkippedLocationsState: PublisherSkippedLocationsState {
     
     let maxSkippedLocationsSize: Int
     private var skippedLocations: [String: [EnhancedLocationUpdate]] = [:]

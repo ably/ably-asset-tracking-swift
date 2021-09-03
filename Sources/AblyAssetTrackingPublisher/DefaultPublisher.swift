@@ -67,7 +67,7 @@ class DefaultPublisher: Publisher {
          locationService: LocationService,
          routeProvider: RouteProvider,
          trackableState: PublisherTrackableState = DefaultTrackableState(),
-         skippedLocationsState: PublisherSkippedLocationsState = DefaultSkippedLocatoinsState()
+         skippedLocationsState: PublisherSkippedLocationsState = DefaultSkippedLocationsState()
     ) {
         
         self.connectionConfiguration = connectionConfiguration
