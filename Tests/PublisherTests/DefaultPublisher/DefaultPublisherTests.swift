@@ -594,7 +594,7 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertNotNil(ablyService.closeParamCompletion)
     }
     
-    func testDefaultTrackableState() {
+    func testDefaultTrackableStateRetry() {
         let trackableId = "trackable_1"
         let otherTrackableId = "trackable_2"
         let state = DefaultTrackableState()
@@ -625,6 +625,90 @@ class DefaultPublisherTests: XCTestCase {
         
         XCTAssertEqual(state.getCounter(for: otherTrackableId), 2)
         XCTAssertEqual(state.getCounter(for: trackableId), 0)
+        
+    }
+    
+    func testDefaultTrackableStateWaiting() {
+        let trackableId = "trackable_1"
+        let locationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 1, longitude: 1))
+        let anotherLocationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 2, longitude: 2))
+        let state = DefaultTrackableState()
+        
+        /**
+         Add two location updates
+         */
+        state.addToWaiting(locationUpdate: locationUpdate, for: trackableId)
+        state.addToWaiting(locationUpdate: anotherLocationUpdate, for: trackableId)
+        
+        /**
+         Ensure that  location returning by `nextWaiting` is location on index `0` (FIFO).
+         */
+        if let nextLocationUpdate = state.nextWaiting(for: trackableId) {
+            XCTAssertEqual(nextLocationUpdate, locationUpdate)
+        } else {
+            XCTFail("No location update for \(trackableId)")
+        }
+        
+        /**
+         Call `nextWainting` second time to pop last location for `trackableId`
+         */
+        _ = state.nextWaiting(for: trackableId)
+        
+        /**
+         Ensure that there is no more waiting locations  for `trackableId`
+         */
+        XCTAssertNil(state.nextWaiting(for: trackableId))
+    }
+    
+    func testDefaultTrackableStatePending() {
+        let trackableId = "trackable_1"
+        let state = DefaultTrackableState()
+        
+        XCTAssertFalse(state.hasPendingMessage(for: trackableId))
+        
+        state.markMessageAsPending(for: trackableId)
+        
+        XCTAssertTrue(state.hasPendingMessage(for: trackableId))
+        
+        state.unmarkMessageAsPending(for: trackableId)
+        
+        XCTAssertFalse(state.hasPendingMessage(for: trackableId))
+    }
+    
+    func testDefaultTrackableStateRemove() {
+        let trackableId = "trackable_1"
+        let trackableId2 = "trackable_2"
+        let locationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 1, longitude: 1))
+        let state = DefaultTrackableState()
+        
+        state.markMessageAsPending(for: trackableId)
+        state.markMessageAsPending(for: trackableId2)
+        
+        state.addToWaiting(locationUpdate: locationUpdate, for: trackableId)
+        state.addToWaiting(locationUpdate: locationUpdate, for: trackableId2)
+        
+        _ = state.shouldRetry(trackableId: trackableId)
+        _ = state.shouldRetry(trackableId: trackableId2)
+        
+        state.incrementCounter(for: trackableId)
+        state.incrementCounter(for: trackableId2)
+        
+        state.remove(trackableId: trackableId)
+        
+        XCTAssertFalse(state.hasPendingMessage(for: trackableId))
+        XCTAssertTrue(state.hasPendingMessage(for: trackableId2))
+        
+        XCTAssertNil(state.nextWaiting(for: trackableId))
+        XCTAssertNotNil(state.nextWaiting(for: trackableId2))
+        
+        XCTAssertEqual(state.getCounter(for: trackableId), 0)
+        XCTAssertEqual(state.getCounter(for: trackableId2), 1)
+        
+        state.removeAll()
+        
+        XCTAssertFalse(state.hasPendingMessage(for: trackableId2))
+        XCTAssertNil(state.nextWaiting(for: trackableId2))
+        XCTAssertEqual(state.getCounter(for: trackableId2), 0)
         
     }
     
