@@ -66,7 +66,14 @@ class DefaultTrackableState: PublisherTrackableState {
     }
     
     func nextWaiting(for trackableId: TrackableId) -> EnhancedLocationUpdate? {
-        waitingLocationUpdates[trackableId]?.isEmpty == false ? waitingLocationUpdates[trackableId]?.removeFirst() : nil
+        guard var enhancedLocationUpdates = waitingLocationUpdates[trackableId], !enhancedLocationUpdates.isEmpty else {
+            return nil
+        }
+        
+        let location = enhancedLocationUpdates.removeFirst()
+        waitingLocationUpdates[trackableId] = enhancedLocationUpdates
+        
+        return location
     }
     
     func remove(trackableId: TrackableId) {
