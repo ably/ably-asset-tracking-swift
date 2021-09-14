@@ -6,16 +6,13 @@ import Foundation
 
 struct PublisherTrackableState {
     
-    private enum Constants {
-        static let maxRetryCount = 1
-    }
-    
+    private let maxRetryCount = 1
     private var retryCounter: [String: Int] = [:]
     
     mutating func shouldRetry(trackableId: String) -> Bool {
         addIfNeeded(trackableId: trackableId)
         
-        return getCounter(for: trackableId) < Constants.maxRetryCount
+        return getCounter(for: trackableId) < maxRetryCount
     }
     
     mutating func resetCounter(for trackableId: String) {
