@@ -655,9 +655,8 @@ class DefaultPublisherTests: XCTestCase {
         
         /**
          On every `sendEnhancedAssetLocation` request, the `sendEnhancedAssetLocationUpdateCounter` is incremented by `1`
-         Initialy we need to reset this counter
          */
-        ablyService.sendEnhancedAssetLocationUpdateCounter = .zero
+        let sendEnhancedAssetLocationUpdateIntialCounter = ablyService.sendEnhancedAssetLocationUpdateCounter
         
         publisher.locationService(sender: MockLocationService(), didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location1))
         
@@ -669,9 +668,10 @@ class DefaultPublisherTests: XCTestCase {
         ablyService.sendEnhancedAssetLocationUpdateParamCompletion?(.failure(ErrorInformation(type: .commonError(errorMessage: "Failure on test 1"))))
         
         /**
-         After failure `ablyService` should retry request
+         After failure `ablyService` should retry request, `sendEnhancedAssetLocation` will be called twice.
+         `sendEnhancedAssetLocationUpdateCounter` should increment by `2`
          */
-        let expectedResult: Int = 2
+        let expectedResult: Int = sendEnhancedAssetLocationUpdateIntialCounter + 2
         waitAsync.wait("Wait for retry") {
             return self.ablyService.sendEnhancedAssetLocationUpdateCounter == expectedResult
         }
