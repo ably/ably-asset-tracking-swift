@@ -10,10 +10,10 @@ import AblyAssetTrackingCore
 
 protocol StateRetryable {
     var maxRetryCount: Int { get }
-    mutating func resetCounter(for trackableId: String)
-    mutating func incrementCounter(for trackableId: String)
+    mutating func resetRetryCounter(for trackableId: String)
+    mutating func incrementRetryCounter(for trackableId: String)
     mutating func shouldRetry(trackableId: String) -> Bool
-    func getCounter(for trackableId: String) -> Int
+    func getRetryCounter(for trackableId: String) -> Int
 }
 
 protocol StatePendable {
@@ -32,4 +32,8 @@ protocol StateRemovable {
     mutating func removeAll()
 }
 
-typealias TrackableStateable = StateWaitable & StatePendable & StateRemovable & StateRetryable
+protocol StateSkippable {
+    func skippedLocationsAdd(for trackableId: String, location: EnhancedLocationUpdate)
+    func skippedLocationsClear(for trackableId: String)
+    func skippedLocationsList(for trackableId: String) -> [EnhancedLocationUpdate]
+}

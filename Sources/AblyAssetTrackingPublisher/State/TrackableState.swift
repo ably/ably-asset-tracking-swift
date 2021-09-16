@@ -5,24 +5,31 @@
 import Foundation
 import AblyAssetTrackingCore
 
-class TrackableState: TrackableStateable {
+class TrackableState {
     
     let maxRetryCount: Int
+    let maxSkippedLocationsSize: Int
+    
     private var retryCounter: [String: Int] = [:]
     private var pendingMessages: Set<String> = []
     private var waitingLocationUpdates: [String: [EnhancedLocationUpdate]] = [:]
+    private var skippedLocations: [String: [EnhancedLocationUpdate]] = [:]
     
-    init(maxRetryCount: Int = 1) {
+    init(maxRetryCount: Int = 1, maxSkippedLocationsSize: Int = 60) {
         self.maxRetryCount = maxRetryCount
+        self.maxSkippedLocationsSize = maxSkippedLocationsSize
     }
-    
+}
+
+// MARK: - StateRetryable
+extension TrackableState: StateRetryable {
     func shouldRetry(trackableId: String) -> Bool {
         addIfNeeded(trackableId: trackableId)
         
-        return getCounter(for: trackableId) < maxRetryCount
+        return getRetryCounter(for: trackableId) < maxRetryCount
     }
     
-    func resetCounter(for trackableId: String) {
+    func resetRetryCounter(for trackableId: String) {
         guard retryCounter[trackableId] != nil else {
             return
         }
@@ -30,11 +37,11 @@ class TrackableState: TrackableStateable {
         retryCounter[trackableId] = .zero
     }
     
-    func incrementCounter(for trackableId: String) {
-        retryCounter[trackableId] = getCounter(for: trackableId) + 1
+    func incrementRetryCounter(for trackableId: String) {
+        retryCounter[trackableId] = getRetryCounter(for: trackableId) + 1
     }
     
-    func getCounter(for trackableId: String) -> Int {
+    func getRetryCounter(for trackableId: String) -> Int {
         retryCounter[trackableId] ?? .zero
     }
     
@@ -45,7 +52,10 @@ class TrackableState: TrackableStateable {
         
         retryCounter[trackableId] = .zero
     }
-    
+}
+
+// MARK: - StatePendable
+extension TrackableState: StatePendable {
     func markMessageAsPending(for trackableId: String) {
         pendingMessages.insert(trackableId)
     }
@@ -58,7 +68,10 @@ class TrackableState: TrackableStateable {
     func hasPendingMessage(for trackableId: String) -> Bool {
         pendingMessages.contains(trackableId)
     }
-    
+}
+
+// MARK: - StateWaitable
+extension TrackableState: StateWaitable {
     func addToWaiting(locationUpdate: EnhancedLocationUpdate, for trackableId: String) {
         var locations = waitingLocationUpdates[trackableId] ?? []
         locations.append(locationUpdate)
@@ -75,7 +88,31 @@ class TrackableState: TrackableStateable {
         
         return location
     }
+}
+
+// MARK: - StateSkippable
+extension TrackableState: StateSkippable {
+    func skippedLocationsAdd(for trackableId: String, location: EnhancedLocationUpdate) {
+        var locations = skippedLocations[trackableId] ?? []
+        locations.append(location)
+        locations.sort { $0.location.timestamp < $1.location.timestamp }
+        if locations.count > maxSkippedLocationsSize {
+            locations.remove(at: .zero)
+        }
+        skippedLocations[trackableId] = locations
+    }
     
+    func skippedLocationsClear(for trackableId: String) {
+        skippedLocations[trackableId]?.removeAll()
+    }
+    
+    func skippedLocationsList(for trackableId: String) -> [EnhancedLocationUpdate] {
+        skippedLocations[trackableId] ?? []
+    }
+}
+
+// MARK: - StateRemovable
+extension TrackableState: StateRemovable {
     func remove(trackableId: String) {
         retryCounter.removeValue(forKey: trackableId)
         pendingMessages.remove(trackableId)
@@ -86,5 +123,6 @@ class TrackableState: TrackableStateable {
         retryCounter.removeAll()
         pendingMessages.removeAll()
         waitingLocationUpdates.removeAll()
+        skippedLocations.removeAll()
     }
 }

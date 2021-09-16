@@ -7,6 +7,7 @@ import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 
 class PublisherHelper {
+    typealias TrackableStateable = StateWaitable & StatePendable & StateRemovable & StateRetryable & StateSkippable
     
     enum SendLocationResultPolicy {
         case success
@@ -96,8 +97,7 @@ class PublisherHelper {
         ablyService: AblyPublisherService = MockAblyPublisherService(),
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
-        trackableState: TrackableStateable = TestableTrackableState(),
-        skippedLocationState: PublisherSkippedLocationsState = DefaultSkippedLocationsState()
+        trackableState: TrackableStateable = TrackableState()
     ) -> DefaultPublisher {
         
         DefaultPublisher(
@@ -109,8 +109,7 @@ class PublisherHelper {
             ablyService: ablyService,
             locationService: locationService,
             routeProvider: routeProvider,
-            trackableState: trackableState,
-            skippedLocationsState: skippedLocationState
+            trackableState: trackableState
         )
     }
 }

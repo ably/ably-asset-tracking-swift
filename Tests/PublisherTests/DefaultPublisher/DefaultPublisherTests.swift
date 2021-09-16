@@ -5,6 +5,8 @@ import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 
 class DefaultPublisherTests: XCTestCase {
+    typealias TrackableStateable = StateWaitable & StatePendable & StateRemovable & StateRetryable & StateSkippable
+    
     var locationService: MockLocationService!
     var ablyService: MockAblyPublisherService!
     var configuration: ConnectionConfiguration!
@@ -607,24 +609,24 @@ class DefaultPublisherTests: XCTestCase {
          */
         
         XCTAssertTrue(state.shouldRetry(trackableId: trackableId), "The retry counter for `trackableId` should be < `maxRetryCount` so it should be able to retry")
-        state.incrementCounter(for: trackableId) // counter == 1
+        state.incrementRetryCounter(for: trackableId) // counter == 1
         
         XCTAssertFalse(state.shouldRetry(trackableId: trackableId), "The counter for `trackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
-        XCTAssertEqual(state.getCounter(for: trackableId), 1)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId), 1)
         
-        state.resetCounter(for: trackableId)
-        XCTAssertEqual(state.getCounter(for: trackableId), 0)
+        state.resetRetryCounter(for: trackableId)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
                 
         XCTAssertTrue(state.shouldRetry(trackableId: otherTrackableId), "The retry counter for `otherTrackableId` should be < `maxRetryCount` so it should be able to retry")
-        state.incrementCounter(for: otherTrackableId) // counter == 1
+        state.incrementRetryCounter(for: otherTrackableId) // counter == 1
         
         XCTAssertFalse(state.shouldRetry(trackableId: otherTrackableId), "The counter for `otherTrackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
-        state.incrementCounter(for: otherTrackableId) // counter == 2
+        state.incrementRetryCounter(for: otherTrackableId) // counter == 2
         
         XCTAssertFalse(state.shouldRetry(trackableId: otherTrackableId), "The counter for `otherTrackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
         
-        XCTAssertEqual(state.getCounter(for: otherTrackableId), 2)
-        XCTAssertEqual(state.getCounter(for: trackableId), 0)
+        XCTAssertEqual(state.getRetryCounter(for: otherTrackableId), 2)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
         
     }
     
@@ -690,8 +692,8 @@ class DefaultPublisherTests: XCTestCase {
         _ = state.shouldRetry(trackableId: trackableId)
         _ = state.shouldRetry(trackableId: trackableId2)
         
-        state.incrementCounter(for: trackableId)
-        state.incrementCounter(for: trackableId2)
+        state.incrementRetryCounter(for: trackableId)
+        state.incrementRetryCounter(for: trackableId2)
         
         state.remove(trackableId: trackableId)
         
@@ -701,14 +703,14 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertNil(state.nextWaiting(for: trackableId))
         XCTAssertNotNil(state.nextWaiting(for: trackableId2))
         
-        XCTAssertEqual(state.getCounter(for: trackableId), 0)
-        XCTAssertEqual(state.getCounter(for: trackableId2), 1)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId2), 1)
         
         state.removeAll()
         
         XCTAssertFalse(state.hasPendingMessage(for: trackableId2))
         XCTAssertNil(state.nextWaiting(for: trackableId2))
-        XCTAssertEqual(state.getCounter(for: trackableId2), 0)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId2), 0)
         
     }
     
@@ -723,37 +725,37 @@ class DefaultPublisherTests: XCTestCase {
         
         let state = createSkippedLocationState()
         
-        XCTAssertEqual(state.list(for: trackableId).count, .zero)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, .zero)
         
         /**
          Add `location` for `trackableId`
          Add `location2` for `trackableId2`
          */
-        state.add(trackableId: trackableId, location: locationUpdate)
-        state.add(trackableId: trackableId2, location: locationUpdate2)
+        state.skippedLocationsAdd(for: trackableId, location: locationUpdate)
+        state.skippedLocationsAdd(for: trackableId2, location: locationUpdate2)
                 
         /**
          Check if `location` for `trackableId` EXISTS in state
          */
-        XCTAssertEqual(state.list(for: trackableId).count, 1)
-        XCTAssertEqual(state.list(for: trackableId)[0].location, location)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, 1)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId)[0].location, location)
         
         /**
          Clear `location` for `trackableId`
          */
-        state.clear(trackableId: trackableId)
+        state.skippedLocationsClear(for: trackableId)
         
         /**
          Check if `list` for `trackableId` IS EMPTY
          */
-        XCTAssertEqual(state.list(for: trackableId).count, .zero)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, .zero)
         
         /**
          Check if `list2` for `trackableId2` IS NOT EMPTY after removing `trackableId` locations
          */
         
-        XCTAssertEqual(state.list(for: trackableId2).count, 1)
-        XCTAssertEqual(state.list(for: trackableId2)[0].location, location2)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId2).count, 1)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId2)[0].location, location2)
     }
     
     func testDefaultSkippedLocationsStateClearAll() {
@@ -764,10 +766,10 @@ class DefaultPublisherTests: XCTestCase {
             ]
         )
 
-        state.clearAll()
+        state.removeAll()
         
-        XCTAssertEqual(state.list(for: "Trackable_1").count, .zero)
-        XCTAssertEqual(state.list(for: "Trackable_2").count, .zero)
+        XCTAssertEqual(state.skippedLocationsList(for: "Trackable_1").count, .zero)
+        XCTAssertEqual(state.skippedLocationsList(for: "Trackable_2").count, .zero)
     }
     
     func testDefaultSkippedLocationsStateCapacityOverflow() {
@@ -777,32 +779,32 @@ class DefaultPublisherTests: XCTestCase {
         for i in 0..<state.maxSkippedLocationsSize {
             let location = CLLocation(latitude: Double(i), longitude: Double(i))
             let locationUpdate = EnhancedLocationUpdate(location: location)
-            state.add(trackableId: trackableId, location: locationUpdate)
+            state.skippedLocationsAdd(for: trackableId, location: locationUpdate)
         }
         
-        XCTAssertEqual(state.list(for: trackableId).count, state.maxSkippedLocationsSize)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, state.maxSkippedLocationsSize)
         
         let overflowLocation = CLLocation(latitude: 1.2345, longitude: 1.2345)
         let overflowLocationUpdate = EnhancedLocationUpdate(location: overflowLocation)
-        state.add(trackableId: trackableId, location: overflowLocationUpdate)
+        state.skippedLocationsAdd(for: trackableId, location: overflowLocationUpdate)
         
-        XCTAssertEqual(state.list(for: trackableId).count, state.maxSkippedLocationsSize)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, state.maxSkippedLocationsSize)
         /**
          It should drop oldest (first index) location on overflofw - first location from loop above had `CLLocationCoordinate2D(latitude: 0, longitude: 0)`
          so next one should has `CLLocationCoordinate2D(latitude: 1, longitude: 1)`
          */
-        XCTAssertEqual(state.list(for: trackableId)[0].location.coordinate, CLLocationCoordinate2D(latitude: 1, longitude: 1))
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId)[0].location.coordinate, CLLocationCoordinate2D(latitude: 1, longitude: 1))
         /**
          additionally last location should be equal to `overflowLocation`
          */
-        XCTAssertEqual(state.list(for: trackableId).last!.location, overflowLocation)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).last!.location, overflowLocation)
     }
     
-    private func createSkippedLocationState(with data: [String: [CLLocation]] = [:], capacity: Int = 10) -> DefaultSkippedLocationsState {
-        let state = DefaultSkippedLocationsState(maxSkippedLocationsSize: capacity)
+    private func createSkippedLocationState(with data: [String: [CLLocation]] = [:], capacity: Int = 10) -> TrackableState {
+        let state = TrackableState(maxSkippedLocationsSize: capacity)
         for (trackableId, locations) in data {
             locations.map(EnhancedLocationUpdate.init).forEach { enhancedLocationUpdate in
-                state.add(trackableId: trackableId, location: enhancedLocationUpdate)
+                state.skippedLocationsAdd(for: trackableId, location: enhancedLocationUpdate)
             }
         }
         

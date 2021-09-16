@@ -15,7 +15,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
     var waitAsync: WaitAsync!
-    var trackableState: TestableTrackableState!
+    var trackableState: TrackableState!
 
     override func setUpWithError() throws {
         locationService = MockLocationService()
@@ -26,7 +26,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         delegate = MockPublisherDelegate()
         waitAsync = WaitAsync()
-        trackableState = TestableTrackableState()
+        trackableState = TrackableState()
         trackable = Trackable(
             id: "TrackableId",
             metadata: "TrackableMetadata",
@@ -97,10 +97,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
 
         var unmarkMessageAsPendingDidCallExpectation = XCTestExpectation(description: "Trackable Unmark Message As Pending Did Call Expectation")
         
-        trackableState.unmarkMessageAsPendingDidCall {
-            unmarkMessageAsPendingDidCallExpectation.fulfill()
-        }
-        
         var expectation = XCTestExpectation()
         publisher.add(trackable: trackable) { _ in } 
         delegate.publisherDidUpdateEnhancedLocationCallback = { expectation.fulfill() }
@@ -130,8 +126,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
          When receiving enhanced position update for the first time
          */
         publisher.locationService(sender: MockLocationService(), didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location1))
-        wait(for: [expectation, unmarkMessageAsPendingDidCallExpectation], timeout: 5.0)
-
+        _ = XCTWaiter.wait(for: [expectation, unmarkMessageAsPendingDidCallExpectation], timeout: 1.0)
+        
         /**
          It should send row location update to AblyService
          */
@@ -152,7 +148,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
          Resolution will discard this locartion update because distance between last location and current one is smaller than `minimumDisplacement: 500`
          which means that `success` callback will never be called. This is  the reason why `unmarkMessageAsPendingDidCallExpectation` is NOT in expectations array below.
          */
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 2.0)
 
         /**
          It should NOT send enhanced location update to AblyService because distance between location1 and location2 is to small
@@ -170,7 +166,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
          When receiving enhanced position update, and distance is higher than threshold in resolution
          */
         publisher.locationService(sender: MockLocationService(), didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location3))
-        wait(for: [expectation, unmarkMessageAsPendingDidCallExpectation], timeout: 5.0)
+        _ = XCTWaiter.wait(for: [expectation, unmarkMessageAsPendingDidCallExpectation], timeout: 1.0)
 
         /**
          It should send enhanced location update to AblyService
@@ -212,13 +208,11 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
         let trackable = Trackable(id: "Trackable_2")
         let trackableState = TrackableState()
-        let skippedLocationState = DefaultSkippedLocationsState()
         let ablyService = MockAblyPublisherService()
         let delegate = MockPublisherDelegate()
         let publisher = PublisherHelper.createPublisher(
             ablyService: ablyService,
-            trackableState: trackableState,
-            skippedLocationState: skippedLocationState
+            trackableState: trackableState
         )
         publisher.delegate = delegate
         
@@ -238,7 +232,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
                 
         wait(for: [publisherDidFailExpectation], timeout: 10.0)
         
-        XCTAssertGreaterThan(skippedLocationState.list(for: trackable.id).count, .zero, "Skipped locations state should has at least 1 skipped location")
+        XCTAssertGreaterThan(trackableState.skippedLocationsList(for: trackable.id).count, .zero, "Skipped locations state should has at least 1 skipped location")
         
         let newLocation = CLLocation(latitude: 1.1, longitude: 1.1)
         locationUpdate = EnhancedLocationUpdate(location: newLocation)
