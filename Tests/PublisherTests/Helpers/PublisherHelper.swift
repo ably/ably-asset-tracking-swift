@@ -26,7 +26,7 @@ class PublisherHelper {
         publisher: DefaultPublisher,
         locationUpdate: EnhancedLocationUpdate,
         trackable: Trackable,
-        trackableState: PublisherTrackableState,
+        trackableState: TrackableStateable,
         locationService: LocationService = MockLocationService(),
         resultPolicy: SendLocationResultPolicy = .success,
         error: ErrorInformation = ErrorInformation(type: .commonError(errorMessage: "Failure"))
@@ -96,7 +96,7 @@ class PublisherHelper {
         ablyService: AblyPublisherService = MockAblyPublisherService(),
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
-        trackableState: PublisherTrackableState = DefaultTrackableState(),
+        trackableState: TrackableStateable = TestableTrackableState(),
         skippedLocationState: PublisherSkippedLocationsState = DefaultSkippedLocationsState()
     ) -> DefaultPublisher {
         

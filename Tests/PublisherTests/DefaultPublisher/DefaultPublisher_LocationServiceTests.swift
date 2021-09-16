@@ -97,10 +97,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
 
         var unmarkMessageAsPendingDidCallExpectation = XCTestExpectation(description: "Trackable Unmark Message As Pending Did Call Expectation")
         
-        /**
-         `unmarkMessageAsPending(_:)` is always called on `SendEnhancedLocationSuccessEvent`
-         Since there is no callback on `sendEnhancedAssetLocaionUpdate` we're using it as `success` for the testing purpose
-         */
         trackableState.unmarkMessageAsPendingDidCall {
             unmarkMessageAsPendingDidCallExpectation.fulfill()
         }
@@ -191,7 +187,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let location = CLLocation(latitude: 1, longitude: 1)
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let trackable = Trackable(id: "Trackable_1")
-        let trackableState = DefaultTrackableState()
+        let trackableState = TrackableState()
         let ablyService = MockAblyPublisherService()
         let publisher = PublisherHelper.createPublisher(ablyService: ablyService)
         
@@ -215,7 +211,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let initialLocation = CLLocation(latitude: 1, longitude: 1)
         var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
         let trackable = Trackable(id: "Trackable_2")
-        let trackableState = DefaultTrackableState()
+        let trackableState = TrackableState()
         let skippedLocationState = DefaultSkippedLocationsState()
         let ablyService = MockAblyPublisherService()
         let delegate = MockPublisherDelegate()
@@ -269,14 +265,12 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let nextLocation = CLLocation(latitude: 2, longitude: 2)
         let nextLocationUpdate = EnhancedLocationUpdate(location: nextLocation)
         let trackable = Trackable(id: "Trackable_2")
-        let trackableState = DefaultTrackableState()
         let ablyService = MockAblyPublisherService()
         let locationService = MockLocationService()
         let resolutionPolicyFactory = MockResolutionPolicyFactory()
         let publisher = PublisherHelper.createPublisher(
             ablyService: ablyService,
-            locationService: locationService,
-            trackableState: trackableState
+            locationService: locationService
         )
         
         resolutionPolicyFactory.resolutionPolicy?.resolveResolutionsReturnValue = .init(accuracy: .balanced, desiredInterval: 0, minimumDisplacement: 0)

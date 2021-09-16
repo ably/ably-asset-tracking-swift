@@ -10,6 +10,7 @@ let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
 // swiftlint:disable cyclomatic_complexity
 class DefaultPublisher: Publisher {
+
     // Publisher state
     private enum State {
         case working
@@ -30,7 +31,7 @@ class DefaultPublisher: Publisher {
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
     private let batteryLevelProvider: BatteryLevelProvider
-    private var trackableState: PublisherTrackableState
+    private var trackableState: TrackableStateable
     private var skippedLocationsState: PublisherSkippedLocationsState
     private var state: State = .working
 
@@ -66,7 +67,7 @@ class DefaultPublisher: Publisher {
          ablyService: AblyPublisherService,
          locationService: LocationService,
          routeProvider: RouteProvider,
-         trackableState: PublisherTrackableState = DefaultTrackableState(),
+         trackableState: TrackableStateable = TrackableState(),
          skippedLocationsState: PublisherSkippedLocationsState = DefaultSkippedLocationsState()
     ) {
         

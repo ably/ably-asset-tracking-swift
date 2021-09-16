@@ -14,7 +14,7 @@ class DefaultPublisherTests: XCTestCase {
     var trackable: Trackable!
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
-    var trackableState: PublisherTrackableState!
+    var trackableState: TrackableStateable!
     let waitAsync = WaitAsync()
 
     override class func setUp() {
@@ -36,7 +36,7 @@ class DefaultPublisherTests: XCTestCase {
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
         delegate = MockPublisherDelegate()
-        trackableState = DefaultTrackableState()
+        trackableState = TrackableState()
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      mapboxConfiguration: mapboxConfiguration,
                                      logConfiguration: LogConfiguration(),
@@ -597,7 +597,7 @@ class DefaultPublisherTests: XCTestCase {
     func testDefaultTrackableStateRetry() {
         let trackableId = "trackable_1"
         let otherTrackableId = "trackable_2"
-        let state = DefaultTrackableState()
+        let state = TrackableState()
         
         /**
          The `shouldRetry` method wraps few functionalities:
@@ -632,7 +632,7 @@ class DefaultPublisherTests: XCTestCase {
         let trackableId = "trackable_1"
         let locationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 1, longitude: 1))
         let anotherLocationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 2, longitude: 2))
-        let state = DefaultTrackableState()
+        let state = TrackableState()
         
         /**
          Add two location updates
@@ -662,7 +662,7 @@ class DefaultPublisherTests: XCTestCase {
     
     func testDefaultTrackableStatePending() {
         let trackableId = "trackable_1"
-        let state = DefaultTrackableState()
+        let state = TrackableState()
         
         XCTAssertFalse(state.hasPendingMessage(for: trackableId))
         
@@ -679,7 +679,7 @@ class DefaultPublisherTests: XCTestCase {
         let trackableId = "trackable_1"
         let trackableId2 = "trackable_2"
         let locationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 1, longitude: 1))
-        let state = DefaultTrackableState()
+        let state = TrackableState()
         
         state.markMessageAsPending(for: trackableId)
         state.markMessageAsPending(for: trackableId2)
