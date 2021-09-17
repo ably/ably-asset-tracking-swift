@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-common-ios.git",
         "state": {
           "branch": null,
-          "revision": "16e7bb71288b7835e420ba8213c1c45276338839",
-          "version": "13.0.0"
+          "revision": "d2f66c3a218b0a360f02eb32b1bdb8c7f66327ce",
+          "version": "16.2.0"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-core-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "b293ea5976b2b91d8aceff8096e24107de94afad",
-          "version": "10.0.0-beta.23"
+          "revision": "877ba379f773b364385bc519f89764f6939c35bf",
+          "version": "10.0.0-rc.6"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-directions-swift.git",
         "state": {
           "branch": null,
-          "revision": "c2bfe34699721f1fbdb2a31fb62f00b036ffb248",
-          "version": "2.0.0-beta.3"
+          "revision": "2c0ddf39672ff86eccc579b1c7313832f2eecbe9",
+          "version": "2.0.0-beta.8"
         }
       },
       {
@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "ccf4cc26db8c7ace9b45fa72a5020c56ad0d0c30",
-          "version": "10.0.0-beta.21"
+          "revision": "edb0eb646f9dd73a87798d1bc4812d35945667a5",
+          "version": "10.0.0-rc.6"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
         "state": {
           "branch": null,
-          "revision": "c2ea1e2d8c237c31784b6cb999a64dfb8d4a8f77",
-          "version": "2.0.0-beta.14"
+          "revision": "6b1bdd37ef28a3df658569dfcb2c5ed3b9aac1d5",
+          "version": "2.0.0-beta.22"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
         "state": {
           "branch": null,
-          "revision": "3b748e2105b8358d000943d27493ca8559ae0a47",
-          "version": "52.0.0"
+          "revision": "23cddf80d97c8fd5c0f40b85e4ad7c91de023df7",
+          "version": "62.0.0"
         }
       },
       {
@@ -150,8 +150,8 @@
         "repositoryURL": "https://github.com/ceeK/Solar.git",
         "state": {
           "branch": null,
-          "revision": "eacab01aa732612d97c723ceb77c748aaba54c82",
-          "version": "2.2.0"
+          "revision": "c2b96f2d5fb7f835b91cefac5e83101f54643901",
+          "version": "3.0.1"
         }
       },
       {
@@ -249,8 +249,8 @@
         "repositoryURL": "https://github.com/mapbox/turf-swift.git",
         "state": {
           "branch": null,
-          "revision": "23e72d4174eacd76cc6414f063b427d2dac81cfb",
-          "version": "2.0.0-alpha.3"
+          "revision": "555458bd67acce7322c513ddd3647c9a904f4197",
+          "version": "2.0.0-rc.1"
         }
       },
       {

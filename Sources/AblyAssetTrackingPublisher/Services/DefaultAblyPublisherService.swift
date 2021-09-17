@@ -23,6 +23,8 @@ class DefaultAblyPublisherService: AblyPublisherService {
             guard let self = self else {
                 return
             }
+            
+            let receivedConnectionState = stateChange.current.toConnectionState()
 
             let receivedConnectionState = stateChange.current.toConnectionState()
             
@@ -70,6 +72,8 @@ class DefaultAblyPublisherService: AblyPublisherService {
             guard let self = self else {
                 return
             }
+            
+            let receivedConnectionState = stateChange.current.toConnectionState()
 
             let receivedConnectionState = stateChange.current.toConnectionState()
             
