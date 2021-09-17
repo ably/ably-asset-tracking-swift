@@ -22,6 +22,7 @@ archives/
 
 # User defined configuration
 **/Secrets.xcconfig
+**/Secrets.swift
 PublisherExample/amplifyconfiguration.json
 
 # Documentation output from Jazzy - see jazzy/build.sh
@@ -29,3 +30,6 @@ PublisherExample/amplifyconfiguration.json
 
 # AppCode IDE
 .idea
+
+# Other files
+**/.DS_Store
