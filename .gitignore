@@ -24,8 +24,8 @@ archives/
 /coverage_publisher/
 
 # User defined configuration
-**/Secrets.swift
 **/Secrets.xcconfig
+**/Secrets.swift
 PublisherExample/amplifyconfiguration.json
 
 # Documentation output from Jazzy - see jazzy/build.sh

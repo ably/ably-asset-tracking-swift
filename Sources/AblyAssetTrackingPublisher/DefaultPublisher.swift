@@ -30,6 +30,7 @@ class DefaultPublisher: Publisher {
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
     private let batteryLevelProvider: BatteryLevelProvider
+    private var trackableState: PublisherTrackableState
     private var publisherState: PublisherState = .working
 
     // ResolutionPolicy
@@ -63,7 +64,8 @@ class DefaultPublisher: Publisher {
          resolutionPolicyFactory: ResolutionPolicyFactory,
          ablyService: AblyPublisherService,
          locationService: LocationService,
-         routeProvider: RouteProvider) {
+         routeProvider: RouteProvider,
+         trackableState: PublisherTrackableState = .init()) {
         self.connectionConfiguration = connectionConfiguration
         self.mapboxConfiguration = mapboxConfiguration
         self.logConfiguration = logConfiguration
@@ -72,6 +74,7 @@ class DefaultPublisher: Publisher {
         self.locationService = locationService
         self.ablyService = ablyService
         self.routeProvider = routeProvider
+        self.trackableState = trackableState
 
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
 
@@ -190,6 +193,8 @@ extension DefaultPublisher {
             case let event as PresenceJoinedSuccessfullyEvent: self?.performPresenceJoinedSuccessfullyEvent(event)
             case let event as TrackableReadyToTrackEvent: self?.performTrackableReadyToTrack(event)
             case let event as EnhancedLocationChangedEvent: self?.performEnhancedLocationChanged(event)
+            case let event as SendEnhancedLocationSuccessEvent: self?.performSendEnhancedLocationSuccess(event)
+            case let event as SendEnhancedLocationFailureEvent: self?.performSendEnhancedLocationFailure(event)
             case let event as AddTrackableEvent: self?.performAddTrackableEvent(event)
             case let event as RemoveTrackableEvent: self?.performRemoveTrackableEvent(event)
             case let event as ClearActiveTrackableEvent: self?.performClearActiveTrackableEvent(event)
@@ -517,20 +522,49 @@ extension DefaultPublisher {
         }
 
         trackablesToSend.forEach { trackable in
-            lastEnhancedLocations[trackable] = event.locationUpdate.location
-            lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
-
-            ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, forTrackable: trackable) { [weak self] result in
-                switch result {
-                case .failure(let error):
-                    self?.callback(event: DelegateErrorEvent(error: error))
-                case .success:
-                    return
-                }
-            }
+            sendEnhancedLocationUpdate(event: event, trackable: trackable)
         }
 
         checkThreshold(location: event.locationUpdate.location)
+    }
+    
+    private func sendEnhancedLocationUpdate(event: EnhancedLocationChangedEvent, trackable: Trackable) {
+        lastEnhancedLocations[trackable] = event.locationUpdate.location
+        lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
+
+        ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, forTrackable: trackable) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                self?.enqueue(event: SendEnhancedLocationFailureEvent(error: error, locationUpdate: event.locationUpdate, trackable: trackable))
+            case .success:
+                self?.enqueue(event: SendEnhancedLocationSuccessEvent(trackable: trackable, location: event.locationUpdate.location))
+            }
+        }
+    }
+    
+    private func performSendEnhancedLocationSuccess(_ event: SendEnhancedLocationSuccessEvent) {
+        trackableState.resetCounter(for: event.trackable.id)
+    }
+    
+    private func performSendEnhancedLocationFailure(_ event: SendEnhancedLocationFailureEvent) {
+        guard trackableState.shouldRetry(trackableId: event.trackable.id) else {
+            callback(event: DelegateErrorEvent(error: event.error))
+            return
+        }
+        
+        retrySendingEnhancedLocation(
+            trackable: event.trackable,
+            locationUpdate: event.locationUpdate
+        )
+    }
+    
+    private func retrySendingEnhancedLocation(trackable: Trackable, locationUpdate: EnhancedLocationUpdate) {
+        trackableState.incrementCounter(for: trackable.id)
+        
+        sendEnhancedLocationUpdate(
+            event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate),
+            trackable: trackable
+        )
     }
 
     private func shouldSendLocation(location: CLLocation,

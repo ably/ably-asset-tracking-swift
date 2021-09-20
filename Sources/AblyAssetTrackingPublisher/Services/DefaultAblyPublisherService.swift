@@ -23,8 +23,9 @@ class DefaultAblyPublisherService: AblyPublisherService {
             guard let self = self else {
                 return
             }
-
+            
             let receivedConnectionState = stateChange.current.toConnectionState()
+
             logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(
                 sender: self,
@@ -69,8 +70,9 @@ class DefaultAblyPublisherService: AblyPublisherService {
             guard let self = self else {
                 return
             }
-
+            
             let receivedConnectionState = stateChange.current.toConnectionState()
+
             logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }

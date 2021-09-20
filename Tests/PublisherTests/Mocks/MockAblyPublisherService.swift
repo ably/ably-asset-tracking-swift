@@ -33,11 +33,13 @@ class MockAblyPublisherService: AblyPublisherService {
         didSet { wasDelegateSet = true }
     }
 
+    var sendEnhancedAssetLocationUpdateCounter: Int = .zero
     var sendEnhancedAssetLocationUpdateCalled: Bool = false
     var sendEnhancedAssetLocationUpdateParamLocationUpdate: EnhancedLocationUpdate?
     var sendEnhancedAssetLocationUpdateParamTrackable: Trackable?
     var sendEnhancedAssetLocationUpdateParamCompletion: ResultHandler<Void>?
     func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
+        sendEnhancedAssetLocationUpdateCounter += 1
         sendEnhancedAssetLocationUpdateCalled = true
         sendEnhancedAssetLocationUpdateParamLocationUpdate = locationUpdate
         sendEnhancedAssetLocationUpdateParamTrackable = trackable
