@@ -95,6 +95,34 @@ subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
   .start() // start listening to updates
 ```
 
+### Authentication
+
+Both Subscriber and Publisher SDK support basic authentication (API key) and token authentication. Specify this by passing a `ConnectionConfiguration` to the Subscriber or Publisher builder: `SubscriberFactory.subscribers()
+  .connection(connectionConfiguration)`.
+
+- To use basic authentication, set the following `ConnectionConfiguration` on the Subscriber or Publisher builder:
+```swift
+let connectionConfiguration = ConnectionConfiguration(apiKey: ABLY_API_KEY, clientId: clientId)
+```
+- To use token authentication, you can pass a closure which will be called when the Ably client needs to authenticate or reauthenticate:
+```swift
+let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { tokenParams, resultHandler in
+    // Implement a request to your servers which provides either a TokenRequest (simplest), TokenDetails, JWT or token string. 
+    getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { result in
+        switch result {
+        case .success(let tokenRequest):
+            resultHandler(.success(.tokenRequest(tokenRequest)))
+        case .failure(let error):
+            resultHandler(.failure(error))
+        }
+    }
+}
+```
+- Alternatively, in token authentication, you can specify an `authUrl`, which will be used by Ably to authenticate. 
+```swift
+let connectionConfiguration = ConnectionConfiguration(authUrl: authUrl, clientId: clientId)
+```
+
 ## Example Apps
 
 - Configure your mapbox credentials (`~/.netrc`) to download the Mapbox SDK by following [this](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) guide. You'll need a Mapbox account. 
