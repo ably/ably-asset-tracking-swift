@@ -5,6 +5,8 @@ import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 
 class DefaultPublisherTests: XCTestCase {
+    typealias TrackableStateable = StateWaitable & StatePendable & StateRemovable & StateRetryable & StateSkippable
+    
     var locationService: MockLocationService!
     var ablyService: MockAblyPublisherService!
     var configuration: ConnectionConfiguration!
@@ -14,7 +16,7 @@ class DefaultPublisherTests: XCTestCase {
     var trackable: Trackable!
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
-    var trackableState: PublisherTrackableState!
+    var trackableState: TrackableStateable!
     let waitAsync = WaitAsync()
 
     override class func setUp() {
@@ -36,7 +38,7 @@ class DefaultPublisherTests: XCTestCase {
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
         delegate = MockPublisherDelegate()
-        trackableState = PublisherTrackableState()
+        trackableState = TrackableState()
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      mapboxConfiguration: mapboxConfiguration,
                                      logConfiguration: LogConfiguration(),
@@ -594,10 +596,10 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertNotNil(ablyService.closeParamCompletion)
     }
     
-    func testTrackableState() {
+    func testDefaultTrackableStateRetry() {
         let trackableId = "trackable_1"
         let otherTrackableId = "trackable_2"
-        var state = PublisherTrackableState()
+        let state = TrackableState()
         
         /**
          The `shouldRetry` method wraps few functionalities:
@@ -607,73 +609,205 @@ class DefaultPublisherTests: XCTestCase {
          */
         
         XCTAssertTrue(state.shouldRetry(trackableId: trackableId), "The retry counter for `trackableId` should be < `maxRetryCount` so it should be able to retry")
-        state.incrementCounter(for: trackableId) // counter == 1
+        state.incrementRetryCounter(for: trackableId) // counter == 1
         
         XCTAssertFalse(state.shouldRetry(trackableId: trackableId), "The counter for `trackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
-        XCTAssertEqual(state.getCounter(for: trackableId), 1)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId), 1)
         
-        state.resetCounter(for: trackableId)
-        XCTAssertEqual(state.getCounter(for: trackableId), 0)
+        state.resetRetryCounter(for: trackableId)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
                 
         XCTAssertTrue(state.shouldRetry(trackableId: otherTrackableId), "The retry counter for `otherTrackableId` should be < `maxRetryCount` so it should be able to retry")
-        state.incrementCounter(for: otherTrackableId) // counter == 1
+        state.incrementRetryCounter(for: otherTrackableId) // counter == 1
         
         XCTAssertFalse(state.shouldRetry(trackableId: otherTrackableId), "The counter for `otherTrackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
-        state.incrementCounter(for: otherTrackableId) // counter == 2
+        state.incrementRetryCounter(for: otherTrackableId) // counter == 2
         
         XCTAssertFalse(state.shouldRetry(trackableId: otherTrackableId), "The counter for `otherTrackableId` should be >= `maxRetryCount` so it shouldn't be able to retry")
         
-        XCTAssertEqual(state.getCounter(for: otherTrackableId), 2)
-        XCTAssertEqual(state.getCounter(for: trackableId), 0)
+        XCTAssertEqual(state.getRetryCounter(for: otherTrackableId), 2)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
         
     }
     
-    func testPublisherWillRetryOnFailureOnSendEnhancedLocationUpdate() {
+    func testDefaultTrackableStateWaiting() {
+        let trackableId = "trackable_1"
+        let locationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 1, longitude: 1))
+        let anotherLocationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 2, longitude: 2))
+        let state = TrackableState()
+        
         /**
-         Test that publisher will try to re-send enhanced location update on failure.
-         Re-sending is limited to `PublisherTrackableState.Constants.maxRetryCount` per `trackableId`
-         Retry counter is reset on `success`
+         Add two location updates
          */
-        let location1 = CLLocation(latitude: 51.50084974160386, longitude: -0.12460883599692132)
-        publisher.add(trackable: trackable) { _ in }
+        state.addToWaiting(locationUpdate: locationUpdate, for: trackableId)
+        state.addToWaiting(locationUpdate: anotherLocationUpdate, for: trackableId)
         
-        resolutionPolicyFactory.resolutionPolicy?.resolveRequestReturnValue = Resolution(accuracy: .balanced,
-                                                                                         desiredInterval: 500,
-                                                                                         minimumDisplacement: 500)
-        
-        let trackCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
-        ablyService.trackCompletionHandler = { callback in
-            callback?(.success)
-            trackCompletionHandlerExpectation.fulfill()
+        /**
+         Ensure that  location returning by `nextWaiting` is location on index `0` (FIFO).
+         */
+        if let nextLocationUpdate = state.nextWaiting(for: trackableId) {
+            XCTAssertEqual(nextLocationUpdate, locationUpdate)
+        } else {
+            XCTFail("No location update for \(trackableId)")
         }
-        publisher.track(trackable: trackable) { _ in }
-        
-        wait(for: [trackCompletionHandlerExpectation], timeout: 5.0)
-        
-        let expectationDidUpdateLocation = self.expectation(description: "Publisher did update location expectation")
-        delegate.publisherDidUpdateEnhancedLocationCallback = { expectationDidUpdateLocation.fulfill() }
         
         /**
-         On every `sendEnhancedAssetLocation` request, the `sendEnhancedAssetLocationUpdateCounter` is incremented by `1`
+         Call `nextWainting` second time to pop last location for `trackableId`
          */
-        let sendEnhancedAssetLocationUpdateIntialCounter = ablyService.sendEnhancedAssetLocationUpdateCounter
-        
-        publisher.locationService(sender: MockLocationService(), didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location1))
-        
-        wait(for: [expectationDidUpdateLocation], timeout: 10.0)
+        _ = state.nextWaiting(for: trackableId)
         
         /**
-         Simulate failure for retry purpose
+         Ensure that there is no more waiting locations  for `trackableId`
          */
-        ablyService.sendEnhancedAssetLocationUpdateParamCompletion?(.failure(ErrorInformation(type: .commonError(errorMessage: "Failure on test 1"))))
+        XCTAssertNil(state.nextWaiting(for: trackableId))
+    }
+    
+    func testDefaultTrackableStatePending() {
+        let trackableId = "trackable_1"
+        let state = TrackableState()
+        
+        XCTAssertFalse(state.hasPendingMessage(for: trackableId))
+        
+        state.markMessageAsPending(for: trackableId)
+        
+        XCTAssertTrue(state.hasPendingMessage(for: trackableId))
+        
+        state.unmarkMessageAsPending(for: trackableId)
+        
+        XCTAssertFalse(state.hasPendingMessage(for: trackableId))
+    }
+    
+    func testDefaultTrackableStateRemove() {
+        let trackableId = "trackable_1"
+        let trackableId2 = "trackable_2"
+        let locationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 1, longitude: 1))
+        let state = TrackableState()
+        
+        state.markMessageAsPending(for: trackableId)
+        state.markMessageAsPending(for: trackableId2)
+        
+        state.addToWaiting(locationUpdate: locationUpdate, for: trackableId)
+        state.addToWaiting(locationUpdate: locationUpdate, for: trackableId2)
+        
+        _ = state.shouldRetry(trackableId: trackableId)
+        _ = state.shouldRetry(trackableId: trackableId2)
+        
+        state.incrementRetryCounter(for: trackableId)
+        state.incrementRetryCounter(for: trackableId2)
+        
+        state.remove(trackableId: trackableId)
+        
+        XCTAssertFalse(state.hasPendingMessage(for: trackableId))
+        XCTAssertTrue(state.hasPendingMessage(for: trackableId2))
+        
+        XCTAssertNil(state.nextWaiting(for: trackableId))
+        XCTAssertNotNil(state.nextWaiting(for: trackableId2))
+        
+        XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
+        XCTAssertEqual(state.getRetryCounter(for: trackableId2), 1)
+        
+        state.removeAll()
+        
+        XCTAssertFalse(state.hasPendingMessage(for: trackableId2))
+        XCTAssertNil(state.nextWaiting(for: trackableId2))
+        XCTAssertEqual(state.getRetryCounter(for: trackableId2), 0)
+        
+    }
+    
+    func testDefaultSkippedLocationsStateAddAndRemove() {
+        let location = CLLocation(latitude: 1, longitude: 1)
+        let locationUpdate = EnhancedLocationUpdate(location: location)
+        let trackableId = "Trackable_1"
+        
+        let location2 = CLLocation(latitude: 2, longitude: 2)
+        let locationUpdate2 = EnhancedLocationUpdate(location: location2)
+        let trackableId2 = "Trackable_2"
+        
+        let state = createSkippedLocationState()
+        
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, .zero)
         
         /**
-         After failure `ablyService` should retry request, `sendEnhancedAssetLocation` will be called twice.
-         `sendEnhancedAssetLocationUpdateCounter` should increment by `2`
+         Add `location` for `trackableId`
+         Add `location2` for `trackableId2`
          */
-        let expectedResult: Int = sendEnhancedAssetLocationUpdateIntialCounter + 2
-        waitAsync.wait("Wait for retry") {
-            return self.ablyService.sendEnhancedAssetLocationUpdateCounter == expectedResult
+        state.skippedLocationsAdd(for: trackableId, location: locationUpdate)
+        state.skippedLocationsAdd(for: trackableId2, location: locationUpdate2)
+                
+        /**
+         Check if `location` for `trackableId` EXISTS in state
+         */
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, 1)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId)[0].location, location)
+        
+        /**
+         Clear `location` for `trackableId`
+         */
+        state.skippedLocationsClear(for: trackableId)
+        
+        /**
+         Check if `list` for `trackableId` IS EMPTY
+         */
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, .zero)
+        
+        /**
+         Check if `list2` for `trackableId2` IS NOT EMPTY after removing `trackableId` locations
+         */
+        
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId2).count, 1)
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId2)[0].location, location2)
+    }
+    
+    func testDefaultSkippedLocationsStateClearAll() {
+        let state = createSkippedLocationState(
+            with: [
+                "Trackable_1": [CLLocation(latitude: 1, longitude: 1)],
+                "Trackable_2": [CLLocation(latitude: 2, longitude: 2)]
+            ]
+        )
+
+        state.removeAll()
+        
+        XCTAssertEqual(state.skippedLocationsList(for: "Trackable_1").count, .zero)
+        XCTAssertEqual(state.skippedLocationsList(for: "Trackable_2").count, .zero)
+    }
+    
+    func testDefaultSkippedLocationsStateCapacityOverflow() {
+        let trackableId = "Trackable_1"
+        let state = createSkippedLocationState()
+
+        for i in 0..<state.maxSkippedLocationsSize {
+            let location = CLLocation(latitude: Double(i), longitude: Double(i))
+            let locationUpdate = EnhancedLocationUpdate(location: location)
+            state.skippedLocationsAdd(for: trackableId, location: locationUpdate)
         }
+        
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, state.maxSkippedLocationsSize)
+        
+        let overflowLocation = CLLocation(latitude: 1.2345, longitude: 1.2345)
+        let overflowLocationUpdate = EnhancedLocationUpdate(location: overflowLocation)
+        state.skippedLocationsAdd(for: trackableId, location: overflowLocationUpdate)
+        
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, state.maxSkippedLocationsSize)
+        /**
+         It should drop oldest (first index) location on overflofw - first location from loop above had `CLLocationCoordinate2D(latitude: 0, longitude: 0)`
+         so next one should has `CLLocationCoordinate2D(latitude: 1, longitude: 1)`
+         */
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId)[0].location.coordinate, CLLocationCoordinate2D(latitude: 1, longitude: 1))
+        /**
+         additionally last location should be equal to `overflowLocation`
+         */
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId).last!.location, overflowLocation)
+    }
+    
+    private func createSkippedLocationState(with data: [String: [CLLocation]] = [:], capacity: Int = 10) -> TrackableState {
+        let state = TrackableState(maxSkippedLocationsSize: capacity)
+        for (trackableId, locations) in data {
+            locations.map(EnhancedLocationUpdate.init).forEach { enhancedLocationUpdate in
+                state.skippedLocationsAdd(for: trackableId, location: enhancedLocationUpdate)
+            }
+        }
+        
+        return state
     }
 }
