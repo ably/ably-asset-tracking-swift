@@ -8,19 +8,21 @@ import AblyAssetTrackingInternal
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
-// Publisher state
-private enum PublisherState {
-    case working
-    case stopping
-    case stopped
-
-    var isStoppingOrStopped: Bool {
-        self == .stopping || self == .stopped
-    }
-}
-
 // swiftlint:disable cyclomatic_complexity
 class DefaultPublisher: Publisher {
+    typealias TrackableStateable = StateWaitable & StatePendable & StateRemovable & StateRetryable & StateSkippable
+    
+    // Publisher state
+    private enum State {
+        case working
+        case stopping
+        case stopped
+
+        var isStoppingOrStopped: Bool {
+            self == .stopping || self == .stopped
+        }
+    }
+    
     private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
     private let mapboxConfiguration: MapboxConfiguration
@@ -30,8 +32,8 @@ class DefaultPublisher: Publisher {
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
     private let batteryLevelProvider: BatteryLevelProvider
-    private var trackableState: PublisherTrackableState
-    private var publisherState: PublisherState = .working
+    private var trackableState: TrackableStateable
+    private var state: State = .working
 
     // ResolutionPolicy
     private let hooks: DefaultResolutionPolicyHooks
@@ -65,7 +67,9 @@ class DefaultPublisher: Publisher {
          ablyService: AblyPublisherService,
          locationService: LocationService,
          routeProvider: RouteProvider,
-         trackableState: PublisherTrackableState = .init()) {
+         trackableState: TrackableStateable = TrackableState()
+    ) {
+        
         self.connectionConfiguration = connectionConfiguration
         self.mapboxConfiguration = mapboxConfiguration
         self.logConfiguration = logConfiguration
@@ -255,7 +259,7 @@ extension DefaultPublisher {
     // MARK: Track
     // swiftlint:disable line_length
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
@@ -285,7 +289,7 @@ extension DefaultPublisher {
     }
 
     private func performTrackableReadyToTrack(_ event: TrackableReadyToTrackEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
@@ -312,7 +316,7 @@ extension DefaultPublisher {
     }
 
     private func performPresenceJoinedSuccessfullyEvent(_ event: PresenceJoinedSuccessfullyEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
@@ -326,7 +330,7 @@ extension DefaultPublisher {
 
     // MARK: RoutingProfile
     private func performChangeRoutingProfileEvent(_ event: ChangeRoutingProfileEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
@@ -351,7 +355,7 @@ extension DefaultPublisher {
 
     // MARK: Add trackable
     private func performAddTrackableEvent(_ event: AddTrackableEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
@@ -376,7 +380,7 @@ extension DefaultPublisher {
 
     // MARK: Remove trackable
     private func performRemoveTrackableEvent(_ event: RemoveTrackableEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
@@ -384,6 +388,7 @@ extension DefaultPublisher {
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] result in
             switch result {
             case .success(let wasPresent):
+                self?.trackableState.remove(trackableId: event.trackable.id)
                 wasPresent
                     ? self?.enqueue(event: ClearRemovedTrackableMetadataEvent(trackable: event.trackable, resultHandler: event.resultHandler))
                     : self?.callback(value: false, handler: event.resultHandler)
@@ -395,12 +400,12 @@ extension DefaultPublisher {
 
     // MARK: Stop publisher
     private func performStopPublisherEvent(_ event: StopEvent) {
-        if publisherState.isStoppingOrStopped {
+        if state.isStoppingOrStopped {
             callback(value: Void(), handler: event.resultHandler)
             return
         }
 
-        publisherState = .stopping
+        state = .stopping
 
         ablyService.close { [weak self] result in
             switch result {
@@ -414,7 +419,8 @@ extension DefaultPublisher {
     }
 
     private func performAblyConnectionClosedEvent(_ event: AblyConnectionClosedEvent) {
-        publisherState = .stopped
+        state = .stopped
+        trackableState.removeAll()
         callback(value: Void(), handler: event.resultHandler)
     }
 
@@ -463,7 +469,7 @@ extension DefaultPublisher {
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: ClearRemovedTrackableMetadataEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
@@ -479,7 +485,7 @@ extension DefaultPublisher {
     }
 
     private func performClearActiveTrackableEvent(_ event: ClearActiveTrackableEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
@@ -509,16 +515,29 @@ extension DefaultPublisher {
 
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: EnhancedLocationChangedEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             logger.error("Cannot perform EnhancedLocationChangedEvent. Publisher is not working.")
             return
         }
 
         let trackablesToSend = trackables.filter { trackable in
-            return shouldSendLocation(location: event.locationUpdate.location,
-                                      lastLocation: lastEnhancedLocations[trackable],
-                                      lastTimestamp: lastEnhancedTimestamps[trackable],
-                                      resolution: resolutions[trackable])
+            guard !trackableState.hasPendingMessage(for: trackable.id) else {
+                trackableState.addToWaiting(locationUpdate: event.locationUpdate, for: trackable.id)
+                return false
+            }
+            
+            let shouldSend = shouldSendLocation(
+                location: event.locationUpdate.location,
+                lastLocation: lastEnhancedLocations[trackable],
+                lastTimestamp: lastEnhancedTimestamps[trackable],
+                resolution: resolutions[trackable]
+            )
+            
+            if !shouldSend {
+                trackableState.skippedLocationsAdd(for: trackable.id, location: event.locationUpdate)
+            }
+            
+            return shouldSend
         }
 
         trackablesToSend.forEach { trackable in
@@ -528,10 +547,21 @@ extension DefaultPublisher {
         checkThreshold(location: event.locationUpdate.location)
     }
     
+    private func processNextWaitingEnhancedLocationUpdate(for trackableId: String) {
+        guard let enhancedLocationUpdate = trackableState.nextWaiting(for: trackableId) else {
+            return
+        }
+        
+        performEnhancedLocationChanged(EnhancedLocationChangedEvent(locationUpdate: enhancedLocationUpdate))
+    }
+    
     private func sendEnhancedLocationUpdate(event: EnhancedLocationChangedEvent, trackable: Trackable) {
         lastEnhancedLocations[trackable] = event.locationUpdate.location
         lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
+        
+        event.locationUpdate.skippedLocations = trackableState.skippedLocationsList(for: trackable.id).map { $0.location }
 
+        trackableState.markMessageAsPending(for: trackable.id)
         ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, forTrackable: trackable) { [weak self] result in
             switch result {
             case .failure(let error):
@@ -542,13 +572,23 @@ extension DefaultPublisher {
         }
     }
     
+    private func saveLocationForFurtherSending(trackableId: String, location: EnhancedLocationUpdate) {
+        trackableState.skippedLocationsAdd(for: trackableId, location: location)
+    }
+    
     private func performSendEnhancedLocationSuccess(_ event: SendEnhancedLocationSuccessEvent) {
-        trackableState.resetCounter(for: event.trackable.id)
+        trackableState.unmarkMessageAsPending(for: event.trackable.id)
+        trackableState.skippedLocationsClear(for: event.trackable.id)
+        trackableState.resetRetryCounter(for: event.trackable.id)
+        processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
     }
     
     private func performSendEnhancedLocationFailure(_ event: SendEnhancedLocationFailureEvent) {
         guard trackableState.shouldRetry(trackableId: event.trackable.id) else {
+            trackableState.unmarkMessageAsPending(for: event.trackable.id)
+            saveLocationForFurtherSending(trackableId: event.trackable.id, location: event.locationUpdate)
             callback(event: DelegateErrorEvent(error: event.error))
+            processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
             return
         }
         
@@ -559,7 +599,7 @@ extension DefaultPublisher {
     }
     
     private func retrySendingEnhancedLocation(trackable: Trackable, locationUpdate: EnhancedLocationUpdate) {
-        trackableState.incrementCounter(for: trackable.id)
+        trackableState.incrementRetryCounter(for: trackable.id)
         
         sendEnhancedLocationUpdate(
             event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate),
@@ -586,7 +626,7 @@ extension DefaultPublisher {
 
     // MARK: ResolutionPolicy
     private func performRefreshResolutionPolicyEvent(_ event: RefreshResolutionPolicyEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             logger.error("Cannot perform RefreshResolutionPolicyEvent. Publisher is not working.")
             return
         }
@@ -610,7 +650,7 @@ extension DefaultPublisher {
     }
 
     private func changeLocationEngineResolution(resolution: Resolution) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             logger.error("Cannot perform changeLocationEngineResolution. Publisher is not working.")
             return
         }
@@ -642,12 +682,13 @@ extension DefaultPublisher {
 
     // MARK: Subscribers handling
     private func performPresenceUpdateEvent(_ event: PresenceUpdateEvent) {
-        guard !publisherState.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped else {
             logger.error("Cannot perform PresenceUpdateEvent. Publisher is not working.")
             return
         }
 
         guard event.presenceData.type == .subscriber else { return }
+        
         if event.presence == .enter {
             addSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
         } else if event.presence == .leave {
