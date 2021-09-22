@@ -8,7 +8,7 @@ import AblyAssetTrackingInternal
 protocol AblySubscriberServiceDelegate: AnyObject {
     func subscriberService(sender: AblySubscriberService, didChangeClientConnectionStatus status: ConnectionState)
     func subscriberService(sender: AblySubscriberService, didChangeChannelConnectionStatus status: ConnectionState)
-    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: AblyPresence)
+    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: Presence)
     func subscriberService(sender: AblySubscriberService, didFailWithError error: ErrorInformation)
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation)
 }
@@ -92,8 +92,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
             }
             
             let receivedConnectionState = connectionState.current.toConnectionState()
-            
-            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.subscriberService(sender: self, didChangeClientConnectionStatus: receivedConnectionState)
         }
         
@@ -103,8 +102,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
             }
             
             let receivedConnectionState = channelStatus.current.toConnectionState()
-            
-            logger.debug("Channel connection state changed. New state: \(receivedConnectionState)", source: "DefaultAblyPublisherService")
+            logger.debug("Channel connection state changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
             self.delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: receivedConnectionState)
         }
     }
@@ -139,7 +137,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
               presenceData.type == .publisher
         else { return }
         
-        let presence = message.action.toAblyPresence()
+        let presence = message.action.toPresence()
 
         delegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
         delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: presence.toConnectionState())

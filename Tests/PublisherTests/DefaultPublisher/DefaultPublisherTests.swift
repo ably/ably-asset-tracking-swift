@@ -4,6 +4,10 @@ import Logging
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 
+enum ClientConfigError : Error {
+    case cannotRedefineConnectionConfiguration
+}
+
 class DefaultPublisherTests: XCTestCase {
     typealias TrackableStateable = StateWaitable & StatePendable & StateRemovable & StateRetryable & StateSkippable
     
@@ -26,17 +30,17 @@ class DefaultPublisherTests: XCTestCase {
             return handler
         }
     }
-
+    
     override func setUpWithError() throws {
         locationService = MockLocationService()
         ablyService = MockAblyPublisherService()
-        configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         routeProvider = MockRouteProvider()
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
                               destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
+        configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         delegate = MockPublisherDelegate()
         trackableState = TrackableState()
         publisher = DefaultPublisher(connectionConfiguration: configuration,
@@ -809,5 +813,51 @@ class DefaultPublisherTests: XCTestCase {
         }
         
         return state
+    }
+    
+    func testStopEventCauseImpossibilityOfEnqueueOtherEvents() {
+        ablyService.trackCompletionHandler = { completion in completion?(.success)}
+        ablyService.closeResultCompletionHandler = { completion in completion?(.success)}
+        
+        let publisher = DefaultPublisher(
+            connectionConfiguration: configuration,
+            mapboxConfiguration: mapboxConfiguration,
+            logConfiguration: LogConfiguration(),
+            routingProfile: .driving,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            ablyService: ablyService,
+            locationService: locationService,
+            routeProvider: routeProvider
+        )
+        
+        let trackCompletionExpectation = self.expectation(description: "Track completion expectation")
+        publisher.track(trackable: trackable) { _ in
+            trackCompletionExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0).self
+        
+        let publisherStopExpectation = self.expectation(description: "Publisher stop expectation")
+        publisher.stop { result in
+            switch result {
+            case .success: ()
+            case .failure(let error):
+                XCTFail("Publisher stop failed with error: \(error)")
+            }
+            
+            publisherStopExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0)
+        
+        let trackAfterStopCompletionExpectation = self.expectation(description: "Track after stop event completion expectation")
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Track success shouldn't occur when publisher is stopped")
+            case let .failure: ()
+            }
+            
+            trackAfterStopCompletionExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0)
     }
 }

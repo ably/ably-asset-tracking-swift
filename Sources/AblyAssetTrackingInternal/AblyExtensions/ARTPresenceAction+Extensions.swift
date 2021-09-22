@@ -2,7 +2,7 @@ import Ably
 import AblyAssetTrackingCore
 
 public extension ARTPresenceAction {
-    func toAblyPresence() -> AblyPresence {
+    func toPresence() -> Presence {
         switch self {
         case .absent: return .absent
         case .present: return .present

@@ -7,7 +7,7 @@ protocol AblyPublisherServiceDelegate: AnyObject {
     func publisherService(sender: AblyPublisherService, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable)
     func publisherService(sender: AblyPublisherService, didFailWithError error: ErrorInformation)
     func publisherService(sender: AblyPublisherService,
-                          didReceivePresenceUpdate presence: AblyPresence,
+                          didReceivePresenceUpdate presence: Presence,
                           forTrackable trackable: Trackable,
                           presenceData: PresenceData,
                           clientId: String)
