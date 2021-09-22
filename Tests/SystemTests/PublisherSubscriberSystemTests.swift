@@ -5,17 +5,28 @@ import Ably
 import CoreLocation
 @testable import AblyAssetTrackingPublisher
 
+struct Locations: Codable {
+    let locations: [GeoJSONMessage]
+}
+
 class PublisherAndSubscriberSystemTests: XCTestCase {
 
-    private var didUpdateEnhancedLocationExpectation: XCTestExpectation!
-    
+    private var didUpdateEnhancedLocationCounter = 0
+    private var locationChangeTimer: Timer!
+    private var locationsData: Locations!
+    private var subscriber: AblyAssetTrackingSubscriber.Subscriber!
+    private var publisher: Publisher!
+
+    private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
     private let locationService = MockLocationService()
     private let routeProvider = MockRouteProvider()
     private let resolutionPolicyFactory = MockResolutionPolicyFactory()
-    private let trackableId = "Trackable ID 1"
+    private let trackableId = "Trackable ID 1 - \(UUID().uuidString)"
     private let logConfiguration = LogConfiguration()
-    private let changedLocation = CLLocation(latitude: 51.509865, longitude: -0.118092)
-    private let clientId: String = {
+    private let subscriberClientId: String = {
+        "Test-Subscriber_\(UUID().uuidString)"
+    }()
+    private let publisherClientId: String = {
         "Test-Publisher_\(UUID().uuidString)"
     }()
     
@@ -23,68 +34,64 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     override func tearDownWithError() throws { }
 
     func testSubscriberReceivesPublisherMessage() throws {
-        didUpdateEnhancedLocationExpectation = self.expectation(description: "Subscriber didUpdateEnhancedLocation expectation")
+        do {
+            locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
+        } catch {
+            print(error)
+        }
         
-        let connectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: clientId)
-        let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
-        let subscriber = SubscriberFactory.subscribers()
-            .connection(connectionConfiguration)
+        let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
+        
+        subscriber = SubscriberFactory.subscribers()
+            .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .log(logConfiguration)
             .delegate(self)
             .trackingId(trackableId)
-            .start(completion: { _ in })
+            .start(completion: { result in
+                print("SubscriberFactory start: \(result)")
+            })!
         
-        subscriber?.resolutionPreference(resolution: resolution) { result in }
-        
-        let publisher = DefaultPublisher(
-            connectionConfiguration: connectionConfiguration,
+        let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
+        publisher = DefaultPublisher(
+            connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             logConfiguration: logConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyService: DefaultAblyPublisherService(configuration: connectionConfiguration),
+            ablyService: DefaultAblyPublisherService(configuration: publisherConnectionConfiguration),
             locationService: locationService,
             routeProvider: routeProvider
         )
         
+        
         let trackable = Trackable(id: trackableId)
-
-        publisher.track(trackable: trackable) { _ in
-            self.locationService.delegate?.locationService(
-                sender: self.locationService,
-                didUpdateEnhancedLocationUpdate: .init(location: self.changedLocation)
-            )
+        publisher.add(trackable: trackable) { _ in
+            self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: self.locationsData.locations[0].toCoreLocation()))
         }
-            
-        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 15.0)
+        
+        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
     }
 }
 
 extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didFailWithError error: ErrorInformation) {}
+    
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
-        XCTAssertEqual(location.coordinate, changedLocation.coordinate)
+        XCTAssertEqual(self.locationsData.locations[0].toCoreLocation().coordinate, location.coordinate)
         self.didUpdateEnhancedLocationExpectation.fulfill()
     }
 }
 
 extension PublisherAndSubscriberSystemTests: PublisherDelegate {
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didFailWithError error: ErrorInformation) {
-        return
-    }
+    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didFailWithError error: ErrorInformation) {}
     
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateEnhancedLocation location: CLLocation) {
-        return
-    }
+    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateEnhancedLocation location: CLLocation) {}
     
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        return
-    }
+    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {}
     
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateResolution resolution: Resolution) {
-        return
-    }
+    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateResolution resolution: Resolution) {}
 }

@@ -68,7 +68,8 @@ let package = Package(
                 "AblyAssetTrackingInternal",
                 "AblyAssetTrackingCore",
                 .product(name: "Logging", package: "swift-log")
-            ]),
+            ],
+            resources: [.copy("Resources/test-locations.json")]),
         .testTarget(
             name: "SubscriberTests",
             dependencies: [
