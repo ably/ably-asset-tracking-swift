@@ -49,9 +49,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .log(logConfiguration)
             .delegate(self)
             .trackingId(trackableId)
-            .start(completion: { result in
-                print("SubscriberFactory start: \(result)")
-            })!
+            .start { _ in }!
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
         publisher = DefaultPublisher(
@@ -101,7 +99,6 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
-        print("Finished")
         let coordinates = self.locationsData.locations.map { $0.toCoreLocation().coordinate }
         XCTAssertTrue(coordinates.contains(location.coordinate))
         self.locationChangeTimer.invalidate()
