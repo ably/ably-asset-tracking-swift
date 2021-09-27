@@ -72,10 +72,12 @@ class MapViewController: UIViewController {
     }
     
     // MARK: - Subscriber setup
-    private func setupSubscriber() {        
+    private func setupSubscriber() {
+        // An example of using AuthCallback is shown in the PublisherExample's MapViewController.swift
+        let connectionConfiguration = ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY, clientId: "Asset Tracking Subscriber Example")
+
         subscriber = SubscriberFactory.subscribers()
-            .connection(ConnectionConfiguration(apiKey: Environment.ABLY_API_KEY,
-                                                clientId: "Asset Tracking Cocoa Subscriber Example"))
+            .connection(connectionConfiguration)
             .trackingId(trackingId)
             .log(LogConfiguration())
             .resolution(Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500))

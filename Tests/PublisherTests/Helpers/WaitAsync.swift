@@ -19,9 +19,7 @@ class WaitAsync {
     func wait(_ description: String, condition: @escaping () -> (Bool)) {
         let expectation = XCTestExpectation(description: description)
         var loopBreak = false
-        queue.async {
-            let startTime = CFAbsoluteTimeGetCurrent()
-            
+        queue.async {            
             while true {
                 if loopBreak { break }
                 
@@ -29,6 +27,8 @@ class WaitAsync {
                     expectation.fulfill()
                     break
                 }
+                
+                CFRunLoopRunInMode(CFRunLoopMode.defaultMode, CFTimeInterval(0.1), false)
             }
         }
         

@@ -1,6 +1,9 @@
 ## User settings
 xcuserdata/
 
+#Finder
+.DS_Store
+
 ## Swift packages
 .build
 
@@ -21,7 +24,6 @@ archives/
 /coverage_publisher/
 
 # User defined configuration
-**/.DS_Store
 **/Secrets.xcconfig
 **/Secrets.swift
 PublisherExample/amplifyconfiguration.json
@@ -31,6 +33,3 @@ PublisherExample/amplifyconfiguration.json
 
 # AppCode IDE
 .idea
-
-# Other files
-**/.DS_Store

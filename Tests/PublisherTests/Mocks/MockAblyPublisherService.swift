@@ -12,7 +12,6 @@ class MockAblyPublisherService: AblyPublisherService {
         trackCalled = true
         trackParamTrackable = trackable
         trackParamResultHandler = completion
-
         trackCompletionHandler?(completion)
     }
     
@@ -24,7 +23,6 @@ class MockAblyPublisherService: AblyPublisherService {
         stopTrackingCalled = true
         stopTrackingParamTrackable = trackable
         stopTrackingParamResultHandler = completion
-
         stopTrackingResultCompletionHandler?(completion)
     }
 
@@ -38,12 +36,14 @@ class MockAblyPublisherService: AblyPublisherService {
     var sendEnhancedAssetLocationUpdateParamLocationUpdate: EnhancedLocationUpdate?
     var sendEnhancedAssetLocationUpdateParamTrackable: Trackable?
     var sendEnhancedAssetLocationUpdateParamCompletion: ResultHandler<Void>?
+    var sendEnhancedAssetLocationUpdateParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
     func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
         sendEnhancedAssetLocationUpdateCounter += 1
         sendEnhancedAssetLocationUpdateCalled = true
         sendEnhancedAssetLocationUpdateParamLocationUpdate = locationUpdate
         sendEnhancedAssetLocationUpdateParamTrackable = trackable
         sendEnhancedAssetLocationUpdateParamCompletion = completion
+        sendEnhancedAssetLocationUpdateParamCompletionHandler?(completion)
     }
     
     
@@ -53,7 +53,6 @@ class MockAblyPublisherService: AblyPublisherService {
     func close(completion: @escaping ResultHandler<Void>) {
         closeCalled = true
         closeParamCompletion = completion
-        
         closeResultCompletionHandler?(completion)
     }
 }

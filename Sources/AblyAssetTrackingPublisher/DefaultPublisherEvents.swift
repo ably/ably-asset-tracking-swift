@@ -70,7 +70,7 @@ struct ChangeRoutingProfileEvent: PublisherEvent {
 
 struct PresenceUpdateEvent: PublisherEvent {
     let trackable: Trackable
-    let presence: AblyPresence
+    let presence: Presence
     let presenceData: PresenceData
     let clientId: String
 }
@@ -114,7 +114,7 @@ struct DelegateResolutionUpdateEvent: PublisherEvent {
 
 struct DelegatePresenceUpdateEvent: PublisherEvent {
     let trackable: Trackable
-    let presence: AblyPresence
+    let presence: Presence
     let presenceData: PresenceData
     let clientId: String
 }

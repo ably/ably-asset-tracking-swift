@@ -39,8 +39,8 @@
 		AD909F57267CD2B1004247D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD909F59267CD2B1004247D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD909F5A267CD2B1004247D6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F66AEDF925D3D7D60077D67C /* PublisherExampleObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PublisherExampleObjectiveC.app; path = "/Users/zen/repos/ably/ably-asset-tracking-swift/Examples/PublisherExampleObjectiveC/build/Debug-iphoneos/PublisherExampleObjectiveC.app"; sourceTree = "<absolute>"; };
-		F66AEE1425D3D7D90077D67C /* PublisherExampleObjectiveCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PublisherExampleObjectiveCTests.xctest; path = "/Users/zen/repos/ably/ably-asset-tracking-swift/Examples/PublisherExampleObjectiveC/build/Debug-iphoneos/PublisherExampleObjectiveCTests.xctest"; sourceTree = "<absolute>"; };
+		D58D2F25269C40D100693374 /* PublisherExampleObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExampleObjectiveC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D58D2F26269C40D100693374 /* PublisherExampleObjectiveCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PublisherExampleObjectiveCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +91,8 @@
 			children = (
 				AD909F54267CD2B1004247D6 /* Resources */,
 				AD909F48267CD2AE004247D6 /* Sources */,
+				D58D2F25269C40D100693374 /* PublisherExampleObjectiveC.app */,
+				D58D2F26269C40D100693374 /* PublisherExampleObjectiveCTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,7 +113,7 @@
 			);
 			name = PublisherExampleObjectiveC;
 			productName = PublisherExampleObjectiveC;
-			productReference = F66AEDF925D3D7D60077D67C /* PublisherExampleObjectiveC.app */;
+			productReference = D58D2F25269C40D100693374 /* PublisherExampleObjectiveC.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F66AEE1325D3D7D90077D67C /* PublisherExampleObjectiveCTests */ = {
@@ -129,7 +131,7 @@
 			);
 			name = PublisherExampleObjectiveCTests;
 			productName = PublisherExampleObjectiveCTests;
-			productReference = F66AEE1425D3D7D90077D67C /* PublisherExampleObjectiveCTests.xctest */;
+			productReference = D58D2F26269C40D100693374 /* PublisherExampleObjectiveCTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -356,6 +358,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PublisherExampleObjectiveC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -373,6 +376,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PublisherExampleObjectiveC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -389,6 +393,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PublisherExampleObjectiveCTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -408,6 +413,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PublisherExampleObjectiveCTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
