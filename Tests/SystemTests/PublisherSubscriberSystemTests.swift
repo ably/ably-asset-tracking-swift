@@ -65,10 +65,22 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             routeProvider: routeProvider
         )
         
-        
         let trackable = Trackable(id: trackableId)
         publisher.add(trackable: trackable) { _ in
-            self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: self.locationsData.locations[0].toCoreLocation()))
+            var counter = 0
+            self.locationChangeTimer = Timer.scheduledTimer(withTimeInterval: 1.1, repeats: true, block: { _ in
+                self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: self.locationsData.locations[counter].toCoreLocation()))
+                
+                guard counter < self.locationsData.locations.count - 1 else {
+                    self.locationChangeTimer.invalidate()
+                    self.locationChangeTimer = nil
+                    
+                    return
+                }
+                
+                counter += 1
+            })
+            self.locationChangeTimer.fire()
         }
         
         wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
@@ -89,7 +101,11 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
-        XCTAssertEqual(self.locationsData.locations[0].toCoreLocation().coordinate, location.coordinate)
+        print("Finished")
+        let coordinates = self.locationsData.locations.map { $0.toCoreLocation().coordinate }
+        XCTAssertTrue(coordinates.contains(location.coordinate))
+        self.locationChangeTimer.invalidate()
+        self.locationChangeTimer = nil
         self.didUpdateEnhancedLocationExpectation.fulfill()
     }
 }
