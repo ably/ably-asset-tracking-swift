@@ -29,7 +29,7 @@
 		AD909F40267CD299004247D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD909F42267CD299004247D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD909F43267CD299004247D6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F6D4CF1E25D661EA0071A6A9 /* SubscriberExampleObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SubscriberExampleObjectiveC.app; path = "/Users/zen/repos/ably/ably-asset-tracking-swift/Examples/SubscriberExampleObjectiveC/build/Debug-iphoneos/SubscriberExampleObjectiveC.app"; sourceTree = "<absolute>"; };
+		D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubscriberExampleObjectiveC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +73,7 @@
 			children = (
 				AD909F3D267CD299004247D6 /* Resources */,
 				AD909F31267CD295004247D6 /* Sources */,
+				D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,7 +94,7 @@
 			);
 			name = SubscriberExampleObjectiveC;
 			productName = SubscriberExampleObjectiveC;
-			productReference = F6D4CF1E25D661EA0071A6A9 /* SubscriberExampleObjectiveC.app */;
+			productReference = D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -293,6 +294,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SubscriberExampleObjectiveC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -310,6 +312,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SubscriberExampleObjectiveC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
