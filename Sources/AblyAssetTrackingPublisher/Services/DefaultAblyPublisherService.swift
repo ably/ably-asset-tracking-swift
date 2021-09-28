@@ -102,6 +102,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
             }
 
             self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: .online, forTrackable: trackable)
+            completion?(.success)
         }
     }
 
