@@ -73,15 +73,20 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             }
         }
         
-        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
+        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 20.0)
         
         let publisherStopExpecatation = XCTestExpectation(description: "Publisher Stop Expectation")
+        let subscriberStopExpecatation = XCTestExpectation(description: "Subscriber Stop Expectation")
         
         publisher.stop { _ in
             publisherStopExpecatation.fulfill()
         }
         
-        wait(for: [publisherStopExpecatation], timeout: 5.0)
+        subscriber.stop { _ in
+            subscriberStopExpecatation.fulfill()
+        }
+        
+        wait(for: [publisherStopExpecatation, subscriberStopExpecatation], timeout: 7.0)
     }
 }
 
