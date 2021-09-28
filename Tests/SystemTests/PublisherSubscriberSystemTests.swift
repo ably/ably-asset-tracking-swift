@@ -12,7 +12,6 @@ struct Locations: Codable {
 class PublisherAndSubscriberSystemTests: XCTestCase {
 
     private var didUpdateEnhancedLocationCounter = 0
-    private var locationChangeTimer: Timer!
     private var locationsData: Locations!
     private var subscriber: AblyAssetTrackingSubscriber.Subscriber!
     private var publisher: Publisher!
@@ -51,6 +50,10 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .trackingId(trackableId)
             .start { _ in }!
         
+        // Delay 3 seconds - subscriber needs a while to connect to ably servers
+        //
+        _ = XCTWaiter.wait(for: [XCTestExpectation()], timeout: 3.0)
+
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
         publisher = DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
@@ -65,31 +68,20 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         let trackable = Trackable(id: trackableId)
         publisher.add(trackable: trackable) { _ in
-            var counter = 0
-            self.locationChangeTimer = Timer.scheduledTimer(withTimeInterval: 1.1, repeats: true, block: { _ in
-                self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: self.locationsData.locations[counter].toCoreLocation()))
-                
-                guard counter < self.locationsData.locations.count - 1 else {
-                    self.locationChangeTimer.invalidate()
-                    self.locationChangeTimer = nil
-                    
-                    return
-                }
-                
-                counter += 1
-            })
-            self.locationChangeTimer.fire()
+            for location in self.locationsData.locations {
+                self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: location.toCoreLocation()))
+            }
         }
         
         wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
         
-        let publsherStopExpecatation = XCTestExpectation(description: "Publisher Stop Expectation")
+        let publisherStopExpecatation = XCTestExpectation(description: "Publisher Stop Expectation")
         
         publisher.stop { _ in
-            publsherStopExpecatation.fulfill()
+            publisherStopExpecatation.fulfill()
         }
         
-        wait(for: [publsherStopExpecatation], timeout: 10.0)
+        wait(for: [publisherStopExpecatation], timeout: 5.0)
     }
 }
 
@@ -99,11 +91,15 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
+        guard didUpdateEnhancedLocationCounter < locationsData.locations.count / 2 else {
+            subscriber.delegate = nil
+            didUpdateEnhancedLocationExpectation.fulfill()
+            return
+        }
         let coordinates = self.locationsData.locations.map { $0.toCoreLocation().coordinate }
         XCTAssertTrue(coordinates.contains(location.coordinate))
-        self.locationChangeTimer.invalidate()
-        self.locationChangeTimer = nil
-        self.didUpdateEnhancedLocationExpectation.fulfill()
+        
+        didUpdateEnhancedLocationCounter += 1
     }
 }
 
