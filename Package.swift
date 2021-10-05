@@ -19,11 +19,11 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-beta.22")),
+        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", .exact("2.0.0-rc.4")),
         .package(url: "https://github.com/realm/SwiftLint", from: "0.43.1"),
         .package(url: "https://github.com/apple/swift-log", from: "1.4.2"),
         .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.6")
-        ],
+    ],
     targets: [
         //
         // Targets
@@ -57,9 +57,6 @@ let package = Package(
             dependencies: [
                 .product(name: "Logging", package: "swift-log")
             ]),
-        //
-        // Test targest
-        //
         .testTarget(
             name: "SystemTests",
             dependencies: [

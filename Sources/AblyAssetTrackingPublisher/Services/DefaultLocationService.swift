@@ -17,6 +17,7 @@ class DefaultLocationService: LocationService {
         }
 
         let directions = Directions(credentials: mapboxConfiguration.getCredentians())
+        NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
         self.locationManager = PassiveLocationManager(directions: directions, systemLocationManager: replayLocationManager)
 
         self.locationManager.delegate = self
