@@ -15,6 +15,9 @@ extension ConnectionConfiguration {
         if let authCallback = authCallback {
             clientOptions.authCallback = createAuthCallbackWrapper(authCallback)
             return clientOptions
+        } else if let authCallback = objcAuthCallback {
+            clientOptions.authCallback = createObjCAuthCallbackWrapper(authCallback)
+            return clientOptions
         } else {
             clientOptions.key = apiKey
         }
@@ -43,6 +46,32 @@ extension ConnectionConfiguration {
                 case .failure(let error as NSError):
                     callback(nil, error)
                     return
+                }
+            })
+        }
+
+        return authCallbackWrapper
+    }
+    
+    private func createObjCAuthCallbackWrapper(_ authCallback: @escaping ObjCAuthCallback) -> (ARTTokenParams, @escaping (ARTTokenDetailsCompatible?, NSError?) -> ()?) -> () {
+        func authCallbackWrapper(artTokenParams: ARTTokenParams, callback: @escaping (ARTTokenDetailsCompatible?, NSError?) -> Void?) -> Void {
+            let tokenParams = artTokenParams.toTokenParams()
+            authCallback(tokenParams, { authResult, error in
+                if let error = error {
+                    callback(nil, error as NSError)
+                } else if let result = authResult {
+                    switch result {
+                    case let jwtResult as ObjcAuthResultJWT:
+                        callback(NSString(utf8String: jwtResult.value), nil)
+                    case let tokenRequestResult as ObjcAuthResultTokenRequest:
+                        callback(tokenRequestResult.value.toARTTokenRequest(), nil)
+                    case let tokenDetailsResult as ObjcAuthResultTokenDetails:
+                        callback(tokenDetailsResult.value.toARTTokenDetails(), nil)
+                    default:
+                        fatalError("Unknown type")
+                    }
+                } else {
+                    fatalError("The result callback must return one of the value: error or authResult.")
                 }
             })
         }
