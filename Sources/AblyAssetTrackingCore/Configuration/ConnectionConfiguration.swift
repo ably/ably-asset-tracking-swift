@@ -10,14 +10,40 @@ public enum AuthResult {
     case tokenDetails(TokenDetails)
 }
 
+public class ObjcAuthResultJWT: NSObject {
+    public var value: String
+    
+    public init(value: String) {
+        self.value = value
+    }
+}
+
+public class ObjcAuthResultTokenRequest: NSObject {
+    public var value: TokenRequest
+    
+    public init(value: TokenRequest) {
+        self.value = value
+    }
+}
+
+public class ObjcAuthResultTokenDetails: NSObject {
+    public var value: TokenDetails
+    
+    public init(value: TokenDetails) {
+        self.value = value
+    }
+}
+
 public typealias Token = String
 public typealias AuthCallback = (TokenParams, @escaping (Result<AuthResult, Error>) -> Void) -> Void
+public typealias ObjCAuthCallback = (TokenParams, @escaping (AnyObject?, Error?) -> Void) -> Void
 
 /// A container for connection configuration data used when connecting to Ably
 public class ConnectionConfiguration: NSObject {
     public let apiKey: String?
     public let clientId: String?
     public let authCallback: AuthCallback?
+    public let objcAuthCallback: ObjCAuthCallback?
     
     /**
      Connect to Ably using basic authentication (API Key)
@@ -33,6 +59,16 @@ public class ConnectionConfiguration: NSObject {
         self.apiKey = apiKey
         self.clientId = clientId
         self.authCallback = authCallback
+        self.objcAuthCallback = nil
+    }
+    
+    private init(apiKey: String?,
+                clientId: String?,
+                objcAuthCallback: ObjCAuthCallback?) {
+        self.apiKey = apiKey
+        self.clientId = clientId
+        self.authCallback = nil
+        self.objcAuthCallback = objcAuthCallback
     }
 
     // TODO make clientId optional [RSA7b2], and use the clientId provided in the auth callback. Pending ably-cocoa: https://github.com/ably/ably-cocoa/issues/1126
@@ -50,6 +86,16 @@ public class ConnectionConfiguration: NSObject {
                   authCallback: authCallback)
     }
 
+    @objc
+    public convenience init(clientId: String? = nil, objcAuthCallback: @escaping ObjCAuthCallback) {
+        self.init(
+            apiKey: nil,
+            clientId: clientId,
+            objcAuthCallback: objcAuthCallback
+        )
+    }
+    
+    @objc
     public convenience init(apiKey: String, clientId: String? = nil) {
         self.init(apiKey: apiKey,
                   clientId: clientId,

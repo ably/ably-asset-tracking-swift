@@ -28,7 +28,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
     func testSubscriberConnectsWithTokenRequest() throws {
         let authCallbackCalledExpectation = self.expectation(description: "Auth Callback complete")
         // When a user configures an AuthCallback
-        let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { tokenParams, authResultHandler in
+        let connectionConfiguration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, authResultHandler in
             // Here, users should make a network request to their auth servers, where their servers create the tokenRequest.
             // To emulate this, we use the api key to create a tokenRequest on the client side.
             let keyTokens = Secrets.ablyApiKey.split(separator: ":")
@@ -57,7 +57,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             )
             authCallbackCalledExpectation.fulfill()
             authResultHandler(.success(.tokenRequest(tokenRequest)))
-        }
+        })
 
         testSubscriberConnection(configuration: connectionConfiguration)
     }
