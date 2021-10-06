@@ -25,9 +25,6 @@ let package = Package(
         .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.6")
     ],
     targets: [
-        //
-        // Targets
-        //
         .target(
             name: "AblyAssetTrackingSubscriber",
             dependencies: [
