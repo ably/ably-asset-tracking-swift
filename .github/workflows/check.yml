@@ -33,4 +33,4 @@ jobs:
         with:
           name: xcodebuild-logs
           path: |
-            $WORKING_DIRECTORY
+            ~/Library/Developer/Xcode/DerivedData/
