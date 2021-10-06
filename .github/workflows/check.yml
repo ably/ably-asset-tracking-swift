@@ -25,6 +25,7 @@ jobs:
         env:
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
+          WORKING_DIRECTORY: ${{ pwd }}
       
       - name: Xcodebuild Logs Artifact
         if: ${{ failure() }}
@@ -32,4 +33,4 @@ jobs:
         with:
           name: xcodebuild-logs
           path: |
-            Library/Logs/**/*
+            $WORKING_DIRECTORY
