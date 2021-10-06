@@ -32,4 +32,4 @@ jobs:
         with:
           name: xcodebuild-logs
           path: |
-            ~/Library/Developer/Xcode/DerivedData/
+            ~/Library/Developer/Xcode/DerivedData/*/Logs/Test
