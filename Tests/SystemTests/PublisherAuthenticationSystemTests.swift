@@ -131,7 +131,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         // Here, I am creating a trackable instead of just checking the connection, because there doesn't
         // seem to be a way to check that the client is connected to Ably.
         let expectation = self.expectation(description: "Publisher.track completes")
-        let trackable = Trackable(id: "Trackable ID")
+        let trackable = Trackable(id: "Trackable ID \(UUID().uuidString)")
         publisher.track(trackable: trackable) { _ in
             expectation.fulfill()
         }
