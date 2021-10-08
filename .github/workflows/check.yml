@@ -27,6 +27,7 @@ jobs:
           ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
 
       - name: Xcodebuild Logs Artifact
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: xcodebuild-logs
