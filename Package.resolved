@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-speech-swift.git",
         "state": {
           "branch": null,
-          "revision": "4501b0cbf709ae9fdabb82a2942cd3d54295b411",
-          "version": "2.0.0-alpha.1"
+          "revision": "b0a6008c184c1010dac11e14bf20afe4261d8c36",
+          "version": "2.0.0"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/jpsim/SourceKitten.git",
         "state": {
           "branch": null,
-          "revision": "7f4be006fe73211b0fd9666c73dc2f2303ffa756",
-          "version": "0.31.0"
+          "revision": "558628392eb31d37cb251cfe626c53eafd330df6",
+          "version": "0.31.1"
         }
       },
       {
@@ -132,8 +132,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
         "state": {
           "branch": null,
-          "revision": "9564d61b08a5335ae0a36f789a7d71493eacadfc",
-          "version": "0.3.2"
+          "revision": "d2930e8fcf9c33162b9fcc1d522bc975e2d4179b",
+          "version": "1.0.1"
         }
       },
       {
@@ -150,8 +150,8 @@
         "repositoryURL": "https://github.com/jakeheis/SwiftCLI",
         "state": {
           "branch": null,
-          "revision": "2816678bcc37f4833d32abeddbdf5e757fa891d8",
-          "version": "6.0.2"
+          "revision": "2e949055d9797c1a6bddcda0e58dada16cc8e970",
+          "version": "6.0.3"
         }
       },
       {
@@ -159,8 +159,8 @@
         "repositoryURL": "https://github.com/realm/SwiftLint",
         "state": {
           "branch": null,
-          "revision": "180d94132758dd183124ab1e63d6aa8e10023ec2",
-          "version": "0.43.1"
+          "revision": "99465e659fb91facab5b1d3c0f9229176d086bf1",
+          "version": "0.45.0"
         }
       },
       {
