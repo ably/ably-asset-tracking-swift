@@ -18,7 +18,7 @@
 		180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B7258634420014B310 /* LaunchScreen.storyboard */; };
 		188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */; };
 		AD0F84B52677D6C900C15DB7 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */; };
-		AD909F61267CD370004247D6 /* AblyAssetTrackingSubscriber in Frameworks */ = {isa = PBXBuildFile; productRef = AD909F60267CD370004247D6 /* AblyAssetTrackingSubscriber */; };
+		D5F32550272945A4008D9DC2 /* AblyAssetTrackingSubscriber in Frameworks */ = {isa = PBXBuildFile; productRef = D5F3254F272945A4008D9DC2 /* AblyAssetTrackingSubscriber */; };
 		F618BA8E25C99EF800B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F618BA8D25C99EF800B69885 /* Environment.swift */; };
 		F67E661525F8C221001CF9BB /* ResolutionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661425F8C221001CF9BB /* ResolutionHelper.swift */; };
 		F67E661825F8C507001CF9BB /* DescriptionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661725F8C507001CF9BB /* DescriptionsHelper.swift */; };
@@ -40,6 +40,7 @@
 		AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		ADAAE6192661562B00A8F214 /* Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAAE61F266157C800A8F214 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5F3254E2729450E008D9DC2 /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
 		F618BA8D25C99EF800B69885 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		F618BA9D25C9A73500B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		F67E661425F8C221001CF9BB /* ResolutionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolutionHelper.swift; sourceTree = "<group>"; };
@@ -51,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD909F61267CD370004247D6 /* AblyAssetTrackingSubscriber in Frameworks */,
+				D5F32550272945A4008D9DC2 /* AblyAssetTrackingSubscriber in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +62,7 @@
 		180F60C9258632B40014B310 = {
 			isa = PBXGroup;
 			children = (
+				D5F3254D2729450E008D9DC2 /* Packages */,
 				180F61B5258634420014B310 /* Resources */,
 				180F61A9258634420014B310 /* Sources */,
 				180F60D3258632B40014B310 /* Products */,
@@ -137,6 +139,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		D5F3254D2729450E008D9DC2 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D5F3254E2729450E008D9DC2 /* ably-asset-tracking-swift */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		D8E7ACFB43B945847EF8DCA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,7 +183,7 @@
 			);
 			name = SubscriberExample;
 			packageProductDependencies = (
-				AD909F60267CD370004247D6 /* AblyAssetTrackingSubscriber */,
+				D5F3254F272945A4008D9DC2 /* AblyAssetTrackingSubscriber */,
 			);
 			productName = SubscriberExample;
 			productReference = 180F60D2258632B40014B310 /* SubscriberExample.app */;
@@ -203,7 +213,6 @@
 			);
 			mainGroup = 180F60C9258632B40014B310;
 			packageReferences = (
-				AD909F5F267CD370004247D6 /* XCRemoteSwiftPackageReference "ably-asset-tracking-swift" */,
 			);
 			productRefGroup = 180F60D3258632B40014B310 /* Products */;
 			projectDirPath = "";
@@ -461,21 +470,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		AD909F5F267CD370004247D6 /* XCRemoteSwiftPackageReference "ably-asset-tracking-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ably/ably-asset-tracking-swift";
-			requirement = {
-				branch = "148/swift-package-manager";
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		AD909F60267CD370004247D6 /* AblyAssetTrackingSubscriber */ = {
+		D5F3254F272945A4008D9DC2 /* AblyAssetTrackingSubscriber */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AD909F5F267CD370004247D6 /* XCRemoteSwiftPackageReference "ably-asset-tracking-swift" */;
 			productName = AblyAssetTrackingSubscriber;
 		};
 /* End XCSwiftPackageProductDependency section */

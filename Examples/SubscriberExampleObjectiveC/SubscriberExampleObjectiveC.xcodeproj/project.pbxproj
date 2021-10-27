@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,7 @@
 		AD909F44267CD299004247D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD909F3E267CD299004247D6 /* Assets.xcassets */; };
 		AD909F45267CD299004247D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD909F3F267CD299004247D6 /* LaunchScreen.storyboard */; };
 		AD909F46267CD299004247D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD909F41267CD299004247D6 /* Main.storyboard */; };
-		AD909F47267CD299004247D6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD909F43267CD299004247D6 /* Info.plist */; };
+		D5F3255927294A5B008D9DC2 /* AblyAssetTrackingSubscriber in Frameworks */ = {isa = PBXBuildFile; productRef = D5F3255827294A5B008D9DC2 /* AblyAssetTrackingSubscriber */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +30,7 @@
 		AD909F42267CD299004247D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD909F43267CD299004247D6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubscriberExampleObjectiveC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5F3255627294A43008D9DC2 /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5F3255927294A5B008D9DC2 /* AblyAssetTrackingSubscriber in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,12 +70,29 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D5F3255527294A43008D9DC2 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D5F3255627294A43008D9DC2 /* ably-asset-tracking-swift */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		D5F3255727294A5B008D9DC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F6D4CF1525D661EA0071A6A9 = {
 			isa = PBXGroup;
 			children = (
+				D5F3255527294A43008D9DC2 /* Packages */,
 				AD909F3D267CD299004247D6 /* Resources */,
 				AD909F31267CD295004247D6 /* Sources */,
 				D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */,
+				D5F3255727294A5B008D9DC2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,6 +112,9 @@
 			dependencies = (
 			);
 			name = SubscriberExampleObjectiveC;
+			packageProductDependencies = (
+				D5F3255827294A5B008D9DC2 /* AblyAssetTrackingSubscriber */,
+			);
 			productName = SubscriberExampleObjectiveC;
 			productReference = D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */;
 			productType = "com.apple.product-type.application";
@@ -133,7 +155,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD909F47267CD299004247D6 /* Info.plist in Resources */,
 				AD909F46267CD299004247D6 /* Main.storyboard in Resources */,
 				AD909F44267CD299004247D6 /* Assets.xcassets in Resources */,
 				AD909F45267CD299004247D6 /* LaunchScreen.storyboard in Resources */,
@@ -295,7 +316,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = SubscriberExampleObjectiveC/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -313,7 +334,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = SubscriberExampleObjectiveC/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -346,6 +367,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D5F3255827294A5B008D9DC2 /* AblyAssetTrackingSubscriber */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AblyAssetTrackingSubscriber;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F6D4CF1625D661EA0071A6A9 /* Project object */;
 }

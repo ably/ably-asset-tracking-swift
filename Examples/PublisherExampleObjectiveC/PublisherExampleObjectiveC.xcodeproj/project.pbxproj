@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,8 @@
 		AD909F5B267CD2B1004247D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD909F55267CD2B1004247D6 /* Assets.xcassets */; };
 		AD909F5C267CD2B1004247D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD909F56267CD2B1004247D6 /* LaunchScreen.storyboard */; };
 		AD909F5D267CD2B1004247D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD909F58267CD2B1004247D6 /* Main.storyboard */; };
-		AD909F5E267CD2B1004247D6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD909F5A267CD2B1004247D6 /* Info.plist */; };
+		D5761F8D2729509E003A0175 /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = D5761F8C2729509E003A0175 /* AblyAssetTrackingPublisher */; };
+		D5761F902729512F003A0175 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = D5761F8F2729512F003A0175 /* Amplify */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		AD909F57267CD2B1004247D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD909F59267CD2B1004247D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD909F5A267CD2B1004247D6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5761F8A2729508A003A0175 /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
 		D58D2F25269C40D100693374 /* PublisherExampleObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExampleObjectiveC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58D2F26269C40D100693374 /* PublisherExampleObjectiveCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PublisherExampleObjectiveCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -48,6 +50,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5761F8D2729509E003A0175 /* AblyAssetTrackingPublisher in Frameworks */,
+				D5761F902729512F003A0175 /* Amplify in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,13 +90,30 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D5761F892729508A003A0175 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D5761F8A2729508A003A0175 /* ably-asset-tracking-swift */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		D5761F8B2729509E003A0175 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F66AEDF025D3D7D60077D67C = {
 			isa = PBXGroup;
 			children = (
+				D5761F892729508A003A0175 /* Packages */,
 				AD909F54267CD2B1004247D6 /* Resources */,
 				AD909F48267CD2AE004247D6 /* Sources */,
 				D58D2F25269C40D100693374 /* PublisherExampleObjectiveC.app */,
 				D58D2F26269C40D100693374 /* PublisherExampleObjectiveCTests.xctest */,
+				D5761F8B2729509E003A0175 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +133,10 @@
 			dependencies = (
 			);
 			name = PublisherExampleObjectiveC;
+			packageProductDependencies = (
+				D5761F8C2729509E003A0175 /* AblyAssetTrackingPublisher */,
+				D5761F8F2729512F003A0175 /* Amplify */,
+			);
 			productName = PublisherExampleObjectiveC;
 			productReference = D58D2F25269C40D100693374 /* PublisherExampleObjectiveC.app */;
 			productType = "com.apple.product-type.application";
@@ -160,6 +185,9 @@
 				Base,
 			);
 			mainGroup = F66AEDF025D3D7D60077D67C;
+			packageReferences = (
+				D5761F8E2729512F003A0175 /* XCRemoteSwiftPackageReference "amplify-ios" */,
+			);
 			productRefGroup = F66AEDF025D3D7D60077D67C;
 			projectDirPath = "";
 			projectRoot = "";
@@ -175,7 +203,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD909F5E267CD2B1004247D6 /* Info.plist in Resources */,
 				AD909F5D267CD2B1004247D6 /* Main.storyboard in Resources */,
 				AD909F5B267CD2B1004247D6 /* Assets.xcassets in Resources */,
 				AD909F5C267CD2B1004247D6 /* LaunchScreen.storyboard in Resources */,
@@ -359,7 +386,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = PublisherExampleObjectiveC/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -377,7 +404,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = PublisherExampleObjectiveC/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,6 +486,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D5761F8E2729512F003A0175 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D5761F8C2729509E003A0175 /* AblyAssetTrackingPublisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AblyAssetTrackingPublisher;
+		};
+		D5761F8F2729512F003A0175 /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5761F8E2729512F003A0175 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = Amplify;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F66AEDF125D3D7D60077D67C /* Project object */;
 }

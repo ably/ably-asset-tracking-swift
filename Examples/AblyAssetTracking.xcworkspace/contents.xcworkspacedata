@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:SubscriberExample/SubscriberExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PublisherExample/PublisherExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PublisherExampleObjectiveC/PublisherExampleObjectiveC.xcodeproj">
+   </FileRef>
+</Workspace>

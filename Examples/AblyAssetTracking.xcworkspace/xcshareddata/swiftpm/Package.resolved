@@ -14,9 +14,9 @@
         "package": "Amplify",
         "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
         "state": {
-          "branch": null,
-          "revision": "248eba7c6134cf804a2e09f9f5ac2f8c52f5391b",
-          "version": "1.14.0"
+          "branch": "main",
+          "revision": "a1d1661ca3652c21978b1d22100b5e295b913c85",
+          "version": null
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
         "state": {
           "branch": null,
-          "revision": "c2a17883d70e26af054de7da73a5b5043a87af3a",
-          "version": "2.26.1"
+          "revision": "ef0968c0e47a55047c0dbc3bb6ed08789aa5d081",
+          "version": "2.26.2"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-common-ios.git",
         "state": {
           "branch": null,
-          "revision": "98893cfe86f3aeed89d852f406d74a1756f71dad",
-          "version": "19.0.0"
+          "revision": "0344eb61ec9e3cf96c81b1767354a8a3cd1246fc",
+          "version": "20.0.0"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-core-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "a5561019739925ba364263d3cf0dc58e1133a9ea",
-          "version": "10.0.0-rc.9.1"
+          "revision": "fd3b7e65b51fd984831c1337876b038ed183480b",
+          "version": "10.0.0"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-directions-swift.git",
         "state": {
           "branch": null,
-          "revision": "66331524fd25a052e0cd196e1f56d2f659b7c652",
-          "version": "2.0.0-rc.3"
+          "revision": "f95be4f764acb0ea40ab11184e09825d3046d14f",
+          "version": "2.0.0"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-events-ios.git",
         "state": {
           "branch": null,
-          "revision": "1df12e2514513acdf87841cde1f98fd8e414461e",
-          "version": "1.0.4"
+          "revision": "e29f48d9ed02b31ef51f9774a9c45f1d7c2c2b78",
+          "version": "1.0.6"
         }
       },
       {
@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "3557fa41b15e465852b38b93cc00b52fc8b9d1aa",
-          "version": "10.0.0-rc.9"
+          "revision": "ff273a812f0414537cfb6f55d4945bf377195269",
+          "version": "10.0.1"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
         "state": {
           "branch": null,
-          "revision": "53021fa005777052c2b5dc8ba15b3223e81051a6",
-          "version": "2.0.0-rc.4"
+          "revision": "03523ae1a59e8949bf20fa09b2e6ee25ef5a05d5",
+          "version": "2.0.0"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
         "state": {
           "branch": null,
-          "revision": "7d6c2e675e01178a9329ee67cc061f3de56be92e",
-          "version": "68.0.0"
+          "revision": "bf5aef37100cc0daecb690f0017326af3abbdd8d",
+          "version": "69.0.2"
         }
       },
       {
@@ -114,8 +114,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-speech-swift.git",
         "state": {
           "branch": null,
-          "revision": "7b04b5173eb985a260083dfbeb9a3567d46a0333",
-          "version": "2.0.0-rc.1"
+          "revision": "b0a6008c184c1010dac11e14bf20afe4261d8c36",
+          "version": "2.0.0"
         }
       },
       {
@@ -150,8 +150,8 @@
         "repositoryURL": "https://github.com/jpsim/SourceKitten.git",
         "state": {
           "branch": null,
-          "revision": "7f4be006fe73211b0fd9666c73dc2f2303ffa756",
-          "version": "0.31.0"
+          "revision": "558628392eb31d37cb251cfe626c53eafd330df6",
+          "version": "0.31.1"
         }
       },
       {
@@ -177,17 +177,17 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
         "state": {
           "branch": null,
-          "revision": "9564d61b08a5335ae0a36f789a7d71493eacadfc",
-          "version": "0.3.2"
+          "revision": "d2930e8fcf9c33162b9fcc1d522bc975e2d4179b",
+          "version": "1.0.1"
         }
       },
       {
         "package": "swift-log",
         "repositoryURL": "https://github.com/apple/swift-log",
         "state": {
-          "branch": "main",
-          "revision": "a7e6d7fef58b8909ec9463a492e257ab00d89a4b",
-          "version": null
+          "branch": null,
+          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
+          "version": "1.4.2"
         }
       },
       {
@@ -200,21 +200,12 @@
         }
       },
       {
-        "package": "SwiftCLI",
-        "repositoryURL": "https://github.com/jakeheis/SwiftCLI",
-        "state": {
-          "branch": null,
-          "revision": "2e949055d9797c1a6bddcda0e58dada16cc8e970",
-          "version": "6.0.3"
-        }
-      },
-      {
         "package": "SwiftLint",
         "repositoryURL": "https://github.com/realm/SwiftLint",
         "state": {
           "branch": null,
-          "revision": "e820e750b08bd67bc9d98f4817868e9bc3d5d865",
-          "version": "0.44.0"
+          "revision": "99465e659fb91facab5b1d3c0f9229176d086bf1",
+          "version": "0.45.0"
         }
       },
       {
@@ -240,8 +231,8 @@
         "repositoryURL": "https://github.com/mapbox/turf-swift.git",
         "state": {
           "branch": null,
-          "revision": "555458bd67acce7322c513ddd3647c9a904f4197",
-          "version": "2.0.0-rc.1"
+          "revision": "dccd79aee4c21298d1beb81cc0e86eccbe911ae0",
+          "version": "2.0.0"
         }
       },
       {
