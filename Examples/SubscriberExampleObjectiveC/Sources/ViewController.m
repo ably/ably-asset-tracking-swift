@@ -1,5 +1,4 @@
 #import "ViewController.h"
-//#import <AblyAssetTrackingSubscriber-Swift.h>
 @import AblyAssetTrackingSubscriber;
 
 @interface ViewController ()
