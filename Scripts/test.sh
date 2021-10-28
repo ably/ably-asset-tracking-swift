@@ -23,4 +23,4 @@ struct Secrets {
 }
 EOF
 
-xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 12' | xcpretty || exit 1
+set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 12'
