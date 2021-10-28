@@ -16,12 +16,12 @@ jobs:
           echo "login mapbox" >> ~/.netrc
           echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
         env:
-          MAPBOX_DOWNLOADS_TOKEN: sk.eyJ1IjoibC1zenlzemtvd3NraSIsImEiOiJja3ZiMHNhbzAzZWU4MnJscDFoaDZvMmJlIn0.gRYKod9Ha8UygjGLF7Ty3g
+          MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
 
       - name: Run All Tests
         run: ./Scripts/./test.sh
         env:
-          MAPBOX_ACCESS_TOKEN: pk.eyJ1IjoibC1zenlzemtvd3NraSIsImEiOiJja3ZiMHN5cXowOWFkMnNwbnI0cDcxbmJoIn0.mLwe9TnrUpYPY0bt9GoOuQ
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
 
       - name: Xcodebuild Logs Artifact
