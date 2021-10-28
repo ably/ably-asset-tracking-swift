@@ -2,22 +2,19 @@
 
 set -e
 
-# Install xcpretty (https://github.com/xcpretty/xcpretty)
-gem install --user-install xcpretty
-
 # Build AblyAssetTrackingSubscriber lib
 echo
 echo '\033[1mBuild: AblyAssetTrackingSubscriber Library\033[0m'
 echo
 
-xcodebuild -scheme "AblyAssetTrackingSubscriber" -destination "generic/platform=iOS" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+xcodebuild -scheme "AblyAssetTrackingSubscriber" -destination "generic/platform=iOS" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES | xcpretty
 
 # Build AblyAssetTrackingPublisher lib
 echo
 echo '\033[1mBuild: AblyAssetTrackingPublisher Library\033[0m'
 echo
 
-xcodebuild -scheme "AblyAssetTrackingPublisher" -destination "generic/platform=iOS" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+xcodebuild -scheme "AblyAssetTrackingPublisher" -destination "generic/platform=iOS" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES | xcpretty
 
 # Publisher Example (swift)
 echo

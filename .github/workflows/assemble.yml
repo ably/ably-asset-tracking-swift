@@ -29,4 +29,6 @@ jobs:
           AMPLIFY_CONFIGURATION: ${{ secrets.AMPLIFY_CONFIGURATION }}
 
       - name: Build All Projects
-        run: ./Scripts/./assemble.sh
+        run: |
+            bundle install
+            ./Scripts/./assemble.sh
