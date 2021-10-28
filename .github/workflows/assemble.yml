@@ -29,8 +29,4 @@ jobs:
           AMPLIFY_CONFIGURATION: ${{ secrets.AMPLIFY_CONFIGURATION }}
 
       - name: Build All Projects
-        run: |
-          bundle install
-          fastlane build_subscriber
-          fastlane build_publisher
-          fastlane build_example_apps
+        run: ./Scripts/./assemble.sh
