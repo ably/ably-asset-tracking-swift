@@ -1,4 +1,4 @@
-# Ably SDK Contributing
+# Asset Tracking Swift - CONTRIBUTING.md
 
 ## Contributing to the Ably Asset Tracking SDKs for Swift & Objective-C
 
@@ -50,13 +50,19 @@ To open the project in the Xcode IDE, double click on the `Package.swift` file.
 
 To run tests from Xcode IDE, select the `ably-asset-tracking-swift-Package` scheme, select **_Product_** **_\-> Test_** _or use the keyboard shortcut_ **⌘U**
 
-### Running examples
+### Building Platform-Specific Documentation
 
-To run examples, you have set up the Mapbox and Ably tokens in the `Examples/Secrets.xcconfig` file.
+_This repo uses_ [_jazzy_][5] _to build documentation._
+
+Run `bundle install` to install the required tools.
+
+Run `jazzy/build.sh` to build the documentation.
+
+The above command will generate HTML files that are located in the `docs` directory.
 
 ### Release Process
 
-Releases should always be made through a release pull request (PR), which must bump the version number and add to the [changelog][5].
+Releases should always be made through a release pull request (PR), which must bump the version number and add to the [changelog][6].
 
 The release process must include the following steps:
 
@@ -74,4 +80,5 @@ The release process must include the following steps:
 [2]: https://docs.mapbox.com/ios/search/guides/install/#configure-credentials
 [3]: https://docs.mapbox.com/ios/search/guides/install/#configure-credentials
 [4]: https://developer.apple.com/xcode/
-[5]: https://github.com/ably/ably-asset-tracking-swift/blob/main/CHANGELOG.md
+[5]: https://github.com/realm/jazzy
+[6]: https://github.com/ably/ably-asset-tracking-swift/blob/main/CHANGELOG.md
