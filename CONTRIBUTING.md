@@ -6,30 +6,30 @@ _This repository supports iOS only. It doesn't support macOS. Any tries to build
 
 ### Project structure
 
-This repository is structured as "[Swift Package Manager][1]" (SPM).
+This repository is structured as [Swift Package Manager][1] (SPM).
 
-Project source code is located in the **"/Sources"** directory
+Project source code is located in the **Sources** directory.
 
-Project tests are located in the **"/Tests"** directory
+Project tests are located in the **Tests** directory.
 
-Project examples are located in the **"/Examples"** directory
+Project examples are located in the **Examples** directory.
 
 The product of this project are two libraries:
 
 - `AblyAssetTrackingSubscriber`
 - `AblyAssetTrackingPublisher`
 
-defined in the "**Package.swift**" file
+defined in the `Package.swift` file
 
 ### API Keys and Access Tokens
 
-The Mapbox and the Ably SDK keys and tokens are required to run the "**SystemTests**".
+The Mapbox and the Ably SDK keys and tokens are required to run the **SystemTests**.
 
 Configuration of download token for Mapbox SDK is described [here][2].
 
 ### Development
 
-Since the SPM command doesn't support testing on a specified destination, like "iOS, iOS Simulator or macOS", the recommended way is to use the "xcodebuild" command when used from the command line.
+The SPM command doesn't support testing on a specified destination, like "iOS, iOS, tvOS Simulator or macOS" when creating this document. The recommended way is to use the "xcodebuild" command when used from the command line.
 
 ### Running tests from the command line
 
@@ -46,9 +46,9 @@ Run `Scripts/test.sh` to start the tests.
 
 The recommended IDE for working on this project is the [Xcode][4].
 
-To open the project in the Xcode IDE, double click on the **"Package.swift"** file.
+To open the project in the Xcode IDE, double click on the `Package.swift` file.
 
-To run tests from Xcode IDE, select **the "ably-asset-tracking-swift-Package"** scheme, select **_Product_** **_\-> Test_** _or use the keyboard shortcut_ **⌘U**
+To run tests from Xcode IDE, select the `ably-asset-tracking-swift-Package` scheme, select **_Product_** **_\-> Test_** _or use the keyboard shortcut_ **⌘U**
 
 ### Running examples
 
