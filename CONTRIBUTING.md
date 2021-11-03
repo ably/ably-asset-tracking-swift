@@ -1,10 +1,8 @@
-# Asset Tracking Swift - CONTRIBUTING.md
-
-## Contributing to the Ably Asset Tracking SDKs for Swift & Objective-C
+# Contributing to the Ably Asset Tracking SDKs for Swift & Objective-C
 
 _This repository supports iOS only. It doesn't support macOS. Any tries to build or test for macOS will cause an error._
 
-### Project structure
+## Project structure
 
 This repository is structured as [Swift Package Manager][1] (SPM).
 
@@ -21,17 +19,17 @@ The product of this project are two libraries:
 
 defined in the `Package.swift` file
 
-### API Keys and Access Tokens
+## API Keys and Access Tokens
 
 The Mapbox and the Ably SDK keys and tokens are required to run the **SystemTests**.
 
 Configuration of download token for Mapbox SDK is described [here][2].
 
-### Development
+## Development
 
 The SPM command doesn't support testing on a specified destination, like "iOS, iOS, tvOS Simulator or macOS" when creating this document. The recommended way is to use the "xcodebuild" command when used from the command line.
 
-### Running tests from the command line
+## Running tests from the command line
 
 To run tests, you have to configure the download token for the Mapbox described [here][3] and then set environment variables:
 
@@ -42,7 +40,7 @@ To run tests, you have to configure the download token for the Mapbox described 
 
 Run `Scripts/test.sh` to start the tests.
 
-### Running tests from Xcode IDE
+## Running tests from Xcode IDE
 
 The recommended IDE for working on this project is the [Xcode][4].
 
@@ -50,7 +48,7 @@ To open the project in the Xcode IDE, double click on the `Package.swift` file.
 
 To run tests from Xcode IDE, select the `ably-asset-tracking-swift-Package` scheme, select **_Product_** **_\-> Test_** _or use the keyboard shortcut_ **⌘U**
 
-### Building Platform-Specific Documentation
+## Building Platform-Specific Documentation
 
 _This repo uses_ [_jazzy_][5] _to build documentation._
 
@@ -60,7 +58,7 @@ Run `jazzy/build.sh` to build the documentation.
 
 The above command will generate HTML files that are located in the `docs` directory.
 
-### Release Process
+## Release Process
 
 Releases should always be made through a release pull request (PR), which must bump the version number and add to the [changelog][6].
 
