@@ -76,6 +76,16 @@ These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be develo
 
 _You can find the version on the [releases](https://github.com/ably/ably-asset-tracking-swift/releases) page._
 
+## Example Apps
+
+- Configure your Mapbox credentials (`~/.netrc`) to download the Mapbox SDK by following [this](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) guide. You'll need a Mapbox account.
+- An `Examples/Secrets.xcconfig` file containing credentials (keys/ tokens) is required to build the example apps. (You can use the example `Examples/Example.Secrets.xcconfig`, e.g. by running `cp Examples/Example.Secrets.xcconfig Examples/Secrets.xcconfig`). Update the following values in `Examples/Secrets.xcconfig`:
+- `ABLY_API_KEY`: Used by all example apps to authenticate with Ably using basic authentication. Not recommended in production, and can be taken from [here](https://ably.com/accounts).
+- `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs, and can be taken from [here](https://account.mapbox.com/). Using the Mapbox token is only required to run the **Publisher** example apps.
+- Open `AblyAssetTracking.xcworkspace` to open an Xcode workspace containing example apps and the Swift Package containing the SDKs that showcase how to use the Ably Asset Tracking SDKs.
+
+## Usage
+
 ### Publisher SDK
 
 The Asset Publisher SDK can efficiently acquire the location data on a device and publish location updates to other subscribers in realtime. Here is an example of how the Asset Publisher SDK can be used:
@@ -178,15 +188,24 @@ let connectionConfiguration = ConnectionConfiguration(authUrl: authUrl, clientId
 
 ```
 
-### Example Apps
+## Resources
+- [Asset Tracking Documentation](https://ably.com/documentation/asset-tracking)
+- [Ably Documentation](https://ably.com/documentation)
 
-- Configure your Mapbox credentials (`~/.netrc`) to download the Mapbox SDK by following [this](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) guide. You'll need a Mapbox account.
-- An `Examples/Secrets.xcconfig` file containing credentials (keys/ tokens) is required to build the example apps. (You can use the example `Examples/Example.Secrets.xcconfig`, e.g. by running `cp Examples/Example.Secrets.xcconfig Examples/Secrets.xcconfig`). Update the following values in `Examples/Secrets.xcconfig`:
-- `ABLY_API_KEY`: Used by all example apps to authenticate with Ably using basic authentication. Not recommended in production, and can be taken from [here](https://ably.com/accounts).
-- `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs, and can be taken from [here](https://account.mapbox.com/). Using the Mapbox token is only required to run the **Publisher** example apps.
-- Open `AblyAssetTracking.xcworkspace` to open an Xcode workspace containing example apps and the Swift Package containing the SDKs that showcase how to use the Ably Asset Tracking SDKs.
+## Feature Support
+iOS Client Library [feature support matrix](https://ably.com/documentation/asset-tracking).
 
-### Contributing
+## Support, feedback and troubleshooting
+Please visit http://support.ably.com/ for access to our knowledgebase and to ask for any assistance.
+
+You can also view the [community reported Github issues](https://github.com/ably/ably-asset-tracking-swift/issues).
+
+To see what has changed in recent versions, see the [CHANGELOG](https://github.com/ably/ably-asset-tracking-swift/blob/main/CHANGELOG.md).
+
+## Known Limitations
+These SDKs support iOS and iPadOS. Support for macOS / tvOS may be developed in the future, depending on interest / demand.
+
+## Contributing
 
 For guidance on how to contribute to this project, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
