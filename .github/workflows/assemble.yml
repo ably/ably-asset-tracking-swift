@@ -31,4 +31,4 @@ jobs:
       - name: Build All Projects
         run: |
             bundle install
-            ./Scripts/./assemble.sh
+            ./Scripts/assemble.sh
