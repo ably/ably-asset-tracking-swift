@@ -121,7 +121,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             .connection(configuration)
             .mapboxConfiguration(MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken))
             .log(logConfiguration)
-            .locationSource(LocationSource(locationSource: [CLLocation(latitude: 0.0, longitude: 0.0)]))
+            .locationSource(LocationSource(locationSource: [CLLocation(latitude: 0.0, longitude: 0.0), CLLocation(latitude: 1.0, longitude: 1.0)]))
             .routingProfile(.driving)
             .delegate(publisherDelegate)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
