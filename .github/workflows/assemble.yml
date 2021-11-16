@@ -30,7 +30,5 @@ jobs:
 
       - name: Build All Projects
         run: |
-          bundle install
-          fastlane build_subscriber
-          fastlane build_publisher
-          fastlane build_example_apps
+            bundle install
+            ./Scripts/assemble.sh
