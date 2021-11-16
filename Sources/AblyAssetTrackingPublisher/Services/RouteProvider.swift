@@ -16,7 +16,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
 
     init(mapboxConfiguration: MapboxConfiguration) {
         locationManager = CLLocationManager()
-        directions = Directions(credentials: mapboxConfiguration.getCredentians())
+        directions = Directions(credentials: mapboxConfiguration.getCredentials())
 
         super.init()
     }
