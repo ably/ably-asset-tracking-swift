@@ -67,8 +67,19 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         
         let trackable = Trackable(id: trackableId)
-        publisher.add(trackable: trackable) { _ in
-            self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: self.locationsData.locations[0].toCoreLocation()))
+        publisher.add(trackable: trackable) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
+            switch result {
+            case .success:
+                self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: self.locationsData.locations[0].toCoreLocation()))
+            case .failure(let error):
+                XCTFail("\(error)")
+                self.didUpdateEnhancedLocationExpectation.fulfill()
+            }
+            
         }
         
         wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
