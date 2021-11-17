@@ -37,7 +37,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
         } catch {
-            print(error)
+            XCTFail("Can't find the source of locations `test-locations.json`")
         }
         
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
