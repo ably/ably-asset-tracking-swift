@@ -55,6 +55,11 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         delay(5)
         
+        let defaultLocationService = DefaultLocationService(
+            mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() })
+        )
+        
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
         publisher = DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
@@ -63,33 +68,17 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyService: DefaultAblyPublisherService(configuration: publisherConnectionConfiguration),
-            locationService: locationService,
+            locationService: defaultLocationService,
             routeProvider: routeProvider
         )
         
         
         let trackable = Trackable(id: trackableId)
         didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))
-        publisher.add(trackable: trackable) { [weak self] result in
-            guard let self = self else {
-                return
-            }
-            
-            switch result {
-            case .success:
-                self.delay(5)
-                self.sendLocationsAsync()
-            case .failure(let error):
-                XCTFail("\(error)")
-                self.didUpdateEnhancedLocationExpectation.fulfill()
-            }
-            
-        }
+        publisher.add(trackable: trackable) { _  in }
         
         wait(for: [didUpdateEnhancedLocationExpectation], timeout: 20.0)
-        
-        stopEmmitingLocations = true
-        
+                
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop comppletion closure")
         
