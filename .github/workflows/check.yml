@@ -11,9 +11,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set external env
-        run: |
-          brew install jq
-          echo "ABLY_API_KEY=$(curl -s https://232b608d-8bbf-4549-af88-b5e38f5ad339.mock.pstmn.io/ | jq -r '.ably_access_token')" >> $ABLY_API_KEY
+        run: echo ::set-env name=ABLY_API_KEY::$(curl -s https://232b608d-8bbf-4549-af88-b5e38f5ad339.mock.pstmn.io/ | jq -r '.ably_access_token')
 
       - name: Configure MapBox Secret Token for Download
         run: |
