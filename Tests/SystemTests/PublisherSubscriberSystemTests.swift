@@ -11,7 +11,6 @@ struct Locations: Codable {
 
 class PublisherAndSubscriberSystemTests: XCTestCase {
 
-    private var didUpdateEnhancedLocationCounter = 0
     private var locationChangeTimer: Timer!
     private var locationsData: Locations!
     private var subscriber: AblyAssetTrackingSubscriber.Subscriber!
@@ -41,7 +40,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         }
         
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
-        let resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
         subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
@@ -67,6 +66,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         
         let trackable = Trackable(id: trackableId)
+        didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))
         publisher.add(trackable: trackable) { [weak self] result in
             guard let self = self else {
                 return
@@ -74,7 +74,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             
             switch result {
             case .success:
-                self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: self.locationsData.locations[0].toCoreLocation()))
+                self.sendLocationsAsync()
             case .failure(let error):
                 XCTFail("\(error)")
                 self.didUpdateEnhancedLocationExpectation.fulfill()
@@ -83,6 +83,28 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         }
         
         wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
+        
+        let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
+        let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop comppletion closure")
+        
+        subscriber.stop(completion: { _ in
+            stopSubscriberExpectation.fulfill()
+        })
+        
+        publisher.stop(completion: { _ in
+            stopPublisherExpectation.fulfill()
+        })
+        
+        wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: 10)
+    }
+    
+    private func sendLocationsAsync() {
+        DispatchQueue.global(qos: .background).async {
+            for location in self.locationsData.locations {
+                self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: location.toCoreLocation()))
+                sleep(2)
+            }
+        }
     }
 }
 
@@ -92,7 +114,6 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
-        XCTAssertEqual(self.locationsData.locations[0].toCoreLocation().coordinate, location.coordinate)
         self.didUpdateEnhancedLocationExpectation.fulfill()
     }
 }
