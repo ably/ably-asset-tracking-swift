@@ -16,7 +16,7 @@ platform :ios do
       scheme: 'CoreTests',
       configuration: 'Debug',
       destination: 'platform=iOS Simulator,name=iPhone 12',
-      test: "test"
+      test: ""
     )
   end
 
@@ -26,7 +26,7 @@ platform :ios do
       scheme: 'InternalTests',
       configuration: 'Debug',
       destination: 'platform=iOS Simulator,name=iPhone 12',
-      test: "test"
+      test: ""
     )
   end
 
@@ -36,7 +36,7 @@ platform :ios do
       scheme: 'SubscriberTests',
       configuration: 'Debug',
       destination: 'platform=iOS Simulator,name=iPhone 12',
-      test: "test"
+      test: ""
     )
   end
 
@@ -46,7 +46,7 @@ platform :ios do
       scheme: 'PublisherTests',
       configuration: 'Debug',
       destination: 'platform=iOS Simulator,name=iPhone 12',
-      test: "test"
+      test: ""
     )
   end
 
@@ -57,7 +57,7 @@ platform :ios do
         scheme: 'SystemTests',
         configuration: 'Debug',
         destination: 'platform=iOS Simulator,name=iPhone 12',
-        test: "test"
+        test: ""
       )
     end
 

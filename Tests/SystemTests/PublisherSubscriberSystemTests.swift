@@ -15,6 +15,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private var locationsData: Locations!
     private var subscriber: AblyAssetTrackingSubscriber.Subscriber!
     private var publisher: Publisher!
+    private var stopEmmitingLocations = false
 
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
     private let locationService = MockLocationService()
@@ -48,9 +49,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .log(logConfiguration)
             .delegate(self)
             .trackingId(trackableId)
-            .start(completion: { result in
-                print("SubscriberFactory start: \(result)")
-            })!
+            .start(completion: { _ in })!
+        
+        delay(5)
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
         publisher = DefaultPublisher(
@@ -82,7 +83,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             
         }
         
-        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 20.0)
+        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
+        
+        stopEmmitingLocations = true
         
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop comppletion closure")
@@ -99,12 +102,25 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     }
     
     private func sendLocationsAsync() {
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
             for location in self.locationsData.locations {
+                if self.stopEmmitingLocations {
+                    break
+                }
                 self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: location.toCoreLocation()))
-                sleep(2)
+                self.delay(1.1)
             }
         }
+    }
+    
+    private func delay(_ timeout: TimeInterval) {
+        let delayExpectation = XCTestExpectation()
+        delayExpectation.isInverted = true
+        wait(for: [delayExpectation], timeout: timeout)
     }
 }
 
