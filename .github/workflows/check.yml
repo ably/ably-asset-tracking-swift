@@ -32,3 +32,10 @@ jobs:
         with:
           name: xcodebuild-logs
           path: ~/Library/Developer/Xcode/DerivedData/*/Logs
+
+      - name: Fastlane Logs Artifact
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: fastlane-logs
+          path: ~/Library/Logs/fastlane

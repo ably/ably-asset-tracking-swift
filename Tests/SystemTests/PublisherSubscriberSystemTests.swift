@@ -40,6 +40,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             XCTFail("Can't find the source of locations `test-locations.json`")
         }
         
+        print("LOG: \(locationsData.locations.map({ $0.toCoreLocation().coordinate }))")
+        
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
@@ -112,6 +114,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
                     break
                 }
                 self.locationService.delegate?.locationService(sender: self.locationService, didUpdateEnhancedLocationUpdate: .init(location: location.toCoreLocation()))
+                print("LOG [publisher sent location]: \(location.toCoreLocation().coordinate)")
                 self.delay(1.1)
             }
         }
@@ -130,6 +133,7 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
+        print("LOG [subscriber received location]: \(location.coordinate)")
         self.didUpdateEnhancedLocationExpectation.fulfill()
     }
 }
