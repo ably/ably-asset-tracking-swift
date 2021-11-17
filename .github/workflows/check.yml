@@ -10,8 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set external env
-        run: echo ::set-env name=ABLY_API_KEY::$(curl -s https://232b608d-8bbf-4549-af88-b5e38f5ad339.mock.pstmn.io/ | jq -r '.ably_access_token')
+      - name: Set external env Ably
+        id: ably_token
+        run: echo ::set-output name=token::$(curl -s https://232b608d-8bbf-4549-af88-b5e38f5ad339.mock.pstmn.io/ | jq -r '.ably_access_token')
 
       - name: Configure MapBox Secret Token for Download
         run: |
@@ -20,6 +21,7 @@ jobs:
           echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+          ABLY_API_KEY: ${{ steps.ably_token.outputs.token }}
 
       - name: Run All Tests using Fastlane
         run: |
