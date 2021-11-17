@@ -17,7 +17,6 @@ jobs:
           echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
-          ABLY_API_KEY: 61NQ-g.pnW9Kg:qZzYKILiLPH4VqT5
 
       - name: Run All Tests using Fastlane
         run: |
@@ -25,6 +24,7 @@ jobs:
           fastlane test_all
         env:
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          ABLY_API_KEY: 61NQ-g.pnW9Kg:qZzYKILiLPH4VqT5
 
       - name: Xcodebuild Logs Artifact
         if: always()
