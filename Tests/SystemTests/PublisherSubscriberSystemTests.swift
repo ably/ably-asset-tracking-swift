@@ -77,6 +77,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             
             switch result {
             case .success:
+                self.delay(5)
                 self.sendLocationsAsync()
             case .failure(let error):
                 XCTFail("\(error)")
@@ -85,7 +86,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             
         }
         
-        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
+        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 20.0)
         
         stopEmmitingLocations = true
         
