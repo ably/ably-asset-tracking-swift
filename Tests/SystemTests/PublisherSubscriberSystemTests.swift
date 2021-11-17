@@ -82,7 +82,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             
         }
         
-        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 10.0)
+        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 20.0)
         
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop comppletion closure")
@@ -95,7 +95,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             stopPublisherExpectation.fulfill()
         })
         
-        wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: 10)
+        wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: 5)
     }
     
     private func sendLocationsAsync() {
