@@ -20,7 +20,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private let locationService = MockLocationService()
     private let routeProvider = MockRouteProvider()
     private let resolutionPolicyFactory = MockResolutionPolicyFactory()
-    private let trackableId = "Trackable ID 1 - \(UUID().uuidString)"
+    private let trackableId = "Swift-Trackable_1"// "Trackable ID 1 - \(UUID().uuidString)"
     private let logConfiguration = LogConfiguration()
     private let subscriberClientId: String = {
         "Test-Subscriber_\(UUID().uuidString)"
