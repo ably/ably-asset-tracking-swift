@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set external env
+        run: |
+          brew install jq
+          echo "ABLY_API_KEY=$(curl -s https://232b608d-8bbf-4549-af88-b5e38f5ad339.mock.pstmn.io/ | jq -r '.ably_access_token')" >> $ABLY_API_KEY
+
       - name: Configure MapBox Secret Token for Download
         run: |
           echo "machine api.mapbox.com" >> ~/.netrc
@@ -24,7 +29,6 @@ jobs:
           fastlane test_all
         env:
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
 
       - name: Xcodebuild Logs Artifact
         if: always()
