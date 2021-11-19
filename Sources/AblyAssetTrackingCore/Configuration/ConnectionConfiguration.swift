@@ -25,9 +25,9 @@ public class ConnectionConfiguration: NSObject {
      Connect to Ably using basic authentication (API Key)
      
      - Parameters:
-     - apiKey: API key string obtained from application dashboard.
-     - clientId: Optional identifier to be assigned to this client.
-     - authCallback: A callback that will be used to authenticate with Ably, including at initial connection and for renewing an expired token.
+        - apiKey: API key string obtained from application dashboard.
+        - clientId: Optional identifier to be assigned to this client.
+        - authCallback: A callback that will be used to authenticate with Ably, including at initial connection and for renewing an expired token.
      */
     private init(apiKey: String?,
                  clientId: String?,
@@ -52,9 +52,9 @@ public class ConnectionConfiguration: NSObject {
      Connect to Ably with authCallback authentication, where the authCallback is passed a [TokenRequest]
      
      - Parameters:
-     - authCallbackExpectingTokenRequest: A closure which generates a token request, token details or token string when
-     given token parameters.
-     - clientId: Optional identifier to be assigned to this client.
+        - authCallbackExpectingTokenRequest: A closure which generates a token request, token details or token string when
+        given token parameters.
+        - clientId: Optional identifier to be assigned to this client.
      */
     public convenience init(clientId: String? = nil, authCallback: @escaping AuthCallback) {
         self.init(apiKey: nil,

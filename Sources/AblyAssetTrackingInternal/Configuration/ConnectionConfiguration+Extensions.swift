@@ -29,7 +29,6 @@ extension ConnectionConfiguration {
      receiving Ably types and converting it into Ably Asset Tracking Types,
      and finally converting the output of the callback back into ART types to pass back into Ably-cocoa.
      */
-    // being a ARTAuthCallback (it receives ART types, and outputs ART types (in the callback)).
     private func createAuthCallback(_ authCallback: @escaping AuthCallback) -> (ARTTokenParams, @escaping (ARTTokenDetailsCompatible?, NSError?) -> ()?) -> () {
         func authCallbackWrapper(artTokenParams: ARTTokenParams, callback: @escaping (ARTTokenDetailsCompatible?, NSError?) -> Void?) -> Void {
             let tokenParams = artTokenParams.toTokenParams()
