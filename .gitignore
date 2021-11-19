@@ -6,6 +6,7 @@ xcuserdata/
 
 ## Swift packages
 .build
+.swiftpm
 
 ## Obj-C/Swift specific
 *.hmap
