@@ -61,12 +61,12 @@ extension ConnectionConfiguration {
                     callback(nil, error as NSError)
                 } else if let result = authResult {
                     switch result {
-                    case let jwtResult as ObjcAuthResultJWT:
-                        callback(NSString(utf8String: jwtResult.value), nil)
-                    case let tokenRequestResult as ObjcAuthResultTokenRequest:
-                        callback(tokenRequestResult.value.toARTTokenRequest(), nil)
-                    case let tokenDetailsResult as ObjcAuthResultTokenDetails:
-                        callback(tokenDetailsResult.value.toARTTokenDetails(), nil)
+                    case let jwt as String:
+                        callback(NSString(utf8String: jwt), nil)
+                    case let tokenRequest as TokenRequest:
+                        callback(tokenRequest.toARTTokenRequest(), nil)
+                    case let tokenDetails as TokenDetails:
+                        callback(tokenDetails.toARTTokenDetails(), nil)
                     default:
                         fatalError("Unknown type")
                     }

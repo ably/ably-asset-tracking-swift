@@ -10,30 +10,6 @@ public enum AuthResult {
     case tokenDetails(TokenDetails)
 }
 
-public class ObjcAuthResultJWT: NSObject {
-    public var value: String
-    
-    public init(value: String) {
-        self.value = value
-    }
-}
-
-public class ObjcAuthResultTokenRequest: NSObject {
-    public var value: TokenRequest
-    
-    public init(value: TokenRequest) {
-        self.value = value
-    }
-}
-
-public class ObjcAuthResultTokenDetails: NSObject {
-    public var value: TokenDetails
-    
-    public init(value: TokenDetails) {
-        self.value = value
-    }
-}
-
 public typealias Token = String
 public typealias AuthCallback = (TokenParams, @escaping (Result<AuthResult, Error>) -> Void) -> Void
 public typealias ObjCAuthCallback = (TokenParams, @escaping (AnyObject?, Error?) -> Void) -> Void
