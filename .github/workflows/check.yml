@@ -19,9 +19,7 @@ jobs:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
 
       - name: Run All Tests using Fastlane
-        run: |
-          bundle install
-          fastlane test_all
+        run: ./Scripts/test.sh
         env:
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}
