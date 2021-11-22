@@ -2,7 +2,7 @@
 
 set -e
 BASEDIR=$(dirname "$0")
-WORKSPACE_PATH="${BASEDIR}/../AblyAssetTracking.xcworkspace"
+WORKSPACE_PATH="${BASEDIR}/../Examples/AblyAssetTracking.xcworkspace"
 
 # Jazzy's support for SPM involves using SourceKitten manually to generate json  files, then joining them together with jazzy:
 # https://github.com/realm/jazzy/issues/1194#issuecomment-633012820
