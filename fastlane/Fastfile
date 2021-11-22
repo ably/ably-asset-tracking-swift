@@ -13,6 +13,7 @@ platform :ios do
   desc 'Run Core tests'
   lane :test_core do
     xcodebuild(
+      workspace: './Examples/AblyAssetTracking.xcworkspace',
       scheme: 'CoreTests',
       configuration: 'Debug',
       destination: 'platform=iOS Simulator,name=iPhone 12',
@@ -23,6 +24,7 @@ platform :ios do
   desc 'Run Internal tests'
   lane :test_internal do
     xcodebuild(
+      workspace: './Examples/AblyAssetTracking.xcworkspace',
       scheme: 'InternalTests',
       configuration: 'Debug',
       destination: 'platform=iOS Simulator,name=iPhone 12',
@@ -33,6 +35,7 @@ platform :ios do
   desc 'Run Subscriber tests'
   lane :test_subscriber do
     xcodebuild(
+      workspace: './Examples/AblyAssetTracking.xcworkspace',
       scheme: 'SubscriberTests',
       configuration: 'Debug',
       destination: 'platform=iOS Simulator,name=iPhone 12',
@@ -43,6 +46,7 @@ platform :ios do
   desc 'Run Publisher tests'
   lane :test_publisher do
     xcodebuild(
+      workspace: './Examples/AblyAssetTracking.xcworkspace',
       scheme: 'PublisherTests',
       configuration: 'Debug',
       destination: 'platform=iOS Simulator,name=iPhone 12',
@@ -54,6 +58,7 @@ platform :ios do
     lane :test_system do
       create_secrets
       xcodebuild(
+        workspace: './Examples/AblyAssetTracking.xcworkspace',
         scheme: 'SystemTests',
         configuration: 'Debug',
         destination: 'platform=iOS Simulator,name=iPhone 12',
