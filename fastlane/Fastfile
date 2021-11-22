@@ -113,7 +113,9 @@ platform :ios do
       scheme: 'PublisherExampleObjectiveC',
       configuration: 'Debug',
       sdk: 'iphonesimulator',
-      arch: 'x86_64'
+      arch: 'x86_64',
+      clean: true,
+      build: true
     )
 
     xcodebuild(
@@ -121,7 +123,9 @@ platform :ios do
       scheme: 'SubscriberExampleObjectiveC',
       configuration: 'Debug',
       sdk: 'iphonesimulator',
-      arch: 'x86_64'
+      arch: 'x86_64',
+      clean: true,
+      build: true
     )
   end
 
