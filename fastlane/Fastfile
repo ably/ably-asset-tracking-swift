@@ -65,7 +65,7 @@ platform :ios do
   lane :build_subscriber do
     xcodebuild(
       archive: true,
-      workspace: './AblyAssetTracking.xcworkspace',
+      workspace: './Examples/AblyAssetTracking.xcworkspace',
       scheme: 'AblyAssetTrackingSubscriber',
       destination: 'generic/platform=iOS',
       archive_path: 'archives/Subscriber.xcarchive',
@@ -77,7 +77,7 @@ platform :ios do
   lane :build_publisher do
     xcodebuild(
       archive: true,
-      workspace: './AblyAssetTracking.xcworkspace',
+      workspace: './Examples/AblyAssetTracking.xcworkspace',
       scheme: 'AblyAssetTrackingPublisher',
       destination: 'generic/platform=iOS',
       archive_path: 'archives/Publisher.xcarchive',
