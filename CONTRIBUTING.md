@@ -1,0 +1,90 @@
+# Contributing to the Ably Asset Tracking SDKs for Swift & Objective-C
+
+_This repository supports iOS only. It doesn't support macOS. Any tries to build or test for macOS will cause an error._
+
+## Project structure
+
+This repository is structured as [Swift Package Manager][1] (SPM).
+
+Project source code is located in the **Sources** directory.
+
+Project tests are located in the **Tests** directory.
+
+Project examples are located in the **Examples** directory.
+
+The product of this project are two libraries:
+
+- `AblyAssetTrackingSubscriber`
+- `AblyAssetTrackingPublisher`
+
+defined in the `Package.swift` file
+
+## API Keys and Access Tokens
+
+The Mapbox and the Ably SDK keys and tokens are required to run the **SystemTests**.
+
+Configuration of download token for Mapbox SDK is described [here][2].
+
+## Development
+
+The SPM command doesn't support testing on a specified destination, like "iOS, iOS, tvOS Simulator or macOS" when creating this document. The recommended way is to use the "xcodebuild" command when used from the command line.
+
+## Running tests from the command line
+
+To run tests, you have to configure the download token for the Mapbox described [here][3] and then set environment variables:
+
+- `ABLY_API_KEY` - you can find this key in **your account -> {app name} -> API keys** on https://ably.com
+- `MAPBOX_ACCESS_TOKEN` - you can find this key in **your account -> tokens** on https://mapbox.com
+
+`ABLY_API_KEY` and `MAPBOX_ACCESS_TOKEN` are required to generate the `Secrets.swift` file.
+
+Run `Scripts/test.sh` to start the tests.
+
+## Running tests from Xcode IDE
+
+The recommended IDE for working on this project is the [Xcode][4].
+
+To open the project in the Xcode IDE, double click on the `Package.swift` file.
+
+To run tests from Xcode IDE, select the `ably-asset-tracking-swift-Package` scheme, select **_Product_** **_\-> Test_** _or use the keyboard shortcut_ **⌘U**
+
+## Building Platform-Specific Documentation
+
+_This repo uses_ [_jazzy_][5] _to build documentation._
+
+Run `bundle install` to install the required tools.
+
+Run `jazzy/build.sh` to build the documentation.
+
+The above command will generate HTML files that are located in the `docs` directory.
+
+## Release Process
+
+Releases should always be made through a release pull request (PR), which must bump the version number and add to the [changelog][6].
+
+The release process must include the following steps:
+
+1.  Ensure that all work intended for this release has landed on to `main` branch
+2.  Create a release branch named like release/1.2.3
+3.  Add a commit to bump the version number
+4.  Add a commit to update the changelog
+5.  Push the release branch to GitHub
+6.  Open a PR for the release against the release branch you just pushed
+7.  Gain approval(s) for the release PR from maintainer(s)
+8.  Land the release PR to the `main` branch
+9.  Create a tag named like v1.2.3 and push it to GitHub
+
+## Coding Conventions and Style Guide
+- The SDKs are written in Swift, however they still have to be compatible for use from Objective-C based apps.
+- Favor Protocol Oriented Programming with Dependency Injection when writing any code. We're unable to create automatic mocks in Swift, so it'll be helpful for writing unit tests.
+- SwiftLint is integrated into the project. Make sure that your code does not add any SwiftLint related warning.
+- Please remove default Xcode header comments (with author, license and creation date) as they're not necessary.
+- If you're adding or modifying any part of the public interface of SDK, please also update [QuickHelp](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/SymbolDocumentation.html#//apple_ref/doc/uid/TP40016497-CH51-SW1) documentation.
+- Docs are written for both Swift and ObjC
+
+[1]: https://github.com/apple/swift-package-manager
+[2]: https://docs.mapbox.com/ios/search/guides/install/#configure-credentials
+[3]: https://docs.mapbox.com/ios/search/guides/install/#configure-credentials
+[4]: https://developer.apple.com/xcode/
+[5]: https://github.com/realm/jazzy
+[6]: https://github.com/ably/ably-asset-tracking-swift/blob/main/CHANGELOG.md
