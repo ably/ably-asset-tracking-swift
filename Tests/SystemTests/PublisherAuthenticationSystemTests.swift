@@ -130,7 +130,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
                 return
             }
             
-            resultHandler(ObjcAuthResultTokenDetails(value: tokenDetails), nil)
+            resultHandler(tokenDetails, nil)
         })
         
         testPublisherTrack(configuration: connectionConfiguration)

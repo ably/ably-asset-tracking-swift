@@ -14,7 +14,7 @@
 		AD909F44267CD299004247D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD909F3E267CD299004247D6 /* Assets.xcassets */; };
 		AD909F45267CD299004247D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD909F3F267CD299004247D6 /* LaunchScreen.storyboard */; };
 		AD909F46267CD299004247D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD909F41267CD299004247D6 /* Main.storyboard */; };
-		D5F3255927294A5B008D9DC2 /* AblyAssetTrackingSubscriber in Frameworks */ = {isa = PBXBuildFile; productRef = D5F3255827294A5B008D9DC2 /* AblyAssetTrackingSubscriber */; };
+		D5EBC179274B858700F4A16D /* AblyAssetTrackingSubscriber in Frameworks */ = {isa = PBXBuildFile; productRef = D5EBC178274B858700F4A16D /* AblyAssetTrackingSubscriber */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +30,7 @@
 		AD909F42267CD299004247D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD909F43267CD299004247D6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubscriberExampleObjectiveC.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5F3255627294A43008D9DC2 /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
+		D5EBC176274B857600F4A16D /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5F3255927294A5B008D9DC2 /* AblyAssetTrackingSubscriber in Frameworks */,
+				D5EBC179274B858700F4A16D /* AblyAssetTrackingSubscriber in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,15 +70,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		D5F3255527294A43008D9DC2 /* Packages */ = {
+		D5EBC175274B857600F4A16D /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				D5F3255627294A43008D9DC2 /* ably-asset-tracking-swift */,
+				D5EBC176274B857600F4A16D /* ably-asset-tracking-swift */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
 		};
-		D5F3255727294A5B008D9DC2 /* Frameworks */ = {
+		D5EBC177274B858700F4A16D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -88,11 +88,11 @@
 		F6D4CF1525D661EA0071A6A9 = {
 			isa = PBXGroup;
 			children = (
-				D5F3255527294A43008D9DC2 /* Packages */,
+				D5EBC175274B857600F4A16D /* Packages */,
 				AD909F3D267CD299004247D6 /* Resources */,
 				AD909F31267CD295004247D6 /* Sources */,
 				D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */,
-				D5F3255727294A5B008D9DC2 /* Frameworks */,
+				D5EBC177274B858700F4A16D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,7 +113,7 @@
 			);
 			name = SubscriberExampleObjectiveC;
 			packageProductDependencies = (
-				D5F3255827294A5B008D9DC2 /* AblyAssetTrackingSubscriber */,
+				D5EBC178274B858700F4A16D /* AblyAssetTrackingSubscriber */,
 			);
 			productName = SubscriberExampleObjectiveC;
 			productReference = D58D2F27269C40D100693374 /* SubscriberExampleObjectiveC.app */;
@@ -369,7 +369,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D5F3255827294A5B008D9DC2 /* AblyAssetTrackingSubscriber */ = {
+		D5EBC178274B858700F4A16D /* AblyAssetTrackingSubscriber */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AblyAssetTrackingSubscriber;
 		};

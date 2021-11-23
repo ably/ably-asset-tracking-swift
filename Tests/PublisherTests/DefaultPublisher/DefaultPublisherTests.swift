@@ -853,7 +853,7 @@ class DefaultPublisherTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Track success shouldn't occur when publisher is stopped")
-            case let .failure: ()
+            case .failure: ()
             }
             
             trackAfterStopCompletionExpectation.fulfill()

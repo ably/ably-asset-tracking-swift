@@ -10,7 +10,7 @@ class DefaultLocationService: LocationService {
     weak var delegate: LocationServiceDelegate?
 
     init(mapboxConfiguration: MapboxConfiguration, historyLocation: [CLLocation]?) {
-        let directions = Directions(credentials: mapboxConfiguration.getCredentians())
+        let directions = Directions(credentials: mapboxConfiguration.getCredentials())
         NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
         
         if let historyLocation = historyLocation {
@@ -18,9 +18,8 @@ class DefaultLocationService: LocationService {
         } else {
             replayLocationManager = nil
         }
-
+        
         self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
-
         self.locationManager.delegate = self
     }
 

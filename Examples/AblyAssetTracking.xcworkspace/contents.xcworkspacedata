@@ -2,15 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:SubscriberExample/SubscriberExample.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:PublisherExample/PublisherExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj">
+      location = "group:PublisherExampleObjectiveC/PublisherExampleObjectiveC.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:PublisherExampleObjectiveC/PublisherExampleObjectiveC.xcodeproj">
+      location = "group:SubscriberExample/SubscriberExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SubscriberExampleObjectiveC/SubscriberExampleObjectiveC.xcodeproj">
    </FileRef>
 </Workspace>
