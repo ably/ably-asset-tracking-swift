@@ -1,5 +1,5 @@
 #import "ViewController.h"
-#import <AblyAssetTrackingPublisher-Swift.h>
+@import AblyAssetTrackingPublisher;
 
 @interface ViewController ()
     @property id<Publisher> _Nullable publisher;

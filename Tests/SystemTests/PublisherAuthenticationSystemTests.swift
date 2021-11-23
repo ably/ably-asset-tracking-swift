@@ -26,7 +26,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
     func testPublisherConnectsWithTokenRequest() throws {
         let authCallbackCalledExpectation = self.expectation(description: "Auth Callback complete")
         // When a user configures an AuthCallback
-        let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { tokenParams, authResultHandler in
+        let connectionConfiguration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, authResultHandler in
             // Here, users should make a network request to their auth servers, where their servers create the tokenRequest.
             // To emulate this, we use the api key to create a tokenRequest on the client side.
             let keyTokens = Secrets.ablyApiKey.split(separator: ":")
@@ -55,7 +55,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             )
             authCallbackCalledExpectation.fulfill()
             authResultHandler(.success(.tokenRequest(tokenRequest)))
-        }
+        })
 
         testPublisherTrack(configuration: connectionConfiguration)
     }
@@ -115,13 +115,34 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         testPublisherTrack(configuration: connectionConfiguration)
     }
     
+    func testObjcConnectionConfigurationCallback() {
+        let keyTokens = Secrets.ablyApiKey.split(separator: ":")
+        let keyName = String(keyTokens[0])
+        
+        let fetchedTokenDetails = AuthHelper().requestToken(
+            options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
+            clientId: keyName
+        )
+        
+        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, objcAuthCallback: { tokenParams, resultHandler in
+            guard let tokenDetails = fetchedTokenDetails else {
+                XCTFail("TokenDetails doesn't exist")
+                return
+            }
+            
+            resultHandler(tokenDetails, nil)
+        })
+        
+        testPublisherTrack(configuration: connectionConfiguration)
+    }
+    
     private func testPublisherTrack(configuration: ConnectionConfiguration) {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         let publisher = try! PublisherFactory.publishers()
             .connection(configuration)
             .mapboxConfiguration(MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken))
             .log(logConfiguration)
-            .locationSource(LocationSource(locationSource: [CLLocation(latitude: 0.0, longitude: 0.0)]))
+            .locationSource(LocationSource(locationSource: [CLLocation(latitude: 0.0, longitude: 0.0), CLLocation(latitude: 1.0, longitude: 1.0)]))
             .routingProfile(.driving)
             .delegate(publisherDelegate)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))

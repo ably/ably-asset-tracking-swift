@@ -19,8 +19,8 @@ Ably Asset Tracking is:
 - **built for purpose** - the APIs and underlying functionality are designed specifically to meet the requirements of a range of common asset tracking use-cases
 
 This repo holds an Xcode workspace (`AblyAssetTracking.workspace`), containing:
-- Multiple example apps/ Xcode projects, and
-- One Swift Package (`ably-asset-tracking-swift`), containing 2 libraries/ SDKs:
+- Multiple example apps / Xcode projects, and
+- One Swift Package (`ably-asset-tracking-swift`), containing 2 libraries / SDKs:
    - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingPublisher`.
    - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingSubscriber`.
 
@@ -35,7 +35,7 @@ Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) d
 
 ## Requirements
 
-These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be developed in the future, depending on interest/ demand.
+These SDKs support support iOS and iPadOS. Support for macOS / tvOS may be developed in the future, depending on interest / demand.
 - Publisher SDK: iOS 12.0+ / iPadOS 12.0+
 - Subscriber SDK: iOS 12.0+ / iPadOS 12.0+
 - Xcode 12.4+
@@ -127,9 +127,9 @@ let connectionConfiguration = ConnectionConfiguration(authUrl: authUrl, clientId
 
 - Configure your mapbox credentials (`~/.netrc`) to download the Mapbox SDK by following [this](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) guide. You'll need a Mapbox account. 
 
-- An `Examples/Secrets.xcconfig` file containing credentials (keys/ tokens) is required to build the example apps. (You can use the example `Examples/Example.Secrets.xcconfig`, e.g. by running `cp Examples/Example.Secrets.xcconfig Examples/Secrets.xcconfig`). Update the following values in `Examples/Secrets.xcconfig`:
+- An `Examples/Secrets.xcconfig` file containing credentials (keys / tokens) is required to build the example apps. (You can use the example `Examples/Example.Secrets.xcconfig`, e.g. by running `cp Examples/Example.Secrets.xcconfig Examples/Secrets.xcconfig`). Update the following values in `Examples/Secrets.xcconfig`:
   - `ABLY_API_KEY`: Used by all example apps to authenticate with Ably using basic authentication. Not recommended in production, and can be taken from [here](https://ably.com/accounts).
-  - `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs, and can be taken from [here](https://account.mapbox.com/). This is only required to run the **Publisher** example apps.
+  - `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK / APIs, and can be taken from [here](https://account.mapbox.com/). This is only required to run the **Publisher** example apps.
 - Open `AblyAssetTracking.xcworkspace` to open a Xcode workspace containing example apps and the Swift Package containing the SDKs that showcase how Ably Asset Tracking SDKs can be used.
 
 ## Development
@@ -139,9 +139,9 @@ Open `AblyAssetTracking.swift` using `open AblyAssetTracking.swift`, `xed AblyAs
 Set up a `~/.netrc` file by following the [Example Apps](#example-apps) section. You'll also need the `Examples/Secrets.xcconfig` to run the example applications. 
 ### Package structure
 
-This project is structured as an Xcode Workspace, which contains 1 Swift Package, and 4 Xcode projects (example apps). Xcode can autogenerate schemes which build targets defined in `Package.swift`, run tests for test targets defined in `Package.swift`, and build/ run the Xcode projects.
+This project is structured as an Xcode Workspace, which contains 1 Swift Package, and 4 Xcode projects (example apps). Xcode can autogenerate schemes which build targets defined in `Package.swift`, run tests for test targets defined in `Package.swift`, and build / run the Xcode projects.
 
-These SDKs (libraries/ product in Swift Package terminology) expose targets, which can be imported into a users source code file. We have 4 targets, `AblyAssetTrackingCore`, `AblyAssetTrackingInternal`, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. Internal is the only target not exposed (not `import`able) to users, and is ideal for interfacing with Ably-cocoa in order to hide ably-cocoa interfaces from end users. All public entities in other targets, such as `AblyAssetTrackingCore`, are auto imported by users, via `@_exported import AblyAssetTrackingCore` in `Exports.swift`. All public entities in `AblyAssetTrackingInternal` are public to other targets in the same package, but not to users. `AblyAssetTrackingCore` is exposed to users through both `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber` by using `@_exported`.
+These SDKs (libraries / product in Swift Package terminology) expose targets, which can be imported into a users source code file. We have 4 targets, `AblyAssetTrackingCore`, `AblyAssetTrackingInternal`, `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber`. Internal is the only target not exposed (not `import`able) to users, and is ideal for interfacing with Ably-cocoa in order to hide ably-cocoa interfaces from end users. All public entities in other targets, such as `AblyAssetTrackingCore`, are auto imported by users, via `@_exported import AblyAssetTrackingCore` in `Exports.swift`. All public entities in `AblyAssetTrackingInternal` are public to other targets in the same package, but not to users. `AblyAssetTrackingCore` is exposed to users through both `AblyAssetTrackingPublisher` and `AblyAssetTrackingSubscriber` by using `@_exported`.
 
 **Note:** The user currently has to import both targets in their code to use entities in both Core and Publisher (or Subscriber). In the future, we may expose both `AblyAssetTrackingCore` and `AblyAssetTrackingPublisher` through one target using `@_exported`, so users only need to import one module. Similarly, a new target that joins `AblyAssetTrackingCore` and `AblyAssetTrackingSubscriber` can be created in the future. 
 
@@ -156,7 +156,7 @@ These SDKs (libraries/ product in Swift Package terminology) expose targets, whi
   - To run all tests, run `fastlane test_all`
   - To run only one target, run `fastlane test_target_name`, where test_target_name can be `test_core`, `test_internal` or other test lanes are defined in `./Fastfile`.
 
-### Building/ viewing Jazzy documentation locally
+### Building / viewing Jazzy documentation locally
 - Run `. ./jazzy/build.sh`
 - Open `docs/index.html`
 
