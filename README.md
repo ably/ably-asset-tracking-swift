@@ -1,26 +1,25 @@
 ### Ably SDK
 
-[_Ably_][1] _is the platform that powers synchronized digital experiences in realtime. Whether attending an event in a virtual venue, receiving realtime financial information, or monitoring live car performance data – consumers simply expect realtime digital experiences as standard. Ably provides a suite of APIs to build, extend, and deliver powerful digital experiences in realtime for more than 250 million devices across 80 countries each month. Organizations like Bloomberg, HubSpot, Verizon, and Hopin depend on Ably's platform to offload the growing complexity of business-critical realtime data synchronization at global scale. For more information, see the_ [_Ably documentation_][2]_._
+[_Ably_](https://ably.com/) _is the platform that powers synchronized digital experiences in realtime. Whether attending an event in a virtual venue, receiving realtime financial information, or monitoring live car performance data – consumers simply expect realtime digital experiences as standard. Ably provides a suite of APIs to build, extend, and deliver powerful digital experiences in realtime for more than 250 million devices across 80 countries each month. Organizations like Bloomberg, HubSpot, Verizon, and Hopin depend on Ably's platform to offload the growing complexity of business-critical realtime data synchronization at global scale. For more information, see the_ [_Ably documentation_](https://ably.com/documentation)_._
 
 # Ably Asset Tracking SDKs for Swift & Objective-C
 
 ![.github/workflows/check.yml](https://github.com/ably/ably-asset-tracking-swift/workflows/.github/workflows/check.yml/badge.svg)
 
-
 ### Overview
 
-Ably Asset Tracking SDKs provide an easy way to track multiple assets with realtime location updates powered by the [Ably][3] realtime network and Mapbox [Navigation SDK][4] with location enhancement.
+Ably Asset Tracking SDKs provide an easy way to track multiple assets with realtime location updates powered by the [Ably](https://ably.com/) realtime network and Mapbox [Navigation SDK](https://docs.mapbox.com/android/navigation/overview/) with location enhancement.
 
 ### Status
 
-This SDK is a beta version. That means it contains a subset of the final SDK functionality, and the APIs are subject to change. The latest release of the SDKs is available in the [Releases section][5] of this repository.
+This SDK is a beta version. That means it contains a subset of the final SDK functionality, and the APIs are subject to change. The latest release of the SDKs is available in the [Releases section](https://github.com/ably/ably-asset-tracking-swift/releases) of this repository.
 
 **Ably Asset Tracking is:**
 
 - _easy to integrate_ - comprising two complementary SDKs with easy to use APIs, available for multiple platforms:
 - Asset Publishing SDK, for embedding in apps running on the courier's device.
 - Asset Subscribing SDK, for embedding in apps running on the customer's observing device.
-- _extensible_ - as [Ably][6] is used as the underlying transport, you have direct access to your data and can use [Ably][7] integrations for a wide range of applications in addition to direct realtime subscriptions - examples include:
+- _extensible_ - as [Ably](https://ably.com/) is used as the underlying transport, you have direct access to your data and can use [Ably](https://ably.com/) integrations for a wide range of applications in addition to direct realtime subscriptions - examples include:
 - passing to a 3rd party system
 - persistence for later retrieval
 - _built for purpose_ - the APIs and underlying functionality are explicitly designed to meet the requirements of a range of common asset tracking use-cases
@@ -69,9 +68,7 @@ These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be develo
 - To install this package into a **Swift Package**, add the following to your manifest (`Package.swift`):
 
 ```swift
-
 .package(url: "https://github.com/ably/ably-asset-tracking-swift", from: LATEST_VERSION),
-
 ```
 
 _You can find the version on the [releases](https://github.com/ably/ably-asset-tracking-swift/releases) page._
@@ -91,28 +88,20 @@ _You can find the version on the [releases](https://github.com/ably/ably-asset-t
 The Asset Publisher SDK can efficiently acquire the location data on a device and publish location updates to other subscribers in realtime. Here is an example of how the Asset Publisher SDK can be used:
 
 ```swift
-
 import AblyAssetTrackingPublisher
 
 // Initialise a Publisher
 
 publisher = try? PublisherFactory.publishers() // get a Publisher Builder
-
     .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY, clientId: CLIENT_ID)) // provide Ably configuration with credentials
-
     .log(LogConfiguration()) // provide logging configuration
-
     .transportationMode(TransportationMode()) // provide mode of transportation for better location enhancements
-
     .delegate(self) // provide delegate to handle location updates locally if needed
-
     .start()
     
-
 // Start tracking an asset
 
 publisher?.track(trackable: Trackable(id: trackingId)) // provide a tracking ID of the asset
-
 ```
 
 ### Subscriber SDK
@@ -120,25 +109,17 @@ publisher?.track(trackable: Trackable(id: trackingId)) // provide a tracking ID 
 The Asset Subscriber SDK can be used to receive location updates from a publisher in realtime. Here is an example of how Asset Subscribing SDK can be used:
 
 ```swift
-
 import AblyAssetTrackingSubscriber
 
 // Initialise a Subscriber
 
 subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
-
     .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY, clientId: CLIENT_ID)) // provide Ably configuration with credentials
-
     .trackingId(trackingId) // provide a Tracking ID for the asset to be tracked
-
     .routingProfile(.cycling) // provide a routing profile for better location enhancements
-
     .log(LogConfiguration()) // provide logging configuration
-
     .delegate(self) // provide a delegate to handle received location updates
-
     .start() // start listening to updates
-
 ```
 
 ### Authentication
@@ -155,47 +136,38 @@ let connectionConfiguration = ConnectionConfiguration(apiKey: ABLY_API_KEY, clie
 **To use token authentication, you can pass a closure which will be called when the Ably client needs to authenticate or reauthenticate:**
 
 ```swift
-
 let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { tokenParams, resultHandler in
 
     // Implement a request to your servers which provides either a TokenRequest (simplest), TokenDetails, JWT or token string.
 
     getTokenRequestJSONFromYourServer(tokenParams: tokenParams) { result in
-
         switch result {
-
         case .success(let tokenRequest):
-      
             resultHandler(.success(.tokenRequest(tokenRequest)))
-
         case .failure(let error):
-
             resultHandler(.failure(error))
-
         }
-
     }
-
 }
-
 ```
 
 **Alternatively, in token authentication, you can specify an _authUrl_, which will be used by Ably to authenticate.**
 
 ```swift
-
 let connectionConfiguration = ConnectionConfiguration(authUrl: authUrl, clientId: clientId)
-
 ```
 
 ## Resources
+
 - [Asset Tracking Documentation](https://ably.com/documentation/asset-tracking)
 - [Ably Documentation](https://ably.com/documentation)
 
 ## Feature Support
+
 iOS Client Library [feature support matrix](https://ably.com/documentation/asset-tracking).
 
 ## Support, feedback and troubleshooting
+
 Please visit http://support.ably.com/ for access to our knowledgebase and to ask for any assistance.
 
 You can also view the [community reported Github issues](https://github.com/ably/ably-asset-tracking-swift/issues).
@@ -203,16 +175,9 @@ You can also view the [community reported Github issues](https://github.com/ably
 To see what has changed in recent versions, see the [CHANGELOG](https://github.com/ably/ably-asset-tracking-swift/blob/main/CHANGELOG.md).
 
 ## Known Limitations
+
 These SDKs support iOS and iPadOS. Support for macOS / tvOS may be developed in the future, depending on interest / demand.
 
 ## Contributing
 
 For guidance on how to contribute to this project, see [CONTRIBUTING.md](CONTRIBUTING.md).
-
-[1]: https://ably.com/
-[2]: https://ably.com/documentation
-[3]: https://ably.com/
-[4]: https://docs.mapbox.com/android/navigation/overview/
-[5]: https://github.com/ably/ably-asset-tracking-swift/releases
-[6]: https://ably.com/
-[7]: https://ably.com/
