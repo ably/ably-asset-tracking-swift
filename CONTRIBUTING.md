@@ -4,7 +4,7 @@ _This repository supports iOS only. It doesn't support macOS. Any tries to build
 
 ## Project structure
 
-This repository is structured as [Swift Package Manager][1] (SPM).
+This repository is structured as [Swift Package Manager](https://github.com/apple/swift-package-manager) (SPM).
 
 Project source code is located in the **Sources** directory.
 
@@ -23,7 +23,7 @@ defined in the `Package.swift` file
 
 The Mapbox and the Ably SDK keys and tokens are required to run the **SystemTests**.
 
-Configuration of download token for Mapbox SDK is described [here][2].
+Configuration of download token for Mapbox SDK is described [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials).
 
 ## Development
 
@@ -31,7 +31,7 @@ The SPM command doesn't support testing on a specified destination, like "iOS, i
 
 ## Running tests from the command line
 
-To run tests, you have to configure the download token for the Mapbox described [here][3] and then set environment variables:
+To run tests, you have to configure the download token for the Mapbox described [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) and then set environment variables:
 
 - `ABLY_API_KEY` - you can find this key in **your account -> {app name} -> API keys** on https://ably.com
 - `MAPBOX_ACCESS_TOKEN` - you can find this key in **your account -> tokens** on https://mapbox.com
@@ -42,7 +42,7 @@ Run `Scripts/test.sh` to start the tests.
 
 ## Running tests from Xcode IDE
 
-The recommended IDE for working on this project is the [Xcode][4].
+The recommended IDE for working on this project is the [Xcode](https://developer.apple.com/xcode/).
 
 To open the project in the Xcode IDE, double click on the `Package.swift` file.
 
@@ -50,7 +50,7 @@ To run tests from Xcode IDE, select the `ably-asset-tracking-swift-Package` sche
 
 ## Building Platform-Specific Documentation
 
-_This repo uses_ [_jazzy_][5] _to build documentation._
+_This repo uses_ [_jazzy_](https://github.com/realm/jazzy) _to build documentation._
 
 Run `bundle install` to install the required tools.
 
@@ -60,7 +60,7 @@ The above command will generate HTML files that are located in the `docs` direct
 
 ## Release Process
 
-Releases should always be made through a release pull request (PR), which must bump the version number and add to the [changelog][6].
+Releases should always be made through a release pull request (PR), which must bump the version number and add to the [changelog](https://github.com/ably/ably-asset-tracking-swift/blob/main/CHANGELOG.md).
 
 The release process must include the following steps:
 
@@ -75,16 +75,10 @@ The release process must include the following steps:
 9.  Create a tag named like v1.2.3 and push it to GitHub
 
 ## Coding Conventions and Style Guide
+
 - The SDKs are written in Swift, however they still have to be compatible for use from Objective-C based apps.
 - Favor Protocol Oriented Programming with Dependency Injection when writing any code. We're unable to create automatic mocks in Swift, so it'll be helpful for writing unit tests.
 - SwiftLint is integrated into the project. Make sure that your code does not add any SwiftLint related warning.
 - Please remove default Xcode header comments (with author, license and creation date) as they're not necessary.
 - If you're adding or modifying any part of the public interface of SDK, please also update [QuickHelp](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/SymbolDocumentation.html#//apple_ref/doc/uid/TP40016497-CH51-SW1) documentation.
 - Docs are written for both Swift and ObjC
-
-[1]: https://github.com/apple/swift-package-manager
-[2]: https://docs.mapbox.com/ios/search/guides/install/#configure-credentials
-[3]: https://docs.mapbox.com/ios/search/guides/install/#configure-credentials
-[4]: https://developer.apple.com/xcode/
-[5]: https://github.com/realm/jazzy
-[6]: https://github.com/ably/ably-asset-tracking-swift/blob/main/CHANGELOG.md
