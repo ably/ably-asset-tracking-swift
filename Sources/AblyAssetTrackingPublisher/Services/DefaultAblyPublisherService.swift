@@ -85,7 +85,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
             return
         }
 
-        guard let message = createARTMessage(for: locationUpdate) else {
+        guard let message = try? createARTMessage(for: locationUpdate) else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Cannot create location update message."))
             self.delegate?.publisherService(sender: self, didFailWithError: errorInformation)
             return
@@ -105,16 +105,12 @@ class DefaultAblyPublisherService: AblyPublisherService {
             completion?(.success)
         }
     }
-
-    private func createARTMessage(for locationUpdate: EnhancedLocationUpdate) -> ARTMessage? {
-        do {
-            let geoJson = try EnhancedLocationUpdateMessage(locationUpdate: locationUpdate)
-            let data = try geoJson.toJSONString()
-            return ARTMessage(name: EventName.enhanced.rawValue, data: data)
-        } catch let error {
-            self.delegate?.publisherService(sender: self, didFailWithError: ErrorInformation(error: error))
-            return nil
-        }
+    
+    private func createARTMessage(for locationUpdate: EnhancedLocationUpdate) throws -> ARTMessage? {
+        let geoJson = try EnhancedLocationUpdateMessage(locationUpdate: locationUpdate)
+        let data = try geoJson.toJSONString()
+        
+        return ARTMessage(name: EventName.enhanced.rawValue, data: data)
     }
 
     func close(completion: @escaping ResultHandler<Void>) {
