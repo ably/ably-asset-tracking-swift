@@ -89,7 +89,7 @@ extension TrackablesViewController: UITableViewDelegate, UITableViewDataSource {
         publisher?.remove(trackable: trackableToRemove) { [weak self] result in
             guard let self = self else { return }
             
-            switch result {
+            switch result.enumUnwrap(Bool.self) {
             case .success(let wasPresent):
                 let trackable = self.trackables.remove(at: indexPath.row)
                 self.tableView.reloadData()

@@ -112,7 +112,7 @@ class MapViewController: UIViewController {
         locationState = .pending
 
         publisher?.track(trackable: trackable) { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 self?.trackables = [trackable]
                 logger.info("Initial trackable tracked successfully.")
@@ -124,10 +124,10 @@ class MapViewController: UIViewController {
         }
     }
 
-    private func closePublisher(completion: ResultHandler<Void>?) {
+    private func closePublisher(completion: ResultHandler?) {
         trackables.removeAll()
         publisher?.stop { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 logger.info("Publisher closed successfully.")
                 self?.locationState = .failed
@@ -224,7 +224,7 @@ class MapViewController: UIViewController {
         setRoutingProfileAvtivityIndicatorState(isLoading: true)
         publisher?.changeRoutingProfile(profile: routingProfile) { [weak self] result in
             self?.setRoutingProfileAvtivityIndicatorState(isLoading: false)
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 self?.routingProfileLabel.text = DescriptionsHelper.RoutingProfileDescHelper.getDescription(for: routingProfile)
             case .failure(let error):

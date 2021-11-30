@@ -143,7 +143,7 @@ class AddTrackableViewController: UIViewController {
                     return
                 }
                 
-                switch result {
+                switch result.enumUnwrap {
                 case .success:
                     self.delegate?.addTrackableViewController(sender: self, onTrackableAdded: trackable)
                     self.dismiss(animated: true, completion: nil)

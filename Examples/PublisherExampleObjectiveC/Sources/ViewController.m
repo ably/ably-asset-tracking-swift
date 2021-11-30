@@ -42,6 +42,7 @@
                       resolutionPolicyFactory:resolutionPolicy]
                       delegate:delegate]
                       startAndReturnError:NULL];
+
 }
 
 - (void) publisherTrackUsageExample {
@@ -50,12 +51,14 @@
                             metadata:NULL
                             destination:CLLocationCoordinate2DMake(0.0, 0.0)
                             constraints:NULL];
-
+    
     [self.publisher trackWithTrackable:trackable
-      onSuccess:^() {
-        NSLog(@"Track trackable SUCCESS");
-    } onError: ^(ErrorInformation * _Nonnull error) {
-        NSLog(@"Track trackable ERROR: %@", error.message);
+                            completion:^(ATResult * _Nonnull result) {
+        if(result.failure != nil) {
+            NSLog(@"Track trackable ERROR: %@", result.failure.message);
+        } else if (result.success != nil) {
+            NSLog(@"Track trackable SUCCESS");
+        }
     }];
 }
 
@@ -67,19 +70,23 @@
                             constraints:NULL];
     
     [self.publisher addWithTrackable:trackable
-      onSuccess:^() {
-        NSLog(@"Add trackable SUCCESS");
-    } onError: ^(ErrorInformation * _Nonnull error) {
-        NSLog(@"Add trackable ERROR: %@", error.message);
+                          completion:^(ATResult * _Nonnull result) {
+        if (result.failure != nil) {
+            NSLog(@"Add trackable ERROR: %@", result.failure.message);
+        } else if (result.success != nil) {
+            NSLog(@"Add trackable SUCCESS");
+        }
     }];
 }
 
 - (void) publisherChangeRoutingProfileUsageExample {
     [self.publisher changeRoutingProfileWithProfile:RoutingProfileWalking
-      onSuccess:^() {
-        NSLog(@"Change routing profile SUCCESS");
-    } onError:^(ErrorInformation * _Nonnull error) {
-        NSLog(@"Change routing profile ERROR: %@", error.message);
+                                         completion:^(ATResult * _Nonnull result) {
+        if (result.failure != nil) {
+            NSLog(@"Change routing profile ERROR: %@", result.failure.message);
+        } else if (result.success != nil) {
+            NSLog(@"Change routing profile SUCCESS");
+        }
     }];
 }
 
@@ -91,10 +98,12 @@
                             constraints:NULL];
     
     [self.publisher removeWithTrackable:trackable
-      onSuccess:^(BOOL wasPresent) {
-        NSLog(@"Remove trackable SUCCESS. WasPresent: %s", wasPresent ? "TRUE" : "FALSE");
-    } onError:^(ErrorInformation * _Nonnull error) {
-        NSLog(@"Remove trackable ERROR: %@", error.message);
+                             completion:^(ATResult * _Nonnull result) {
+        if (result.failure != nil) {
+            NSLog(@"Remove trackable ERROR: %@", result.failure.message);
+        } else if (result.success != nil) {
+            NSLog(@"Remove trackable SUCCESS. WasPresent: %s", result.success ? "TRUE" : "FALSE");
+        }
     }];
 }
 
