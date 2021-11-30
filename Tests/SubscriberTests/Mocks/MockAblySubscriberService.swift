@@ -8,20 +8,20 @@ class MockAblySubscriberService: AblySubscriberService {
         didSet { wasDelegateSet = true }
     }
     
-    var startCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    var startResultHandler: ResultHandler<Void>?
+    var startCompletionHandler: ((ResultHandler?/*Void*/) -> Void)?
+    var startResultHandler: ResultHandler?/*Void*/
     var startWasCalled: Bool = false
-    func start(completion: @escaping ResultHandler<Void>) {
+    func start(completion: @escaping ResultHandler/*Void*/) {
         startWasCalled = true
         startResultHandler = completion
         
         startCompletionHandler?(completion)
     }
     
-    var stopResultHandler: ResultHandler<Void>?
-    var stopCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    var stopResultHandler: ResultHandler?/*Void*/
+    var stopCompletionHandler: ((ResultHandler?/*Void*/) -> Void)?
     var stopWasCalled: Bool = false
-    func stop(completion: @escaping ResultHandler<Void>) {
+    func stop(completion: @escaping ResultHandler/*Void*/) {
         stopWasCalled = true
         stopResultHandler = completion
         
@@ -30,9 +30,9 @@ class MockAblySubscriberService: AblySubscriberService {
     
     var sendResolutionPreferenceWasCalled: Bool = false
     var sendResolutionPreferenceResolutionParam: Resolution?
-    var sendResolutionPreferenceResultHander: ResultHandler<Void>?
-    var sendResolutionPreferenceCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    func sendResolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+    var sendResolutionPreferenceResultHander: ResultHandler?/*Void*/
+    var sendResolutionPreferenceCompletionHandler: ((ResultHandler?/*Void*/) -> Void)?
+    func sendResolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler/*Void*/) {
         sendResolutionPreferenceWasCalled = true
         sendResolutionPreferenceResolutionParam = resolution
         sendResolutionPreferenceResultHander = completion

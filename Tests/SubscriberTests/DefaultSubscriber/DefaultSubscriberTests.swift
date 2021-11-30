@@ -38,7 +38,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         // When
         subscriber.stop { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 isSuccess.toggle()
             case .failure:
@@ -63,7 +63,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         // When
         subscriber.stop { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success not expected.")
             case .failure(let error):
@@ -96,7 +96,7 @@ class DefaultSubscriberTests: XCTestCase {
         expectation = XCTestExpectation()
         
         subscriber.stop { result in
-            switch result {
+            switch result.enumUnwrap {
             case .failure:
                 XCTFail("Error not expected.")
             case .success:
@@ -128,7 +128,7 @@ class DefaultSubscriberTests: XCTestCase {
         expectation = XCTestExpectation()
         
         subscriber.resolutionPreference(resolution: nil) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success not expected.")
             case .failure(let error):
@@ -192,7 +192,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         // When
         subscriber.resolutionPreference(resolution: resolution) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 isSuccess.toggle()
                 expectation.fulfill()
@@ -218,7 +218,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         // When
         subscriber.resolutionPreference(resolution: resolution) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success not expected")
             case .failure(let error):
@@ -260,7 +260,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         // When
         subscriber.start { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 isSuccess.toggle()
             case .failure:
@@ -285,7 +285,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         // When
         subscriber.start { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success not expected.")
             case .failure(let error):

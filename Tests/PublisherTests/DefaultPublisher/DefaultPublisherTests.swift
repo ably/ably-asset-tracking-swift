@@ -62,7 +62,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When tracking a trackable
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -101,7 +101,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When tracking a trackable with given destination
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -122,7 +122,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When tracking a trackable
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -134,7 +134,7 @@ class DefaultPublisherTests: XCTestCase {
         
         // And tracking it once again
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure(let error):
@@ -156,7 +156,7 @@ class DefaultPublisherTests: XCTestCase {
             let trackable = Trackable(id: "\(trackableIndex)")
             
             publisher.track(trackable: trackable) { result in
-                switch result {
+                switch result.enumUnwrap {
                 case .success:
                     expectation.fulfill()
                 case .failure:
@@ -177,7 +177,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When tracking a trackable and receive error response from AblyPublisherService
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure(let error):
@@ -196,7 +196,7 @@ class DefaultPublisherTests: XCTestCase {
         // Both `onSuccess` and `onError` callbacks should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
                 expectation.fulfill()
@@ -209,7 +209,7 @@ class DefaultPublisherTests: XCTestCase {
         
         expectation = XCTestExpectation()
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure:
@@ -228,7 +228,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When adding a trackable
         publisher.add(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -262,7 +262,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When tracking a trackable
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -271,7 +271,7 @@ class DefaultPublisherTests: XCTestCase {
         }
         // And then adding another trackable
         publisher.add(trackable: Trackable(id: "TestAddedTrackableId1")) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -291,7 +291,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When adding a trackable and receive error response from AblyPublisherService
         publisher.add(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure(let error):
@@ -310,7 +310,7 @@ class DefaultPublisherTests: XCTestCase {
         // `onSuccess` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.add(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
                 expectation.fulfill()
@@ -330,7 +330,7 @@ class DefaultPublisherTests: XCTestCase {
         // `onError` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.add(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure:
@@ -355,7 +355,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When removing trackable
         publisher.remove(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap(Bool.self) {
             case .success(let present):
                 receivedWasPresent = present
                 expectation.fulfill()
@@ -392,7 +392,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When removing trackable which was tracked before (so it's set as the activeTrackable)
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -405,7 +405,7 @@ class DefaultPublisherTests: XCTestCase {
 
         expectation = XCTestExpectation(description: "Handler for `remove` call")
         publisher.remove(trackable: publisher.activeTrackable!) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -438,7 +438,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When removing trackable which was no tracked before (so it's NOT set as the activeTrackable)
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -451,7 +451,7 @@ class DefaultPublisherTests: XCTestCase {
         expectation = XCTestExpectation(description: "Handler for `remove` call")
         let removedTrackable = Trackable(id: "AnotherTrackableId")
         publisher.remove(trackable: removedTrackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 expectation.fulfill()
             case .failure:
@@ -478,7 +478,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When removing trackable and receive error from AblyPublisherService
         publisher.remove(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure(let receivedError):
@@ -498,7 +498,7 @@ class DefaultPublisherTests: XCTestCase {
         // When removing trackable `onSuccess` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.remove(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
                 expectation.fulfill()
@@ -519,7 +519,7 @@ class DefaultPublisherTests: XCTestCase {
         // When removing trackable `onError` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.remove(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure:
@@ -537,7 +537,7 @@ class DefaultPublisherTests: XCTestCase {
     func testChangeRoutingProfile_called() {
         // Given: Default RoutingProfile set to .driving
         publisher.changeRoutingProfile(profile: .cycling) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
                 XCTAssertEqual(self.routeProvider.changeRoutingProfileParamRoutingProfile, .cycling)
@@ -552,7 +552,7 @@ class DefaultPublisherTests: XCTestCase {
         let expectedDestination = CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182)
         
         publisher.changeRoutingProfile(profile: .cycling) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
                 XCTAssertTrue(self.routeProvider.getRouteCalled)
@@ -586,7 +586,7 @@ class DefaultPublisherTests: XCTestCase {
         }
         
         ablyService.close { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Success not expected.")
             case .failure(let error):
@@ -838,7 +838,7 @@ class DefaultPublisherTests: XCTestCase {
         
         let publisherStopExpectation = self.expectation(description: "Publisher stop expectation")
         publisher.stop { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success: ()
             case .failure(let error):
                 XCTFail("Publisher stop failed with error: \(error)")
@@ -850,7 +850,7 @@ class DefaultPublisherTests: XCTestCase {
         
         let trackAfterStopCompletionExpectation = self.expectation(description: "Track after stop event completion expectation")
         publisher.track(trackable: trackable) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 XCTFail("Track success shouldn't occur when publisher is stopped")
             case .failure: ()
