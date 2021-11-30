@@ -5,16 +5,16 @@ import AblyAssetTrackingInternal
 protocol SubscriberEvent {}
 
 struct StartEvent: SubscriberEvent {
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct StopEvent: SubscriberEvent {
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct ChangeResolutionEvent: SubscriberEvent {
     let resolution: Resolution?
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct PresenceUpdateEvent: SubscriberEvent {
@@ -22,7 +22,7 @@ struct PresenceUpdateEvent: SubscriberEvent {
 }
 
 struct AblyConnectionClosedEvent: SubscriberEvent {
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct AblyClientConnectionStateChangedEvent: SubscriberEvent {

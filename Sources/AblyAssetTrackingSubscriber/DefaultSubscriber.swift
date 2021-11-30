@@ -18,7 +18,8 @@ private enum SubscriberState {
     }
 }
 
-class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
+@objc
+class DefaultSubscriber: NSObject, Subscriber {
     private let workingQueue: DispatchQueue
     private let logConfiguration: LogConfiguration
     private let ablyService: AblySubscriberService
@@ -30,17 +31,18 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     private var isPublisherOnline: Bool = false
     
     weak var delegate: SubscriberDelegate?
-    weak var delegateObjectiveC: SubscriberDelegateObjectiveC?
 
     init(logConfiguration: LogConfiguration,
          ablyService: AblySubscriberService) {
         self.logConfiguration = logConfiguration
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
         self.ablyService = ablyService
+        super.init()
+        
         self.ablyService.delegate = self
     }
 
-    func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+    func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler/*Void*/) {
         guard !subscriberState.isStoppingOrStopped else {
             callback(error: ErrorInformation(type: .subscriberStoppedException), handler: completion)
             return
@@ -52,7 +54,7 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     @objc
     func resolutionPreference(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         resolutionPreference(resolution: resolution) { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 onSuccess()
             case .failure(let error):
@@ -61,14 +63,14 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
         }
     }
 
-    func start(completion: @escaping ResultHandler<Void>) {
+    func start(completion: @escaping ResultHandler/*Void*/) {
         enqueue(event: StartEvent(resultHandler: completion))
     }
     
     @objc
     func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         start { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 onSuccess()
             case .failure(let error):
@@ -77,7 +79,7 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
         }
     }
     
-    func stop(completion: @escaping ResultHandler<Void>) {
+    func stop(completion: @escaping ResultHandler/*Void*/) {
         guard !subscriberState.isStoppingOrStopped else {
             callback(value: Void(), handler: completion)
             return
@@ -89,7 +91,7 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     @objc
     func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         stop { result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 onSuccess()
             case .failure(let error):
@@ -116,11 +118,11 @@ extension DefaultSubscriber {
         }
     }
 
-    private func callback<T: Any>(value: T, handler: @escaping ResultHandler<T>) {
+    private func callback(value: Any, handler: @escaping ResultHandler) {
         performOnMainThread { handler(.success(value)) }
     }
 
-    private func callback<T: Any>(error: ErrorInformation, handler: @escaping ResultHandler<T>) {
+    private func callback(error: ErrorInformation, handler: @escaping ResultHandler) {
         performOnMainThread { handler(.failure(error)) }
     }
 
@@ -143,7 +145,7 @@ extension DefaultSubscriber {
     // MARK: Start/Stop
     private func performStart(_ event: StartEvent) {
         ablyService.start { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 self?.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):
@@ -156,7 +158,7 @@ extension DefaultSubscriber {
         subscriberState = .stopping
         
         ablyService.stop { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 self?.enqueue(event: AblyConnectionClosedEvent(resultHandler: event.resultHandler))
             case .failure(let error):
@@ -216,7 +218,7 @@ extension DefaultSubscriber {
     // swiftlint:disable vertical_whitespace_between_cases
     private func performChangeResolution(_ event: ChangeResolutionEvent) {
         ablyService.sendResolutionPreference(resolution: event.resolution) { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 self?.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):

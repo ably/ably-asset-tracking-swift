@@ -30,7 +30,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
         setup()
     }
 
-    func start(completion: @escaping ResultHandler<Void>) {
+    func start(completion: @escaping ResultHandler/*Void*/) {
         // Trigger offline event at start
         delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: .offline)
         channel.presence.subscribe({ [weak self] message in
@@ -63,13 +63,13 @@ class DefaultAblySubscriberService: AblySubscriberService {
         }
     }
 
-    func stop(completion: @escaping ResultHandler<Void>) {
+    func stop(completion: @escaping ResultHandler/*Void*/) {
         channel.unsubscribe()
         leaveChannelPresence(completion: completion)
         client.close()
     }
 
-    func sendResolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+    func sendResolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler/*Void*/) {
         logger.debug("Changing resolution to: \(String(describing: resolution))", source: "AblySubscriberService")
         presenceData = PresenceData(type: presenceData.type, resolution: resolution)
 
@@ -143,7 +143,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
         delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: presence.toConnectionState())
     }
 
-    private func leaveChannelPresence(completion: @escaping ResultHandler<Void>) {
+    private func leaveChannelPresence(completion: @escaping ResultHandler/*Void*/) {
         channel.presence.unsubscribe()
         delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: .offline)
         

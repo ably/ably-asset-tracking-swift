@@ -2,39 +2,7 @@ import CoreLocation
 import Foundation
 import AblyAssetTrackingCore
 
-@objc(SubscriberDelegate)
-public protocol SubscriberDelegateObjectiveC: AnyObject {
-    /**
-     Called when `SubscriberObjectiveC` spot any (location, network or permissions) error
-     
-     - Parameters:
-        - sender: `SubscriberObjectiveC` instance.
-        - error: Detected error.
-     */
-    @objc
-    func subscriber(sender: SubscriberObjectiveC, didFailWithError error: ErrorInformation)
-    
-    /**
-     Called when the `SubscriberObjectiveC` receive any Enhanced Location (matched to road) update for observed trackable
-     
-     - Parameters:
-        - sender: `SubscriberObjectiveC` instance.
-        - location: Received location.
-     */
-    @objc
-    func subscriber(sender: SubscriberObjectiveC, didUpdateEnhancedLocation location: CLLocation)
-    
-    /**
-     Called when `SubscriberObjectiveC` change connection status
-     
-     -  Parameters:
-        - sender: `SubscriberObjectiveC` instance.
-        - status: Updated connection status.
-     */
-    @objc
-    func subscriber(sender: SubscriberObjectiveC, didChangeAssetConnectionStatus status: ConnectionState)
-}
-
+@objc
 public protocol SubscriberDelegate: AnyObject {
     /**
      Called when `Subscriber` spot any (location, network or permissions) error
