@@ -7,37 +7,37 @@ protocol PublisherEvent {}
 
 struct TrackTrackableEvent: PublisherEvent {
     let trackable: Trackable
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct AddTrackableEvent: PublisherEvent {
     let trackable: Trackable
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct RemoveTrackableEvent: PublisherEvent {
     let trackable: Trackable
-    let resultHandler: ResultHandler<Bool>
+    let resultHandler: ResultHandler/*Bool*/
 }
 
 struct ClearActiveTrackableEvent: PublisherEvent {
     let trackable: Trackable
-    let resultHandler: ResultHandler<Bool>
+    let resultHandler: ResultHandler/*Bool*/
 }
 
 struct ClearRemovedTrackableMetadataEvent: PublisherEvent {
     let trackable: Trackable
-    let resultHandler: ResultHandler<Bool>
+    let resultHandler: ResultHandler/*Bool*/
 }
 
 struct PresenceJoinedSuccessfullyEvent: PublisherEvent {
     let trackable: Trackable
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct TrackableReadyToTrackEvent: PublisherEvent {
     let trackable: Trackable
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct SetDestinationSuccessEvent: PublisherEvent {
@@ -65,7 +65,7 @@ struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
 
 struct ChangeRoutingProfileEvent: PublisherEvent {
     let profile: RoutingProfile
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct PresenceUpdateEvent: PublisherEvent {
@@ -76,11 +76,11 @@ struct PresenceUpdateEvent: PublisherEvent {
 }
 
 struct StopEvent: PublisherEvent {
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct AblyConnectionClosedEvent: PublisherEvent {
-    let resultHandler: ResultHandler<Void>
+    let resultHandler: ResultHandler/*Void*/
 }
 
 struct AblyClientConnectionStateChangedEvent: PublisherEvent {

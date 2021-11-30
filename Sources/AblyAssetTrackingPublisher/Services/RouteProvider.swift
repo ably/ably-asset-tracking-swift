@@ -3,13 +3,13 @@ import MapboxDirections
 import AblyAssetTrackingCore
 
 protocol RouteProvider {
-    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
-    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
+    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler/*Route*/)
+    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler/*Route*/)
 }
 
 class DefaultRouteProvider: NSObject, RouteProvider {
     private let locationManager: CLLocationManager
-    private var resultHandler: ResultHandler<Route>?
+    private var resultHandler: ResultHandler?/*Route*/
     private var destination: CLLocationCoordinate2D?
     private var routingProfile: RoutingProfile?
     private var directions: Directions?
@@ -21,7 +21,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         super.init()
     }
 
-    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
+    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler/*Route*/) {
         self.routingProfile = routingProfile
         guard let destination = self.destination,
               !isCalculating(resultHandler: completion) else {
@@ -33,7 +33,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
                  completion: completion)
     }
 
-    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
+    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler/*Route*/) {
 
         if isCalculating(resultHandler: completion) {
             return
@@ -89,7 +89,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         self.resultHandler = nil
     }
 
-    private func isCalculating(resultHandler: ResultHandler<Route>) -> Bool {
+    private func isCalculating(resultHandler: ResultHandler/*Route*/) -> Bool {
         guard self.resultHandler == nil
         else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Provider is already calculating route."))

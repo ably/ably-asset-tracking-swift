@@ -55,7 +55,6 @@ class DefaultPublisher: Publisher {
     private var currentTrackablesConnectionStates: [Trackable: ConnectionState] = [:]
 
     public weak var delegate: PublisherDelegate?
-    public weak var delegateObjectiveC: PublisherDelegateObjectiveC?
     private(set) public var activeTrackable: Trackable?
     private(set) public var routingProfile: RoutingProfile
 
@@ -99,91 +98,29 @@ class DefaultPublisher: Publisher {
         self.methods.delegate = self
     }
 
-    func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
+    func track(trackable: Trackable, completion: @escaping ResultHandler/*Void*/) {
         let event = TrackTrackableEvent(trackable: trackable,
                                         resultHandler: completion)
         enqueue(event: event)
     }
 
-    func add(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
+    func add(trackable: Trackable, completion: @escaping ResultHandler/*Void*/) {
         let event = AddTrackableEvent(trackable: trackable, resultHandler: completion)
         enqueue(event: event)
     }
 
-    func remove(trackable: Trackable, completion: @escaping ResultHandler<Bool>) {
+    func remove(trackable: Trackable, completion: @escaping ResultHandler/*Bool*/) {
          let event = RemoveTrackableEvent(trackable: trackable, resultHandler: completion)
          enqueue(event: event)
     }
 
-    func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>) {
+    func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler/*Void*/) {
         let event = ChangeRoutingProfileEvent(profile: profile, resultHandler: completion)
         enqueue(event: event)
     }
 
-    func stop(completion: @escaping ResultHandler<Void>) {
+    func stop(completion: @escaping ResultHandler/*Void*/) {
         enqueue(event: StopEvent(resultHandler: completion))
-    }
-}
-
-extension DefaultPublisher: PublisherObjectiveC {
-    @objc
-    func track(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.track(trackable: trackable) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-
-    @objc
-    func add(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.add(trackable: trackable) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-
-    @objc
-    func remove(trackable: Trackable, onSuccess: @escaping ((Bool) -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.remove(trackable: trackable) { result in
-            switch result {
-            case .success(let wasPresent):
-                onSuccess(wasPresent)
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-
-    @objc
-    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.changeRoutingProfile(profile: profile) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-
-    @objc
-    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.stop { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
     }
 }
 
@@ -221,15 +158,15 @@ extension DefaultPublisher {
         }
     }
 
-    private func callback<T: Any>(value: T, handler: @escaping ResultHandler<T>) {
+    private func callback(value: Any?, handler: @escaping ResultHandler) {
         performOnMainThread { handler(.success(value)) }
     }
 
-    private func callback<T: Any>(error: ErrorInformation, handler: @escaping ResultHandler<T>) {
+    private func callback(error: ErrorInformation, handler: @escaping ResultHandler) {
         performOnMainThread { handler(.failure(error)) }
     }
 
-    private func publisherStoppedCallback<T: Any>(handler: @escaping ResultHandler<T>) {
+    private func publisherStoppedCallback(handler: @escaping ResultHandler) {
         let error = ErrorInformation(type: .publisherStoppedException)
         performOnMainThread { handler(.failure(error)) }
     }
@@ -244,13 +181,10 @@ extension DefaultPublisher {
             switch event {
             case let event as DelegateErrorEvent:
                 self.delegate?.publisher(sender: self, didFailWithError: event.error)
-                self.delegateObjectiveC?.publisher(sender: self, didFailWithError: event.error)
             case let event as DelegateTrackableConnectionStateChangedEvent:
                 self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
-                self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
             case let event as DelegateEnhancedLocationChangedEvent:
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
-                self.delegateObjectiveC?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
             default: preconditionFailure("Unhandled delegate event in DefaultPublisher: \(event) ")
             }
         }
@@ -271,13 +205,13 @@ extension DefaultPublisher {
         }
 
         self.ablyService.track(trackable: event.trackable) { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .failure(let error):
                 self?.callback(error: error, handler: event.resultHandler)
                 return
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] result in
-                    switch result {
+                    switch result.enumUnwrap {
                     case .success:
                         self?.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, resultHandler: event.resultHandler))
                     default:
@@ -299,7 +233,7 @@ extension DefaultPublisher {
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
             if let destination = event.trackable.destination {
                 routeProvider.getRoute(to: destination, withRoutingProfile: routingProfile) { [weak self] result in
-                    switch result {
+                    switch result.enumUnwrap(Route.self) {
                     case .success(let route):
                         self?.enqueue(event: SetDestinationSuccessEvent(route: route))
                     case .failure(let error):
@@ -336,7 +270,7 @@ extension DefaultPublisher {
         }
 
         routeProvider.changeRoutingProfile(to: routingProfile) { [weak self] result in
-            switch result {
+            switch result.enumUnwrap(Route.self) {
             case .success(let route):
                 self?.routingProfile = event.profile
                 self?.enqueue(event: SetDestinationSuccessEvent(route: route))
@@ -367,7 +301,7 @@ extension DefaultPublisher {
         }
 
         self.ablyService.track(trackable: event.trackable) { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] _ in
                     self?.callback(value: Void(), handler: event.resultHandler)
@@ -386,7 +320,7 @@ extension DefaultPublisher {
         }
 
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] result in
-            switch result {
+            switch result.enumUnwrap(Bool.self) {
             case .success(let wasPresent):
                 self?.trackableState.remove(trackableId: event.trackable.id)
                 wasPresent
@@ -408,7 +342,7 @@ extension DefaultPublisher {
         state = .stopping
 
         ablyService.close { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 self?.locationService.stopUpdatingLocation()
                 self?.enqueue(event: AblyConnectionClosedEvent(resultHandler: event.resultHandler))
@@ -563,7 +497,7 @@ extension DefaultPublisher {
 
         trackableState.markMessageAsPending(for: trackable.id)
         ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, forTrackable: trackable) { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .failure(let error):
                 self?.enqueue(event: SendEnhancedLocationFailureEvent(error: error, locationUpdate: event.locationUpdate, trackable: trackable))
             case .success:
@@ -753,7 +687,6 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didFailWithError: error)
-            self.delegateObjectiveC?.publisher(sender: self, didFailWithError: error)
         }
     }
 
@@ -761,7 +694,6 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
-            self.delegateObjectiveC?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
         }
     }
 
@@ -769,7 +701,6 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
-            self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
         }
     }
 
@@ -777,7 +708,6 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
-            self.delegateObjectiveC?.publisher(sender: self, didUpdateResolution: event.resolution)
         }
     }
 }

@@ -35,7 +35,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
     }
 
     // MARK: Main interface
-    func track(trackable: Trackable, completion: ResultHandler<Void>?) {
+    func track(trackable: Trackable, completion: ResultHandler?/*Void*/) {
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
         let data = try! presenceData.toJSONString()
 
@@ -78,7 +78,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
     }
 
-    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
+    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler?/*Void*/) {
         guard let channel = channels[trackable] else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Attempt to send location while not tracked channel"))
             completion?(.failure(errorInformation))
@@ -117,13 +117,13 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
     }
 
-    func close(completion: @escaping ResultHandler<Void>) {
+    func close(completion: @escaping ResultHandler/*Void*/) {
         closeAllChannels { _ in
             self.closeClientConnection(completion: completion)
         }
     }
 
-    private func closeClientConnection(completion: @escaping ResultHandler<Void>) {
+    private func closeClientConnection(completion: @escaping ResultHandler/*Void*/) {
         client.connection.on { connectionChange in
             switch connectionChange.current {
             case .closed:
@@ -140,7 +140,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         client.close()
     }
 
-    private func closeAllChannels(completion: @escaping ResultHandler<Void>) {
+    private func closeAllChannels(completion: @escaping ResultHandler/*Void*/) {
         guard !channels.isEmpty else {
             completion(.success)
             return
@@ -150,7 +150,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channels.forEach { channel in
             closingDispatchGroup.enter()
             self.stopTracking(trackable: channel.key) { result in
-                switch result {
+                switch result.enumUnwrap(Bool.self) {
                 case .success(let wasPresent):
                     logger.info("Trackable \(channel.key.id) removed successfully. Was present \(wasPresent)")
                     closingDispatchGroup.leave()
@@ -167,7 +167,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         }
     }
 
-    func stopTracking(trackable: Trackable, completion: ResultHandler<Bool>?) {
+    func stopTracking(trackable: Trackable, completion: ResultHandler?/*Bool*/) {
         guard let channel = channels.removeValue(forKey: trackable) else {
             completion?(.success(false))
             return
