@@ -83,7 +83,7 @@ class MapViewController: UIViewController {
             .resolution(Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500))
             .delegate(self)
             .start { [weak self] result in
-                switch result {
+                switch result.enumUnwrap {
                 case .success:
                     logger.info("Subscriber started successfully.")
                 case .failure(let error):
@@ -151,7 +151,7 @@ class MapViewController: UIViewController {
         }
 
         subscriber?.resolutionPreference(resolution: resolution) { [weak self] result in
-            switch result {
+            switch result.enumUnwrap {
             case .success:
                 self?.currentResolution = resolution
                 self?.updateResolutionLabel()

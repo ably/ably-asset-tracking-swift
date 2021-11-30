@@ -32,10 +32,12 @@
                         log:logConfiguration]
                         resolution:resolution]
                         delegate:delegate]
-                        startOnSuccess:^() {
-                            NSLog(@"Subscriber start SUCCESS");
-                        } onError:^(ErrorInformation * _Nonnull error) {
-                            NSLog(@"Subscriber start ERROR: %@", error.message);
+                        startWithCompletion:^(ATResult * _Nonnull result) {
+                            if (result.failure != nil) {
+                                NSLog(@"Subscriber start ERROR: %@", result.failure.message);
+                            } else if (result.success != nil) {
+                                NSLog(@"Subscriber start SUCCESS");
+                            }
     }];
     
     NSLog(@"Subscriber created: %s", self.subscriber == NULL ? "FALSE" : "TRUE");
@@ -46,19 +48,24 @@
                                                   desiredInterval:1000
                                               minimumDisplacement:1000];
     
-    [self.subscriber resolutionPreferenceWithResolution:resolution
-                                              onSuccess:^() {
-                                                NSLog(@"Send resolution preference SUCCESS");
-                                              } onError:^(ErrorInformation * _Nonnull error) {
-                                                NSLog(@"Send resolution preference ERROR: %@", error.message);
+    [self.subscriber
+     resolutionPreferenceWithResolution:resolution
+     completion:^(ATResult * _Nonnull result) {
+        if (result.failure != nil) {
+            NSLog(@"Send resolution preference ERROR: %@", result.failure.message);
+        } else if (result.success != nil) {
+            NSLog(@"Send resolution preference SUCCESS");
+        }
     }];
 }
 
 - (void) subscriberStopUsageExample {
-    [self.subscriber stopOnSuccess:^() {
-        NSLog(@"Subscriber stop SUCCESS");
-    } onError:^(ErrorInformation * _Nonnull error) {
-        NSLog(@"Subscriber stop ERROR: %@", error.message);
+    [self.subscriber stopWithCompletion:^(ATResult * _Nonnull result) {
+        if (result.failure != nil) {
+            NSLog(@"Send resolution preference ERROR: %@", result.failure.message);
+        } else if (result.success != nil) {
+            NSLog(@"Subscriber stop SUCCESS");
+        }
     }];
 }
 
