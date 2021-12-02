@@ -1,6 +1,6 @@
 import Foundation
 
-public typealias ResultHandler = (ATResult) -> Void
+public typealias ResultHandler = (AATResult) -> Void
 
 @objc
 public protocol Resultable {
@@ -9,19 +9,19 @@ public protocol Resultable {
 }
 
 @objcMembers
-public class ATResult: NSObject, Resultable {
+public class AATResult: NSObject, Resultable {
     public let success: Any?
     public let failure: ErrorInformation?
     
-    public static var success: ATResult {
+    public static var success: AATResult {
         return .init(success: Void(), failure: nil)
     }
     
-    public static func success(_ value: Any?) -> ATResult {
+    public static func success(_ value: Any?) -> AATResult {
         return .init(success: value, failure: nil)
     }
     
-    public static func failure(_ value: ErrorInformation?) -> ATResult {
+    public static func failure(_ value: ErrorInformation?) -> AATResult {
         return .init(success: nil, failure: value)
     }
     
@@ -38,7 +38,7 @@ public class ATResult: NSObject, Resultable {
     }
 }
 
-public extension ATResult {
+public extension AATResult {
     enum Unwrapped<T> {
         case success(T)
         case failure(ErrorInformation)

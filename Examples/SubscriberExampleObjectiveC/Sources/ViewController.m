@@ -32,7 +32,7 @@
                         log:logConfiguration]
                         resolution:resolution]
                         delegate:delegate]
-                        startWithCompletion:^(ATResult * _Nonnull result) {
+                        startWithCompletion:^(AATResult * _Nonnull result) {
                             if (result.failure != nil) {
                                 NSLog(@"Subscriber start ERROR: %@", result.failure.message);
                             } else if (result.success != nil) {
@@ -50,7 +50,7 @@
     
     [self.subscriber
      resolutionPreferenceWithResolution:resolution
-     completion:^(ATResult * _Nonnull result) {
+     completion:^(AATResult * _Nonnull result) {
         if (result.failure != nil) {
             NSLog(@"Send resolution preference ERROR: %@", result.failure.message);
         } else if (result.success != nil) {
@@ -60,7 +60,7 @@
 }
 
 - (void) subscriberStopUsageExample {
-    [self.subscriber stopWithCompletion:^(ATResult * _Nonnull result) {
+    [self.subscriber stopWithCompletion:^(AATResult * _Nonnull result) {
         if (result.failure != nil) {
             NSLog(@"Send resolution preference ERROR: %@", result.failure.message);
         } else if (result.success != nil) {

@@ -53,7 +53,7 @@
                             constraints:NULL];
     
     [self.publisher trackWithTrackable:trackable
-                            completion:^(ATResult * _Nonnull result) {
+                            completion:^(AATResult * _Nonnull result) {
         if(result.failure != nil) {
             NSLog(@"Track trackable ERROR: %@", result.failure.message);
         } else if (result.success != nil) {
@@ -70,7 +70,7 @@
                             constraints:NULL];
     
     [self.publisher addWithTrackable:trackable
-                          completion:^(ATResult * _Nonnull result) {
+                          completion:^(AATResult * _Nonnull result) {
         if (result.failure != nil) {
             NSLog(@"Add trackable ERROR: %@", result.failure.message);
         } else if (result.success != nil) {
@@ -81,7 +81,7 @@
 
 - (void) publisherChangeRoutingProfileUsageExample {
     [self.publisher changeRoutingProfileWithProfile:RoutingProfileWalking
-                                         completion:^(ATResult * _Nonnull result) {
+                                         completion:^(AATResult * _Nonnull result) {
         if (result.failure != nil) {
             NSLog(@"Change routing profile ERROR: %@", result.failure.message);
         } else if (result.success != nil) {
@@ -98,7 +98,7 @@
                             constraints:NULL];
     
     [self.publisher removeWithTrackable:trackable
-                             completion:^(ATResult * _Nonnull result) {
+                             completion:^(AATResult * _Nonnull result) {
         if (result.failure != nil) {
             NSLog(@"Remove trackable ERROR: %@", result.failure.message);
         } else if (result.success != nil) {
