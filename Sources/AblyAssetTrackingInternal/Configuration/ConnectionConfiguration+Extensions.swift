@@ -18,8 +18,8 @@ extension ConnectionConfiguration {
         } else {
             clientOptions.key = apiKey
         }
+        
         clientOptions.addAgent("ably-asset-tracking-swift", version: Version.libraryVersion)
-        clientOptions.clientId = clientId
         
         return clientOptions
     }
