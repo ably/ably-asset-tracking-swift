@@ -125,7 +125,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             .trackingId("Trackable ID")
             .log(logConfiguration)
             .start { result in
-                switch result.enumUnwrap {
+                switch result.unwrap {
                 case .success: ()
                 case .failure(let error):
                     XCTFail("Subscriber start failed with error: \(error)")
@@ -137,7 +137,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         let resolutionCompletionExpectation = self.expectation(description: "Resolution completion expectation")
         resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
         subscriber?.resolutionPreference(resolution: resolution, completion: { result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success: ()
             case .failure(let error):
                 XCTFail("Resolution completion failed with error: \(error)")

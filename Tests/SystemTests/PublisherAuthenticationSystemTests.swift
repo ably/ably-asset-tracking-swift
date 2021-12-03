@@ -161,7 +161,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
 
         let stopExpectation = self.expectation(description: "Publisher stops")
         publisher.stop { result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 stopExpectation.fulfill()
             case .failure(let error):

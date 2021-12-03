@@ -205,13 +205,13 @@ extension DefaultPublisher {
         }
 
         self.ablyService.track(trackable: event.trackable) { [weak self] result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .failure(let error):
                 self?.callback(error: error, handler: event.resultHandler)
                 return
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] result in
-                    switch result.enumUnwrap {
+                    switch result.unwrap {
                     case .success:
                         self?.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, resultHandler: event.resultHandler))
                     default:
@@ -233,7 +233,7 @@ extension DefaultPublisher {
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
             if let destination = event.trackable.destination {
                 routeProvider.getRoute(to: destination, withRoutingProfile: routingProfile) { [weak self] result in
-                    switch result.enumUnwrap(Route.self) {
+                    switch result.unwrap(Route.self) {
                     case .success(let route):
                         self?.enqueue(event: SetDestinationSuccessEvent(route: route))
                     case .failure(let error):
@@ -270,7 +270,7 @@ extension DefaultPublisher {
         }
 
         routeProvider.changeRoutingProfile(to: routingProfile) { [weak self] result in
-            switch result.enumUnwrap(Route.self) {
+            switch result.unwrap(Route.self) {
             case .success(let route):
                 self?.routingProfile = event.profile
                 self?.enqueue(event: SetDestinationSuccessEvent(route: route))
@@ -301,7 +301,7 @@ extension DefaultPublisher {
         }
 
         self.ablyService.track(trackable: event.trackable) { [weak self] result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] _ in
                     self?.callback(value: Void(), handler: event.resultHandler)
@@ -320,7 +320,7 @@ extension DefaultPublisher {
         }
 
         self.ablyService.stopTracking(trackable: event.trackable) { [weak self] result in
-            switch result.enumUnwrap(Bool.self) {
+            switch result.unwrap(Bool.self) {
             case .success(let wasPresent):
                 self?.trackableState.remove(trackableId: event.trackable.id)
                 wasPresent
@@ -342,7 +342,7 @@ extension DefaultPublisher {
         state = .stopping
 
         ablyService.close { [weak self] result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 self?.locationService.stopUpdatingLocation()
                 self?.enqueue(event: AblyConnectionClosedEvent(resultHandler: event.resultHandler))
@@ -497,7 +497,7 @@ extension DefaultPublisher {
 
         trackableState.markMessageAsPending(for: trackable.id)
         ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, forTrackable: trackable) { [weak self] result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .failure(let error):
                 self?.enqueue(event: SendEnhancedLocationFailureEvent(error: error, locationUpdate: event.locationUpdate, trackable: trackable))
             case .success:

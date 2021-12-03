@@ -54,7 +54,7 @@ class DefaultSubscriber: NSObject, Subscriber {
     @objc
     func resolutionPreference(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         resolutionPreference(resolution: resolution) { result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 onSuccess()
             case .failure(let error):
@@ -70,7 +70,7 @@ class DefaultSubscriber: NSObject, Subscriber {
     @objc
     func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         start { result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 onSuccess()
             case .failure(let error):
@@ -91,7 +91,7 @@ class DefaultSubscriber: NSObject, Subscriber {
     @objc
     func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         stop { result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 onSuccess()
             case .failure(let error):
@@ -145,7 +145,7 @@ extension DefaultSubscriber {
     // MARK: Start/Stop
     private func performStart(_ event: StartEvent) {
         ablyService.start { [weak self] result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 self?.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):
@@ -158,7 +158,7 @@ extension DefaultSubscriber {
         subscriberState = .stopping
         
         ablyService.stop { [weak self] result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 self?.enqueue(event: AblyConnectionClosedEvent(resultHandler: event.resultHandler))
             case .failure(let error):
@@ -218,7 +218,7 @@ extension DefaultSubscriber {
     // swiftlint:disable vertical_whitespace_between_cases
     private func performChangeResolution(_ event: ChangeResolutionEvent) {
         ablyService.sendResolutionPreference(resolution: event.resolution) { [weak self] result in
-            switch result.enumUnwrap {
+            switch result.unwrap {
             case .success:
                 self?.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):

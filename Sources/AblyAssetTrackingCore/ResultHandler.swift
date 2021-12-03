@@ -39,24 +39,19 @@ public class AATResult: NSObject, Resultable {
 }
 
 public extension AATResult {
-    enum Unwrapped<T> {
-        case success(T)
-        case failure(ErrorInformation)
-    }
-    
-    var enumUnwrap: Unwrapped<Void> {
-        if let failure = failure {
-            return .failure(failure)
+    var unwrap: Result<Void, ErrorInformation> {
+        if let value = failure {
+            return .failure(value)
         }
         
         return .success(Void())
     }
     
-    func enumUnwrap<T>(_:T.Type) -> Unwrapped<T> {
-        if let failure = failure {
-            return .failure(failure)
-        } else if let success = success {
-            if let casted = success as? T {
+    func unwrap<T>(_ :T.Type) -> Result<T, ErrorInformation> {
+        if let value = failure {
+            return .failure(value)
+        } else if let value = success {
+            if let casted = value as? T {
                 return .success(casted)
             } else {
                 fatalError("Unable to cast \(type(of: success)) to `\(T.self)`")

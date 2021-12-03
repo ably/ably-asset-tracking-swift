@@ -150,7 +150,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
         channels.forEach { channel in
             closingDispatchGroup.enter()
             self.stopTracking(trackable: channel.key) { result in
-                switch result.enumUnwrap(Bool.self) {
+                switch result.unwrap(Bool.self) {
                 case .success(let wasPresent):
                     logger.info("Trackable \(channel.key.id) removed successfully. Was present \(wasPresent)")
                     closingDispatchGroup.leave()
