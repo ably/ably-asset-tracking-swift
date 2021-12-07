@@ -89,12 +89,23 @@ public protocol SubscriberSetListener {
     func onSubscriberRemoved(subscriber: Subscriber)
  }
 
-public class Subscriber: NSObject {
+public class Subscriber {
     let id: String
     let trackable: Trackable
 
-    init(id: String, trackable: Trackable) {
+    public init(id: String, trackable: Trackable) {
         self.id = id
         self.trackable = trackable
+    }
+}
+
+extension Subscriber: Hashable, Equatable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(trackable)
+    }
+    
+    public static func == (lhs: Subscriber, rhs: Subscriber) -> Bool {
+        lhs.id == rhs.id && lhs.trackable == rhs.trackable
     }
 }

@@ -5,7 +5,7 @@ public enum LocationSourceType: Int {
     case raw
 }
 
-public class LocationSource: NSObject {
+public class LocationSource {
     let type: LocationSourceType
     let locationSource: [CLLocation]?
     
@@ -14,7 +14,7 @@ public class LocationSource: NSObject {
         self.locationSource = locationSource
     }
     
-    public override init() {
+    public init() {
         self.type = .default
         self.locationSource = nil
     }

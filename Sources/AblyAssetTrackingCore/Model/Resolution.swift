@@ -4,7 +4,7 @@ import Foundation
  Governs how often to sample locations, at what level of positional accuracy, and how often to send them to
  subscribers.
  */
-public class Resolution: NSObject, Codable {
+public class Resolution: Codable, CustomDebugStringConvertible {
     /**
      The general priority for accuracy of location updates, used to govern any trade-off between power usage and
      positional accuracy.
@@ -43,8 +43,14 @@ public class Resolution: NSObject, Codable {
     }
 }
 
-public extension Resolution {
-    static func == (lhs: Resolution, rhs: Resolution) -> Bool {
+extension Resolution: Hashable, Equatable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(accuracy)
+        hasher.combine(desiredInterval)
+        hasher.combine(minimumDisplacement)
+    }
+    
+    public static func == (lhs: Resolution, rhs: Resolution) -> Bool {
         return lhs.accuracy == rhs.accuracy &&
             lhs.desiredInterval == rhs.desiredInterval &&
             lhs.minimumDisplacement == rhs.minimumDisplacement
@@ -60,7 +66,7 @@ public extension Resolution {
 }
 
 extension Resolution {
-    public override var debugDescription: String {
+    public var debugDescription: String {
         return "Publisher.Resolution accuracy: \(accuracy), desiredInterval: \(desiredInterval), minimumDisplacement: \(minimumDisplacement)"
     }
 }

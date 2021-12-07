@@ -3,7 +3,7 @@ import CoreLocation
 /**
  Main class used to track assets in SDK
  */
-public class Trackable: NSObject {
+public class Trackable {
     /**
      Trackable identifier
      */
@@ -25,7 +25,6 @@ public class Trackable: NSObject {
         self.id = id
         self.destination = destination
         self.constraints = constraints
-        super.init()
     }
     
     public init(id: String,
@@ -35,20 +34,15 @@ public class Trackable: NSObject {
         self.id = id
         self.destination = (destination.latitude == 0 && destination.longitude == 0) ? nil : destination
         self.constraints = constraints
-        super.init()
     }
-    
-    public override var hash: Int {
-        var hasher = Hasher()
+}
+
+extension Trackable: Hashable, Equatable {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-        return hasher.finalize()
     }
     
-    public override func isEqual(_ object: Any?) -> Bool {
-        guard let otherObject = object as? Trackable else {
-            return false
-        }
-        
-        return otherObject.id == self.id
+    public static func == (lhs: Trackable, rhs: Trackable) -> Bool {
+        lhs.id == rhs.id
     }
 }
