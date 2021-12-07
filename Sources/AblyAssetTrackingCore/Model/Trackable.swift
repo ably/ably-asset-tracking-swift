@@ -3,7 +3,6 @@ import CoreLocation
 /**
  Main class used to track assets in SDK
  */
-@objc
 public class Trackable: NSObject {
     /**
      Trackable identifier
@@ -29,7 +28,6 @@ public class Trackable: NSObject {
         super.init()
     }
     
-    @objc
     public init(id: String,
                 metadata: String? = nil,
                 destination: CLLocationCoordinate2D,

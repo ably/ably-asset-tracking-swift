@@ -66,30 +66,30 @@ public class ErrorInformation: NSObject, Error, CustomNSError {
     /**
      Ably specific error code. Defined [here](https://github.com/ably/ably-common/blob/main/protocol/errors.json).
      */
-    @objc public let code: Int
+    public let code: Int
     
     /**
      Analogous to HTTP status code.
      */
-    @objc public let statusCode: Int
+    public let statusCode: Int
     
     /**
      An explanation of what went wrong, in a format readable by humans.
      Can be written to logs or presented to users, but is not intended to be machine parsed.
      */
-    @objc public let message: String
+    public let message: String
     
     /**
      An error underlying this error which caused this failure.
      */
-    @objc public let cause: Error?
+    public let cause: Error?
     
     /**
      A URL for customers to find more help on the error code.
      */
-    @objc public let href: String?
+    public let href: String?
     
-    @objc public override var description: String {
+    public override var description: String {
         return message.isEmpty
         ? localizedDescription
         : message

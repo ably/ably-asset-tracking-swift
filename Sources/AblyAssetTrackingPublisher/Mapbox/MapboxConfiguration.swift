@@ -1,6 +1,6 @@
 import Foundation
 
-public class MapboxConfiguration: NSObject {
+public class MapboxConfiguration {
     public let mapboxKey: String
 
     @objc

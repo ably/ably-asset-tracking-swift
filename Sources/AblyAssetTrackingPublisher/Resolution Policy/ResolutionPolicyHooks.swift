@@ -6,7 +6,6 @@ import AblyAssetTrackingCore
  Methods on this interface may only be called from within implementations of
  `createResolutionPolicy` `Factory.createResolutionPolicy`.
  */
-@objc
 public protocol ResolutionPolicyHooks {
     /**
      Register a handler for the addition, removal and activation of `Trackable` objects for the `Publisher`
@@ -37,7 +36,6 @@ public protocol ResolutionPolicyHooks {
   A handler of events relating to the addition, removal and activation of `Trackable` objects for a
   `Publisher` instance.
   */
-@objc
 public protocol TrackableSetListener {
     /**
      A `Trackable` object has been added to the `Publisher`'s set of tracked objects.
@@ -71,7 +69,6 @@ public protocol TrackableSetListener {
 /**
 A handler of events relating to the addition or removal of remote `Subscriber`s to a `Publisher` instance.
 */
-@objc
 public protocol SubscriberSetListener {
     /**
      A `Subscriber` has subscribed to receive updates for one or more `Trackable` objects from the

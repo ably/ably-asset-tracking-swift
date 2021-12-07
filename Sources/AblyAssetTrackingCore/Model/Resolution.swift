@@ -12,7 +12,6 @@ public class Resolution: NSObject, Codable {
      significantly increased power usage. Conversely, the lowest power usage will be achieved by specifying
      `Accuracy.minimum` but at the expense of significantly decreased positional accuracy.
      */
-    @objc
     public let accuracy: Accuracy
 
     /**
@@ -22,7 +21,6 @@ public class Resolution: NSObject, Codable {
      Used to govern the frequency of updates requested from the underlying location provider, as well as the frequency
      of messages broadcast to subscribers.
      */
-    @objc
     public let desiredInterval: Double
 
     /**
@@ -33,13 +31,11 @@ public class Resolution: NSObject, Codable {
 
      Used to configure the underlying location provider, as well as to filter the broadcast of updates to subscribers.
      */
-    @objc
     public let minimumDisplacement: Double
 
     /**
      Default constructor for the Resolution
      */
-    @objc
     public init(accuracy: Accuracy, desiredInterval: Double, minimumDisplacement: Double) {
         self.accuracy = accuracy
         self.desiredInterval = desiredInterval

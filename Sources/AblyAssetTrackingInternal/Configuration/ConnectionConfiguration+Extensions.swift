@@ -15,9 +15,6 @@ extension ConnectionConfiguration {
         if let authCallback = authCallback {
             clientOptions.authCallback = createAuthCallback(authCallback)
             return clientOptions
-        } else if let authCallback = objcAuthCallback {
-            clientOptions.authCallback = createAuthCallback(authCallback)
-            return clientOptions
         } else {
             clientOptions.key = apiKey
         }
@@ -51,31 +48,4 @@ extension ConnectionConfiguration {
         
         return authCallbackWrapper
     }
-    
-    private func createAuthCallback(_ authCallback: @escaping ObjCAuthCallback) -> (ARTTokenParams, @escaping (ARTTokenDetailsCompatible?, NSError?) -> ()?) -> () {
-        func authCallbackWrapper(artTokenParams: ARTTokenParams, callback: @escaping (ARTTokenDetailsCompatible?, NSError?) -> Void?) -> Void {
-            let tokenParams = artTokenParams.toTokenParams()
-            authCallback(tokenParams, { authResult, error in
-                if let error = error {
-                    callback(nil, error as NSError)
-                } else if let result = authResult {
-                    switch result {
-                    case let jwt as String:
-                        callback(NSString(utf8String: jwt), nil)
-                    case let tokenRequest as TokenRequest:
-                        callback(tokenRequest.toARTTokenRequest(), nil)
-                    case let tokenDetails as TokenDetails:
-                        callback(tokenDetails.toARTTokenDetails(), nil)
-                    default:
-                        fatalError("Unknown type")
-                    }
-                } else {
-                    fatalError("The result callback must return one of the value: error or authResult.")
-                }
-            })
-        }
-        
-        return authCallbackWrapper
-    }
-    
 }

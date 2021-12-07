@@ -3,7 +3,7 @@ import Foundation
 /**
  Details of the current parameters of the token, which users can use to generate a new ``TokenRequest`` (simpler/ preferable) or ``TokenDetails`` server-side when using Token Authentication.
  */
-public class TokenParams: NSObject, Codable {
+public class TokenParams: Codable {
     public let ttl: Int?
     public let capability: String?
     public let clientId: String?

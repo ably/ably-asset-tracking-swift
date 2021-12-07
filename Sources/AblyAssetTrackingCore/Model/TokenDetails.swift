@@ -3,7 +3,7 @@ import Foundation
 /**
  A set of fields used by Ably client to manage authentication with Ably servers, such as identifying the current user, and deciding to generate a new ``TokenDetails`` when one expires. 
  */
-public class TokenDetails: NSObject, Codable {
+public class TokenDetails: Codable {
     public let token: String
     public let expires: Date
     public let issued: Date

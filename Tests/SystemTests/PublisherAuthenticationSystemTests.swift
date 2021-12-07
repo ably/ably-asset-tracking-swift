@@ -115,27 +115,6 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         testPublisherTrack(configuration: connectionConfiguration)
     }
     
-    func testObjcConnectionConfigurationCallback() {
-        let keyTokens = Secrets.ablyApiKey.split(separator: ":")
-        let keyName = String(keyTokens[0])
-        
-        let fetchedTokenDetails = AuthHelper().requestToken(
-            options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
-            clientId: keyName
-        )
-        
-        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, objcAuthCallback: { tokenParams, resultHandler in
-            guard let tokenDetails = fetchedTokenDetails else {
-                XCTFail("TokenDetails doesn't exist")
-                return
-            }
-            
-            resultHandler(tokenDetails, nil)
-        })
-        
-        testPublisherTrack(configuration: connectionConfiguration)
-    }
-    
     private func testPublisherTrack(configuration: ConnectionConfiguration) {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         let publisher = try! PublisherFactory.publishers()
