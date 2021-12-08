@@ -50,7 +50,6 @@ public class ConnectionConfiguration {
                   authCallback: authCallback)
     }
     
-    @objc
     public convenience init(apiKey: String, clientId: String? = nil) {
         self.init(apiKey: apiKey,
                   clientId: clientId,
