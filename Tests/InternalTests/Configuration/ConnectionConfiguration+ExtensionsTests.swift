@@ -47,7 +47,7 @@ class ConnectionConfigurationTests: XCTestCase {
             }
             XCTAssertEqual(tokenRequest.keyName, keyname)
             XCTAssertEqual(tokenRequest.clientId, clientId)
-            XCTAssertEqual(tokenRequest.timestamp.timeIntervalSinceReferenceDate, timestamp.timeIntervalSinceReferenceDate, accuracy: 0.002)
+            XCTAssertEqual(tokenRequest.timestamp.timeIntervalSinceReferenceDate, timestamp.timeIntervalSinceReferenceDate, accuracy: 0.001)
             XCTAssertEqual(tokenRequest.nonce, nonce)
         }
         XCTAssertTrue(authCallbackCalled)
