@@ -62,7 +62,7 @@ public enum ErrorInformationType {
 /**
  Information about an error reported by the Ably service.
  */
-public class ErrorInformation: Error, CustomNSError, CustomStringConvertible {
+public struct ErrorInformation: Error, CustomNSError, CustomStringConvertible {
     /**
      Ably specific error code. Defined [here](https://github.com/ably/ably-common/blob/main/protocol/errors.json).
      */
