@@ -68,6 +68,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             routeProvider: routeProvider
         )
         
+        
         let trackable = Trackable(id: trackableId)
         didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))
         publisher.add(trackable: trackable) { _  in }
