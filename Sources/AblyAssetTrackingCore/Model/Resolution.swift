@@ -4,7 +4,7 @@ import Foundation
  Governs how often to sample locations, at what level of positional accuracy, and how often to send them to
  subscribers.
  */
-public class Resolution: Codable, CustomDebugStringConvertible {
+public struct Resolution: Codable, CustomDebugStringConvertible {
     /**
      The general priority for accuracy of location updates, used to govern any trade-off between power usage and
      positional accuracy.
