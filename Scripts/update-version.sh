@@ -9,5 +9,5 @@ set -e
 
 BASEDIR=$(dirname "$0")
 
-sed -i '' -E 's/(ibraryVersion = ").+(")/\1'$1'\2/' $BASEDIR/../Sources/AblyAssetTrackingCore/Version.swift
-sed -i '' -E 's/(ibraryVersion = ").+(")/\1'$1'\2/' $BASEDIR/../Tests/CoreTests/Sources/Helper/VersionTest.swift
+sed -i '' -E 's/(libraryVersion = ").+(")/\1'$1'\2/' $BASEDIR/../Sources/AblyAssetTrackingCore/Version.swift
+sed -i '' -E 's/(libraryVersion = ").+(")/\1'$1'\2/' $BASEDIR/../Tests/CoreTests/Sources/Helper/VersionTest.swift
