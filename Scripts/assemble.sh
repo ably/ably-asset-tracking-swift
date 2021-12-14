@@ -10,4 +10,4 @@ echo
 echo '\033[1mBuild: PublisherExample\033[0m'
 echo
 
-xcodebuild build -scheme "PublisherExampleObjectiveC" -workspace "./Examples/AblyAssetTracking.xcworkspace" -sdk "iphonesimulator" -configuration "Debug" | xcpretty
+set -o pipefail && xcodebuild build -scheme "PublisherExampleObjectiveC" -workspace "./Examples/AblyAssetTracking.xcworkspace" -sdk "iphonesimulator" -configuration "Debug" | xcpretty
