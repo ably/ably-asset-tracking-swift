@@ -122,20 +122,3 @@ public struct ErrorInformation: Error, CustomNSError, CustomStringConvertible {
         self.href = nil
     }
 }
-
-extension ErrorInformation: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(code)
-        hasher.combine(statusCode)
-        hasher.combine(message)
-        hasher.combine(href)
-    }
-    
-    public static func == (lhs: ErrorInformation, rhs: ErrorInformation) -> Bool {
-        lhs.code == rhs.code &&
-        lhs.statusCode == rhs.statusCode &&
-        lhs.message == rhs.message &&
-        lhs.href == rhs.href
-    }
-}
-

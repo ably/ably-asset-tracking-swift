@@ -182,7 +182,7 @@ class DefaultPublisherTests: XCTestCase {
                 XCTFail("Success callback shouldn't be called")
             case .failure(let error):
                 // It should call failure callback with received error
-                XCTAssertEqual(error, errorInformation)
+                XCTAssertTrue(error.isEqual(to: errorInformation))
                 expectation.fulfill()
             }
         }
@@ -296,7 +296,7 @@ class DefaultPublisherTests: XCTestCase {
                 XCTFail("Success callback shouldn't be called")
             case .failure(let error):
                 // It should call onError callback with received error
-                XCTAssertEqual(error, errorInformation)
+                XCTAssertTrue(error.isEqual(to: errorInformation))
                 expectation.fulfill()
             }
         }
@@ -482,7 +482,7 @@ class DefaultPublisherTests: XCTestCase {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure(let receivedError):
-                XCTAssertEqual(receivedError, errorInformation)
+                XCTAssertTrue(receivedError.isEqual(to: errorInformation))
                 expectation.fulfill()
             }
         }
@@ -859,5 +859,14 @@ class DefaultPublisherTests: XCTestCase {
             trackAfterStopCompletionExpectation.fulfill()
         }
         waitForExpectations(timeout: 10.0)
+    }
+}
+
+extension ErrorInformation {
+    func isEqual(to error: ErrorInformation) -> Bool {
+        self.code == error.code &&
+        self.message == error.message &&
+        self.href == error.href &&
+        self.statusCode == error.statusCode
     }
 }
