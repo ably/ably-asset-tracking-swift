@@ -862,7 +862,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 }
 
-private extension ErrorInformation {
+extension ErrorInformation {
     func isEqual(to error: ErrorInformation) -> Bool {
         self.code == error.code &&
         self.message == error.message &&
