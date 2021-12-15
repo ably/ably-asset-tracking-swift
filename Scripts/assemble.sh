@@ -1,6 +1,7 @@
 # This script is used to check that "Ably Asset Tracker" lib integration works properly in example apps.
 
 set -e
+set -o pipefail
 
 # Install xcpretty (https://github.com/xcpretty/xcpretty)
 gem install --user-install xcpretty
