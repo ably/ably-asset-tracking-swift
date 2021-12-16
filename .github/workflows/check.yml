@@ -19,7 +19,9 @@ jobs:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
 
       - name: Run All Tests using Fastlane
-        run: ./Scripts/test.sh
+        run: |
+          sudo xcode-select -s /Applications/Xcode_13.2.app
+          ./Scripts/test.sh
         env:
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           ABLY_API_KEY: ${{ secrets.ABLY_API_KEY }}

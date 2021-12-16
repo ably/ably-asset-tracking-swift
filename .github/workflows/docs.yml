@@ -26,6 +26,7 @@ jobs:
 
       - name: Build Documentation
         run: |
+          sudo xcode-select -s /Applications/Xcode_13.2.app
           bundle install
           ./jazzy/build.sh
           ls -al docs
