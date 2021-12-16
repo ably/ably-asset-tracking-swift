@@ -30,6 +30,6 @@ jobs:
 
       - name: Build All Projects
         run: |
-          xcode-select -s /Applications/Xcode_13.2.app
+          sudo xcode-select -s /Applications/Xcode_13.2.app
           bundle install
           ./Scripts/assemble.sh
