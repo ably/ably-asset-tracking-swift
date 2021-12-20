@@ -67,6 +67,7 @@ The release process must include the following steps:
 1.  Ensure that all work intended for this release has landed on to `main` branch
 2.  Create a release branch named like release/1.2.3
 3.  Add a commit to bump the version number
+	- use the script to update version, e.g.: `Scripts/update-version.sh 1.2.3`
 4.  Add a commit to update the changelog
 5.  Push the release branch to GitHub
 6.  Open a PR for the release against the release branch you just pushed
