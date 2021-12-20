@@ -1,6 +1,6 @@
 import AblyAssetTrackingCore
 
-public class EnhancedLocationUpdateMessage: Codable {
+public struct EnhancedLocationUpdateMessage: Codable {
     public let location: GeoJSONMessage
     public let skippedLocations: [GeoJSONMessage]
     public let intermediateLocations: [GeoJSONMessage]

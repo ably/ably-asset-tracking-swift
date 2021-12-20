@@ -62,7 +62,7 @@ public enum ErrorInformationType {
 /**
  Information about an error reported by the Ably service.
  */
-public class ErrorInformation: NSObject, Error, CustomNSError {
+public struct ErrorInformation: Error, CustomNSError, CustomStringConvertible {
     /**
      Ably specific error code. Defined [here](https://github.com/ably/ably-common/blob/main/protocol/errors.json).
      */
@@ -89,7 +89,7 @@ public class ErrorInformation: NSObject, Error, CustomNSError {
      */
     public let href: String?
     
-    public override var description: String {
+    public var description: String {
         return message.isEmpty
         ? localizedDescription
         : message

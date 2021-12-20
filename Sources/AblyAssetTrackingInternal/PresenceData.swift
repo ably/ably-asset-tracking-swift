@@ -1,7 +1,7 @@
 import UIKit
 import AblyAssetTrackingCore
 
-public class PresenceData: Codable {
+public struct PresenceData: Codable {
     public let type: ClientType
     public let resolution: Resolution?
 
