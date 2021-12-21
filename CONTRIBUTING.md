@@ -76,7 +76,6 @@ The release process must include the following steps:
 
 ## Coding Conventions and Style Guide
 
-- The SDKs are written in Swift.
 - Favor Protocol Oriented Programming with Dependency Injection when writing any code. We're unable to create automatic mocks in Swift, so it'll be helpful for writing unit tests.
 - SwiftLint is integrated into the project. Make sure that your code does not add any SwiftLint related warning.
 - Please remove default Xcode header comments (with author, license and creation date) as they're not necessary.
