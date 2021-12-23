@@ -22,7 +22,7 @@ import CoreLocation
  }
  ````
  */
-public class GeoJSONMessage: Codable {
+public struct GeoJSONMessage: Codable {
     let type: GeoJSONType
     let geometry: GeoJSONGeometry
     let properties: GeoJSONProperties

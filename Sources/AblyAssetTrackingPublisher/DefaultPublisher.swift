@@ -55,7 +55,6 @@ class DefaultPublisher: Publisher {
     private var currentTrackablesConnectionStates: [Trackable: ConnectionState] = [:]
 
     public weak var delegate: PublisherDelegate?
-    public weak var delegateObjectiveC: PublisherDelegateObjectiveC?
     private(set) public var activeTrackable: Trackable?
     private(set) public var routingProfile: RoutingProfile
 
@@ -125,68 +124,6 @@ class DefaultPublisher: Publisher {
     }
 }
 
-extension DefaultPublisher: PublisherObjectiveC {
-    @objc
-    func track(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.track(trackable: trackable) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-
-    @objc
-    func add(trackable: Trackable, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.add(trackable: trackable) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-
-    @objc
-    func remove(trackable: Trackable, onSuccess: @escaping ((Bool) -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.remove(trackable: trackable) { result in
-            switch result {
-            case .success(let wasPresent):
-                onSuccess(wasPresent)
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-
-    @objc
-    func changeRoutingProfile(profile: RoutingProfile, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.changeRoutingProfile(profile: profile) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-
-    @objc
-    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        self.stop { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-}
-
 // MARK: Threading events handling
 extension DefaultPublisher {
     private func enqueue(event: PublisherEvent) {
@@ -244,13 +181,10 @@ extension DefaultPublisher {
             switch event {
             case let event as DelegateErrorEvent:
                 self.delegate?.publisher(sender: self, didFailWithError: event.error)
-                self.delegateObjectiveC?.publisher(sender: self, didFailWithError: event.error)
             case let event as DelegateTrackableConnectionStateChangedEvent:
                 self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
-                self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
             case let event as DelegateEnhancedLocationChangedEvent:
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
-                self.delegateObjectiveC?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
             default: preconditionFailure("Unhandled delegate event in DefaultPublisher: \(event) ")
             }
         }
@@ -753,7 +687,6 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didFailWithError: error)
-            self.delegateObjectiveC?.publisher(sender: self, didFailWithError: error)
         }
     }
 
@@ -761,7 +694,6 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
-            self.delegateObjectiveC?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
         }
     }
 
@@ -769,7 +701,6 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
-            self.delegateObjectiveC?.publisher(sender: self, didChangeConnectionState: event.connectionState)
         }
     }
 
@@ -777,7 +708,6 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
-            self.delegateObjectiveC?.publisher(sender: self, didUpdateResolution: event.resolution)
         }
     }
 }

@@ -18,7 +18,7 @@ private enum SubscriberState {
     }
 }
 
-class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
+class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
     private let logConfiguration: LogConfiguration
     private let ablyService: AblySubscriberService
@@ -30,7 +30,6 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
     private var isPublisherOnline: Bool = false
     
     weak var delegate: SubscriberDelegate?
-    weak var delegateObjectiveC: SubscriberDelegateObjectiveC?
 
     init(logConfiguration: LogConfiguration,
          ablyService: AblySubscriberService) {
@@ -49,7 +48,6 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
         enqueue(event: ChangeResolutionEvent(resolution: resolution, resultHandler: completion))
     }
     
-    @objc
     func resolutionPreference(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         resolutionPreference(resolution: resolution) { result in
             switch result {
@@ -65,7 +63,6 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
         enqueue(event: StartEvent(resultHandler: completion))
     }
     
-    @objc
     func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         start { result in
             switch result {
@@ -86,7 +83,6 @@ class DefaultSubscriber: Subscriber, SubscriberObjectiveC {
         enqueue(event: StopEvent(resultHandler: completion))
     }
 
-    @objc
     func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
         stop { result in
             switch result {
