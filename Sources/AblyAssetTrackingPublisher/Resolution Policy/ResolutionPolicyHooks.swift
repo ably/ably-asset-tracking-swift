@@ -6,7 +6,6 @@ import AblyAssetTrackingCore
  Methods on this interface may only be called from within implementations of
  `createResolutionPolicy` `Factory.createResolutionPolicy`.
  */
-@objc
 public protocol ResolutionPolicyHooks {
     /**
      Register a handler for the addition, removal and activation of `Trackable` objects for the `Publisher`
@@ -37,7 +36,6 @@ public protocol ResolutionPolicyHooks {
   A handler of events relating to the addition, removal and activation of `Trackable` objects for a
   `Publisher` instance.
   */
-@objc
 public protocol TrackableSetListener {
     /**
      A `Trackable` object has been added to the `Publisher`'s set of tracked objects.
@@ -71,7 +69,6 @@ public protocol TrackableSetListener {
 /**
 A handler of events relating to the addition or removal of remote `Subscriber`s to a `Publisher` instance.
 */
-@objc
 public protocol SubscriberSetListener {
     /**
      A `Subscriber` has subscribed to receive updates for one or more `Trackable` objects from the
@@ -92,12 +89,23 @@ public protocol SubscriberSetListener {
     func onSubscriberRemoved(subscriber: Subscriber)
  }
 
-public class Subscriber: NSObject {
+public class Subscriber {
     let id: String
     let trackable: Trackable
 
-    init(id: String, trackable: Trackable) {
+    public init(id: String, trackable: Trackable) {
         self.id = id
         self.trackable = trackable
+    }
+}
+
+extension Subscriber: Hashable, Equatable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(trackable)
+    }
+    
+    public static func == (lhs: Subscriber, rhs: Subscriber) -> Bool {
+        lhs.id == rhs.id && lhs.trackable == rhs.trackable
     }
 }

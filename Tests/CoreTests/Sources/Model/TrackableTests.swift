@@ -24,7 +24,7 @@ class TrackableTests: XCTestCase {
         XCTAssertNil(givenTrackable.destination)
         XCTAssertNotNil(trackableToCompare?.destination)
         
-        XCTAssertTrue(givenTrackable.isEqual(trackableToCompare))
+        XCTAssertEqual(givenTrackable, trackableToCompare)
     }
     
     func test_TrackablesContainsTrackable_ShouldContain() {

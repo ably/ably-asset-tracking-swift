@@ -4,7 +4,7 @@ import CoreLocation
  Helper class used in `GeoJSONMessage` to map GeoJSON properties field (as defined at https://geojson.org ).
  All properties match properties from `CLLocation`.
  */
-class GeoJSONProperties: Codable {
+struct GeoJSONProperties: Codable {
 
     /**
      Object horizontal accuracy in meters.
@@ -52,7 +52,7 @@ class GeoJSONProperties: Codable {
      */
     let floor: Int?
 
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let horizontalAccuracy = try container.decode(Double.self, forKey: .accuracyHorizontal)
         if let accuracyValidationError = LocationValidator.isAccuracyValid(horizontalAccuracy) {
