@@ -46,7 +46,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         publisher.delegate = delegate
     }
 
-    func testLocationService_didFailWithError() {
+    func testLocationService_didFailWithError() throws {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "TestError"))
         let expectation = XCTestExpectation()
         delegate.publisherDidFailWithErrorCallback = { expectation.fulfill() }
@@ -58,7 +58,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
 
         // It should notify delegate
         XCTAssertTrue(delegate.publisherDidFailWithErrorCalled)
-        XCTAssertEqual(delegate.publisherDidFailWithErrorParamError, errorInformation)
+        let publisherDidFailWithErrorParamError = try XCTUnwrap(delegate.publisherDidFailWithErrorParamError)
+        XCTAssertTrue(publisherDidFailWithErrorParamError.isEqual(to: errorInformation))
     }
 
     func testLocationService_didUpdateEnhancedLocation() {

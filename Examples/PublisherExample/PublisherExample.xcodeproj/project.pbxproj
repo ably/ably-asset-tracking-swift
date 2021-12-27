@@ -29,7 +29,7 @@
 		AD5BCAF22677C3CB00836F16 /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAF12677C3CB00836F16 /* AWSPluginsCore */; };
 		AD5BCAF42677C3CB00836F16 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAF32677C3CB00836F16 /* AWSS3StoragePlugin */; };
 		AD909F66267CD3ED004247D6 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD909F65267CD3ED004247D6 /* AWSAPIPlugin */; };
-		D5EBC15A274B7DEE00F4A16D /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = D5EBC159274B7DEE00F4A16D /* AblyAssetTrackingPublisher */; };
+		D57E00CB275F46CA00E6B520 /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = D57E00CA275F46CA00E6B520 /* AblyAssetTrackingPublisher */; };
 		F618BA8625C9939000B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7DADD25C96F26001C094B /* Environment.swift */; };
 		F67E661C25F8E21B001CF9BB /* DescriptionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */; };
 		F67E661F25F8EA2C001CF9BB /* AssetStateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */; };
@@ -79,7 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD909F66267CD3ED004247D6 /* AWSAPIPlugin in Frameworks */,
-				D5EBC15A274B7DEE00F4A16D /* AblyAssetTrackingPublisher in Frameworks */,
+				D57E00CB275F46CA00E6B520 /* AblyAssetTrackingPublisher in Frameworks */,
 				AD5BCAF42677C3CB00836F16 /* AWSS3StoragePlugin in Frameworks */,
 				AD5BCAF22677C3CB00836F16 /* AWSPluginsCore in Frameworks */,
 				AD5BCAEE2677C3CB00836F16 /* Amplify in Frameworks */,
@@ -253,7 +253,7 @@
 				AD5BCAF12677C3CB00836F16 /* AWSPluginsCore */,
 				AD5BCAF32677C3CB00836F16 /* AWSS3StoragePlugin */,
 				AD909F65267CD3ED004247D6 /* AWSAPIPlugin */,
-				D5EBC159274B7DEE00F4A16D /* AblyAssetTrackingPublisher */,
+				D57E00CA275F46CA00E6B520 /* AblyAssetTrackingPublisher */,
 			);
 			productName = PublisherExample;
 			productReference = 180F60F3258632D90014B310 /* PublisherExample.app */;
@@ -589,7 +589,7 @@
 			package = AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSAPIPlugin;
 		};
-		D5EBC159274B7DEE00F4A16D /* AblyAssetTrackingPublisher */ = {
+		D57E00CA275F46CA00E6B520 /* AblyAssetTrackingPublisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AblyAssetTrackingPublisher;
 		};

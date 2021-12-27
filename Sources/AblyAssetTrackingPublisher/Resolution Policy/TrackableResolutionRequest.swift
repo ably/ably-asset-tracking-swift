@@ -4,7 +4,7 @@ import AblyAssetTrackingCore
 /**
   A request for a tracking `Resolution` for a `Trackable` object.
  */
-public class TrackableResolutionRequest: NSObject {
+public class TrackableResolutionRequest {
     /**
       The `Trackable` object that holds optional constraints.
      */

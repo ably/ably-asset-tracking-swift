@@ -5,7 +5,6 @@ import Foundation
 /**
  Represents the mean of transport that's being used.
  */
-@objc
 public enum RoutingProfile: Int {
     /**
      For car and motorcycle routing. This profile prefers high-speed roads like highways.
