@@ -14,9 +14,9 @@
         "package": "Amplify",
         "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "598a3f62da6eb0c23167a494d74a50c2f80372f3",
-          "version": null
+          "version": "1.16.1"
         }
       },
       {

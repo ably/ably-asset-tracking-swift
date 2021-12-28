@@ -10,7 +10,7 @@ import CoreLocation
  }
  ````
  */
-class GeoJSONGeometry: Codable {
+struct GeoJSONGeometry: Codable {
     let type: GeoJSONType
     let latitude: Double
     let longitude: Double
@@ -28,7 +28,7 @@ class GeoJSONGeometry: Codable {
         case type
     }
 
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         type = try container.decode(GeoJSONType.self, forKey: .type)
 

@@ -3,7 +3,7 @@ import Foundation
 /**
  A set of fields usable by Ably client to request a token. This can be generated server-side and provided to your client.
  */
-public class TokenRequest: NSObject, Codable {
+public struct TokenRequest: Codable {
     public let keyName: String
     public let clientId: String?
     public let capability: String?
