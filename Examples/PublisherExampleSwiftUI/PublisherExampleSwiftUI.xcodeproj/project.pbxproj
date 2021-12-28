@@ -46,7 +46,7 @@
 		D544FB262772103B0015925C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D544FB292773010B0015925C /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
 		D544FB46277332760015925C /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		D544FB482773338B0015925C /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		D544FB482773338B0015925C /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		D544FB4A277333A20015925C /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		D5DBAF6F27746105008B8DED /* StackedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedText.swift; sourceTree = "<group>"; };
 		D5DBAF722774625C008B8DED /* StackedTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedTextModel.swift; sourceTree = "<group>"; };
