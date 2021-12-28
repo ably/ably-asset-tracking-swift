@@ -33,3 +33,11 @@ echo '\033[1mBuild: SubscriberExample\033[0m'
 echo
 
 xcodebuild build -scheme "SubscriberExample" -workspace "./Examples/AblyAssetTracking.xcworkspace" -sdk "iphonesimulator" -configuration "Debug" | xcpretty
+
+# Publisher Example (SwiftUI)
+echo
+echo '\033[1mBuild: PublisherExample (SwiftUI)\033[0m'
+echo
+
+xcodebuild build -scheme "PublisherExampleSwiftUI" -workspace "./Examples/AblyAssetTracking.xcworkspace" -sdk "iphonesimulator" -configuration "Debug" | xcpretty
+
