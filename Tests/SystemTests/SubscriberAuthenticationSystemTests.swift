@@ -46,7 +46,6 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             hmacComponents.append("\n")
 
             let hmac = hmacComponents.hmac(key: keySecret)
-            print("HMAC is \(hmac)\nKey: \(keySecret)")
 
             let tokenRequest = TokenRequest(keyName: keyName,
                          clientId: tokenParams.clientId,
