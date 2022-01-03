@@ -11,14 +11,6 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         "Test-Subscriber_\(UUID().uuidString)"
     }()
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
     func testSubscriberConnectsWithApiKey() throws {
         let connectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: clientId)
         
@@ -114,13 +106,11 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
     }
     
     private func testSubscriberConnection(configuration: ConnectionConfiguration) {
-        let subscriberDelegate = SubscriberTestDelegate()
         var resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         let subscriberStartExpectation = self.expectation(description: "Subscriber start expectation")
         let subscriber = SubscriberFactory.subscribers()
             .connection(configuration)
             .resolution(resolution)
-            .delegate(subscriberDelegate)
             .trackingId("Trackable ID")
             .log(logConfiguration)
             .start { result in
@@ -151,19 +141,5 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             subscriberStopExpectation.fulfill()
         })
         waitForExpectations(timeout: 10.0)
-    }
-    
-    private class SubscriberTestDelegate: SubscriberDelegate {
-        func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
-            
-        }
-        
-        func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation) {
-            
-        }
-        
-        func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
-            
-        }
     }
 }
