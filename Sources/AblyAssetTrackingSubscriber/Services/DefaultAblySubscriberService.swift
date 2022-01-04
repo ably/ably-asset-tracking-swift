@@ -34,7 +34,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
         // Trigger offline event at start
         delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: .offline)
         channel.presence.subscribe({ [weak self] message in
-            logger.debug("Received presence update from channel", source: "AblySubscriberService")
+            logger.debug("Received presence update from channel", source: String(describing: Self.self))
             self?.handleIncomingPresenceMessage(message)
         })
 
@@ -43,7 +43,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
 
         channel.presence.enter(data) { error in
             guard let error = error else {
-                logger.debug("Entered to channel presence successfully", source: "AblySubscriberService")
+                logger.debug("Entered to channel presence successfully", source: String(describing: Self.self))
                 completion(.success)
                 return
             }
@@ -53,12 +53,12 @@ class DefaultAblySubscriberService: AblySubscriberService {
         }
 
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in
-            logger.debug("Received raw location message from channel", source: "AblySubscriberService")
+            logger.debug("Received raw location message from channel", source: String(describing: Self.self))
             self?.handleLocationUpdateResponse(forEvent: .raw, messageData: message.data)
         }
 
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
-            logger.debug("Received enhanced location message from channel", source: "AblySubscriberService")
+            logger.debug("Received enhanced location message from channel", source: String(describing: Self.self))
             self?.handleLocationUpdateResponse(forEvent: .enhanced, messageData: message.data)
         }
     }
@@ -70,7 +70,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
     }
 
     func sendResolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
-        logger.debug("Changing resolution to: \(String(describing: resolution))", source: "AblySubscriberService")
+        logger.debug("Changing resolution to: \(String(describing: resolution))", source: String(describing: Self.self))
         presenceData = PresenceData(type: presenceData.type, resolution: resolution)
 
         // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
@@ -92,7 +92,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
             }
             
             let receivedConnectionState = connectionState.current.toConnectionState()
-            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
+            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.delegate?.subscriberService(sender: self, didChangeClientConnectionStatus: receivedConnectionState)
         }
         
@@ -102,7 +102,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
             }
             
             let receivedConnectionState = channelStatus.current.toConnectionState()
-            logger.debug("Channel connection state changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
+            logger.debug("Channel connection state changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.delegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: receivedConnectionState)
         }
     }
@@ -164,7 +164,7 @@ class DefaultAblySubscriberService: AblySubscriberService {
                 return
             }
             
-            logger.debug("Left channel presence successfully", source: "AblySubscriberService")
+            logger.debug("Left channel presence successfully", source: String(describing: Self.self))
             completion(.success)
         }
     }
