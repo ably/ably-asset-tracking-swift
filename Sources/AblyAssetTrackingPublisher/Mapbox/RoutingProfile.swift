@@ -1,6 +1,5 @@
 import Foundation
 
-// swiftlint:disable trailing_whitespace
 
 /**
  Represents the mean of transport that's being used.

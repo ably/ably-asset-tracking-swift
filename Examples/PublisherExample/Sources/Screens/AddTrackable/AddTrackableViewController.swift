@@ -6,7 +6,6 @@ protocol AddTrackableViewControllerDelegate: AnyObject {
     func addTrackableViewController(sender: AddTrackableViewController, onTrackableAdded trackable: Trackable)
 }
 
-// swiftlint:disable identifier_name
 class AddTrackableViewController: UIViewController {
     @IBOutlet private weak var saveAsDefaultSwitch: UISwitch!
     @IBOutlet private weak var resolutionConstraintsSwitch: UISwitch!

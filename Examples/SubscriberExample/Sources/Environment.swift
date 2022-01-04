@@ -1,6 +1,5 @@
 import Foundation
 
-// swiftlint:disable identifier_name
 public enum Environment {
     private static let infoDictionary: [String: Any] = {
         guard let dict = Bundle.main.infoDictionary else {

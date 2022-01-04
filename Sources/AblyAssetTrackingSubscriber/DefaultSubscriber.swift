@@ -209,8 +209,7 @@ extension DefaultSubscriber {
         }
     }
 
-    // swiftlint:disable vertical_whitespace_between_cases
-    private func performChangeResolution(_ event: ChangeResolutionEvent) {
+        private func performChangeResolution(_ event: ChangeResolutionEvent) {
         ablyService.sendResolutionPreference(resolution: event.resolution) { [weak self] result in
             switch result {
             case .success:
