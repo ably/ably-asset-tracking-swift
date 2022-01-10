@@ -7,7 +7,6 @@ import Ably
 
 class PublisherAuthenticationSystemTests: XCTestCase {
 
-    private let publisherDelegate = PublisherTestDelegate()
     private let logConfiguration = LogConfiguration()
     private let clientId: String = {
         "Test-Publisher_\(UUID().uuidString)"
@@ -44,7 +43,6 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             hmacComponents.append("\n")
 
             let hmac = hmacComponents.hmac(key: keySecret)
-            print("HMAC is \(hmac)\nKey: \(keySecret)")
 
             let tokenRequest = TokenRequest(keyName: keyName,
                          clientId: tokenParams.clientId,
@@ -123,7 +121,6 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             .log(logConfiguration)
             .locationSource(LocationSource(locationSource: [CLLocation(latitude: 0.0, longitude: 0.0), CLLocation(latitude: 1.0, longitude: 1.0)]))
             .routingProfile(.driving)
-            .delegate(publisherDelegate)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .start() // Doesn't start publishing, its just a `build()` publisher call.
 
@@ -149,23 +146,5 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 10)
-    }
-}
-
-private class PublisherTestDelegate: PublisherDelegate {
-    func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
-        return
-    }
-    
-    func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
-        return
-    }
-    
-    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        return
-    }
-    
-    func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
-        return
     }
 }
