@@ -5,14 +5,6 @@ import AblyAssetTrackingCore
 
 class ConnectionConfigurationTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testBasicAuthenticationConstructor() throws {
         let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
         let clientOptions = configuration.getClientOptions()
