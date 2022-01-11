@@ -57,12 +57,15 @@ struct GeoJSONGeometry: Codable {
     init(location: Location) throws {
         type = .point
         
-        if let validationError = LocationValidator.validate(latitude: location.latitude, longitude: location.longitude) {
+        if let validationError = LocationValidator.validate(
+            latitude: location.coordinates.latitude,
+            longitude: location.coordinates.longitude
+        ) {
             throw validationError
         }
         
-        latitude = location.latitude
-        longitude = location.longitude
+        latitude = location.coordinates.latitude
+        longitude = location.coordinates.longitude
         altitude = location.altitude
     }
 }

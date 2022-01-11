@@ -1,17 +1,9 @@
 
 import Foundation
 
-public struct Location {
+public struct Location: Equatable {
     
-    /**
-     Latitude of the location in degrees.
-     */
-    public let latitude: Double
-    
-    /**
-     Longitude of the location in degrees.
-     */
-    public let longitude: Double
+    public let coordinates: LocationCoordinate
     
     /**
      The altitude above mean sea level associated with a location, measured in meters.

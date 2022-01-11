@@ -3,16 +3,11 @@ import CoreLocation
 
 public extension Location {
     func toCoreLocation() -> CLLocation {
-        let coordinates = CLLocationCoordinate2D(
-            latitude: self.latitude,
-            longitude: self.longitude
-        )
-        
         let date = Date(timeIntervalSince1970: self.timestamp)
         
         if #available(iOS 15.0, *) {
             return CLLocation(
-                coordinate: coordinates,
+                coordinate: self.coordinates.toCoreLocationCoordinate2d(),
                 altitude: self.altitude,
                 horizontalAccuracy: self.horizontalAccuracy,
                 verticalAccuracy: self.verticalAccuracy,
@@ -25,7 +20,7 @@ public extension Location {
             
         } else if #available(iOS 13.4, *) {
             return CLLocation(
-                coordinate: coordinates,
+                coordinate: self.coordinates.toCoreLocationCoordinate2d(),
                 altitude: self.altitude,
                 horizontalAccuracy: self.horizontalAccuracy,
                 verticalAccuracy: self.verticalAccuracy,
@@ -38,7 +33,7 @@ public extension Location {
             
         } else {
             return CLLocation(
-                coordinate: coordinates,
+                coordinate: self.coordinates.toCoreLocationCoordinate2d(),
                 altitude: self.altitude,
                 horizontalAccuracy: self.horizontalAccuracy,
                 verticalAccuracy: self.verticalAccuracy,
@@ -47,5 +42,9 @@ public extension Location {
                 timestamp: date
             )
         }
+    }
+    
+    func distance(from: Location) -> Double {
+        self.toCoreLocation().distance(from: from.toCoreLocation())
     }
 }

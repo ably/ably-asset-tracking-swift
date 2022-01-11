@@ -14,8 +14,7 @@ public extension CLLocation {
         }
         
         return Location(
-            latitude: self.coordinate.latitude,
-            longitude: self.coordinate.longitude,
+            coordinates: self.coordinate.toLocationCoordinate(),
             altitude: self.altitude,
             ellipsoidalAltitude: ellipsoidalAltitude,
             horizontalAccuracy: self.horizontalAccuracy,

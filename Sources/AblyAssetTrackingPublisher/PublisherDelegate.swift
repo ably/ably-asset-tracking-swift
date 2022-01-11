@@ -18,7 +18,7 @@ public protocol PublisherDelegate: AnyObject {
         - sender:`Publisher` instance.
         - location: Location object received from LocationManager
      */
-    func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation)
+    func publisher(sender: Publisher, didUpdateEnhancedLocation location: Location)
 
     /**
      Called when there is a connection update directly in AblySDK.
