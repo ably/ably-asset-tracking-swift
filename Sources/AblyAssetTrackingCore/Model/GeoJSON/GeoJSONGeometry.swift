@@ -1,5 +1,3 @@
-import CoreLocation
-
 /**
  Helper class used in `GeoJSONMessage` to map GeoJSON geometry field (as defined at https://geojson.org ).
  When encoded or decoded from JSON, it produces the following structure:
@@ -56,15 +54,15 @@ struct GeoJSONGeometry: Codable {
         try container.encode([longitude, latitude, altitude], forKey: .coordinates)
     }
 
-    init(location: CLLocation) throws {
+    init(location: Location) throws {
         type = .point
         
-        if let validationError = LocationValidator.validate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) {
+        if let validationError = LocationValidator.validate(latitude: location.latitude, longitude: location.longitude) {
             throw validationError
         }
         
-        latitude = location.coordinate.latitude
-        longitude = location.coordinate.longitude
+        latitude = location.latitude
+        longitude = location.longitude
         altitude = location.altitude
     }
 }
