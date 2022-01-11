@@ -7,7 +7,7 @@ public extension Location {
         
         if #available(iOS 15.0, *) {
             return CLLocation(
-                coordinate: self.coordinates.toCoreLocationCoordinate2d(),
+                coordinate: self.coordinate.toCoreLocationCoordinate2d(),
                 altitude: self.altitude,
                 horizontalAccuracy: self.horizontalAccuracy,
                 verticalAccuracy: self.verticalAccuracy,
@@ -20,7 +20,7 @@ public extension Location {
             
         } else if #available(iOS 13.4, *) {
             return CLLocation(
-                coordinate: self.coordinates.toCoreLocationCoordinate2d(),
+                coordinate: self.coordinate.toCoreLocationCoordinate2d(),
                 altitude: self.altitude,
                 horizontalAccuracy: self.horizontalAccuracy,
                 verticalAccuracy: self.verticalAccuracy,
@@ -33,7 +33,7 @@ public extension Location {
             
         } else {
             return CLLocation(
-                coordinate: self.coordinates.toCoreLocationCoordinate2d(),
+                coordinate: self.coordinate.toCoreLocationCoordinate2d(),
                 altitude: self.altitude,
                 horizontalAccuracy: self.horizontalAccuracy,
                 verticalAccuracy: self.verticalAccuracy,

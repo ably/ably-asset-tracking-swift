@@ -3,7 +3,7 @@ import Foundation
 
 public struct Location: Equatable {
     
-    public let coordinates: LocationCoordinate
+    public let coordinate: LocationCoordinate
     
     /**
      The altitude above mean sea level associated with a location, measured in meters.
@@ -56,4 +56,45 @@ public struct Location: Equatable {
      The unix timestamp at which this location was determined.
      */
     public let timestamp: Double
+    
+    public init(
+        coordinate: LocationCoordinate,
+        altitude: Double,
+        ellipsoidalAltitude: Double,
+        horizontalAccuracy: Double,
+        verticalAccuracy: Double,
+        course: Double,
+        courseAccuracy: Double,
+        speed: Double,
+        speedAccuracy: Double,
+        floorLevel: Int?,
+        timestamp: Double
+    ) {
+        
+        self.coordinate = coordinate
+        self.altitude = altitude
+        self.ellipsoidalAltitude = ellipsoidalAltitude
+        self.horizontalAccuracy = horizontalAccuracy
+        self.verticalAccuracy = verticalAccuracy
+        self.course = course
+        self.courseAccuracy = courseAccuracy
+        self.speed = speed
+        self.speedAccuracy = speedAccuracy
+        self.floorLevel = floorLevel
+        self.timestamp = timestamp
+    }
+    
+    public init(coordinate: LocationCoordinate) {
+        self.coordinate = coordinate
+        self.altitude = .zero
+        self.ellipsoidalAltitude = .zero
+        self.horizontalAccuracy = .zero
+        self.verticalAccuracy = .zero
+        self.course = .zero
+        self.courseAccuracy = .zero
+        self.speed = .zero
+        self.speedAccuracy = .zero
+        self.floorLevel = nil
+        self.timestamp = .zero
+    }
 }
