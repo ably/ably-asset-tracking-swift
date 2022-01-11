@@ -76,7 +76,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         wait(for: [didUpdateEnhancedLocationExpectation], timeout: 20.0)
                 
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
-        let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop comppletion closure")
+        let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop completion closure")
         
         subscriber.stop(completion: { _ in
             stopSubscriberExpectation.fulfill()
@@ -102,7 +102,7 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
-        self.didUpdateEnhancedLocationExpectation.fulfill()
+        didUpdateEnhancedLocationExpectation.fulfill()
     }
 }
 
