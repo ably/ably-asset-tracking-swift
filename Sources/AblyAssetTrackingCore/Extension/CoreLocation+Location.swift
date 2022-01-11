@@ -24,6 +24,7 @@ public extension CLLocation {
             courseAccuracy: courseAccuracy,
             speed: self.speed,
             speedAccuracy: self.speedAccuracy,
+            floorLevel: self.floor?.level,
             timestamp: self.timestamp.timeIntervalSince1970
         )
     }

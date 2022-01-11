@@ -55,6 +55,12 @@ public struct Location {
     public let speedAccuracy: Double
     
     /**
+     The logical floor of the building.
+     nil if not available
+     */
+    public let floorLevel: Int?
+    
+    /**
      The unix timestamp at which this location was determined.
      */
     public let timestamp: Double
