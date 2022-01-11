@@ -157,7 +157,7 @@ private class PublisherTestDelegate: PublisherDelegate {
         return
     }
     
-    func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
+    func publisher(sender: Publisher, didUpdateEnhancedLocation location: EnhancedLocationUpdate) {
         return
     }
     
