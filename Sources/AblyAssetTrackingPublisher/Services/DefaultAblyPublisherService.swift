@@ -26,7 +26,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
             
             let receivedConnectionState = stateChange.current.toConnectionState()
 
-            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
+            logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.delegate?.publisherService(
                 sender: self,
                 didChangeConnectionState: receivedConnectionState
@@ -56,7 +56,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
 
         channel.presence.enter(data) { error in
             guard let error = error else {
-                logger.debug("Entered to presence successfully", source: "AblyPublisherService")
+                logger.debug("Entered to presence successfully", source: String(describing: Self.self))
                 self.channels[trackable] = channel
                 completion?(.success)
                 return
@@ -73,7 +73,7 @@ class DefaultAblyPublisherService: AblyPublisherService {
             
             let receivedConnectionState = stateChange.current.toConnectionState()
 
-            logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: "DefaultAblyPublisherService")
+            logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.delegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
     }
