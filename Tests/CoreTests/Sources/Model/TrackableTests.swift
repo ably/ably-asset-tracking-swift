@@ -8,9 +8,9 @@ class TrackableTests: XCTestCase {
     override func setUpWithError() throws {
         trackables = []
         
-        let trackable1 = Trackable(id: "1", destination: CLLocationCoordinate2D(latitude: 1, longitude: 1))
-        let trackable2 = Trackable(id: "2", destination: CLLocationCoordinate2D(latitude: 2, longitude: 2))
-        let trackable3 = Trackable(id: "3", destination: CLLocationCoordinate2D(latitude: 3, longitude: 3))
+        let trackable1 = Trackable(id: "1", destination: LocationCoordinate(latitude: 1, longitude: 1))
+        let trackable2 = Trackable(id: "2", destination: LocationCoordinate(latitude: 2, longitude: 2))
+        let trackable3 = Trackable(id: "3", destination: LocationCoordinate(latitude: 3, longitude: 3))
         
         trackables.insert(trackable1)
         trackables.insert(trackable2)
