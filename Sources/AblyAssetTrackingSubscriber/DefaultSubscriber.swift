@@ -233,17 +233,17 @@ extension DefaultSubscriber {
 
 extension DefaultSubscriber: AblySubscriberServiceDelegate {
     func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: Presence) {
-        logger.debug("subscriberService.didReceivePresenceUpdate. Presence: \(presence)", source: "DefaultSubscriber")
+        logger.debug("subscriberService.didReceivePresenceUpdate. Presence: \(presence)", source: String(describing: Self.self))
         enqueue(event: PresenceUpdateEvent(presence: presence))
     }
     
     func subscriberService(sender: AblySubscriberService, didChangeClientConnectionStatus status: ConnectionState) {
-        logger.debug("subscriberService.didChangeClientConnectionStatus. Status: \(status)", source: "DefaultSubscriber")
+        logger.debug("subscriberService.didChangeClientConnectionStatus. Status: \(status)", source: String(describing: Self.self))
         enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: status))
     }
     
     func subscriberService(sender: AblySubscriberService, didChangeChannelConnectionStatus status: ConnectionState) {
-        logger.debug("subscriberService.didChangeChannelConnectionStatus. Status: \(status)", source: "DefaultSubscriber")
+        logger.debug("subscriberService.didChangeChannelConnectionStatus. Status: \(status)", source: String(describing: Self.self))
         enqueue(event: AblyChannelConnectionStateChangedEvent(connectionState: status))
     }
 
@@ -253,7 +253,7 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
     }
 
     func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation) {
-        logger.debug("subscriberService.didReceiveEnhancedLocation.", source: "DefaultSubscriber")
+        logger.debug("subscriberService.didReceiveEnhancedLocation.", source: String(describing: Self.self))
         callback(event: DelegateEnhancedLocationReceivedEvent(location: location))
     }
 }

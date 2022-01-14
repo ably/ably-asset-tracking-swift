@@ -39,7 +39,7 @@ class DefaultLocationService: LocationService {
 
 extension DefaultLocationService: PassiveLocationManagerDelegate {
     func passiveLocationManagerDidChangeAuthorization(_ manager: PassiveLocationManager) {
-        logger.debug("passiveLocationManager.passiveLocationManagerDidChangeAuthorization", source: "DefaultLocationService")
+        logger.debug("passiveLocationManager.passiveLocationManagerDidChangeAuthorization", source: String(describing: Self.self))
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
@@ -47,7 +47,7 @@ extension DefaultLocationService: PassiveLocationManagerDelegate {
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
-        logger.debug("passiveLocationManager.didUpdateHeading", source: "DefaultLocationService")
+        logger.debug("passiveLocationManager.didUpdateHeading", source: String(describing: Self.self))
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didFailWithError error: Error) {
