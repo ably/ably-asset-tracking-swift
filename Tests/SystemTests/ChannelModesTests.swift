@@ -139,8 +139,6 @@ class ChannelModesTests: XCTestCase {
         return channelMetricsObject
     }
     
-
-    
     private func delay(_ timeout: TimeInterval) {
         let delayExpectation = XCTestExpectation()
         delayExpectation.isInverted = true
