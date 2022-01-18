@@ -88,7 +88,7 @@ class MapViewController: UIViewController {
 
     // MARK: - Publisher setup
     private func setupPublisher() {
-        let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
         currentResolution = resolution
 
         // Authentication to Ably with a private Ably API key. See the README for the more secure, token based authentication
