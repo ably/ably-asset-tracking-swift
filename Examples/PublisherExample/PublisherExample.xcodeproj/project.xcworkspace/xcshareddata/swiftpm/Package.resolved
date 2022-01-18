@@ -6,17 +6,17 @@
         "repositoryURL": "https://github.com/ably/ably-cocoa",
         "state": {
           "branch": null,
-          "revision": "b2db07daea85c07db87cbda3e28725b11148777f",
-          "version": "1.2.7"
+          "revision": "98b7af573672a95dad05bfef6b6f73fd794d6aeb",
+          "version": "1.2.6"
         }
       },
       {
         "package": "Amplify",
         "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
         "state": {
-          "branch": "main",
-          "revision": "2c57ccce43d60789183f3737e44226a453eae969",
-          "version": null
+          "branch": null,
+          "revision": "a581adbb34dfb12945f1534ecd535e33dae96a13",
+          "version": "1.15.5"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git",
         "state": {
           "branch": null,
-          "revision": "73b042998cf91ff3c8f335ca935b504881473a61",
-          "version": "1.6.0"
+          "revision": "55d670f329b9cf9f4830d5f1b37e50b100934d09",
+          "version": "1.5.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
         "state": {
           "branch": null,
-          "revision": "de0dd3f85aa9e661ed9e45569122f9a7c7f9ef5c",
-          "version": "2.26.6"
+          "revision": "e896a99482174275c1d8159828ca357ff7dbbe06",
+          "version": "2.26.3"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/ably/delta-codec-cocoa",
         "state": {
           "branch": null,
-          "revision": "d3c6972b4e10ddd9bea1d26d2c1778c5cd3d0bac",
-          "version": "1.3.2"
+          "revision": "8bb8ad568acf0c0a3d0208389c41b133925c5c64",
+          "version": "1.3.1"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
         "state": {
           "branch": null,
-          "revision": "3ddee8efad42082032f872b476cb5b3b6e73bb42",
-          "version": "69.0.3"
+          "revision": "bf5aef37100cc0daecb690f0017326af3abbdd8d",
+          "version": "69.0.2"
         }
       },
       {
@@ -146,6 +146,15 @@
         }
       },
       {
+        "package": "SourceKitten",
+        "repositoryURL": "https://github.com/jpsim/SourceKitten.git",
+        "state": {
+          "branch": null,
+          "revision": "558628392eb31d37cb251cfe626c53eafd330df6",
+          "version": "0.31.1"
+        }
+      },
+      {
         "package": "SQLite.swift",
         "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
         "state": {
@@ -161,15 +170,6 @@
           "branch": null,
           "revision": "e6b65c6d9077ea48b4a7bdda8994a1d3c6969c8d",
           "version": "3.1.1"
-        }
-      },
-      {
-        "package": "swift-argument-parser",
-        "repositoryURL": "https://github.com/apple/swift-argument-parser",
-        "state": {
-          "branch": null,
-          "revision": "e1465042f195f374b94f915ba8ca49de24300a0d",
-          "version": "1.0.2"
         }
       },
       {
@@ -191,12 +191,48 @@
         }
       },
       {
+        "package": "SwiftLint",
+        "repositoryURL": "https://github.com/realm/SwiftLint",
+        "state": {
+          "branch": null,
+          "revision": "99465e659fb91facab5b1d3c0f9229176d086bf1",
+          "version": "0.45.0"
+        }
+      },
+      {
+        "package": "SwiftyTextTable",
+        "repositoryURL": "https://github.com/scottrhoyt/SwiftyTextTable.git",
+        "state": {
+          "branch": null,
+          "revision": "c6df6cf533d120716bff38f8ff9885e1ce2a4ac3",
+          "version": "0.9.0"
+        }
+      },
+      {
+        "package": "SWXMLHash",
+        "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
+        "state": {
+          "branch": null,
+          "revision": "9183170d20857753d4f331b0ca63f73c60764bf3",
+          "version": "5.0.2"
+        }
+      },
+      {
         "package": "Turf",
         "repositoryURL": "https://github.com/mapbox/turf-swift.git",
         "state": {
           "branch": null,
-          "revision": "132aaf7f90fb3e334acd685ae7040a2b70b80d26",
-          "version": "2.1.0"
+          "revision": "dccd79aee4c21298d1beb81cc0e86eccbe911ae0",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "Yams",
+        "repositoryURL": "https://github.com/jpsim/Yams.git",
+        "state": {
+          "branch": null,
+          "revision": "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
+          "version": "4.0.6"
         }
       }
     ]
