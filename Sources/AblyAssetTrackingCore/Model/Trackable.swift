@@ -12,7 +12,7 @@ public class Trackable {
     /**
      Asset destination. Used to increase accuracy of GPS map matching feature
      */
-    public let destination: CLLocationCoordinate2D?
+    public let destination: LocationCoordinate?
 
     /**
     Optional constraints used to determine suitable Resolution
@@ -20,7 +20,7 @@ public class Trackable {
     public let constraints: ResolutionConstraints?
 
     public init(id: String,
-                destination: CLLocationCoordinate2D? = nil,
+                destination: LocationCoordinate? = nil,
                 constraints: ResolutionConstraints? = nil) {
         self.id = id
         self.destination = destination
@@ -29,7 +29,7 @@ public class Trackable {
     
     public init(id: String,
                 metadata: String? = nil,
-                destination: CLLocationCoordinate2D,
+                destination: LocationCoordinate,
                 constraints: ResolutionConstraints? = nil) {
         self.id = id
         self.destination = (destination.latitude == 0 && destination.longitude == 0) ? nil : destination

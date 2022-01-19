@@ -1,5 +1,4 @@
 import XCTest
-import CoreLocation
 import Logging
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
@@ -39,7 +38,7 @@ class DefaultPublisherTests: XCTestCase {
         routeProvider = MockRouteProvider()
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
-                              destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182))
+                              destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182))
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         delegate = MockPublisherDelegate()
         trackableState = TrackableState()
@@ -96,7 +95,7 @@ class DefaultPublisherTests: XCTestCase {
         ablyService.trackCompletionHandler = { completion in completion?(.success)}
         let expectation = XCTestExpectation()
 
-        let destination = CLLocationCoordinate2D(latitude: 12.3456, longitude: 56.789)
+        let destination = LocationCoordinate(latitude: 12.3456, longitude: 56.789)
         let trackable = Trackable(id: "TrackableId", destination: destination)
 
         // When tracking a trackable with given destination
@@ -112,7 +111,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // It should ask RouteProvider to calculate route to given destination
         XCTAssertTrue(routeProvider.getRouteCalled)
-        XCTAssertEqual(routeProvider.getRouteParamDestination, destination)
+        XCTAssertEqual(routeProvider.getRouteParamDestination?.toLocationCoordinate(), destination)
     }
 
     func testTrack_error_duplicate_track() {
@@ -549,14 +548,14 @@ class DefaultPublisherTests: XCTestCase {
     
     func testChangeRoutingProfile_shouldCallGetRouteForDestination() {
         // Given: Default destination set to:
-        let expectedDestination = CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182)
+        let expectedDestination = LocationCoordinate(latitude: 3.1415, longitude: 2.7182)
         
         publisher.changeRoutingProfile(profile: .cycling) { result in
             switch result {
             case .success:
                 XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
                 XCTAssertTrue(self.routeProvider.getRouteCalled)
-                XCTAssertEqual(self.routeProvider.getRouteParamDestination, expectedDestination)
+                XCTAssertEqual(self.routeProvider.getRouteParamDestination?.toLocationCoordinate(), expectedDestination)
             case .failure:
                 XCTFail("Failure callback shouldn't be called")
             }
@@ -636,8 +635,8 @@ class DefaultPublisherTests: XCTestCase {
     
     func testDefaultTrackableStateWaiting() {
         let trackableId = "trackable_1"
-        let locationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 1, longitude: 1))
-        let anotherLocationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 2, longitude: 2))
+        let locationUpdate = EnhancedLocationUpdate(location: Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1)))
+        let anotherLocationUpdate = EnhancedLocationUpdate(location: Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2)))
         let state = TrackableState()
         
         /**
@@ -684,7 +683,7 @@ class DefaultPublisherTests: XCTestCase {
     func testDefaultTrackableStateRemove() {
         let trackableId = "trackable_1"
         let trackableId2 = "trackable_2"
-        let locationUpdate = EnhancedLocationUpdate(location: CLLocation(latitude: 1, longitude: 1))
+        let locationUpdate = EnhancedLocationUpdate(location: Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1)))
         let state = TrackableState()
         
         state.markMessageAsPending(for: trackableId)
@@ -719,11 +718,11 @@ class DefaultPublisherTests: XCTestCase {
     }
     
     func testDefaultSkippedLocationsStateAddAndRemove() {
-        let location = CLLocation(latitude: 1, longitude: 1)
+        let location = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let trackableId = "Trackable_1"
         
-        let location2 = CLLocation(latitude: 2, longitude: 2)
+        let location2 = Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2))
         let locationUpdate2 = EnhancedLocationUpdate(location: location2)
         let trackableId2 = "Trackable_2"
         
@@ -765,8 +764,8 @@ class DefaultPublisherTests: XCTestCase {
     func testDefaultSkippedLocationsStateClearAll() {
         let state = createSkippedLocationState(
             with: [
-                "Trackable_1": [CLLocation(latitude: 1, longitude: 1)],
-                "Trackable_2": [CLLocation(latitude: 2, longitude: 2)]
+                "Trackable_1": [Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))],
+                "Trackable_2": [Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2))]
             ]
         )
 
@@ -781,14 +780,14 @@ class DefaultPublisherTests: XCTestCase {
         let state = createSkippedLocationState()
 
         for i in 0..<state.maxSkippedLocationsSize {
-            let location = CLLocation(latitude: Double(i), longitude: Double(i))
+            let location = Location(coordinate: LocationCoordinate(latitude: Double(i), longitude: Double(i)))
             let locationUpdate = EnhancedLocationUpdate(location: location)
             state.skippedLocationsAdd(for: trackableId, location: locationUpdate)
         }
         
         XCTAssertEqual(state.skippedLocationsList(for: trackableId).count, state.maxSkippedLocationsSize)
         
-        let overflowLocation = CLLocation(latitude: 1.2345, longitude: 1.2345)
+        let overflowLocation = Location(coordinate: LocationCoordinate(latitude: 1.2345, longitude: 1.2345))
         let overflowLocationUpdate = EnhancedLocationUpdate(location: overflowLocation)
         state.skippedLocationsAdd(for: trackableId, location: overflowLocationUpdate)
         
@@ -797,14 +796,14 @@ class DefaultPublisherTests: XCTestCase {
          It should drop oldest (first index) location on overflofw - first location from loop above had `CLLocationCoordinate2D(latitude: 0, longitude: 0)`
          so next one should has `CLLocationCoordinate2D(latitude: 1, longitude: 1)`
          */
-        XCTAssertEqual(state.skippedLocationsList(for: trackableId)[0].location.coordinate, CLLocationCoordinate2D(latitude: 1, longitude: 1))
+        XCTAssertEqual(state.skippedLocationsList(for: trackableId)[0].location.coordinate, LocationCoordinate(latitude: 1, longitude: 1))
         /**
          additionally last location should be equal to `overflowLocation`
          */
         XCTAssertEqual(state.skippedLocationsList(for: trackableId).last!.location, overflowLocation)
     }
     
-    private func createSkippedLocationState(with data: [String: [CLLocation]] = [:], capacity: Int = 10) -> TrackableState {
+    private func createSkippedLocationState(with data: [String: [Location]] = [:], capacity: Int = 10) -> TrackableState {
         let state = TrackableState(maxSkippedLocationsSize: capacity)
         for (trackableId, locations) in data {
             locations.map(EnhancedLocationUpdate.init).forEach { enhancedLocationUpdate in

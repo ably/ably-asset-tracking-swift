@@ -1,4 +1,3 @@
-import CoreLocation
 
 /**
  Enumeration used to determine enhanced location type.
@@ -12,14 +11,14 @@ public enum LocationUpdateType: String, Codable {
  Model used to handle location updates.
  */
 public class EnhancedLocationUpdate {
-    public let location: CLLocation
-    public var skippedLocations: [CLLocation] = []
+    public let location: Location
+    public var skippedLocations: [Location] = []
 
     public var type: LocationUpdateType {
         return .actual
     }
 
-    public init(location: CLLocation) {
+    public init(location: Location) {
         self.location = location
     }
     

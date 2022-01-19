@@ -88,7 +88,7 @@ class MapViewController: UIViewController {
 
     // MARK: - Publisher setup
     private func setupPublisher() {
-        let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
         currentResolution = resolution
 
         // Authentication to Ably with a private Ably API key. See the README for the more secure, token based authentication
@@ -106,7 +106,7 @@ class MapViewController: UIViewController {
     }
 
     private func startTracking() {
-        let destination = CLLocationCoordinate2D(latitude: 37.363152386314994, longitude: -122.11786987383525)
+        let destination = LocationCoordinate(latitude: 37.363152386314994, longitude: -122.11786987383525)
         let trackable = Trackable(id: trackingId, destination: destination)
 
         locationState = .pending
@@ -295,8 +295,8 @@ extension MapViewController: PublisherDelegate {
         showErrorDialog(error: error)
     }
 
-    func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
-        currentLocation = location
+    func publisher(sender: Publisher, didUpdateEnhancedLocation location: Location) {
+        currentLocation = location.toCoreLocation()
         locationState = .active
         refreshAnnotations()
         scrollToReceivedLocation()
