@@ -1,5 +1,4 @@
 import XCTest
-import CoreLocation
 
 @testable import AblyAssetTrackingCore
 
@@ -10,28 +9,22 @@ class GeoJSONPropertiesCLLocationTests: XCTestCase {
                              accuracyBearing: Double? = nil,
                              speed: Double? = nil,
                              accuracySpeed: Double? = nil,
-                             timestamp: Date? = nil) -> CLLocation {
-        let coordinate = CLLocationCoordinate2D(latitude: 1.0, longitude: 1.0)
+                             timestamp: Double? = nil) -> Location {
+        let coordinate = LocationCoordinate(latitude: 1.0, longitude: 1.0)
         
-        if #available(iOS 13.4, *) {
-            return CLLocation(coordinate: coordinate,
-                              altitude: 1.0,
-                              horizontalAccuracy: horizontalAccuracy ?? 2.0,
-                              verticalAccuracy: accuracyVertical ?? 3.0,
-                              course: bearing ?? 4.0,
-                              courseAccuracy: accuracyBearing ?? 5.0,
-                              speed: speed ?? 6.0,
-                              speedAccuracy: accuracySpeed ?? 7.0,
-                              timestamp: timestamp ?? Date())
-        } else {
-            return CLLocation(coordinate: coordinate,
-                              altitude: 1.0,
-                              horizontalAccuracy: horizontalAccuracy ?? 2.0,
-                              verticalAccuracy: accuracyVertical ?? 3.0,
-                              course: bearing ?? 4.0,
-                              speed: speed ?? 5.0,
-                              timestamp: timestamp ?? Date())
-        }
+        return Location(
+            coordinate: coordinate,
+            altitude: 1.0,
+            ellipsoidalAltitude: .zero,
+            horizontalAccuracy: horizontalAccuracy ?? 2.0,
+            verticalAccuracy: accuracyVertical ?? 3.0,
+            course: bearing ?? 4.0,
+            courseAccuracy: accuracyBearing ?? 5.0,
+            speed: speed ?? 6.0,
+            speedAccuracy: accuracySpeed ?? 7.0,
+            floorLevel: nil,
+            timestamp: timestamp ?? .zero
+        )
     }
     
     // MARK: Horizontal accuracy
@@ -134,10 +127,10 @@ class GeoJSONPropertiesCLLocationTests: XCTestCase {
     }
     
     // MARK: Timestamp
-
+    
     func testGeoJsonPropertiesFromCLLocation_Timestamp() throws {
         let timestamp = Date()
-        let location = getLocation(timestamp: timestamp)
+        let location = getLocation(timestamp: timestamp.timeIntervalSince1970)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertEqual(properties.time, timestamp.timeIntervalSince1970)
     }

@@ -46,8 +46,8 @@ class DefaultPublisher: Publisher {
     private var locationEngineResolution: Resolution
     private var trackables: Set<Trackable>
 
-    private var lastEnhancedLocations: [Trackable: CLLocation]
-    private var lastEnhancedTimestamps: [Trackable: Date]
+    private var lastEnhancedLocations: [Trackable: Location]
+    private var lastEnhancedTimestamps: [Trackable: Double]
     private var route: Route?
 
     private var receivedAblyClientConnectionState: ConnectionState = .offline
@@ -232,7 +232,7 @@ extension DefaultPublisher {
             activeTrackable = event.trackable
             hooks.trackables?.onActiveTrackableChanged(trackable: event.trackable)
             if let destination = event.trackable.destination {
-                routeProvider.getRoute(to: destination, withRoutingProfile: routingProfile) { [weak self] result in
+                routeProvider.getRoute(to: destination.toCoreLocationCoordinate2d(), withRoutingProfile: routingProfile) { [weak self] result in
                     switch result {
                     case .success(let route):
                         self?.enqueue(event: SetDestinationSuccessEvent(route: route))
@@ -541,9 +541,9 @@ extension DefaultPublisher {
         )
     }
 
-    private func shouldSendLocation(location: CLLocation,
-                                    lastLocation: CLLocation?,
-                                    lastTimestamp: Date?,
+    private func shouldSendLocation(location: Location,
+                                    lastLocation: Location?,
+                                    lastTimestamp: Double?,
                                     resolution: Resolution?) -> Bool {
         guard let resolution = resolution,
               let lastLocation = lastLocation,
@@ -551,7 +551,7 @@ extension DefaultPublisher {
         else { return true }
 
         let distance = location.distance(from: lastLocation)
-        let timeInterval = location.timestamp.timeIntervalSince1970 - lastTimestamp.timeIntervalSince1970
+        let timeInterval = location.timestamp - lastTimestamp
 
         // desiredInterval in resolution is in milliseconds, while timeInterval from timestamp is in seconds
         let desiredIntervalInSeconds = resolution.desiredInterval / 1000
@@ -593,14 +593,14 @@ extension DefaultPublisher {
         enqueue(event: DelegateResolutionUpdateEvent(resolution: resolution))
     }
 
-    private func checkThreshold(location: CLLocation) {
+    private func checkThreshold(location: Location) {
         guard let threshold = proximityThreshold,
               let handler = proximityHandler
         else { return }
 
         let checker = ThresholdChecker()
         let destination = activeTrackable?.destination != nil ?
-            CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude) : nil
+        CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude).toLocation() : nil
         let estimatedArrivalTime = route?.expectedTravelTime == nil ? nil :
             route!.expectedTravelTime + Date().timeIntervalSince1970
 

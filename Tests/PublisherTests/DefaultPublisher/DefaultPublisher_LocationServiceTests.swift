@@ -1,5 +1,4 @@
 import XCTest
-import CoreLocation
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 
@@ -30,7 +29,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         trackable = Trackable(
             id: "TrackableId",
             metadata: "TrackableMetadata",
-            destination: CLLocationCoordinate2D(latitude: 3.1415, longitude: 2.7182)
+            destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182)
         )
         publisher = DefaultPublisher(
             connectionConfiguration:configuration,
@@ -63,7 +62,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
 
     func testLocationService_didUpdateEnhancedLocation() {
-        let location = CLLocation(latitude: 1.234, longitude: 3.456)
+        let location = Location(coordinate: LocationCoordinate(latitude: 1.234, longitude: 3.45))
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let expectationAddTrackable = XCTestExpectation()
         let expectationUpdateLocation = XCTestExpectation()
@@ -92,9 +91,9 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         /**
          Distance from location1 to location2 to is about 23.7 meters, and from location1 to location3 about 609.9 meters
          */
-        let location1 = CLLocation(latitude: 51.50084974160386, longitude: -0.12460883599692132)
-        let location2 = CLLocation(latitude: 51.50106028620921, longitude: -0.12455871010105721)
-        let location3 = CLLocation(latitude: 51.50076810088975, longitude: -0.11582583421022277)
+        let location1 = Location(coordinate: LocationCoordinate(latitude: 51.50084974160386, longitude: -0.12460883599692132))
+        let location2 = Location(coordinate: LocationCoordinate(latitude: 51.50106028620921, longitude: -0.12455871010105721))
+        let location3 = Location(coordinate: LocationCoordinate(latitude: 51.50076810088975, longitude: -0.11582583421022277))
 
         var unmarkMessageAsPendingDidCallExpectation = XCTestExpectation(description: "Trackable Unmark Message As Pending Did Call Expectation")
         
@@ -181,7 +180,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
          Re-sending is limited to `PublisherTrackableState.Constants.maxRetryCount` per `trackableId`
          Retry counter is reset on `success`
          */
-        let location = CLLocation(latitude: 1, longitude: 1)
+        let location = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let trackable = Trackable(id: "Trackable_1")
         let trackableState = TrackableState()
@@ -205,7 +204,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
     
     func testPublisherWillAttachSkippedLocationsToNextRequest() {
-        let initialLocation = CLLocation(latitude: 1, longitude: 1)
+        let initialLocation = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))
         var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
         let trackable = Trackable(id: "Trackable_2")
         let trackableState = TrackableState()
@@ -235,7 +234,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         XCTAssertGreaterThan(trackableState.skippedLocationsList(for: trackable.id).count, .zero, "Skipped locations state should has at least 1 skipped location")
         
-        let newLocation = CLLocation(latitude: 1.1, longitude: 1.1)
+        let newLocation = Location(coordinate: LocationCoordinate(latitude: 1.1, longitude: 1.1))
         locationUpdate = EnhancedLocationUpdate(location: newLocation)
         
         publisherHelper.sendLocationUpdate(
@@ -255,9 +254,9 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
     
     func testPublisherSendEnhancedLocationWillAddToWaitingQueuePendingMessage() {
-        let initialLocation = CLLocation(latitude: 1, longitude: 1)
+        let initialLocation = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))
         let locationUpdate = EnhancedLocationUpdate(location: initialLocation)
-        let nextLocation = CLLocation(latitude: 2, longitude: 2)
+        let nextLocation = Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2))
         let nextLocationUpdate = EnhancedLocationUpdate(location: nextLocation)
         let trackable = Trackable(id: "Trackable_2")
         let ablyService = MockAblyPublisherService()
