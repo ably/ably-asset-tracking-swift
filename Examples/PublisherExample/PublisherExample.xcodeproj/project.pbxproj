@@ -64,7 +64,8 @@
 		18A7FB7525AE3624005AC55E /* AccuracyPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccuracyPickerView.swift; sourceTree = "<group>"; };
 		AD0F84B22677D67900C15DB7 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		ADAAE617266154FB00A8F214 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5EBC158274B7A5500F4A16D /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
+		D5ECA9DD273BEEE200025FB7 /* London-waypoints.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "London-waypoints.gpx"; sourceTree = "<group>"; };
+		D5F3255227294696008D9DC2 /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
 		F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionsHelper.swift; sourceTree = "<group>"; };
 		F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStateHelper.swift; sourceTree = "<group>"; };
 		F6994D1425DE646300F222AD /* S3FilesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3FilesListViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 		180F618B258634350014B310 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5ECA9DD273BEEE200025FB7 /* London-waypoints.gpx */,
 				AD0F84B22677D67900C15DB7 /* Secrets.xcconfig */,
 				180F618C258634350014B310 /* Assets.xcassets */,
 				180F618D258634350014B310 /* LaunchScreen.storyboard */,
@@ -560,12 +562,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
+		D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.10.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 		D5B792BA277EE5D400428420 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -579,34 +581,44 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AD5BCAED2677C3CB00836F16 /* Amplify */ = {
+		D5ECA9CC27395BFA00025FB7 /* Amplify */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = Amplify;
 		};
-		AD5BCAEF2677C3CB00836F16 /* AWSCognitoAuthPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = AWSCognitoAuthPlugin;
-		};
-		AD5BCAF12677C3CB00836F16 /* AWSPluginsCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = AWSPluginsCore;
-		};
-		AD5BCAF32677C3CB00836F16 /* AWSS3StoragePlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = AWSS3StoragePlugin;
-		};
-		AD909F65267CD3ED004247D6 /* AWSAPIPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = AWSAPIPlugin;
-		};
-		D57E00CA275F46CA00E6B520 /* AblyAssetTrackingPublisher */ = {
+		D5ECA9CE27395F4300025FB7 /* AblyAssetTrackingPublisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AblyAssetTrackingPublisher;
+		};
+		D5ECA9D027395FA500025FB7 /* AWSPluginsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSPluginsCore;
+		};
+		D5ECA9D227395FBB00025FB7 /* AWSAPIPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSAPIPlugin;
+		};
+		D5ECA9D427395FBB00025FB7 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		D5ECA9D627395FBB00025FB7 /* AWSDataStorePlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSDataStorePlugin;
+		};
+		D5ECA9D827395FBB00025FB7 /* AWSPinpointAnalyticsPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSPinpointAnalyticsPlugin;
+		};
+		D5ECA9DA27395FBB00025FB7 /* AWSS3StoragePlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSS3StoragePlugin;
 		};
 		D5B792BB277EE5D400428420 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
