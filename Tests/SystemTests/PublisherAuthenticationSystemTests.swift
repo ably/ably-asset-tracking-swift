@@ -148,3 +148,21 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
 }
+
+private class PublisherTestDelegate: PublisherDelegate {
+    func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
+        return
+    }
+    
+    func publisher(sender: Publisher, didUpdateEnhancedLocation location: EnhancedLocationUpdate) {
+        return
+    }
+    
+    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+        return
+    }
+    
+    func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
+        return
+    }
+}
