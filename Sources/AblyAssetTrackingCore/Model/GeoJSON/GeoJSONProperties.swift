@@ -1,4 +1,3 @@
-import CoreLocation
 
 /**
  Helper class used in `GeoJSONMessage` to map GeoJSON properties field (as defined at https://geojson.org ).
@@ -70,15 +69,15 @@ struct GeoJSONProperties: Codable {
         bearing = try? container.decode(Double.self, forKey: .bearing).isLessThanZeroThenNil()
     }
 
-    init(location: CLLocation) throws {
+    init(location: Location) throws {
         if let accuracyValidationError = LocationValidator.isAccuracyValid(location.horizontalAccuracy) {
             throw accuracyValidationError
         }
         
         accuracyHorizontal = location.horizontalAccuracy
-        time = location.timestamp.timeIntervalSince1970
+        time = location.timestamp
         
-        floor = location.floor?.level
+        floor = location.floorLevel
         speed = location.speed.isLessThanZeroThenNil()
         accuracySpeed = location.speedAccuracy.isLessThanZeroThenNil()
         accuracyVertical = location.verticalAccuracy.isLessThanZeroThenNil()

@@ -4,28 +4,22 @@ import XCTest
 @testable import AblyAssetTrackingCore
 
 class GeoJsonMessageCLLocationTests: XCTestCase {
-    private func getLocation(isValid: Bool? = nil, timestamp: Date? = nil) -> CLLocation {
-        let coordinate = CLLocationCoordinate2D(latitude: 1.0, longitude: 1.0)
+    private func getLocation(isValid: Bool? = nil, timestamp: Double? = nil) -> Location {
+        let coordinate = LocationCoordinate(latitude: 1.0, longitude: 1.0)
         
-        if #available(iOS 13.4, *) {
-            return CLLocation(coordinate: coordinate,
-                              altitude: 1.0,
-                              horizontalAccuracy: isValid ?? true ? 2.0 : -2.0,
-                              verticalAccuracy: 3.0,
-                              course: 4.0,
-                              courseAccuracy: 5.0,
-                              speed: 6.0,
-                              speedAccuracy: 7.0,
-                              timestamp: timestamp ?? Date())
-        } else {
-            return CLLocation(coordinate: coordinate,
-                              altitude: 1.0,
-                              horizontalAccuracy: isValid ?? true ? 2.0 : -2.0,
-                              verticalAccuracy: 3.0,
-                              course: 4.0,
-                              speed: 6.0,
-                              timestamp: timestamp ?? Date())
-        }
+        return Location(
+            coordinate: coordinate,
+            altitude: 1.0,
+            ellipsoidalAltitude: .zero,
+            horizontalAccuracy: isValid ?? true ? 2.0 : -2.0,
+            verticalAccuracy: 3.0,
+            course: 4.0,
+            courseAccuracy: 5.0,
+            speed: 6.0,
+            speedAccuracy: 7.0,
+            floorLevel: nil,
+            timestamp: timestamp ?? .zero
+        )
     }
     
     func testGeoJsonMessageFromCLLocation_InvalidLocation() {
@@ -40,7 +34,7 @@ class GeoJsonMessageCLLocationTests: XCTestCase {
     
     func testGeoJsonMessageFromCLLocation_CheckValues() throws {
         let timestamp = Date()
-        let location = getLocation(isValid: true, timestamp: timestamp)
+        let location = getLocation(isValid: true, timestamp: timestamp.timeIntervalSince1970)
         let message = try GeoJSONMessage(location: location)
         
         XCTAssertEqual(message.type, .feature)
