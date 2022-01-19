@@ -24,12 +24,11 @@
 		18A7FB7125AE1596005AC55E /* AddTrackableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7FB6F25AE1596005AC55E /* AddTrackableViewController.swift */; };
 		18A7FB7225AE1596005AC55E /* AddTrackableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A7FB7025AE1596005AC55E /* AddTrackableViewController.xib */; };
 		18A7FB7625AE3624005AC55E /* AccuracyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7FB7525AE3624005AC55E /* AccuracyPickerView.swift */; };
-		AD5BCAEE2677C3CB00836F16 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAED2677C3CB00836F16 /* Amplify */; };
-		AD5BCAF02677C3CB00836F16 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAEF2677C3CB00836F16 /* AWSCognitoAuthPlugin */; };
-		AD5BCAF22677C3CB00836F16 /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAF12677C3CB00836F16 /* AWSPluginsCore */; };
-		AD5BCAF42677C3CB00836F16 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD5BCAF32677C3CB00836F16 /* AWSS3StoragePlugin */; };
-		AD909F66267CD3ED004247D6 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = AD909F65267CD3ED004247D6 /* AWSAPIPlugin */; };
-		D57E00CB275F46CA00E6B520 /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = D57E00CA275F46CA00E6B520 /* AblyAssetTrackingPublisher */; };
+		D5423CB72798006700BC5FA7 /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = D5423CB62798006700BC5FA7 /* AblyAssetTrackingPublisher */; };
+		D5423CBA2798014600BC5FA7 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = D5423CB92798014600BC5FA7 /* Amplify */; };
+		D5423CBC2798025600BC5FA7 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = D5423CBB2798025600BC5FA7 /* AWSCognitoAuthPlugin */; };
+		D5423CBE2798025600BC5FA7 /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = D5423CBD2798025600BC5FA7 /* AWSPluginsCore */; };
+		D5423CC02798025600BC5FA7 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = D5423CBF2798025600BC5FA7 /* AWSS3StoragePlugin */; };
 		D5B792BC277EE5D400428420 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = D5B792BB277EE5D400428420 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		D5B792BE277EE5D400428420 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D5B792BD277EE5D400428420 /* FirebaseCrashlytics */; };
 		F618BA8625C9939000B69885 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7DADD25C96F26001C094B /* Environment.swift */; };
@@ -65,7 +64,6 @@
 		AD0F84B22677D67900C15DB7 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		ADAAE617266154FB00A8F214 /* Publisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Publisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5ECA9DD273BEEE200025FB7 /* London-waypoints.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "London-waypoints.gpx"; sourceTree = "<group>"; };
-		D5F3255227294696008D9DC2 /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
 		F67E661B25F8E21B001CF9BB /* DescriptionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionsHelper.swift; sourceTree = "<group>"; };
 		F67E661E25F8EA2C001CF9BB /* AssetStateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStateHelper.swift; sourceTree = "<group>"; };
 		F6994D1425DE646300F222AD /* S3FilesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3FilesListViewController.swift; sourceTree = "<group>"; };
@@ -81,14 +79,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD909F66267CD3ED004247D6 /* AWSAPIPlugin in Frameworks */,
-				D57E00CB275F46CA00E6B520 /* AblyAssetTrackingPublisher in Frameworks */,
-				AD5BCAF42677C3CB00836F16 /* AWSS3StoragePlugin in Frameworks */,
-				AD5BCAF22677C3CB00836F16 /* AWSPluginsCore in Frameworks */,
 				D5B792BC277EE5D400428420 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				D5423CBC2798025600BC5FA7 /* AWSCognitoAuthPlugin in Frameworks */,
+				D5423CBE2798025600BC5FA7 /* AWSPluginsCore in Frameworks */,
+				D5423CC02798025600BC5FA7 /* AWSS3StoragePlugin in Frameworks */,
+				D5423CBA2798014600BC5FA7 /* Amplify in Frameworks */,
+				D5423CB72798006700BC5FA7 /* AblyAssetTrackingPublisher in Frameworks */,
 				D5B792BE277EE5D400428420 /* FirebaseCrashlytics in Frameworks */,
-				AD5BCAEE2677C3CB00836F16 /* Amplify in Frameworks */,
-				AD5BCAF02677C3CB00836F16 /* AWSCognitoAuthPlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +200,6 @@
 		D5EBC157274B7A5400F4A16D /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				D5EBC158274B7A5500F4A16D /* ably-asset-tracking-swift */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -254,14 +250,13 @@
 			);
 			name = PublisherExample;
 			packageProductDependencies = (
-				AD5BCAED2677C3CB00836F16 /* Amplify */,
-				AD5BCAEF2677C3CB00836F16 /* AWSCognitoAuthPlugin */,
-				AD5BCAF12677C3CB00836F16 /* AWSPluginsCore */,
-				AD5BCAF32677C3CB00836F16 /* AWSS3StoragePlugin */,
-				AD909F65267CD3ED004247D6 /* AWSAPIPlugin */,
-				D57E00CA275F46CA00E6B520 /* AblyAssetTrackingPublisher */,
 				D5B792BB277EE5D400428420 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				D5B792BD277EE5D400428420 /* FirebaseCrashlytics */,
+				D5423CB62798006700BC5FA7 /* AblyAssetTrackingPublisher */,
+				D5423CB92798014600BC5FA7 /* Amplify */,
+				D5423CBB2798025600BC5FA7 /* AWSCognitoAuthPlugin */,
+				D5423CBD2798025600BC5FA7 /* AWSPluginsCore */,
+				D5423CBF2798025600BC5FA7 /* AWSS3StoragePlugin */,
 			);
 			productName = PublisherExample;
 			productReference = 180F60F3258632D90014B310 /* PublisherExample.app */;
@@ -291,8 +286,8 @@
 			);
 			mainGroup = 180F60EA258632D90014B310;
 			packageReferences = (
-				AD5BCAEC2677C3CB00836F16 /* XCRemoteSwiftPackageReference "amplify-ios" */,
 				D5B792BA277EE5D400428420 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D5423CB82798014500BC5FA7 /* XCRemoteSwiftPackageReference "amplify-ios" */,
 			);
 			productRefGroup = 180F60F4258632D90014B310 /* Products */;
 			projectDirPath = "";
@@ -562,7 +557,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
+		D5423CB82798014500BC5FA7 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
 			requirement = {
@@ -581,43 +576,28 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D5ECA9CC27395BFA00025FB7 /* Amplify */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = Amplify;
-		};
-		D5ECA9CE27395F4300025FB7 /* AblyAssetTrackingPublisher */ = {
+		D5423CB62798006700BC5FA7 /* AblyAssetTrackingPublisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AblyAssetTrackingPublisher;
 		};
-		D5ECA9D027395FA500025FB7 /* AWSPluginsCore */ = {
+		D5423CB92798014600BC5FA7 /* Amplify */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = AWSPluginsCore;
+			package = D5423CB82798014500BC5FA7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = Amplify;
 		};
-		D5ECA9D227395FBB00025FB7 /* AWSAPIPlugin */ = {
+		D5423CBB2798025600BC5FA7 /* AWSCognitoAuthPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = AWSAPIPlugin;
-		};
-		D5ECA9D427395FBB00025FB7 /* AWSCognitoAuthPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = D5423CB82798014500BC5FA7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSCognitoAuthPlugin;
 		};
-		D5ECA9D627395FBB00025FB7 /* AWSDataStorePlugin */ = {
+		D5423CBD2798025600BC5FA7 /* AWSPluginsCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = AWSDataStorePlugin;
+			package = D5423CB82798014500BC5FA7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSPluginsCore;
 		};
-		D5ECA9D827395FBB00025FB7 /* AWSPinpointAnalyticsPlugin */ = {
+		D5423CBF2798025600BC5FA7 /* AWSS3StoragePlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
-			productName = AWSPinpointAnalyticsPlugin;
-		};
-		D5ECA9DA27395FBB00025FB7 /* AWSS3StoragePlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D5ECA9CB27395BFA00025FB7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = D5423CB82798014500BC5FA7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSS3StoragePlugin;
 		};
 		D5B792BB277EE5D400428420 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
