@@ -25,19 +25,18 @@ echo
 echo '\033[1mBuild: PublisherExample\033[0m'
 echo
 
-xcodebuild build -scheme "PublisherExample" -workspace "./Examples/AblyAssetTracking.xcworkspace" -sdk "iphonesimulator" -configuration "Debug" | xcpretty
+xcodebuild build -scheme "PublisherExample" -workspace "./Examples/AblyAssetTracking.xcworkspace" -destination "platform=iOS Simulator,name=iPhone 13" -configuration "Debug" | xcpretty
 
 # Subscriber Example (swift)
 echo
 echo '\033[1mBuild: SubscriberExample\033[0m'
 echo
 
-xcodebuild build -scheme "SubscriberExample" -workspace "./Examples/AblyAssetTracking.xcworkspace" -sdk "iphonesimulator" -configuration "Debug" | xcpretty
+xcodebuild build -scheme "SubscriberExample" -workspace "./Examples/AblyAssetTracking.xcworkspace" -destination "platform=iOS Simulator,name=iPhone 13" -configuration "Debug" | xcpretty
 
 # Publisher Example (SwiftUI)
 echo
 echo '\033[1mBuild: PublisherExample (SwiftUI)\033[0m'
 echo
 
-xcodebuild build -scheme "PublisherExampleSwiftUI" -workspace "./Examples/AblyAssetTracking.xcworkspace" -sdk "iphonesimulator" -configuration "Debug" | xcpretty
-
+xcodebuild build -scheme "PublisherExampleSwiftUI" -workspace "./Examples/AblyAssetTracking.xcworkspace" -destination "platform=iOS Simulator,name=iPhone 13" -configuration "Debug" | xcpretty
