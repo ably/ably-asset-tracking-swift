@@ -79,7 +79,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
 
         // It should notify delegate
         XCTAssertTrue(delegate.publisherDidUpdateEnhancedLocationCalled)
-        XCTAssertEqual(delegate.publisherDidUpdateEnhancedLocationParamLocation, location)
+        XCTAssertEqual(delegate.publisherDidUpdateEnhancedLocationParamLocation?.location, location)
 
         // It should send row location update to AblyService
         XCTAssertTrue(ablyService.sendEnhancedAssetLocationUpdateCalled)
