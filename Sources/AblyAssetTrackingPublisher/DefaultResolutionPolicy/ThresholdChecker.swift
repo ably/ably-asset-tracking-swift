@@ -4,9 +4,9 @@ import AblyAssetTrackingCore
 class ThresholdChecker {
     func isThresholdReached(
         threshold: Proximity,
-        currentLocation: CLLocation,
+        currentLocation: Location,
         currentTime: TimeInterval,
-        destination: CLLocation?,
+        destination: Location?,
         estimatedArrivalTime: TimeInterval?
     ) -> Bool {
         guard let threshold = threshold as? DefaultProximity
@@ -16,8 +16,8 @@ class ThresholdChecker {
     }
 
     private func isSpatialProximityReached(threshold: DefaultProximity,
-                                           currentLocation: CLLocation,
-                                           destination: CLLocation?) -> Bool {
+                                           currentLocation: Location,
+                                           destination: Location?) -> Bool {
         guard let spatial = threshold.spatial,
               let destination = destination
         else { return false }

@@ -50,7 +50,7 @@ struct EnhancedLocationChangedEvent: PublisherEvent {
 
 struct SendEnhancedLocationSuccessEvent: PublisherEvent {
     let trackable: Trackable
-    let location: CLLocation
+    let location: Location
 }
 
 struct SendEnhancedLocationFailureEvent: PublisherEvent {

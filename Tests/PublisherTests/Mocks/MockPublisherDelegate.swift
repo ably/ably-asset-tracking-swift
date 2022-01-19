@@ -17,9 +17,9 @@ class MockPublisherDelegate: PublisherDelegate {
 
     var publisherDidUpdateEnhancedLocationCalled: Bool = false
     var publisherDidUpdateEnhancedLocationParamSender: Publisher?
-    var publisherDidUpdateEnhancedLocationParamLocation: CLLocation?
+    var publisherDidUpdateEnhancedLocationParamLocation: Location?
     var publisherDidUpdateEnhancedLocationCallback: (() -> Void)?
-    func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
+    func publisher(sender: Publisher, didUpdateEnhancedLocation location: Location) {
         publisherDidUpdateEnhancedLocationCalled = true
         publisherDidUpdateEnhancedLocationParamSender = sender
         publisherDidUpdateEnhancedLocationParamLocation = location
