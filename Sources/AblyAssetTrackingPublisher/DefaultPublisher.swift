@@ -184,7 +184,7 @@ extension DefaultPublisher {
             case let event as DelegateTrackableConnectionStateChangedEvent:
                 self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
             case let event as DelegateEnhancedLocationChangedEvent:
-                self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
+                self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
             default: preconditionFailure("Unhandled delegate event in DefaultPublisher: \(event) ")
             }
         }
@@ -693,7 +693,7 @@ extension DefaultPublisher {
     private func notifyDelegateEnhancedLocationChanged(_ event: DelegateEnhancedLocationChangedEvent) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate.location)
+            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
         }
     }
 
