@@ -1,5 +1,3 @@
-import CoreLocation
-
 /**
  Class used to send location updates from Publisher to Subscriber modules.
  It's mapped to GeoJSON format (https://geojson.org) with the following structure:
@@ -27,20 +25,9 @@ public struct GeoJSONMessage: Codable {
     let geometry: GeoJSONGeometry
     let properties: GeoJSONProperties
 
-    public init(location: CLLocation) throws {
+    public init(location: Location) throws {
         type = .feature
         geometry = try GeoJSONGeometry(location: location)
         properties = try GeoJSONProperties(location: location)
-    }
-
-    public func toCoreLocation() -> CLLocation {
-        return CLLocation(
-            coordinate: CLLocationCoordinate2D(latitude: geometry.latitude, longitude: geometry.longitude),
-            altitude: geometry.altitude,
-            horizontalAccuracy: properties.accuracyHorizontal,
-            verticalAccuracy: properties.accuracyVertical ?? -1,
-            course: properties.bearing ?? -1,
-            speed: properties.speed ?? -1,
-            timestamp: Date(timeIntervalSince1970: properties.time))
     }
 }

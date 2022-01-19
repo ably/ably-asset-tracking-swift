@@ -189,7 +189,7 @@ extension AddTrackableViewController {
         let destination = try getDestination()
 
         if !resolutionConstraintsSwitch.isOn {
-            return Trackable(id: trackableId, destination: destination, constraints: nil)
+            return Trackable(id: trackableId, destination: destination?.toLocationCoordinate(), constraints: nil)
         }
 
         guard let batteryLevelThresholdText = batteryLevelThresholdTextField.text,
@@ -227,7 +227,7 @@ extension AddTrackableViewController {
                                                        proximityThreshold: try getProximity(),
                                                        batteryLevelThreshold: batteryLevelThreshold,
                                                        lowBatteryMultiplier: lowBatteryMultiplier)
-        return Trackable(id: trackableId, destination: destination, constraints: constraints)
+        return Trackable(id: trackableId, destination: destination?.toLocationCoordinate(), constraints: constraints)
     }
 
     private func getProximity() throws -> Proximity {
