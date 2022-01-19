@@ -296,7 +296,7 @@ extension MapViewController: PublisherDelegate {
     }
 
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: EnhancedLocationUpdate) {
-        currentLocation = location.location
+        currentLocation = location.location.toCoreLocation()
         locationState = .active
         refreshAnnotations()
         scrollToReceivedLocation()
