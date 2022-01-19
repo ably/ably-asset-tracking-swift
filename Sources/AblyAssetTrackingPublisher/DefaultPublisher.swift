@@ -720,7 +720,7 @@ extension DefaultPublisher: LocationServiceDelegate {
     }
 
     func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
-        logger.debug("locationService.didUpdateEnhancedLocation.", source: "DefaultPublisher")
+        logger.debug("locationService.didUpdateEnhancedLocation.", source: String(describing: Self.self))
         enqueue(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate))
         callback(event: DelegateEnhancedLocationChangedEvent(locationUpdate: locationUpdate))
     }
@@ -729,7 +729,7 @@ extension DefaultPublisher: LocationServiceDelegate {
 // MARK: AblyPublisherServiceDelegate
 extension DefaultPublisher: AblyPublisherServiceDelegate {
     func publisherService(sender: AblyPublisherService, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        logger.debug("publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: "DefaultPublisher")
+        logger.debug("publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: String(describing: Self.self))
         enqueue(event: AblyChannelConnectionStateChangedEvent(trackable: trackable, connectionState: state))
     }
 
@@ -739,7 +739,7 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
     }
 
     func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
-        logger.debug("publisherService.didChangeConnectionState. State: \(state.description)", source: "DefaultPublisher")
+        logger.debug("publisherService.didChangeConnectionState. State: \(state.description)", source: String(describing: Self.self))
         enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
     }
 
