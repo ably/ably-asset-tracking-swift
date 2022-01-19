@@ -76,7 +76,7 @@ class SettingsViewController: UIViewController {
         if status == .denied {
             showPermissionSettingsAlert()
         } else {
-            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestAlwaysAuthorization()
         }
     }
 
