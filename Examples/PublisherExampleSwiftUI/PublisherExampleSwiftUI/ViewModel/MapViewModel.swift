@@ -51,7 +51,7 @@ class MapViewModel: ObservableObject {
                 .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
                 .start()
         
-        let destination: CLLocationCoordinate2D? = nil
+        let destination: LocationCoordinate? = nil
         
         /**
          Uncomment below line if you want to set destination coordinates for your trackable.
@@ -133,8 +133,8 @@ extension MapViewModel: PublisherDelegate {
         updateErrorInfo(error)
     }
     
-    func publisher(sender: Publisher, didUpdateEnhancedLocation location: CLLocation) {
-        updatedLocations.insert(location)
+    func publisher(sender: Publisher, didUpdateEnhancedLocation location: EnhancedLocationUpdate) {
+        updatedLocations.insert(location.location.toCoreLocation())
     }
     
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
