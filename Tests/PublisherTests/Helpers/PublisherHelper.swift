@@ -1,6 +1,3 @@
-//
-//  Created by Łukasz Szyszkowski on 31/08/2021.
-//
 import XCTest
 import CoreLocation
 import AblyAssetTrackingCore

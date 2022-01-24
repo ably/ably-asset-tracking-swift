@@ -1,5 +1,3 @@
-//
-
 import SwiftUI
 import CoreLocation
 import MapKit

@@ -1,5 +1,3 @@
-//
-
 import SwiftUI
 
 extension Button {
