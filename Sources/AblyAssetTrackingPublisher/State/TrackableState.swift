@@ -1,7 +1,3 @@
-//
-//  Created by Łukasz Szyszkowski on 30/08/2021.
-//
-
 import Foundation
 import AblyAssetTrackingCore
 

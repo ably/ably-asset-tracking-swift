@@ -1,5 +1,3 @@
-//
-
 import Foundation
 import AblyAssetTrackingPublisher
 import CoreLocation.CLLocation
