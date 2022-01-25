@@ -1,5 +1,3 @@
-//
-
 import AblyAssetTrackingPublisher
 
 extension RoutingProfile {

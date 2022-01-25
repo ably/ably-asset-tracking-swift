@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Łukasz Szyszkowski on 27/08/2021.
-//
-
 import Foundation
 import XCTest
 

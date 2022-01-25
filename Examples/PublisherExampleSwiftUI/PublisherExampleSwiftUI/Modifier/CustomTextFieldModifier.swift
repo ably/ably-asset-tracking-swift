@@ -1,5 +1,3 @@
-//
-
 import SwiftUI
 
 struct CustomTextFieldModifier: ViewModifier {
