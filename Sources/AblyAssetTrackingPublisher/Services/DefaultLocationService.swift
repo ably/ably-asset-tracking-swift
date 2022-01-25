@@ -33,7 +33,7 @@ class DefaultLocationService: LocationService {
     }
 
     func changeLocationEngineResolution(resolution: Resolution) {
-        // TODO: Implement method
+        locationManager.systemLocationManager.desiredAccuracy = resolution.accuracy.toCoreLocationAccuracy()
     }
 }
 
