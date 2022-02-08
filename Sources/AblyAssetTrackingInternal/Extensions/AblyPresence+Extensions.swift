@@ -1,7 +1,6 @@
 import AblyAssetTrackingCore
-import AblyAssetTrackingInternal
 
-extension Presence {
+public extension Presence {
     func toConnectionState() -> ConnectionState {
         switch self {
         case .enter, .present, .update:
