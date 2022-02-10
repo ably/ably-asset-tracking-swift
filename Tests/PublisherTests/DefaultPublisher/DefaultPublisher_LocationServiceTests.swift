@@ -1,9 +1,13 @@
 import XCTest
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
+import Logging
 @testable import AblyAssetTrackingPublisher
 
 class DefaultPublisher_LocationServiceTests: XCTestCase {
     let publisherHelper = PublisherHelper()
+    let logger = Logger(label: "com.ably.tracking.DefaultPublisher_LocationServiceTests")
+    
     var locationService: MockLocationService!
     var ablyService: MockAblyPublisherService!
     var configuration: ConnectionConfiguration!
@@ -18,8 +22,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
 
     override func setUpWithError() throws {
         locationService = MockLocationService()
-        ablyService = MockAblyPublisherService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
+        ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
         mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         routeProvider = MockRouteProvider()
         resolutionPolicyFactory = MockResolutionPolicyFactory()
@@ -67,7 +71,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let expectationAddTrackable = XCTestExpectation()
         let expectationUpdateLocation = XCTestExpectation()
 
-        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        
         publisher.add(trackable: trackable) { _ in expectationAddTrackable.fulfill() }
         wait(for: [expectationAddTrackable], timeout: 5.0)
         
@@ -107,11 +112,11 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         /**
          After tracking trackable (to trigger resolution resolve refresh)
          */
-        ablyService.trackCompletionHandler = { callback in
+        ablyService.connectCompletionHandler = { callback in
             callback?(.success)
             expectation.fulfill()
         }
-        
+                
         ablyService.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in
             completion?(.success)
         }
@@ -184,8 +189,10 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let trackable = Trackable(id: "Trackable_1")
         let trackableState = TrackableState()
-        let ablyService = MockAblyPublisherService()
+        let ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
         let publisher = PublisherHelper.createPublisher(ablyService: ablyService)
+        
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisherHelper.sendLocationUpdate(
             ablyService: ablyService,
@@ -208,7 +215,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
         let trackable = Trackable(id: "Trackable_2")
         let trackableState = TrackableState()
-        let ablyService = MockAblyPublisherService()
+        let ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
         let delegate = MockPublisherDelegate()
         let publisher = PublisherHelper.createPublisher(
             ablyService: ablyService,
@@ -220,6 +227,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         delegate.publisherDidFailWithErrorCallback = {
             publisherDidFailExpectation.fulfill()
         }
+        
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisherHelper.sendLocationUpdate(
             ablyService: ablyService,
@@ -259,7 +268,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let nextLocation = Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2))
         let nextLocationUpdate = EnhancedLocationUpdate(location: nextLocation)
         let trackable = Trackable(id: "Trackable_2")
-        let ablyService = MockAblyPublisherService()
+        let ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
         let locationService = MockLocationService()
         let resolutionPolicyFactory = MockResolutionPolicyFactory()
         let publisher = PublisherHelper.createPublisher(
@@ -269,13 +278,13 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         resolutionPolicyFactory.resolutionPolicy?.resolveResolutionsReturnValue = .init(accuracy: .balanced, desiredInterval: 0, minimumDisplacement: 0)
         
-        let trackCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
-        ablyService.trackCompletionHandler = { callback in
+        let connectCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
+        ablyService.connectCompletionHandler = { callback in
             callback?(.success)
-            trackCompletionHandlerExpectation.fulfill()
+            connectCompletionHandlerExpectation.fulfill()
         }
         publisher.track(trackable: trackable) { _ in }
-        wait(for: [trackCompletionHandlerExpectation], timeout: 5.0)
+        wait(for: [connectCompletionHandlerExpectation], timeout: 5.0)
         
         
         let sendLocationCompleteExpectation = XCTestExpectation(description: "Send Location Complete Expectation")
