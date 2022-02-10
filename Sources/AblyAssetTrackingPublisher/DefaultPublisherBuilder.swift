@@ -1,5 +1,7 @@
 import UIKit
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
+import Logging
 
 class DefaultPublisherBuilder: PublisherBuilder {
     private var connection: ConnectionConfiguration?
@@ -54,12 +56,20 @@ class DefaultPublisherBuilder: PublisherBuilder {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }
         
+        let defaultAbly = DefaultAbly(
+            configuration: connection,
+            mode: .publish,
+            logger: Logger(
+                label: "com.ably.tracking.DefaultAbly-Publisher"
+            )
+        )
+        
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
                                           mapboxConfiguration: mapboxConfiguration,
                                           logConfiguration: logConfiguration,
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
-                                          ablyService: DefaultAblyPublisherService(configuration: connection),
+                                          ablyService: defaultAbly,
                                           locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locationSource),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration))
         publisher.delegate = delegate

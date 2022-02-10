@@ -28,12 +28,14 @@ class DefaultPublisher: Publisher {
     private let mapboxConfiguration: MapboxConfiguration
     private let logConfiguration: LogConfiguration
     private let locationService: LocationService
-    private let ablyService: AblyPublisherService
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
     private let batteryLevelProvider: BatteryLevelProvider
+    
+    private var ablyService: AblyPublisher
     private var trackableState: TrackableStateable
     private var state: State = .working
+    private var presenceData = PresenceData(type: .publisher)
 
     // ResolutionPolicy
     private let hooks: DefaultResolutionPolicyHooks
@@ -63,7 +65,7 @@ class DefaultPublisher: Publisher {
          logConfiguration: LogConfiguration,
          routingProfile: RoutingProfile,
          resolutionPolicyFactory: ResolutionPolicyFactory,
-         ablyService: AblyPublisherService,
+         ablyService: AblyPublisher,
          locationService: LocationService,
          routeProvider: RouteProvider,
          trackableState: TrackableStateable = TrackableState()
@@ -93,9 +95,11 @@ class DefaultPublisher: Publisher {
         self.lastEnhancedTimestamps = [:]
         self.trackables = []
 
-        self.ablyService.delegate = self
+        self.ablyService.publisherDelegate = self
         self.locationService.delegate = self
         self.methods.delegate = self
+        
+        self.ablyService.subscribeForAblyStateChange()
     }
 
     func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
@@ -204,11 +208,12 @@ extension DefaultPublisher {
             return
         }
 
-        self.ablyService.track(trackable: event.trackable) { [weak self] result in
+        ablyService.connect(
+            trackableId: event.trackable.id,
+            presenceData: presenceData,
+            useRewind: false
+        ) { [weak self] result in
             switch result {
-            case .failure(let error):
-                self?.callback(error: error, handler: event.resultHandler)
-                return
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] result in
                     switch result {
@@ -218,6 +223,8 @@ extension DefaultPublisher {
                         return
                     }
                 })
+            case .failure(let error):
+                self?.callback(error: error, handler: event.resultHandler)
             }
         }
     }
@@ -255,6 +262,9 @@ extension DefaultPublisher {
             return
         }
 
+        ablyService.subscribeForPresenceMessages(trackable: event.trackable)
+        ablyService.subscribeForChannelStateChange(trackable: event.trackable)
+        
         trackables.insert(event.trackable)
         locationService.startUpdatingLocation()
         resolveResolution(trackable: event.trackable)
@@ -299,8 +309,14 @@ extension DefaultPublisher {
             callback(error: error, handler: event.resultHandler)
             return
         }
-
-        self.ablyService.track(trackable: event.trackable) { [weak self] result in
+        
+        
+        ablyService.connect(
+            trackableId: event.trackable.id,
+            presenceData: presenceData,
+            useRewind: false
+        ) { [weak self] result in
+            
             switch result {
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] _ in
@@ -318,8 +334,12 @@ extension DefaultPublisher {
             publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-
-        self.ablyService.stopTracking(trackable: event.trackable) { [weak self] result in
+        
+        self.ablyService.disconnect(
+            trackableId: event.trackable.id,
+            presenceData: presenceData
+        ) { [weak self] result in
+            
             switch result {
             case .success(let wasPresent):
                 self?.trackableState.remove(trackableId: event.trackable.id)
@@ -341,7 +361,7 @@ extension DefaultPublisher {
 
         state = .stopping
 
-        ablyService.close { [weak self] result in
+        ablyService.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
                 self?.locationService.stopUpdatingLocation()
@@ -496,7 +516,8 @@ extension DefaultPublisher {
         event.locationUpdate.skippedLocations = trackableState.skippedLocationsList(for: trackable.id).map { $0.location }
 
         trackableState.markMessageAsPending(for: trackable.id)
-        ablyService.sendEnhancedAssetLocationUpdate(locationUpdate: event.locationUpdate, forTrackable: trackable) { [weak self] result in
+        
+        ablyService.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackable: trackable) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.enqueue(event: SendEnhancedLocationFailureEvent(error: error, locationUpdate: event.locationUpdate, trackable: trackable))
@@ -728,22 +749,22 @@ extension DefaultPublisher: LocationServiceDelegate {
 
 // MARK: AblyPublisherServiceDelegate
 extension DefaultPublisher: AblyPublisherServiceDelegate {
-    func publisherService(sender: AblyPublisherService, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+    func publisherService(sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
         logger.debug("publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: String(describing: Self.self))
         enqueue(event: AblyChannelConnectionStateChangedEvent(trackable: trackable, connectionState: state))
     }
 
-    func publisherService(sender: AblyPublisherService, didFailWithError error: ErrorInformation) {
+    func publisherService(sender: AblyPublisher, didFailWithError error: ErrorInformation) {
         logger.error("publisherService.didFailWithError. Error: \(error.message)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }
 
-    func publisherService(sender: AblyPublisherService, didChangeConnectionState state: ConnectionState) {
+    func publisherService(sender: AblyPublisher, didChangeConnectionState state: ConnectionState) {
         logger.debug("publisherService.didChangeConnectionState. State: \(state.description)", source: String(describing: Self.self))
         enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
     }
 
-    func publisherService(sender: AblyPublisherService,
+    func publisherService(sender: AblyPublisher,
                           didReceivePresenceUpdate presence: Presence,
                           forTrackable trackable: Trackable,
                           presenceData: PresenceData,
