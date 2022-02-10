@@ -1,5 +1,7 @@
 import XCTest
 import CoreLocation
+import Logging
+import AblyAssetTrackingInternal
 import AblyAssetTrackingSubscriber
 @testable import AblyAssetTrackingPublisher
 
@@ -66,13 +68,19 @@ class ChannelModesTests: XCTestCase {
         )
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: ablyApiKey, clientId: clientId)
         
+        let defaultAbly = DefaultAbly(
+            configuration: publisherConnectionConfiguration,
+            mode: .publish,
+            logger: .init(label: "com.ably.tracking.SystemTests")
+        )
+        
         return DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: MockResolutionPolicyFactory(),
-            ablyService: DefaultAblyPublisherService(configuration: publisherConnectionConfiguration),
+            ablyService: defaultAbly,
             locationService: defaultLocationService,
             routeProvider: MockRouteProvider()
         )
