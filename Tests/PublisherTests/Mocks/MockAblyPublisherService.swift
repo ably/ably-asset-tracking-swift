@@ -1,33 +1,65 @@
 import CoreLocation
 import Foundation
+import Logging
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
+
 @testable import AblyAssetTrackingPublisher
 
-class MockAblyPublisherService: AblyPublisherService {
-    var trackCalled: Bool = false
-    var trackParamTrackable: Trackable?
-    var trackParamResultHandler: ResultHandler<Void>?
-    var trackCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    func track(trackable: Trackable, completion: ResultHandler<Void>?) {
-        trackCalled = true
-        trackParamTrackable = trackable
-        trackParamResultHandler = completion
-        trackCompletionHandler?(completion)
+class MockAblyPublisherService: AblyPublisher {
+    
+    var initConnectionConfiguration: ConnectionConfiguration?
+    var initMode: AblyMode?
+    required init(configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger) {
+        self.initConnectionConfiguration = configuration
+        self.initMode = mode
     }
     
-    var stopTrackingCalled: Bool = false
-    var stopTrackingParamTrackable: Trackable?
-    var stopTrackingParamResultHandler: ResultHandler<Bool>?
-    var stopTrackingResultCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
-    func stopTracking(trackable: Trackable, completion: ResultHandler<Bool>?) {
-        stopTrackingCalled = true
-        stopTrackingParamTrackable = trackable
-        stopTrackingParamResultHandler = completion
-        stopTrackingResultCompletionHandler?(completion)
+    var subscribeForAblyStateChangeCalled = false
+    func subscribeForAblyStateChange() {
+        subscribeForAblyStateChangeCalled = true
+    }
+    
+    var subscribeForChannelStateChangeCalled = false
+    var subscribeForChannelStateChangeTrackable: Trackable?
+    func subscribeForChannelStateChange(trackable: Trackable) {
+        subscribeForChannelStateChangeCalled = true
+        subscribeForChannelStateChangeTrackable = trackable
+    }
+    
+    var subscribeForPresenceMessagesCalled = false
+    var subscribeForPresenceMessagesTrackable: Trackable?
+    func subscribeForPresenceMessages(trackable: Trackable) {
+        subscribeForPresenceMessagesCalled = true
+        subscribeForPresenceMessagesTrackable = trackable
+    }
+    
+    var connectCalled = false
+    var connectTrackableId: String?
+    var connectPresenceData: PresenceData?
+    var connectUseRewind: Bool?
+    var connectCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    func connect(trackableId: String, presenceData: PresenceData, useRewind: Bool, completion: @escaping ResultHandler<Void>) {
+        connectCalled = true
+        connectTrackableId = trackableId
+        connectPresenceData = presenceData
+        connectUseRewind = useRewind
+        connectCompletionHandler?(completion)
+    }
+    
+    var disconnectCalled: Bool = false
+    var disconnectParamTrackableId: String?
+    var disconnectParamResultHandler: ResultHandler<Bool>?
+    var disconnectResultCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
+    func disconnect(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Bool>) {
+        disconnectCalled = true
+        disconnectParamTrackableId = trackableId
+        disconnectParamResultHandler = completion
+        disconnectResultCompletionHandler?(completion)
     }
 
     var wasDelegateSet: Bool = false
-    var delegate: AblyPublisherServiceDelegate? {
+    var publisherDelegate: AblyPublisherServiceDelegate? {
         didSet { wasDelegateSet = true }
     }
 
@@ -37,7 +69,7 @@ class MockAblyPublisherService: AblyPublisherService {
     var sendEnhancedAssetLocationUpdateParamTrackable: Trackable?
     var sendEnhancedAssetLocationUpdateParamCompletion: ResultHandler<Void>?
     var sendEnhancedAssetLocationUpdateParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    func sendEnhancedAssetLocationUpdate(locationUpdate: EnhancedLocationUpdate, forTrackable trackable: Trackable, completion: ResultHandler<Void>?) {
+    func sendEnhancedLocation(locationUpdate: EnhancedLocationUpdate, trackable: Trackable, completion: ResultHandler<Void>?) {
         sendEnhancedAssetLocationUpdateCounter += 1
         sendEnhancedAssetLocationUpdateCalled = true
         sendEnhancedAssetLocationUpdateParamLocationUpdate = locationUpdate
@@ -48,10 +80,12 @@ class MockAblyPublisherService: AblyPublisherService {
     
     
     var closeCalled: Bool = false
+    var closePresenceData: PresenceData?
     var closeParamCompletion: ResultHandler<Void>?
     var closeResultCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    func close(completion: @escaping ResultHandler<Void>) {
+    func close(presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
         closeCalled = true
+        closePresenceData = presenceData
         closeParamCompletion = completion
         closeResultCompletionHandler?(completion)
     }

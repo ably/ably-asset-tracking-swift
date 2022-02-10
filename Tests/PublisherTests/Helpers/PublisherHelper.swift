@@ -1,6 +1,7 @@
 import XCTest
 import CoreLocation
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
 @testable import AblyAssetTrackingPublisher
 
 class PublisherHelper {
@@ -36,18 +37,18 @@ class PublisherHelper {
             /**
              Start publishing trackable
              */
-            let trackCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
-            ablyService.trackCompletionHandler = { callback in
+            let connectCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
+            ablyService.connectCompletionHandler = { callback in
                 callback?(.success)
                 self.addedTrackables.append(trackable.id)
-                trackCompletionHandlerExpectation.fulfill()
+                connectCompletionHandlerExpectation.fulfill()
             }
             
             publisher.track(trackable: trackable) { _ in }
             
-            switch XCTWaiter.wait(for: [trackCompletionHandlerExpectation], timeout: defaultTimeout) {
+            switch XCTWaiter.wait(for: [connectCompletionHandlerExpectation], timeout: defaultTimeout) {
             case .timedOut:
-                XCTFail("Timeout \(trackCompletionHandlerExpectation.description)")
+                XCTFail("Timeout \(connectCompletionHandlerExpectation.description)")
             default: ()
             }
         }
@@ -86,19 +87,19 @@ class PublisherHelper {
     }
     
     static func createPublisher(
-        connectionConfigurationn: ConnectionConfiguration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID"),
+        ablyService: AblyPublisher,
+        connectionConfiguration: ConnectionConfiguration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID"),
         mapboxConfiguration: MapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN"),
         logConfiguration: LogConfiguration = LogConfiguration(),
         routingProfile: RoutingProfile = .driving,
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
-        ablyService: AblyPublisherService = MockAblyPublisherService(),
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
         trackableState: TrackableStateable = TrackableState()
     ) -> DefaultPublisher {
         
         DefaultPublisher(
-            connectionConfiguration: connectionConfigurationn,
+            connectionConfiguration: connectionConfiguration,
             mapboxConfiguration: mapboxConfiguration,
             logConfiguration: logConfiguration,
             routingProfile: routingProfile,
