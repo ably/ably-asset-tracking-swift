@@ -104,7 +104,7 @@ class PublisherHelper {
             logConfiguration: logConfiguration,
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyService: ablyService,
+            ablyPublisher: ablyService,
             locationService: locationService,
             routeProvider: routeProvider,
             trackableState: trackableState

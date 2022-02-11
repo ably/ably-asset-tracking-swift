@@ -80,7 +80,7 @@ class ChannelModesTests: XCTestCase {
             logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: MockResolutionPolicyFactory(),
-            ablyService: defaultAbly,
+            ablyPublisher: defaultAbly,
             locationService: defaultLocationService,
             routeProvider: MockRouteProvider()
         )

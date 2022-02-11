@@ -49,7 +49,7 @@ class DefaultPublisherTests: XCTestCase {
                                      logConfiguration: LogConfiguration(),
                                      routingProfile: .driving,
                                      resolutionPolicyFactory: resolutionPolicyFactory,
-                                     ablyService: ablyService,
+                                     ablyPublisher: ablyService,
                                      locationService: locationService,
                                      routeProvider: routeProvider,
                                      trackableState: trackableState)
@@ -828,7 +828,7 @@ class DefaultPublisherTests: XCTestCase {
             logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyService: ablyService,
+            ablyPublisher: ablyService,
             locationService: locationService,
             routeProvider: routeProvider
         )

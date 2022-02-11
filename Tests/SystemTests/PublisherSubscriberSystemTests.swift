@@ -72,7 +72,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             logConfiguration: logConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyService: defaultAbly,
+            ablyPublisher: defaultAbly,
             locationService: defaultLocationService,
             routeProvider: routeProvider
         )
