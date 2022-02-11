@@ -81,12 +81,12 @@ class MockAblyPublisherService: AblyPublisher {
     
     var closeCalled: Bool = false
     var closePresenceData: PresenceData?
-    var closeParamCompletion: ResultHandler<Void>?
+    var closeCompletion: ResultHandler<Void>?
     var closeResultCompletionHandler: ((ResultHandler<Void>?) -> Void)?
     func close(presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
         closeCalled = true
         closePresenceData = presenceData
-        closeParamCompletion = completion
+        closeCompletion = completion
         closeResultCompletionHandler?(completion)
     }
 }
