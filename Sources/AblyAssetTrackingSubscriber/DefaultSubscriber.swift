@@ -21,9 +21,11 @@ private enum SubscriberState {
 class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
     private let logConfiguration: LogConfiguration
-    private let ablyService: AblySubscriberService
-    private var subscriberState: SubscriberState = .working
+    private let trackableId: String
+    private let presenceData: PresenceData
     
+    private var ablySubscriber: AblySubscriber
+    private var subscriberState: SubscriberState = .working
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelConnectionState: ConnectionState = .offline
     private var currentTrackableConnectionState: ConnectionState = .offline
@@ -31,12 +33,20 @@ class DefaultSubscriber: Subscriber {
     
     weak var delegate: SubscriberDelegate?
 
-    init(logConfiguration: LogConfiguration,
-         ablyService: AblySubscriberService) {
+    init(
+        logConfiguration: LogConfiguration,
+        ablySubscriber: AblySubscriber,
+        trackableId: String,
+        resolution: Resolution?
+    ) {
         self.logConfiguration = logConfiguration
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
-        self.ablyService = ablyService
-        self.ablyService.delegate = self
+        self.ablySubscriber = ablySubscriber
+        self.trackableId = trackableId
+        self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
+        self.ablySubscriber.subscriberDelegate = self
+        
+        self.ablySubscriber.subscribeForAblyStateChange()
     }
 
     func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
@@ -138,20 +148,34 @@ extension DefaultSubscriber {
 
     // MARK: Start/Stop
     private func performStart(_ event: StartEvent) {
-        ablyService.start { [weak self] result in
+        
+        ablySubscriber.connect(
+            trackableId: trackableId,
+            presenceData: presenceData,
+            useRewind: true
+        ) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
             switch result {
             case .success:
-                self?.callback(value: Void(), handler: event.resultHandler)
+                self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
+                self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
+                self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
+                
+                self.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):
-                self?.callback(error: error, handler: event.resultHandler)
+                self.callback(error: error, handler: event.resultHandler)
             }
         }
+        
     }
-
+    
     private func performStop(_ event: StopEvent) {
         subscriberState = .stopping
         
-        ablyService.stop { [weak self] result in
+        ablySubscriber.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
                 self?.enqueue(event: AblyConnectionClosedEvent(resultHandler: event.resultHandler))
@@ -211,7 +235,18 @@ extension DefaultSubscriber {
 
     // swiftlint:disable vertical_whitespace_between_cases
     private func performChangeResolution(_ event: ChangeResolutionEvent) {
-        ablyService.sendResolutionPreference(resolution: event.resolution) { [weak self] result in
+        guard let resolution = event.resolution else {
+            callback(value: Void(), handler: event.resultHandler)
+            
+            return
+        }
+        
+        let presenceDataUpdate = PresenceData(type: presenceData.type, resolution: resolution)
+        ablySubscriber.updatePresenceData(
+            trackableId: trackableId,
+            presenceData: presenceDataUpdate
+        ) { [weak self] result in
+            
             switch result {
             case .success:
                 self?.callback(value: Void(), handler: event.resultHandler)
@@ -232,27 +267,27 @@ extension DefaultSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberServiceDelegate {
-    func subscriberService(sender: AblySubscriberService, didReceivePresenceUpdate presence: Presence) {
+    func subscriberService(sender: AblySubscriber, didReceivePresenceUpdate presence: Presence) {
         logger.debug("subscriberService.didReceivePresenceUpdate. Presence: \(presence)", source: String(describing: Self.self))
         enqueue(event: PresenceUpdateEvent(presence: presence))
     }
     
-    func subscriberService(sender: AblySubscriberService, didChangeClientConnectionStatus status: ConnectionState) {
+    func subscriberService(sender: AblySubscriber, didChangeClientConnectionStatus status: ConnectionState) {
         logger.debug("subscriberService.didChangeClientConnectionStatus. Status: \(status)", source: String(describing: Self.self))
         enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: status))
     }
     
-    func subscriberService(sender: AblySubscriberService, didChangeChannelConnectionStatus status: ConnectionState) {
+    func subscriberService(sender: AblySubscriber, didChangeChannelConnectionStatus status: ConnectionState) {
         logger.debug("subscriberService.didChangeChannelConnectionStatus. Status: \(status)", source: String(describing: Self.self))
         enqueue(event: AblyChannelConnectionStateChangedEvent(connectionState: status))
     }
 
-    func subscriberService(sender: AblySubscriberService, didFailWithError error: ErrorInformation) {
+    func subscriberService(sender: AblySubscriber, didFailWithError error: ErrorInformation) {
         logger.error("subscriberService.didFailWithError. Error: \(error)", source: "DefaultSubscriber")
         callback(event: DelegateErrorEvent(error: error))
     }
 
-    func subscriberService(sender: AblySubscriberService, didReceiveEnhancedLocation location: CLLocation) {
+    func subscriberService(sender: AblySubscriber, didReceiveEnhancedLocation location: CLLocation) {
         logger.debug("subscriberService.didReceiveEnhancedLocation.", source: String(describing: Self.self))
         callback(event: DelegateEnhancedLocationReceivedEvent(location: location))
     }

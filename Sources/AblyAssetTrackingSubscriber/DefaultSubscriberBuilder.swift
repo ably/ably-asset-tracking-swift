@@ -1,5 +1,7 @@
 import UIKit
+import Logging
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
 
 class DefaultSubscriberBuilder: SubscriberBuilder {
     private var connection: ConnectionConfiguration?
@@ -44,11 +46,19 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             return nil
         }
 
-        let ablyService = DefaultAblySubscriberService(configuration: connection,
-                                                trackingId: trackingId,
-                                                resolution: resolution)
-        let subscriber = DefaultSubscriber(logConfiguration: logConfiguration,
-                                           ablyService: ablyService)
+        let defaultAbly = DefaultAbly(
+            configuration: connection,
+            mode: .subscribe,
+            logger: Logger(
+                label: "com.ably.tracking.DefaultAbly-Subscriber"
+            )
+        )
+        let subscriber = DefaultSubscriber(
+            logConfiguration: logConfiguration,
+            ablySubscriber: defaultAbly,
+            trackableId: trackingId,
+            resolution: resolution
+        )
         subscriber.delegate = delegate
         subscriber.start(completion: completion)
         return subscriber
