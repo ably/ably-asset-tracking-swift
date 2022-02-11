@@ -577,7 +577,7 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         
         XCTAssertTrue(ablyService.closeCalled)
-        XCTAssertNotNil(ablyService.closeParamCompletion)
+        XCTAssertNotNil(ablyService.closeCompletion)
     }
     
     func test_closeConnection_failure() {
@@ -600,7 +600,7 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         
         XCTAssertTrue(ablyService.closeCalled)
-        XCTAssertNotNil(ablyService.closeParamCompletion)
+        XCTAssertNotNil(ablyService.closeCompletion)
     }
     
     func testDefaultTrackableStateRetry() {
