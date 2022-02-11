@@ -135,6 +135,10 @@ public class DefaultAbly: AblyCommon {
                 sender: self,
                 didChangeConnectionState: receivedConnectionState
             )
+            self.subscriberDelegate?.subscriberService(
+                sender: self,
+                didChangeClientConnectionStatus: receivedConnectionState
+            )
         }
     }
     
