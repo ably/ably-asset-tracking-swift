@@ -69,7 +69,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                           logConfiguration: logConfiguration,
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
-                                          ablyService: defaultAbly,
+                                          ablyPublisher: defaultAbly,
                                           locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locationSource),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration))
         publisher.delegate = delegate

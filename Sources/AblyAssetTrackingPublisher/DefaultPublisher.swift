@@ -32,7 +32,7 @@ class DefaultPublisher: Publisher {
     private let routeProvider: RouteProvider
     private let batteryLevelProvider: BatteryLevelProvider
     
-    private var ablyService: AblyPublisher
+    private var ablyPublisher: AblyPublisher
     private var trackableState: TrackableStateable
     private var state: State = .working
     private var presenceData = PresenceData(type: .publisher)
@@ -65,7 +65,7 @@ class DefaultPublisher: Publisher {
          logConfiguration: LogConfiguration,
          routingProfile: RoutingProfile,
          resolutionPolicyFactory: ResolutionPolicyFactory,
-         ablyService: AblyPublisher,
+         ablyPublisher: AblyPublisher,
          locationService: LocationService,
          routeProvider: RouteProvider,
          trackableState: TrackableStateable = TrackableState()
@@ -77,7 +77,7 @@ class DefaultPublisher: Publisher {
         self.routingProfile = routingProfile
         self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher", qos: .default)
         self.locationService = locationService
-        self.ablyService = ablyService
+        self.ablyPublisher = ablyPublisher
         self.routeProvider = routeProvider
         self.trackableState = trackableState
 
@@ -95,11 +95,11 @@ class DefaultPublisher: Publisher {
         self.lastEnhancedTimestamps = [:]
         self.trackables = []
 
-        self.ablyService.publisherDelegate = self
+        self.ablyPublisher.publisherDelegate = self
         self.locationService.delegate = self
         self.methods.delegate = self
         
-        self.ablyService.subscribeForAblyStateChange()
+        self.ablyPublisher.subscribeForAblyStateChange()
     }
 
     func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
@@ -208,7 +208,7 @@ extension DefaultPublisher {
             return
         }
 
-        ablyService.connect(
+        ablyPublisher.connect(
             trackableId: event.trackable.id,
             presenceData: presenceData,
             useRewind: false
@@ -262,8 +262,8 @@ extension DefaultPublisher {
             return
         }
 
-        ablyService.subscribeForPresenceMessages(trackable: event.trackable)
-        ablyService.subscribeForChannelStateChange(trackable: event.trackable)
+        ablyPublisher.subscribeForPresenceMessages(trackable: event.trackable)
+        ablyPublisher.subscribeForChannelStateChange(trackable: event.trackable)
         
         trackables.insert(event.trackable)
         locationService.startUpdatingLocation()
@@ -311,7 +311,7 @@ extension DefaultPublisher {
         }
         
         
-        ablyService.connect(
+        ablyPublisher.connect(
             trackableId: event.trackable.id,
             presenceData: presenceData,
             useRewind: false
@@ -335,7 +335,7 @@ extension DefaultPublisher {
             return
         }
         
-        self.ablyService.disconnect(
+        self.ablyPublisher.disconnect(
             trackableId: event.trackable.id,
             presenceData: presenceData
         ) { [weak self] result in
@@ -361,7 +361,7 @@ extension DefaultPublisher {
 
         state = .stopping
 
-        ablyService.close(presenceData: presenceData) { [weak self] result in
+        ablyPublisher.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
                 self?.locationService.stopUpdatingLocation()
@@ -517,7 +517,7 @@ extension DefaultPublisher {
 
         trackableState.markMessageAsPending(for: trackable.id)
         
-        ablyService.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackable: trackable) { [weak self] result in
+        ablyPublisher.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackable: trackable) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.enqueue(event: SendEnhancedLocationFailureEvent(error: error, locationUpdate: event.locationUpdate, trackable: trackable))
