@@ -49,8 +49,7 @@ public class DefaultAbly: AblyCommon {
         
         let channel = client.channels.getChannelFor(trackingId: trackableId, options: options)
         
-        // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
-        channel.presence.enter(try! presenceData.toJSONString()) { [weak self] error in
+        channel.presence.enter(presenceDataJSON(data: presenceData)) { [weak self] error in
             guard let error = error else {
                 self?.logger.debug("Entered to channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
                 self?.channels[trackableId] = channel
@@ -71,9 +70,7 @@ public class DefaultAbly: AblyCommon {
             return
         }
         
-        // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
-        //
-        channelToRemove.presence.leave(try! presenceData.toJSONString()) { [weak self] error in
+        channelToRemove.presence.leave(presenceDataJSON(data: presenceData)) { [weak self] error in
             guard let error = error else {
                 self?.logger.debug("Left channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
                 
@@ -234,9 +231,7 @@ extension DefaultAbly: AblySubscriber {
             return
         }
         
-        // Force cast intentional here. It's a fatal error if we are unable to create presenceData JSON
-        let data = try! presenceData.toJSONString()
-        channel.presence.update(data) { error in
+        channel.presence.update(presenceDataJSON(data: presenceData)) { error in
             if let error = error {
                 completion(.failure(error.toErrorInformation()))
             } else {
@@ -270,6 +265,14 @@ extension DefaultAbly: AblySubscriber {
             subscriberDelegate?.subscriberService(sender: self, didFailWithError: errorInformation)
             
             return
+        }
+    }
+    
+    private func presenceDataJSON(data: PresenceData) -> String {
+        do {
+            return try data.toJSONString()
+        } catch {
+            fatalError("Can't encode presenceData. Reason: \(error)")
         }
     }
 }
