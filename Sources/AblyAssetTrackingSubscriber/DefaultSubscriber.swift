@@ -272,14 +272,14 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
         enqueue(event: PresenceUpdateEvent(presence: presence))
     }
     
-    func subscriberService(sender: AblySubscriber, didChangeClientConnectionStatus status: ConnectionState) {
-        logger.debug("subscriberService.didChangeClientConnectionStatus. Status: \(status)", source: String(describing: Self.self))
-        enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: status))
+    func subscriberService(sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState) {
+        logger.debug("subscriberService.didChangeClientConnectionStatus. Status: \(state)", source: String(describing: Self.self))
+        enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
     }
     
-    func subscriberService(sender: AblySubscriber, didChangeChannelConnectionStatus status: ConnectionState) {
-        logger.debug("subscriberService.didChangeChannelConnectionStatus. Status: \(status)", source: String(describing: Self.self))
-        enqueue(event: AblyChannelConnectionStateChangedEvent(connectionState: status))
+    func subscriberService(sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState) {
+        logger.debug("subscriberService.didChangeChannelConnectionStatus. Status: \(state)", source: String(describing: Self.self))
+        enqueue(event: AblyChannelConnectionStateChangedEvent(connectionState: state))
     }
 
     func subscriberService(sender: AblySubscriber, didFailWithError error: ErrorInformation) {

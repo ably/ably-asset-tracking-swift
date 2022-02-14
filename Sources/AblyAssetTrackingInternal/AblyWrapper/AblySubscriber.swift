@@ -9,7 +9,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:    The `AblySubscriber` object which is delegating the change.
      - Parameter state:     The `ConnectionState` object
      */
-    func subscriberService(sender: AblySubscriber, didChangeClientConnectionStatus status: ConnectionState)
+    func subscriberService(sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState)
     
     /**
      Tells the delegate that channel connection state changed.
@@ -17,7 +17,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
      - Parameter state:         The `ConnectionState` object
      */
-    func subscriberService(sender: AblySubscriber, didChangeChannelConnectionStatus status: ConnectionState)
+    func subscriberService(sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState)
     
     /**
      Tells the delegate that channel presence was changed.

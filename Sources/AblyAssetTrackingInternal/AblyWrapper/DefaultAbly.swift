@@ -134,7 +134,7 @@ public class DefaultAbly: AblyCommon {
             )
             self.subscriberDelegate?.subscriberService(
                 sender: self,
-                didChangeClientConnectionStatus: receivedConnectionState
+                didChangeClientConnectionState: receivedConnectionState
             )
         }
     }
@@ -157,7 +157,7 @@ public class DefaultAbly: AblyCommon {
             
             // AblySubscriber delegate
             self.subscriberDelegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
-            self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionStatus: presence.toConnectionState())
+            self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionState: presence.toConnectionState())
             
             // AblyPublisher delegate
             self.publisherDelegate?.publisherService(sender: self,
