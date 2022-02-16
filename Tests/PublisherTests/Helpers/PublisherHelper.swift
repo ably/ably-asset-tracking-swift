@@ -4,9 +4,7 @@ import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 @testable import AblyAssetTrackingPublisher
 
-class PublisherHelper {
-    typealias TrackableStateable = StateWaitable & StatePendable & StateRemovable & StateRetryable & StateSkippable
-    
+class PublisherHelper {    
     enum SendLocationResultPolicy {
         case success
         case retry
@@ -25,8 +23,8 @@ class PublisherHelper {
         publisher: DefaultPublisher,
         locationUpdate: EnhancedLocationUpdate,
         trackable: Trackable,
-        trackableState: TrackableStateable,
         locationService: LocationService = MockLocationService(),
+        trackableState: TrackableState<EnhancedLocationUpdate>,
         resultPolicy: SendLocationResultPolicy = .success,
         error: ErrorInformation = ErrorInformation(type: .commonError(errorMessage: "Failure"))
     ) {
@@ -95,7 +93,7 @@ class PublisherHelper {
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
-        trackableState: TrackableStateable = TrackableState()
+        trackableState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>()
     ) -> DefaultPublisher {
         
         DefaultPublisher(

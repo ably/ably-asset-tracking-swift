@@ -78,6 +78,18 @@ class MockAblyPublisherService: AblyPublisher {
         sendEnhancedAssetLocationUpdateParamCompletionHandler?(completion)
     }
     
+    var sendRawLocationWasCalled = false
+    var sendRawLocationParamLocation: Location?
+    var sendRawLocationParamTrackable: Trackable?
+    var sendRawLocationParamCompletion: ResultHandler<Void>?
+    var sendRawLocationParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    func sendRawLocation(location: Location, trackable: Trackable, completion: ResultHandler<Void>?) {
+        sendRawLocationWasCalled = true
+        sendRawLocationParamLocation = location
+        sendRawLocationParamTrackable = trackable
+        sendRawLocationParamCompletion = completion
+        sendRawLocationParamCompletionHandler?(completion)
+    }
     
     var closeCalled: Bool = false
     var closePresenceData: PresenceData?
