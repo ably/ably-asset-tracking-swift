@@ -24,7 +24,7 @@ class PublisherHelper {
         locationUpdate: EnhancedLocationUpdate,
         trackable: Trackable,
         locationService: LocationService = MockLocationService(),
-        trackableState: TrackableState<EnhancedLocationUpdate>,
+        enhancedLocationState: TrackableState<EnhancedLocationUpdate>,
         resultPolicy: SendLocationResultPolicy = .success,
         error: ErrorInformation = ErrorInformation(type: .commonError(errorMessage: "Failure"))
     ) {
@@ -61,7 +61,7 @@ class PublisherHelper {
                 completion?(.success)
                 expectationDidSendEnhancedLocation.fulfill()
             case .retry:
-                if ablyService.sendEnhancedAssetLocationUpdateCounter == trackableState.maxRetryCount {
+                if ablyService.sendEnhancedAssetLocationUpdateCounter == enhancedLocationState.maxRetryCount {
                     completion?(.failure(error))
                 } else {
                     completion?(.success)
@@ -69,7 +69,7 @@ class PublisherHelper {
                 }
             case .fail:
                 completion?(.failure(error))
-                if ablyService.sendEnhancedAssetLocationUpdateCounter == trackableState.maxRetryCount + 1 {
+                if ablyService.sendEnhancedAssetLocationUpdateCounter == enhancedLocationState.maxRetryCount + 1 {
                     expectationDidSendEnhancedLocation.fulfill()
                 }
             }
@@ -93,7 +93,7 @@ class PublisherHelper {
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
-        trackableState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>()
+        enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>()
     ) -> DefaultPublisher {
         
         DefaultPublisher(
@@ -105,7 +105,7 @@ class PublisherHelper {
             ablyPublisher: ablyService,
             locationService: locationService,
             routeProvider: routeProvider,
-            trackableState: trackableState
+            enhancedLocationState: enhancedLocationState
         )
     }
 }

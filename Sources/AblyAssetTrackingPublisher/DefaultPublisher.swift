@@ -32,7 +32,7 @@ class DefaultPublisher: Publisher {
     private let batteryLevelProvider: BatteryLevelProvider
     
     private var ablyPublisher: AblyPublisher
-    private var trackableState: TrackableState<EnhancedLocationUpdate>
+    private var enhancedLocationState: TrackableState<EnhancedLocationUpdate>
     private var state: State = .working
     private var presenceData = PresenceData(type: .publisher)
 
@@ -67,7 +67,7 @@ class DefaultPublisher: Publisher {
          ablyPublisher: AblyPublisher,
          locationService: LocationService,
          routeProvider: RouteProvider,
-         trackableState: TrackableState<EnhancedLocationUpdate> = TrackableState()
+         enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState()
     ) {
         
         self.connectionConfiguration = connectionConfiguration
@@ -78,7 +78,7 @@ class DefaultPublisher: Publisher {
         self.locationService = locationService
         self.ablyPublisher = ablyPublisher
         self.routeProvider = routeProvider
-        self.trackableState = trackableState
+        self.enhancedLocationState = enhancedLocationState
 
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
 
@@ -341,7 +341,7 @@ extension DefaultPublisher {
             
             switch result {
             case .success(let wasPresent):
-                self?.trackableState.remove(trackableId: event.trackable.id)
+                self?.enhancedLocationState.remove(trackableId: event.trackable.id)
                 wasPresent
                     ? self?.enqueue(event: ClearRemovedTrackableMetadataEvent(trackable: event.trackable, resultHandler: event.resultHandler))
                     : self?.callback(value: false, handler: event.resultHandler)
@@ -373,7 +373,7 @@ extension DefaultPublisher {
 
     private func performAblyConnectionClosedEvent(_ event: AblyConnectionClosedEvent) {
         state = .stopped
-        trackableState.removeAll()
+        enhancedLocationState.removeAll()
         callback(value: Void(), handler: event.resultHandler)
     }
 
@@ -474,8 +474,8 @@ extension DefaultPublisher {
         }
 
         let trackablesToSend = trackables.filter { trackable in
-            guard !trackableState.hasPendingMessage(for: trackable.id) else {
-                trackableState.addToWaiting(locationUpdate: event.locationUpdate, for: trackable.id)
+            guard !enhancedLocationState.hasPendingMessage(for: trackable.id) else {
+                enhancedLocationState.addToWaiting(locationUpdate: event.locationUpdate, for: trackable.id)
                 return false
             }
             
@@ -487,7 +487,7 @@ extension DefaultPublisher {
             )
             
             if !shouldSend {
-                trackableState.addLocation(for: trackable.id, location: event.locationUpdate)
+                enhancedLocationState.addLocation(for: trackable.id, location: event.locationUpdate)
             }
             
             return shouldSend
@@ -501,7 +501,7 @@ extension DefaultPublisher {
     }
     
     private func processNextWaitingEnhancedLocationUpdate(for trackableId: String) {
-        guard let enhancedLocationUpdate = trackableState.nextWaitingLocation(for: trackableId) else {
+        guard let enhancedLocationUpdate = enhancedLocationState.nextWaitingLocation(for: trackableId) else {
             return
         }
         
@@ -512,9 +512,9 @@ extension DefaultPublisher {
         lastEnhancedLocations[trackable] = event.locationUpdate.location
         lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
         
-        event.locationUpdate.skippedLocations = trackableState.locationsList(for: trackable.id).map { $0.location }
+        event.locationUpdate.skippedLocations = enhancedLocationState.locationsList(for: trackable.id).map { $0.location }
 
-        trackableState.markMessageAsPending(for: trackable.id)
+        enhancedLocationState.markMessageAsPending(for: trackable.id)
         
         ablyPublisher.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackable: trackable) { [weak self] result in
             switch result {
@@ -527,19 +527,19 @@ extension DefaultPublisher {
     }
     
     private func saveLocationForFurtherSending(trackableId: String, location: EnhancedLocationUpdate) {
-        trackableState.addLocation(for: trackableId, location: location)
+        enhancedLocationState.addLocation(for: trackableId, location: location)
     }
     
     private func performSendEnhancedLocationSuccess(_ event: SendEnhancedLocationSuccessEvent) {
-        trackableState.unmarkMessageAsPending(for: event.trackable.id)
-        trackableState.clearLocation(for: event.trackable.id)
-        trackableState.resetRetryCounter(for: event.trackable.id)
+        enhancedLocationState.unmarkMessageAsPending(for: event.trackable.id)
+        enhancedLocationState.clearLocation(for: event.trackable.id)
+        enhancedLocationState.resetRetryCounter(for: event.trackable.id)
         processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
     }
     
     private func performSendEnhancedLocationFailure(_ event: SendEnhancedLocationFailureEvent) {
-        guard trackableState.shouldRetry(trackableId: event.trackable.id) else {
-            trackableState.unmarkMessageAsPending(for: event.trackable.id)
+        guard enhancedLocationState.shouldRetry(trackableId: event.trackable.id) else {
+            enhancedLocationState.unmarkMessageAsPending(for: event.trackable.id)
             saveLocationForFurtherSending(trackableId: event.trackable.id, location: event.locationUpdate)
             callback(event: DelegateErrorEvent(error: event.error))
             processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
@@ -553,7 +553,7 @@ extension DefaultPublisher {
     }
     
     private func retrySendingEnhancedLocation(trackable: Trackable, locationUpdate: EnhancedLocationUpdate) {
-        trackableState.incrementRetryCounter(for: trackable.id)
+        enhancedLocationState.incrementRetryCounter(for: trackable.id)
         
         sendEnhancedLocationUpdate(
             event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate),

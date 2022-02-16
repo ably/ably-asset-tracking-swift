@@ -18,7 +18,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
     var waitAsync: WaitAsync!
-    var trackableState: TrackableState<EnhancedLocationUpdate>!
+    var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
 
     override func setUpWithError() throws {
         locationService = MockLocationService()
@@ -29,7 +29,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         delegate = MockPublisherDelegate()
         waitAsync = WaitAsync()
-        trackableState = TrackableState<EnhancedLocationUpdate>()
+        enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
         trackable = Trackable(
             id: "TrackableId",
             metadata: "TrackableMetadata",
@@ -44,7 +44,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             ablyPublisher: ablyService,
             locationService: locationService,
             routeProvider: routeProvider,
-            trackableState: trackableState
+            enhancedLocationState: enhancedLocationState
         )
         publisher.delegate = delegate
     }
@@ -199,7 +199,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             publisher: publisher,
             locationUpdate: locationUpdate,
             trackable: trackable,
-            trackableState: trackableState,
+                    enhancedLocationState: trackableState,
             resultPolicy: .retry
         )
                 
@@ -214,12 +214,12 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let initialLocation = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))
         var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
         let trackable = Trackable(id: "Trackable_2")
-        let trackableState = TrackableState<EnhancedLocationUpdate>()
+        let enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
         let ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
         let delegate = MockPublisherDelegate()
         let publisher = PublisherHelper.createPublisher(
             ablyService: ablyService,
-            trackableState: trackableState
+            enhancedLocationState: enhancedLocationState
         )
         publisher.delegate = delegate
         
@@ -235,13 +235,13 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             publisher: publisher,
             locationUpdate: locationUpdate,
             trackable: trackable,
-            trackableState: trackableState,
+            enhancedLocationState: enhancedLocationState,
             resultPolicy: .fail
         )
                 
         wait(for: [publisherDidFailExpectation], timeout: 10.0)
         
-        XCTAssertGreaterThan(trackableState.locationsList(for: trackable.id).count, .zero, "Skipped locations state should has at least 1 skipped location")
+        XCTAssertGreaterThan(enhancedLocationState.locationsList(for: trackable.id).count, .zero, "Skipped locations state should has at least 1 skipped location")
         
         let newLocation = Location(coordinate: LocationCoordinate(latitude: 1.1, longitude: 1.1))
         locationUpdate = EnhancedLocationUpdate(location: newLocation)
@@ -251,7 +251,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             publisher: publisher,
             locationUpdate: locationUpdate,
             trackable: trackable,
-            trackableState: trackableState,
+            enhancedLocationState: enhancedLocationState,
             resultPolicy: .success
         )
                 

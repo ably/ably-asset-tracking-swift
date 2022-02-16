@@ -17,7 +17,7 @@ class DefaultPublisherTests: XCTestCase {
     var trackable: Trackable!
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
-    var trackableState: TrackableState<EnhancedLocationUpdate>!
+    var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
     
     let logger = Logger(label: "com.ably.tracking.DefaultPublisherTests")
     let waitAsync = WaitAsync()
@@ -41,7 +41,7 @@ class DefaultPublisherTests: XCTestCase {
                               metadata: "TrackableMetadata",
                               destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182))
         delegate = MockPublisherDelegate()
-        trackableState = TrackableState<EnhancedLocationUpdate>()
+        enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      mapboxConfiguration: mapboxConfiguration,
                                      logConfiguration: LogConfiguration(),
@@ -50,7 +50,7 @@ class DefaultPublisherTests: XCTestCase {
                                      ablyPublisher: ablyService,
                                      locationService: locationService,
                                      routeProvider: routeProvider,
-                                     trackableState: trackableState)
+                                     enhancedLocationState: enhancedLocationState)
         publisher.delegate = delegate
     }
     
