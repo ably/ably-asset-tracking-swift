@@ -10,7 +10,6 @@ let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
 // swiftlint:disable cyclomatic_complexity
 class DefaultPublisher: Publisher {
-    typealias TrackableStateable = StateWaitable & StatePendable & StateRemovable & StateRetryable & StateSkippable
     
     // Publisher state
     private enum State {
@@ -33,7 +32,7 @@ class DefaultPublisher: Publisher {
     private let batteryLevelProvider: BatteryLevelProvider
     
     private var ablyPublisher: AblyPublisher
-    private var trackableState: TrackableStateable
+    private var trackableState: TrackableState<EnhancedLocationUpdate>
     private var state: State = .working
     private var presenceData = PresenceData(type: .publisher)
 
@@ -68,7 +67,7 @@ class DefaultPublisher: Publisher {
          ablyPublisher: AblyPublisher,
          locationService: LocationService,
          routeProvider: RouteProvider,
-         trackableState: TrackableStateable = TrackableState()
+         trackableState: TrackableState<EnhancedLocationUpdate> = TrackableState()
     ) {
         
         self.connectionConfiguration = connectionConfiguration
@@ -309,14 +308,14 @@ extension DefaultPublisher {
             callback(error: error, handler: event.resultHandler)
             return
         }
-        
-        
+     
+     
         ablyPublisher.connect(
             trackableId: event.trackable.id,
             presenceData: presenceData,
             useRewind: false
         ) { [weak self] result in
-            
+     
             switch result {
             case .success:
                 self?.enqueue(event: PresenceJoinedSuccessfullyEvent(trackable: event.trackable) { [weak self] _ in
@@ -488,7 +487,7 @@ extension DefaultPublisher {
             )
             
             if !shouldSend {
-                trackableState.skippedLocationsAdd(for: trackable.id, location: event.locationUpdate)
+                trackableState.addLocation(for: trackable.id, location: event.locationUpdate)
             }
             
             return shouldSend
@@ -502,7 +501,7 @@ extension DefaultPublisher {
     }
     
     private func processNextWaitingEnhancedLocationUpdate(for trackableId: String) {
-        guard let enhancedLocationUpdate = trackableState.nextWaiting(for: trackableId) else {
+        guard let enhancedLocationUpdate = trackableState.nextWaitingLocation(for: trackableId) else {
             return
         }
         
@@ -513,7 +512,7 @@ extension DefaultPublisher {
         lastEnhancedLocations[trackable] = event.locationUpdate.location
         lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
         
-        event.locationUpdate.skippedLocations = trackableState.skippedLocationsList(for: trackable.id).map { $0.location }
+        event.locationUpdate.skippedLocations = trackableState.locationsList(for: trackable.id).map { $0.location }
 
         trackableState.markMessageAsPending(for: trackable.id)
         
@@ -528,12 +527,12 @@ extension DefaultPublisher {
     }
     
     private func saveLocationForFurtherSending(trackableId: String, location: EnhancedLocationUpdate) {
-        trackableState.skippedLocationsAdd(for: trackableId, location: location)
+        trackableState.addLocation(for: trackableId, location: location)
     }
     
     private func performSendEnhancedLocationSuccess(_ event: SendEnhancedLocationSuccessEvent) {
         trackableState.unmarkMessageAsPending(for: event.trackable.id)
-        trackableState.skippedLocationsClear(for: event.trackable.id)
+        trackableState.clearLocation(for: event.trackable.id)
         trackableState.resetRetryCounter(for: event.trackable.id)
         processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
     }

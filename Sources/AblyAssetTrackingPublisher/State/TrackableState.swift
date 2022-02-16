@@ -1,15 +1,15 @@
 import Foundation
 import AblyAssetTrackingCore
 
-class TrackableState {
+class TrackableState<T: LocationUpdate> {
     
     let maxRetryCount: Int
     let maxSkippedLocationsSize: Int
     
     private var retryCounter: [String: Int] = [:]
     private var pendingMessages: Set<String> = []
-    private var waitingLocationUpdates: [String: [EnhancedLocationUpdate]] = [:]
-    private var skippedLocations: [String: [EnhancedLocationUpdate]] = [:]
+    private var waitingLocationUpdates: [String: [T]] = [:]
+    private var enhancedSkippedLocations: [String: [T]] = [:]
     
     init(maxRetryCount: Int = 1, maxSkippedLocationsSize: Int = 60) {
         self.maxRetryCount = maxRetryCount
@@ -68,13 +68,13 @@ extension TrackableState: StatePendable {
 
 // MARK: - StateWaitable
 extension TrackableState: StateWaitable {
-    func addToWaiting(locationUpdate: EnhancedLocationUpdate, for trackableId: String) {
+    func addToWaiting(locationUpdate: T, for trackableId: String) {
         var locations = waitingLocationUpdates[trackableId] ?? []
         locations.append(locationUpdate)
         waitingLocationUpdates[trackableId] = locations
     }
     
-    func nextWaiting(for trackableId: String) -> EnhancedLocationUpdate? {
+    func nextWaitingLocation(for trackableId: String) -> T? {
         guard var enhancedLocationUpdates = waitingLocationUpdates[trackableId], !enhancedLocationUpdates.isEmpty else {
             return nil
         }
@@ -88,22 +88,22 @@ extension TrackableState: StateWaitable {
 
 // MARK: - StateSkippable
 extension TrackableState: StateSkippable {
-    func skippedLocationsAdd(for trackableId: String, location: EnhancedLocationUpdate) {
-        var locations = skippedLocations[trackableId] ?? []
+    func addLocation(for trackableId: String, location: T) {
+        var locations = enhancedSkippedLocations[trackableId] ?? []
         locations.append(location)
         locations.sort { $0.location.timestamp < $1.location.timestamp }
         if locations.count > maxSkippedLocationsSize {
             locations.remove(at: .zero)
         }
-        skippedLocations[trackableId] = locations
+        enhancedSkippedLocations[trackableId] = locations
     }
     
-    func skippedLocationsClear(for trackableId: String) {
-        skippedLocations[trackableId]?.removeAll()
+    func clearLocation(for trackableId: String) {
+        enhancedSkippedLocations[trackableId]?.removeAll()
     }
     
-    func skippedLocationsList(for trackableId: String) -> [EnhancedLocationUpdate] {
-        skippedLocations[trackableId] ?? []
+    func locationsList(for trackableId: String) -> [T] {
+        enhancedSkippedLocations[trackableId] ?? []
     }
 }
 
@@ -119,6 +119,6 @@ extension TrackableState: StateRemovable {
         retryCounter.removeAll()
         pendingMessages.removeAll()
         waitingLocationUpdates.removeAll()
-        skippedLocations.removeAll()
+        enhancedSkippedLocations.removeAll()
     }
 }
