@@ -20,8 +20,10 @@ class DefaultPublisherTests: XCTestCase {
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
     var trackableState: TrackableStateable!
+    
+    let logger = Logger(label: "com.ably.tracking.DefaultPublisherTests")
     let waitAsync = WaitAsync()
-
+    
     override class func setUp() {
         LoggingSystem.bootstrap { label -> LogHandler in
             var handler = StreamLogHandler.standardOutput(label: label)
@@ -31,15 +33,15 @@ class DefaultPublisherTests: XCTestCase {
     }
     
     override func setUpWithError() throws {
+        configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         locationService = MockLocationService()
-        ablyService = MockAblyPublisherService()
+        ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
         mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         routeProvider = MockRouteProvider()
         trackable = Trackable(id: "TrackableId",
                               metadata: "TrackableMetadata",
                               destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182))
-        configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         delegate = MockPublisherDelegate()
         trackableState = TrackableState()
         publisher = DefaultPublisher(connectionConfiguration: configuration,
@@ -47,18 +49,18 @@ class DefaultPublisherTests: XCTestCase {
                                      logConfiguration: LogConfiguration(),
                                      routingProfile: .driving,
                                      resolutionPolicyFactory: resolutionPolicyFactory,
-                                     ablyService: ablyService,
+                                     ablyPublisher: ablyService,
                                      locationService: locationService,
                                      routeProvider: routeProvider,
                                      trackableState: trackableState)
         publisher.delegate = delegate
     }
-
+    
     // MARK: track
     func testTrack_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success)}
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         let expectation = XCTestExpectation()
-
+        
         // When tracking a trackable
         publisher.track(trackable: trackable) { result in
             switch result {
@@ -68,36 +70,36 @@ class DefaultPublisherTests: XCTestCase {
                 XCTFail("Failure callback shouldn't be called")
             }
         }
-                      
+        
         wait(for: [expectation], timeout: 5.0)
-
+        
         // It should set active trackable
         XCTAssertEqual(publisher.activeTrackable, trackable)
-
+        
         // It should ask ably service to track given trackable
-        XCTAssertTrue(ablyService.trackCalled)
-        XCTAssertEqual(ablyService.trackParamTrackable, trackable)
-
+        XCTAssertTrue(ablyService.connectCalled)
+        XCTAssertEqual(ablyService.connectTrackableId, trackable.id)
+        
         // It should ask location service to start updating location
         XCTAssertTrue(locationService.startUpdatingLocationCalled)
-
+        
         // It should notify trackables hook that there is new trackable
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedParamTrackable, trackable)
-
+        
         // It should notify trackables hook that there is new active trackable
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedParamTrackable, trackable)
     }
-
+    
     // MARK: track
     func testTrack_destination() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success)}
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         let expectation = XCTestExpectation()
-
+        
         let destination = LocationCoordinate(latitude: 12.3456, longitude: 56.789)
         let trackable = Trackable(id: "TrackableId", destination: destination)
-
+        
         // When tracking a trackable with given destination
         publisher.track(trackable: trackable) { result in
             switch result {
@@ -108,17 +110,17 @@ class DefaultPublisherTests: XCTestCase {
             }
         }
         wait(for: [expectation], timeout: 5.0)
-
+        
         // It should ask RouteProvider to calculate route to given destination
         XCTAssertTrue(routeProvider.getRouteCalled)
         XCTAssertEqual(routeProvider.getRouteParamDestination?.toLocationCoordinate(), destination)
     }
-
+    
     func testTrack_error_duplicate_track() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success)}
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         var expectation = XCTestExpectation()
         let expectedError = ErrorInformation(type: .trackableAlreadyExist(trackableId: self.trackable.id))
-
+        
         // When tracking a trackable
         publisher.track(trackable: trackable) { result in
             switch result {
@@ -146,7 +148,7 @@ class DefaultPublisherTests: XCTestCase {
     }
     
     func test_trackCalledMultipleTimes_shouldPass() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success)}
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         var expectations = [XCTestExpectation]()
         let trackMethodCalls = 5
         
@@ -168,12 +170,12 @@ class DefaultPublisherTests: XCTestCase {
         
         wait(for: expectations, timeout: 5.0)
     }
-
+    
     func testTrack_error_ably_service_error() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
-        ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
+        ablyService.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
-
+        
         // When tracking a trackable and receive error response from AblyPublisherService
         publisher.track(trackable: trackable) { result in
             switch result {
@@ -187,10 +189,10 @@ class DefaultPublisherTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 5.0)
     }
-
+    
     func testTrack_thread() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success) }
-
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        
         var expectation = XCTestExpectation()
         // Both `onSuccess` and `onError` callbacks should be called on main thread
         // Notice - in case of failure it will crash whole test suite
@@ -216,15 +218,15 @@ class DefaultPublisherTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-
+        
         wait(for: [expectation], timeout: 5.0)
     }
-
+    
     // MARK: add
     func testAdd_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success) }
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         let expectation = XCTestExpectation()
-
+        
         // When adding a trackable
         publisher.add(trackable: trackable) { result in
             switch result {
@@ -235,30 +237,30 @@ class DefaultPublisherTests: XCTestCase {
             }
         }
         wait(for: [expectation], timeout: 5.0)
-
+        
         // It should NOT set active trackable
         XCTAssertNil(publisher.activeTrackable)
-
+        
         // It should ask ably service to track given trackable
-        XCTAssertTrue(ablyService.trackCalled)
-        XCTAssertEqual(ablyService.trackParamTrackable, trackable)
-
+        XCTAssertTrue(ablyService.connectCalled)
+        XCTAssertEqual(ablyService.connectTrackableId, trackable.id)
+        
         // It should ask location service to start updating location
         XCTAssertTrue(locationService.startUpdatingLocationCalled)
-
+        
         // It should notify trackables hook that there is new trackable
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedParamTrackable, trackable)
-
+        
         // It should NOT notify trackables hook that there is new active trackable
         XCTAssertFalse(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
     }
-
+    
     func testAdd_track_success() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success) }
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         let expectation = XCTestExpectation()
         expectation.expectedFulfillmentCount = 2
-
+        
         // When tracking a trackable
         publisher.track(trackable: trackable) { result in
             switch result {
@@ -278,16 +280,16 @@ class DefaultPublisherTests: XCTestCase {
             }
         }
         wait(for: [expectation], timeout: 5.0)
-
+        
         // It should NOT change active trackable
         XCTAssertEqual(publisher.activeTrackable, trackable)
     }
-
+    
     func testAdd_track_error() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
-        ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
+        ablyService.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
-
+        
         // When adding a trackable and receive error response from AblyPublisherService
         publisher.add(trackable: trackable) { result in
             switch result {
@@ -302,9 +304,9 @@ class DefaultPublisherTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
-
+    
     func testAdd_success_thread() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success) }
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         let expectation = XCTestExpectation()
         // `onSuccess` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
@@ -320,12 +322,12 @@ class DefaultPublisherTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
-
+    
     func testAdd_error_thread() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
-        ablyService.trackCompletionHandler = { completion in completion?(.failure(errorInformation)) }
+        ablyService.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
-
+        
         // `onError` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.add(trackable: trackable) { result in
@@ -340,18 +342,20 @@ class DefaultPublisherTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
-
+    
     // MARK: remove
     func testRemove_success() {
         let wasPresent = true
         var receivedWasPresent: Bool?
-        ablyService.stopTrackingResultCompletionHandler = { completion in completion?(.success(wasPresent))}
-        ablyService.trackCompletionHandler = { completion in completion?(.success(())) }
+        
+        ablyService.disconnectResultCompletionHandler = { completion in completion?(.success(wasPresent))}
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        
         publisher.add(trackable: Trackable(id: "Trackable1")) { _ in }
         publisher.add(trackable: Trackable(id: "Trackable2")) { _ in }
-
+        
         let expectation = XCTestExpectation()
-
+        
         // When removing trackable
         publisher.remove(trackable: trackable) { result in
             switch result {
@@ -364,31 +368,31 @@ class DefaultPublisherTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 5.0)
-
+        
         // It should ask ablyService to stop tracking
-        XCTAssertTrue(ablyService.stopTrackingCalled)
-
+        XCTAssertTrue(ablyService.disconnectCalled)
+        
         // It should ask ablyService to stop tracking given trackable
-        XCTAssertEqual(ablyService.stopTrackingParamTrackable, trackable)
-
+        XCTAssertEqual(ablyService.disconnectParamTrackableId, trackable.id)
+        
         // It should return correct `wasPresent` value in callback
         XCTAssertEqual(receivedWasPresent!, wasPresent)
-
+        
         // It should NOT ask locationService to stop location updates as there are some tracked trackables
         XCTAssertFalse(locationService.stopUpdatingLocationCalled)
-
+        
         // It should notify trackables hook that trackable was removed (as it was present in AblyService)
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedParamTrackable, trackable)
     }
-
+    
     func testRemove_activeTrackable() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success)}
-        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true)) }
-
+        ablyService.connectCompletionHandler = { completion in completion?(.success)}
+        ablyService.disconnectResultCompletionHandler = { handler in handler?(.success(true)) }
+        
         var expectation = XCTestExpectation(description: "Handler for `track` call")
         expectation.expectedFulfillmentCount = 1
-
+        
         // When removing trackable which was tracked before (so it's set as the activeTrackable)
         publisher.track(trackable: trackable) { result in
             switch result {
@@ -401,7 +405,7 @@ class DefaultPublisherTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
         XCTAssertEqual(publisher.activeTrackable, trackable)
-
+        
         expectation = XCTestExpectation(description: "Handler for `remove` call")
         publisher.remove(trackable: publisher.activeTrackable!) { result in
             switch result {
@@ -413,28 +417,28 @@ class DefaultPublisherTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 5.0)
-
+        
         // It should clear activeTrackable
         XCTAssertNil(publisher.activeTrackable)
-
+        
         // It should ask locationService to stop location updates as there are none tracked trackables
         XCTAssertTrue(locationService.stopUpdatingLocationCalled)
-
+        
         // It should notify trackables hook that there is trackable removed
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedParamTrackable, trackable)
-
+        
         // It should notify trackables hook that there is active trackable changed with nil value
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
         XCTAssertNil(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedParamTrackable)
     }
-
+    
     func testRemove_nonActiveTrackable() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success) }
-        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true)) }
-
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyService.disconnectResultCompletionHandler = { handler in handler?(.success(true)) }
+        
         var expectation = XCTestExpectation(description: "Handler for `track` call")
-
+        
         // When removing trackable which was no tracked before (so it's NOT set as the activeTrackable)
         publisher.track(trackable: trackable) { result in
             switch result {
@@ -446,7 +450,7 @@ class DefaultPublisherTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 5.0)
         XCTAssertEqual(publisher.activeTrackable, trackable)
-
+        
         expectation = XCTestExpectation(description: "Handler for `remove` call")
         let removedTrackable = Trackable(id: "AnotherTrackableId")
         publisher.remove(trackable: removedTrackable) { result in
@@ -458,23 +462,23 @@ class DefaultPublisherTests: XCTestCase {
             }
         }
         wait(for: [expectation], timeout: 5.0)
-
+        
         // It should NOT modify activeTrackable
         XCTAssertEqual(publisher.activeTrackable, trackable)
-
+        
         // It should notify trackables hook that there is trackable removed
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedParamTrackable, removedTrackable)
-
+        
         // It should NOT notify trackables hook that there is active trackable changed
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onActiveTrackableChangedCalled)
     }
-
+    
     func testRemove_error() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
-        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
+        ablyService.disconnectResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
         let expectation = XCTestExpectation()
-
+        
         // When removing trackable and receive error from AblyPublisherService
         publisher.remove(trackable: trackable) { result in
             switch result {
@@ -488,12 +492,12 @@ class DefaultPublisherTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
-
-
+    
+    
     func testRemove_success_thread() {
-        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.success(true))}
+        ablyService.disconnectResultCompletionHandler = { handler in handler?(.success(true))}
         let expectation = XCTestExpectation()
-
+        
         // When removing trackable `onSuccess` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.remove(trackable: trackable) { result in
@@ -508,13 +512,13 @@ class DefaultPublisherTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
-
+    
     func testRemove_error_thread() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
-        ablyService.stopTrackingResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
+        ablyService.disconnectResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
         
         let expectation = XCTestExpectation()
-
+        
         // When removing trackable `onError` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.remove(trackable: trackable) { result in
@@ -569,11 +573,11 @@ class DefaultPublisherTests: XCTestCase {
             expectation.fulfill()
         }
         
-        ablyService.close(completion: { _ in })
+        ablyService.close(presenceData: .init(type: .publisher)) { _ in }
         wait(for: [expectation], timeout: 5.0)
         
         XCTAssertTrue(ablyService.closeCalled)
-        XCTAssertNotNil(ablyService.closeParamCompletion)
+        XCTAssertNotNil(ablyService.closeCompletion)
     }
     
     func test_closeConnection_failure() {
@@ -584,7 +588,7 @@ class DefaultPublisherTests: XCTestCase {
             expectation.fulfill()
         }
         
-        ablyService.close { result in
+        ablyService.close(presenceData: .init(type: .publisher)) { result in
             switch result {
             case .success:
                 XCTFail("Success not expected.")
@@ -596,7 +600,7 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         
         XCTAssertTrue(ablyService.closeCalled)
-        XCTAssertNotNil(ablyService.closeParamCompletion)
+        XCTAssertNotNil(ablyService.closeCompletion)
     }
     
     func testDefaultTrackableStateRetry() {
@@ -619,7 +623,7 @@ class DefaultPublisherTests: XCTestCase {
         
         state.resetRetryCounter(for: trackableId)
         XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
-                
+        
         XCTAssertTrue(state.shouldRetry(trackableId: otherTrackableId), "The retry counter for `otherTrackableId` should be < `maxRetryCount` so it should be able to retry")
         state.incrementRetryCounter(for: otherTrackableId) // counter == 1
         
@@ -736,7 +740,7 @@ class DefaultPublisherTests: XCTestCase {
          */
         state.skippedLocationsAdd(for: trackableId, location: locationUpdate)
         state.skippedLocationsAdd(for: trackableId2, location: locationUpdate2)
-                
+        
         /**
          Check if `location` for `trackableId` EXISTS in state
          */
@@ -768,7 +772,7 @@ class DefaultPublisherTests: XCTestCase {
                 "Trackable_2": [Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2))]
             ]
         )
-
+        
         state.removeAll()
         
         XCTAssertEqual(state.skippedLocationsList(for: "Trackable_1").count, .zero)
@@ -778,7 +782,7 @@ class DefaultPublisherTests: XCTestCase {
     func testDefaultSkippedLocationsStateCapacityOverflow() {
         let trackableId = "Trackable_1"
         let state = createSkippedLocationState()
-
+        
         for i in 0..<state.maxSkippedLocationsSize {
             let location = Location(coordinate: LocationCoordinate(latitude: Double(i), longitude: Double(i)))
             let locationUpdate = EnhancedLocationUpdate(location: location)
@@ -815,7 +819,7 @@ class DefaultPublisherTests: XCTestCase {
     }
     
     func testStopEventCauseImpossibilityOfEnqueueOtherEvents() {
-        ablyService.trackCompletionHandler = { completion in completion?(.success)}
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
         ablyService.closeResultCompletionHandler = { completion in completion?(.success)}
         
         let publisher = DefaultPublisher(
@@ -824,14 +828,14 @@ class DefaultPublisherTests: XCTestCase {
             logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyService: ablyService,
+            ablyPublisher: ablyService,
             locationService: locationService,
             routeProvider: routeProvider
         )
         
-        let trackCompletionExpectation = self.expectation(description: "Track completion expectation")
+        let connectCompletionExpectation = self.expectation(description: "Track completion expectation")
         publisher.track(trackable: trackable) { _ in
-            trackCompletionExpectation.fulfill()
+            connectCompletionExpectation.fulfill()
         }
         waitForExpectations(timeout: 10.0).self
         
