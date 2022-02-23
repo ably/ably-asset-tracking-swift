@@ -4,8 +4,8 @@ public struct RawLocationUpdateMessage: Codable {
     public let location: GeoJSONMessage
     public let skippedLocations: [GeoJSONMessage]
     
-    init(location: Location, skippedLocations: [Location]) throws {
-        self.location = try GeoJSONMessage(location: location)
-        self.skippedLocations = try skippedLocations.map(GeoJSONMessage.init)
+    init(locationUpdate: RawLocationUpdate) throws {
+        self.location = try GeoJSONMessage(location: locationUpdate.location)
+        self.skippedLocations = try locationUpdate.skippedLocations.map(GeoJSONMessage.init)
     }
 }
