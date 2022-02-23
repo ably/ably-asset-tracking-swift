@@ -70,4 +70,20 @@ public protocol AblyPublisher: AblyCommon {
         trackable: Trackable,
         completion: ResultHandler<Void>?
     )
+    
+    /**
+     Sends a raw location update to the channel.
+     
+     Should be called only when there's an existing channel for the `trackable.id`.
+     If a channel for the `trackable.id` doesn't exist then it just calls `completion` with success.
+     
+     - Parameter location              The `Location` object. This is the object containing raw location data.
+     - Parameter trackable            The `Trackable` object.
+     - Parameter completion          The closure that will be called when sending completes. If something goes wrong it will be called with an `error` object.
+     */
+    func sendRawLocation(
+        location: RawLocationUpdate,
+        trackable: Trackable,
+        completion: ResultHandler<Void>?
+    )
 }

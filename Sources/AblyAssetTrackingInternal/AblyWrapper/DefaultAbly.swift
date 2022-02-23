@@ -319,6 +319,37 @@ extension DefaultAbly: AblyPublisher {
         }
     }
     
+    public func sendRawLocation(
+        location: RawLocationUpdate,
+        trackable: Trackable,
+        completion: ResultHandler<Void>?
+    ) {
+        guard let channel = channels[trackable.id] else {
+            completion?(.success)
+            
+            return
+        }
+        
+        do {
+            let geoJson = try RawLocationUpdateMessage(locationUpdate: location)
+            let data = try geoJson.toJSONString()
+            let message = ARTMessage(name: EventName.raw.rawValue, data: data)
+            
+            channel.publish([message]) { error in
+                if let error = error {
+                    self.publisherDelegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+                } else {
+                    completion?(.success)
+                }
+            }
+        } catch {
+            let errorInformation = ErrorInformation(
+                type: .publisherError(errorMessage: "Cannot create location update message. Underlying error: \(error)")
+            )
+            publisherDelegate?.publisherService(sender: self, didFailWithError: errorInformation)
+        }
+    }
+    
     private func createARTMessage(for locationUpdate: EnhancedLocationUpdate) throws -> ARTMessage {
         let geoJson = try EnhancedLocationUpdateMessage(locationUpdate: locationUpdate)
         let data = try geoJson.toJSONString()
