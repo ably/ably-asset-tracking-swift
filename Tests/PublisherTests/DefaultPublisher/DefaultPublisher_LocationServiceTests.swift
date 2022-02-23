@@ -19,6 +19,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var delegate: MockPublisherDelegate!
     var waitAsync: WaitAsync!
     var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
+    var rawLocationState: TrackableState<RawLocationUpdate>!
 
     override func setUpWithError() throws {
         locationService = MockLocationService()
@@ -30,11 +31,14 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         delegate = MockPublisherDelegate()
         waitAsync = WaitAsync()
         enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
+        rawLocationState = TrackableState<RawLocationUpdate>()
+        
         trackable = Trackable(
             id: "TrackableId",
             metadata: "TrackableMetadata",
             destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182)
         )
+        
         publisher = DefaultPublisher(
             connectionConfiguration:configuration,
             mapboxConfiguration: mapboxConfiguration,
@@ -46,6 +50,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             routeProvider: routeProvider,
             enhancedLocationState: enhancedLocationState
         )
+        
         publisher.delegate = delegate
     }
 
@@ -199,7 +204,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             publisher: publisher,
             locationUpdate: locationUpdate,
             trackable: trackable,
-                    enhancedLocationState: trackableState,
+            enhancedLocationState: trackableState,
             resultPolicy: .retry
         )
                 
@@ -308,5 +313,80 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
          Wait for `sendEnhancedAssetLocationUpdateParamCompletionHandler` called `2` times
          */
         wait(for: [sendLocationCompleteExpectation], timeout: 10.0)
+    }
+    
+    func testShouldSendRawMessageIfTheyAreEnabled() {
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        
+        let publisher = DefaultPublisher(
+            connectionConfiguration: configuration,
+            mapboxConfiguration: mapboxConfiguration,
+            logConfiguration: LogConfiguration(),
+            routingProfile: .driving,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            ablyPublisher: ablyService,
+            locationService: locationService,
+            routeProvider: routeProvider,
+            areRawLocationsEnabled: true
+        )
+        
+        let expectationAddTrackable = self.expectation(description: "Add Trackable Expectation")
+        publisher.add(trackable: trackable) { _ in expectationAddTrackable.fulfill() }
+        
+        wait(for: [expectationAddTrackable], timeout: 5.0)
+        
+        let location = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 2))
+        let expectationDidUpdateRawLocation = self.expectation(description: "Did Update Raw Location Expectation")
+        
+        ablyService.sendRawLocationParamCompletionHandler = { completion in
+            completion?(.success)
+            expectationDidUpdateRawLocation.fulfill()
+        }
+        
+        publisher.locationService(
+            sender: MockLocationService(),
+            didUpdateRawLocationUpdate: RawLocationUpdate(location: location)
+        )
+        wait(for: [expectationDidUpdateRawLocation], timeout: 5.0)
+        
+        XCTAssertTrue(ablyService.sendRawLocationWasCalled)
+    }
+    
+    func testShouldNotSendRawMessageIfTheyAreDisabled() {
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        
+        let publisher = DefaultPublisher(
+            connectionConfiguration: configuration,
+            mapboxConfiguration: mapboxConfiguration,
+            logConfiguration: LogConfiguration(),
+            routingProfile: .driving,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            ablyPublisher: ablyService,
+            locationService: locationService,
+            routeProvider: routeProvider,
+            areRawLocationsEnabled: false
+        )
+        
+        let expectationAddTrackable = self.expectation(description: "Add Trackable Expectation")
+        publisher.add(trackable: trackable) { _ in expectationAddTrackable.fulfill() }
+        
+        wait(for: [expectationAddTrackable], timeout: 5.0)
+        
+        let location = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 2))
+        let expectationDidUpdateRawLocation = self.expectation(description: "Did Update Raw Location Expectation")
+        expectationDidUpdateRawLocation.isInverted = true
+        
+        ablyService.sendRawLocationParamCompletionHandler = { completion in
+            completion?(.success)
+            expectationDidUpdateRawLocation.fulfill()
+        }
+        
+        publisher.locationService(
+            sender: MockLocationService(),
+            didUpdateRawLocationUpdate: RawLocationUpdate(location: location)
+        )
+        wait(for: [expectationDidUpdateRawLocation], timeout: 5.0)
+        
+        XCTAssertFalse(ablyService.sendRawLocationWasCalled)
     }
 }

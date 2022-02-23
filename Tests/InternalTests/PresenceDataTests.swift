@@ -5,15 +5,33 @@ import UIKit
 
 class PresenceDataTests: XCTestCase {
     func testSerializationPublisher() throws {
-        let data = PresenceData(type: .publisher)
-        let jsonString = try data.toJSONString()
+        var data = PresenceData(type: .publisher, rawLocations: true)
+        var jsonString = try data.toJSONString()
+        XCTAssertNotNil(jsonString)
+        
+        data = PresenceData(type: .publisher, rawLocations: false)
+        jsonString = try data.toJSONString()
+        XCTAssertNotNil(jsonString)
+        
+        data = PresenceData(type: .publisher, rawLocations: nil)
+        jsonString = try data.toJSONString()
         XCTAssertNotNil(jsonString)
     }
 
     func testDeserializationPublisher() throws {
-        let jsonString = "{\"type\":\"PUBLISHER\"}"
-        let data: PresenceData = try PresenceData.fromJSONString(jsonString)
+        var jsonString = "{\"type\":\"PUBLISHER\"}"
+        var data: PresenceData = try PresenceData.fromJSONString(jsonString)
         XCTAssertEqual(data.type, .publisher)
+        
+        jsonString = "{\"type\":\"PUBLISHER\",\"rawLocations\":true}"
+        data = try PresenceData.fromJSONString(jsonString)
+        XCTAssertEqual(data.type, .publisher)
+        XCTAssertEqual(data.rawLocations, true)
+        
+        jsonString = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}"
+        data = try PresenceData.fromJSONString(jsonString)
+        XCTAssertEqual(data.type, .publisher)
+        XCTAssertEqual(data.rawLocations, false)
     }
 
     func testDeserializationFailure() {

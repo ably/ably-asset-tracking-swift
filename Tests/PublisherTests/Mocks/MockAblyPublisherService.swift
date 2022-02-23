@@ -79,11 +79,11 @@ class MockAblyPublisherService: AblyPublisher {
     }
     
     var sendRawLocationWasCalled = false
-    var sendRawLocationParamLocation: Location?
+    var sendRawLocationParamLocation: RawLocationUpdate?
     var sendRawLocationParamTrackable: Trackable?
     var sendRawLocationParamCompletion: ResultHandler<Void>?
     var sendRawLocationParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    func sendRawLocation(location: Location, trackable: Trackable, completion: ResultHandler<Void>?) {
+    func sendRawLocation(location: RawLocationUpdate, trackable: Trackable, completion: ResultHandler<Void>?) {
         sendRawLocationWasCalled = true
         sendRawLocationParamLocation = location
         sendRawLocationParamTrackable = trackable
