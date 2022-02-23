@@ -9,7 +9,7 @@ class TrackableState<T: LocationUpdate> {
     private var retryCounter: [String: Int] = [:]
     private var pendingMessages: Set<String> = []
     private var waitingLocationUpdates: [String: [T]] = [:]
-    private var enhancedSkippedLocations: [String: [T]] = [:]
+    private var skippedLocations: [String: [T]] = [:]
     
     init(maxRetryCount: Int = 1, maxSkippedLocationsSize: Int = 60) {
         self.maxRetryCount = maxRetryCount
@@ -89,21 +89,21 @@ extension TrackableState: StateWaitable {
 // MARK: - StateSkippable
 extension TrackableState: StateSkippable {
     func addLocation(for trackableId: String, location: T) {
-        var locations = enhancedSkippedLocations[trackableId] ?? []
+        var locations = skippedLocations[trackableId] ?? []
         locations.append(location)
         locations.sort { $0.location.timestamp < $1.location.timestamp }
         if locations.count > maxSkippedLocationsSize {
             locations.remove(at: .zero)
         }
-        enhancedSkippedLocations[trackableId] = locations
+        skippedLocations[trackableId] = locations
     }
     
     func clearLocation(for trackableId: String) {
-        enhancedSkippedLocations[trackableId]?.removeAll()
+        skippedLocations[trackableId]?.removeAll()
     }
     
     func locationsList(for trackableId: String) -> [T] {
-        enhancedSkippedLocations[trackableId] ?? []
+        skippedLocations[trackableId] ?? []
     }
 }
 
@@ -119,6 +119,6 @@ extension TrackableState: StateRemovable {
         retryCounter.removeAll()
         pendingMessages.removeAll()
         waitingLocationUpdates.removeAll()
-        enhancedSkippedLocations.removeAll()
+        skippedLocations.removeAll()
     }
 }
