@@ -7,15 +7,15 @@ class PresenceDataTests: XCTestCase {
     func testSerializationPublisher() throws {
         var data = PresenceData(type: .publisher, rawLocations: true)
         var jsonString = try data.toJSONString()
-        XCTAssertNotNil(jsonString)
+        XCTAssertEqual(jsonString, "{\"type\":\"PUBLISHER\",\"rawLocations\":true}")
         
         data = PresenceData(type: .publisher, rawLocations: false)
         jsonString = try data.toJSONString()
-        XCTAssertNotNil(jsonString)
+        XCTAssertEqual(jsonString, "{\"type\":\"PUBLISHER\",\"rawLocations\":false}")
         
         data = PresenceData(type: .publisher, rawLocations: nil)
         jsonString = try data.toJSONString()
-        XCTAssertNotNil(jsonString)
+        XCTAssertEqual(jsonString, "{\"type\":\"PUBLISHER\"}")
     }
 
     func testDeserializationPublisher() throws {
