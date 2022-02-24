@@ -577,7 +577,7 @@ extension DefaultPublisher {
     }
     
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
-        guard !state.isStoppingOrStopped else {
+        guard !state.isStoppingOrStopped, areRawLocationsEnabled == true else {
             logger.error("Cannot perform EnhancedLocationChangedEvent. Publisher is not working.")
             return
         }
@@ -602,10 +602,8 @@ extension DefaultPublisher {
             return shouldSend
         }
 
-        if areRawLocationsEnabled == true {
-            trackablesToSend.forEach { trackable in
-                sendRawLocationUpdate(event: event, trackable: trackable)
-            }
+        trackablesToSend.forEach { trackable in
+            sendRawLocationUpdate(event: event, trackable: trackable)
         }
     }
     
