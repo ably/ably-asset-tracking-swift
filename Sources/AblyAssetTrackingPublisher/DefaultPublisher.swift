@@ -578,7 +578,7 @@ extension DefaultPublisher {
     
     private func performRawLocationChanged(_ event: RawLocationChangedEvent) {
         guard !state.isStoppingOrStopped, areRawLocationsEnabled == true else {
-            logger.error("Cannot perform EnhancedLocationChangedEvent. Publisher is not working.")
+            logger.error("Cannot perform RawLocationChangedEvent. Publisher is not working.")
             return
         }
 
