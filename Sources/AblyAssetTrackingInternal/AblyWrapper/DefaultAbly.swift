@@ -253,8 +253,14 @@ extension DefaultAbly: AblySubscriber {
         }
         
         do {
-            let message: EnhancedLocationUpdateMessage = try EnhancedLocationUpdateMessage.fromJSONString(json)
-            subscriberDelegate?.subscriberService(sender: self, didReceiveEnhancedLocation: message.location.toCoreLocation())
+            switch event {
+            case .raw:
+                let message: RawLocationUpdateMessage = try RawLocationUpdateMessage.fromJSONString(json)
+                subscriberDelegate?.subscriberService(sender: self, didReceiveRawLocation: message.location.toCoreLocation())
+            case .enhanced:
+                let message: EnhancedLocationUpdateMessage = try EnhancedLocationUpdateMessage.fromJSONString(json)
+                subscriberDelegate?.subscriberService(sender: self, didReceiveEnhancedLocation: message.location.toCoreLocation())
+            }
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
                 subscriberDelegate?.subscriberService(sender: self, didFailWithError: ErrorInformation(error: error))

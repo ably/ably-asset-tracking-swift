@@ -43,9 +43,19 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      This is a generic delegate method and can be called from any method in the `Ably` wrapper
      
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
-     - Parameter location:      The `CLLocation` object that contains info about publisher location.
+     - Parameter location:      The `Location` object that contains info about publisher `Enhanced` location.
      */
     func subscriberService(sender: AblySubscriber, didReceiveEnhancedLocation location: CLLocation)
+    
+    /**
+     Tells the delegate that published location was changed.
+     
+     This is a generic delegate method and can be called from any method in the `Ably` wrapper
+     
+     - Parameter sender:        The `AblySubscriber` object which is delegating the change.
+     - Parameter location:      The `Location` object that contains info about publisher `Raw` location.
+     */
+    func subscriberService(sender: AblySubscriber, didReceiveRawLocation location: CLLocation)
 }
 
 public protocol AblySubscriber: AblyCommon {
