@@ -42,7 +42,7 @@ struct DelegateErrorEvent: SubscriberDelegateEvent {
 }
 
 struct DelegateEnhancedLocationReceivedEvent: SubscriberDelegateEvent {
-    let location: CLLocation
+    let location: Location
 }
 
 struct DelegateConnectionStatusChangedEvent: SubscriberDelegateEvent {
