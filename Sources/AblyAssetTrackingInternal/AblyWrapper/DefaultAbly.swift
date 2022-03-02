@@ -256,7 +256,7 @@ extension DefaultAbly: AblySubscriber {
             switch event {
             case .raw:
                 let message: RawLocationUpdateMessage = try RawLocationUpdateMessage.fromJSONString(json)
-                subscriberDelegate?.subscriberService(sender: self, didReceiveRawLocation: message.location.toCoreLocation())
+                subscriberDelegate?.subscriberService(sender: self, didReceiveRawLocation: message.location.toLocation())
             case .enhanced:
                 let message: EnhancedLocationUpdateMessage = try EnhancedLocationUpdateMessage.fromJSONString(json)
                 subscriberDelegate?.subscriberService(sender: self, didReceiveEnhancedLocation: message.location.toCoreLocation())

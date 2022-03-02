@@ -46,7 +46,7 @@ struct DelegateEnhancedLocationReceivedEvent: SubscriberDelegateEvent {
 }
 
 struct DelegateRawLocationReceivedEvent: SubscriberDelegateEvent {
-    let location: CLLocation
+    let location: Location
 }
 
 struct DelegateConnectionStatusChangedEvent: SubscriberDelegateEvent {

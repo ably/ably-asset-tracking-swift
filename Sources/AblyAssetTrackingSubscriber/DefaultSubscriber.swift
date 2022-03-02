@@ -287,7 +287,7 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
         callback(event: DelegateErrorEvent(error: error))
     }
 
-    func subscriberService(sender: AblySubscriber, didReceiveRawLocation location: CLLocation) {
+    func subscriberService(sender: AblySubscriber, didReceiveRawLocation location: Location) {
         logger.debug("subscriberService.didReceiveRawLocation.", source: String(describing: Self.self))
         callback(event: DelegateRawLocationReceivedEvent(location: location))
     }

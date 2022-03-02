@@ -55,7 +55,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
      - Parameter location:      The `Location` object that contains info about publisher `Raw` location.
      */
-    func subscriberService(sender: AblySubscriber, didReceiveRawLocation location: CLLocation)
+    func subscriberService(sender: AblySubscriber, didReceiveRawLocation location: Location)
 }
 
 public protocol AblySubscriber: AblyCommon {
