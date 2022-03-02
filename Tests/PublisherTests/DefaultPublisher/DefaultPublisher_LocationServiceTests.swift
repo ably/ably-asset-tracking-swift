@@ -207,7 +207,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             enhancedLocationState: trackableState,
             resultPolicy: .retry
         )
-                
+        
         /**
          It means that failed request (counter 1) was retried (counter 2)
          */
