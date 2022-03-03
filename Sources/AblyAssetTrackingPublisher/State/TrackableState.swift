@@ -1,15 +1,15 @@
 import Foundation
 import AblyAssetTrackingCore
 
-class TrackableState {
+class TrackableState<T: LocationUpdate> {
     
     let maxRetryCount: Int
     let maxSkippedLocationsSize: Int
     
     private var retryCounter: [String: Int] = [:]
     private var pendingMessages: Set<String> = []
-    private var waitingLocationUpdates: [String: [EnhancedLocationUpdate]] = [:]
-    private var skippedLocations: [String: [EnhancedLocationUpdate]] = [:]
+    private var waitingLocationUpdates: [String: [T]] = [:]
+    private var skippedLocations: [String: [T]] = [:]
     
     init(maxRetryCount: Int = 1, maxSkippedLocationsSize: Int = 60) {
         self.maxRetryCount = maxRetryCount
@@ -68,13 +68,13 @@ extension TrackableState: StatePendable {
 
 // MARK: - StateWaitable
 extension TrackableState: StateWaitable {
-    func addToWaiting(locationUpdate: EnhancedLocationUpdate, for trackableId: String) {
+    func addToWaiting(locationUpdate: T, for trackableId: String) {
         var locations = waitingLocationUpdates[trackableId] ?? []
         locations.append(locationUpdate)
         waitingLocationUpdates[trackableId] = locations
     }
     
-    func nextWaiting(for trackableId: String) -> EnhancedLocationUpdate? {
+    func nextWaitingLocation(for trackableId: String) -> T? {
         guard var enhancedLocationUpdates = waitingLocationUpdates[trackableId], !enhancedLocationUpdates.isEmpty else {
             return nil
         }
@@ -88,7 +88,7 @@ extension TrackableState: StateWaitable {
 
 // MARK: - StateSkippable
 extension TrackableState: StateSkippable {
-    func skippedLocationsAdd(for trackableId: String, location: EnhancedLocationUpdate) {
+    func addLocation(for trackableId: String, location: T) {
         var locations = skippedLocations[trackableId] ?? []
         locations.append(location)
         locations.sort { $0.location.timestamp < $1.location.timestamp }
@@ -98,11 +98,11 @@ extension TrackableState: StateSkippable {
         skippedLocations[trackableId] = locations
     }
     
-    func skippedLocationsClear(for trackableId: String) {
+    func clearLocation(for trackableId: String) {
         skippedLocations[trackableId]?.removeAll()
     }
     
-    func skippedLocationsList(for trackableId: String) -> [EnhancedLocationUpdate] {
+    func locationsList(for trackableId: String) -> [T] {
         skippedLocations[trackableId] ?? []
     }
 }

@@ -16,8 +16,10 @@ protocol StatePendable {
 }
 
 protocol StateWaitable {
-    mutating func addToWaiting(locationUpdate: EnhancedLocationUpdate, for trackableId: String)
-    mutating func nextWaiting(for trackableId: String) -> EnhancedLocationUpdate?
+    associatedtype LocationType: LocationUpdate
+    
+    mutating func addToWaiting(locationUpdate: LocationType, for trackableId: String)
+    mutating func nextWaitingLocation(for trackableId: String) -> LocationType?
 }
 
 protocol StateRemovable {
@@ -26,7 +28,9 @@ protocol StateRemovable {
 }
 
 protocol StateSkippable {
-    func skippedLocationsAdd(for trackableId: String, location: EnhancedLocationUpdate)
-    func skippedLocationsClear(for trackableId: String)
-    func skippedLocationsList(for trackableId: String) -> [EnhancedLocationUpdate]
+    associatedtype LocationType: LocationUpdate
+    
+    func addLocation(for trackableId: String, location: LocationType)
+    func clearLocation(for trackableId: String)
+    func locationsList(for trackableId: String) -> [LocationType]
 }

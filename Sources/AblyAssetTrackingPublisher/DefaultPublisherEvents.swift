@@ -59,6 +59,21 @@ struct SendEnhancedLocationFailureEvent: PublisherEvent {
     let trackable: Trackable
 }
 
+struct RawLocationChangedEvent: PublisherEvent {
+    var locationUpdate: RawLocationUpdate
+}
+
+struct SendRawLocationSuccessEvent: PublisherEvent {
+    let trackable: Trackable
+    let location: Location
+}
+
+struct SendRawLocationFailureEvent: PublisherEvent {
+    let error: ErrorInformation
+    let locationUpdate: RawLocationUpdate
+    let trackable: Trackable
+}
+
 struct RefreshResolutionPolicyEvent: PublisherEvent {}
 
 struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
