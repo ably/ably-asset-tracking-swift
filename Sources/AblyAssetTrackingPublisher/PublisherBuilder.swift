@@ -49,4 +49,10 @@ public protocol PublisherBuilder {
      It's optional to pass it via builder, as it can be set directly on `Publisher`.  Maintains weak reference.
      */
     func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder
+    
+    /**
+     Sets publishing `raw locations` enabled or not
+     It's disabled by default
+     */
+    func rawLocations(enabled: Bool) -> PublisherBuilder
 }

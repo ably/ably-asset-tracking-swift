@@ -4,6 +4,7 @@ import CoreLocation.CLLocation
 
 class MapViewModel: ObservableObject {
     private var publisher: Publisher?
+    private var trackableId: String?
     private var connectionState: ConnectionState = .offline {
         didSet {
             isConnected = connectionState == .online
@@ -20,10 +21,16 @@ class MapViewModel: ObservableObject {
     }
     private var updatedLocations: Set<CLLocation> = []
     
+    @Published var areRawLocationsEnabled = false {
+        didSet {
+            rawLocationsEnabledChanged()
+        }
+    }
     @Published var isConnected: Bool
     @Published var errorInfo: String? = nil
     @Published var isDestinationAvailable: Bool = false
     @Published var didChangeRoutingProfile = false
+    @Published var rawLocationsInfo: [StackedTextModel] = []
     @Published var connectionStatusAndProfileInfo: [StackedTextModel] = []
     @Published var resolutionInfo: [StackedTextModel] = []
     
@@ -34,9 +41,12 @@ class MapViewModel: ObservableObject {
             routingProfile: routingProfile?.asInfo()
         )
         updateResolutionInfo()
+        rawLocationsInfo = [.init(label: "Publish raw locations: ", value: "\(areRawLocationsEnabled ? "enabled" : "disabled")")]
     }
     
     func connectPublisher(trackableId: String) {
+        self.trackableId = trackableId
+        
         let connectionConfiguration = ConnectionConfiguration(apiKey: EnvironmentHelper.ABLY_API_KEY, clientId: "Asset Tracking Publisher Example")
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         
@@ -47,6 +57,7 @@ class MapViewModel: ObservableObject {
                 .routingProfile(.driving)
                 .delegate(self)
                 .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
+                .rawLocations(enabled: areRawLocationsEnabled)
                 .start()
         
         let destination: LocationCoordinate? = nil
@@ -62,9 +73,22 @@ class MapViewModel: ObservableObject {
         publisher?.track(trackable: trackable) { _ in }
     }
     
-    func disconnectPublisher() {
-        publisher?.stop {[weak self] _ in
+    func disconnectPublisher(_ completion: ((Result<Void, ErrorInformation>) -> Void)? = nil) {
+        publisher?.stop {[weak self] result in
             self?.publisher = nil
+            completion?(result)
+        }
+    }
+    
+    private func rawLocationsEnabledChanged() {
+        rawLocationsInfo = [.init(label: "Publish raw locations: ", value: "\(areRawLocationsEnabled ? "enabled" : "disabled")")]
+        
+        disconnectPublisher { [weak self] _ in
+            guard let trackableId = self?.trackableId else {
+                return
+            }
+
+            self?.connectPublisher(trackableId: trackableId)
         }
     }
     

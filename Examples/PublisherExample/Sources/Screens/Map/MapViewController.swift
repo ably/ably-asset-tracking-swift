@@ -21,13 +21,13 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var changeRoutingProfileButton: UIButton!
     @IBOutlet private weak var routingProfileLabel: UILabel!
     @IBOutlet private weak var routingProfileAvtivityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var rawLocationsSwitch: UISwitch!
 
     // MARK: - Properties
     private let trackingId: String
     private let historyLocation: [CLLocation]?
-
+    
     private var publisher: Publisher?
-
     private var currentLocation: CLLocation?
     private var locationState: LocationState = .pending {
         didSet {
@@ -66,6 +66,7 @@ class MapViewController: UIViewController {
 
     // MARK: View setup
     private func setupControlsBehaviour() {
+        rawLocationsSwitch.addTarget(self, action: #selector(onRawLocationsSwitchChange), for: .valueChanged)
         resolutionLabel.font = UIFont.systemFont(ofSize: 14)
     }
 
@@ -102,6 +103,7 @@ class MapViewController: UIViewController {
                 .routingProfile(.driving)
                 .delegate(self)
                 .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
+                .rawLocations(enabled: rawLocationsSwitch.isOn)
                 .start()
     }
 
@@ -164,6 +166,14 @@ class MapViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         navigationController?.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc
+    private func onRawLocationsSwitchChange(_ sender: UISwitch) {
+        closePublisher { [weak self] _ in
+            self?.setupPublisher()
+            self?.startTracking()
+        }
     }
 
 // MARK: - Utils
