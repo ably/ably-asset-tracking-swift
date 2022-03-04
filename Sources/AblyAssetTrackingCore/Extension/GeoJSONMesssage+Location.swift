@@ -5,7 +5,7 @@ public extension GeoJSONMessage {
         return Location(
             coordinate: LocationCoordinate(latitude: geometry.latitude, longitude: geometry.longitude),
             altitude: geometry.altitude,
-            ellipsoidalAltitude: .zero,
+            ellipsoidalAltitude: -1,
             horizontalAccuracy: properties.accuracyHorizontal,
             verticalAccuracy: properties.accuracyVertical ?? -1,
             course: properties.bearing ?? -1,
