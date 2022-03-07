@@ -5,13 +5,13 @@ public extension GeoJSONMessage {
         return Location(
             coordinate: LocationCoordinate(latitude: geometry.latitude, longitude: geometry.longitude),
             altitude: geometry.altitude,
-            ellipsoidalAltitude: -1,
+            ellipsoidalAltitude: .zero,
             horizontalAccuracy: properties.accuracyHorizontal,
             verticalAccuracy: properties.accuracyVertical ?? -1,
             course: properties.bearing ?? -1,
             courseAccuracy: properties.accuracyBearing ?? -1,
             speed: properties.speed ?? -1,
-            speedAccuracy: properties.accuracySpeed ?? -1,
+            speedAccuracy: .zero,
             floorLevel: properties.floor,
             timestamp: properties.time)
     }
