@@ -226,6 +226,17 @@ extension DefaultAbly: AblySubscriber {
         }
     }
     
+    public func subscribeForResolutionEvents(trackableId: String) {
+        guard let channel = channels[trackableId] else {
+            return
+        }
+        
+        channel.subscribe(EventName.resolution.rawValue) { [weak self] message in
+            self?.logger.debug("Received resolution message from channel", source: String(describing: Self.self))
+            self?.handleLocationUpdateResponse(forEvent: .resolution, messageData: message.data)
+        }
+    }
+    
     public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
         guard let channel = channels[trackableId] else {
             return
@@ -260,6 +271,9 @@ extension DefaultAbly: AblySubscriber {
             case .enhanced:
                 let message: EnhancedLocationUpdateMessage = try EnhancedLocationUpdateMessage.fromJSONString(json)
                 subscriberDelegate?.subscriberService(sender: self, didReceiveEnhancedLocation: message.location.toCoreLocation())
+            case .resolution:
+                let message: Resolution = try Resolution.fromJSONString(json)
+                subscriberDelegate?.subscriberService(sender: self, didReceiveResolution: message)
             }
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
@@ -351,6 +365,36 @@ extension DefaultAbly: AblyPublisher {
         } catch {
             let errorInformation = ErrorInformation(
                 type: .publisherError(errorMessage: "Cannot create location update message. Underlying error: \(error)")
+            )
+            publisherDelegate?.publisherService(sender: self, didFailWithError: errorInformation)
+        }
+    }
+    
+    public func sendResolution(
+        trackable: Trackable,
+        resolution: Resolution,
+        completion: ResultHandler<Void>?
+    ) {
+        guard let channel = channels[trackable.id] else {
+            completion?(.success)
+            
+            return
+        }
+        
+        do {
+            let data = try resolution.toJSONString()
+            let message = ARTMessage(name: EventName.resolution.rawValue, data: data)
+            
+            channel.publish([message]) { error in
+                if let error = error {
+                    self.publisherDelegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+                } else {
+                    completion?(.success)
+                }
+            }
+        } catch {
+            let errorInformation = ErrorInformation(
+                type: .publisherError(errorMessage: "Cannot create resolution update message. Underlying error: \(error)")
             )
             publisherDelegate?.publisherService(sender: self, didFailWithError: errorInformation)
         }
