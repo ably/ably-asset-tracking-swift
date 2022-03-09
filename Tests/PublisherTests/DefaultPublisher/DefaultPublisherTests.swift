@@ -861,4 +861,41 @@ class DefaultPublisherTests: XCTestCase {
         }
         waitForExpectations(timeout: 10.0)
     }
+    
+    func testShouldSendRawMessageIfTheyAreEnabled() {
+        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        
+        let publisher = DefaultPublisher(
+            connectionConfiguration: configuration,
+            mapboxConfiguration: mapboxConfiguration,
+            logConfiguration: LogConfiguration(),
+            routingProfile: .driving,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            ablyPublisher: ablyService,
+            locationService: locationService,
+            routeProvider: routeProvider,
+            isSendResolutionEnabled: true
+        )
+        
+        let expectationAddTrackable = self.expectation(description: "Add Trackable Expectation")
+        publisher.add(trackable: trackable) { _ in expectationAddTrackable.fulfill() }
+        
+        wait(for: [expectationAddTrackable], timeout: 5.0)
+        
+        let location = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 2))
+        let expectationDidUpdateRawLocation = self.expectation(description: "Did Update Raw Location Expectation")
+        
+        ablyService.sendRawLocationParamCompletionHandler = { completion in
+            completion?(.success)
+            expectationDidUpdateRawLocation.fulfill()
+        }
+        
+        publisher.locationService(
+            sender: MockLocationService(),
+            didUpdateRawLocationUpdate: RawLocationUpdate(location: location)
+        )
+        wait(for: [expectationDidUpdateRawLocation], timeout: 5.0)
+        
+        XCTAssertTrue(ablyService.sendRawLocationWasCalled)
+    }
 }

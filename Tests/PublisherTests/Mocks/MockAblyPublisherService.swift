@@ -91,6 +91,19 @@ class MockAblyPublisherService: AblyPublisher {
         sendRawLocationParamCompletionHandler?(completion)
     }
     
+    var sendResolutionWasCalled = false
+    var sendResolutionParamResolution: Resolution?
+    var sendResolutionParamTrackable: Trackable?
+    var sendResolutionParamCompletion: ResultHandler<Void>?
+    var sendResolutionParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    func sendResolution(trackable: Trackable, resolution: Resolution, completion: ResultHandler<Void>?) {
+        sendResolutionWasCalled = true
+        sendResolutionParamResolution = resolution
+        sendResolutionParamTrackable = trackable
+        sendResolutionParamCompletion = completion
+        sendResolutionParamCompletionHandler?(completion)
+    }
+    
     var closeCalled: Bool = false
     var closePresenceData: PresenceData?
     var closeCompletion: ResultHandler<Void>?

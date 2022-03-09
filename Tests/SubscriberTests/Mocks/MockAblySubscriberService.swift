@@ -31,6 +31,13 @@ class MockAblySubscriberService: AblySubscriber {
         subscribeForRawEventsTrackableId = trackableId
     }
     
+    var subscribeForResolutionWasCalled = false
+    var subscribeForResolutionTrackableId: String?
+    func subscribeForResolutionEvents(trackableId: String) {
+        subscribeForResolutionWasCalled = true
+        subscribeForResolutionTrackableId = trackableId
+    }
+    
     var updatePresenceDataWasCalled = false
     var updatePresenceDataTrackableId: String?
     var updatePresenceDataPresenceData: PresenceData?
