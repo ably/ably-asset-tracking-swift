@@ -20,6 +20,15 @@ public protocol SubscriberDelegate: AnyObject {
         - location: Received location.
      */
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation)
+    
+    /**
+     Called when the `Subscriber` receive any Resolution update for observed trackable
+     
+     - Parameters:
+        - sender: `Subscriber` instance.
+        - resolution: Received `Resolution` object.
+     */
+    func subscriber(sender: Subscriber, didUpdateEnhancedLocation resolution: Resolution)
 
     /**
      Called when `Subscriber` change connection status
