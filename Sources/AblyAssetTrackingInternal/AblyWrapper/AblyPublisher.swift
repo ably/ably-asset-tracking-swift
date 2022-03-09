@@ -86,4 +86,20 @@ public protocol AblyPublisher: AblyCommon {
         trackable: Trackable,
         completion: ResultHandler<Void>?
     )
+    
+    /**
+     Sends a resolution to the channel.
+     Should be called only when there's an existing channel for the `trackable.id`.
+     If a channel for the `trackable.id` doesn't exist then it just calls `completion` closure with success.
+     
+     - Parameter trackable          The `Trackable` object
+     - Parameter resolution        The resolution that is sent to the channel.
+     - Parameter completion        The closure that will be called when sending completes. If something goes wrong it will be called with an `error` object.
+     */
+    
+    func sendResolution(
+        trackable: Trackable,
+        resolution: Resolution,
+        completion: ResultHandler<Void>?
+    )
 }
