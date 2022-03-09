@@ -64,7 +64,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      The resolutions publishing needs to be enabled in the Publisher API in order to receive them here.
      
      - Parameter sender:          The `AblySubscriber` object which is delegating the change.
-     - Parameter resolution:      The `Resolution` object that contains info about publisher `Raw` location.
+     - Parameter resolution:      The `Resolution` object.
      */
     func subscriberService(sender: AblySubscriber, didReceiveResolution resolution: Resolution)
 }
