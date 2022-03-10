@@ -11,7 +11,7 @@ public extension GeoJSONMessage {
             course: properties.bearing ?? -1,
             courseAccuracy: properties.accuracyBearing ?? -1,
             speed: properties.speed ?? -1,
-            speedAccuracy: .zero,
+            speedAccuracy: properties.accuracySpeed ?? .zero,
             floorLevel: properties.floor,
             timestamp: properties.time)
     }
