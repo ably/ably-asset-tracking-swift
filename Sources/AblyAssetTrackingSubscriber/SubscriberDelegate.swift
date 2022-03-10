@@ -20,6 +20,15 @@ public protocol SubscriberDelegate: AnyObject {
         - location: Received location.
      */
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation)
+    
+    /**
+     Called when the `Subscriber` receive any Raw Location (matched to road) update for observed trackable
+     
+     - Parameters:
+        - sender: `Subscriber` instance.
+        - location: Received location.
+     */
+    func subscriber(sender: Subscriber, didUpdateRawLocation location: Location)
 
     /**
      Called when `Subscriber` change connection status
