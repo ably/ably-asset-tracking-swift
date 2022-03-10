@@ -19,6 +19,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private var publisher: Publisher!
 
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
+    private let didUpdateRawLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Raw Locations")
     private let routeProvider = MockRouteProvider()
     private let resolutionPolicyFactory = MockResolutionPolicyFactory()
     private let trackableId = "Trackable ID 1 - \(UUID().uuidString)"
@@ -74,7 +75,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,
             locationService: defaultLocationService,
-            routeProvider: routeProvider
+            routeProvider: routeProvider,
+            areRawLocationsEnabled: true
         )
         
         
@@ -82,7 +84,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))
         publisher.add(trackable: trackable) { _  in }
         
-        wait(for: [didUpdateEnhancedLocationExpectation], timeout: 20.0)
+        wait(for: [didUpdateEnhancedLocationExpectation, didUpdateRawLocationExpectation], timeout: 20.0)
                 
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop completion closure")
@@ -112,6 +114,10 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
         didUpdateEnhancedLocationExpectation.fulfill()
+    }
+    
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateRawLocation location: Location) {
+        didUpdateRawLocationExpectation.fulfill()
     }
 }
 
