@@ -224,8 +224,4 @@ extension MapViewController: SubscriberDelegate {
         assetStatusLabel.textColor = statusDescAndColor.color
         assetStatusLabel.text = statusDescAndColor.desc
     }
-    
-    func subscriber(sender: Subscriber, didUpdateEnhancedLocation resolution: Resolution) {
-        // TODO
-    }
 }

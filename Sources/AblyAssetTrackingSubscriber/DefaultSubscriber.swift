@@ -141,7 +141,7 @@ extension DefaultSubscriber {
             case let event as DelegateErrorEvent: delegate.subscriber(sender: self, didFailWithError: event.error)
             case let event as DelegateConnectionStatusChangedEvent: delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
             case let event as DelegateEnhancedLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.location)
-            case let event as DelegateResolutionReceivedEvent: delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.resolution)
+            case let event as DelegateResolutionReceivedEvent: delegate.subscriber(sender: self, didUpdateResolution: event.resolution)
             default: preconditionFailure("Unhandled delegate event in DefaultSubscriber: \(event) ")
             }
         }

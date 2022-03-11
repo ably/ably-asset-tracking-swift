@@ -28,7 +28,7 @@ public protocol SubscriberDelegate: AnyObject {
         - sender: `Subscriber` instance.
         - resolution: Received `Resolution` object.
      */
-    func subscriber(sender: Subscriber, didUpdateEnhancedLocation resolution: Resolution)
+    func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution)
 
     /**
      Called when `Subscriber` change connection status
@@ -38,4 +38,11 @@ public protocol SubscriberDelegate: AnyObject {
         - status: Updated connection status.
      */
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState)
+}
+
+public extension SubscriberDelegate {
+    /**
+     Default implementation to make this method `optional`
+     */
+    func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {}
 }

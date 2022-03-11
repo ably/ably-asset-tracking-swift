@@ -116,7 +116,7 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
         didUpdateEnhancedLocationExpectation.fulfill()
     }
     
-    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation resolution: Resolution) {
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateResolution resolution: Resolution) {
         didUpdateResolutionExpectation.fulfill()
     }
 }
