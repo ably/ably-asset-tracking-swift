@@ -75,7 +75,7 @@ class DefaultPublisher: Publisher {
          enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
          rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
          areRawLocationsEnabled: Bool? = nil,
-         isSendResolutionEnabled: Bool = false
+         isSendResolutionEnabled: Bool = true
     ) {
         
         self.connectionConfiguration = connectionConfiguration

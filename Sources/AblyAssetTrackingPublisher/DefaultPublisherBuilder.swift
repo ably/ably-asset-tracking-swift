@@ -24,7 +24,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  delegate: PublisherDelegate?,
                  resolutionPolicyFactory: ResolutionPolicyFactory?,
                  areRawLocationsEnabled: Bool?,
-                 isSendResolutionEnabled: Bool = false
+                 isSendResolutionEnabled: Bool = true
     ) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
