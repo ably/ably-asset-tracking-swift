@@ -39,3 +39,7 @@ public protocol SubscriberDelegate: AnyObject {
      */
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState)
 }
+
+public extension SubscriberDelegate {
+    func subscriber(sender: Subscriber, didUpdateRawLocation location: Location) {}
+}

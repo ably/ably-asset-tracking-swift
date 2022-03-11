@@ -218,15 +218,10 @@ extension MapViewController: SubscriberDelegate {
         self.location = location
         scrollToReceivedLocation()
     }
-    
-    func subscriber(sender: Subscriber, didUpdateRawLocation location: Location) {
-        // TODO
-    }
 
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
         let statusDescAndColor = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .connectionState(status))
         assetStatusLabel.textColor = statusDescAndColor.color
         assetStatusLabel.text = statusDescAndColor.desc
     }
-    
 }
