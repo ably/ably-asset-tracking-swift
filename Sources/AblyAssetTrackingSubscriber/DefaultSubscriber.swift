@@ -164,7 +164,6 @@ extension DefaultSubscriber {
                 self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
                 self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
                 self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
-                self.ablySubscriber.subscribeForResolutionEvents(trackableId: self.trackableId)
                 
                 self.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):

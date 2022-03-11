@@ -114,4 +114,17 @@ class MockAblyPublisherService: AblyPublisher {
         closeCompletion = completion
         closeResultCompletionHandler?(completion)
     }
+    
+    var updatePresenceDataWasCalled = false
+    var updatePresenceDataTrackableId: String?
+    var updatePresenceDataPresenceData: PresenceData?
+    var updatePresenceDataCompletion: ResultHandler<Void>?
+    var updatePresenceDataCompletionHandler: ((ResultHandler<Void>?) -> ())?
+    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
+        updatePresenceDataWasCalled = true
+        updatePresenceDataTrackableId = trackableId
+        updatePresenceDataPresenceData = presenceData
+        updatePresenceDataCompletion = completion
+        updatePresenceDataCompletionHandler?(completion)
+    }
 }

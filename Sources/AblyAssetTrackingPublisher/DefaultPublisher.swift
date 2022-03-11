@@ -713,7 +713,7 @@ extension DefaultPublisher {
         resolutions[trackable] = resolution
         enqueue(event: ChangeLocationEngineResolutionEvent())
         if isSendResolutionEnabled {
-            ablyPublisher.sendResolution(trackable: trackable, resolution: resolution, completion: nil)
+            ablyPublisher.updatePresenceData(trackableId: trackable.id, presenceData: presenceData.copy(with: resolution), completion: nil)
         }
     }
 

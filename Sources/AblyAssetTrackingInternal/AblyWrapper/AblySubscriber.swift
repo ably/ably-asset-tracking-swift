@@ -94,25 +94,4 @@ public protocol AblySubscriber: AblyCommon {
      - Parameter trackableId: The identifier of the channel.
      */
     func subscribeForRawEvents(trackableId: String)
-    
-    /**
-     Observe  for the resolution location change.
-     
-     Subscription should be able  only when there's an existing channel for the `trackableId`
-     
-     - Parameter trackableId: The identifier of the channel.
-     */
-    func subscribeForResolutionEvents(trackableId: String)
-    
-    /**
-     Updates presence data in the `trackableId` channel's presence.
-     
-     Should be called only when there's an existing channel for the `trackableId`.
-     If a channel for the `trackableId` doesn't exist then nothing happens.
-     
-     - Parameter trackableId:    The ID of the trackable channel.
-     - Parameter presenceData:   The data that will be send via the presence channel.
-     - Parameter callback:       The closure that will be called when updating presence data completes. If something goes wrong it will be called with an `error`object.
-     */
-    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Void>)
 }

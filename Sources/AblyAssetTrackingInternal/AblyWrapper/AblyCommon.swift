@@ -26,6 +26,18 @@ public protocol AblyCommon {
     func subscribeForPresenceMessages(trackable: Trackable)
     
     /**
+     Updates presence data in the `trackableId` channel's presence.
+     
+     Should be called only when there's an existing channel for the `trackableId`.
+     If a channel for the `trackableId` doesn't exist then nothing happens.
+     
+     - Parameter trackableId:    The ID of the trackable channel.
+     - Parameter presenceData:   The data that will be send via the presence channel.
+     - Parameter callback:       The closure that will be called when updating presence data completes. If something goes wrong it will be called with an `error`object.
+     */
+    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?)
+    
+    /**
      Joins the presence of the channel for the given `trackableId` and add it to the connected channels.
      
      If successfully joined the presence then the channel is added to the connected channels.

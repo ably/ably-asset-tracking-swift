@@ -42,8 +42,8 @@ class MockAblySubscriberService: AblySubscriber {
     var updatePresenceDataTrackableId: String?
     var updatePresenceDataPresenceData: PresenceData?
     var updatePresenceDataCompletion: ResultHandler<Void>?
-    var updatePresenceDataCompletionHandler: ((ResultHandler<Void>) -> ())?
-    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
+    var updatePresenceDataCompletionHandler: ((ResultHandler<Void>?) -> ())?
+    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
         updatePresenceDataWasCalled = true
         updatePresenceDataTrackableId = trackableId
         updatePresenceDataPresenceData = presenceData

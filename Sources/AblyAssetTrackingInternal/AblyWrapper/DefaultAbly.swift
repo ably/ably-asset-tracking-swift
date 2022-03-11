@@ -159,6 +159,11 @@ public class DefaultAbly: AblyCommon {
             self.subscriberDelegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
             self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionState: presence.toConnectionState())
             
+            // Deleagate `Publisher` resolution if present in PresenceData
+            if let resolution = data.resolution, data.type == .publisher {
+                self.subscriberDelegate?.subscriberService(sender: self, didReceiveResolution: resolution)
+            }
+            
             // AblyPublisher delegate
             self.publisherDelegate?.publisherService(sender: self,
                                                      didReceivePresenceUpdate: presence,
@@ -182,6 +187,20 @@ public class DefaultAbly: AblyCommon {
             
             self.logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.publisherDelegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
+        }
+    }
+    
+    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
+        guard let channel = channels[trackableId] else {
+            return
+        }
+        
+        channel.presence.update(presenceDataJSON(data: presenceData)) { error in
+            if let error = error {
+                completion?(.failure(error.toErrorInformation()))
+            } else {
+                completion?(.success)
+            }
         }
     }
     
@@ -226,31 +245,6 @@ extension DefaultAbly: AblySubscriber {
         }
     }
     
-    public func subscribeForResolutionEvents(trackableId: String) {
-        guard let channel = channels[trackableId] else {
-            return
-        }
-        
-        channel.subscribe(EventName.resolution.rawValue) { [weak self] message in
-            self?.logger.debug("Received resolution message from channel", source: String(describing: Self.self))
-            self?.handleLocationUpdateResponse(forEvent: .resolution, messageData: message.data)
-        }
-    }
-    
-    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
-        guard let channel = channels[trackableId] else {
-            return
-        }
-        
-        channel.presence.update(presenceDataJSON(data: presenceData)) { error in
-            if let error = error {
-                completion(.failure(error.toErrorInformation()))
-            } else {
-                completion(.success)
-            }
-        }
-    }
-    
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
             let errorInformation = ErrorInformation(
@@ -271,9 +265,6 @@ extension DefaultAbly: AblySubscriber {
             case .enhanced:
                 let message: EnhancedLocationUpdateMessage = try EnhancedLocationUpdateMessage.fromJSONString(json)
                 subscriberDelegate?.subscriberService(sender: self, didReceiveEnhancedLocation: message.location.toCoreLocation())
-            case .resolution:
-                let message: Resolution = try Resolution.fromJSONString(json)
-                subscriberDelegate?.subscriberService(sender: self, didReceiveResolution: message)
             }
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
@@ -365,36 +356,6 @@ extension DefaultAbly: AblyPublisher {
         } catch {
             let errorInformation = ErrorInformation(
                 type: .publisherError(errorMessage: "Cannot create location update message. Underlying error: \(error)")
-            )
-            publisherDelegate?.publisherService(sender: self, didFailWithError: errorInformation)
-        }
-    }
-    
-    public func sendResolution(
-        trackable: Trackable,
-        resolution: Resolution,
-        completion: ResultHandler<Void>?
-    ) {
-        guard let channel = channels[trackable.id] else {
-            completion?(.success)
-            
-            return
-        }
-        
-        do {
-            let data = try resolution.toJSONString()
-            let message = ARTMessage(name: EventName.resolution.rawValue, data: data)
-            
-            channel.publish([message]) { error in
-                if let error = error {
-                    self.publisherDelegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
-                } else {
-                    completion?(.success)
-                }
-            }
-        } catch {
-            let errorInformation = ErrorInformation(
-                type: .publisherError(errorMessage: "Cannot create resolution update message. Underlying error: \(error)")
             )
             publisherDelegate?.publisherService(sender: self, didFailWithError: errorInformation)
         }
