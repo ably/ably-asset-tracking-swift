@@ -22,7 +22,7 @@ public protocol SubscriberDelegate: AnyObject {
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation)
     
     /**
-     Called when the `Subscriber` receive any Raw Location (matched to road) update for observed trackable
+     Called when the `Subscriber` receive any Raw Location update for observed trackable
      
      - Parameters:
         - sender: `Subscriber` instance.
