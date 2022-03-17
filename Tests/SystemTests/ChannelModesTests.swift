@@ -159,7 +159,7 @@ extension ChannelModesTests: SubscriberDelegate {
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
-    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: CLLocation) {
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: Location) {
         didUpdateEnhancedLocationExpectation.fulfill()
     }
 }
