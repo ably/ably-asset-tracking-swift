@@ -214,8 +214,8 @@ extension MapViewController: SubscriberDelegate {
         errors.append(error)
     }
 
-    func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: CLLocation) {
-        self.location = location
+    func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: Location) {
+        self.location = location.toCoreLocation()
         scrollToReceivedLocation()
     }
 
