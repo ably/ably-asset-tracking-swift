@@ -48,6 +48,7 @@ class DefaultPublisher: Publisher {
     private var resolutions: [Trackable: Resolution]
     private var locationEngineResolution: Resolution
     private var trackables: Set<Trackable>
+    private var constantLocationEngineResolution: Resolution?
 
     private var lastEnhancedLocations: [Trackable: Location]
     private var lastEnhancedTimestamps: [Trackable: Double]
@@ -73,7 +74,8 @@ class DefaultPublisher: Publisher {
          routeProvider: RouteProvider,
          enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
          rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
-         areRawLocationsEnabled: Bool? = nil
+         areRawLocationsEnabled: Bool? = nil,
+         constantLocationEngineResolution: Resolution? = nil
     ) {
         
         self.connectionConfiguration = connectionConfiguration
@@ -90,6 +92,7 @@ class DefaultPublisher: Publisher {
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
 
         self.areRawLocationsEnabled = areRawLocationsEnabled
+        self.constantLocationEngineResolution = constantLocationEngineResolution
         self.presenceData = PresenceData(type: .publisher, rawLocations: areRawLocationsEnabled)
         self.hooks = DefaultResolutionPolicyHooks()
         self.methods = DefaultResolutionPolicyMethods()
@@ -110,6 +113,15 @@ class DefaultPublisher: Publisher {
         self.methods.delegate = self
         
         self.ablyPublisher.subscribeForAblyStateChange()
+        
+        /**
+         If available, set `constantLocationEngineResolution` for default LocationService`.
+         In this case all further resolution calculations are disabled.
+         E.g. `ChangeLocationEngineResolutionEvent` won't be equeued.
+         */
+        if let resolution = constantLocationEngineResolution {
+            locationService.changeLocationEngineResolution(resolution: resolution)
+        }
     }
 
     func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
@@ -703,11 +715,16 @@ extension DefaultPublisher {
     }
 
     private func resolveResolution(trackable: Trackable) {
-        let currentRequests = requests[trackable]?.values
-        let resolutionSet: Set<Resolution> = currentRequests == nil ? [] : Set(currentRequests!)
-        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutionSet)
-        resolutions[trackable] = resolutionPolicy.resolve(request: request)
-        enqueue(event: ChangeLocationEngineResolutionEvent())
+        /**
+         Re-calculate resolution if `constantLocationEngineResolution` is not defined
+         */
+        if constantLocationEngineResolution == nil {
+            let currentRequests = requests[trackable]?.values
+            let resolutionSet: Set<Resolution> = currentRequests == nil ? [] : Set(currentRequests!)
+            let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutionSet)
+            resolutions[trackable] = resolutionPolicy.resolve(request: request)
+            enqueue(event: ChangeLocationEngineResolutionEvent())
+        }
     }
 
     private func performChangeLocationEngineResolutionEvent(_ event: ChangeLocationEngineResolutionEvent) {

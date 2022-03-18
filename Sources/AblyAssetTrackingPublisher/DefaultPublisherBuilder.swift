@@ -11,6 +11,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var routingProfile: RoutingProfile?
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
     private var areRawLocationsEnabled: Bool?
+    private var constantLocationEngineResolution: Resolution?
     private weak var delegate: PublisherDelegate?
     
     init() { }
@@ -22,7 +23,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  routingProfile: RoutingProfile?,
                  delegate: PublisherDelegate?,
                  resolutionPolicyFactory: ResolutionPolicyFactory?,
-                 areRawLocationsEnabled: Bool?) {
+                 areRawLocationsEnabled: Bool?,
+                 constantLocationEngineResolution: Resolution?) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
         self.logConfiguration = logConfiguration
@@ -31,6 +33,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
         self.delegate = delegate
         self.resolutionPolicyFactory = resolutionPolicyFactory
         self.areRawLocationsEnabled = areRawLocationsEnabled
+        self.constantLocationEngineResolution = constantLocationEngineResolution
     }
     
     func start() throws -> Publisher {
@@ -75,7 +78,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                           ablyPublisher: defaultAbly,
                                           locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locationSource),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration),
-                                          areRawLocationsEnabled: areRawLocationsEnabled)
+                                          areRawLocationsEnabled: areRawLocationsEnabled,
+                                          constantLocationEngineResolution: constantLocationEngineResolution)
         publisher.delegate = delegate
         return publisher
     }
@@ -88,7 +92,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled)
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
     func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilder {
@@ -99,7 +104,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled)
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
     func log(_ configuration: LogConfiguration) -> PublisherBuilder {
@@ -110,7 +116,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled)
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
     func locationSource(_ source: LocationSource?) -> PublisherBuilder {
@@ -121,7 +128,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled)
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
     func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder {
@@ -132,7 +140,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        routingProfile: profile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled)
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
     func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
@@ -143,7 +152,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled)
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
     func resolutionPolicyFactory(_ resolutionPolicyFactory: ResolutionPolicyFactory) -> PublisherBuilder {
@@ -154,7 +164,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled)
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
     func rawLocations(enabled: Bool) -> PublisherBuilder {
@@ -165,6 +176,19 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        routingProfile: routingProfile,
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: enabled)
+                                       areRawLocationsEnabled: enabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
+    }
+    
+    func constantLocationEngineResolution(resolution: Resolution?) -> PublisherBuilder {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       resolutionPolicyFactory: resolutionPolicyFactory,
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       constantLocationEngineResolution: resolution)
     }
 }
