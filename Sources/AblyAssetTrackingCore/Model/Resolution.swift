@@ -22,7 +22,7 @@ public struct Resolution: Codable, CustomDebugStringConvertible {
      of messages broadcast to subscribers.
      
      Waning:
-     This change has no effect in `CoreLocation` engine, for example, when  Publisher `Resolution` is set as constant.
+     Change of this value has no effect in `CoreLocation` engine, for example, when  Publisher `Resolution` is set as constant.
      Apple Documentation: https://developer.apple.com/documentation/corelocation/cllocationmanager?language=objc
      */
     public let desiredInterval: Double
