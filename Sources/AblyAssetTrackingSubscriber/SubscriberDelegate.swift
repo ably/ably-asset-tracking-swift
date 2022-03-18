@@ -20,6 +20,15 @@ public protocol SubscriberDelegate: AnyObject {
         - location: Received location.
      */
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: Location)
+    
+    /**
+     Called when the `Subscriber` receive any Raw Location update for observed trackable
+     
+     - Parameters:
+        - sender: `Subscriber` instance.
+        - location: Received location.
+     */
+    func subscriber(sender: Subscriber, didUpdateRawLocation location: Location)
 
     /**
      Called when `Subscriber` change connection status
@@ -29,4 +38,8 @@ public protocol SubscriberDelegate: AnyObject {
         - status: Updated connection status.
      */
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState)
+}
+
+public extension SubscriberDelegate {
+    func subscriber(sender: Subscriber, didUpdateRawLocation location: Location) {}
 }
