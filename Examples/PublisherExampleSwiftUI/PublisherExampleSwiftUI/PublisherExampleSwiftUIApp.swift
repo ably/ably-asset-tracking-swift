@@ -4,7 +4,7 @@ import SwiftUI
 struct PublisherExampleSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            SettingsView()
+            MainView()
         }
     }
 }
