@@ -17,7 +17,12 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var assetStatusLabel: UILabel!
     @IBOutlet private weak var animationSwitch: UISwitch!
     @IBOutlet private weak var mapView: MKMapView!
-    @IBOutlet private weak var resolutionLabel: UILabel!
+    @IBOutlet private weak var subscriberResolutionAccuracyLabel: UILabel!
+    @IBOutlet private weak var subscriberResolutionMinDisplacementlabel: UILabel!
+    @IBOutlet private weak var subscriberResolutionIntervalLabel: UILabel!
+    @IBOutlet private weak var publisherResolutionAccuracyLabel: UILabel!
+    @IBOutlet private weak var publisherResolutionMinDisplacementlabel: UILabel!
+    @IBOutlet private weak var publisherResolutionIntervalLabel: UILabel!
 
     // MARK: - Properties
     private let trackingId: String
@@ -49,7 +54,7 @@ class MapViewController: UIViewController {
         setupSubscriber()
         setupMapView()
         setupControlsBehaviour()
-        updateResolutionLabel()
+        updateSubscriberResolutionLabels()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,7 +72,6 @@ class MapViewController: UIViewController {
     }
 
     private func setupControlsBehaviour() {
-        resolutionLabel.font = UIFont.systemFont(ofSize: 14)
         assetStatusLabel.font = UIFont.systemFont(ofSize: 14)
     }
     
@@ -154,7 +158,7 @@ class MapViewController: UIViewController {
             switch result {
             case .success:
                 self?.currentResolution = resolution
-                self?.updateResolutionLabel()
+                self?.updateSubscriberResolutionLabels()
                 logger.info("Updated resolution to: \(resolution)")
             case .failure(let error):
                 let errorDescription = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .changeError(error))
@@ -163,13 +167,30 @@ class MapViewController: UIViewController {
         }
     }
 
-    private func updateResolutionLabel() {
+    private func updateSubscriberResolutionLabels() {
         guard let resolution = currentResolution else {
-            resolutionLabel.text = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .none)
+            subscriberResolutionAccuracyLabel.text = "-"
+            subscriberResolutionIntervalLabel.text = "-"
+            subscriberResolutionMinDisplacementlabel.text = "-"
             return
         }
         
-        resolutionLabel.text = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .notEmpty(resolution))
+        subscriberResolutionAccuracyLabel.text = "\(resolution.accuracy)"
+        subscriberResolutionIntervalLabel.text = "\(resolution.desiredInterval)ms"
+        subscriberResolutionMinDisplacementlabel.text = "\(resolution.minimumDisplacement)m"
+    }
+    
+    private func updatePublisherResolutionLabels(resolution: Resolution?) {
+        guard let resolution = resolution else {
+            publisherResolutionAccuracyLabel.text = "-"
+            publisherResolutionIntervalLabel.text = "-"
+            publisherResolutionMinDisplacementlabel.text = "-"
+            return
+        }
+        
+        publisherResolutionAccuracyLabel.text = "\(resolution.accuracy)"
+        publisherResolutionIntervalLabel.text = "\(resolution.desiredInterval)ms"
+        publisherResolutionMinDisplacementlabel.text = "\(resolution.minimumDisplacement)m"
     }
     
     private func showErrorDialog(withMessage message: String) {
@@ -223,5 +244,9 @@ extension MapViewController: SubscriberDelegate {
         let statusDescAndColor = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .connectionState(status))
         assetStatusLabel.textColor = statusDescAndColor.color
         assetStatusLabel.text = statusDescAndColor.desc
+    }
+    
+    func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {
+        updatePublisherResolutionLabels(resolution: resolution)
     }
 }
