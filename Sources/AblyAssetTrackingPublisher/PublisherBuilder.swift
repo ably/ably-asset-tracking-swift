@@ -55,4 +55,9 @@ public protocol PublisherBuilder {
      It's disabled by default
      */
     func rawLocations(enabled: Bool) -> PublisherBuilder
+    
+    /**
+     Set constant resolution for locatoin engine
+     */
+    func constantLocationEngineResolution(resolution: Resolution?) -> PublisherBuilder
 }
