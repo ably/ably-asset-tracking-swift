@@ -117,7 +117,6 @@ class DefaultPublisher: Publisher {
         /**
          If available, set `constantLocationEngineResolution` for default LocationService`.
          In this case all further resolution calculations are disabled.
-         E.g. `ChangeLocationEngineResolutionEvent` won't be equeued.
          */
         if let resolution = constantLocationEngineResolution {
             locationService.changeLocationEngineResolution(resolution: resolution)
@@ -715,16 +714,11 @@ extension DefaultPublisher {
     }
 
     private func resolveResolution(trackable: Trackable) {
-        /**
-         Re-calculate resolution if `constantLocationEngineResolution` is not defined
-         */
-        if constantLocationEngineResolution == nil {
-            let currentRequests = requests[trackable]?.values
-            let resolutionSet: Set<Resolution> = currentRequests == nil ? [] : Set(currentRequests!)
-            let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutionSet)
-            resolutions[trackable] = resolutionPolicy.resolve(request: request)
-            enqueue(event: ChangeLocationEngineResolutionEvent())
-        }
+        let currentRequests = requests[trackable]?.values
+        let resolutionSet: Set<Resolution> = currentRequests == nil ? [] : Set(currentRequests!)
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutionSet)
+        resolutions[trackable] = resolutionPolicy.resolve(request: request)
+        enqueue(event: ChangeLocationEngineResolutionEvent())
     }
 
     private func performChangeLocationEngineResolutionEvent(_ event: ChangeLocationEngineResolutionEvent) {
@@ -737,8 +731,11 @@ extension DefaultPublisher {
             logger.error("Cannot perform changeLocationEngineResolution. Publisher is not working.")
             return
         }
-
-        locationService.changeLocationEngineResolution(resolution: resolution)
+        
+        if constantLocationEngineResolution == nil {
+            locationService.changeLocationEngineResolution(resolution: resolution)
+        }
+        
         enqueue(event: DelegateResolutionUpdateEvent(resolution: resolution))
     }
 
