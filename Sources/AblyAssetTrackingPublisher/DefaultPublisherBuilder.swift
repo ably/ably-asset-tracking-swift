@@ -11,6 +11,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var routingProfile: RoutingProfile?
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
     private var areRawLocationsEnabled: Bool?
+    private var isSendResolutionEnabled: Bool?
     private weak var delegate: PublisherDelegate?
     
     init() { }
@@ -22,7 +23,9 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  routingProfile: RoutingProfile?,
                  delegate: PublisherDelegate?,
                  resolutionPolicyFactory: ResolutionPolicyFactory?,
-                 areRawLocationsEnabled: Bool?) {
+                 areRawLocationsEnabled: Bool?,
+                 isSendResolutionEnabled: Bool = true
+    ) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
         self.logConfiguration = logConfiguration
@@ -31,6 +34,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
         self.delegate = delegate
         self.resolutionPolicyFactory = resolutionPolicyFactory
         self.areRawLocationsEnabled = areRawLocationsEnabled
+        self.isSendResolutionEnabled = isSendResolutionEnabled
     }
     
     func start() throws -> Publisher {
@@ -166,5 +170,17 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: enabled)
+    }
+    
+    func sendResolution(enabled: Bool) -> PublisherBuilder {
+        return DefaultPublisherBuilder(connection: connection,
+                                       mapboxConfiguration: mapboxConfiguration,
+                                       logConfiguration: logConfiguration,
+                                       locationSource: locationSource,
+                                       routingProfile: routingProfile,
+                                       delegate: delegate,
+                                       resolutionPolicyFactory: resolutionPolicyFactory,
+                                       areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: enabled)
     }
 }

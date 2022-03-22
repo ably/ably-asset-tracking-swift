@@ -49,6 +49,10 @@ struct DelegateRawLocationReceivedEvent: SubscriberDelegateEvent {
     let location: Location
 }
 
+struct DelegateResolutionReceivedEvent: SubscriberDelegateEvent {
+    let resolution: Resolution
+}
+
 struct DelegateConnectionStatusChangedEvent: SubscriberDelegateEvent {
     let status: ConnectionState
 }

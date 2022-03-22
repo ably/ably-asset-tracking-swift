@@ -91,6 +91,19 @@ class MockAblyPublisherService: AblyPublisher {
         sendRawLocationParamCompletionHandler?(completion)
     }
     
+    var sendResolutionWasCalled = false
+    var sendResolutionParamResolution: Resolution?
+    var sendResolutionParamTrackable: Trackable?
+    var sendResolutionParamCompletion: ResultHandler<Void>?
+    var sendResolutionParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    func sendResolution(trackable: Trackable, resolution: Resolution, completion: ResultHandler<Void>?) {
+        sendResolutionWasCalled = true
+        sendResolutionParamResolution = resolution
+        sendResolutionParamTrackable = trackable
+        sendResolutionParamCompletion = completion
+        sendResolutionParamCompletionHandler?(completion)
+    }
+    
     var closeCalled: Bool = false
     var closePresenceData: PresenceData?
     var closeCompletion: ResultHandler<Void>?
@@ -100,5 +113,18 @@ class MockAblyPublisherService: AblyPublisher {
         closePresenceData = presenceData
         closeCompletion = completion
         closeResultCompletionHandler?(completion)
+    }
+    
+    var updatePresenceDataWasCalled = false
+    var updatePresenceDataTrackableId: String?
+    var updatePresenceDataPresenceData: PresenceData?
+    var updatePresenceDataCompletion: ResultHandler<Void>?
+    var updatePresenceDataCompletionHandler: ((ResultHandler<Void>?) -> ())?
+    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
+        updatePresenceDataWasCalled = true
+        updatePresenceDataTrackableId = trackableId
+        updatePresenceDataPresenceData = presenceData
+        updatePresenceDataCompletion = completion
+        updatePresenceDataCompletionHandler?(completion)
     }
 }

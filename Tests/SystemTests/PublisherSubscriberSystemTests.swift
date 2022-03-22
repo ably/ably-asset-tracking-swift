@@ -20,6 +20,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
 
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
     private let didUpdateRawLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Raw Locations")
+    private let didUpdateResolutionExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Resolution")
     private let routeProvider = MockRouteProvider()
     private let resolutionPolicyFactory = MockResolutionPolicyFactory()
     private let trackableId = "Trackable ID 1 - \(UUID().uuidString)"
@@ -76,7 +77,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             ablyPublisher: defaultAbly,
             locationService: defaultLocationService,
             routeProvider: routeProvider,
-            areRawLocationsEnabled: true
+            areRawLocationsEnabled: true,
+            isSendResolutionEnabled: true
         )
         
         
@@ -84,7 +86,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))
         publisher.add(trackable: trackable) { _  in }
         
-        wait(for: [didUpdateEnhancedLocationExpectation, didUpdateRawLocationExpectation], timeout: 20.0)
+        wait(for: [didUpdateEnhancedLocationExpectation, didUpdateRawLocationExpectation, didUpdateResolutionExpectation], timeout: 20.0)
                 
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop completion closure")
@@ -118,6 +120,10 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateRawLocation location: Location) {
         didUpdateRawLocationExpectation.fulfill()
+    }
+    
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateResolution resolution: Resolution) {
+        didUpdateResolutionExpectation.fulfill()
     }
 }
 
