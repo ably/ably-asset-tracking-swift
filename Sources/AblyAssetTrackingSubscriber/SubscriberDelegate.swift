@@ -64,4 +64,9 @@ public extension SubscriberDelegate {
      Default implementation to make this method `optional`
      */
     func subscriber(sender: Subscriber, didUpdateRawLocation location: Location) {}
+    
+    /**
+     Default implementation to make this method `optional`
+    */
+    func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {}
 }
