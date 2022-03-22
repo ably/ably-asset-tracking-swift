@@ -38,6 +38,11 @@ public protocol SubscriberDelegate: AnyObject {
         - resolution: Received `Resolution` object.
      */
     func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution)
+    
+    /**
+     Called when the `Subscriber` receive estimated next location update intervals (in milliseconds) for observed trackable
+     */
+    func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double)
 
     /**
      Called when `Subscriber` change connection status
