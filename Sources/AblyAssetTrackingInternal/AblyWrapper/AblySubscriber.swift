@@ -56,6 +56,17 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter location:      The `Location` object that contains info about publisher `Raw` location.
      */
     func subscriberService(sender: AblySubscriber, didReceiveRawLocation location: Location)
+    
+    /**
+     Tells the delegate that resolution was changed.
+     
+     This is a generic delegate method and can be called from any method in the `Ably` wrapper
+     The resolutions publishing needs to be enabled in the Publisher API in order to receive them here.
+     
+     - Parameter sender:          The `AblySubscriber` object which is delegating the change.
+     - Parameter resolution:      The `Resolution` object.
+     */
+    func subscriberService(sender: AblySubscriber, didReceiveResolution resolution: Resolution)
 }
 
 public protocol AblySubscriber: AblyCommon {
@@ -83,16 +94,4 @@ public protocol AblySubscriber: AblyCommon {
      - Parameter trackableId: The identifier of the channel.
      */
     func subscribeForRawEvents(trackableId: String)
-    
-    /**
-     Updates presence data in the `trackableId` channel's presence.
-     
-     Should be called only when there's an existing channel for the `trackableId`.
-     If a channel for the `trackableId` doesn't exist then nothing happens.
-     
-     - Parameter trackableId:    The ID of the trackable channel.
-     - Parameter presenceData:   The data that will be send via the presence channel.
-     - Parameter callback:       The closure that will be called when updating presence data completes. If something goes wrong it will be called with an `error`object.
-     */
-    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Void>)
 }

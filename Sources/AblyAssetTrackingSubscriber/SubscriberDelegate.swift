@@ -29,6 +29,15 @@ public protocol SubscriberDelegate: AnyObject {
         - location: Received location.
      */
     func subscriber(sender: Subscriber, didUpdateRawLocation location: Location)
+    
+    /**
+     Called when the `Subscriber` receive any Resolution update for observed trackable
+     
+     - Parameters:
+        - sender: `Subscriber` instance.
+        - resolution: Received `Resolution` object.
+     */
+    func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution)
 
     /**
      Called when `Subscriber` change connection status
@@ -41,5 +50,13 @@ public protocol SubscriberDelegate: AnyObject {
 }
 
 public extension SubscriberDelegate {
+    /**
+     Default implementation to make this method `optional`
+     */
+    func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {}
+    
+    /**
+     Default implementation to make this method `optional`
+     */
     func subscriber(sender: Subscriber, didUpdateRawLocation location: Location) {}
 }
