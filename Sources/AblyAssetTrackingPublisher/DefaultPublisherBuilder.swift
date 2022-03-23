@@ -171,7 +171,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
-    func rawLocations(enabled: Bool) -> PublisherBuilder {
+    func rawLocations(enabled: Bool?) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        logConfiguration: logConfiguration,
