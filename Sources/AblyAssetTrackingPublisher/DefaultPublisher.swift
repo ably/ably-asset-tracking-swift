@@ -118,7 +118,7 @@ class DefaultPublisher: Publisher {
         self.ablyPublisher.subscribeForAblyStateChange()
         
         /**
-         If available, set `constantLocationEngineResolution` for the `DefaultLocationService`.
+         If available, set `constantLocationEngineResolution` for the `LocationService`.
          In this case all further resolution calculations are disabled.
          */
         if let resolution = constantLocationEngineResolution {
