@@ -159,6 +159,11 @@ public class DefaultAbly: AblyCommon {
             self.subscriberDelegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
             self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionState: presence.toConnectionState())
             
+            // Deleagate `Publisher` resolution if present in PresenceData
+            if let resolution = data.resolution, data.type == .publisher {
+                self.subscriberDelegate?.subscriberService(sender: self, didReceiveResolution: resolution)
+            }
+            
             // AblyPublisher delegate
             self.publisherDelegate?.publisherService(sender: self,
                                                      didReceivePresenceUpdate: presence,
@@ -182,6 +187,20 @@ public class DefaultAbly: AblyCommon {
             
             self.logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.publisherDelegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
+        }
+    }
+    
+    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
+        guard let channel = channels[trackableId] else {
+            return
+        }
+        
+        channel.presence.update(presenceDataJSON(data: presenceData)) { error in
+            if let error = error {
+                completion?(.failure(error.toErrorInformation()))
+            } else {
+                completion?(.success)
+            }
         }
     }
     
@@ -223,20 +242,6 @@ extension DefaultAbly: AblySubscriber {
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
             self?.logger.debug("Received enhanced location message from channel", source: String(describing: Self.self))
             self?.handleLocationUpdateResponse(forEvent: .enhanced, messageData: message.data)
-        }
-    }
-    
-    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
-        guard let channel = channels[trackableId] else {
-            return
-        }
-        
-        channel.presence.update(presenceDataJSON(data: presenceData)) { error in
-            if let error = error {
-                completion(.failure(error.toErrorInformation()))
-            } else {
-                completion(.success)
-            }
         }
     }
     

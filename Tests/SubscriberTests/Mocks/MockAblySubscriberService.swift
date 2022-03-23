@@ -31,12 +31,19 @@ class MockAblySubscriberService: AblySubscriber {
         subscribeForRawEventsTrackableId = trackableId
     }
     
+    var subscribeForResolutionWasCalled = false
+    var subscribeForResolutionTrackableId: String?
+    func subscribeForResolutionEvents(trackableId: String) {
+        subscribeForResolutionWasCalled = true
+        subscribeForResolutionTrackableId = trackableId
+    }
+    
     var updatePresenceDataWasCalled = false
     var updatePresenceDataTrackableId: String?
     var updatePresenceDataPresenceData: PresenceData?
     var updatePresenceDataCompletion: ResultHandler<Void>?
-    var updatePresenceDataCompletionHandler: ((ResultHandler<Void>) -> ())?
-    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
+    var updatePresenceDataCompletionHandler: ((ResultHandler<Void>?) -> ())?
+    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
         updatePresenceDataWasCalled = true
         updatePresenceDataTrackableId = trackableId
         updatePresenceDataPresenceData = presenceData

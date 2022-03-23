@@ -30,6 +30,7 @@ class DefaultPublisher: Publisher {
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
     private let batteryLevelProvider: BatteryLevelProvider
+    private let isSendResolutionEnabled: Bool
     
     private var ablyPublisher: AblyPublisher
     private var enhancedLocationState: TrackableState<EnhancedLocationUpdate>
@@ -75,6 +76,7 @@ class DefaultPublisher: Publisher {
          enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
          rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
          areRawLocationsEnabled: Bool? = nil,
+         isSendResolutionEnabled: Bool = true
          constantLocationEngineResolution: Resolution? = nil
     ) {
         
@@ -91,6 +93,7 @@ class DefaultPublisher: Publisher {
 
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
 
+        self.isSendResolutionEnabled = isSendResolutionEnabled
         self.areRawLocationsEnabled = areRawLocationsEnabled
         self.constantLocationEngineResolution = constantLocationEngineResolution
         self.presenceData = PresenceData(type: .publisher, rawLocations: areRawLocationsEnabled)
@@ -717,8 +720,12 @@ extension DefaultPublisher {
         let currentRequests = requests[trackable]?.values
         let resolutionSet: Set<Resolution> = currentRequests == nil ? [] : Set(currentRequests!)
         let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutionSet)
-        resolutions[trackable] = resolutionPolicy.resolve(request: request)
+        let resolution = resolutionPolicy.resolve(request: request)
+        resolutions[trackable] = resolution
         enqueue(event: ChangeLocationEngineResolutionEvent())
+        if isSendResolutionEnabled {
+            ablyPublisher.updatePresenceData(trackableId: trackable.id, presenceData: presenceData.copy(with: resolution), completion: nil)
+        }
     }
 
     private func performChangeLocationEngineResolutionEvent(_ event: ChangeLocationEngineResolutionEvent) {
@@ -908,6 +915,7 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
 // MARK: ResolutionPolicyMethodsDelegate
 extension DefaultPublisher: DefaultResolutionPolicyMethodsDelegate {
     func resolutionPolicyMethods(refreshWithSender sender: DefaultResolutionPolicyMethods) {
+        resolutionPolicy
         enqueue(event: RefreshResolutionPolicyEvent())
     }
 

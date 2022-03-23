@@ -142,6 +142,8 @@ extension DefaultSubscriber {
             case let event as DelegateConnectionStatusChangedEvent: delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
             case let event as DelegateEnhancedLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.location)
             case let event as DelegateRawLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateRawLocation: event.location)
+            case let event as DelegateResolutionReceivedEvent: delegate.subscriber(sender: self, didUpdateResolution: event.resolution)
+            case let event as DelegateDesiredIntervalReceivedEvent: delegate.subscriber(sender: self, didUpdateDesiredInterval: event.desiredInterval)
             default: preconditionFailure("Unhandled delegate event in DefaultSubscriber: \(event) ")
             }
         }
@@ -296,5 +298,11 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
     func subscriberService(sender: AblySubscriber, didReceiveEnhancedLocation location: Location) {
         logger.debug("subscriberService.didReceiveEnhancedLocation.", source: String(describing: Self.self))
         callback(event: DelegateEnhancedLocationReceivedEvent(location: location))
+    }
+    
+    func subscriberService(sender: AblySubscriber, didReceiveResolution resolution: Resolution) {
+        logger.debug("subscriberService.didReceiveResolution.", source: String(describing: Self.self))
+        callback(event: DelegateResolutionReceivedEvent(resolution: resolution))
+        callback(event: DelegateDesiredIntervalReceivedEvent(desiredInterval: resolution.desiredInterval))
     }
 }
