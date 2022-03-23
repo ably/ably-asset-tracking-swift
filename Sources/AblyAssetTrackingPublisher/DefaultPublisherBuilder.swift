@@ -11,7 +11,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var routingProfile: RoutingProfile?
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
     private var areRawLocationsEnabled: Bool?
-    private var isSendResolutionEnabled: Bool?
+    private var isSendResolutionEnabled: Bool = true
     private var constantLocationEngineResolution: Resolution?
     private weak var delegate: PublisherDelegate?
     
@@ -82,6 +82,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                           locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locationSource),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration),
                                           areRawLocationsEnabled: areRawLocationsEnabled,
+                                          isSendResolutionEnabled: isSendResolutionEnabled,
                                           constantLocationEngineResolution: constantLocationEngineResolution)
         publisher.delegate = delegate
         return publisher
@@ -96,6 +97,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
@@ -108,6 +110,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
@@ -120,6 +123,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
@@ -132,6 +136,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
@@ -144,6 +149,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
@@ -156,6 +162,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
@@ -168,6 +175,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
@@ -180,6 +188,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: enabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: constantLocationEngineResolution)
     }
     
@@ -192,6 +201,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
+                                       isSendResolutionEnabled: isSendResolutionEnabled,
                                        constantLocationEngineResolution: resolution)
     }
     
