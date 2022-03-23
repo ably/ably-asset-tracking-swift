@@ -25,7 +25,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  delegate: PublisherDelegate?,
                  resolutionPolicyFactory: ResolutionPolicyFactory?,
                  areRawLocationsEnabled: Bool?,
-                 isSendResolutionEnabled: Bool = true
+                 isSendResolutionEnabled: Bool = true,
                  constantLocationEngineResolution: Resolution?) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
@@ -204,6 +204,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        delegate: delegate,
                                        resolutionPolicyFactory: resolutionPolicyFactory,
                                        areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: enabled)
+                                       isSendResolutionEnabled: enabled,
+                                       constantLocationEngineResolution: constantLocationEngineResolution)
     }
 }

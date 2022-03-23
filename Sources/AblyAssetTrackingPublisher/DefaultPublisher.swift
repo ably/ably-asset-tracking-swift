@@ -76,7 +76,7 @@ class DefaultPublisher: Publisher {
          enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
          rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
          areRawLocationsEnabled: Bool? = nil,
-         isSendResolutionEnabled: Bool = true
+         isSendResolutionEnabled: Bool = true,
          constantLocationEngineResolution: Resolution? = nil
     ) {
         
