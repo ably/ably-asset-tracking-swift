@@ -1,8 +1,9 @@
 import SwiftUI
 
-struct SettingsView: View {
+struct MainView: View {
     @StateObject private var locationManager = LocationManager.shared
     @State var trackableId: String = ""
+    @State var settingsOpened = false
     
     var body: some View {
         NavigationView {
@@ -28,7 +29,6 @@ struct SettingsView: View {
                         CustomText("Start publishing")
                     }
                     .disabled(trackableId.isEmpty || locationManager.isLocationAuthorizationDenied)
-                    
                     Text("Location permission status:")
                         .foregroundColor(.gray)
                         .font(.system(size: 10)) +
@@ -55,16 +55,24 @@ struct SettingsView: View {
                     width: proxy.size.width,
                     height: proxy.size.height
                 )
+                NavigationLink(destination: SettingsView(), isActive: $settingsOpened) { EmptyView() }.hidden()
             }
             .onAppear() {
                 locationManager.requestAuthorization()
+            }
+            .toolbar {
+                ToolbarItem {
+                    Button("Settings") {
+                        self.settingsOpened = true
+                    }
+                }
             }
         }
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
+struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        MainView()
     }
 }
