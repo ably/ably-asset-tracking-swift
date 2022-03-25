@@ -53,6 +53,10 @@ struct DelegateResolutionReceivedEvent: SubscriberDelegateEvent {
     let resolution: Resolution
 }
 
+struct DelegateDesiredIntervalReceivedEvent: SubscriberDelegateEvent {
+    let desiredInterval: Double
+}
+
 struct DelegateConnectionStatusChangedEvent: SubscriberDelegateEvent {
     let status: ConnectionState
 }
