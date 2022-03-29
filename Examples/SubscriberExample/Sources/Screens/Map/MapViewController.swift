@@ -26,6 +26,7 @@ class MapViewController: UIViewController {
 
     // MARK: - Properties
     private let trackingId: String
+    private let locationAnimator: LocationAnimator
     private var subscriber: Subscriber?
     private var errors: [ErrorInformation] = []
 
@@ -37,6 +38,7 @@ class MapViewController: UIViewController {
     // MARK: - Initialization
     init(trackingId: String) {
         self.trackingId = trackingId
+        self.locationAnimator = DefaultLocationAnimator()
 
         let viewControllerType = MapViewController.self
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
@@ -55,6 +57,10 @@ class MapViewController: UIViewController {
         setupMapView()
         setupControlsBehaviour()
         updateSubscriberResolutionLabels()
+        
+        locationAnimator.positions { position in
+            
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {

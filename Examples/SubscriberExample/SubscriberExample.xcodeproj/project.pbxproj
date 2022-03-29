@@ -18,6 +18,8 @@
 		180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B7258634420014B310 /* LaunchScreen.storyboard */; };
 		188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */; };
 		AD0F84B52677D6C900C15DB7 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */; };
+		D5D60CB027EDC63F00B7BE38 /* DefaultLocationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D60CAF27EDC63F00B7BE38 /* DefaultLocationAnimator.swift */; };
+		D5D60CB327EDC6DA00B7BE38 /* LocationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D60CB227EDC6DA00B7BE38 /* LocationAnimator.swift */; };
 		D5DCC8B72785A8C300CC04E6 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = D5DCC8B62785A8C300CC04E6 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		D5DCC8B92785A8C300CC04E6 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D5DCC8B82785A8C300CC04E6 /* FirebaseCrashlytics */; };
 		D5EBC174274B825500F4A16D /* AblyAssetTrackingSubscriber in Frameworks */ = {isa = PBXBuildFile; productRef = D5EBC173274B825500F4A16D /* AblyAssetTrackingSubscriber */; };
@@ -42,6 +44,8 @@
 		AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		ADAAE6192661562B00A8F214 /* Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAAE61F266157C800A8F214 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5D60CAF27EDC63F00B7BE38 /* DefaultLocationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocationAnimator.swift; sourceTree = "<group>"; };
+		D5D60CB227EDC6DA00B7BE38 /* LocationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnimator.swift; sourceTree = "<group>"; };
 		D5EBC172274B823C00F4A16D /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
 		F618BA8D25C99EF800B69885 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		F618BA9D25C9A73500B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 		180F61AE258634420014B310 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				D5D60CB127EDC6C400B7BE38 /* LocationAnimator */,
 				F67E661325F8C214001CF9BB /* Helpers */,
 				180F61AF258634420014B310 /* TruckAnnotation.swift */,
 				180F61B0258634420014B310 /* MapViewController.swift */,
@@ -141,6 +146,15 @@
 				188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		D5D60CB127EDC6C400B7BE38 /* LocationAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				D5D60CAF27EDC63F00B7BE38 /* DefaultLocationAnimator.swift */,
+				D5D60CB227EDC6DA00B7BE38 /* LocationAnimator.swift */,
+			);
+			path = LocationAnimator;
 			sourceTree = "<group>";
 		};
 		D5EBC171274B823C00F4A16D /* Packages */ = {
@@ -272,12 +286,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				180F61C0258634420014B310 /* AppDelegate.swift in Sources */,
+				D5D60CB027EDC63F00B7BE38 /* DefaultLocationAnimator.swift in Sources */,
 				180F61BE258634420014B310 /* TruckAnnotationView.swift in Sources */,
 				180F61BD258634420014B310 /* MapViewController.swift in Sources */,
 				F618BA8E25C99EF800B69885 /* Environment.swift in Sources */,
 				F67E661825F8C507001CF9BB /* DescriptionsHelper.swift in Sources */,
 				180F61BC258634420014B310 /* TruckAnnotation.swift in Sources */,
 				F67E661525F8C221001CF9BB /* ResolutionHelper.swift in Sources */,
+				D5D60CB327EDC6DA00B7BE38 /* LocationAnimator.swift in Sources */,
 				188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */,
 				180F61BB258634420014B310 /* SettingsViewController.swift in Sources */,
 			);
