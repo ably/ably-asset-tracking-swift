@@ -42,11 +42,11 @@ struct DelegateErrorEvent: SubscriberDelegateEvent {
 }
 
 struct DelegateEnhancedLocationReceivedEvent: SubscriberDelegateEvent {
-    let location: Location
+    let locationUpdate: LocationUpdate
 }
 
 struct DelegateRawLocationReceivedEvent: SubscriberDelegateEvent {
-    let location: Location
+    let locationUpdate: LocationUpdate
 }
 
 struct DelegateResolutionReceivedEvent: SubscriberDelegateEvent {
