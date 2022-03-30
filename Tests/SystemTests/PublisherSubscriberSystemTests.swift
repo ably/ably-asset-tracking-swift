@@ -114,11 +114,11 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
     
-    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation location: Location) {
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         didUpdateEnhancedLocationExpectation.fulfill()
     }
     
-    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateRawLocation location: Location) {
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate) {
         didUpdateRawLocationExpectation.fulfill()
     }
     
