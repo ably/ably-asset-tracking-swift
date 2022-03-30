@@ -18,12 +18,9 @@ public struct Resolution: Codable, CustomDebugStringConvertible {
      Desired time between updates, in milliseconds. Lowering this value increases the temporal resolution.
      Location updates whose timestamp differs from the last captured update timestamp by less that this value are to
      be filtered out.
+     
      Used to govern the frequency of updates requested from the underlying location provider, as well as the frequency
      of messages broadcast to subscribers.
-     
-     Waning:
-     Change of this value has no effect in `CoreLocation` engine, for example, when  Publisher `Resolution` is set as constant.
-     Apple Documentation: https://developer.apple.com/documentation/corelocation/cllocationmanager?language=objc
      */
     public let desiredInterval: Double
 
