@@ -140,8 +140,8 @@ extension DefaultSubscriber {
             switch event {
             case let event as DelegateErrorEvent: delegate.subscriber(sender: self, didFailWithError: event.error)
             case let event as DelegateConnectionStatusChangedEvent: delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
-            case let event as DelegateEnhancedLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.location)
-            case let event as DelegateRawLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateRawLocation: event.location)
+            case let event as DelegateEnhancedLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
+            case let event as DelegateRawLocationReceivedEvent: delegate.subscriber(sender: self, didUpdateRawLocation: event.locationUpdate)
             case let event as DelegateResolutionReceivedEvent: delegate.subscriber(sender: self, didUpdateResolution: event.resolution)
             case let event as DelegateDesiredIntervalReceivedEvent: delegate.subscriber(sender: self, didUpdateDesiredInterval: event.desiredInterval)
             default: preconditionFailure("Unhandled delegate event in DefaultSubscriber: \(event) ")
@@ -290,14 +290,14 @@ extension DefaultSubscriber: AblySubscriberServiceDelegate {
         callback(event: DelegateErrorEvent(error: error))
     }
 
-    func subscriberService(sender: AblySubscriber, didReceiveRawLocation location: Location) {
+    func subscriberService(sender: AblySubscriber, didReceiveRawLocation location: LocationUpdate) {
         logger.debug("subscriberService.didReceiveRawLocation.", source: String(describing: Self.self))
-        callback(event: DelegateRawLocationReceivedEvent(location: location))
+        callback(event: DelegateRawLocationReceivedEvent(locationUpdate: location))
     }
     
-    func subscriberService(sender: AblySubscriber, didReceiveEnhancedLocation location: Location) {
+    func subscriberService(sender: AblySubscriber, didReceiveEnhancedLocation location: LocationUpdate) {
         logger.debug("subscriberService.didReceiveEnhancedLocation.", source: String(describing: Self.self))
-        callback(event: DelegateEnhancedLocationReceivedEvent(location: location))
+        callback(event: DelegateEnhancedLocationReceivedEvent(locationUpdate: location))
     }
     
     func subscriberService(sender: AblySubscriber, didReceiveResolution resolution: Resolution) {
