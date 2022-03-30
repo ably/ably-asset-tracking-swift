@@ -54,7 +54,7 @@ public protocol PublisherBuilder {
      Sets publishing `raw locations` enabled or not
      It's disabled by default
      */
-    func rawLocations(enabled: Bool?) -> PublisherBuilder
+    func rawLocations(enabled: Bool) -> PublisherBuilder
     
     /**
      Set constant resolution for location engine
