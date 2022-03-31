@@ -10,7 +10,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var logConfiguration: LogConfiguration?
     private var routingProfile: RoutingProfile?
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
-    private var areRawLocationsEnabled: Bool?
+    private var areRawLocationsEnabled: Bool = false
     private var isSendResolutionEnabled: Bool = true
     private var constantLocationEngineResolution: Resolution?
     private weak var delegate: PublisherDelegate?
@@ -24,7 +24,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  routingProfile: RoutingProfile?,
                  delegate: PublisherDelegate?,
                  resolutionPolicyFactory: ResolutionPolicyFactory?,
-                 areRawLocationsEnabled: Bool?,
+                 areRawLocationsEnabled: Bool = false,
                  isSendResolutionEnabled: Bool = true,
                  constantLocationEngineResolution: Resolution?) {
         self.connection = connection

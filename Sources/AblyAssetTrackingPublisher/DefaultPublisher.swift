@@ -37,7 +37,7 @@ class DefaultPublisher: Publisher {
     private var rawLocationState: TrackableState<RawLocationUpdate>
     private var state: State = .working
     private var presenceData: PresenceData
-    private var areRawLocationsEnabled: Bool?
+    private var areRawLocationsEnabled: Bool
 
     // ResolutionPolicy
     private let hooks: DefaultResolutionPolicyHooks
@@ -75,7 +75,7 @@ class DefaultPublisher: Publisher {
          routeProvider: RouteProvider,
          enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
          rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
-         areRawLocationsEnabled: Bool? = nil,
+         areRawLocationsEnabled: Bool = false,
          isSendResolutionEnabled: Bool = true,
          constantLocationEngineResolution: Resolution? = nil
     ) {
