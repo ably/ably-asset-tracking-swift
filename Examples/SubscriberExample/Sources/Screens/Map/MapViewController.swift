@@ -25,20 +25,27 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var publisherResolutionIntervalLabel: UILabel!
 
     // MARK: - Properties
+    private let resolution = Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500)
     private let trackingId: String
     private let locationAnimator: LocationAnimator
     private var subscriber: Subscriber?
     private var errors: [ErrorInformation] = []
+    private var locationUpdateInterval: TimeInterval = .zero
+    private var mapSpan: MKCoordinateSpan = .init(
+        latitudeDelta: MapConstraints.regionLatitude,
+        longitudeDelta: MapConstraints.regionLongitude
+    )
 
     private var currentResolution: Resolution?
     private var resolutionDebounceTimer: Timer?
 
-    private var location: CLLocation? { didSet { updateLocationAnnotation() } }
+    private var location: CLLocation?
 
     // MARK: - Initialization
     init(trackingId: String) {
         self.trackingId = trackingId
         self.locationAnimator = DefaultLocationAnimator()
+        self.locationUpdateInterval = resolution.desiredInterval
 
         let viewControllerType = MapViewController.self
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
@@ -58,8 +65,20 @@ class MapViewController: UIViewController {
         setupControlsBehaviour()
         updateSubscriberResolutionLabels()
         
-        locationAnimator.positions { position in
+        locationAnimator.trackablePosition { [weak self] position in
+            guard self?.animationSwitch.isOn == true else {
+                return
+            }
             
+            self?.updateLocationAnnotation(position: position)
+        }
+        
+        locationAnimator.fragmentaryPosition { [weak self] position in
+            guard self?.animationSwitch.isOn == true else {
+                return
+            }
+            
+            self?.scrollToReceivedLocation(position: position)
         }
     }
 
@@ -90,7 +109,7 @@ class MapViewController: UIViewController {
             .connection(connectionConfiguration)
             .trackingId(trackingId)
             .log(LogConfiguration())
-            .resolution(Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500))
+            .resolution(resolution)
             .delegate(self)
             .start { [weak self] result in
                 switch result {
@@ -103,44 +122,32 @@ class MapViewController: UIViewController {
     }
     
     // MARK: Utils
-    private func updateLocationAnnotation() {
-        guard let location = self.location else {
-            mapView.annotations.forEach { mapView.removeAnnotation($0) }
-            return
-        }
-
+    private func updateLocationAnnotation(position: Position) {
         if let annotation = mapView.annotations.first as? TruckAnnotation {
-            annotation.bearing = location.course
+            annotation.bearing = position.bearing
 
             // Delegate's "viewForAnnotation" method is not called when we're only updating coordinate or bearing, so AnnotationView is not updated.
             // That's why we need to set latest values in AnnotationView manually.
             if let view = mapView.view(for: annotation) as? TruckAnnotationView {
-                view.bearing = annotation.bearing
+                view.bearing = position.bearing
             }
-
-            let isAnimated = animationSwitch.isOn
-            UIView.animate(withDuration: isAnimated ? 1 : 0) {
-                annotation.coordinate = location.coordinate
-            }
+            annotation.coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
         } else {
             let annotation = TruckAnnotation()
-            annotation.coordinate = location.coordinate
-            annotation.bearing = location.course
+            annotation.coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
+            annotation.bearing = position.bearing
             mapView.addAnnotation(annotation)
         }
     }
 
-    private func scrollToReceivedLocation() {
-        let mapCenter = CLLocation(latitude: mapView.region.center.latitude,
-                                   longitude: mapView.region.center.longitude)
-        
-        guard let location = self.location,
-              location.distance(from: mapCenter) > MapConstraints.minimumDistanceToCenter
-        else { return }
-
-        let region = MKCoordinateRegion(center: location.coordinate,
-                                        latitudinalMeters: MapConstraints.regionLatitude,
-                                        longitudinalMeters: MapConstraints.regionLongitude)
+    private func scrollToReceivedLocation(position: Position) {
+        let region = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: position.latitude,
+                longitude: position.longitude
+            ),
+            span: mapSpan
+        )
         
         mapView.setRegion(region, animated: true)
     }
@@ -217,6 +224,10 @@ extension MapViewController: MKMapViewDelegate {
         let zoom = mapView.getZoomLevel()
         logger.debug("Current map zoom level: \(zoom)")
         scheduleResolutionUpdate()
+        
+        if !animated {
+            mapSpan = mapView.region.span
+        }
     }
     
     private func createAnnotationView(for annotation: TruckAnnotation) -> MKAnnotationView {
@@ -242,8 +253,14 @@ extension MapViewController: SubscriberDelegate {
     }
 
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
+        if animationSwitch.isOn {
+            locationAnimator.animateLocationUpdate(location: locationUpdate, interval: locationUpdateInterval / 1000.0)
+        } else {
+            updateLocationAnnotation(position: locationUpdate.location.toPosition())
+            scrollToReceivedLocation(position: locationUpdate.location.toPosition())
+        }
+        
         self.location = locationUpdate.location.toCoreLocation()
-        scrollToReceivedLocation()
     }
 
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
@@ -254,5 +271,9 @@ extension MapViewController: SubscriberDelegate {
     
     func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {
         updatePublisherResolutionLabels(resolution: resolution)
+    }
+    
+    func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {
+        locationUpdateInterval = interval
     }
 }
