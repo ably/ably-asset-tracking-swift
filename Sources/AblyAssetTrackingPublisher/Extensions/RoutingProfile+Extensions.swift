@@ -2,12 +2,12 @@ import AblyAssetTrackingCore
 import MapboxDirections
 
 extension RoutingProfile {
-    func toMapboxProfileIdentifier() -> DirectionsProfileIdentifier {
+    func toMapboxProfileIdentifier() -> ProfileIdentifier {
         switch self {
-        case .driving: return DirectionsProfileIdentifier.automobile
-        case .cycling: return DirectionsProfileIdentifier.cycling
-        case .walking: return DirectionsProfileIdentifier.walking
-        case .drivingTraffic: return DirectionsProfileIdentifier.automobileAvoidingTraffic
+        case .driving: return ProfileIdentifier.automobile
+        case .cycling: return ProfileIdentifier.cycling
+        case .walking: return ProfileIdentifier.walking
+        case .drivingTraffic: return ProfileIdentifier.automobileAvoidingTraffic
         }
     }
 }
