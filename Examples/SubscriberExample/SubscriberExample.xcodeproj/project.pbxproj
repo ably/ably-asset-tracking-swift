@@ -119,7 +119,6 @@
 		180F61AE258634420014B310 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				D5D60CB127EDC6C400B7BE38 /* LocationAnimator */,
 				F67E661325F8C214001CF9BB /* Helpers */,
 				180F61AF258634420014B310 /* TruckAnnotation.swift */,
 				180F61B0258634420014B310 /* MapViewController.swift */,
@@ -143,6 +142,7 @@
 		188F5ED925AF6FC900202C97 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D5D60CB127EDC6C400B7BE38 /* LocationAnimator */,
 				188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */,
 			);
 			path = Utils;
@@ -215,7 +215,7 @@
 		180F60CA258632B40014B310 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					180F60D1258632B40014B310 = {
