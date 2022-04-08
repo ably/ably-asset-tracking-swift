@@ -31,10 +31,6 @@ class MapViewController: UIViewController {
     private var subscriber: Subscriber?
     private var errors: [ErrorInformation] = []
     private var locationUpdateInterval: TimeInterval = .zero
-    private var mapSpan: MKCoordinateSpan = .init(
-        latitudeDelta: MapConstraints.regionLatitude,
-        longitudeDelta: MapConstraints.regionLongitude
-    )
 
     private var currentResolution: Resolution?
     private var resolutionDebounceTimer: Timer?
@@ -146,7 +142,8 @@ class MapViewController: UIViewController {
                 latitude: position.latitude,
                 longitude: position.longitude
             ),
-            span: mapSpan
+            latitudinalMeters: MapConstraints.regionLatitude,
+            longitudinalMeters: MapConstraints.regionLongitude
         )
         
         mapView.setRegion(region, animated: true)
@@ -224,10 +221,7 @@ extension MapViewController: MKMapViewDelegate {
         let zoom = mapView.getZoomLevel()
         logger.debug("Current map zoom level: \(zoom)")
         scheduleResolutionUpdate()
-        
-        if !animated {
-            mapSpan = mapView.region.span
-        }
+
     }
     
     private func createAnnotationView(for annotation: TruckAnnotation) -> MKAnnotationView {
