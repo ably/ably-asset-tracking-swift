@@ -17,18 +17,18 @@ public protocol SubscriberDelegate: AnyObject {
      
      - Parameters:
         - sender: `Subscriber` instance.
-        - location: Received location.
+        - location: Received location update.
      */
-    func subscriber(sender: Subscriber, didUpdateEnhancedLocation location: Location)
+    func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate)
     
     /**
      Called when the `Subscriber` receive any Raw Location update for observed trackable
      
      - Parameters:
         - sender: `Subscriber` instance.
-        - location: Received location.
+        - location: Received location update.
      */
-    func subscriber(sender: Subscriber, didUpdateRawLocation location: Location)
+    func subscriber(sender: Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate)
     
     /**
      Called when the `Subscriber` receive any Resolution update for observed trackable
@@ -63,7 +63,7 @@ public extension SubscriberDelegate {
     /**
      Default implementation to make this method `optional`
      */
-    func subscriber(sender: Subscriber, didUpdateRawLocation location: Location) {}
+    func subscriber(sender: Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate) {}
     
     /**
      Default implementation to make this method `optional`
