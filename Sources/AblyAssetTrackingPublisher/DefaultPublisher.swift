@@ -915,7 +915,6 @@ extension DefaultPublisher: AblyPublisherServiceDelegate {
 // MARK: ResolutionPolicyMethodsDelegate
 extension DefaultPublisher: DefaultResolutionPolicyMethodsDelegate {
     func resolutionPolicyMethods(refreshWithSender sender: DefaultResolutionPolicyMethods) {
-        resolutionPolicy
         enqueue(event: RefreshResolutionPolicyEvent())
     }
 
