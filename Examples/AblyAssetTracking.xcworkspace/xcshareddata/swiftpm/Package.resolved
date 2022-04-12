@@ -20,33 +20,6 @@
         }
       },
       {
-        "package": "Amplify",
-        "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
-        "state": {
-          "branch": null,
-          "revision": "5454bc35721b46143c99eec441dd2c17609d0f3a",
-          "version": "1.18.1"
-        }
-      },
-      {
-        "package": "AppSyncRealTimeClient",
-        "repositoryURL": "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "73b042998cf91ff3c8f335ca935b504881473a61",
-          "version": "1.6.0"
-        }
-      },
-      {
-        "package": "AWSiOSSDKV2",
-        "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
-        "state": {
-          "branch": null,
-          "revision": "de0dd3f85aa9e661ed9e45569122f9a7c7f9ef5c",
-          "version": "2.26.6"
-        }
-      },
-      {
         "package": "BoringSSL-GRPC",
         "repositoryURL": "https://github.com/firebase/boringssl-SwiftPM.git",
         "state": {
@@ -132,8 +105,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-common-ios.git",
         "state": {
           "branch": null,
-          "revision": "8d107b2dae7822f75e1bedfebe3be9d14a1d81df",
-          "version": "20.1.0"
+          "revision": "3f9002c8140503b0c3c9d1e2a210a188bc2f5252",
+          "version": "21.2.0"
         }
       },
       {
@@ -141,8 +114,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-core-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "ebb10128747d417c23755486eeb976fbe89f103c",
-          "version": "10.1.0"
+          "revision": "05cc6505956f2311e1a932fc021e9b14c4cdccb2",
+          "version": "10.4.2"
         }
       },
       {
@@ -150,8 +123,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-directions-swift.git",
         "state": {
           "branch": null,
-          "revision": "f95be4f764acb0ea40ab11184e09825d3046d14f",
-          "version": "2.0.0"
+          "revision": "2b14b8c276523a01dc730897593990ef83c71320",
+          "version": "2.3.0"
         }
       },
       {
@@ -159,8 +132,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-events-ios.git",
         "state": {
           "branch": null,
-          "revision": "e29f48d9ed02b31ef51f9774a9c45f1d7c2c2b78",
-          "version": "1.0.6"
+          "revision": "1b6c2a34086de40c26f2f97a716ac419f46eb630",
+          "version": "1.0.7"
         }
       },
       {
@@ -168,8 +141,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "4c58ce320a716ef6b7337186076ef3d8279882f7",
-          "version": "10.1.0"
+          "revision": "8e4c5ee26175a2ac92b84043d2d1f1f994ed18d4",
+          "version": "10.4.2"
         }
       },
       {
@@ -177,8 +150,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
         "state": {
           "branch": null,
-          "revision": "8636b5517a158a83c2533c9ecaf87097fa32c0e6",
-          "version": "2.0.1"
+          "revision": "d62458089e7017a1f976798e5326e50466eca9e1",
+          "version": "2.3.1"
         }
       },
       {
@@ -186,8 +159,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
         "state": {
           "branch": null,
-          "revision": "3ddee8efad42082032f872b476cb5b3b6e73bb42",
-          "version": "69.0.3"
+          "revision": "921b60a08375832088d69d023c1a7e1b4cac2231",
+          "version": "88.0.0"
         }
       },
       {
@@ -245,24 +218,6 @@
         }
       },
       {
-        "package": "SQLite.swift",
-        "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
-          "version": "0.12.2"
-        }
-      },
-      {
-        "package": "Starscream",
-        "repositoryURL": "https://github.com/daltoniam/Starscream",
-        "state": {
-          "branch": null,
-          "revision": "e6b65c6d9077ea48b4a7bdda8994a1d3c6969c8d",
-          "version": "3.1.1"
-        }
-      },
-      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
@@ -278,15 +233,6 @@
           "branch": null,
           "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
           "version": "1.4.2"
-        }
-      },
-      {
-        "package": "swift-nio-zlib-support",
-        "repositoryURL": "https://github.com/apple/swift-nio-zlib-support.git",
-        "state": {
-          "branch": null,
-          "revision": "37760e9a52030bb9011972c5213c3350fa9d41fd",
-          "version": "1.0.0"
         }
       },
       {
