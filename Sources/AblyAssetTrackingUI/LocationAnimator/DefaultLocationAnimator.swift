@@ -3,9 +3,9 @@ import AblyAssetTrackingCore
 import QuartzCore
 import Accelerate
 
-class DefaultLocationAnimator: NSObject, LocationAnimator {
+public class DefaultLocationAnimator: NSObject, LocationAnimator {
     
-    var fragmentaryPositionInterval: TimeInterval = 5.0
+    public var fragmentaryPositionInterval: TimeInterval = 5.0
     
     // Default values
     private let intentionalAnimationDelay: TimeInterval = 2.0
@@ -45,7 +45,7 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         stopAnimationLoop()
     }
     
-    override init() {
+    public override init() {
         super.init()
         
         startAnimationLoop()
@@ -80,15 +80,15 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         }.store(in: &subscriptions)
     }
    
-    func animateLocationUpdate(location: LocationUpdate, interval: Double) {
+    public func animateLocationUpdate(location: LocationUpdate, interval: Double) {
         animationRequestSubject.send(AnimationRequest(locationUpdate: location, interval: interval))
     }
     
-    func trackablePosition(_ closure: @escaping (Position) -> Void) {
+    public func trackablePosition(_ closure: @escaping (Position) -> Void) {
         self.trackablePositionClosure = closure
     }
     
-    func fragmentaryPosition(_ closure: @escaping (Position) -> Void) {
+    public func fragmentaryPosition(_ closure: @escaping (Position) -> Void) {
         self.fragmentaryPositionClosure = closure
     }
     
@@ -216,7 +216,7 @@ struct DefaultPosition: Position, CustomDebugStringConvertible {
 }
 
 extension Location {
-    func toPosition() -> Position {
+  public func toPosition() -> Position {
         DefaultPosition(
             latitude: coordinate.latitude,
             longitude: coordinate.longitude,

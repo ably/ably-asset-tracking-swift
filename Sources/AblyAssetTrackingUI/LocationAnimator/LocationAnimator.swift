@@ -2,7 +2,7 @@ import Foundation
 import AblyAssetTrackingCore
 import Combine
 
-protocol LocationAnimator {
+public protocol LocationAnimator {
     /**
      Time interval (in seconds) for publishing `fragmentaryPosition`.
      Default value is 5.0 seconds
@@ -30,7 +30,7 @@ protocol LocationAnimator {
     func animateLocationUpdate(location: LocationUpdate, interval: TimeInterval)
 }
 
-protocol Position {
+public protocol Position {
     var latitude: Double { get }
     var longitude: Double { get }
     var accuracy: Double { get }

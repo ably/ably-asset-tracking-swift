@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import AblyAssetTrackingSubscriber
+import AblyAssetTrackingUI
 
 private struct MapConstraints {
     static let regionLatitude: CLLocationDistance = 600
@@ -221,7 +222,6 @@ extension MapViewController: MKMapViewDelegate {
         let zoom = mapView.getZoomLevel()
         logger.debug("Current map zoom level: \(zoom)")
         scheduleResolutionUpdate()
-
     }
     
     private func createAnnotationView(for annotation: TruckAnnotation) -> MKAnnotationView {
