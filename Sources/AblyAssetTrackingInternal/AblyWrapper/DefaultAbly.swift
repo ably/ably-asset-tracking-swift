@@ -148,8 +148,8 @@ public class DefaultAbly: AblyCommon {
             self?.logger.debug("Received presence update from channel", source: String(describing: Self.self))
             guard
                 let self = self,
-                let json = message.data as? String,
-                let data: PresenceData = try? PresenceData.fromJSONString(json),
+                let jsonData = message.data,
+                let data: PresenceData = try? PresenceData.fromAny(jsonData),
                 let clientId = message.clientId
             else { return }
             
