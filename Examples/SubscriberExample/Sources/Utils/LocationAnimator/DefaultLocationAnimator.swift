@@ -73,7 +73,7 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
             
             while !steps.isEmpty {
                 self.animateStep(steps.removeFirst())
-            }	
+            }
         }.store(in: &subscriptions)
     }
    
@@ -168,7 +168,7 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         vDSP_vgen(&start, &end, &accuracies, vDSP_Stride(1), numberOfSteps)
                 
         return latitudes.enumerated().map { index, latitude in
-            DefaultPosition(
+            Position(
                 latitude: Double(latitude),
                 longitude: Double(longitudes[index]),
                 accuracy: Double(accuracies[index]),
@@ -195,26 +195,9 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
 }
 
 // Models
-
-struct DefaultPosition: Position, CustomDebugStringConvertible {
-    let latitude: Double
-    let longitude: Double
-    let accuracy: Double
-    let bearing: Double
-    
-    var debugDescription: String {
-        """
-        latitude: \(latitude)
-        longitude: \(longitude)
-        accuracy: \(accuracy)
-        bearing: \(bearing)
-        """
-    }
-}
-
 extension Location {
     func toPosition() -> Position {
-        DefaultPosition(
+        Position(
             latitude: coordinate.latitude,
             longitude: coordinate.longitude,
             accuracy: horizontalAccuracy,

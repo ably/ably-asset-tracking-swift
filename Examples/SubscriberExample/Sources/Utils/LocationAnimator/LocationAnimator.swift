@@ -30,9 +30,18 @@ protocol LocationAnimator {
     func animateLocationUpdate(location: LocationUpdate, interval: TimeInterval)
 }
 
-protocol Position {
-    var latitude: Double { get }
-    var longitude: Double { get }
-    var accuracy: Double { get }
-    var bearing: Double { get }
+struct Position: CustomDebugStringConvertible {    
+    let latitude: Double
+    let longitude: Double
+    let accuracy: Double
+    let bearing: Double
+    
+    var debugDescription: String {
+        """
+        latitude: \(latitude)
+        longitude: \(longitude)
+        accuracy: \(accuracy)
+        bearing: \(bearing)
+        """
+    }
 }
