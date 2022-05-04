@@ -65,7 +65,7 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
                 // Update each AnimationStep duration property
                 steps = steps.map { step -> AnimationStep in
                     var step = step
-                    step.updateDuration(animationStepDuration)
+                    step.duration = animationStepDuration
                     return step
                 }
             
@@ -235,8 +235,4 @@ struct AnimationStep {
     let startPosition: Position
     let endPosition: Position
     var duration: Double
-    
-    mutating func updateDuration(_ duration: Double) {
-        self.duration = duration
-    }
 }
