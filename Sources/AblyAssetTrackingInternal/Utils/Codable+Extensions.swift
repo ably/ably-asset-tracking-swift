@@ -35,4 +35,32 @@ public extension Decodable {
         }
         return try JSONDecoder().decode(T.self, from: data)
     }
+    
+    /**
+     Utility function to construct given `Decodable` object from  Dictionary object.
+     - Parameters:
+        - dictionary: Dictinary (key:value) object]
+     - Returns: Decodable object instance.
+     */
+    static func fromDictionary<T: Decodable>(_ dictionary: [AnyHashable: Any]) throws -> T {
+        let data = try JSONSerialization.data(withJSONObject: dictionary, options: .fragmentsAllowed)
+        
+        return try JSONDecoder().decode(T.self, from: data)
+    }
+    
+    /**
+     Helper function to construct given `Decodable` from `JSON string` or `Dictionary object`.
+     - Parameters:
+        - input: `String` or `Dictionary` object
+     - Returns: Decodable object instance.
+     */
+    static func fromAny<T: Decodable>(_ input: Any) throws -> T {
+        if let json = input as? String {
+            return try Self.fromJSONString(json)
+        } else if let dictionary = input as? [AnyHashable: Any] {
+            return try Self.fromDictionary(dictionary)
+        } else {
+            throw ErrorInformation(type: .JSONCodingError(for: "Not supported input type\(type(of: input))"))
+        }
+    }
 }
