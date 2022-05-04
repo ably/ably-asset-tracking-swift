@@ -9,7 +9,6 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
     
     // Default values
     private let intentionalAnimationDelay: TimeInterval = 2.0
-    private let unknownDuration: TimeInterval = -1.0
     private let defaultDisplayLinkDuration: CFTimeInterval = 1.0/60.0
     
     // Dispatch queue for synchronized variable access
@@ -120,7 +119,7 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
             ? self.getNewAnimationStartingPosition(locationUpdate: request.locationUpdate)
             : requestPositions[value.offset - 1]
             
-            return partialResult + [AnimationStep(startPosition: startPosition, endPosition: value.element, duration: self.unknownDuration)]
+            return partialResult + [AnimationStep(startPosition: startPosition, endPosition: value.element)]
         }
     }
     
@@ -234,5 +233,5 @@ struct AnimationRequest {
 struct AnimationStep {
     let startPosition: Position
     let endPosition: Position
-    var duration: Double
+    var duration: Double = -1.0 // value -1 means `unknown duration`
 }
