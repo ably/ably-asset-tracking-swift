@@ -49,33 +49,31 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         
         startAnimationLoop()
         
-        animationRequestSubject.sink { [weak self] request in
-            self?.processAnimationQueue.async { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                
-                var steps = self.createAnimationStepsFromRequest(request)
-                let expectedAnimationDuration = self.intentionalAnimationDelay + request.interval
-                            
-                // Recalculate animation duration
-                let animationStepDuration = expectedAnimationDuration / Double(steps.count)
-                
-                // Update each AnimationStep duration property
-                steps = steps.map { step -> AnimationStep in
-                    var step = step
-                    step.duration = animationStepDuration
-                    return step
-                }
-            
-                // Store last position from animation steps array
-                // In next iteration this position could be start position for the first step of the animation
-                self.previousFinalPosition = steps.last?.endPosition
-                
-                while !steps.isEmpty {
-                    self.animateStep(steps.removeFirst())
-                }
+        animationRequestSubject.receive(on: processAnimationQueue).sink { [weak self] request in
+            guard let self = self else {
+                return
             }
+            
+            var steps = self.createAnimationStepsFromRequest(request)
+            let expectedAnimationDuration = self.intentionalAnimationDelay + request.interval
+            
+            // Recalculate animation duration
+            let animationStepDuration = expectedAnimationDuration / Double(steps.count)
+            
+            // Update each AnimationStep duration property
+            steps = steps.map { step -> AnimationStep in
+                var step = step
+                step.duration = animationStepDuration
+                return step
+            }
+            
+            // Store last position from animation steps array
+            // In next iteration this position could be start position for the first step of the animation
+            self.previousFinalPosition = steps.last?.endPosition
+            
+            while !steps.isEmpty {
+                self.animateStep(steps.removeFirst())
+            }	
         }.store(in: &subscriptions)
     }
    
