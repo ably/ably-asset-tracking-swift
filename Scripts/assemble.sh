@@ -20,13 +20,6 @@ echo
 
 xcodebuild -scheme "AblyAssetTrackingPublisher" -destination "generic/platform=iOS" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES | xcpretty
 
-# Publisher Example (swift)
-echo
-echo '\033[1mBuild: PublisherExample\033[0m'
-echo
-
-xcodebuild build -scheme "PublisherExample" -workspace "./Examples/AblyAssetTracking.xcworkspace" -destination "platform=iOS Simulator,name=iPhone 13" -configuration "Debug" | xcpretty
-
 # Subscriber Example (swift)
 echo
 echo '\033[1mBuild: SubscriberExample\033[0m'
