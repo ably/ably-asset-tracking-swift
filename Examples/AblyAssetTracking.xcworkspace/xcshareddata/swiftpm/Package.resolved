@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
         "state": {
           "branch": "main",
-          "revision": "60ef6e3f240f53feb5f0cc10f260e2f51ac2d775",
+          "revision": "f22aaf2f9f9561f4f13defe3da1a1c547bff0547",
           "version": null
         }
       },
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git",
         "state": {
           "branch": null,
-          "revision": "57d5df1590e9ead5a0c3677ffa8d83688bd48608",
-          "version": "1.9.0"
+          "revision": "810a305a8e2200db90d3a237c687b20cfc610268",
+          "version": "1.9.1"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
         "state": {
           "branch": null,
-          "revision": "e806b0d5fceacec2c993b30f24d9f35570f44e6a",
-          "version": "2.27.4"
+          "revision": "2e492ce100d30813c3e491778ed5496c329e14aa",
+          "version": "2.27.7"
         }
       },
       {
@@ -132,8 +132,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-common-ios.git",
         "state": {
           "branch": null,
-          "revision": "3f9002c8140503b0c3c9d1e2a210a188bc2f5252",
-          "version": "21.2.0"
+          "revision": "15221bf71677824975d2d9418fe76bd4259e9c3b",
+          "version": "21.2.1"
         }
       },
       {
@@ -141,8 +141,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-core-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "20763d81dd2f2dee611e81f17ce892b599aa069d",
-          "version": "10.4.1"
+          "revision": "05cc6505956f2311e1a932fc021e9b14c4cdccb2",
+          "version": "10.4.2"
         }
       },
       {
@@ -150,8 +150,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-directions-swift.git",
         "state": {
           "branch": null,
-          "revision": "2b14b8c276523a01dc730897593990ef83c71320",
-          "version": "2.3.0"
+          "revision": "a85b353688f7ffb22809fbc890518f9f1dff7c43",
+          "version": "2.4.0"
         }
       },
       {
@@ -168,8 +168,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "635fdd15a402be76af390757f347149aaef5349a",
-          "version": "10.4.1"
+          "revision": "61ba7962a208100242a72c588ee83e20575bd2d9",
+          "version": "10.4.3"
         }
       },
       {
@@ -177,8 +177,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
         "state": {
           "branch": null,
-          "revision": "d62458089e7017a1f976798e5326e50466eca9e1",
-          "version": "2.3.1"
+          "revision": "8f730a5a6ff632a7ddecb72b88390a040528fbfb",
+          "version": "2.4.0"
         }
       },
       {
@@ -186,8 +186,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
         "state": {
           "branch": null,
-          "revision": "921b60a08375832088d69d023c1a7e1b4cac2231",
-          "version": "88.0.0"
+          "revision": "3ba009e09aed0238a49b2e8c156ec3a12892b178",
+          "version": "94.0.3"
         }
       },
       {
