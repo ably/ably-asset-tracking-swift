@@ -1,6 +1,7 @@
 import CoreLocation
 
 struct SimulatedLocations {
+    
     /**
      Data structure:
      "latitude, longitude, elevation, horizontalAccuracy, speed, isoDate"
@@ -110,6 +111,9 @@ struct SimulatedLocations {
     ]
     
     static func recordedLocations() -> [CLLocation] {
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = .withFractionalSeconds
+        
         return Self.data.map { value -> CLLocation in
             let values = value.split(separator: ",")
             
@@ -122,16 +126,7 @@ struct SimulatedLocations {
                 courseAccuracy: .zero,
                 speed: Double(values[4])!,
                 speedAccuracy: .zero,
-                timestamp: String(values[5]).toIsoDate())
+                timestamp: isoFormatter.date(from: String(values[5]))!)
         }
-    }
-}
-
-extension String {
-    func toIsoDate() -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZ"
-        
-        return dateFormatter.date(from: self)!
     }
 }
