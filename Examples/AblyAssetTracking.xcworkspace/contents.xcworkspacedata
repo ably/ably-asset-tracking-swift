@@ -5,9 +5,6 @@
       location = "group:PublisherExampleSwiftUI/PublisherExampleSwiftUI.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:PublisherExample/PublisherExample.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:SubscriberExample/SubscriberExample.xcodeproj">
    </FileRef>
 </Workspace>
