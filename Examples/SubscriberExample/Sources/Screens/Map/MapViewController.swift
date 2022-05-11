@@ -62,7 +62,7 @@ class MapViewController: UIViewController {
         setupControlsBehaviour()
         updateSubscriberResolutionLabels()
         
-        locationAnimator.trackablePosition { [weak self] position in
+        locationAnimator.subscribeForFrequentlyUpdatingPosition { [weak self] position in
             guard self?.animationSwitch.isOn == true else {
                 return
             }
@@ -70,7 +70,7 @@ class MapViewController: UIViewController {
             self?.updateLocationAnnotation(position: position)
         }
         
-        locationAnimator.fragmentaryPosition { [weak self] position in
+        locationAnimator.subscribeForInfrequentlyUpdatingPosition { [weak self] position in
             guard self?.animationSwitch.isOn == true else {
                 return
             }

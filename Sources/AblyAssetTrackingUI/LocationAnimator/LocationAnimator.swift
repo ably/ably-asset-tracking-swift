@@ -4,20 +4,20 @@ import Combine
 
 public protocol LocationAnimator {
     /**
-     Time interval (in seconds) for publishing `fragmentaryPosition`.
+     Time interval (in seconds) for publishing `subscribeForInfrequentlyUpdatingPosition`.
      Default value is 5.0 seconds
      */
-    var fragmentaryPositionInterval: TimeInterval { get set }
+    var infrequentlyUpdatingPositionInterval: TimeInterval { get set }
     
     /**
      This closure returns position in CADisplayLink framerate
      */
-    func trackablePosition(_ closure: @escaping (Position) -> Void)
+    func subscribeForFrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void)
     
     /**
-     This closure returns trackable position every `fragmentaryPositionInterval`
+     This closure returns trackable position every `infrequentlyUpdatingPositionInterval`
      */
-    func fragmentaryPosition(_ closure: @escaping (Position) -> Void)
+    func subscribeForInfrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void)
     
     /**
      Animate location method.
@@ -30,9 +30,18 @@ public protocol LocationAnimator {
     func animateLocationUpdate(location: LocationUpdate, interval: TimeInterval)
 }
 
-public protocol Position {
-    var latitude: Double { get }
-    var longitude: Double { get }
-    var accuracy: Double { get }
-    var bearing: Double { get }
+public struct Position: CustomDebugStringConvertible {
+    public let latitude: Double
+    public let longitude: Double
+    public let accuracy: Double
+    public let bearing: Double
+    
+    public var debugDescription: String {
+        """
+        latitude: \(latitude)
+        longitude: \(longitude)
+        accuracy: \(accuracy)
+        bearing: \(bearing)
+        """
+    }
 }

@@ -5,11 +5,10 @@ import Accelerate
 
 public class DefaultLocationAnimator: NSObject, LocationAnimator {
     
-    public var fragmentaryPositionInterval: TimeInterval = 5.0
+    public var infrequentlyUpdatingPositionInterval: TimeInterval = 5.0
     
     // Default values
     private let intentionalAnimationDelay: TimeInterval = 2.0
-    private let unknownDuration: TimeInterval = -1.0
     private let defaultDisplayLinkDuration: CFTimeInterval = 1.0/60.0
     
     // Dispatch queue for synchronized variable access
@@ -38,8 +37,8 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     
     private var previousFinalPosition: Position?
     private var displayLink: CADisplayLink?
-    private var trackablePositionClosure: ((Position) -> Void)?
-    private var fragmentaryPositionClosure: ((Position) -> Void)?
+    private var subscribeForFrequentlyUpdatingPositionClosure: ((Position) -> Void)?
+    private var subscribeForInfrequentlyUpdatingPositionClosure: ((Position) -> Void)?
     
     deinit {
         stopAnimationLoop()
@@ -50,32 +49,30 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         
         startAnimationLoop()
         
-        animationRequestSubject.sink { [weak self] request in
-            self?.processAnimationQueue.async { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                
-                var steps = self.createAnimationStepsFromRequest(request)
-                let expectedAnimationDuration = self.intentionalAnimationDelay + request.interval
-                            
-                // Recalculate animation duration
-                let animationStepDuration = expectedAnimationDuration / Double(steps.count)
-                
-                // Update each AnimationStep duration property
-                steps = steps.map { step -> AnimationStep in
-                    var step = step
-                    step.updateDuration(animationStepDuration)
-                    return step
-                }
+        animationRequestSubject.receive(on: processAnimationQueue).sink { [weak self] request in
+            guard let self = self else {
+                return
+            }
             
-                // Store last position from animation steps array
-                // In next iteration this position could be start position for the first step of the animation
-                self.previousFinalPosition = steps.last?.endPosition
-                
-                while !steps.isEmpty {
-                    self.animateStep(steps.removeFirst())
-                }
+            var steps = self.createAnimationStepsFromRequest(request)
+            let expectedAnimationDuration = self.intentionalAnimationDelay + request.interval
+            
+            // Recalculate animation duration
+            let animationStepDuration = expectedAnimationDuration / Double(steps.count)
+            
+            // Update each AnimationStep duration property
+            steps = steps.map { step -> AnimationStep in
+                var step = step
+                step.duration = animationStepDuration
+                return step
+            }
+            
+            // Store last position from animation steps array
+            // In next iteration this position could be start position for the first step of the animation
+            self.previousFinalPosition = steps.last?.endPosition
+            
+            while !steps.isEmpty {
+                self.animateStep(steps.removeFirst())
             }
         }.store(in: &subscriptions)
     }
@@ -84,12 +81,12 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         animationRequestSubject.send(AnimationRequest(locationUpdate: location, interval: interval))
     }
     
-    public func trackablePosition(_ closure: @escaping (Position) -> Void) {
-        self.trackablePositionClosure = closure
+    public func subscribeForFrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
+        self.subscribeForFrequentlyUpdatingPositionClosure = closure
     }
     
-    public func fragmentaryPosition(_ closure: @escaping (Position) -> Void) {
-        self.fragmentaryPositionClosure = closure
+    public func subscribeForInfrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
+        self.subscribeForInfrequentlyUpdatingPositionClosure = closure
     }
     
     private func startAnimationLoop() {
@@ -120,7 +117,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             ? self.getNewAnimationStartingPosition(locationUpdate: request.locationUpdate)
             : requestPositions[value.offset - 1]
             
-            return partialResult + [AnimationStep(startPosition: startPosition, endPosition: value.element, duration: self.unknownDuration)]
+            return partialResult + [AnimationStep(startPosition: startPosition, endPosition: value.element)]
         }
     }
     
@@ -171,7 +168,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         vDSP_vgen(&start, &end, &accuracies, vDSP_Stride(1), numberOfSteps)
                 
         return latitudes.enumerated().map { index, latitude in
-            DefaultPosition(
+            Position(
                 latitude: Double(latitude),
                 longitude: Double(longitudes[index]),
                 accuracy: Double(accuracies[index]),
@@ -188,36 +185,19 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         }
         
         let animationPosition = animationPositions.removeFirst()
-        trackablePositionClosure?(animationPosition)
+        subscribeForFrequentlyUpdatingPositionClosure?(animationPosition)
         
-        if CFAbsoluteTimeGetCurrent() - displayLinkStartTime >= fragmentaryPositionInterval {
-            fragmentaryPositionClosure?(animationPosition)
+        if CFAbsoluteTimeGetCurrent() - displayLinkStartTime >= infrequentlyUpdatingPositionInterval {
+            subscribeForInfrequentlyUpdatingPositionClosure?(animationPosition)
             displayLinkStartTime = CFAbsoluteTimeGetCurrent()
         }
     }
 }
 
 // Models
-
-struct DefaultPosition: Position, CustomDebugStringConvertible {
-    let latitude: Double
-    let longitude: Double
-    let accuracy: Double
-    let bearing: Double
-    
-    var debugDescription: String {
-        """
-        latitude: \(latitude)
-        longitude: \(longitude)
-        accuracy: \(accuracy)
-        bearing: \(bearing)
-        """
-    }
-}
-
-extension Location {
-  public func toPosition() -> Position {
-        DefaultPosition(
+public extension Location {
+    func toPosition() -> Position {
+        Position(
             latitude: coordinate.latitude,
             longitude: coordinate.longitude,
             accuracy: horizontalAccuracy,
@@ -234,9 +214,5 @@ struct AnimationRequest {
 struct AnimationStep {
     let startPosition: Position
     let endPosition: Position
-    var duration: Double
-    
-    mutating func updateDuration(_ duration: Double) {
-        self.duration = duration
-    }
+    var duration: Double = -1.0 // value -1 means `unknown duration`
 }
