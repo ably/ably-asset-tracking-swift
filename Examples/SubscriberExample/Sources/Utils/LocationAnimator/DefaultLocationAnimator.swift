@@ -5,7 +5,7 @@ import Accelerate
 
 class DefaultLocationAnimator: NSObject, LocationAnimator {
     
-    var fragmentaryPositionInterval: TimeInterval = 5.0
+    var infrequentlyUpdatingPositionInterval: TimeInterval = 5.0
     
     // Default values
     private let intentionalAnimationDelay: TimeInterval = 2.0
@@ -37,8 +37,8 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
     
     private var previousFinalPosition: Position?
     private var displayLink: CADisplayLink?
-    private var trackablePositionClosure: ((Position) -> Void)?
-    private var fragmentaryPositionClosure: ((Position) -> Void)?
+    private var subscribeForFrequentlyUpdatingPositionClosure: ((Position) -> Void)?
+    private var subscribeForInfrequentlyUpdatingPositionClosure: ((Position) -> Void)?
     
     deinit {
         stopAnimationLoop()
@@ -81,12 +81,12 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         animationRequestSubject.send(AnimationRequest(locationUpdate: location, interval: interval))
     }
     
-    func trackablePosition(_ closure: @escaping (Position) -> Void) {
-        self.trackablePositionClosure = closure
+    func subscribeForFrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
+        self.subscribeForFrequentlyUpdatingPositionClosure = closure
     }
     
-    func fragmentaryPosition(_ closure: @escaping (Position) -> Void) {
-        self.fragmentaryPositionClosure = closure
+    func subscribeForInfrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
+        self.subscribeForInfrequentlyUpdatingPositionClosure = closure
     }
     
     private func startAnimationLoop() {
@@ -185,10 +185,10 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         }
         
         let animationPosition = animationPositions.removeFirst()
-        trackablePositionClosure?(animationPosition)
+        subscribeForFrequentlyUpdatingPositionClosure?(animationPosition)
         
-        if CFAbsoluteTimeGetCurrent() - displayLinkStartTime >= fragmentaryPositionInterval {
-            fragmentaryPositionClosure?(animationPosition)
+        if CFAbsoluteTimeGetCurrent() - displayLinkStartTime >= infrequentlyUpdatingPositionInterval {
+            subscribeForInfrequentlyUpdatingPositionClosure?(animationPosition)
             displayLinkStartTime = CFAbsoluteTimeGetCurrent()
         }
     }
