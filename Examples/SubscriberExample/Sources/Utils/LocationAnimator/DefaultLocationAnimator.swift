@@ -1,7 +1,6 @@
 import Combine
 import AblyAssetTrackingCore
 import QuartzCore
-import Accelerate
 
 class DefaultLocationAnimator: NSObject, LocationAnimator {
     
@@ -20,6 +19,11 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var displayLinkStartTime: CFAbsoluteTime = .zero
     private var animationRequestSubject = PassthroughSubject<AnimationRequest, Never>()
     private var subscriptions = Set<AnyCancellable>()
+    private var animationStartTime: CFAbsoluteTime = .zero
+    private var animationStepStartTime: CFAbsoluteTime = .zero
+    private var currentAnimationStepProgress: Double = 1.0
+    private var currentAnimationStepIndex: Int = -1
+    private var currentAnimationStep: AnimationStep?
         
     private var _animationPositions: [Position] = []
     private var animationPositions: [Position] {
@@ -35,7 +39,33 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         }
     }
     
-    private var previousFinalPosition: Position?
+    private var _animationSteps: [AnimationStep] = []
+    private var animationSteps: [AnimationStep] {
+        get {
+            return globalBackgroundSyncronizeDataQueue.sync {
+                _animationSteps
+            }
+        }
+        set {
+            globalBackgroundSyncronizeDataQueue.sync {
+                self._animationSteps = newValue
+            }
+        }
+    }
+    
+    private var _previousFinalPosition: Position?
+    private var previousFinalPosition: Position? {
+        get {
+            return globalBackgroundSyncronizeDataQueue.sync {
+                _previousFinalPosition
+            }
+        }
+        set {
+            globalBackgroundSyncronizeDataQueue.sync {
+                self._previousFinalPosition = newValue
+            }
+        }
+    }
     private var displayLink: CADisplayLink?
     private var subscribeForFrequentlyUpdatingPositionClosure: ((Position) -> Void)?
     private var subscribeForInfrequentlyUpdatingPositionClosure: ((Position) -> Void)?
@@ -53,26 +83,27 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
             guard let self = self else {
                 return
             }
-            
-            var steps = self.createAnimationStepsFromRequest(request)
-            let expectedAnimationDuration = self.intentionalAnimationDelay + request.interval
-            
-            // Recalculate animation duration
-            let animationStepDuration = expectedAnimationDuration / Double(steps.count)
-            
-            // Update each AnimationStep duration property
-            steps = steps.map { step -> AnimationStep in
-                var step = step
-                step.duration = animationStepDuration
-                return step
-            }
+                        
+            let steps = self.createAnimationStepsFromRequest(request)
             
             // Store last position from animation steps array
             // In next iteration this position could be start position for the first step of the animation
             self.previousFinalPosition = steps.last?.endPosition
             
-            while !steps.isEmpty {
-                self.animateStep(steps.removeFirst())
+            // This is an animation duration for request
+            let expectedAnimationDuration = self.intentionalAnimationDelay + request.interval
+            
+            // Recalculate each animation step duration
+            let animationStepDuration = expectedAnimationDuration / Double(steps.count)
+            
+            var previousStepEndTime: CFAbsoluteTime = self.animationSteps.last?.endTime ?? .zero
+            for step in steps {
+                var step = step
+                step.endTime =  previousStepEndTime + animationStepDuration
+                step.duration = animationStepDuration
+                                
+                self.animationSteps.append(step)
+                previousStepEndTime = step.endTime
             }
         }.store(in: &subscriptions)
     }
@@ -93,7 +124,6 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         let displayLink = CADisplayLink(target: self, selector: #selector(animationLoop))
         displayLink.add(to: .current, forMode: .default)
         
-        displayLinkStartTime = CFAbsoluteTimeGetCurrent()
         self.displayLink = displayLink
     }
     
@@ -127,68 +157,69 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
             ?? locationUpdate.location.toPosition()
     }
     
-    private func animateStep(_ step: AnimationStep?) {
-        guard let step = step, step.duration > .zero else {
-            return
-        }
+    private func calculatePosition(firstPosition: Position, secondPosition: Position, stepProgress: Double) -> Position {
+        let latitude = interpolateLinear(first: firstPosition.latitude, second: secondPosition.latitude, progress: stepProgress)
+        let longitude = interpolateLinear(first: firstPosition.longitude, second: secondPosition.longitude, progress: stepProgress)
+        let accuracy = interpolateLinear(first: firstPosition.accuracy, second: secondPosition.accuracy, progress: stepProgress)
+        let bearing = interpolateLinear(first: firstPosition.bearing, second: secondPosition.bearing, progress: stepProgress)
         
-        let displayLinkDuration = self.displayLink?.duration ?? self.defaultDisplayLinkDuration
-        
-        // Interpolate position and accuracy
-        let interpolatedPositions = interpolateLinear(
-            numberOfSteps: UInt(step.duration / displayLinkDuration),
-            first: step.startPosition,
-            second: step.endPosition
-        )
-    
-        animationPositions.append(contentsOf: interpolatedPositions)
+        return Position(latitude: latitude, longitude: longitude, accuracy: accuracy, bearing: bearing)
     }
     
-    private func interpolateLinear(numberOfSteps: UInt, first: Position, second: Position) -> [Position] {
-        var latitudes = [Float](repeating: 0, count: Int(numberOfSteps))
-        var longitudes = [Float](repeating: 0, count: Int(numberOfSteps))
-        var accuracies = [Float](repeating: 0, count: Int(numberOfSteps))
-        
-        // Interpolate latitudes
-        var start = Float(first.latitude)
-        var end = Float(second.latitude)
-    
-        vDSP_vgen(&start, &end, &latitudes, vDSP_Stride(1), numberOfSteps)
-        
-        // Interpolate longitudes
-        start = Float(first.longitude)
-        end = Float(second.longitude)
-        
-        vDSP_vgen(&start, &end, &longitudes, vDSP_Stride(1), numberOfSteps)
-        
-        // Interpolate accuracies
-        start = Float(first.accuracy)
-        end = Float(second.accuracy)
-        
-        vDSP_vgen(&start, &end, &accuracies, vDSP_Stride(1), numberOfSteps)
-                
-        return latitudes.enumerated().map { index, latitude in
-            Position(
-                latitude: Double(latitude),
-                longitude: Double(longitudes[index]),
-                accuracy: Double(accuracies[index]),
-                bearing: second.bearing
-            )
-        }
+    private func interpolateLinear(first: Double, second: Double, progress: Double) -> Double {
+        first + (second - first) * progress
     }
 
     // Animation loop based od CADisplayLink
     @objc
     private func animationLoop(link: CADisplayLink) {
-        guard !animationPositions.isEmpty else {
+        if currentAnimationStepProgress >= 1 && !animationSteps.isEmpty {
+            
+            if animationStartTime == .zero {
+                animationStartTime = link.timestamp
+            }
+            
+            animationStepStartTime = link.timestamp
+            
+            /**
+             Step index is calculated against the time elapsed since receive first animation request.
+             Each animation step has it's unique `endTime` which is estimated animation end time.
+             */
+            let stepIndex = animationSteps.firstIndex {
+                $0.endTime >= (link.timestamp - animationStartTime)
+            } ?? .zero
+        
+            currentAnimationStep = animationSteps[stepIndex]
+            
+            // Remove used steps
+            animationSteps.removeSubrange(0..<stepIndex)
+        } else if animationSteps.isEmpty && currentAnimationStepProgress >= 1 {
+            
+            currentAnimationStep = nil
+        }
+        
+        guard let animationStep = currentAnimationStep else {
             return
         }
         
-        let animationPosition = animationPositions.removeFirst()
-        subscribeForFrequentlyUpdatingPositionClosure?(animationPosition)
-        
+        /**
+         Each animation step has it's own animation progress based on `animationStep` duration and `CADisplayLink` timestamp.
+         */
+        currentAnimationStepProgress = (link.timestamp - animationStepStartTime) / animationStep.duration
+
+        /**
+         Current position is interpolated against current step animation progress
+         */
+        let position = calculatePosition(
+            firstPosition: animationStep.startPosition,
+            secondPosition: animationStep.endPosition,
+            stepProgress: currentAnimationStepProgress
+        )
+
+        subscribeForFrequentlyUpdatingPositionClosure?(position)
+
         if CFAbsoluteTimeGetCurrent() - displayLinkStartTime >= infrequentlyUpdatingPositionInterval {
-            subscribeForInfrequentlyUpdatingPositionClosure?(animationPosition)
+            subscribeForInfrequentlyUpdatingPositionClosure?(position)
             displayLinkStartTime = CFAbsoluteTimeGetCurrent()
         }
     }
@@ -214,5 +245,6 @@ struct AnimationRequest {
 struct AnimationStep {
     let startPosition: Position
     let endPosition: Position
+    var endTime: CFAbsoluteTime = .zero
     var duration: Double = -1.0 // value -1 means `unknown duration`
 }

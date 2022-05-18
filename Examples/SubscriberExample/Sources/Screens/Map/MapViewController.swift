@@ -3,9 +3,9 @@ import MapKit
 import AblyAssetTrackingSubscriber
 
 private struct MapConstraints {
-    static let regionLatitude: CLLocationDistance = 600
-    static let regionLongitude: CLLocationDistance = 600
-    static let minimumDistanceToCenter: CLLocationDistance = 300
+    static let regionLatitude: CLLocationDistance = 400
+    static let regionLongitude: CLLocationDistance = 400
+    static let minimumDistanceToCenter: CLLocationDistance = 100
 }
 
 private struct Identifiers {
@@ -221,7 +221,6 @@ extension MapViewController: MKMapViewDelegate {
         let zoom = mapView.getZoomLevel()
         logger.debug("Current map zoom level: \(zoom)")
         scheduleResolutionUpdate()
-
     }
     
     private func createAnnotationView(for annotation: TruckAnnotation) -> MKAnnotationView {
