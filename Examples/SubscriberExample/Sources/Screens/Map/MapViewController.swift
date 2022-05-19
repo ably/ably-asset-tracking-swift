@@ -4,9 +4,9 @@ import AblyAssetTrackingSubscriber
 import AblyAssetTrackingUI
 
 private struct MapConstraints {
-    static let regionLatitude: CLLocationDistance = 600
-    static let regionLongitude: CLLocationDistance = 600
-    static let minimumDistanceToCenter: CLLocationDistance = 300
+    static let regionLatitude: CLLocationDistance = 400
+    static let regionLongitude: CLLocationDistance = 400
+    static let minimumDistanceToCenter: CLLocationDistance = 100
 }
 
 private struct Identifiers {

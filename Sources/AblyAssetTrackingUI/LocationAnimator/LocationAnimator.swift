@@ -30,7 +30,7 @@ public protocol LocationAnimator {
     func animateLocationUpdate(location: LocationUpdate, interval: TimeInterval)
 }
 
-public struct Position: CustomDebugStringConvertible {
+public struct Position: CustomDebugStringConvertible, CustomStringConvertible {
     public let latitude: Double
     public let longitude: Double
     public let accuracy: Double
@@ -43,5 +43,9 @@ public struct Position: CustomDebugStringConvertible {
         accuracy: \(accuracy)
         bearing: \(bearing)
         """
+    }
+ 
+    public var description: String {
+        "\(latitude),\(longitude)"
     }
 }
