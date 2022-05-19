@@ -18,9 +18,6 @@ public struct Resolution: Codable, CustomDebugStringConvertible {
      Desired time between updates, in milliseconds. Lowering this value increases the temporal resolution.
      Location updates whose timestamp differs from the last captured update timestamp by less that this value are to
      be filtered out.
-     
-     Used to govern the frequency of updates requested from the underlying location provider, as well as the frequency
-     of messages broadcast to subscribers.
      */
     public let desiredInterval: Double
 
