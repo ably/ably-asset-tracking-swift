@@ -9,10 +9,6 @@ private struct MapConstraints {
     static let minimumDistanceToCenter: CLLocationDistance = 100
 }
 
-private struct Identifiers {
-    static let truckAnnotation = "MapTruckAnnotationViewIdentifier"
-}
-
 class MapViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet private weak var assetStatusLabel: UILabel!
@@ -67,7 +63,8 @@ class MapViewController: UIViewController {
                 return
             }
             
-            self?.updateLocationAnnotation(position: position)
+            self?.updateTruckAnnotation(position: position)
+            self?.updateHorizontalAccuracyAnnotation(position: position)
         }
         
         locationAnimator.subscribeForInfrequentlyUpdatingPosition { [weak self] position in
@@ -90,7 +87,8 @@ class MapViewController: UIViewController {
     // MARK: - View setup
     private func setupMapView() {
         mapView.delegate = self
-        mapView.register(TruckAnnotationView.self, forAnnotationViewWithReuseIdentifier: Identifiers.truckAnnotation)
+        mapView.register(TruckAnnotationView.self, forAnnotationViewWithReuseIdentifier: TruckAnnotationView.identifier)
+        mapView.register(HorizontalAccuracyAnnotationView.self, forAnnotationViewWithReuseIdentifier: HorizontalAccuracyAnnotationView.identifier)
     }
 
     private func setupControlsBehaviour() {
@@ -119,8 +117,8 @@ class MapViewController: UIViewController {
     }
     
     // MARK: Utils
-    private func updateLocationAnnotation(position: Position) {
-        if let annotation = mapView.annotations.first as? TruckAnnotation {
+    private func updateTruckAnnotation(position: Position) {
+        if let annotation = mapView.annotations.first(where: { $0 is TruckAnnotation }) as? TruckAnnotation {
             annotation.bearing = position.bearing
 
             // Delegate's "viewForAnnotation" method is not called when we're only updating coordinate or bearing, so AnnotationView is not updated.
@@ -133,6 +131,27 @@ class MapViewController: UIViewController {
             let annotation = TruckAnnotation()
             annotation.coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
             annotation.bearing = position.bearing
+            mapView.addAnnotation(annotation)
+        }
+    }
+    
+    private func updateHorizontalAccuracyAnnotation(position: Position) {
+        let coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: position.accuracy, longitudinalMeters: position.accuracy)
+        let rect = mapView.convert(region, toRectTo: mapView)
+
+        if let annotation = mapView.annotations.first(where: { $0 is HorizontalAccuracyAnnotation }) as? HorizontalAccuracyAnnotation  {
+            annotation.accuracy = position.accuracy
+            
+            if let view = mapView.view(for: annotation) as? HorizontalAccuracyAnnotationView {
+                view.accuracy = Double(rect.size.width)
+            }
+            
+            annotation.coordinate = coordinate
+        } else {
+            let annotation = HorizontalAccuracyAnnotation()
+            annotation.coordinate = coordinate
+            annotation.accuracy = position.accuracy
             mapView.addAnnotation(annotation)
         }
     }
@@ -213,9 +232,15 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? TruckAnnotation else { return nil }
-
-        return createAnnotationView(for: annotation)
+        if let annotation = annotation as? TruckAnnotation {
+            
+            return createTruckAnnotationView(for: annotation)
+        } else if let annotation = annotation as? HorizontalAccuracyAnnotation {
+            
+            return createHorizontalAccuracyView(for: annotation)
+        }
+        
+        return nil
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -224,16 +249,24 @@ extension MapViewController: MKMapViewDelegate {
         scheduleResolutionUpdate()
     }
     
-    private func createAnnotationView(for annotation: TruckAnnotation) -> MKAnnotationView {
-        let annotationView = getAnnotationView(for: annotation)
+    private func createTruckAnnotationView(for annotation: TruckAnnotation) -> TruckAnnotationView {
+        let annotationView: TruckAnnotationView = getAnnotationView(for: annotation)
         annotationView.bearing = annotation.bearing
-        annotationView.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
+        annotationView.zPriority = .init(rawValue: 1.0)
+
+        return annotationView
+    }
+    
+    private func createHorizontalAccuracyView(for annotation: HorizontalAccuracyAnnotation) -> HorizontalAccuracyAnnotationView {
+        let annotationView: HorizontalAccuracyAnnotationView = getAnnotationView(for: annotation)
+        annotationView.zPriority = .init(rawValue: .zero)
+
         return annotationView
     }
         
-    private func getAnnotationView(for annotation: TruckAnnotation) -> TruckAnnotationView {
-        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Identifiers.truckAnnotation) as? TruckAnnotationView else {
-            return TruckAnnotationView(annotation: annotation, reuseIdentifier: Identifiers.truckAnnotation)
+    private func getAnnotationView<T: MKAnnotationView & Identifiable>(for annotation: MKPointAnnotation) -> T {
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: T.identifier) as? T else {
+            return T(annotation: annotation, reuseIdentifier: T.identifier)
         }
         
         return annotationView
@@ -250,7 +283,7 @@ extension MapViewController: SubscriberDelegate {
         if animationSwitch.isOn {
             locationAnimator.animateLocationUpdate(location: locationUpdate, interval: locationUpdateInterval / 1000.0)
         } else {
-            updateLocationAnnotation(position: locationUpdate.location.toPosition())
+            updateTruckAnnotation(position: locationUpdate.location.toPosition())
             scrollToReceivedLocation(position: locationUpdate.location.toPosition())
         }
         

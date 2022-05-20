@@ -107,7 +107,7 @@ struct SimulatedLocations {
             return CLLocation(
                 coordinate: .init(latitude: Double(values.first!)!, longitude: Double(values.last!)!),
                 altitude: 100,
-                horizontalAccuracy: Double(2 + arc4random_uniform(20)), //accuracy between 2m and 22m
+                horizontalAccuracy: index < 10 ? 25 : 35,
                 verticalAccuracy: .zero,
                 course: .zero,
                 courseAccuracy: .zero,
