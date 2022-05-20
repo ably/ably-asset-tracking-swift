@@ -22,6 +22,8 @@ class MapViewController: UIViewController {
     @IBOutlet private weak var publisherResolutionIntervalLabel: UILabel!
 
     // MARK: - Properties
+    private let zPriorityForeground = MKAnnotationViewZPriority(1.0)
+    private let zPriorityBackground = MKAnnotationViewZPriority(0.0)
     private let resolution = Resolution(accuracy: .balanced, desiredInterval: 10000, minimumDisplacement: 500)
     private let trackingId: String
     private let locationAnimator: LocationAnimator
@@ -250,14 +252,14 @@ extension MapViewController: MKMapViewDelegate {
     private func createTruckAnnotationView(for annotation: TruckAnnotation) -> TruckAnnotationView {
         let annotationView: TruckAnnotationView = getAnnotationView(for: annotation)
         annotationView.bearing = annotation.bearing
-        annotationView.zPriority = .max
+        annotationView.zPriority = zPriorityForeground
 
         return annotationView
     }
     
     private func createHorizontalAccuracyView(for annotation: HorizontalAccuracyAnnotation) -> HorizontalAccuracyAnnotationView {
         let annotationView: HorizontalAccuracyAnnotationView = getAnnotationView(for: annotation)
-        annotationView.zPriority = .min
+        annotationView.zPriority = zPriorityBackground
 
         return annotationView
     }
