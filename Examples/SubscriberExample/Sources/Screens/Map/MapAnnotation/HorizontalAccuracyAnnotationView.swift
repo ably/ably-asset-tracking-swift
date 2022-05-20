@@ -8,7 +8,7 @@ class HorizontalAccuracyAnnotationView: MKAnnotationView, Identifiable {
     
     var accuracy: Double = .zero {
         didSet {
-            updateRadius(radius: accuracy / 2.0)
+            updateRadius(radius: accuracy)
         }
     }
     
