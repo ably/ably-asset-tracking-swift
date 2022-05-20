@@ -118,20 +118,14 @@ class MapViewController: UIViewController {
     
     // MARK: Utils
     private func updateTruckAnnotation(position: Position) {
-        if let annotation = mapView.annotations.first(where: { $0 is TruckAnnotation }) as? TruckAnnotation {
-            annotation.bearing = position.bearing
-
-            // Delegate's "viewForAnnotation" method is not called when we're only updating coordinate or bearing, so AnnotationView is not updated.
-            // That's why we need to set latest values in AnnotationView manually.
-            if let view = mapView.view(for: annotation) as? TruckAnnotationView {
-                view.bearing = position.bearing
-            }
-            annotation.coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
-        } else {
-            let annotation = TruckAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
-            annotation.bearing = position.bearing
-            mapView.addAnnotation(annotation)
+        let coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
+        
+        let annotation: TruckAnnotation = createAnnotationIfNeeded()
+        annotation.bearing = position.bearing
+        annotation.coordinate = coordinate
+        
+        if let view = mapView.view(for: annotation) as? TruckAnnotationView {
+            view.bearing = position.bearing
         }
     }
     
@@ -140,19 +134,23 @@ class MapViewController: UIViewController {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: position.accuracy, longitudinalMeters: position.accuracy)
         let rect = mapView.convert(region, toRectTo: mapView)
 
-        if let annotation = mapView.annotations.first(where: { $0 is HorizontalAccuracyAnnotation }) as? HorizontalAccuracyAnnotation  {
-            annotation.accuracy = position.accuracy
-            
-            if let view = mapView.view(for: annotation) as? HorizontalAccuracyAnnotationView {
-                view.accuracy = Double(rect.size.width)
-            }
-            
-            annotation.coordinate = coordinate
+        let annotation: HorizontalAccuracyAnnotation = createAnnotationIfNeeded()
+        annotation.accuracy = position.accuracy
+        annotation.coordinate = coordinate
+        
+        if let view = mapView.view(for: annotation) as? HorizontalAccuracyAnnotationView {
+            view.accuracy = Double(rect.size.width)
+        }
+    }
+    
+    private func createAnnotationIfNeeded<T: MKPointAnnotation>() -> T {
+        if let annotation = mapView.annotations.first(where: { $0 is T }) as? T  {
+            return annotation
         } else {
-            let annotation = HorizontalAccuracyAnnotation()
-            annotation.coordinate = coordinate
-            annotation.accuracy = position.accuracy
+            let annotation = T()
             mapView.addAnnotation(annotation)
+            
+            return annotation
         }
     }
 
