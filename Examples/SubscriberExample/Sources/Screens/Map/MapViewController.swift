@@ -250,14 +250,14 @@ extension MapViewController: MKMapViewDelegate {
     private func createTruckAnnotationView(for annotation: TruckAnnotation) -> TruckAnnotationView {
         let annotationView: TruckAnnotationView = getAnnotationView(for: annotation)
         annotationView.bearing = annotation.bearing
-        annotationView.zPriority = .init(rawValue: 1.0)
+        annotationView.zPriority = .max
 
         return annotationView
     }
     
     private func createHorizontalAccuracyView(for annotation: HorizontalAccuracyAnnotation) -> HorizontalAccuracyAnnotationView {
         let annotationView: HorizontalAccuracyAnnotationView = getAnnotationView(for: annotation)
-        annotationView.zPriority = .init(rawValue: .zero)
+        annotationView.zPriority = .min
 
         return annotationView
     }
