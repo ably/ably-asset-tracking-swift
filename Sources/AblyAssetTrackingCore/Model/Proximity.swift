@@ -1,6 +1,5 @@
 import Foundation
 
-// swiftlint:disable missing_docs
 public protocol Proximity { }
 
 public class DefaultProximity: Proximity {
