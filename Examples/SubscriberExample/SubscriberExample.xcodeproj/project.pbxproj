@@ -19,6 +19,9 @@
 		188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */; };
 		AD0F84B52677D6C900C15DB7 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */; };
 		D55F03B028195552001F5F83 /* AblyAssetTrackingUI in Frameworks */ = {isa = PBXBuildFile; productRef = D55F03AF28195552001F5F83 /* AblyAssetTrackingUI */; };
+		D569B3A3283631C100E680AF /* HorizontalAccuracyAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569B3A2283631C100E680AF /* HorizontalAccuracyAnnotationView.swift */; };
+		D569B3A52836625200E680AF /* HorizontalAccuracyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569B3A42836625200E680AF /* HorizontalAccuracyAnnotation.swift */; };
+		D569B3A728366C1F00E680AF /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569B3A628366C1F00E680AF /* Identifiable.swift */; };
 		D5DCC8B72785A8C300CC04E6 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = D5DCC8B62785A8C300CC04E6 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		D5DCC8B92785A8C300CC04E6 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D5DCC8B82785A8C300CC04E6 /* FirebaseCrashlytics */; };
 		D5EBC174274B825500F4A16D /* AblyAssetTrackingSubscriber in Frameworks */ = {isa = PBXBuildFile; productRef = D5EBC173274B825500F4A16D /* AblyAssetTrackingSubscriber */; };
@@ -43,6 +46,9 @@
 		AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		ADAAE6192661562B00A8F214 /* Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAAE61F266157C800A8F214 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D569B3A2283631C100E680AF /* HorizontalAccuracyAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalAccuracyAnnotationView.swift; sourceTree = "<group>"; };
+		D569B3A42836625200E680AF /* HorizontalAccuracyAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalAccuracyAnnotation.swift; sourceTree = "<group>"; };
+		D569B3A628366C1F00E680AF /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		D5EBC172274B823C00F4A16D /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
 		F618BA8D25C99EF800B69885 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		F618BA9D25C9A73500B69885 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
@@ -117,10 +123,9 @@
 		180F61AE258634420014B310 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				D569B3A828366C7900E680AF /* MapAnnotation */,
 				F67E661325F8C214001CF9BB /* Helpers */,
-				180F61AF258634420014B310 /* TruckAnnotation.swift */,
 				180F61B0258634420014B310 /* MapViewController.swift */,
-				180F61B1258634420014B310 /* TruckAnnotationView.swift */,
 				180F61B2258634420014B310 /* MapViewController.xib */,
 			);
 			path = Map;
@@ -143,6 +148,18 @@
 				188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		D569B3A828366C7900E680AF /* MapAnnotation */ = {
+			isa = PBXGroup;
+			children = (
+				D569B3A628366C1F00E680AF /* Identifiable.swift */,
+				180F61AF258634420014B310 /* TruckAnnotation.swift */,
+				180F61B1258634420014B310 /* TruckAnnotationView.swift */,
+				D569B3A2283631C100E680AF /* HorizontalAccuracyAnnotationView.swift */,
+				D569B3A42836625200E680AF /* HorizontalAccuracyAnnotation.swift */,
+			);
+			path = MapAnnotation;
 			sourceTree = "<group>";
 		};
 		D5EBC171274B823C00F4A16D /* Packages */ = {
@@ -275,8 +292,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				180F61C0258634420014B310 /* AppDelegate.swift in Sources */,
+				D569B3A728366C1F00E680AF /* Identifiable.swift in Sources */,
+				D569B3A52836625200E680AF /* HorizontalAccuracyAnnotation.swift in Sources */,
 				180F61BE258634420014B310 /* TruckAnnotationView.swift in Sources */,
 				180F61BD258634420014B310 /* MapViewController.swift in Sources */,
+				D569B3A3283631C100E680AF /* HorizontalAccuracyAnnotationView.swift in Sources */,
 				F618BA8E25C99EF800B69885 /* Environment.swift in Sources */,
 				F67E661825F8C507001CF9BB /* DescriptionsHelper.swift in Sources */,
 				180F61BC258634420014B310 /* TruckAnnotation.swift in Sources */,
