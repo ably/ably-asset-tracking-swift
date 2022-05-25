@@ -8,7 +8,6 @@ import AblyAssetTrackingInternal
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
-// swiftlint:disable cyclomatic_complexity
 class DefaultPublisher: Publisher {
     
     // Publisher state
@@ -211,7 +210,6 @@ extension DefaultPublisher {
     }
 
     // MARK: Track
-    // swiftlint:disable line_length
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
