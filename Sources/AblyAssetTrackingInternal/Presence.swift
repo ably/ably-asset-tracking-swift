@@ -9,4 +9,3 @@ public enum Presence {
     case update
     case unknown
 }
-

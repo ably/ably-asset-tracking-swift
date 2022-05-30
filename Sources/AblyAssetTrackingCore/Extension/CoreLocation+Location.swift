@@ -1,4 +1,3 @@
-
 import CoreLocation
 
 public extension CLLocation {

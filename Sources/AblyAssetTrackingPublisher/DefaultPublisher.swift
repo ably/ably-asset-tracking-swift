@@ -165,7 +165,7 @@ extension DefaultPublisher {
             case let event as SetDestinationSuccessEvent: self?.performSetDestinationSuccessEvent(event)
             case let event as DelegateResolutionUpdateEvent: self?.notifyDelegateResolutionUpdate(event)
             case let event as DelegateErrorEvent: self?.notifyDelegateDidFailWithError(event.error)
-            case let event as DelegateTrackableConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
+            case let event as DelegateConnectionStateChangedEvent: self?.notifyDelegateConnectionStateChanged(event)
             case let event as DelegateEnhancedLocationChangedEvent: self?.notifyDelegateEnhancedLocationChanged(event)
             case let event as ChangeRoutingProfileEvent: self?.performChangeRoutingProfileEvent(event)
             case let event as StopEvent: self?.performStopPublisherEvent(event)
@@ -200,7 +200,7 @@ extension DefaultPublisher {
             switch event {
             case let event as DelegateErrorEvent:
                 self.delegate?.publisher(sender: self, didFailWithError: event.error)
-            case let event as DelegateTrackableConnectionStateChangedEvent:
+            case let event as DelegateConnectionStateChangedEvent:
                 self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
             case let event as DelegateEnhancedLocationChangedEvent:
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
@@ -324,7 +324,6 @@ extension DefaultPublisher {
             return
         }
      
-     
         ablyPublisher.connect(
             trackableId: event.trackable.id,
             presenceData: presenceData,
@@ -429,7 +428,7 @@ extension DefaultPublisher {
 
         if newTrackableState != currentTrackablesConnectionStates[trackable] {
             currentTrackablesConnectionStates[trackable] = newTrackableState
-            callback(event: DelegateTrackableConnectionStateChangedEvent(trackable: trackable, connectionState: newTrackableState))
+            callback(event: DelegateConnectionStateChangedEvent(trackable: trackable, connectionState: newTrackableState))
         }
     }
 
@@ -834,7 +833,7 @@ extension DefaultPublisher {
         }
     }
 
-    private func notifyDelegateConnectionStateChanged(_ event: DelegateTrackableConnectionStateChangedEvent) {
+    private func notifyDelegateConnectionStateChanged(_ event: DelegateConnectionStateChangedEvent) {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)

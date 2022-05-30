@@ -1,7 +1,6 @@
 import Foundation
 import CoreLocation
 import Logging
-import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
@@ -172,7 +171,6 @@ extension DefaultSubscriber {
                 self.callback(error: error, handler: event.resultHandler)
             }
         }
-        
     }
     
     private func performStop(_ event: StopEvent) {

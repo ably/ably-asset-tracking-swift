@@ -118,7 +118,7 @@ struct DelegateEnhancedLocationChangedEvent: PublisherEvent, PublisherDelegateEv
     let locationUpdate: EnhancedLocationUpdate
 }
 
-struct DelegateTrackableConnectionStateChangedEvent: PublisherEvent, PublisherDelegateEvent {
+struct DelegateConnectionStateChangedEvent: PublisherEvent, PublisherDelegateEvent {
     let trackable: Trackable
     let connectionState: ConnectionState
 }

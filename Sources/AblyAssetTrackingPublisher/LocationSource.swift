@@ -1,5 +1,8 @@
 import CoreLocation
 
+/**
+ Type of location `LocationSource`
+ */
 public enum LocationSourceType: Int {
     case `default`
     case raw

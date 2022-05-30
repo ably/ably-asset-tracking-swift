@@ -1,5 +1,6 @@
 import Foundation
 import AblyAssetTrackingPublisher
+import AblyAssetTrackingCore
 import CoreLocation.CLLocation
 
 class MapViewModel: ObservableObject {

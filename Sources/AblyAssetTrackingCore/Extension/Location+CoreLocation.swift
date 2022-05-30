@@ -1,6 +1,4 @@
-
 import CoreLocation
-
 public extension Location {
     func toCoreLocation() -> CLLocation {
         let date = Date(timeIntervalSince1970: self.timestamp)
@@ -17,8 +15,7 @@ public extension Location {
                 speedAccuracy: self.speedAccuracy,
                 timestamp: date
             )
-            
-        } else if #available(iOS 13.4, *) {
+       } else if #available(iOS 13.4, *) {
             return CLLocation(
                 coordinate: self.coordinate.toCoreLocationCoordinate2d(),
                 altitude: self.altitude,
@@ -30,7 +27,6 @@ public extension Location {
                 speedAccuracy: self.speedAccuracy,
                 timestamp: date
             )
-            
         } else {
             return CLLocation(
                 coordinate: self.coordinate.toCoreLocationCoordinate2d(),

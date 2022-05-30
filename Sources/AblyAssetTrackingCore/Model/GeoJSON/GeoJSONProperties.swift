@@ -1,4 +1,3 @@
-
 /**
  Helper class used in `GeoJSONMessage` to map GeoJSON properties field (as defined at https://geojson.org ).
  All properties match properties from `CLLocation`.

@@ -32,11 +32,10 @@ class DefaultLocationService: LocationService {
         locationManager.systemLocationManager.stopUpdatingLocation()
     }
 
+    /**
+     It's not possible to change time interval for location updates in `CLLocationManager` from Apple `CoreLocation` framework.
+     */
     func changeLocationEngineResolution(resolution: Resolution) {
-        /**
-         It's not possible to change time interval for location updates in `CLLocationManager` from Apple `CoreLocation` framework.
-         Documentation: https://developer.apple.com/documentation/corelocation/cllocationmanager
-         */
         locationManager.systemLocationManager.desiredAccuracy = resolution.accuracy.toCoreLocationAccuracy()
         locationManager.systemLocationManager.distanceFilter = resolution.minimumDisplacement
     }
