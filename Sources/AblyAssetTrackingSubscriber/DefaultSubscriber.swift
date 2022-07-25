@@ -236,7 +236,6 @@ extension DefaultSubscriber {
         }
     }
 
-    // swiftlint:disable vertical_whitespace_between_cases
     private func performChangeResolution(_ event: ChangeResolutionEvent) {
         guard let resolution = event.resolution else {
             callback(value: Void(), handler: event.resultHandler)
