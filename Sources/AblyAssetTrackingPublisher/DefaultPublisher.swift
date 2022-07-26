@@ -8,7 +8,6 @@ import AblyAssetTrackingInternal
 // Default logger used in Publisher SDK
 let logger: Logger = Logger(label: "com.ably.tracking.Publisher")
 
-// swiftlint:disable cyclomatic_complexity
 class DefaultPublisher: Publisher {
     
     // Publisher state
@@ -37,7 +36,7 @@ class DefaultPublisher: Publisher {
     private var rawLocationState: TrackableState<RawLocationUpdate>
     private var state: State = .working
     private var presenceData: PresenceData
-    private var areRawLocationsEnabled: Bool?
+    private var areRawLocationsEnabled: Bool
 
     // ResolutionPolicy
     private let hooks: DefaultResolutionPolicyHooks
@@ -49,6 +48,7 @@ class DefaultPublisher: Publisher {
     private var resolutions: [Trackable: Resolution]
     private var locationEngineResolution: Resolution
     private var trackables: Set<Trackable>
+    private var constantLocationEngineResolution: Resolution?
 
     private var lastEnhancedLocations: [Trackable: Location]
     private var lastEnhancedTimestamps: [Trackable: Double]
@@ -74,8 +74,9 @@ class DefaultPublisher: Publisher {
          routeProvider: RouteProvider,
          enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
          rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
-         areRawLocationsEnabled: Bool? = nil,
-         isSendResolutionEnabled: Bool = true
+         areRawLocationsEnabled: Bool = false,
+         isSendResolutionEnabled: Bool = true,
+         constantLocationEngineResolution: Resolution? = nil
     ) {
         
         self.connectionConfiguration = connectionConfiguration
@@ -93,6 +94,7 @@ class DefaultPublisher: Publisher {
 
         self.isSendResolutionEnabled = isSendResolutionEnabled
         self.areRawLocationsEnabled = areRawLocationsEnabled
+        self.constantLocationEngineResolution = constantLocationEngineResolution
         self.presenceData = PresenceData(type: .publisher, rawLocations: areRawLocationsEnabled)
         self.hooks = DefaultResolutionPolicyHooks()
         self.methods = DefaultResolutionPolicyMethods()
@@ -113,6 +115,14 @@ class DefaultPublisher: Publisher {
         self.methods.delegate = self
         
         self.ablyPublisher.subscribeForAblyStateChange()
+        
+        /**
+         If available, set `constantLocationEngineResolution` for the `LocationService`.
+         In this case all further resolution calculations are disabled.
+         */
+        if let resolution = constantLocationEngineResolution {
+            locationService.changeLocationEngineResolution(resolution: resolution)
+        }
     }
 
     func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
@@ -211,7 +221,6 @@ extension DefaultPublisher {
     }
 
     // MARK: Track
-    // swiftlint:disable line_length
     private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
         guard !state.isStoppingOrStopped else {
             publisherStoppedCallback(handler: event.resultHandler)
@@ -727,8 +736,11 @@ extension DefaultPublisher {
             logger.error("Cannot perform changeLocationEngineResolution. Publisher is not working.")
             return
         }
-
-        locationService.changeLocationEngineResolution(resolution: resolution)
+        
+        if constantLocationEngineResolution == nil {
+            locationService.changeLocationEngineResolution(resolution: resolution)
+        }
+        
         enqueue(event: DelegateResolutionUpdateEvent(resolution: resolution))
     }
 

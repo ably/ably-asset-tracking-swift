@@ -1,6 +1,6 @@
 ### Ably SDK
 
-[_Ably_](https://ably.com/) _is the platform that powers synchronized digital experiences in realtime. Whether attending an event in a virtual venue, receiving realtime financial information, or monitoring live car performance data – consumers simply expect realtime digital experiences as standard. Ably provides a suite of APIs to build, extend, and deliver powerful digital experiences in realtime for more than 250 million devices across 80 countries each month. Organizations like Bloomberg, HubSpot, Verizon, and Hopin depend on Ably's platform to offload the growing complexity of business-critical realtime data synchronization at global scale. For more information, see the_ [_Ably documentation_](https://ably.com/documentation)_._
+[_Ably_](https://ably.com/) _is the platform that powers synchronized digital experiences in realtime. Whether attending an event in a virtual venue, receiving realtime financial information, or monitoring live car performance data – consumers simply expect realtime digital experiences as standard. Ably provides a suite of APIs to build, extend, and deliver powerful digital experiences in realtime for more than 250 million devices across 80 countries each month. Organizations like Bloomberg, HubSpot, Verizon, and Hopin depend on Ably's platform to offload the growing complexity of business-critical realtime data synchronization at global scale. For more information, see the_ [_Ably documentation_](https://ably.com/docs)_._
 
 # Ably Asset Tracking SDKs for Swift
 
@@ -36,7 +36,7 @@ One Swift Package (`ably-asset-tracking-swift`), containing two libraries/ SDKs:
 
 ### Documentation
 
-Visit the [Ably Asset Tracking](https://ably.com/documentation/asset-tracking) documentation for a complete API reference and code examples.
+Visit the [Ably Asset Tracking](https://ably.com/docs/asset-tracking) documentation for a complete API reference and code examples.
 
 ### Useful Resources
 
@@ -159,12 +159,12 @@ let connectionConfiguration = ConnectionConfiguration(authUrl: authUrl, clientId
 
 ## Resources
 
-- [Asset Tracking Documentation](https://ably.com/documentation/asset-tracking)
-- [Ably Documentation](https://ably.com/documentation)
+- [Asset Tracking Documentation](https://ably.com/docs/asset-tracking)
+- [Ably Documentation](https://ably.com/docs)
 
 ## Feature Support
 
-iOS Client Library [feature support matrix](https://ably.com/documentation/asset-tracking).
+iOS Client Library [feature support matrix](https://ably.com/docs/asset-tracking).
 
 ## Support, feedback and troubleshooting
 
