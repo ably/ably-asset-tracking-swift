@@ -28,11 +28,16 @@ This repo holds an Xcode workspace (`Examples/AblyAssetTracking.workspace`), con
 
 Multiple example apps/ Xcode projects, and
 
-One Swift Package (`ably-asset-tracking-swift`), containing two libraries/ SDKs:
+One Swift Package (`ably-asset-tracking-swift`), containing three libraries/ SDKs:
 
 - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingPublisher`.
 
 - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingSubscriber`.
+
+- Ably Asset Tracking UI SDK: The `AblyAssetTrackingUI` library allows you to use `import AblyAssetTrackingUI`.
+
+  The UI SDK contains:
+    - Location Animator - uses to animate map view annotation smoothly
 
 ### Documentation
 
@@ -155,6 +160,36 @@ let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { toke
 
 ```swift
 let connectionConfiguration = ConnectionConfiguration(authUrl: authUrl, clientId: clientId)
+```
+
+### Ably Asset Tracking UI (Location Animator)
+
+The `Location Animator` can interpolate and animate map annotation view.
+
+```swift
+// Instantiate Location Animator
+let locationAnimator = DefaultLocationAnimator()
+```
+
+```swift
+// Subscribe for `Location Animator` position updates
+locationAnimator.subscribeForFrequentlyUpdatingPosition { position in
+    // Update map view annotation position here
+}
+```
+
+```swift
+// Additionally you can subscribe for infrequently position updates
+locationAnimator.subscribeForInfrequentlyUpdatingPosition { position in
+    // Update map camera position
+}
+```
+
+```swift
+// Feed animator with location changes from the `Subscriber SDK`
+func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
+    locationAnimator.animateLocationUpdate(location: locationUpdate, interval: locationUpdateInterval / 1000.0)
+}
 ```
 
 ## Resources

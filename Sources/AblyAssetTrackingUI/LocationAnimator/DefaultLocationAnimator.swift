@@ -2,9 +2,9 @@ import Combine
 import AblyAssetTrackingCore
 import QuartzCore
 
-class DefaultLocationAnimator: NSObject, LocationAnimator {
+public class DefaultLocationAnimator: NSObject, LocationAnimator {
     
-    var infrequentlyUpdatingPositionInterval: TimeInterval = 5.0
+    public var infrequentlyUpdatingPositionInterval: TimeInterval = 5.0
     
     // Default values
     private let intentionalAnimationDelay: TimeInterval = 2.0
@@ -74,7 +74,7 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         stopAnimationLoop()
     }
     
-    override init() {
+    public override init() {
         super.init()
         
         startAnimationLoop()
@@ -108,15 +108,15 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
         }.store(in: &subscriptions)
     }
    
-    func animateLocationUpdate(location: LocationUpdate, interval: Double) {
+    public func animateLocationUpdate(location: LocationUpdate, interval: Double) {
         animationRequestSubject.send(AnimationRequest(locationUpdate: location, interval: interval))
     }
     
-    func subscribeForFrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
+    public func subscribeForFrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
         self.subscribeForFrequentlyUpdatingPositionClosure = closure
     }
     
-    func subscribeForInfrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
+    public func subscribeForInfrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
         self.subscribeForInfrequentlyUpdatingPositionClosure = closure
     }
     
@@ -226,7 +226,7 @@ class DefaultLocationAnimator: NSObject, LocationAnimator {
 }
 
 // Models
-extension Location {
+public extension Location {
     func toPosition() -> Position {
         Position(
             latitude: coordinate.latitude,

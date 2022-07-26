@@ -2,7 +2,7 @@ import Foundation
 import AblyAssetTrackingCore
 import Combine
 
-protocol LocationAnimator {
+public protocol LocationAnimator {
     /**
      Time interval (in seconds) for publishing `subscribeForInfrequentlyUpdatingPosition`.
      Default value is 5.0 seconds
@@ -30,13 +30,13 @@ protocol LocationAnimator {
     func animateLocationUpdate(location: LocationUpdate, interval: TimeInterval)
 }
 
-struct Position: CustomDebugStringConvertible, CustomStringConvertible {
-    let latitude: Double
-    let longitude: Double
-    let accuracy: Double
-    let bearing: Double
+public struct Position: CustomDebugStringConvertible, CustomStringConvertible {
+    public let latitude: Double
+    public let longitude: Double
+    public let accuracy: Double
+    public let bearing: Double
     
-    var debugDescription: String {
+    public var debugDescription: String {
         """
         latitude: \(latitude)
         longitude: \(longitude)
@@ -45,7 +45,7 @@ struct Position: CustomDebugStringConvertible, CustomStringConvertible {
         """
     }
  
-    var description: String {
+    public var description: String {
         "\(latitude),\(longitude)"
     }
 }
