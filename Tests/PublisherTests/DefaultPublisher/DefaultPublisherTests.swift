@@ -192,7 +192,6 @@ class DefaultPublisherTests: XCTestCase {
 
         let expectation = XCTestExpectation()
         // onSuccess callback should be called on the main thread
-        // Notice - in case of failure it will crash whole test suite
         publisher.track(trackable: trackable) { result in
             switch result {
             case .success:
@@ -212,7 +211,6 @@ class DefaultPublisherTests: XCTestCase {
         let expectation = XCTestExpectation()
         
         //onError callback should be called on the main thread
-        // Notice - in case of failure it will crash whole test suite
         publisher.track(trackable: trackable) { result in
             switch result {
             case .success:
