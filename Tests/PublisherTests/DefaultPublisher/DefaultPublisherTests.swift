@@ -113,14 +113,12 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertTrue(routeProvider.getRouteCalled)
         XCTAssertEqual(routeProvider.getRouteParamDestination?.toLocationCoordinate(), destination)
     }
-    
-    func testTrack_error_duplicate_track() {
-        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+    func testTrack_trackableAddedEarlier() {
+        ablyService.connectCompletionHandler = { completion in completion?(.success) }
         var expectation = XCTestExpectation()
-        let expectedError = ErrorInformation(type: .trackableAlreadyExist(trackableId: self.trackable.id))
         
-        // When tracking a trackable
-        publisher.track(trackable: trackable) { result in
+        // When adding a new trackable
+        publisher.add(trackable: trackable) { result in
             switch result {
             case .success:
                 expectation.fulfill()
@@ -128,17 +126,18 @@ class DefaultPublisherTests: XCTestCase {
                 XCTFail("Failure callback shouldn't be called")
             }
         }
+        
         wait(for: [expectation], timeout: 5.0)
         expectation = XCTestExpectation()
         
-        // And tracking it once again
+        // And then tracking it
         publisher.track(trackable: trackable) { result in
             switch result {
             case .success:
-                XCTFail("Success callback shouldn't be called")
-            case .failure(let error):
+                XCTAssertEqual(self.publisher.activeTrackable, self.trackable)
                 expectation.fulfill()
-                XCTAssertEqual(error.message, expectedError.message)
+            case .failure(_):
+                XCTFail("Failure callback shouldn't be called")
             }
         }
         
@@ -188,11 +187,11 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
     
-    func testTrack_thread() {
+    func testTrack_successMainThread() {
         ablyService.connectCompletionHandler = { completion in  completion?(.success) }
-        
-        var expectation = XCTestExpectation()
-        // Both `onSuccess` and `onError` callbacks should be called on main thread
+
+        let expectation = XCTestExpectation()
+        // onSuccess callback should be called on the main thread
         // Notice - in case of failure it will crash whole test suite
         publisher.track(trackable: trackable) { result in
             switch result {
@@ -205,8 +204,15 @@ class DefaultPublisherTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 5.0)
+    }
+    
+    func testTrack_failureMainThread() {
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
+        ablyService.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
+        let expectation = XCTestExpectation()
         
-        expectation = XCTestExpectation()
+        //onError callback should be called on the main thread
+        // Notice - in case of failure it will crash whole test suite
         publisher.track(trackable: trackable) { result in
             switch result {
             case .success:
