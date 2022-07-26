@@ -57,9 +57,20 @@ struct MapView: View {
             }
             Divider()
                 .padding(4)
-            Toggle(isOn: $viewModel.areRawLocationsEnabled) {
+            HStack {
                 StackedText(texts: viewModel.rawLocationsInfo)
-            }.padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 10))
+                    .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 10))
+                Spacer()
+            }
+            Divider()
+                .padding(4)
+            HStack(alignment: .top) {
+                VStack(alignment: .leading) {
+                    StackedText(texts: viewModel.constantResolutionInfo)
+                        .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
+                }
+                Spacer()
+            }
             ZStack(alignment: .bottomTrailing) {
                 Map(coordinateRegion: $locationManager.currentRegion, showsUserLocation: true)
                     .edgesIgnoringSafeArea(.bottom)

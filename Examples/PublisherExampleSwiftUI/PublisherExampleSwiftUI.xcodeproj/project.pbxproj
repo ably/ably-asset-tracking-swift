@@ -7,11 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D50920DB27E4AFF6001073D1 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50920DA27E4AFF6001073D1 /* SettingsViewModel.swift */; };
+		D50920DD27E4B08A001073D1 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50920DC27E4B08A001073D1 /* SettingsModel.swift */; };
+		D50920DF27E4B1F2001073D1 /* UserDefaults+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50920DE27E4B1F2001073D1 /* UserDefaults+Codable.swift */; };
+		D50920E127E4B509001073D1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50920E027E4B509001073D1 /* SettingsView.swift */; };
+		D50920E427E4BCD7001073D1 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50920E327E4BCD7001073D1 /* ListItem.swift */; };
+		D50920E627E4C0D6001073D1 /* TitleValueListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50920E527E4C0D6001073D1 /* TitleValueListItem.swift */; };
+		D50920E827E8571A001073D1 /* TitleTextFieldListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50920E727E8571A001073D1 /* TitleTextFieldListItem.swift */; };
 		D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */; };
 		D544FAFA2771B3580015925C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D544FAF92771B3580015925C /* Assets.xcassets */; };
 		D544FAFD2771B3580015925C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D544FAFC2771B3580015925C /* Preview Assets.xcassets */; };
 		D544FB072771B3850015925C /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = D544FB062771B3850015925C /* AblyAssetTrackingPublisher */; };
-		D544FB092771B4340015925C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FB082771B4340015925C /* SettingsView.swift */; };
+		D544FB092771B4340015925C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FB082771B4340015925C /* MainView.swift */; };
 		D544FB0C2771BA680015925C /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FB0B2771BA680015925C /* CustomButtonStyle.swift */; };
 		D544FB0F2771BB9D0015925C /* CustomButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FB0E2771BB9D0015925C /* CustomButtonModifier.swift */; };
 		D544FB122771BC1E0015925C /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FB112771BC1E0015925C /* Button.swift */; };
@@ -23,18 +30,26 @@
 		D544FB2A2773010B0015925C /* CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FB292773010B0015925C /* CustomText.swift */; };
 		D544FB47277332760015925C /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FB46277332760015925C /* MapViewModel.swift */; };
 		D544FB4B277333A20015925C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FB4A277333A20015925C /* Environment.swift */; };
+		D5A6A9F927E867160035A689 /* CloseKeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6A9F827E867160035A689 /* CloseKeyboardHelper.swift */; };
 		D5DBAF7027746105008B8DED /* StackedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAF6F27746105008B8DED /* StackedText.swift */; };
 		D5DBAF732774625C008B8DED /* StackedTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAF722774625C008B8DED /* StackedTextModel.swift */; };
 		D5DBAF7527748116008B8DED /* RoutingProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAF7427748116008B8DED /* RoutingProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D50920DA27E4AFF6001073D1 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		D50920DC27E4B08A001073D1 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		D50920DE27E4B1F2001073D1 /* UserDefaults+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Codable.swift"; sourceTree = "<group>"; };
+		D50920E027E4B509001073D1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D50920E327E4BCD7001073D1 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
+		D50920E527E4C0D6001073D1 /* TitleValueListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleValueListItem.swift; sourceTree = "<group>"; };
+		D50920E727E8571A001073D1 /* TitleTextFieldListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTextFieldListItem.swift; sourceTree = "<group>"; };
 		D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExampleSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExampleSwiftUIApp.swift; sourceTree = "<group>"; };
 		D544FAF92771B3580015925C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D544FAFC2771B3580015925C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D544FB042771B3790015925C /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
-		D544FB082771B4340015925C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D544FB082771B4340015925C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D544FB0B2771BA680015925C /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		D544FB0E2771BB9D0015925C /* CustomButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonModifier.swift; sourceTree = "<group>"; };
 		D544FB112771BC1E0015925C /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -48,6 +63,7 @@
 		D544FB46277332760015925C /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		D544FB482773338B0015925C /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		D544FB4A277333A20015925C /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		D5A6A9F827E867160035A689 /* CloseKeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseKeyboardHelper.swift; sourceTree = "<group>"; };
 		D5DBAF6F27746105008B8DED /* StackedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedText.swift; sourceTree = "<group>"; };
 		D5DBAF722774625C008B8DED /* StackedTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedTextModel.swift; sourceTree = "<group>"; };
 		D5DBAF7427748116008B8DED /* RoutingProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingProfile.swift; sourceTree = "<group>"; };
@@ -65,6 +81,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D50920E227E4B714001073D1 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D50920E027E4B509001073D1 /* SettingsView.swift */,
+				D50920E327E4BCD7001073D1 /* ListItem.swift */,
+				D50920E527E4C0D6001073D1 /* TitleValueListItem.swift */,
+				D50920E727E8571A001073D1 /* TitleTextFieldListItem.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		D544FAE92771B3550015925C = {
 			isa = PBXGroup;
 			children = (
@@ -167,7 +194,8 @@
 		D544FB202771D8290015925C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D544FB082771B4340015925C /* SettingsView.swift */,
+				D50920E227E4B714001073D1 /* Settings */,
+				D544FB082771B4340015925C /* MainView.swift */,
 				D544FB242772102F0015925C /* MapView.swift */,
 			);
 			path = View;
@@ -185,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				D544FB46277332760015925C /* MapViewModel.swift */,
+				D50920DA27E4AFF6001073D1 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -193,6 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				D544FB4A277333A20015925C /* Environment.swift */,
+				D50920DE27E4B1F2001073D1 /* UserDefaults+Codable.swift */,
+				D5A6A9F827E867160035A689 /* CloseKeyboardHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -201,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				D5DBAF722774625C008B8DED /* StackedTextModel.swift */,
+				D50920DC27E4B08A001073D1 /* SettingsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -278,18 +310,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D50920DD27E4B08A001073D1 /* SettingsModel.swift in Sources */,
 				D5DBAF7027746105008B8DED /* StackedText.swift in Sources */,
-				D544FB092771B4340015925C /* SettingsView.swift in Sources */,
+				D544FB092771B4340015925C /* MainView.swift in Sources */,
+				D50920E827E8571A001073D1 /* TitleTextFieldListItem.swift in Sources */,
 				D544FB162771C49B0015925C /* CustomTextFieldModifier.swift in Sources */,
 				D544FB122771BC1E0015925C /* Button.swift in Sources */,
+				D50920E127E4B509001073D1 /* SettingsView.swift in Sources */,
 				D544FB182771C4E50015925C /* TextField.swift in Sources */,
 				D544FB142771C34B0015925C /* CustomTextFieldStyle.swift in Sources */,
 				D544FB0C2771BA680015925C /* CustomButtonStyle.swift in Sources */,
 				D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */,
+				D50920DF27E4B1F2001073D1 /* UserDefaults+Codable.swift in Sources */,
+				D50920DB27E4AFF6001073D1 /* SettingsViewModel.swift in Sources */,
 				D5DBAF7527748116008B8DED /* RoutingProfile.swift in Sources */,
 				D544FB2A2773010B0015925C /* CustomText.swift in Sources */,
 				D544FB4B277333A20015925C /* Environment.swift in Sources */,
+				D50920E427E4BCD7001073D1 /* ListItem.swift in Sources */,
 				D544FB252772102F0015925C /* MapView.swift in Sources */,
+				D50920E627E4C0D6001073D1 /* TitleValueListItem.swift in Sources */,
+				D5A6A9F927E867160035A689 /* CloseKeyboardHelper.swift in Sources */,
 				D544FB0F2771BB9D0015925C /* CustomButtonModifier.swift in Sources */,
 				D544FB232771D8510015925C /* LocationManager.swift in Sources */,
 				D5DBAF732774625C008B8DED /* StackedTextModel.swift in Sources */,
