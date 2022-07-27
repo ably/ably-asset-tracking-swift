@@ -22,22 +22,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var animationStartTime: CFAbsoluteTime = .zero
     private var animationStepStartTime: CFAbsoluteTime = .zero
     private var currentAnimationStepProgress: Double = 1.0
-    private var currentAnimationStepIndex: Int = -1
     private var currentAnimationStep: AnimationStep?
-        
-    private var _animationPositions: [Position] = []
-    private var animationPositions: [Position] {
-        get {
-            return globalBackgroundSyncronizeDataQueue.sync {
-                _animationPositions
-            }
-        }
-        set {
-            globalBackgroundSyncronizeDataQueue.sync {
-                self._animationPositions = newValue
-            }
-        }
-    }
     
     private var _animationSteps: [AnimationStep] = []
     private var animationSteps: [AnimationStep] {
