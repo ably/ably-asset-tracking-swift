@@ -53,12 +53,15 @@ class MapViewModel: ObservableObject {
         
         let connectionConfiguration = ConnectionConfiguration(apiKey: EnvironmentHelper.ABLY_API_KEY, clientId: "Asset Tracking Publisher Example")
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
+
         let constantResolution: Resolution? = SettingsModel.shared.isConstantResolutionEnabled ? SettingsModel.shared.constantResolution : nil
         
         publisher = try! PublisherFactory.publishers()
                 .connection(connectionConfiguration)
                 .mapboxConfiguration(MapboxConfiguration(mapboxKey: EnvironmentHelper.MAPBOX_ACCESS_TOKEN))
                 .log(LogConfiguration())
+//                Uncomment below line to enable simulated location
+//                .locationSource(.init(locationSource: SimulatedLocations.recordedLocations()))
                 .routingProfile(.driving)
                 .delegate(self)
                 .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
