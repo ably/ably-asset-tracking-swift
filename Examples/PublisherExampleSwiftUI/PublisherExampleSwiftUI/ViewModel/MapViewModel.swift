@@ -21,16 +21,12 @@ class MapViewModel: ObservableObject {
     }
     private var updatedLocations: Set<CLLocation> = []
     
-    @Published var areRawLocationsEnabled = false {
-        didSet {
-            rawLocationsEnabledChanged()
-        }
-    }
     @Published var isConnected: Bool
     @Published var errorInfo: String? = nil
     @Published var isDestinationAvailable: Bool = false
     @Published var didChangeRoutingProfile = false
     @Published var rawLocationsInfo: [StackedTextModel] = []
+    @Published var constantResolutionInfo: [StackedTextModel] = []
     @Published var connectionStatusAndProfileInfo: [StackedTextModel] = []
     @Published var resolutionInfo: [StackedTextModel] = []
     
@@ -41,7 +37,15 @@ class MapViewModel: ObservableObject {
             routingProfile: routingProfile?.asInfo()
         )
         updateResolutionInfo()
-        rawLocationsInfo = [.init(label: "Publish raw locations: ", value: "\(areRawLocationsEnabled ? "enabled" : "disabled")")]
+        rawLocationsInfo = [.init(label: "Publish raw locations: ", value: "\(SettingsModel.shared.areRawLocationsEnabled ? "enabled" : "disabled")")]
+        
+        if SettingsModel.shared.isConstantResolutionEnabled {
+            constantResolutionInfo.append(.init(label: "Constant engine resolution", value: "", isHeader: true))
+            constantResolutionInfo.append(.init(label: "Desired accuracy: ", value: "\(SettingsModel.shared.constantResolution.accuracy)"))
+            constantResolutionInfo.append(.init(label: "Min displacement: ", value: "\(SettingsModel.shared.constantResolution.minimumDisplacement)m"))
+        } else {
+            constantResolutionInfo.append(.init(label: "Constant resolution: ", value:  "disabled"))
+        }
     }
     
     func connectPublisher(trackableId: String) {
@@ -49,7 +53,9 @@ class MapViewModel: ObservableObject {
         
         let connectionConfiguration = ConnectionConfiguration(apiKey: EnvironmentHelper.ABLY_API_KEY, clientId: "Asset Tracking Publisher Example")
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
-                
+
+        let constantResolution: Resolution? = SettingsModel.shared.isConstantResolutionEnabled ? SettingsModel.shared.constantResolution : nil
+        
         publisher = try! PublisherFactory.publishers()
                 .connection(connectionConfiguration)
                 .mapboxConfiguration(MapboxConfiguration(mapboxKey: EnvironmentHelper.MAPBOX_ACCESS_TOKEN))
@@ -59,7 +65,8 @@ class MapViewModel: ObservableObject {
                 .routingProfile(.driving)
                 .delegate(self)
                 .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
-                .rawLocations(enabled: areRawLocationsEnabled)
+                .rawLocations(enabled: SettingsModel.shared.areRawLocationsEnabled)
+                .constantLocationEngineResolution(resolution: constantResolution)
                 .start()
         
         let destination: LocationCoordinate? = nil
@@ -82,21 +89,9 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    private func rawLocationsEnabledChanged() {
-        rawLocationsInfo = [.init(label: "Publish raw locations: ", value: "\(areRawLocationsEnabled ? "enabled" : "disabled")")]
-        
-        disconnectPublisher { [weak self] _ in
-            guard let trackableId = self?.trackableId else {
-                return
-            }
-
-            self?.connectPublisher(trackableId: trackableId)
-        }
-    }
-    
     private func updateResolutionInfo(_ resolution: Resolution? = nil) {
         resolutionInfo.removeAll()
-        
+        resolutionInfo.append(.init(label: "Resolution policy", value: "", isHeader: true))
         if let resolution = resolution {
             resolutionInfo.append(StackedTextModel(label: "Accurancy:", value: " \(resolution.accuracy.asInfo())"))
             resolutionInfo.append(StackedTextModel(label: "Min. displacement:", value: " \(resolution.minimumDisplacement)m"))
