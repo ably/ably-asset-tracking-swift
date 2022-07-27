@@ -28,11 +28,16 @@ This repo holds an Xcode workspace (`Examples/AblyAssetTracking.workspace`), con
 
 Multiple example apps/ Xcode projects, and
 
-One Swift Package (`ably-asset-tracking-swift`), containing two libraries/ SDKs:
+One Swift Package (`ably-asset-tracking-swift`), containing three libraries/ SDKs:
 
 - Publisher SDK: The `AblyAssetTrackingPublisher` library allows you to use `import AblyAssetTrackingPublisher`.
 
 - Subscriber SDK: The `AblyAssetTrackingSubscriber` library allows you to use `import AblyAssetTrackingSubscriber`.
+
+- Ably Asset Tracking UI SDK: The `AblyAssetTrackingUI` library allows you to use `import AblyAssetTrackingUI`.
+
+  The UI SDK contains:
+    - Location Animator - uses to animate map view annotation smoothly
 
 ### Documentation
 
@@ -79,7 +84,8 @@ _You can find the version on the [releases](https://github.com/ably/ably-asset-t
 - An `Examples/Secrets.xcconfig` file containing credentials (keys/ tokens) is required to build the example apps. (You can use the example `Examples/Example.Secrets.xcconfig`, e.g. by running `cp Examples/Example.Secrets.xcconfig Examples/Secrets.xcconfig`). Update the following values in `Examples/Secrets.xcconfig`:
 - `ABLY_API_KEY`: Used by all example apps to authenticate with Ably using basic authentication. Not recommended in production, and can be taken from [here](https://ably.com/accounts).
 - `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs, and can be taken from [here](https://account.mapbox.com/). Using the Mapbox token is only required to run the **Publisher** example apps.
-- Open `AblyAssetTracking.xcworkspace` to open an Xcode workspace containing example apps and the Swift Package containing the SDKs that showcase how to use the Ably Asset Tracking SDKs.
+- Open `AblyAssetTracking.xcworkspace` to open an Xcode workspace containing the Subscriber example app and the Swift Package containing the SDKs that showcase how to use the subscriber part of the Ably Asset Tracking SDKs.
+- Open `PublisherExampleSwiftUI.xcodeproj` to open an Xcode workspace containing the Publisher exmple app
 
 ## Usage
 
@@ -155,6 +161,36 @@ let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { toke
 
 ```swift
 let connectionConfiguration = ConnectionConfiguration(authUrl: authUrl, clientId: clientId)
+```
+
+### Ably Asset Tracking UI (Location Animator)
+
+The `Location Animator` can interpolate and animate map annotation view.
+
+```swift
+// Instantiate Location Animator
+let locationAnimator = DefaultLocationAnimator()
+```
+
+```swift
+// Subscribe for `Location Animator` position updates
+locationAnimator.subscribeForFrequentlyUpdatingPosition { position in
+    // Update map view annotation position here
+}
+```
+
+```swift
+// Additionally you can subscribe for infrequently position updates
+locationAnimator.subscribeForInfrequentlyUpdatingPosition { position in
+    // Update map camera position
+}
+```
+
+```swift
+// Feed animator with location changes from the `Subscriber SDK`
+func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
+    locationAnimator.animateLocationUpdate(location: locationUpdate, interval: locationUpdateInterval / 1000.0)
+}
 ```
 
 ## Resources

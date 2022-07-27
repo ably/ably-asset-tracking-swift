@@ -1,7 +1,8 @@
 import Foundation
 import MapKit
 
-class TruckAnnotationView: MKAnnotationView {
+class TruckAnnotationView: MKAnnotationView, Identifiable {
+    static let identifier = "MapTruckAnnotationViewIdentifier"
     private let imageView: UIImageView
 
     var bearing: Double = 0 { didSet { updateImage() } }
@@ -11,9 +12,7 @@ class TruckAnnotationView: MKAnnotationView {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
         frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        centerOffset = CGPoint(x: 0, y: -frame.size.height / 2)
 
-        layer.cornerRadius = 12
         canShowCallout = false
         addSubview(imageView)
         updateImage()
