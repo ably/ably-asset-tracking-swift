@@ -18,6 +18,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private var subscriber: AblyAssetTrackingSubscriber.Subscriber!
     private var publisher: Publisher!
 
+    private let didChangeAssetConnectionStatusOnlineExpectation = XCTestExpectation(description: "Asset Connection Status Did Change To Online")
+    private let didChangeAssetConnectionStatusOfflineExpectation = XCTestExpectation(description: "Asset Connection Status Did Change To Offline")
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
     private let didUpdateRawLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Raw Locations")
     private let didUpdateResolutionExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Resolution")
@@ -102,6 +104,66 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: 5)
     }
     
+    func testSubscriberReceivesAssetConnectionStatus() throws {
+        do {
+            locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
+        } catch {
+            XCTFail("Can't find the source of locations `test-locations.json`")
+        }
+        
+        let defaultLocationService = DefaultLocationService(
+            mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() })
+        )
+        
+        let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
+        
+        let defaultAbly = DefaultAbly(
+            configuration: publisherConnectionConfiguration,
+            mode: .publish,
+            logger: .init(label: "com.ably.tracking.SystemTests")
+        )
+        
+        publisher = DefaultPublisher(
+            connectionConfiguration: publisherConnectionConfiguration,
+            mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
+            logConfiguration: logConfiguration,
+            routingProfile: .driving,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            ablyPublisher: defaultAbly,
+            locationService: defaultLocationService,
+            routeProvider: routeProvider,
+            areRawLocationsEnabled: true,
+            isSendResolutionEnabled: true
+        )
+        
+        let trackable = Trackable(id: trackableId)
+        publisher.add(trackable: trackable) { _  in }
+        
+        let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
+        
+        subscriber = SubscriberFactory.subscribers()
+            .connection(subscriberConnectionConfiguration)
+            .resolution(resolution)
+            .log(logConfiguration)
+            .delegate(self)
+            .trackingId(trackableId)
+            .start(completion: { _ in })!
+        
+        wait(for: [didChangeAssetConnectionStatusOnlineExpectation], timeout: 5.0)
+        
+        let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
+        publisher.stop(completion: { _ in
+            stopPublisherExpectation.fulfill()
+        })
+        wait(for: [stopPublisherExpectation], timeout: 5)
+        
+        wait(for: [didChangeAssetConnectionStatusOfflineExpectation], timeout: 5.0)
+        
+        subscriber.stop(completion: { _ in })
+    }
+    
     private func delay(_ timeout: TimeInterval) {
         let delayExpectation = XCTestExpectation()
         delayExpectation.isInverted = true
@@ -112,7 +174,16 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
 extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didFailWithError error: ErrorInformation) {}
     
-    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
+        switch status {
+        case .online:
+            didChangeAssetConnectionStatusOnlineExpectation.fulfill()
+        case .offline:
+            didChangeAssetConnectionStatusOfflineExpectation.fulfill()
+        case .failed:
+            ()
+        }
+    }
     
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         didUpdateEnhancedLocationExpectation.fulfill()
