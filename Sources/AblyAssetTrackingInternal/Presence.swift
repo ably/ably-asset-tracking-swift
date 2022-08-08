@@ -1,7 +1,4 @@
-/**
- Wrapper for ``ARTPresenceAction`` to hide ``Ably`` interface
- */
-public enum Presence {
+public enum PresenceAction {
     case absent
     case present
     case enter
@@ -10,3 +7,15 @@ public enum Presence {
     case unknown
 }
 
+public enum PresenceType {
+    case publisher
+    case subscriber
+}
+
+/**
+ Wrapper for ``ARTPresenceMessage`` to hide ``Ably`` interface
+ */
+public struct Presence {
+    public let action: PresenceAction
+    public let type: PresenceType
+}

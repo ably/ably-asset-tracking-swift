@@ -144,33 +144,52 @@ public class DefaultAbly: AblyCommon {
             return
         }
         
+        channel.presence.get { [weak self] messages, error in
+            self?.logger.debug("Get presence update from channel", source: String(describing: Self.self))
+            guard let self = self, let messages = messages else {
+                return
+            }
+            for message in messages {
+                self.handleARTPresenceMessage(message, for: trackable)
+            }
+        }
         channel.presence.subscribe { [weak self] message in
             self?.logger.debug("Received presence update from channel", source: String(describing: Self.self))
-            guard
-                let self = self,
-                let jsonData = message.data,
-                let data: PresenceData = try? PresenceData.fromAny(jsonData),
-                let clientId = message.clientId
-            else { return }
+            guard let self = self else { return }
             
-            let presence = message.action.toPresence()
-            
-            // AblySubscriber delegate
-            self.subscriberDelegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
-            self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionState: presence.toConnectionState())
-            
-            // Deleagate `Publisher` resolution if present in PresenceData
-            if let resolution = data.resolution, data.type == .publisher {
-                self.subscriberDelegate?.subscriberService(sender: self, didReceiveResolution: resolution)
-            }
-            
-            // AblyPublisher delegate
-            self.publisherDelegate?.publisherService(sender: self,
-                                                     didReceivePresenceUpdate: presence,
-                                                     forTrackable: trackable,
-                                                     presenceData: data,
-                                                     clientId: clientId)
+            self.handleARTPresenceMessage(message, for: trackable)
         }
+    }
+    
+    private func handleARTPresenceMessage(_ message: ARTPresenceMessage, for trackable: Trackable) {
+        guard
+            let jsonData = message.data,
+            let data: PresenceData = try? PresenceData.fromAny(jsonData),
+            let clientId = message.clientId
+        else { return }
+        
+        let presence = Presence(
+            action: message.action.toPresenceAction(),
+            type: data.type.toPresenceType()
+        )
+        
+        // AblySubscriber delegate
+        self.subscriberDelegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
+        self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionState: presence.action.toConnectionState())
+        
+        // Deleagate `Publisher` resolution if present in PresenceData
+        if let resolution = data.resolution, data.type == .publisher {
+            self.subscriberDelegate?.subscriberService(sender: self, didReceiveResolution: resolution)
+        }
+        
+        // AblyPublisher delegate
+        self.publisherDelegate?.publisherService(
+            sender: self,
+            didReceivePresenceUpdate: presence,
+            forTrackable: trackable,
+            presenceData: data,
+            clientId: clientId
+        )
     }
     
     public func subscribeForChannelStateChange(trackable: Trackable) {
