@@ -104,6 +104,34 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: 5)
     }
     
+    func testSubscriberNotReceivesAssetConnectionStatus() throws {
+        do {
+            locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
+        } catch {
+            XCTFail("Can't find the source of locations `test-locations.json`")
+        }
+        
+        let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
+        
+        subscriber = SubscriberFactory.subscribers()
+            .connection(subscriberConnectionConfiguration)
+            .resolution(resolution)
+            .log(logConfiguration)
+            .delegate(self)
+            .trackingId(trackableId)
+            .start(completion: { _ in })!
+        
+        delay(5)
+        didChangeAssetConnectionStatusOnlineExpectation.isInverted = true
+        didChangeAssetConnectionStatusOfflineExpectation.isInverted = true
+        wait(for: [
+            didChangeAssetConnectionStatusOnlineExpectation, didChangeAssetConnectionStatusOfflineExpectation
+        ], timeout: 0.0)
+        
+        subscriber.stop(completion: { _ in })
+    }
+    
     func testSubscriberReceivesAssetConnectionStatus() throws {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)

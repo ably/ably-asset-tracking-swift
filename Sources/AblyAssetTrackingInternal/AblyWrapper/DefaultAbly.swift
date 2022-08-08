@@ -168,11 +168,14 @@ public class DefaultAbly: AblyCommon {
             let clientId = message.clientId
         else { return }
         
-        let presence = message.action.toPresence()
+        let presence = Presence(
+            action: message.action.toPresenceAction(),
+            type: data.type.toPresenceType()
+        )
         
         // AblySubscriber delegate
         self.subscriberDelegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
-        self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionState: presence.toConnectionState())
+        self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionState: presence.action.toConnectionState())
         
         // Deleagate `Publisher` resolution if present in PresenceData
         if let resolution = data.resolution, data.type == .publisher {

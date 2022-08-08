@@ -774,11 +774,11 @@ extension DefaultPublisher {
 
         guard event.presenceData.type == .subscriber else { return }
         
-        if event.presence == .enter {
+        if event.presence.action == .enter {
             addSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
-        } else if event.presence == .leave {
+        } else if event.presence.action == .leave {
             removeSubscriber(clientId: event.clientId, trackable: event.trackable)
-        } else if event.presence == .update {
+        } else if event.presence.action == .update {
             updateSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
         }
     }

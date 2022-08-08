@@ -189,9 +189,13 @@ extension DefaultSubscriber {
     }
     
     private func performPresenceUpdated(_ event: PresenceUpdateEvent) {
-        if event.presence.isPresentOrEnter {
+        guard event.presence.type == .publisher else {
+            return
+        }
+        
+        if event.presence.action.isPresentOrEnter {
             isPublisherOnline = true
-        } else if event.presence.isLeaveOrAbsent {
+        } else if event.presence.action.isLeaveOrAbsent {
             isPublisherOnline = false
         }
     }
