@@ -5,7 +5,6 @@
 
 **Implemented enhancements:**
 
-- Enable setting a constant location engine resolution [\#276](https://github.com/ably/ably-asset-tracking-swift/issues/276)
 - Add ability to observe raw locations change in `Subscriber` SDK [\#272](https://github.com/ably/ably-asset-tracking-swift/issues/272)
 - Send batches of location updates [\#265](https://github.com/ably/ably-asset-tracking-swift/issues/265)
 - Upgrade Mapbox dependencies [\#260](https://github.com/ably/ably-asset-tracking-swift/issues/260)
@@ -14,14 +13,11 @@
 - Add switch enabling raw locations publishing in the publisher example app [\#252](https://github.com/ably/ably-asset-tracking-swift/issues/252)
 - Add raw locations to the Subscriber SDK [\#251](https://github.com/ably/ably-asset-tracking-swift/issues/251)
 - Send raw locations from the Publisher [\#250](https://github.com/ably/ably-asset-tracking-swift/issues/250)
-- Route is not recalculated when user is off route [\#184](https://github.com/ably/ably-asset-tracking-swift/issues/184)
 - Implement `RSC7d` \(Ably-Agent header\) [\#172](https://github.com/ably/ably-asset-tracking-swift/issues/172)
 - Implement stopping strategy [\#165](https://github.com/ably/ably-asset-tracking-swift/issues/165)
-- Test issue ignore [\#163](https://github.com/ably/ably-asset-tracking-swift/issues/163)
 - Send skipped location updates [\#135](https://github.com/ably/ably-asset-tracking-swift/issues/135)
 - Add token based authentication [\#134](https://github.com/ably/ably-asset-tracking-swift/issues/134)
 - Modify Publisher example app to work in background [\#110](https://github.com/ably/ably-asset-tracking-swift/issues/110)
-- Enable setting a constant location engine resolution [\#277](https://github.com/ably/ably-asset-tracking-swift/pull/277) ([lukasz-szyszkowski](https://github.com/lukasz-szyszkowski))
 
 **Fixed bugs:**
 
@@ -38,7 +34,6 @@
 - The trackable state should be updated in the Publisher only after the state is different from the previous one. [\#115](https://github.com/ably/ably-asset-tracking-swift/issues/115)
 - Allow to call Publisher track\(\) method multiple times [\#112](https://github.com/ably/ably-asset-tracking-swift/issues/112)
 - Handle stopped state of the Subscriber [\#109](https://github.com/ably/ably-asset-tracking-swift/issues/109)
-- Fix lint errors for podspec [\#41](https://github.com/ably/ably-asset-tracking-swift/issues/41)
 
 **Closed issues:**
 
@@ -49,7 +44,6 @@
 - Add next location update intervals to the Subscriber API [\#280](https://github.com/ably/ably-asset-tracking-swift/issues/280)
 - Remove Swift version of `Publisher Example App` [\#278](https://github.com/ably/ably-asset-tracking-swift/issues/278)
 - Replace `CLLocation` with AAT Wrapper `Location` in subscriber delegate [\#267](https://github.com/ably/ably-asset-tracking-swift/issues/267)
-- Add constant location engine resolution to the publisher example app [\#264](https://github.com/ably/ably-asset-tracking-swift/issues/264)
 - Use the next location update intervals to make the marker movement smoother in the example app [\#263](https://github.com/ably/ably-asset-tracking-swift/issues/263)
 - Display the horizontal accuracy of locations in the subscriber example app [\#257](https://github.com/ably/ably-asset-tracking-swift/issues/257)
 - Check: Zooming does not improve resolution: Resolution-type events does not get sent [\#255](https://github.com/ably/ably-asset-tracking-swift/issues/255)
@@ -73,14 +67,10 @@
 - Share build outputs instead of building the library 3 times in separate workflows [\#168](https://github.com/ably/ably-asset-tracking-swift/issues/168)
 - Add Swift Package to Swift Package Index [\#167](https://github.com/ably/ably-asset-tracking-swift/issues/167)
 - iOS Integration Testing set up [\#166](https://github.com/ably/ably-asset-tracking-swift/issues/166)
-- Final test sync after repo has been renamed \(ignore\) [\#164](https://github.com/ably/ably-asset-tracking-swift/issues/164)
-- Ignore this issue [\#162](https://github.com/ably/ably-asset-tracking-swift/issues/162)
 - Supporting location button \(in SDK and Example apps\) [\#160](https://github.com/ably/ably-asset-tracking-swift/issues/160)
-- Create Swift Package Collection to conveniently store all Ably SDKs in one group [\#159](https://github.com/ably/ably-asset-tracking-swift/issues/159)
 - Send notification about trip started on a meta channel \(iOS\) [\#158](https://github.com/ably/ably-asset-tracking-swift/issues/158)
 - Error `nw_protocol_get_quic_image_block_invoke dlopen libquic failed` when running app [\#157](https://github.com/ably/ably-asset-tracking-swift/issues/157)
 - Create Cocoapods installation instructions in Readme for SDK users [\#155](https://github.com/ably/ably-asset-tracking-swift/issues/155)
-- Consider merging both SDKs into one SDK, or into one Xcode project [\#154](https://github.com/ably/ably-asset-tracking-swift/issues/154)
 - Renaming to `ably-asset-tracking-swift` [\#151](https://github.com/ably/ably-asset-tracking-swift/issues/151)
 - Expose EnhancedLocationUpdate in the API instead of CLLocation [\#150](https://github.com/ably/ably-asset-tracking-swift/issues/150)
 - Add "Manual Installation" section to the Readme [\#149](https://github.com/ably/ably-asset-tracking-swift/issues/149)
