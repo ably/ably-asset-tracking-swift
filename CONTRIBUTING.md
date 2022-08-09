@@ -75,6 +75,11 @@ The release process must include the following steps:
 8.  Land the release PR to the `main` branch
 9.  Create a tag named like v1.2.3 and push it to GitHub
 
+We tend to use [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator) to collate the information required for a change log update.
+Your mileage may vary, but it seems the most reliable method to invoke the generator is something like:
+`github_changelog_generator -u ably -p ably-asset-tracking-swift --since-tag v1.0.0 --output delta.md`
+and then manually merge the delta contents in to the main change log (where `v1.0.0` in this case is the tag for the previous release).
+
 ## Coding Conventions and Style Guide
 
 - Favor Protocol Oriented Programming with Dependency Injection when writing any code. We're unable to create automatic mocks in Swift, so it'll be helpful for writing unit tests.
