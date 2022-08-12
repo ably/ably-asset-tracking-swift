@@ -3,9 +3,9 @@ import AblyAssetTrackingCore
 import QuartzCore
 
 public class DefaultLocationAnimator: NSObject, LocationAnimator {
-    
-    public var infrequentlyUpdatingPositionInterval: TimeInterval = 5.0
-    
+        
+    public var animationStepsBetweenCameraUpdates: Int = 1
+
     // Default values
     private let intentionalAnimationDelay: TimeInterval = 2.0
     private let defaultDisplayLinkDuration: CFTimeInterval = 1.0/60.0
@@ -23,6 +23,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var animationStepStartTime: CFAbsoluteTime = .zero
     private var currentAnimationStepProgress: Double = 1.0
     private var currentAnimationStep: AnimationStep?
+    private var currentAnimationStepsSinceLastCameraUpdate: Int = 0
     
     private var _animationSteps: [AnimationStep] = []
     private var animationSteps: [AnimationStep] {
@@ -52,8 +53,8 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         }
     }
     private var displayLink: CADisplayLink?
-    private var subscribeForFrequentlyUpdatingPositionClosure: ((Position) -> Void)?
-    private var subscribeForInfrequentlyUpdatingPositionClosure: ((Position) -> Void)?
+    private var subscribeForPositionUpdatesClosure: ((Position) -> Void)?
+    private var subscribeForCameraPositionUpdatesClosure: ((Position) -> Void)?
     
     deinit {
         stopAnimationLoop()
@@ -76,7 +77,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             self.previousFinalPosition = steps.last?.endPosition
             
             // This is an animation duration for request
-            let expectedAnimationDuration = self.intentionalAnimationDelay + request.interval
+            let expectedAnimationDuration = self.intentionalAnimationDelay + request.expectedIntervalBetweenLocationUpdatesInMilliseconds
             
             // Recalculate each animation step duration
             let animationStepDuration = expectedAnimationDuration / Double(steps.count)
@@ -92,20 +93,25 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             }
         }.store(in: &subscriptions)
     }
+    
+    public func stop() {
+        stopAnimationLoop()
+    }
    
-    public func animateLocationUpdate(location: LocationUpdate, interval: Double) {
-        animationRequestSubject.send(AnimationRequest(locationUpdate: location, interval: interval))
+    public func animateLocationUpdate(location: LocationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: Double) {
+        animationRequestSubject.send(AnimationRequest(locationUpdate: location, expectedIntervalBetweenLocationUpdatesInMilliseconds: expectedIntervalBetweenLocationUpdatesInMilliseconds))
     }
     
-    public func subscribeForFrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
-        self.subscribeForFrequentlyUpdatingPositionClosure = closure
+    public func subscribeForPositionUpdates(_ closure: @escaping (Position) -> Void) {
+        self.subscribeForPositionUpdatesClosure = closure
     }
     
-    public func subscribeForInfrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void) {
-        self.subscribeForInfrequentlyUpdatingPositionClosure = closure
+    public func subscribeForCameraPositionUpdates(_ closure: @escaping (Position) -> Void) {
+        self.subscribeForCameraPositionUpdatesClosure = closure
     }
     
     private func startAnimationLoop() {
+        currentAnimationStepsSinceLastCameraUpdate = animationStepsBetweenCameraUpdates
         let displayLink = CADisplayLink(target: self, selector: #selector(animationLoop))
         displayLink.add(to: .current, forMode: .default)
         
@@ -173,11 +179,12 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             let stepIndex = animationSteps.firstIndex {
                 $0.endTime >= (link.timestamp - animationStartTime)
             } ?? .zero
-        
             currentAnimationStep = animationSteps[stepIndex]
             
-            // Remove used steps
-            animationSteps.removeSubrange(0..<stepIndex)
+            // Remove used steps and increase the `currentAnimationStepsSinceLastCameraUpdate` count
+            let removeStepsRange = 0..<stepIndex
+            currentAnimationStepsSinceLastCameraUpdate += removeStepsRange.count
+            animationSteps.removeSubrange(removeStepsRange)
         } else if animationSteps.isEmpty && currentAnimationStepProgress >= 1 {
             
             currentAnimationStep = nil
@@ -201,10 +208,11 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             stepProgress: currentAnimationStepProgress
         )
 
-        subscribeForFrequentlyUpdatingPositionClosure?(position)
+        subscribeForPositionUpdatesClosure?(position)
 
-        if CFAbsoluteTimeGetCurrent() - displayLinkStartTime >= infrequentlyUpdatingPositionInterval {
-            subscribeForInfrequentlyUpdatingPositionClosure?(position)
+        if currentAnimationStepsSinceLastCameraUpdate >= animationStepsBetweenCameraUpdates {
+            currentAnimationStepsSinceLastCameraUpdate = 0
+            subscribeForCameraPositionUpdatesClosure?(position)
             displayLinkStartTime = CFAbsoluteTimeGetCurrent()
         }
     }
@@ -224,7 +232,7 @@ public extension Location {
 
 struct AnimationRequest {
     let locationUpdate: LocationUpdate
-    let interval: Double
+    let expectedIntervalBetweenLocationUpdatesInMilliseconds: Double
 }
 
 struct AnimationStep {
