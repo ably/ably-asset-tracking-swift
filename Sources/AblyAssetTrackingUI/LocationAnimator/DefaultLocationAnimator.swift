@@ -16,7 +16,6 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     // Dispatch queue for animation calculations
     private let processAnimationQueue = DispatchQueue(label: "com.ably.tracking.SubscriberExample.locationAnimator.processAnimationQueue")
 
-    private var displayLinkStartTime: CFAbsoluteTime = .zero
     private var animationRequestSubject = PassthroughSubject<AnimationRequest, Never>()
     private var subscriptions = Set<AnyCancellable>()
     private var animationStartTime: CFAbsoluteTime = .zero
@@ -213,7 +212,6 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         if currentAnimationStepsSinceLastCameraUpdate >= animationStepsBetweenCameraUpdates {
             currentAnimationStepsSinceLastCameraUpdate = 0
             subscribeForCameraPositionUpdatesClosure?(position)
-            displayLinkStartTime = CFAbsoluteTimeGetCurrent()
         }
     }
 }
