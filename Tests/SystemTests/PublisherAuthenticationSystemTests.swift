@@ -63,7 +63,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         
         let fetchedTokenDetails = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
-            clientId: keyName
+            tokenParams: ARTTokenParams(clientId: keyName)
         )
         
         let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
@@ -84,7 +84,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         
         let fetchedTokenString = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
-            clientId: keyName
+            tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
                 
         let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in

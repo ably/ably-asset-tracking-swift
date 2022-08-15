@@ -3,6 +3,7 @@ import XCTest
 import AblyAssetTrackingCore
 import AblyAssetTrackingSubscriber
 import CoreLocation
+import Ably
 
 class SubscriberAuthenticationSystemTests: XCTestCase {
     
@@ -55,7 +56,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
     func testSubscriberConnectsWithTokenDetails() throws {
         let fetchedTokenDetails = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
-            clientId: clientId
+            tokenParams: ARTTokenParams(clientId: clientId)
         )
         
         let connectionConfiguration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, resultHandler in
@@ -76,7 +77,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         
         let fetchedTokenString = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
-            clientId: keyName
+            tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
                 
         let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
