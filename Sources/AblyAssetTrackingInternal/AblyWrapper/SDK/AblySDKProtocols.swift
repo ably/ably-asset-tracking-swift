@@ -10,6 +10,7 @@ public protocol AblySDKRealtimeFactory {
 public protocol AblySDKRealtime {
     var channels: AblySDKRealtimeChannels { get }
     var connection: AblySDKConnection { get }
+    var auth: AblySDKAuth { get }
     
     func close()
 }
@@ -27,6 +28,7 @@ public protocol AblySDKRealtimeChannel {
     func detach(_ callback: ARTCallback?)
     @discardableResult func on(_ callback: @escaping (ARTChannelStateChange) -> ()) -> AblySDKEventListener
     func publish(_ messages: [ARTMessage], callback: ARTCallback?)
+    func attach(_ callback: ARTCallback?)
 }
 
 //sourcery: AutoMockable
@@ -42,6 +44,11 @@ public protocol AblySDKRealtimePresence {
 //sourcery: AutoMockable
 public protocol AblySDKConnection {
     @discardableResult func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener
+}
+
+//sourcery: AutoMockable
+public protocol AblySDKAuth {
+    func authorize(_ callback: @escaping ARTTokenDetailsCallback)
 }
 
 public protocol AblySDKEventListener {}

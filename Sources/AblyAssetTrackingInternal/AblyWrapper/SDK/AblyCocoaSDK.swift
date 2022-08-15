@@ -12,6 +12,10 @@ struct AblyCocoaSDKRealtime: AblySDKRealtime {
         return AblyCocoaSDKConnection(connection: realtime.connection)
     }
     
+    var auth: AblySDKAuth {
+        return AblyCocoaSDKAuth(auth: realtime.auth)
+    }
+    
     func close() {
         realtime.close()
     }
@@ -56,6 +60,10 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
     func publish(_ messages: [ARTMessage], callback: ARTCallback?) {
         channel.publish(messages, callback: callback)
     }
+    
+    func attach(_ callback: ARTCallback?) {
+        channel.attach(callback)
+    }
 }
 
 struct AblyCocoaSDKRealtimePresence: AblySDKRealtimePresence {
@@ -95,6 +103,14 @@ struct AblyCocoaSDKConnection: AblySDKConnection {
     
     func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener {
         return AblyCocoaSDKEventListener(eventListener: connection.on(callback))
+    }
+}
+
+struct AblyCocoaSDKAuth: AblySDKAuth {
+    fileprivate let auth: ARTAuth
+    
+    func authorize(_ callback: @escaping (ARTTokenDetails?, Error?) -> Void) {
+        auth.authorize(callback)
     }
 }
 

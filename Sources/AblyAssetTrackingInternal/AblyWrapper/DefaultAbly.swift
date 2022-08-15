@@ -10,6 +10,7 @@ public class DefaultAbly: AblyCommon {
     
     private let logger: Logger
     private let client: AblySDKRealtime
+    private let connectionConfiguration: ConnectionConfiguration
     let mode: AblyMode
     
     private var channels: [String: AblySDKRealtimeChannel] = [:]
@@ -18,6 +19,7 @@ public class DefaultAbly: AblyCommon {
         self.client = factory.create(withConfiguration: configuration)
         self.mode = mode
         self.logger = logger
+        self.connectionConfiguration = configuration
     }
     
     public func connect(
@@ -49,17 +51,62 @@ public class DefaultAbly: AblyCommon {
         
         let channel = client.channels.getChannelFor(trackingId: trackableId, options: options)
         
-        channel.presence.enter(presenceDataJSON(data: presenceData)) { [weak self] error in
-            guard let error = error else {
-                self?.logger.debug("Entered to channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
-                self?.channels[trackableId] = channel
-                completion(.success)
+        let presenceDataJSON = self.presenceDataJSON(data: presenceData)
                 
+        channel.presence.enter(presenceDataJSON) { [weak self] error in
+            guard let self = self else { return }
+            
+            let presenceEnterSuccess = { [weak self] in
+                guard let self = self else { return }
+                
+                self.logger.debug("Entered to channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
+                self.channels[trackableId] = channel
+                completion(.success)
+            }
+            
+            let presenceEnterTerminalFailure = { [weak self] (error: ARTErrorInfo) in
+                guard let self = self else { return }
+                
+                self.logger.error("Error during joining to channel [id: \(trackableId)] presence: \(String(describing: error))", source: String(describing: Self.self))
+                completion(.failure(error.toErrorInformation()))
+            }
+            
+            guard let error = error else {
+                presenceEnterSuccess()
                 return
             }
             
-            self?.logger.error("Error during joining to channel [id: \(trackableId)] presence: \(String(describing: error))", source: String(describing: Self.self))
-            completion(.failure(error.toErrorInformation()))
+            if error.code == ARTErrorCode.operationNotPermittedWithProvidedCapability.rawValue && self.connectionConfiguration.usesTokenAuth {
+                self.logger.debug("Failed to enter presence on channel [id: \(trackableId)], requesting Ably SDK to re-authorize", source: String(describing: Self.self))
+                self.client.auth.authorize { [weak self] _, error in
+                    guard let self = self else { return }
+                    
+                    if let error = error {
+                        self.logger.error("Error calling authorize: \(String(describing: error))", source: String(describing: Self.self))
+                        completion(.failure(ErrorInformation(error: error)))
+                    } else {
+                        self.logger.debug("Authorize succeeded, attaching to channel so that we can retry presence enter", source: String(describing: Self.self))
+                        // The channel is currently in the FAILED state, so an immediate attempt to enter presence would fail. We need to first of all explicitly attach to the channel to get it out of the FAILED state (if we _were_ able to attempt to enter presence, doing so would attach to the channel anyway, so we’re not doing anything surprising here).
+                        channel.attach { error in
+                            if let error = error {
+                                self.logger.error("Error attaching to channel [id: \(trackableId)]: \(String(describing: error))", source: String(describing: Self.self))
+                                completion(.failure(ErrorInformation(error: error)))
+                            } else {
+                                self.logger.debug("Channel attach succeeded, retrying presence enter", source: String(describing: Self.self))
+                                channel.presence.enter(presenceDataJSON) { error in
+                                    guard let error = error else {
+                                        presenceEnterSuccess()
+                                        return
+                                    }
+                                    presenceEnterTerminalFailure(error)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                presenceEnterTerminalFailure(error)
+            }
         }
     }
     
@@ -389,5 +436,11 @@ extension DefaultAbly: AblyPublisher {
         let data = try geoJson.toJSONString()
         
         return ARTMessage(name: EventName.enhanced.rawValue, data: data)
+    }
+}
+
+fileprivate extension ConnectionConfiguration {
+    var usesTokenAuth: Bool {
+        return authCallback != nil
     }
 }

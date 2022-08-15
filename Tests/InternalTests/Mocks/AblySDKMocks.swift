@@ -23,6 +23,26 @@ import Ably
 
 
 
+class AblySDKAuthMock: AblySDKAuth {
+
+    //MARK: - authorize
+
+    var authorizeCallsCount = 0
+    var authorizeCalled: Bool {
+        return authorizeCallsCount > 0
+    }
+    var authorizeReceivedCallback: ARTTokenDetailsCallback?
+    var authorizeReceivedInvocations: [ARTTokenDetailsCallback] = []
+    var authorizeClosure: ((@escaping ARTTokenDetailsCallback) -> Void)?
+
+    func authorize(_ callback: @escaping ARTTokenDetailsCallback) {
+        authorizeCallsCount += 1
+        authorizeReceivedCallback = callback
+        authorizeReceivedInvocations.append(callback)
+        authorizeClosure?(callback)
+    }
+
+}
 class AblySDKConnectionMock: AblySDKConnection {
 
     //MARK: - on
@@ -60,6 +80,11 @@ class AblySDKRealtimeMock: AblySDKRealtime {
         set(value) { underlyingConnection = value }
     }
     var underlyingConnection: AblySDKConnection!
+    var auth: AblySDKAuth {
+        get { return underlyingAuth }
+        set(value) { underlyingAuth = value }
+    }
+    var underlyingAuth: AblySDKAuth!
 
     //MARK: - close
 
@@ -173,6 +198,23 @@ class AblySDKRealtimeChannelMock: AblySDKRealtimeChannel {
         publishCallbackReceivedArguments = (messages: messages, callback: callback)
         publishCallbackReceivedInvocations.append((messages: messages, callback: callback))
         publishCallbackClosure?(messages, callback)
+    }
+
+    //MARK: - attach
+
+    var attachCallsCount = 0
+    var attachCalled: Bool {
+        return attachCallsCount > 0
+    }
+    var attachReceivedCallback: ARTCallback?
+    var attachReceivedInvocations: [ARTCallback?] = []
+    var attachClosure: ((ARTCallback?) -> Void)?
+
+    func attach(_ callback: ARTCallback?) {
+        attachCallsCount += 1
+        attachReceivedCallback = callback
+        attachReceivedInvocations.append(callback)
+        attachClosure?(callback)
     }
 
 }
