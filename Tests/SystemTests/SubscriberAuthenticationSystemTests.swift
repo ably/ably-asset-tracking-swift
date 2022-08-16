@@ -105,13 +105,17 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         testSubscriberConnection(configuration: connectionConfiguration)
     }
     
-    private func testSubscriberConnection(configuration: ConnectionConfiguration) {
-        var resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
-        let subscriberStartExpectation = self.expectation(description: "Subscriber start expectation")
-        let subscriber = SubscriberFactory.subscribers()
-            .connection(configuration)
+    private func createSubscriberBuilder(connectionConfiguration: ConnectionConfiguration) -> SubscriberBuilder {
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
+        return SubscriberFactory.subscribers()
+            .connection(connectionConfiguration)
             .resolution(resolution)
             .trackingId("Trackable ID")
+    }
+    
+    private func testSubscriberConnection(configuration: ConnectionConfiguration) {
+        let subscriberStartExpectation = self.expectation(description: "Subscriber start expectation")
+        let subscriber = createSubscriberBuilder(connectionConfiguration: configuration)
             .start { result in
                 switch result {
                 case .success: ()
@@ -123,7 +127,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         waitForExpectations(timeout: 10.0)
     
         let resolutionCompletionExpectation = self.expectation(description: "Resolution completion expectation")
-        resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
         subscriber?.resolutionPreference(resolution: resolution, completion: { result in
             switch result {
             case .success: ()
