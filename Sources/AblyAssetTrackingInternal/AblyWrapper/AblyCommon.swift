@@ -68,16 +68,6 @@ public protocol AblyCommon {
      - Parameter completion:    The closure that will be called when `Ably` connection state will change to `closed` or `failed`.
      */
     func close(presenceData: PresenceData, completion: @escaping ResultHandler<Void>)
-    
-    /**
-     Common required initialiser
-     
-     - Parameter configuration: The `ConnectionConfiguration` object
-     - Parameter mode:          The mode in which `Ably` wrapper is initialise. Available modes: `subscribe`, `publish`
-     - Parameter logger:        The object of the `Logger` introduced in `swift-log` package
-     
-     */
-    init(configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger)
 }
 
 /**
