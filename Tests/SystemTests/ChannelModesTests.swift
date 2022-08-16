@@ -69,6 +69,7 @@ class ChannelModesTests: XCTestCase {
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: ablyApiKey, clientId: clientId)
         
         let defaultAbly = DefaultAbly(
+            factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
             logger: .init(label: "com.ably.tracking.SystemTests")

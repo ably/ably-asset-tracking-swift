@@ -9,13 +9,13 @@ public class DefaultAbly: AblyCommon {
     public weak var subscriberDelegate: AblySubscriberServiceDelegate?
     
     private let logger: Logger
-    private let client: ARTRealtime
-    private let mode: AblyMode
+    private let client: AblySDKRealtime
+    let mode: AblyMode
     
-    private var channels: [String: ARTRealtimeChannel] = [:]
+    private var channels: [String: AblySDKRealtimeChannel] = [:]
 
-    public required init(configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger) {
-        self.client = ARTRealtime(options: configuration.getClientOptions())
+    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger) {
+        self.client = factory.create(withConfiguration: configuration)
         self.mode = mode
         self.logger = logger
     }
