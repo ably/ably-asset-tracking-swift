@@ -1,10 +1,12 @@
 import Ably
 import AblyAssetTrackingCore
 
+//sourcery: AutoMockable
 public protocol AblySDKRealtimeFactory {
     func create(withConfiguration configuration: ConnectionConfiguration) -> AblySDKRealtime
 }
 
+//sourcery: AutoMockable
 public protocol AblySDKRealtime {
     var channels: AblySDKRealtimeChannels { get }
     var connection: AblySDKConnection { get }
@@ -12,10 +14,12 @@ public protocol AblySDKRealtime {
     func close()
 }
 
+//sourcery: AutoMockable
 public protocol AblySDKRealtimeChannels {
     func getChannelFor(trackingId: String, options: ARTRealtimeChannelOptions?) -> AblySDKRealtimeChannel
 }
 
+//sourcery: AutoMockable
 public protocol AblySDKRealtimeChannel {
     var presence: AblySDKRealtimePresence { get }
     @discardableResult func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> AblySDKEventListener?
@@ -25,6 +29,7 @@ public protocol AblySDKRealtimeChannel {
     func publish(_ messages: [ARTMessage], callback: ARTCallback?)
 }
 
+//sourcery: AutoMockable
 public protocol AblySDKRealtimePresence {
     func get(_ callback: @escaping ARTPresenceMessagesCallback)
     func enter(_ data: Any?, callback: ARTCallback?)
