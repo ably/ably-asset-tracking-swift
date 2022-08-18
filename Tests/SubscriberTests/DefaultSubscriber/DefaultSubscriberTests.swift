@@ -15,7 +15,6 @@ class DefaultSubscriberTests: XCTestCase {
         ablySubscriber = MockAblySubscriberService(configuration: configuration, mode: .subscribe, logger: logger)
         
         subscriber = DefaultSubscriber(
-            logConfiguration: LogConfiguration(),
             ablySubscriber: ablySubscriber,
             trackableId: trackableId,
             resolution: nil

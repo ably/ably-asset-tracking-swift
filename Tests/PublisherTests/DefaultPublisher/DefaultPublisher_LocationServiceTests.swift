@@ -42,7 +42,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         publisher = DefaultPublisher(
             connectionConfiguration:configuration,
             mapboxConfiguration: mapboxConfiguration,
-            logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyService,
@@ -321,7 +320,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,
             mapboxConfiguration: mapboxConfiguration,
-            logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyService,
@@ -358,7 +356,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,
             mapboxConfiguration: mapboxConfiguration,
-            logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyService,

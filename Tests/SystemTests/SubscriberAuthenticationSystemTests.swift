@@ -6,7 +6,6 @@ import CoreLocation
 
 class SubscriberAuthenticationSystemTests: XCTestCase {
     
-    private let logConfiguration = LogConfiguration()
     private let clientId: String = {
         "Test-Subscriber_\(UUID().uuidString)"
     }()
@@ -112,7 +111,6 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             .connection(configuration)
             .resolution(resolution)
             .trackingId("Trackable ID")
-            .log(logConfiguration)
             .start { result in
                 switch result {
                 case .success: ()

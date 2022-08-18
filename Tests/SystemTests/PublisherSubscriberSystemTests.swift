@@ -26,7 +26,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private let routeProvider = MockRouteProvider()
     private let resolutionPolicyFactory = MockResolutionPolicyFactory()
     private let trackableId = "Trackable ID 1 - \(UUID().uuidString)"
-    private let logConfiguration = LogConfiguration()
     private let subscriberClientId: String = {
         "Test-Subscriber_\(UUID().uuidString)"
     }()
@@ -50,7 +49,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
-            .log(logConfiguration)
             .delegate(self)
             .trackingId(trackableId)
             .start(completion: { _ in })!
@@ -73,7 +71,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         publisher = DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
-            logConfiguration: logConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,
@@ -117,7 +114,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
-            .log(logConfiguration)
             .delegate(self)
             .trackingId(trackableId)
             .start(completion: { _ in })!
@@ -155,7 +151,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         publisher = DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
-            logConfiguration: logConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,
@@ -174,7 +169,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
-            .log(logConfiguration)
             .delegate(self)
             .trackingId(trackableId)
             .start(completion: { _ in })!

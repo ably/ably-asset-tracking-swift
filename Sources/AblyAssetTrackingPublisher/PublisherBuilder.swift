@@ -23,11 +23,6 @@ public protocol PublisherBuilder {
      Sets the mandatory `MapboxConfiguration` property
     */
     func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilder
-
-    /**
-     Sets the mandatory `LogConfiguration` property
-     */
-    func log(_ configuration: LogConfiguration) -> PublisherBuilder
     
     /**
      Sets the optional `LocationSource` property
@@ -35,7 +30,8 @@ public protocol PublisherBuilder {
     func locationSource(_ source: LocationSource?) -> PublisherBuilder
 
     /**
-     Sets the mandatory `RoutingProfile` property
+     Sets the `RoutingProfile` property
+     Default value is `.driving`
      */
     func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder
 

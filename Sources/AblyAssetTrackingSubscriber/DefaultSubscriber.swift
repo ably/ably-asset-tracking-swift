@@ -20,7 +20,6 @@ private enum SubscriberState {
 
 class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
-    private let logConfiguration: LogConfiguration
     private let trackableId: String
     private let presenceData: PresenceData
     
@@ -34,12 +33,10 @@ class DefaultSubscriber: Subscriber {
     weak var delegate: SubscriberDelegate?
 
     init(
-        logConfiguration: LogConfiguration,
         ablySubscriber: AblySubscriber,
         trackableId: String,
         resolution: Resolution?
     ) {
-        self.logConfiguration = logConfiguration
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
