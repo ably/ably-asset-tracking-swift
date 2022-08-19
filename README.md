@@ -96,11 +96,10 @@ The Asset Publisher SDK can efficiently acquire the location data on a device an
 ```swift
 import AblyAssetTrackingPublisher
 
-// Initialise a Publisher
+// Initialise a Publisher using the mandatory builder methods
 
 publisher = try? PublisherFactory.publishers() // get a Publisher Builder
     .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY, clientId: CLIENT_ID)) // provide Ably configuration with credentials
-    .transportationMode(TransportationMode()) // provide mode of transportation for better location enhancements
     .delegate(self) // provide delegate to handle location updates locally if needed
     .start()
     
@@ -109,6 +108,8 @@ publisher = try? PublisherFactory.publishers() // get a Publisher Builder
 publisher?.track(trackable: Trackable(id: trackingId)) // provide a tracking ID of the asset
 ```
 
+See the `PublisherBuilder` protocol for addtional optional builder methods.
+
 ### Subscriber SDK
 
 The Asset Subscriber SDK can be used to receive location updates from a publisher in realtime. Here is an example of how Asset Subscribing SDK can be used:
@@ -116,15 +117,15 @@ The Asset Subscriber SDK can be used to receive location updates from a publishe
 ```swift
 import AblyAssetTrackingSubscriber
 
-// Initialise a Subscriber
+// Initialise a Subscriber using the mandatory builder methods
 
 subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
     .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY, clientId: CLIENT_ID)) // provide Ably configuration with credentials
     .trackingId(trackingId) // provide a Tracking ID for the asset to be tracked
-    .routingProfile(.cycling) // provide a routing profile for better location enhancements
-    .delegate(self) // provide a delegate to handle received location updates
+    .delegate(self) // provide delegate to handle location updates locally if needed
     .start() // start listening to updates
 ```
+See the `SubscriberBuilder` protocol for addtional optional builder methods.
 
 ### Authentication
 
