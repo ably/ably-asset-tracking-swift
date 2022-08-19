@@ -100,7 +100,6 @@ import AblyAssetTrackingPublisher
 
 publisher = try? PublisherFactory.publishers() // get a Publisher Builder
     .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY, clientId: CLIENT_ID)) // provide Ably configuration with credentials
-    .log(LogConfiguration()) // provide logging configuration
     .transportationMode(TransportationMode()) // provide mode of transportation for better location enhancements
     .delegate(self) // provide delegate to handle location updates locally if needed
     .start()
@@ -123,7 +122,6 @@ subscriber = try? SubscriberFactory.subscribers() // get a Subscriber Builder
     .connection(ConnectionConfiguration(apiKey: ABLY_API_KEY, clientId: CLIENT_ID)) // provide Ably configuration with credentials
     .trackingId(trackingId) // provide a Tracking ID for the asset to be tracked
     .routingProfile(.cycling) // provide a routing profile for better location enhancements
-    .log(LogConfiguration()) // provide logging configuration
     .delegate(self) // provide a delegate to handle received location updates
     .start() // start listening to updates
 ```
