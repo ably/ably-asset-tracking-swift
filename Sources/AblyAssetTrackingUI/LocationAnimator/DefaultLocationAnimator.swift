@@ -3,11 +3,18 @@ import AblyAssetTrackingCore
 import QuartzCore
 
 public class DefaultLocationAnimator: NSObject, LocationAnimator {
-        
+            
+    /**
+       Defines how many animation steps have to complete before an event is passed to
+       `subscribeForCameraPositionUpdatesClosure`
+     */
     public var animationStepsBetweenCameraUpdates: Int = 1
+    /**
+     * A constant delay added to the animation duration. It helps to smooth out movement
+     * when we receive a location update later than we've expected.
+     */
+    public var intentionalAnimationDelay: TimeInterval = 2.0
 
-    // Default values
-    private let intentionalAnimationDelay: TimeInterval = 2.0
     private let defaultDisplayLinkDuration: CFTimeInterval = 1.0/60.0
     
     // Dispatch queue for synchronized variable access
