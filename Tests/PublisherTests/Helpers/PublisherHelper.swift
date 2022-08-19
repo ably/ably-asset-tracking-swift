@@ -88,7 +88,6 @@ class PublisherHelper {
         ablyService: AblyPublisher,
         connectionConfiguration: ConnectionConfiguration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID"),
         mapboxConfiguration: MapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN"),
-        logConfiguration: LogConfiguration = LogConfiguration(),
         routingProfile: RoutingProfile = .driving,
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
         locationService: LocationService = MockLocationService(),
@@ -99,7 +98,6 @@ class PublisherHelper {
         DefaultPublisher(
             connectionConfiguration: connectionConfiguration,
             mapboxConfiguration: mapboxConfiguration,
-            logConfiguration: logConfiguration,
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyService,

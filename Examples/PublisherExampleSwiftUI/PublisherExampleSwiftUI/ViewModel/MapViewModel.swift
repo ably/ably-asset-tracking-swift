@@ -59,7 +59,6 @@ class MapViewModel: ObservableObject {
         publisher = try! PublisherFactory.publishers()
                 .connection(connectionConfiguration)
                 .mapboxConfiguration(MapboxConfiguration(mapboxKey: EnvironmentHelper.MAPBOX_ACCESS_TOKEN))
-                .log(LogConfiguration())
 //                Uncomment below line to enable simulated location
 //                .locationSource(.init(locationSource: SimulatedLocations.recordedLocations()))
                 .routingProfile(.driving)

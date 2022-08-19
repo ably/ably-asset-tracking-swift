@@ -44,7 +44,6 @@ class DefaultPublisherTests: XCTestCase {
         enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
         publisher = DefaultPublisher(connectionConfiguration: configuration,
                                      mapboxConfiguration: mapboxConfiguration,
-                                     logConfiguration: LogConfiguration(),
                                      routingProfile: .driving,
                                      resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyPublisher: ablyService,
@@ -827,7 +826,6 @@ class DefaultPublisherTests: XCTestCase {
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,
             mapboxConfiguration: mapboxConfiguration,
-            logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyService,

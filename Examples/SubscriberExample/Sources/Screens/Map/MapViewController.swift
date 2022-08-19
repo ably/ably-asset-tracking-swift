@@ -105,7 +105,6 @@ class MapViewController: UIViewController {
         subscriber = SubscriberFactory.subscribers()
             .connection(connectionConfiguration)
             .trackingId(trackingId)
-            .log(LogConfiguration())
             .resolution(resolution)
             .delegate(self)
             .start { [weak self] result in

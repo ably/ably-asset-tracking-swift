@@ -7,7 +7,6 @@ import Ably
 
 class PublisherAuthenticationSystemTests: XCTestCase {
 
-    private let logConfiguration = LogConfiguration()
     private let clientId: String = {
         "Test-Publisher_\(UUID().uuidString)"
     }()
@@ -118,7 +117,6 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         let publisher = try! PublisherFactory.publishers()
             .connection(configuration)
             .mapboxConfiguration(MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken))
-            .log(logConfiguration)
             .locationSource(LocationSource(locationSource: [CLLocation(latitude: 0.0, longitude: 0.0), CLLocation(latitude: 1.0, longitude: 1.0)]))
             .routingProfile(.driving)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
