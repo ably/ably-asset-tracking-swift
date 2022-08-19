@@ -5,13 +5,13 @@ import QuartzCore
 public class DefaultLocationAnimator: NSObject, LocationAnimator {
             
     /**
-       Defines how many animations steps have to complete before an event is passed to
+       Defines how many animation steps have to complete before an event is passed to
        `subscribeForCameraPositionUpdatesClosure`
      */
     public var animationStepsBetweenCameraUpdates: Int = 1
     /**
      * A constant delay added to the animation duration. It helps to smooth out movement
-       when we receive a location update later than we've expected.
+     * when we receive a location update later than we've expected.
      */
     public var intentionalAnimationDelay: TimeInterval = 2.0
 
