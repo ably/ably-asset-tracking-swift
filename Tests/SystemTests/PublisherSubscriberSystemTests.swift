@@ -63,6 +63,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
         
         let defaultAbly = DefaultAbly(
+            factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
             logger: .init(label: "com.ably.tracking.SystemTests")
@@ -143,6 +144,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
         
         let defaultAbly = DefaultAbly(
+            factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
             logger: .init(label: "com.ably.tracking.SystemTests")

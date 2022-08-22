@@ -1,0 +1,6 @@
+sources:
+  - Sources/AblyAssetTrackingInternal/AblyWrapper/SDK/AblySDKProtocols.swift
+templates:
+  - Sourcery/templates/AblySDKMocks.stencil
+output:
+  Tests/InternalTests/Mocks/AblySDKMocks.swift

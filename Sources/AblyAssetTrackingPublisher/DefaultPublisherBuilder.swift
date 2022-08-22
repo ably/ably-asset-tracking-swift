@@ -53,6 +53,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
         }
         
         let defaultAbly = DefaultAbly(
+            factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
             mode: .publish,
             logger: Logger(
