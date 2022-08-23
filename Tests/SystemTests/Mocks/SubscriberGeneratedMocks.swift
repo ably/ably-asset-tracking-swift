@@ -1,0 +1,1 @@
+../../SubscriberTests/Mocks/GeneratedMocks.swift
