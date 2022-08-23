@@ -14,4 +14,4 @@ run_sourcery () {
   mint run krzysztofzablocki/Sourcery@1.8.2 --config ".sourcery-${1}.yml"
 }
 
-run_sourcery "InternalTests"
+run_sourcery "InternalMocks"
