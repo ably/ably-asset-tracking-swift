@@ -2,14 +2,14 @@ import Foundation
 import AblyAssetTrackingCore
 import CoreLocation
 
-public protocol AblySubscriberServiceDelegate: AnyObject {
+public protocol AblySubscriberDelegate: AnyObject {
     /**
      Tells the delegate that `Ably` client connection state changed.
      
      - Parameter sender:    The `AblySubscriber` object which is delegating the change.
      - Parameter state:     The `ConnectionState` object
      */
-    func subscriberService(sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState)
+    func ablySubscriber(sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState)
     
     /**
      Tells the delegate that channel connection state changed.
@@ -17,7 +17,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
      - Parameter state:         The `ConnectionState` object
      */
-    func subscriberService(sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState)
+    func ablySubscriber(sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState)
     
     /**
      Tells the delegate that channel presence was changed.
@@ -25,7 +25,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
      - Parameter presence:      The `Presence` object affected by the change.
      */
-    func subscriberService(sender: AblySubscriber, didReceivePresenceUpdate presence: Presence)
+    func ablySubscriber(sender: AblySubscriber, didReceivePresenceUpdate presence: Presence)
     
     /**
      Tells the delegate that an error occurred.
@@ -35,7 +35,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
      - Parameter error:         The `ErrorInformation` object that contains info about error.
      */
-    func subscriberService(sender: AblySubscriber, didFailWithError error: ErrorInformation)
+    func ablySubscriber(sender: AblySubscriber, didFailWithError error: ErrorInformation)
     
     /**
      Tells the delegate that published location was changed.
@@ -45,7 +45,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:              The `AblySubscriber` object which is delegating the change.
      - Parameter locationUpdate:      The `LocationUpdate` object that contains info about publisher `Enhanced` location.
      */
-    func subscriberService(sender: AblySubscriber, didReceiveEnhancedLocation locationUpdate: LocationUpdate)
+    func ablySubscriber(sender: AblySubscriber, didReceiveEnhancedLocation locationUpdate: LocationUpdate)
     
     /**
      Tells the delegate that published location was changed.
@@ -55,7 +55,7 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:              The `AblySubscriber` object which is delegating the change.
      - Parameter locationUpdate:      The `LocationUpdate` object that contains info about publisher `Raw` location.
      */
-    func subscriberService(sender: AblySubscriber, didReceiveRawLocation locationUpdate: LocationUpdate)
+    func ablySubscriber(sender: AblySubscriber, didReceiveRawLocation locationUpdate: LocationUpdate)
     
     /**
      Tells the delegate that resolution was changed.
@@ -66,16 +66,16 @@ public protocol AblySubscriberServiceDelegate: AnyObject {
      - Parameter sender:          The `AblySubscriber` object which is delegating the change.
      - Parameter resolution:      The `Resolution` object.
      */
-    func subscriberService(sender: AblySubscriber, didReceiveResolution resolution: Resolution)
+    func ablySubscriber(sender: AblySubscriber, didReceiveResolution resolution: Resolution)
 }
 
 public protocol AblySubscriber: AblyCommon {
     /**
      The delegate of the `Ably` wrapper object.
      
-     The methods declared by the `AblySubscriberServiceDelegate` protocol allow the adopting delegate to respond to messages from the `Ably` wrapper class..
+     The methods declared by the `AblySubscriberDelegate` protocol allow the adopting delegate to respond to messages from the `Ably` wrapper class..
      */
-    var subscriberDelegate: AblySubscriberServiceDelegate? { get set }
+    var subscriberDelegate: AblySubscriberDelegate? { get set }
     
     /**
      Observe  for the enhanced location change.
