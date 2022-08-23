@@ -2,6 +2,7 @@ import Foundation
 import AblyAssetTrackingCore
 import CoreLocation
 
+//sourcery: AutoMockable
 public protocol AblySubscriberDelegate: AnyObject {
     /**
      Tells the delegate that `Ably` client connection state changed.

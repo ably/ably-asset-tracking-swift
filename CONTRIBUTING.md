@@ -91,6 +91,7 @@ and then manually merge the delta contents in to the main change log (where `v1.
 
 We use [Sourcery](https://github.com/krzysztofzablocki/Sourcery) to generate mocks for the protocols in the following files:
 
+- `Sources/AblyAssetTrackingInternal/AblyWrapper/AblySubscriber.swift`
 - `Sources/AblyAssetTrackingInternal/AblyWrapper/SDK/AblySDKProtocols.swift`
 - `Sources/AblyAssetTrackingSubscriber/Subscriber.swift`
 
