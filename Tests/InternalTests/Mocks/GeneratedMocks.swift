@@ -75,6 +75,9 @@ class AblySDKConnectionMock: AblySDKConnection {
     }
 
 }
+class AblySDKEventListenerMock: AblySDKEventListener {
+
+}
 class AblySDKRealtimeMock: AblySDKRealtime {
     var channels: AblySDKRealtimeChannels {
         get { return underlyingChannels }
