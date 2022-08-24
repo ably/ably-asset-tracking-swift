@@ -313,11 +313,7 @@ extension DefaultAbly: AblySubscriber {
     
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
-            let errorInformation = ErrorInformation(
-                type: .subscriberError(
-                    errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"
-                )
-            )
+            let errorInformation = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 400, message: "Received a non-string message for \(event.rawValue) event: \(String(describing: messageData))", cause: nil, href: nil)
             subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
             
             return
@@ -338,7 +334,8 @@ extension DefaultAbly: AblySubscriber {
             }
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
-                subscriberDelegate?.ablySubscriber(self, didFailWithError: ErrorInformation(error: error))
+                let errorInformation = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 400, message: "Received a malformed message for \(event.rawValue) event", cause: error, href: nil)
+                subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
                 
                 return
             }
