@@ -114,6 +114,7 @@ extension DefaultSubscriber {
             case .ablyClientConnectionStateChanged(let event): self?.performClientConnectionChanged(event)
             case .ablyChannelConnectionStateChanged(let event): self?.performChannelConnectionChanged(event)
             case .presenceUpdate(let event): self?.performPresenceUpdated(event)
+            case .ablyError(let event): self?.performAblyError(event)
             }
         }
     }
@@ -256,6 +257,16 @@ extension DefaultSubscriber {
             }
         }
     }
+    
+    private func performAblyError(_ event: Event.AblyErrorEvent) {
+        callback(event: .delegateError(.init(error: event.error)))
+        
+        if event.error.code == ErrorCode.invalidMessage.rawValue {
+            logger.error("invalidMessage error received, emitting failed connection status: \(event.error)")
+            currentTrackableConnectionState = .failed
+            callback(event: .delegateConnectionStatusChanged(.init(status: .failed)))
+        }
+    }
 
     // MARK: Utils
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
@@ -285,7 +296,7 @@ extension DefaultSubscriber: AblySubscriberDelegate {
 
     func ablySubscriber(_ sender: AblySubscriber, didFailWithError error: ErrorInformation) {
         logger.error("ablySubscriber.didFailWithError. Error: \(error)", source: "DefaultSubscriber")
-        callback(event: .delegateError(.init(error: error)))
+        enqueue(event: .ablyError(.init(error: error)))
     }
 
     func ablySubscriber(_ sender: AblySubscriber, didReceiveRawLocation location: LocationUpdate) {

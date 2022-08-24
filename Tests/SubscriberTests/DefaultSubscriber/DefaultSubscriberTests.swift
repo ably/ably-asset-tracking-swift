@@ -309,4 +309,26 @@ class DefaultSubscriberTests: XCTestCase {
         XCTAssertNotNil(receivedError)
         XCTAssertEqual(receivedError?.message, stopError.message)
     }
+
+    func test_whenSubscriberReceivesInvalidMessageErrorFromAblySubscriber_itEmitsAFailedConnectionStatus() {
+        let delegate = SubscriberDelegateMock()
+        subscriber.delegate = delegate
+        
+        let delegateDidFailWithErrorCalledExpectation = expectation(description: "Subscriber’s delegate receives didFailWithError")
+        delegate.subscriberSenderDidFailWithErrorClosure = { _, error in
+            XCTAssertEqual(error.code, ErrorCode.invalidMessage.rawValue)
+            delegateDidFailWithErrorCalledExpectation.fulfill()
+        }
+        
+        let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeAssetConnectionStatus")
+        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+            XCTAssertEqual(status, .failed)
+            delegateDidChangeAssetConnectionStatusExpectation.fulfill()
+        }
+
+        let invalidMessageError = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 0, message: "", cause: nil, href: nil)
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didFailWithError: invalidMessageError)
+        
+        waitForExpectations(timeout: 10)
+    }
 }
