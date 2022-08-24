@@ -270,37 +270,37 @@ extension DefaultSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberDelegate {
-    func ablySubscriber(sender: AblySubscriber, didReceivePresenceUpdate presence: Presence) {
+    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence) {
         logger.debug("ablySubscriber.didReceivePresenceUpdate. Presence: \(presence)", source: String(describing: Self.self))
         enqueue(event: PresenceUpdateEvent(presence: presence))
     }
     
-    func ablySubscriber(sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState) {
+    func ablySubscriber(_: AblySubscriber, didChangeClientConnectionState state: ConnectionState) {
         logger.debug("ablySubscriber.didChangeClientConnectionStatus. Status: \(state)", source: String(describing: Self.self))
         enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
     }
     
-    func ablySubscriber(sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState) {
+    func ablySubscriber(_ sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState) {
         logger.debug("ablySubscriber.didChangeChannelConnectionStatus. Status: \(state)", source: String(describing: Self.self))
         enqueue(event: AblyChannelConnectionStateChangedEvent(connectionState: state))
     }
 
-    func ablySubscriber(sender: AblySubscriber, didFailWithError error: ErrorInformation) {
+    func ablySubscriber(_ sender: AblySubscriber, didFailWithError error: ErrorInformation) {
         logger.error("ablySubscriber.didFailWithError. Error: \(error)", source: "DefaultSubscriber")
         callback(event: DelegateErrorEvent(error: error))
     }
 
-    func ablySubscriber(sender: AblySubscriber, didReceiveRawLocation location: LocationUpdate) {
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveRawLocation location: LocationUpdate) {
         logger.debug("ablySubscriber.didReceiveRawLocation.", source: String(describing: Self.self))
         callback(event: DelegateRawLocationReceivedEvent(locationUpdate: location))
     }
     
-    func ablySubscriber(sender: AblySubscriber, didReceiveEnhancedLocation location: LocationUpdate) {
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveEnhancedLocation location: LocationUpdate) {
         logger.debug("ablySubscriber.didReceiveEnhancedLocation.", source: String(describing: Self.self))
         callback(event: DelegateEnhancedLocationReceivedEvent(locationUpdate: location))
     }
     
-    func ablySubscriber(sender: AblySubscriber, didReceiveResolution resolution: Resolution) {
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveResolution resolution: Resolution) {
         logger.debug("ablySubscriber.didReceiveResolution.", source: String(describing: Self.self))
         callback(event: DelegateResolutionReceivedEvent(resolution: resolution))
         callback(event: DelegateDesiredIntervalReceivedEvent(desiredInterval: resolution.desiredInterval))

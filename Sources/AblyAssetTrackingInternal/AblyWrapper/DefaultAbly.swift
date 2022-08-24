@@ -176,11 +176,11 @@ public class DefaultAbly: AblyCommon {
             
             self.logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.publisherDelegate?.ablyPublisher(
-                sender: self,
+                self,
                 didChangeConnectionState: receivedConnectionState
             )
             self.subscriberDelegate?.ablySubscriber(
-                sender: self,
+                self,
                 didChangeClientConnectionState: receivedConnectionState
             )
         }
@@ -221,17 +221,17 @@ public class DefaultAbly: AblyCommon {
         )
         
         // AblySubscriber delegate
-        self.subscriberDelegate?.ablySubscriber(sender: self, didReceivePresenceUpdate: presence)
-        self.subscriberDelegate?.ablySubscriber(sender: self, didChangeChannelConnectionState: presence.action.toConnectionState())
+        self.subscriberDelegate?.ablySubscriber(self, didReceivePresenceUpdate: presence)
+        self.subscriberDelegate?.ablySubscriber(self, didChangeChannelConnectionState: presence.action.toConnectionState())
         
         // Deleagate `Publisher` resolution if present in PresenceData
         if let resolution = data.resolution, data.type == .publisher {
-            self.subscriberDelegate?.ablySubscriber(sender: self, didReceiveResolution: resolution)
+            self.subscriberDelegate?.ablySubscriber(self, didReceiveResolution: resolution)
         }
         
         // AblyPublisher delegate
         self.publisherDelegate?.ablyPublisher(
-            sender: self,
+            self,
             didReceivePresenceUpdate: presence,
             forTrackable: trackable,
             presenceData: data,
@@ -252,7 +252,7 @@ public class DefaultAbly: AblyCommon {
             let receivedConnectionState = stateChange.current.toConnectionState()
             
             self.logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
-            self.publisherDelegate?.ablyPublisher(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
+            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
     }
     
@@ -318,7 +318,7 @@ extension DefaultAbly: AblySubscriber {
                     errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"
                 )
             )
-            subscriberDelegate?.ablySubscriber(sender: self, didFailWithError: errorInformation)
+            subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
             
             return
         }
@@ -329,21 +329,21 @@ extension DefaultAbly: AblySubscriber {
                 let message: RawLocationUpdateMessage = try RawLocationUpdateMessage.fromJSONString(json)
                 let locationUpdate = RawLocationUpdate(location: message.location.toLocation())
                 locationUpdate.skippedLocations = message.skippedLocations.map { $0.toLocation() }
-                subscriberDelegate?.ablySubscriber(sender: self, didReceiveRawLocation: locationUpdate)
+                subscriberDelegate?.ablySubscriber(self, didReceiveRawLocation: locationUpdate)
             case .enhanced:
                 let message: EnhancedLocationUpdateMessage = try EnhancedLocationUpdateMessage.fromJSONString(json)
                 let locationUpdate = EnhancedLocationUpdate(location: message.location.toLocation())
                 locationUpdate.skippedLocations = message.skippedLocations.map { $0.toLocation() }
-                subscriberDelegate?.ablySubscriber(sender: self, didReceiveEnhancedLocation: locationUpdate)
+                subscriberDelegate?.ablySubscriber(self, didReceiveEnhancedLocation: locationUpdate)
             }
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
-                subscriberDelegate?.ablySubscriber(sender: self, didFailWithError: ErrorInformation(error: error))
+                subscriberDelegate?.ablySubscriber(self, didFailWithError: ErrorInformation(error: error))
                 
                 return
             }
             
-            subscriberDelegate?.ablySubscriber(sender: self, didFailWithError: errorInformation)
+            subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
             
             return
         }
@@ -379,7 +379,7 @@ extension DefaultAbly: AblyPublisher {
             let errorInformation = ErrorInformation(
                 type: .publisherError(errorMessage: "Cannot create location update message. Underlying error: \(error)")
             )
-            publisherDelegate?.ablyPublisher(sender: self, didFailWithError: errorInformation)
+            publisherDelegate?.ablyPublisher(self, didFailWithError: errorInformation)
             
             return
         }
@@ -390,12 +390,12 @@ extension DefaultAbly: AblyPublisher {
             }
             
             if let error = error {
-                self.publisherDelegate?.ablyPublisher(sender: self, didFailWithError: error.toErrorInformation())
+                self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
                 
                 return
             }
             
-            self.publisherDelegate?.ablyPublisher(sender: self, didChangeChannelConnectionState: .online, forTrackable: trackable)
+            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: .online, forTrackable: trackable)
             completion?(.success)
         }
     }
@@ -418,7 +418,7 @@ extension DefaultAbly: AblyPublisher {
             
             channel.publish([message]) { error in
                 if let error = error {
-                    self.publisherDelegate?.ablyPublisher(sender: self, didFailWithError: error.toErrorInformation())
+                    self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
                 } else {
                     completion?(.success)
                 }
@@ -427,7 +427,7 @@ extension DefaultAbly: AblyPublisher {
             let errorInformation = ErrorInformation(
                 type: .publisherError(errorMessage: "Cannot create location update message. Underlying error: \(error)")
             )
-            publisherDelegate?.ablyPublisher(sender: self, didFailWithError: errorInformation)
+            publisherDelegate?.ablyPublisher(self, didFailWithError: errorInformation)
         }
     }
     

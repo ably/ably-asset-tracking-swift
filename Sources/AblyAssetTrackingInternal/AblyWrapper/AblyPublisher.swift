@@ -8,7 +8,7 @@ public protocol AblyPublisherDelegate: AnyObject {
      - Parameter sender:    The `AblyPublisher` object which is delegating the change.
      - Parameter state:     The `ConnectionState` object
      */
-    func ablyPublisher(sender: AblyPublisher, didChangeConnectionState state: ConnectionState)
+    func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState)
     
     /**
      Tells the delegate that channel connection state changed.
@@ -17,7 +17,7 @@ public protocol AblyPublisherDelegate: AnyObject {
      - Parameter state:         The `ConnectionState` object
      - Parameter trackable:     The `Trackable` object affected by the change
      */
-    func ablyPublisher(sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable)
+    func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable)
     
     /**
      Tells the delegate that an error occurred.
@@ -27,7 +27,7 @@ public protocol AblyPublisherDelegate: AnyObject {
      - Parameter sender:        The `AblyPublisher` object which is delegating the change.
      - Parameter error:         The `ErrorInformation` object that contains info about error.
      */
-    func ablyPublisher(sender: AblyPublisher, didFailWithError error: ErrorInformation)
+    func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation)
     
     /**
      Tells the delegate that channel presence data was changed.
@@ -39,7 +39,7 @@ public protocol AblyPublisherDelegate: AnyObject {
      - Parameter clientId:      The `Ably` client identifier.
      */
     func ablyPublisher(
-        sender: AblyPublisher,
+        _ sender: AblyPublisher,
         didReceivePresenceUpdate presence: Presence,
         forTrackable trackable: Trackable,
         presenceData: PresenceData,

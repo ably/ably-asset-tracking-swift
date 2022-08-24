@@ -9,7 +9,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter sender:    The `AblySubscriber` object which is delegating the change.
      - Parameter state:     The `ConnectionState` object
      */
-    func ablySubscriber(sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState)
+    func ablySubscriber(_ sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState)
     
     /**
      Tells the delegate that channel connection state changed.
@@ -17,7 +17,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
      - Parameter state:         The `ConnectionState` object
      */
-    func ablySubscriber(sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState)
+    func ablySubscriber(_ sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState)
     
     /**
      Tells the delegate that channel presence was changed.
@@ -25,7 +25,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
      - Parameter presence:      The `Presence` object affected by the change.
      */
-    func ablySubscriber(sender: AblySubscriber, didReceivePresenceUpdate presence: Presence)
+    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence)
     
     /**
      Tells the delegate that an error occurred.
@@ -35,7 +35,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
      - Parameter error:         The `ErrorInformation` object that contains info about error.
      */
-    func ablySubscriber(sender: AblySubscriber, didFailWithError error: ErrorInformation)
+    func ablySubscriber(_ sender: AblySubscriber, didFailWithError error: ErrorInformation)
     
     /**
      Tells the delegate that published location was changed.
@@ -45,7 +45,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter sender:              The `AblySubscriber` object which is delegating the change.
      - Parameter locationUpdate:      The `LocationUpdate` object that contains info about publisher `Enhanced` location.
      */
-    func ablySubscriber(sender: AblySubscriber, didReceiveEnhancedLocation locationUpdate: LocationUpdate)
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveEnhancedLocation locationUpdate: LocationUpdate)
     
     /**
      Tells the delegate that published location was changed.
@@ -55,7 +55,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter sender:              The `AblySubscriber` object which is delegating the change.
      - Parameter locationUpdate:      The `LocationUpdate` object that contains info about publisher `Raw` location.
      */
-    func ablySubscriber(sender: AblySubscriber, didReceiveRawLocation locationUpdate: LocationUpdate)
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveRawLocation locationUpdate: LocationUpdate)
     
     /**
      Tells the delegate that resolution was changed.
@@ -66,7 +66,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter sender:          The `AblySubscriber` object which is delegating the change.
      - Parameter resolution:      The `Resolution` object.
      */
-    func ablySubscriber(sender: AblySubscriber, didReceiveResolution resolution: Resolution)
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveResolution resolution: Resolution)
 }
 
 public protocol AblySubscriber: AblyCommon {
