@@ -338,4 +338,28 @@ class DefaultSubscriberTests: XCTestCase {
         XCTAssertEqual(ablySubscriber.disconnectParamTrackableId, trackableId)
         XCTAssertNil(ablySubscriber.disconnectParamPresenceData)
     }
+    
+    func test_whenItHasAlreadyEmittedAFailedConnectionStatus_andItThenReceivesAConnectionStatusThatWouldMakeItOnline_itDoesNotEmitAnyMoreConnectionStatus() {
+        let delegate = SubscriberDelegateMock()
+        subscriber.delegate = delegate
+        
+        let failedStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeAssetConnectionStatus with failed status")
+        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+            XCTAssertEqual(status, .failed)
+            failedStatusExpectation.fulfill()
+        }
+        
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didChangeClientConnectionState: .failed)
+        
+        waitForExpectations(timeout: 10)
+        
+        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+            XCTFail("Subscriber’s delegate received a connection status update")
+        }
+        
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didChangeClientConnectionState: .online)
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didChangeChannelConnectionState: .online)
+        
+        RunLoop.main.run(until: Date() + 0.5)
+    }
 }

@@ -212,6 +212,11 @@ extension DefaultSubscriber {
     }
     
     private func handleConnectionStateChange() {
+        if currentTrackableConnectionState == .failed {
+            logger.debug("Ignoring state change since state is already .failed", source: String(describing: Self.self))
+            return
+        }
+        
         var newConnectionState: ConnectionState = .offline
         
         switch receivedAblyClientConnectionState {
