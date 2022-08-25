@@ -126,10 +126,3 @@ struct DelegateTrackableConnectionStateChangedEvent: PublisherEvent, PublisherDe
 struct DelegateResolutionUpdateEvent: PublisherEvent {
     let resolution: Resolution
 }
-
-struct DelegatePresenceUpdateEvent: PublisherEvent {
-    let trackable: Trackable
-    let presence: Presence
-    let presenceData: PresenceData
-    let clientId: String
-}
