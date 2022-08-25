@@ -326,8 +326,7 @@ extension DefaultPublisher {
         }
 
         guard !trackables.contains(event.trackable) else {
-            let error = ErrorInformation(type: .trackableAlreadyExist(trackableId: event.trackable.id))
-            callback(error: error, handler: event.resultHandler)
+            callback(value: Void(), handler: event.resultHandler)
             return
         }
      
