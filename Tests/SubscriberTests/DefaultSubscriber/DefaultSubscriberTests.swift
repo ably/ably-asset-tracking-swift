@@ -6,12 +6,13 @@ import AblyAssetTrackingCore
 class DefaultSubscriberTests: XCTestCase {
     private var ablySubscriber: MockAblySubscriber!
     private var subscriber: DefaultSubscriber!
+    private var trackableId: String!
     
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
     private let logger = Logger(label: "com.ably.tracking.DefaultSubscriberTests")
     
     override func setUpWithError() throws {
-        let trackableId: String = "Trackable-\(UUID().uuidString)"
+        trackableId = "Trackable-\(UUID().uuidString)"
         ablySubscriber = MockAblySubscriber(configuration: configuration, mode: .subscribe, logger: logger)
         
         subscriber = DefaultSubscriber(
@@ -310,7 +311,7 @@ class DefaultSubscriberTests: XCTestCase {
         XCTAssertEqual(receivedError?.message, stopError.message)
     }
 
-    func test_whenSubscriberReceivesInvalidMessageErrorFromAblySubscriber_itEmitsAFailedConnectionStatus() {
+    func test_whenSubscriberReceivesInvalidMessageErrorFromAblySubscriber_itEmitsAFailedConnectionStatus_andCallsDisconnectOnAblySubscriber() {
         let delegate = SubscriberDelegateMock()
         subscriber.delegate = delegate
         
@@ -325,10 +326,16 @@ class DefaultSubscriberTests: XCTestCase {
             XCTAssertEqual(status, .failed)
             delegateDidChangeAssetConnectionStatusExpectation.fulfill()
         }
+        
+        // Expectation that disconnect is called
+        expectation(for: .init(block: { [weak self] _, _ in self?.ablySubscriber.disconnectCalled == true }), evaluatedWith: nil)
 
         let invalidMessageError = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 0, message: "", cause: nil, href: nil)
         ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didFailWithError: invalidMessageError)
         
         waitForExpectations(timeout: 10)
+        
+        XCTAssertEqual(ablySubscriber.disconnectParamTrackableId, trackableId)
+        XCTAssertNil(ablySubscriber.disconnectParamPresenceData)
     }
 }

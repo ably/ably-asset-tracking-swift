@@ -265,6 +265,12 @@ extension DefaultSubscriber {
             logger.error("invalidMessage error received, emitting failed connection status: \(event.error)")
             currentTrackableConnectionState = .failed
             callback(event: .delegateConnectionStatusChanged(.init(status: .failed)))
+
+            ablySubscriber.disconnect(trackableId: trackableId, presenceData: nil) { [trackableId] error in
+                if case .failure(let error) = error {
+                    logger.error("Failed to disconnect trackable (\(trackableId)) after receiving invalid message. Error: \(error)")
+                }
+            }
         }
     }
 
