@@ -4,7 +4,7 @@ import AblyAssetTrackingCore
 @testable import AblyAssetTrackingSubscriber
 
 class DefaultSubscriberTests: XCTestCase {
-    private var ablySubscriber: MockAblySubscriberService!
+    private var ablySubscriber: MockAblySubscriber!
     private var subscriber: DefaultSubscriber!
     
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
@@ -12,7 +12,7 @@ class DefaultSubscriberTests: XCTestCase {
     
     override func setUpWithError() throws {
         let trackableId: String = "Trackable-\(UUID().uuidString)"
-        ablySubscriber = MockAblySubscriberService(configuration: configuration, mode: .subscribe, logger: logger)
+        ablySubscriber = MockAblySubscriber(configuration: configuration, mode: .subscribe, logger: logger)
         
         subscriber = DefaultSubscriber(
             ablySubscriber: ablySubscriber,
