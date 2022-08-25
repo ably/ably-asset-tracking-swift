@@ -4,7 +4,7 @@ import AblyAssetTrackingInternal
 
 // These types are only used internally by DefaultSubscriber.
 extension DefaultSubscriber {
-    enum SubscriberEvent {
+    enum Event {
         case start(StartEvent)
         case stop(StopEvent)
         case changeResolution(ChangeResolutionEvent)
@@ -45,7 +45,7 @@ extension DefaultSubscriber {
     
     // MARK: Delegate handling events
     
-    enum SubscriberDelegateEvent {
+    enum DelegateEvent {
         case delegateError(DelegateErrorEvent)
         case delegateEnhancedLocationReceived(DelegateEnhancedLocationReceivedEvent)
         case delegateRawLocationReceived(DelegateRawLocationReceivedEvent)

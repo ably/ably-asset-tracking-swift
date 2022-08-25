@@ -103,7 +103,7 @@ class DefaultSubscriber: Subscriber {
 }
 
 extension DefaultSubscriber {
-    private func enqueue(event: SubscriberEvent) {
+    private func enqueue(event: Event) {
         logger.trace("Received event: \(event)")
         performOnWorkingThread { [weak self] in
             switch event {
@@ -126,7 +126,7 @@ extension DefaultSubscriber {
         performOnMainThread { handler(.failure(error)) }
     }
 
-    private func callback(event: SubscriberDelegateEvent) {
+    private func callback(event: DelegateEvent) {
         logger.trace("Received delegate event: \(event)")
         performOnMainThread { [weak self] in
             guard let self = self,
@@ -145,7 +145,7 @@ extension DefaultSubscriber {
     }
 
     // MARK: Start/Stop
-    private func performStart(_ event: SubscriberEvent.StartEvent) {
+    private func performStart(_ event: Event.StartEvent) {
         
         ablySubscriber.connect(
             trackableId: trackableId,
@@ -170,7 +170,7 @@ extension DefaultSubscriber {
         
     }
     
-    private func performStop(_ event: SubscriberEvent.StopEvent) {
+    private func performStop(_ event: Event.StopEvent) {
         subscriberState = .stopping
         
         ablySubscriber.close(presenceData: presenceData) { [weak self] result in
@@ -183,7 +183,7 @@ extension DefaultSubscriber {
         }
     }
     
-    private func performPresenceUpdated(_ event: SubscriberEvent.PresenceUpdateEvent) {
+    private func performPresenceUpdated(_ event: Event.PresenceUpdateEvent) {
         guard event.presence.type == .publisher else {
             return
         }
@@ -195,17 +195,17 @@ extension DefaultSubscriber {
         }
     }
     
-    private func performStopped(_ event: SubscriberEvent.AblyConnectionClosedEvent) {
+    private func performStopped(_ event: Event.AblyConnectionClosedEvent) {
         subscriberState = .stopped
         callback(value: Void(), handler: event.resultHandler)
     }
     
-    private func performClientConnectionChanged(_ event: SubscriberEvent.AblyClientConnectionStateChangedEvent) {
+    private func performClientConnectionChanged(_ event: Event.AblyClientConnectionStateChangedEvent) {
         receivedAblyClientConnectionState = event.connectionState
         handleConnectionStateChange()
     }
     
-    private func performChannelConnectionChanged(_ event: SubscriberEvent.AblyChannelConnectionStateChangedEvent) {
+    private func performChannelConnectionChanged(_ event: Event.AblyChannelConnectionStateChangedEvent) {
         receivedAblyChannelConnectionState = event.connectionState
         handleConnectionStateChange()
     }
@@ -235,7 +235,7 @@ extension DefaultSubscriber {
         }
     }
 
-    private func performChangeResolution(_ event: SubscriberEvent.ChangeResolutionEvent) {
+    private func performChangeResolution(_ event: Event.ChangeResolutionEvent) {
         guard let resolution = event.resolution else {
             callback(value: Void(), handler: event.resultHandler)
             

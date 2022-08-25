@@ -5,7 +5,7 @@ import AblyAssetTrackingInternal
 
 // These types are only used internally by DefaultPublisher.
 extension DefaultPublisher {
-    enum PublisherEvent {
+    enum Event {
         case trackTrackable(TrackTrackableEvent)
         case addTrackable(AddTrackableEvent)
         case removeTrackable(RemoveTrackableEvent)
@@ -154,7 +154,7 @@ extension DefaultPublisher {
     }
     
     // MARK: Delegate handling events
-    enum PublisherDelegateEvent {
+    enum DelegateEvent {
         case delegateError(DelegateErrorEvent)
         case delegateEnhancedLocationChanged(DelegateEnhancedLocationChangedEvent)
         case delegateTrackableConnectionStateChanged(DelegateTrackableConnectionStateChangedEvent)
