@@ -287,7 +287,10 @@ extension DefaultPublisher {
         ablyPublisher.subscribeForChannelStateChange(trackable: event.trackable)
         
         trackables.insert(event.trackable)
-        locationService.startUpdatingLocation()
+        //Start updating location only after the first trackable
+        if (trackables.count == 1){
+            locationService.startUpdatingLocation()
+        }
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
         event.resultHandler(.success)
