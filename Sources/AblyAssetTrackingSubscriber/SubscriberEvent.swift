@@ -2,61 +2,76 @@ import CoreLocation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
-protocol SubscriberEvent {}
+enum SubscriberEvent {
+    case start(StartEvent)
+    case stop(StopEvent)
+    case changeResolution(ChangeResolutionEvent)
+    case presenceUpdate(PresenceUpdateEvent)
+    case ablyConnectionClosed(AblyConnectionClosedEvent)
+    case ablyClientConnectionStateChanged(AblyClientConnectionStateChangedEvent)
+    case ablyChannelConnectionStateChanged(AblyChannelConnectionStateChangedEvent)
 
-struct StartEvent: SubscriberEvent {
-    let resultHandler: ResultHandler<Void>
-}
+    struct StartEvent {
+        let resultHandler: ResultHandler<Void>
+    }
 
-struct StopEvent: SubscriberEvent {
-    let resultHandler: ResultHandler<Void>
-}
+    struct StopEvent {
+        let resultHandler: ResultHandler<Void>
+    }
 
-struct ChangeResolutionEvent: SubscriberEvent {
-    let resolution: Resolution?
-    let resultHandler: ResultHandler<Void>
-}
+    struct ChangeResolutionEvent {
+        let resolution: Resolution?
+        let resultHandler: ResultHandler<Void>
+    }
 
-struct PresenceUpdateEvent: SubscriberEvent {
-    let presence: Presence
-}
+    struct PresenceUpdateEvent {
+        let presence: Presence
+    }
 
-struct AblyConnectionClosedEvent: SubscriberEvent {
-    let resultHandler: ResultHandler<Void>
-}
+    struct AblyConnectionClosedEvent {
+        let resultHandler: ResultHandler<Void>
+    }
 
-struct AblyClientConnectionStateChangedEvent: SubscriberEvent {
-    let connectionState: ConnectionState
-}
+    struct AblyClientConnectionStateChangedEvent {
+        let connectionState: ConnectionState
+    }
 
-struct AblyChannelConnectionStateChangedEvent: SubscriberEvent {
-    let connectionState: ConnectionState
+    struct AblyChannelConnectionStateChangedEvent {
+        let connectionState: ConnectionState
+    }
 }
 
 // MARK: Delegate handling events
 
-protocol SubscriberDelegateEvent {}
+enum SubscriberDelegateEvent {
+    case delegateError(DelegateErrorEvent)
+    case delegateEnhancedLocationReceived(DelegateEnhancedLocationReceivedEvent)
+    case delegateRawLocationReceived(DelegateRawLocationReceivedEvent)
+    case delegateResolutionReceived(DelegateResolutionReceivedEvent)
+    case delegateDesiredIntervalReceived(DelegateDesiredIntervalReceivedEvent)
+    case delegateConnectionStatusChanged(DelegateConnectionStatusChangedEvent)
+    
+    struct DelegateErrorEvent {
+        let error: ErrorInformation
+    }
 
-struct DelegateErrorEvent: SubscriberDelegateEvent {
-    let error: ErrorInformation
-}
+    struct DelegateEnhancedLocationReceivedEvent {
+        let locationUpdate: LocationUpdate
+    }
 
-struct DelegateEnhancedLocationReceivedEvent: SubscriberDelegateEvent {
-    let locationUpdate: LocationUpdate
-}
+    struct DelegateRawLocationReceivedEvent {
+        let locationUpdate: LocationUpdate
+    }
 
-struct DelegateRawLocationReceivedEvent: SubscriberDelegateEvent {
-    let locationUpdate: LocationUpdate
-}
+    struct DelegateResolutionReceivedEvent {
+        let resolution: Resolution
+    }
 
-struct DelegateResolutionReceivedEvent: SubscriberDelegateEvent {
-    let resolution: Resolution
-}
+    struct DelegateDesiredIntervalReceivedEvent {
+        let desiredInterval: Double
+    }
 
-struct DelegateDesiredIntervalReceivedEvent: SubscriberDelegateEvent {
-    let desiredInterval: Double
-}
-
-struct DelegateConnectionStatusChangedEvent: SubscriberDelegateEvent {
-    let status: ConnectionState
+    struct DelegateConnectionStatusChangedEvent {
+        let status: ConnectionState
+    }
 }
