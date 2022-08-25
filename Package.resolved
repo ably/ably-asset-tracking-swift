@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/ably/ably-cocoa",
         "state": {
           "branch": null,
-          "revision": "3b4d3065762f99b3745eb239179d33615b9594b2",
-          "version": "1.2.10"
+          "revision": "5f61e2abc374787e3a553d60b5369981a214ef29",
+          "version": "1.2.13"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/ably/delta-codec-cocoa",
         "state": {
           "branch": null,
-          "revision": "d3c6972b4e10ddd9bea1d26d2c1778c5cd3d0bac",
-          "version": "1.3.2"
+          "revision": "3ee62ea40a63996b55818d44b3f0e56d8753be88",
+          "version": "1.3.3"
         }
       },
       {
