@@ -383,7 +383,7 @@ extension DefaultPublisher {
         state = .stopping
 
         //first stop updating location
-        self?.locationService.stopUpdatingLocation()
+        locationService.stopUpdatingLocation()
         ablyPublisher.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
