@@ -4,9 +4,9 @@ import AblyAssetTrackingInternal
 import Logging
 @testable import AblyAssetTrackingSubscriber
 
-class MockAblySubscriberService: AblySubscriber {
+class MockAblySubscriber: AblySubscriber {
     var wasDelegateSet: Bool = false
-    var subscriberDelegate: AblySubscriberServiceDelegate? {
+    var subscriberDelegate: AblySubscriberDelegate? {
         didSet { wasDelegateSet = true }
     }
     
