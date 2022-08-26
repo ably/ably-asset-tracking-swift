@@ -881,29 +881,29 @@ extension DefaultPublisher: LocationServiceDelegate {
     }
 }
 
-// MARK: AblyPublisherServiceDelegate
-extension DefaultPublisher: AblyPublisherServiceDelegate {
-    func publisherService(sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        logger.debug("publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: String(describing: Self.self))
+// MARK: AblyPublisherDelegate
+extension DefaultPublisher: AblyPublisherDelegate {
+    func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+        logger.debug("ablyPublisher.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", source: String(describing: Self.self))
         enqueue(event: AblyChannelConnectionStateChangedEvent(trackable: trackable, connectionState: state))
     }
 
-    func publisherService(sender: AblyPublisher, didFailWithError error: ErrorInformation) {
-        logger.error("publisherService.didFailWithError. Error: \(error.message)", source: "DefaultPublisher")
+    func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation) {
+        logger.error("ablyPublisher.didFailWithError. Error: \(error.message)", source: "DefaultPublisher")
         callback(event: DelegateErrorEvent(error: error))
     }
 
-    func publisherService(sender: AblyPublisher, didChangeConnectionState state: ConnectionState) {
-        logger.debug("publisherService.didChangeConnectionState. State: \(state.description)", source: String(describing: Self.self))
+    func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState) {
+        logger.debug("ablyPublisher.didChangeConnectionState. State: \(state.description)", source: String(describing: Self.self))
         enqueue(event: AblyClientConnectionStateChangedEvent(connectionState: state))
     }
 
-    func publisherService(sender: AblyPublisher,
+    func ablyPublisher(_ sender: AblyPublisher,
                           didReceivePresenceUpdate presence: Presence,
                           forTrackable trackable: Trackable,
                           presenceData: PresenceData,
                           clientId: String) {
-        logger.debug("publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)",
+        logger.debug("ablyPublisher.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)",
                      source: "DefaultPublisher")
         enqueue(event: PresenceUpdateEvent(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId))
     }

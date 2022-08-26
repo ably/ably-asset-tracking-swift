@@ -1,14 +1,14 @@
 import Foundation
 import AblyAssetTrackingCore
 
-public protocol AblyPublisherServiceDelegate: AnyObject {
+public protocol AblyPublisherDelegate: AnyObject {
     /**
      Tells the delegate that `Ably` client connection state changed.
      
      - Parameter sender:    The `AblyPublisher` object which is delegating the change.
      - Parameter state:     The `ConnectionState` object
      */
-    func publisherService(sender: AblyPublisher, didChangeConnectionState state: ConnectionState)
+    func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState)
     
     /**
      Tells the delegate that channel connection state changed.
@@ -17,7 +17,7 @@ public protocol AblyPublisherServiceDelegate: AnyObject {
      - Parameter state:         The `ConnectionState` object
      - Parameter trackable:     The `Trackable` object affected by the change
      */
-    func publisherService(sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable)
+    func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable)
     
     /**
      Tells the delegate that an error occurred.
@@ -27,7 +27,7 @@ public protocol AblyPublisherServiceDelegate: AnyObject {
      - Parameter sender:        The `AblyPublisher` object which is delegating the change.
      - Parameter error:         The `ErrorInformation` object that contains info about error.
      */
-    func publisherService(sender: AblyPublisher, didFailWithError error: ErrorInformation)
+    func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation)
     
     /**
      Tells the delegate that channel presence data was changed.
@@ -38,8 +38,8 @@ public protocol AblyPublisherServiceDelegate: AnyObject {
      - Parameter presenceData:  The `PresenceData` object that contains info related to presence change.
      - Parameter clientId:      The `Ably` client identifier.
      */
-    func publisherService(
-        sender: AblyPublisher,
+    func ablyPublisher(
+        _ sender: AblyPublisher,
         didReceivePresenceUpdate presence: Presence,
         forTrackable trackable: Trackable,
         presenceData: PresenceData,
@@ -51,9 +51,9 @@ public protocol AblyPublisher: AblyCommon {
     /**
      The delegate of the `Ably` wrapper object.
      
-     The methods declared by the `AblyPublisherServiceDelegate` protocol allow the adopting delegate to respond to messages from the `Ably` wrapper class..
+     The methods declared by the `AblyPublisherDelegate` protocol allow the adopting delegate to respond to messages from the `Ably` wrapper class..
      */
-    var publisherDelegate: AblyPublisherServiceDelegate? { get set }
+    var publisherDelegate: AblyPublisherDelegate? { get set }
     
     /**
      Sends an enhanced location update to the channel.
