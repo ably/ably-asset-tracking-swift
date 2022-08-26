@@ -6,7 +6,7 @@ extension ConnectionConfiguration {
     /**
      Create ClientOptions for Ably SDK, to be passed to Ably Client
      */
-    public func getClientOptions() -> ARTClientOptions {
+    public func getClientOptions(logHandler: InternalARTLogHandler? = nil) -> ARTClientOptions {
         let clientOptions = ARTClientOptions()
         if let clientId = clientId {
             clientOptions.clientId = clientId
@@ -17,6 +17,10 @@ extension ConnectionConfiguration {
             return clientOptions
         } else {
             clientOptions.key = apiKey
+        }
+        if let logHandler = logHandler {
+            clientOptions.logLevel = .verbose
+            clientOptions.logHandler = logHandler
         }
         
         clientOptions.addAgent("ably-asset-tracking-swift", version: Version.libraryVersion)

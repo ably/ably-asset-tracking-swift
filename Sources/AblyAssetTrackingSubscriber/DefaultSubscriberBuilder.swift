@@ -40,9 +40,8 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
             mode: .subscribe,
-            logger: Logger(
-                label: "com.ably.tracking.DefaultAbly-Subscriber"
-            )
+            //TODO: Add!
+            logHandler: nil
         )
         let subscriber = DefaultSubscriber(
             ablySubscriber: defaultAbly,

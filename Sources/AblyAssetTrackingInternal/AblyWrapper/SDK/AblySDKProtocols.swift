@@ -3,7 +3,7 @@ import AblyAssetTrackingCore
 
 //sourcery: AutoMockable
 public protocol AblySDKRealtimeFactory {
-    func create(withConfiguration configuration: ConnectionConfiguration) -> AblySDKRealtime
+    func create(withConfiguration configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler?) -> AblySDKRealtime
 }
 
 //sourcery: AutoMockable

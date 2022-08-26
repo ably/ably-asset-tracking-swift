@@ -8,17 +8,23 @@ public class DefaultAbly: AblyCommon {
     public weak var publisherDelegate: AblyPublisherServiceDelegate?
     public weak var subscriberDelegate: AblySubscriberServiceDelegate?
     
-    private let logger: Logger
+    private let internalARTLogHandler: InternalARTLogHandler = InternalARTLogHandler()
+    
+    private let logHandler: AblyLogHandler?
     private let client: AblySDKRealtime
     private let connectionConfiguration: ConnectionConfiguration
     let mode: AblyMode
     
     private var channels: [String: AblySDKRealtimeChannel] = [:]
 
-    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger) {
-        self.client = factory.create(withConfiguration: configuration)
+    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: AblyLogHandler?) {
+        self.logHandler = logHandler
+        internalARTLogHandler.logCallback = {  (message, level, error) in
+            logHandler?.logMessage(level: level, message: message, error: error)
+        }
+        self.client = factory.create(withConfiguration: configuration, logHandler: internalARTLogHandler)
+        
         self.mode = mode
-        self.logger = logger
         self.connectionConfiguration = configuration
     }
     
@@ -58,16 +64,11 @@ public class DefaultAbly: AblyCommon {
             
             let presenceEnterSuccess = { [weak self] in
                 guard let self = self else { return }
-                
-                self.logger.debug("Entered to channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
                 self.channels[trackableId] = channel
                 completion(.success)
             }
             
-            let presenceEnterTerminalFailure = { [weak self] (error: ARTErrorInfo) in
-                guard let self = self else { return }
-                
-                self.logger.error("Error during joining to channel [id: \(trackableId)] presence: \(String(describing: error))", source: String(describing: Self.self))
+            let presenceEnterTerminalFailure = {(error: ARTErrorInfo) in
                 completion(.failure(error.toErrorInformation()))
             }
             
@@ -77,22 +78,15 @@ public class DefaultAbly: AblyCommon {
             }
             
             if error.code == ARTErrorCode.operationNotPermittedWithProvidedCapability.rawValue && self.connectionConfiguration.usesTokenAuth {
-                self.logger.debug("Failed to enter presence on channel [id: \(trackableId)], requesting Ably SDK to re-authorize", source: String(describing: Self.self))
-                self.client.auth.authorize { [weak self] _, error in
-                    guard let self = self else { return }
-                    
+                self.client.auth.authorize { _, error in
                     if let error = error {
-                        self.logger.error("Error calling authorize: \(String(describing: error))", source: String(describing: Self.self))
                         completion(.failure(ErrorInformation(error: error)))
                     } else {
-                        self.logger.debug("Authorize succeeded, attaching to channel so that we can retry presence enter", source: String(describing: Self.self))
                         // The channel is currently in the FAILED state, so an immediate attempt to enter presence would fail. We need to first of all explicitly attach to the channel to get it out of the FAILED state (if we _were_ able to attempt to enter presence, doing so would attach to the channel anyway, so we’re not doing anything surprising here).
                         channel.attach { error in
                             if let error = error {
-                                self.logger.error("Error attaching to channel [id: \(trackableId)]: \(String(describing: error))", source: String(describing: Self.self))
                                 completion(.failure(ErrorInformation(error: error)))
                             } else {
-                                self.logger.debug("Channel attach succeeded, retrying presence enter", source: String(describing: Self.self))
                                 channel.presence.enter(presenceDataJSON) { error in
                                     guard let error = error else {
                                         presenceEnterSuccess()
@@ -119,8 +113,6 @@ public class DefaultAbly: AblyCommon {
         
         channelToRemove.presence.leave(presenceDataJSON(data: presenceData)) { [weak self] error in
             guard let error = error else {
-                self?.logger.debug("Left channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
-                
                 channelToRemove.presence.unsubscribe()
                 channelToRemove.unsubscribe()
                 
@@ -131,15 +123,11 @@ public class DefaultAbly: AblyCommon {
                         
                         return
                     }
-                    
-                    self?.logger.error("Error during detach channel [id: \(trackableId)] presence: \(String(describing: error))", source: String(describing: Self.self))
                     completion(.failure(error.toErrorInformation()))
                 }
                 
                 return
             }
-            
-            self?.logger.error("Error during leaving to channel [id: \(trackableId)] presence: \(String(describing: error))", source: String(describing: Self.self))
             completion(.failure(error.toErrorInformation()))
         }
     }
@@ -149,19 +137,12 @@ public class DefaultAbly: AblyCommon {
         
         for (trackableId, _) in self.channels {
             closingDispatchGroup.enter()
-            self.disconnect(trackableId: trackableId, presenceData: presenceData) { result in
-                switch result {
-                case .success(let wasPresent):
-                    self.logger.info("Trackable \(trackableId) removed successfully. Was present \(wasPresent)")
-                case .failure(let error):
-                    self.logger.error("Removing trackable \(trackableId) failed. Error \(error.message)")
-                }
+            self.disconnect(trackableId: trackableId, presenceData: presenceData) { _ in
                 closingDispatchGroup.leave()
             }
         }
         
         closingDispatchGroup.notify(queue: .main) { [weak self] in
-            self?.logger.info("All trackables removed.")
             self?.closeConnection(completion: completion)
         }
     }
@@ -174,7 +155,6 @@ public class DefaultAbly: AblyCommon {
             
             let receivedConnectionState = stateChange.current.toConnectionState()
             
-            self.logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.publisherDelegate?.publisherService(
                 sender: self,
                 didChangeConnectionState: receivedConnectionState
@@ -192,7 +172,6 @@ public class DefaultAbly: AblyCommon {
         }
         
         channel.presence.get { [weak self] messages, error in
-            self?.logger.debug("Get presence update from channel", source: String(describing: Self.self))
             guard let self = self, let messages = messages else {
                 return
             }
@@ -201,7 +180,6 @@ public class DefaultAbly: AblyCommon {
             }
         }
         channel.presence.subscribe { [weak self] message in
-            self?.logger.debug("Received presence update from channel", source: String(describing: Self.self))
             guard let self = self else { return }
             
             self.handleARTPresenceMessage(message, for: trackable)
@@ -251,7 +229,6 @@ public class DefaultAbly: AblyCommon {
             
             let receivedConnectionState = stateChange.current.toConnectionState()
             
-            self.logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
             self.publisherDelegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
     }
@@ -274,7 +251,6 @@ public class DefaultAbly: AblyCommon {
         client.connection.on { stateChange in
             switch stateChange.current {
             case .closed:
-                self.logger.info("Ably connection closed successfully.")
                 completion(.success)
             case .failed:
                 let errorInfo = stateChange.reason?.toErrorInformation() ?? ErrorInformation(type: .publisherError(errorMessage: "Cannot close connection"))
@@ -295,7 +271,6 @@ extension DefaultAbly: AblySubscriber {
         }
         
         channel.subscribe(EventName.raw.rawValue) { [weak self] message in
-            self?.logger.debug("Received raw location message from channel", source: String(describing: Self.self))
             self?.handleLocationUpdateResponse(forEvent: .raw, messageData: message.data)
         }
     }
@@ -306,7 +281,6 @@ extension DefaultAbly: AblySubscriber {
         }
         
         channel.subscribe(EventName.enhanced.rawValue) { [weak self] message in
-            self?.logger.debug("Received enhanced location message from channel", source: String(describing: Self.self))
             self?.handleLocationUpdateResponse(forEvent: .enhanced, messageData: message.data)
         }
     }
