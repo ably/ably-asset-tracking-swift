@@ -43,7 +43,6 @@ let package = Package(
                 "AblyAssetTrackingInternal",
                 .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "MapboxNavigation", package: "MapboxNavigation"),
-                .product(name: "Logging", package: "swift-log")
             ]),
         .target(
             name: "AblyAssetTrackingInternal",

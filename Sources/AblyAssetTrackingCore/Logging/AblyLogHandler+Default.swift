@@ -31,12 +31,11 @@ public extension AblyLogHandler {
     }
     
     private func getFormattedCurrentTimestamp() -> String{
-        let currentDate = Date(timeIntervalSince1970: Date.timeIntervalSinceReferenceDate)
+        let currentDate = Date()
         
-        let dateFormat = DateFormatter()
+        let dateFormatter = DateFormatter()
         
-        dateFormat.locale = Locale.current
-        dateFormat.setLocalizedDateFormatFromTemplate("dd-MM-yy HH:mm:ss.SSS")
-        return dateFormat.string(from: currentDate)
+        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss.SSS"
+        return dateFormatter.string(from: currentDate)
     }
 }

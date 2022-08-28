@@ -19,8 +19,19 @@ public class DefaultAbly: AblyCommon {
 
     public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: AblyLogHandler?) {
         self.logHandler = logHandler
-        internalARTLogHandler.logCallback = {  (message, level, error) in
-            logHandler?.logMessage(level: level, message: message, error: error)
+        internalARTLogHandler.logCallback = { (message, level, error) in
+            switch level {
+            case .verbose:
+                logHandler?.v(message: message, error: error)
+            case .info:
+                logHandler?.i(message: message, error: error)
+            case .debug:
+                logHandler?.d(message: message, error: error)
+            case .warn:
+                logHandler?.w(message: message, error: error)
+            case .error:
+                logHandler?.e(message: message, error: error)
+            }
         }
         self.client = factory.create(withConfiguration: configuration, logHandler: internalARTLogHandler)
         
