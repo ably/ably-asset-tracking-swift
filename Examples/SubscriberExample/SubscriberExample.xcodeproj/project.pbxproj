@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C75DF8328BCD94E00B0AD81 /* SubscriberLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C75DF8228BCD94E00B0AD81 /* SubscriberLogger.swift */; };
 		180F61BA258634420014B310 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F61AC258634420014B310 /* SettingsViewController.xib */; };
 		180F61BB258634420014B310 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61AD258634420014B310 /* SettingsViewController.swift */; };
 		180F61BC258634420014B310 /* TruckAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F61AF258634420014B310 /* TruckAnnotation.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C75DF8228BCD94E00B0AD81 /* SubscriberLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriberLogger.swift; sourceTree = "<group>"; };
 		180F60D2258632B40014B310 /* SubscriberExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubscriberExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		180F61AC258634420014B310 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		180F61AD258634420014B310 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C75DF8128BCD92D00B0AD81 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				0C75DF8228BCD94E00B0AD81 /* SubscriberLogger.swift */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
 		180F60C9258632B40014B310 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +115,7 @@
 		180F61AA258634420014B310 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				0C75DF8128BCD92D00B0AD81 /* Logging */,
 				180F61AB258634420014B310 /* Settings */,
 				180F61AE258634420014B310 /* Map */,
 			);
@@ -295,6 +306,7 @@
 				D569B3A728366C1F00E680AF /* Identifiable.swift in Sources */,
 				D569B3A52836625200E680AF /* HorizontalAccuracyAnnotation.swift in Sources */,
 				180F61BE258634420014B310 /* TruckAnnotationView.swift in Sources */,
+				0C75DF8328BCD94E00B0AD81 /* SubscriberLogger.swift in Sources */,
 				180F61BD258634420014B310 /* MapViewController.swift in Sources */,
 				D569B3A3283631C100E680AF /* HorizontalAccuracyAnnotationView.swift in Sources */,
 				F618BA8E25C99EF800B69885 /* Environment.swift in Sources */,

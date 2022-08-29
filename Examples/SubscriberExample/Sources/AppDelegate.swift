@@ -2,15 +2,12 @@ import UIKit
 import Logging
 import Firebase
 
-let logger: Logger = Logger(label: "com.ably.asset-tracking.SubscriberExample")
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupCrashlytics()
-        setupLogger()
 
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
@@ -22,14 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.makeKeyAndVisible()
 
         return true
-    }
-
-    private func setupLogger() {
-        LoggingSystem.bootstrap { label -> LogHandler in
-            var handler = StreamLogHandler.standardOutput(label: label)
-            handler.logLevel = .debug
-            return handler
-        }
     }
     
     private func setupCrashlytics() {
