@@ -3,133 +3,173 @@ import MapboxDirections
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
-protocol PublisherEvent {}
-
-struct TrackTrackableEvent: PublisherEvent {
-    let trackable: Trackable
-    let resultHandler: ResultHandler<Void>
-}
-
-struct AddTrackableEvent: PublisherEvent {
-    let trackable: Trackable
-    let resultHandler: ResultHandler<Void>
-}
-
-struct RemoveTrackableEvent: PublisherEvent {
-    let trackable: Trackable
-    let resultHandler: ResultHandler<Bool>
-}
-
-struct ClearActiveTrackableEvent: PublisherEvent {
-    let trackable: Trackable
-    let resultHandler: ResultHandler<Bool>
-}
-
-struct ClearRemovedTrackableMetadataEvent: PublisherEvent {
-    let trackable: Trackable
-    let resultHandler: ResultHandler<Bool>
-}
-
-struct PresenceJoinedSuccessfullyEvent: PublisherEvent {
-    let trackable: Trackable
-    let resultHandler: ResultHandler<Void>
-}
-
-struct TrackableReadyToTrackEvent: PublisherEvent {
-    let trackable: Trackable
-    let resultHandler: ResultHandler<Void>
-}
-
-struct SetDestinationSuccessEvent: PublisherEvent {
-    let route: Route
-}
-
-struct EnhancedLocationChangedEvent: PublisherEvent {
-    let locationUpdate: EnhancedLocationUpdate
-}
-
-struct SendEnhancedLocationSuccessEvent: PublisherEvent {
-    let trackable: Trackable
-    let location: Location
-}
-
-struct SendEnhancedLocationFailureEvent: PublisherEvent {
-    let error: ErrorInformation
-    let locationUpdate: EnhancedLocationUpdate
-    let trackable: Trackable
-}
-
-struct RawLocationChangedEvent: PublisherEvent {
-    var locationUpdate: RawLocationUpdate
-}
-
-struct SendRawLocationSuccessEvent: PublisherEvent {
-    let trackable: Trackable
-    let location: Location
-}
-
-struct SendRawLocationFailureEvent: PublisherEvent {
-    let error: ErrorInformation
-    let locationUpdate: RawLocationUpdate
-    let trackable: Trackable
-}
-
-struct RefreshResolutionPolicyEvent: PublisherEvent {}
-
-struct ChangeLocationEngineResolutionEvent: PublisherEvent {}
-
-struct ChangeRoutingProfileEvent: PublisherEvent {
-    let profile: RoutingProfile
-    let resultHandler: ResultHandler<Void>
-}
-
-struct PresenceUpdateEvent: PublisherEvent {
-    let trackable: Trackable
-    let presence: Presence
-    let presenceData: PresenceData
-    let clientId: String
-}
-
-struct StopEvent: PublisherEvent {
-    let resultHandler: ResultHandler<Void>
-}
-
-struct AblyConnectionClosedEvent: PublisherEvent {
-    let resultHandler: ResultHandler<Void>
-}
-
-struct AblyClientConnectionStateChangedEvent: PublisherEvent {
-    let connectionState: ConnectionState
-}
-
-struct AblyChannelConnectionStateChangedEvent: PublisherEvent {
-    let trackable: Trackable
-    let connectionState: ConnectionState
-}
-
-// MARK: Delegate handling events
-protocol PublisherDelegateEvent {}
-
-struct DelegateErrorEvent: PublisherEvent, PublisherDelegateEvent {
-    let error: ErrorInformation
-}
-
-struct DelegateEnhancedLocationChangedEvent: PublisherEvent, PublisherDelegateEvent {
-    let locationUpdate: EnhancedLocationUpdate
-}
-
-struct DelegateTrackableConnectionStateChangedEvent: PublisherEvent, PublisherDelegateEvent {
-    let trackable: Trackable
-    let connectionState: ConnectionState
-}
-
-struct DelegateResolutionUpdateEvent: PublisherEvent {
-    let resolution: Resolution
-}
-
-struct DelegatePresenceUpdateEvent: PublisherEvent {
-    let trackable: Trackable
-    let presence: Presence
-    let presenceData: PresenceData
-    let clientId: String
+// These types are only used internally by DefaultPublisher.
+extension DefaultPublisher {
+    enum Event {
+        case trackTrackable(TrackTrackableEvent)
+        case addTrackable(AddTrackableEvent)
+        case removeTrackable(RemoveTrackableEvent)
+        case clearActiveTrackable(ClearActiveTrackableEvent)
+        case clearRemovedTrackableMetadata(ClearRemovedTrackableMetadataEvent)
+        case presenceJoinedSuccessfully(PresenceJoinedSuccessfullyEvent)
+        case trackableReadyToTrack(TrackableReadyToTrackEvent)
+        case setDestinationSuccess(SetDestinationSuccessEvent)
+        case enhancedLocationChanged(EnhancedLocationChangedEvent)
+        case sendEnhancedLocationSuccess(SendEnhancedLocationSuccessEvent)
+        case sendEnhancedLocationFailure(SendEnhancedLocationFailureEvent)
+        case rawLocationChanged(RawLocationChangedEvent)
+        case sendRawLocationSuccess(SendRawLocationSuccessEvent)
+        case sendRawLocationFailure(SendRawLocationFailureEvent)
+        case refreshResolutionPolicy(RefreshResolutionPolicyEvent)
+        case changeLocationEngineResolution(ChangeLocationEngineResolutionEvent)
+        case changeRoutingProfile(ChangeRoutingProfileEvent)
+        case presenceUpdate(PresenceUpdateEvent)
+        case stop(StopEvent)
+        case ablyConnectionClosed(AblyConnectionClosedEvent)
+        case ablyClientConnectionStateChanged(AblyClientConnectionStateChangedEvent)
+        case ablyChannelConnectionStateChanged(AblyChannelConnectionStateChangedEvent)
+        case delegateError(DelegateErrorEvent)
+        case delegateEnhancedLocationChanged(DelegateEnhancedLocationChangedEvent)
+        case delegateTrackableConnectionStateChanged(DelegateTrackableConnectionStateChangedEvent)
+        case delegateResolutionUpdate(DelegateResolutionUpdateEvent)
+        
+        struct TrackTrackableEvent {
+            let trackable: Trackable
+            let resultHandler: ResultHandler<Void>
+        }
+        
+        struct AddTrackableEvent {
+            let trackable: Trackable
+            let resultHandler: ResultHandler<Void>
+        }
+        
+        struct RemoveTrackableEvent {
+            let trackable: Trackable
+            let resultHandler: ResultHandler<Bool>
+        }
+        
+        struct ClearActiveTrackableEvent {
+            let trackable: Trackable
+            let resultHandler: ResultHandler<Bool>
+        }
+        
+        struct ClearRemovedTrackableMetadataEvent {
+            let trackable: Trackable
+            let resultHandler: ResultHandler<Bool>
+        }
+        
+        struct PresenceJoinedSuccessfullyEvent {
+            let trackable: Trackable
+            let resultHandler: ResultHandler<Void>
+        }
+        
+        struct TrackableReadyToTrackEvent {
+            let trackable: Trackable
+            let resultHandler: ResultHandler<Void>
+        }
+        
+        struct SetDestinationSuccessEvent {
+            let route: Route
+        }
+        
+        struct EnhancedLocationChangedEvent {
+            let locationUpdate: EnhancedLocationUpdate
+        }
+        
+        struct SendEnhancedLocationSuccessEvent {
+            let trackable: Trackable
+            let location: Location
+        }
+        
+        struct SendEnhancedLocationFailureEvent {
+            let error: ErrorInformation
+            let locationUpdate: EnhancedLocationUpdate
+            let trackable: Trackable
+        }
+        
+        struct RawLocationChangedEvent {
+            var locationUpdate: RawLocationUpdate
+        }
+        
+        struct SendRawLocationSuccessEvent {
+            let trackable: Trackable
+            let location: Location
+        }
+        
+        struct SendRawLocationFailureEvent {
+            let error: ErrorInformation
+            let locationUpdate: RawLocationUpdate
+            let trackable: Trackable
+        }
+        
+        struct RefreshResolutionPolicyEvent {}
+        
+        struct ChangeLocationEngineResolutionEvent {}
+        
+        struct ChangeRoutingProfileEvent {
+            let profile: RoutingProfile
+            let resultHandler: ResultHandler<Void>
+        }
+        
+        struct PresenceUpdateEvent {
+            let trackable: Trackable
+            let presence: Presence
+            let presenceData: PresenceData
+            let clientId: String
+        }
+        
+        struct StopEvent {
+            let resultHandler: ResultHandler<Void>
+        }
+        
+        struct AblyConnectionClosedEvent {
+            let resultHandler: ResultHandler<Void>
+        }
+        
+        struct AblyClientConnectionStateChangedEvent {
+            let connectionState: ConnectionState
+        }
+        
+        struct AblyChannelConnectionStateChangedEvent {
+            let trackable: Trackable
+            let connectionState: ConnectionState
+        }
+        
+        struct DelegateErrorEvent {
+            let error: ErrorInformation
+        }
+        
+        struct DelegateEnhancedLocationChangedEvent {
+            let locationUpdate: EnhancedLocationUpdate
+        }
+        
+        struct DelegateTrackableConnectionStateChangedEvent {
+            let trackable: Trackable
+            let connectionState: ConnectionState
+        }
+        
+        struct DelegateResolutionUpdateEvent {
+            let resolution: Resolution
+        }
+    }
+    
+    // MARK: Delegate handling events
+    enum DelegateEvent {
+        case delegateError(DelegateErrorEvent)
+        case delegateEnhancedLocationChanged(DelegateEnhancedLocationChangedEvent)
+        case delegateTrackableConnectionStateChanged(DelegateTrackableConnectionStateChangedEvent)
+        
+        struct DelegateErrorEvent {
+            let error: ErrorInformation
+        }
+        
+        struct DelegateEnhancedLocationChangedEvent {
+            let locationUpdate: EnhancedLocationUpdate
+        }
+        
+        struct DelegateTrackableConnectionStateChangedEvent {
+            let trackable: Trackable
+            let connectionState: ConnectionState
+        }
+    }
 }

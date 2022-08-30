@@ -6,7 +6,7 @@ import AblyAssetTrackingInternal
 
 @testable import AblyAssetTrackingPublisher
 
-class MockAblyPublisherService: AblyPublisher {
+class MockAblyPublisher: AblyPublisher {
     
     var initConnectionConfiguration: ConnectionConfiguration?
     var initMode: AblyMode?
@@ -59,7 +59,7 @@ class MockAblyPublisherService: AblyPublisher {
     }
 
     var wasDelegateSet: Bool = false
-    var publisherDelegate: AblyPublisherServiceDelegate? {
+    var publisherDelegate: AblyPublisherDelegate? {
         didSet { wasDelegateSet = true }
     }
 

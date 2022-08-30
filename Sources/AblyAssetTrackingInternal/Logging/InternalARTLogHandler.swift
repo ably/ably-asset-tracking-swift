@@ -29,6 +29,6 @@ public class InternalARTLogHandler: ARTLog {
     
     override public func logWithError(_ error: ARTErrorInfo) {
         let convertedLogLevel = convertLogLevel(artLogLevel: .error)
-        logCallback?("", convertedLogLevel, error)
+        logCallback?(error.message, convertedLogLevel, error)
     }
 }

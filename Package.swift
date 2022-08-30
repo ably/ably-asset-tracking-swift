@@ -23,9 +23,9 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", from: "2.3.0"),
+        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", from: "2.7.0"),
         .package(url: "https://github.com/apple/swift-log", from: "1.4.2"),
-        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.10")
+        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.13")
     ],
     targets: [
         .target(

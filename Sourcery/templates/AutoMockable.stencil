@@ -1,9 +1,12 @@
 // swiftlint:disable line_length
 // swiftlint:disable variable_name
 
-import AblyAssetTrackingCore
-import AblyAssetTrackingInternal
-import Ably
+import Foundation
+#if os(iOS) || os(tvOS) || os(watchOS)
+import UIKit
+#elseif os(OSX)
+import AppKit
+#endif
 
 {% for import in argument.autoMockableImports %}
 import {{ import }}
