@@ -19,7 +19,7 @@ class PublisherHelper {
     }
         
     func sendLocationUpdate(
-        ablyService: MockAblyPublisherService,
+        ablyPublisher: MockAblyPublisher,
         publisher: DefaultPublisher,
         locationUpdate: EnhancedLocationUpdate,
         trackable: Trackable,
@@ -36,7 +36,7 @@ class PublisherHelper {
              Start publishing trackable
              */
             let connectCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
-            ablyService.connectCompletionHandler = { callback in
+            ablyPublisher.connectCompletionHandler = { callback in
                 callback?(.success)
                 self.addedTrackables.append(trackable.id)
                 connectCompletionHandlerExpectation.fulfill()
@@ -51,17 +51,17 @@ class PublisherHelper {
             }
         }
         
-        ablyService.sendEnhancedAssetLocationUpdateCounter = .zero
+        ablyPublisher.sendEnhancedAssetLocationUpdateCounter = .zero
                 
         let expectationDidSendEnhancedLocation = XCTestExpectation(description: "Publisher did send enhanced location")
         
-        ablyService.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in            
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in            
             switch resultPolicy {
             case .success:
                 completion?(.success)
                 expectationDidSendEnhancedLocation.fulfill()
             case .retry:
-                if ablyService.sendEnhancedAssetLocationUpdateCounter == enhancedLocationState.maxRetryCount {
+                if ablyPublisher.sendEnhancedAssetLocationUpdateCounter == enhancedLocationState.maxRetryCount {
                     completion?(.failure(error))
                 } else {
                     completion?(.success)
@@ -69,7 +69,7 @@ class PublisherHelper {
                 }
             case .fail:
                 completion?(.failure(error))
-                if ablyService.sendEnhancedAssetLocationUpdateCounter == enhancedLocationState.maxRetryCount + 1 {
+                if ablyPublisher.sendEnhancedAssetLocationUpdateCounter == enhancedLocationState.maxRetryCount + 1 {
                     expectationDidSendEnhancedLocation.fulfill()
                 }
             }
@@ -85,7 +85,7 @@ class PublisherHelper {
     }
     
     static func createPublisher(
-        ablyService: AblyPublisher,
+        ablyPublisher: AblyPublisher,
         connectionConfiguration: ConnectionConfiguration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID"),
         mapboxConfiguration: MapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN"),
         routingProfile: RoutingProfile = .driving,
@@ -100,7 +100,7 @@ class PublisherHelper {
             mapboxConfiguration: mapboxConfiguration,
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyPublisher: ablyService,
+            ablyPublisher: ablyPublisher,
             locationService: locationService,
             routeProvider: routeProvider,
             enhancedLocationState: enhancedLocationState
