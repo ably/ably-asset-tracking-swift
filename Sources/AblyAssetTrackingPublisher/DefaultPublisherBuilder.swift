@@ -1,7 +1,6 @@
 import UIKit
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
-import Logging
 
 class DefaultPublisherBuilder: PublisherBuilder {
     private var connection: ConnectionConfiguration?

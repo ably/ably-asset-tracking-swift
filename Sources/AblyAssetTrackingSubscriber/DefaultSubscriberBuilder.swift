@@ -1,5 +1,4 @@
 import UIKit
-import Logging
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 

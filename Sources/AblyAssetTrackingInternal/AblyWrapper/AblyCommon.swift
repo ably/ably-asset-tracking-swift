@@ -1,5 +1,4 @@
 import AblyAssetTrackingCore
-import Logging
 
 public protocol AblyCommon {
     /**

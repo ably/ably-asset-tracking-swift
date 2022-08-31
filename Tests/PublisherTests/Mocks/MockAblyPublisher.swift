@@ -1,6 +1,5 @@
 import CoreLocation
 import Foundation
-import Logging
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
@@ -10,7 +9,7 @@ class MockAblyPublisher: AblyPublisher {
     
     var initConnectionConfiguration: ConnectionConfiguration?
     var initMode: AblyMode?
-    required init(configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger) {
+    required init(configuration: ConnectionConfiguration, mode: AblyMode) {
         self.initConnectionConfiguration = configuration
         self.initMode = mode
     }

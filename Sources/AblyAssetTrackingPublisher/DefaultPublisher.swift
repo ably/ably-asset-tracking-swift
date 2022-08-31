@@ -1,6 +1,5 @@
 import UIKit
 import CoreLocation
-import Logging
 import MapboxDirections
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
@@ -859,25 +858,6 @@ extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: ErrorInformation) {
         logHandler?.e(message: "\(String(describing: Self.self)): locationService.didFailWithError.", error: error)
         callback(event: .delegateError(.init(error: error)))
-    }
-
-    func locationService(sender: LocationService, didUpdateRawLocationUpdate locationUpdate: RawLocationUpdate) {
-        logHandler?.d(message: "\(String(describing: Self.self)): locationService.didUpdateRawLocation.", error: nil)
-        enqueue(event: RawLocationChangedEvent(locationUpdate: locationUpdate))
-    }
-    
-    func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
-        logHandler?.d(message: "\(String(describing: Self.self)): locationService.didUpdateEnhancedLocation.", error: nil)
-        enqueue(event: EnhancedLocationChangedEvent(locationUpdate: locationUpdate))
-        callback(event: DelegateEnhancedLocationChangedEvent(locationUpdate: locationUpdate))
-    }
-}
-
-// MARK: AblyPublisherServiceDelegate
-extension DefaultPublisher: AblyPublisherServiceDelegate {
-    func publisherService(sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        logHandler?.d(message: "\(String(describing: Self.self)): publisherService.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", error: nil)
-        enqueue(event: AblyChannelConnectionStateChangedEvent(trackable: trackable, connectionState: state))
     }
 
     func locationService(sender: LocationService, didUpdateRawLocationUpdate locationUpdate: RawLocationUpdate) {

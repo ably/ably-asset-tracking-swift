@@ -1,7 +1,6 @@
 import CoreLocation
 import Ably
 import AblyAssetTrackingCore
-import Logging
 
 public class DefaultAbly: AblyCommon {
     

@@ -1,7 +1,6 @@
 import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
-import Logging
 @testable import AblyAssetTrackingSubscriber
 
 class MockAblySubscriber: AblySubscriber {
@@ -10,9 +9,11 @@ class MockAblySubscriber: AblySubscriber {
         didSet { wasDelegateSet = true }
     }
     
+    let logger = MockAblyLogHandler()
+    
     var initConnectionConfiguration: ConnectionConfiguration?
     var initMode: AblyMode?
-    required init(configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger) {
+    required init(configuration: ConnectionConfiguration, mode: AblyMode, logger: AblyLogHandler) {
         self.initConnectionConfiguration = configuration
         self.initMode = mode
     }

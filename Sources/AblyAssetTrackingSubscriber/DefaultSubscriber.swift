@@ -1,6 +1,5 @@
 import Foundation
 import CoreLocation
-import Logging
 import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
