@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C3E7C3F28BF695000171D14 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 0C3E7C3E28BF695000171D14 /* Logging */; };
 		0C9E6B1D28BBA637001A54E1 /* PublisherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9E6B1C28BBA637001A54E1 /* PublisherLogger.swift */; };
 		0CFCA2FD289130E700A1A6B5 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA2F9289130E700A1A6B5 /* ListItem.swift */; };
 		0CFCA2FE289130E700A1A6B5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA2FA289130E700A1A6B5 /* SettingsView.swift */; };
@@ -78,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C3E7C3F28BF695000171D14 /* Logging in Frameworks */,
 				D544FB072771B3850015925C /* AblyAssetTrackingPublisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,6 +271,7 @@
 			name = PublisherExampleSwiftUI;
 			packageProductDependencies = (
 				D544FB062771B3850015925C /* AblyAssetTrackingPublisher */,
+				0C3E7C3E28BF695000171D14 /* Logging */,
 			);
 			productName = PublisherExampleSwiftUI;
 			productReference = D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */;
@@ -298,6 +301,9 @@
 				Base,
 			);
 			mainGroup = D544FAE92771B3550015925C;
+			packageReferences = (
+				0C3E7C3D28BF695000171D14 /* XCRemoteSwiftPackageReference "swift-log" */,
+			);
 			productRefGroup = D544FAF32771B3560015925C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -563,7 +569,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		0C3E7C3D28BF695000171D14 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.4.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		0C3E7C3E28BF695000171D14 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C3E7C3D28BF695000171D14 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
 		D544FB062771B3850015925C /* AblyAssetTrackingPublisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AblyAssetTrackingPublisher;

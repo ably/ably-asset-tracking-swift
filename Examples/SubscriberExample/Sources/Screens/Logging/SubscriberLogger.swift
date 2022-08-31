@@ -7,7 +7,7 @@ class SubscriberLogger: AblyLogHandler {
         
     init () {
         swiftLog = Logger(label: "com.ably.SubscriberExample")
-        swiftLog.logLevel = .trace
+        swiftLog.logLevel = .info
     }
     
     func logMessage(level: LogLevel, message: String, error: Error?) {
