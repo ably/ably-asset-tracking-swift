@@ -2,6 +2,10 @@ import Foundation
 import Ably
 import AblyAssetTrackingCore
 
+/**
+* This log handler is supposed to be used only for capturing internal events from the ably-cocoa sdk and passing them on
+* to the AblyLogHandler (passed by users via publisher/subscriber builder methods) via `logCallback`
+*/
 public class InternalARTLogHandler: ARTLog {
     var logCallback: ((_ message: String, _ level: LogLevel, _ error: Error?) -> Void)?
     
