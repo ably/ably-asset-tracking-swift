@@ -114,6 +114,7 @@ extension DefaultSubscriber {
             case .ablyClientConnectionStateChanged(let event): self?.performClientConnectionChanged(event)
             case .ablyChannelConnectionStateChanged(let event): self?.performChannelConnectionChanged(event)
             case .presenceUpdate(let event): self?.performPresenceUpdated(event)
+            case .ablyError(let event): self?.performAblyError(event)
             }
         }
     }
@@ -211,6 +212,11 @@ extension DefaultSubscriber {
     }
     
     private func handleConnectionStateChange() {
+        if currentTrackableConnectionState == .failed {
+            logger.debug("Ignoring state change since state is already .failed", source: String(describing: Self.self))
+            return
+        }
+        
         var newConnectionState: ConnectionState = .offline
         
         switch receivedAblyClientConnectionState {
@@ -256,6 +262,22 @@ extension DefaultSubscriber {
             }
         }
     }
+    
+    private func performAblyError(_ event: Event.AblyErrorEvent) {
+        callback(event: .delegateError(.init(error: event.error)))
+        
+        if event.error.code == ErrorCode.invalidMessage.rawValue {
+            logger.error("invalidMessage error received, emitting failed connection status: \(event.error)")
+            currentTrackableConnectionState = .failed
+            callback(event: .delegateConnectionStatusChanged(.init(status: .failed)))
+
+            ablySubscriber.disconnect(trackableId: trackableId, presenceData: nil) { [trackableId] error in
+                if case .failure(let error) = error {
+                    logger.error("Failed to disconnect trackable (\(trackableId)) after receiving invalid message. Error: \(error)")
+                }
+            }
+        }
+    }
 
     // MARK: Utils
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
@@ -285,7 +307,7 @@ extension DefaultSubscriber: AblySubscriberDelegate {
 
     func ablySubscriber(_ sender: AblySubscriber, didFailWithError error: ErrorInformation) {
         logger.error("ablySubscriber.didFailWithError. Error: \(error)", source: "DefaultSubscriber")
-        callback(event: .delegateError(.init(error: error)))
+        enqueue(event: .ablyError(.init(error: error)))
     }
 
     func ablySubscriber(_ sender: AblySubscriber, didReceiveRawLocation location: LocationUpdate) {

@@ -6,12 +6,13 @@ import AblyAssetTrackingCore
 class DefaultSubscriberTests: XCTestCase {
     private var ablySubscriber: MockAblySubscriber!
     private var subscriber: DefaultSubscriber!
+    private var trackableId: String!
     
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
     private let logger = Logger(label: "com.ably.tracking.DefaultSubscriberTests")
     
     override func setUpWithError() throws {
-        let trackableId: String = "Trackable-\(UUID().uuidString)"
+        trackableId = "Trackable-\(UUID().uuidString)"
         ablySubscriber = MockAblySubscriber(configuration: configuration, mode: .subscribe, logger: logger)
         
         subscriber = DefaultSubscriber(
@@ -308,5 +309,57 @@ class DefaultSubscriberTests: XCTestCase {
         XCTAssertTrue(isFailure)
         XCTAssertNotNil(receivedError)
         XCTAssertEqual(receivedError?.message, stopError.message)
+    }
+
+    func test_whenSubscriberReceivesInvalidMessageErrorFromAblySubscriber_itEmitsAFailedConnectionStatus_andCallsDisconnectOnAblySubscriber() {
+        let delegate = SubscriberDelegateMock()
+        subscriber.delegate = delegate
+        
+        let delegateDidFailWithErrorCalledExpectation = expectation(description: "Subscriber’s delegate receives didFailWithError")
+        delegate.subscriberSenderDidFailWithErrorClosure = { _, error in
+            XCTAssertEqual(error.code, ErrorCode.invalidMessage.rawValue)
+            delegateDidFailWithErrorCalledExpectation.fulfill()
+        }
+        
+        let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeAssetConnectionStatus")
+        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+            XCTAssertEqual(status, .failed)
+            delegateDidChangeAssetConnectionStatusExpectation.fulfill()
+        }
+        
+        // Expectation that disconnect is called
+        expectation(for: .init(block: { [weak self] _, _ in self?.ablySubscriber.disconnectCalled == true }), evaluatedWith: nil)
+
+        let invalidMessageError = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 0, message: "", cause: nil, href: nil)
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didFailWithError: invalidMessageError)
+        
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertEqual(ablySubscriber.disconnectParamTrackableId, trackableId)
+        XCTAssertNil(ablySubscriber.disconnectParamPresenceData)
+    }
+    
+    func test_whenItHasAlreadyEmittedAFailedConnectionStatus_andItThenReceivesAConnectionStatusThatWouldMakeItOnline_itDoesNotEmitAnyMoreConnectionStatus() {
+        let delegate = SubscriberDelegateMock()
+        subscriber.delegate = delegate
+        
+        let failedStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeAssetConnectionStatus with failed status")
+        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+            XCTAssertEqual(status, .failed)
+            failedStatusExpectation.fulfill()
+        }
+        
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didChangeClientConnectionState: .failed)
+        
+        waitForExpectations(timeout: 10)
+        
+        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+            XCTFail("Subscriber’s delegate received a connection status update")
+        }
+        
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didChangeClientConnectionState: .online)
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didChangeChannelConnectionState: .online)
+        
+        RunLoop.main.run(until: Date() + 0.5)
     }
 }

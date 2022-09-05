@@ -12,6 +12,7 @@ extension DefaultSubscriber {
         case ablyConnectionClosed(AblyConnectionClosedEvent)
         case ablyClientConnectionStateChanged(AblyClientConnectionStateChangedEvent)
         case ablyChannelConnectionStateChanged(AblyChannelConnectionStateChangedEvent)
+        case ablyError(AblyErrorEvent)
         
         struct StartEvent {
             let resultHandler: ResultHandler<Void>
@@ -40,6 +41,10 @@ extension DefaultSubscriber {
         
         struct AblyChannelConnectionStateChangedEvent {
             let connectionState: ConnectionState
+        }
+        
+        struct AblyErrorEvent {
+            let error: ErrorInformation
         }
     }
     

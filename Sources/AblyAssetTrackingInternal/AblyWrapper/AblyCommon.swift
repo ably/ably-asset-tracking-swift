@@ -59,7 +59,7 @@ public protocol AblyCommon {
      - Parameter presenceData:  The data that will be send via the presence channel.
      - Parameter completion:    The closure that will be called when disconnecting completes. If something goes wrong it will be called with `error` object.
      */
-    func disconnect(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Bool>)
+    func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>)
     
     /**
      Cleanups and closes all the connected channels and their presence. In the end closes Ably connection.

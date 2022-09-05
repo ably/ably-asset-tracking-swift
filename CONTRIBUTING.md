@@ -89,6 +89,12 @@ and then manually merge the delta contents in to the main change log (where `v1.
 
 ## Generating mocks
 
-We use [Sourcery](https://github.com/krzysztofzablocki/Sourcery) to generate mocks for the protocols in the file `Sources/AblyAssetTrackingInternal/AblyWrapper/SDK/AblySDKProtocols.swift`. At the time of writing, there is no way to automatically generate these mocks as part of the SPM build process, so when you update this file you’ll need to manually run the command `Scripts/generate-mocks.sh`.
+We use [Sourcery](https://github.com/krzysztofzablocki/Sourcery) to generate mocks for the protocols in the following files:
+
+- `Sources/AblyAssetTrackingInternal/AblyWrapper/AblySubscriber.swift`
+- `Sources/AblyAssetTrackingInternal/AblyWrapper/SDK/AblySDKProtocols.swift`
+- `Sources/AblyAssetTrackingSubscriber/Subscriber.swift`
+
+At the time of writing, there is no way to automatically generate these mocks as part of the SPM build process, so when you update these files you’ll need to manually run the command `Scripts/generate-mocks.sh`.
 
 When [Swift package plugins](https://developer.apple.com/videos/play/wwdc2022/110359/) get introduced in Swift 5.6, we might be able to generate these mocks automatically.
