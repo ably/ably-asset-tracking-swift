@@ -5,19 +5,21 @@ import Logging
 
 public class DefaultAbly: AblyCommon {
     
-    public weak var publisherDelegate: AblyPublisherServiceDelegate?
-    public weak var subscriberDelegate: AblySubscriberServiceDelegate?
+    public weak var publisherDelegate: AblyPublisherDelegate?
+    public weak var subscriberDelegate: AblySubscriberDelegate?
     
     private let logger: Logger
-    private let client: ARTRealtime
-    private let mode: AblyMode
+    private let client: AblySDKRealtime
+    private let connectionConfiguration: ConnectionConfiguration
+    let mode: AblyMode
     
-    private var channels: [String: ARTRealtimeChannel] = [:]
+    private var channels: [String: AblySDKRealtimeChannel] = [:]
 
-    public required init(configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger) {
-        self.client = ARTRealtime(options: configuration.getClientOptions())
+    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logger: Logger) {
+        self.client = factory.create(withConfiguration: configuration)
         self.mode = mode
         self.logger = logger
+        self.connectionConfiguration = configuration
     }
     
     public func connect(
@@ -49,28 +51,80 @@ public class DefaultAbly: AblyCommon {
         
         let channel = client.channels.getChannelFor(trackingId: trackableId, options: options)
         
-        channel.presence.enter(presenceDataJSON(data: presenceData)) { [weak self] error in
-            guard let error = error else {
-                self?.logger.debug("Entered to channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
-                self?.channels[trackableId] = channel
-                completion(.success)
+        let presenceDataJSON = self.presenceDataJSON(data: presenceData)
                 
+        channel.presence.enter(presenceDataJSON) { [weak self] error in
+            guard let self = self else { return }
+            
+            let presenceEnterSuccess = { [weak self] in
+                guard let self = self else { return }
+                
+                self.logger.debug("Entered to channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
+                self.channels[trackableId] = channel
+                completion(.success)
+            }
+            
+            let presenceEnterTerminalFailure = { [weak self] (error: ARTErrorInfo) in
+                guard let self = self else { return }
+                
+                self.logger.error("Error during joining to channel [id: \(trackableId)] presence: \(String(describing: error))", source: String(describing: Self.self))
+                completion(.failure(error.toErrorInformation()))
+            }
+            
+            guard let error = error else {
+                presenceEnterSuccess()
                 return
             }
             
-            self?.logger.error("Error during joining to channel [id: \(trackableId)] presence: \(String(describing: error))", source: String(describing: Self.self))
-            completion(.failure(error.toErrorInformation()))
+            if error.code == ARTErrorCode.operationNotPermittedWithProvidedCapability.rawValue && self.connectionConfiguration.usesTokenAuth {
+                self.logger.debug("Failed to enter presence on channel [id: \(trackableId)], requesting Ably SDK to re-authorize", source: String(describing: Self.self))
+                self.client.auth.authorize { [weak self] _, error in
+                    guard let self = self else { return }
+                    
+                    if let error = error {
+                        self.logger.error("Error calling authorize: \(String(describing: error))", source: String(describing: Self.self))
+                        completion(.failure(ErrorInformation(error: error)))
+                    } else {
+                        self.logger.debug("Authorize succeeded, attaching to channel so that we can retry presence enter", source: String(describing: Self.self))
+                        // The channel is currently in the FAILED state, so an immediate attempt to enter presence would fail. We need to first of all explicitly attach to the channel to get it out of the FAILED state (if we _were_ able to attempt to enter presence, doing so would attach to the channel anyway, so we’re not doing anything surprising here).
+                        channel.attach { error in
+                            if let error = error {
+                                self.logger.error("Error attaching to channel [id: \(trackableId)]: \(String(describing: error))", source: String(describing: Self.self))
+                                completion(.failure(ErrorInformation(error: error)))
+                            } else {
+                                self.logger.debug("Channel attach succeeded, retrying presence enter", source: String(describing: Self.self))
+                                channel.presence.enter(presenceDataJSON) { error in
+                                    guard let error = error else {
+                                        presenceEnterSuccess()
+                                        return
+                                    }
+                                    presenceEnterTerminalFailure(error)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                presenceEnterTerminalFailure(error)
+            }
         }
     }
     
-    public func disconnect(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Bool>) {
+    public func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
         guard let channelToRemove = channels[trackableId] else {
             completion(.success(false))
             
             return
         }
         
-        channelToRemove.presence.leave(presenceDataJSON(data: presenceData)) { [weak self] error in
+        let presenceDataJSON: Any?
+        if let presenceData = presenceData {
+            presenceDataJSON = self.presenceDataJSON(data: presenceData)
+        } else {
+            presenceDataJSON = nil
+        }
+        
+        channelToRemove.presence.leave(presenceDataJSON) { [weak self] error in
             guard let error = error else {
                 self?.logger.debug("Left channel [id: \(trackableId)] presence successfully", source: String(describing: Self.self))
                 
@@ -128,12 +182,12 @@ public class DefaultAbly: AblyCommon {
             let receivedConnectionState = stateChange.current.toConnectionState()
             
             self.logger.debug("Connection to Ably changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
-            self.publisherDelegate?.publisherService(
-                sender: self,
+            self.publisherDelegate?.ablyPublisher(
+                self,
                 didChangeConnectionState: receivedConnectionState
             )
-            self.subscriberDelegate?.subscriberService(
-                sender: self,
+            self.subscriberDelegate?.ablySubscriber(
+                self,
                 didChangeClientConnectionState: receivedConnectionState
             )
         }
@@ -174,17 +228,17 @@ public class DefaultAbly: AblyCommon {
         )
         
         // AblySubscriber delegate
-        self.subscriberDelegate?.subscriberService(sender: self, didReceivePresenceUpdate: presence)
-        self.subscriberDelegate?.subscriberService(sender: self, didChangeChannelConnectionState: presence.action.toConnectionState())
+        self.subscriberDelegate?.ablySubscriber(self, didReceivePresenceUpdate: presence)
+        self.subscriberDelegate?.ablySubscriber(self, didChangeChannelConnectionState: presence.action.toConnectionState())
         
         // Deleagate `Publisher` resolution if present in PresenceData
         if let resolution = data.resolution, data.type == .publisher {
-            self.subscriberDelegate?.subscriberService(sender: self, didReceiveResolution: resolution)
+            self.subscriberDelegate?.ablySubscriber(self, didReceiveResolution: resolution)
         }
         
         // AblyPublisher delegate
-        self.publisherDelegate?.publisherService(
-            sender: self,
+        self.publisherDelegate?.ablyPublisher(
+            self,
             didReceivePresenceUpdate: presence,
             forTrackable: trackable,
             presenceData: data,
@@ -205,7 +259,7 @@ public class DefaultAbly: AblyCommon {
             let receivedConnectionState = stateChange.current.toConnectionState()
             
             self.logger.debug("Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", source: String(describing: Self.self))
-            self.publisherDelegate?.publisherService(sender: self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
+            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
         }
     }
     
@@ -266,12 +320,8 @@ extension DefaultAbly: AblySubscriber {
     
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
-            let errorInformation = ErrorInformation(
-                type: .subscriberError(
-                    errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"
-                )
-            )
-            subscriberDelegate?.subscriberService(sender: self, didFailWithError: errorInformation)
+            let errorInformation = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 400, message: "Received a non-string message for \(event.rawValue) event: \(String(describing: messageData))", cause: nil, href: nil)
+            subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
             
             return
         }
@@ -282,21 +332,22 @@ extension DefaultAbly: AblySubscriber {
                 let message: RawLocationUpdateMessage = try RawLocationUpdateMessage.fromJSONString(json)
                 let locationUpdate = RawLocationUpdate(location: message.location.toLocation())
                 locationUpdate.skippedLocations = message.skippedLocations.map { $0.toLocation() }
-                subscriberDelegate?.subscriberService(sender: self, didReceiveRawLocation: locationUpdate)
+                subscriberDelegate?.ablySubscriber(self, didReceiveRawLocation: locationUpdate)
             case .enhanced:
                 let message: EnhancedLocationUpdateMessage = try EnhancedLocationUpdateMessage.fromJSONString(json)
                 let locationUpdate = EnhancedLocationUpdate(location: message.location.toLocation())
                 locationUpdate.skippedLocations = message.skippedLocations.map { $0.toLocation() }
-                subscriberDelegate?.subscriberService(sender: self, didReceiveEnhancedLocation: locationUpdate)
+                subscriberDelegate?.ablySubscriber(self, didReceiveEnhancedLocation: locationUpdate)
             }
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
-                subscriberDelegate?.subscriberService(sender: self, didFailWithError: ErrorInformation(error: error))
+                let errorInformation = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 400, message: "Received a malformed message for \(event.rawValue) event", cause: error, href: nil)
+                subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
                 
                 return
             }
             
-            subscriberDelegate?.subscriberService(sender: self, didFailWithError: errorInformation)
+            subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
             
             return
         }
@@ -332,7 +383,7 @@ extension DefaultAbly: AblyPublisher {
             let errorInformation = ErrorInformation(
                 type: .publisherError(errorMessage: "Cannot create location update message. Underlying error: \(error)")
             )
-            publisherDelegate?.publisherService(sender: self, didFailWithError: errorInformation)
+            publisherDelegate?.ablyPublisher(self, didFailWithError: errorInformation)
             
             return
         }
@@ -343,12 +394,12 @@ extension DefaultAbly: AblyPublisher {
             }
             
             if let error = error {
-                self.publisherDelegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+                self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
                 
                 return
             }
             
-            self.publisherDelegate?.publisherService(sender: self, didChangeChannelConnectionState: .online, forTrackable: trackable)
+            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: .online, forTrackable: trackable)
             completion?(.success)
         }
     }
@@ -371,7 +422,7 @@ extension DefaultAbly: AblyPublisher {
             
             channel.publish([message]) { error in
                 if let error = error {
-                    self.publisherDelegate?.publisherService(sender: self, didFailWithError: error.toErrorInformation())
+                    self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
                 } else {
                     completion?(.success)
                 }
@@ -380,7 +431,7 @@ extension DefaultAbly: AblyPublisher {
             let errorInformation = ErrorInformation(
                 type: .publisherError(errorMessage: "Cannot create location update message. Underlying error: \(error)")
             )
-            publisherDelegate?.publisherService(sender: self, didFailWithError: errorInformation)
+            publisherDelegate?.ablyPublisher(self, didFailWithError: errorInformation)
         }
     }
     
@@ -389,5 +440,11 @@ extension DefaultAbly: AblyPublisher {
         let data = try geoJson.toJSONString()
         
         return ARTMessage(name: EventName.enhanced.rawValue, data: data)
+    }
+}
+
+fileprivate extension ConnectionConfiguration {
+    var usesTokenAuth: Bool {
+        return authCallback != nil
     }
 }

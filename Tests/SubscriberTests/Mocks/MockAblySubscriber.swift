@@ -4,9 +4,9 @@ import AblyAssetTrackingInternal
 import Logging
 @testable import AblyAssetTrackingSubscriber
 
-class MockAblySubscriberService: AblySubscriber {
+class MockAblySubscriber: AblySubscriber {
     var wasDelegateSet: Bool = false
-    var subscriberDelegate: AblySubscriberServiceDelegate? {
+    var subscriberDelegate: AblySubscriberDelegate? {
         didSet { wasDelegateSet = true }
     }
     
@@ -87,11 +87,13 @@ class MockAblySubscriberService: AblySubscriber {
     
     var disconnectCalled: Bool = false
     var disconnectParamTrackableId: String?
+    var disconnectParamPresenceData: PresenceData?
     var disconnectParamResultHandler: ResultHandler<Bool>?
     var disconnectResultCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
-    func disconnect(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Bool>) {
+    func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
         disconnectCalled = true
         disconnectParamTrackableId = trackableId
+        disconnectParamPresenceData = presenceData
         disconnectParamResultHandler = completion
         disconnectResultCompletionHandler?(completion)
     }

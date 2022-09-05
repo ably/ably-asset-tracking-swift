@@ -75,9 +75,26 @@ The release process must include the following steps:
 8.  Land the release PR to the `main` branch
 9.  Create a tag named like v1.2.3 and push it to GitHub
 
+We tend to use [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator) to collate the information required for a change log update.
+Your mileage may vary, but it seems the most reliable method to invoke the generator is something like:
+`github_changelog_generator -u ably -p ably-asset-tracking-swift --since-tag v1.0.0 --output delta.md`
+and then manually merge the delta contents in to the main change log (where `v1.0.0` in this case is the tag for the previous release).
+
 ## Coding Conventions and Style Guide
 
 - Favor Protocol Oriented Programming with Dependency Injection when writing any code. We're unable to create automatic mocks in Swift, so it'll be helpful for writing unit tests.
 - SwiftLint is integrated into the project. Make sure that your code does not add any SwiftLint related warning.
 - Please remove default Xcode header comments (with author, license and creation date) as they're not necessary.
 - If you're adding or modifying any part of the public interface of SDK, please also update [QuickHelp](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/SymbolDocumentation.html#//apple_ref/doc/uid/TP40016497-CH51-SW1) documentation.
+
+## Generating mocks
+
+We use [Sourcery](https://github.com/krzysztofzablocki/Sourcery) to generate mocks for the protocols in the following files:
+
+- `Sources/AblyAssetTrackingInternal/AblyWrapper/AblySubscriber.swift`
+- `Sources/AblyAssetTrackingInternal/AblyWrapper/SDK/AblySDKProtocols.swift`
+- `Sources/AblyAssetTrackingSubscriber/Subscriber.swift`
+
+At the time of writing, there is no way to automatically generate these mocks as part of the SPM build process, so when you update these files you’ll need to manually run the command `Scripts/generate-mocks.sh`.
+
+When [Swift package plugins](https://developer.apple.com/videos/play/wwdc2022/110359/) get introduced in Swift 5.6, we might be able to generate these mocks automatically.

@@ -4,11 +4,10 @@ import Ably
 import XCTest
 
 class AuthHelper {
-    func requestToken(options: ARTClientOptions, clientId: String? = nil) -> TokenDetails? {
+    func requestToken(options: ARTClientOptions, tokenParams: ARTTokenParams = ARTTokenParams(clientId: nil)) -> TokenDetails? {
         var requestCompleted = false
         var fetchedTokenDetails: TokenDetails?
         let client = ARTRest(options: options)
-        let tokenParams = ARTTokenParams(clientId: clientId)
         
         client.auth.requestToken(tokenParams, with: nil) { tokenDetails, error in
             if let error = error {

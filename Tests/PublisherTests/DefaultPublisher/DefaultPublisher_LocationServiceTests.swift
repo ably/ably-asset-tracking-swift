@@ -9,7 +9,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     let logger = Logger(label: "com.ably.tracking.DefaultPublisher_LocationServiceTests")
     
     var locationService: MockLocationService!
-    var ablyService: MockAblyPublisherService!
+    var ablyPublisher: MockAblyPublisher!
     var configuration: ConnectionConfiguration!
     var mapboxConfiguration: MapboxConfiguration!
     var resolutionPolicyFactory: MockResolutionPolicyFactory!
@@ -24,7 +24,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     override func setUpWithError() throws {
         locationService = MockLocationService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
-        ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
+        ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
         mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         routeProvider = MockRouteProvider()
         resolutionPolicyFactory = MockResolutionPolicyFactory()
@@ -42,10 +42,9 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         publisher = DefaultPublisher(
             connectionConfiguration:configuration,
             mapboxConfiguration: mapboxConfiguration,
-            logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyPublisher: ablyService,
+            ablyPublisher: ablyPublisher,
             locationService: locationService,
             routeProvider: routeProvider,
             enhancedLocationState: enhancedLocationState
@@ -76,7 +75,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let expectationAddTrackable = XCTestExpectation()
         let expectationUpdateLocation = XCTestExpectation()
         
-        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisher.add(trackable: trackable) { _ in expectationAddTrackable.fulfill() }
         wait(for: [expectationAddTrackable], timeout: 5.0)
@@ -91,10 +90,10 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         XCTAssertTrue(delegate.publisherDidUpdateEnhancedLocationCalled)
         XCTAssertEqual(delegate.publisherDidUpdateEnhancedLocationParamLocation?.location, location)
         
-        // It should send row location update to AblyService
-        XCTAssertTrue(ablyService.sendEnhancedAssetLocationUpdateCalled)
-        XCTAssertEqual(ablyService.sendEnhancedAssetLocationUpdateParamLocationUpdate?.location, location)
-        XCTAssertEqual(ablyService.sendEnhancedAssetLocationUpdateParamTrackable, trackable)
+        // It should send row location update to ablyPublisher
+        XCTAssertTrue(ablyPublisher.sendEnhancedAssetLocationUpdateCalled)
+        XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate?.location, location)
+        XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackable, trackable)
     }
     
     func testLocationService_didUpdateEnhancedLocation_resolution() {
@@ -117,12 +116,12 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         /**
          After tracking trackable (to trigger resolution resolve refresh)
          */
-        ablyService.connectCompletionHandler = { callback in
+        ablyPublisher.connectCompletionHandler = { callback in
             callback?(.success)
             expectation.fulfill()
         }
         
-        ablyService.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in
             completion?(.success)
         }
         
@@ -139,14 +138,14 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         _ = XCTWaiter.wait(for: [expectation, unmarkMessageAsPendingDidCallExpectation], timeout: 1.0)
         
         /**
-         It should send row location update to AblyService
+         It should send row location update to ablyPublisher
          */
-        XCTAssertTrue(ablyService.sendEnhancedAssetLocationUpdateCalled)
+        XCTAssertTrue(ablyPublisher.sendEnhancedAssetLocationUpdateCalled)
         
-        ablyService.sendEnhancedAssetLocationUpdateCalled = false
-        ablyService.sendEnhancedAssetLocationUpdateParamTrackable = nil
-        ablyService.sendEnhancedAssetLocationUpdateParamLocationUpdate = nil
-        ablyService.sendEnhancedAssetLocationUpdateParamCompletion = nil
+        ablyPublisher.sendEnhancedAssetLocationUpdateCalled = false
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackable = nil
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate = nil
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletion = nil
         expectation = XCTestExpectation()
         
         /**
@@ -161,14 +160,14 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
         
         /**
-         It should NOT send enhanced location update to AblyService because distance between location1 and location2 is to small
+         It should NOT send enhanced location update to ablyPublisher because distance between location1 and location2 is to small
          */
-        XCTAssertFalse(ablyService.sendEnhancedAssetLocationUpdateCalled)
+        XCTAssertFalse(ablyPublisher.sendEnhancedAssetLocationUpdateCalled)
         
-        ablyService.sendEnhancedAssetLocationUpdateCalled = false
-        ablyService.sendEnhancedAssetLocationUpdateParamTrackable = nil
-        ablyService.sendEnhancedAssetLocationUpdateParamLocationUpdate = nil
-        ablyService.sendEnhancedAssetLocationUpdateParamCompletion = nil
+        ablyPublisher.sendEnhancedAssetLocationUpdateCalled = false
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackable = nil
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate = nil
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletion = nil
         expectation = XCTestExpectation()
         unmarkMessageAsPendingDidCallExpectation = XCTestExpectation(description: "Trackable Unmark Message As Pending Did Call Expectation")
         
@@ -179,9 +178,9 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         _ = XCTWaiter.wait(for: [expectation, unmarkMessageAsPendingDidCallExpectation], timeout: 1.0)
         
         /**
-         It should send enhanced location update to AblyService
+         It should send enhanced location update to ablyPublisher
          */
-        XCTAssertTrue(ablyService.sendEnhancedAssetLocationUpdateCalled)
+        XCTAssertTrue(ablyPublisher.sendEnhancedAssetLocationUpdateCalled)
     }
     
     func testPublisherWillRetryOnFailureOnSendEnhancedLocationUpdate() {
@@ -194,13 +193,13 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let trackable = Trackable(id: "Trackable_1")
         let trackableState = TrackableState<EnhancedLocationUpdate>()
-        let ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
-        let publisher = PublisherHelper.createPublisher(ablyService: ablyService)
+        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
+        let publisher = PublisherHelper.createPublisher(ablyPublisher: ablyPublisher)
         
-        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisherHelper.sendLocationUpdate(
-            ablyService: ablyService,
+            ablyPublisher: ablyPublisher,
             publisher: publisher,
             locationUpdate: locationUpdate,
             trackable: trackable,
@@ -211,7 +210,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         /**
          It means that failed request (counter 1) was retried (counter 2)
          */
-        XCTAssertEqual(ablyService.sendEnhancedAssetLocationUpdateCounter, 2)
+        XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateCounter, 2)
         
     }
     
@@ -220,10 +219,10 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
         let trackable = Trackable(id: "Trackable_2")
         let enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
-        let ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
+        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
         let delegate = MockPublisherDelegate()
         let publisher = PublisherHelper.createPublisher(
-            ablyService: ablyService,
+            ablyPublisher: ablyPublisher,
             enhancedLocationState: enhancedLocationState
         )
         publisher.delegate = delegate
@@ -233,10 +232,10 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             publisherDidFailExpectation.fulfill()
         }
         
-        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisherHelper.sendLocationUpdate(
-            ablyService: ablyService,
+            ablyPublisher: ablyPublisher,
             publisher: publisher,
             locationUpdate: locationUpdate,
             trackable: trackable,
@@ -252,7 +251,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         locationUpdate = EnhancedLocationUpdate(location: newLocation)
         
         publisherHelper.sendLocationUpdate(
-            ablyService: ablyService,
+            ablyPublisher: ablyPublisher,
             publisher: publisher,
             locationUpdate: locationUpdate,
             trackable: trackable,
@@ -260,7 +259,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             resultPolicy: .success
         )
         
-        if let sentLocationUpdate =  ablyService.sendEnhancedAssetLocationUpdateParamLocationUpdate {
+        if let sentLocationUpdate =  ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate {
             XCTAssertTrue(sentLocationUpdate.skippedLocations.contains(initialLocation))
         } else {
             XCTFail("sendEnhancedAssetLocationUpdateParamLocationUpdate is nil")
@@ -273,18 +272,18 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let nextLocation = Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2))
         let nextLocationUpdate = EnhancedLocationUpdate(location: nextLocation)
         let trackable = Trackable(id: "Trackable_2")
-        let ablyService = MockAblyPublisherService(configuration: configuration, mode: .publish, logger: logger)
+        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
         let locationService = MockLocationService()
         let resolutionPolicyFactory = MockResolutionPolicyFactory()
         let publisher = PublisherHelper.createPublisher(
-            ablyService: ablyService,
+            ablyPublisher: ablyPublisher,
             locationService: locationService
         )
         
         resolutionPolicyFactory.resolutionPolicy?.resolveResolutionsReturnValue = .init(accuracy: .balanced, desiredInterval: 0, minimumDisplacement: 0)
         
         let connectCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
-        ablyService.connectCompletionHandler = { callback in
+        ablyPublisher.connectCompletionHandler = { callback in
             callback?(.success)
             connectCompletionHandlerExpectation.fulfill()
         }
@@ -293,12 +292,12 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         
         let sendLocationCompleteExpectation = XCTestExpectation(description: "Send Location Complete Expectation")
-        ablyService.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in
-            if ablyService.sendEnhancedAssetLocationUpdateCounter == 2 {
-                XCTAssertEqual(ablyService.sendEnhancedAssetLocationUpdateParamLocationUpdate, nextLocationUpdate)
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in
+            if ablyPublisher.sendEnhancedAssetLocationUpdateCounter == 2 {
+                XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate, nextLocationUpdate)
                 sendLocationCompleteExpectation.fulfill()
             } else {
-                XCTAssertEqual(ablyService.sendEnhancedAssetLocationUpdateParamLocationUpdate, locationUpdate)
+                XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate, locationUpdate)
                 completion?(.success)
             }
         }
@@ -316,15 +315,14 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
     
     func testShouldSendRawMessageIfTheyAreEnabled() {
-        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,
             mapboxConfiguration: mapboxConfiguration,
-            logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyPublisher: ablyService,
+            ablyPublisher: ablyPublisher,
             locationService: locationService,
             routeProvider: routeProvider,
             areRawLocationsEnabled: true
@@ -338,7 +336,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let location = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 2))
         let expectationDidUpdateRawLocation = self.expectation(description: "Did Update Raw Location Expectation")
         
-        ablyService.sendRawLocationParamCompletionHandler = { completion in
+        ablyPublisher.sendRawLocationParamCompletionHandler = { completion in
             completion?(.success)
             expectationDidUpdateRawLocation.fulfill()
         }
@@ -349,19 +347,18 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         )
         wait(for: [expectationDidUpdateRawLocation], timeout: 5.0)
         
-        XCTAssertTrue(ablyService.sendRawLocationWasCalled)
+        XCTAssertTrue(ablyPublisher.sendRawLocationWasCalled)
     }
     
     func testShouldNotSendRawMessageIfTheyAreDisabled() {
-        ablyService.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,
             mapboxConfiguration: mapboxConfiguration,
-            logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
-            ablyPublisher: ablyService,
+            ablyPublisher: ablyPublisher,
             locationService: locationService,
             routeProvider: routeProvider,
             areRawLocationsEnabled: false
@@ -376,7 +373,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let expectationDidUpdateRawLocation = self.expectation(description: "Did Update Raw Location Expectation")
         expectationDidUpdateRawLocation.isInverted = true
         
-        ablyService.sendRawLocationParamCompletionHandler = { completion in
+        ablyPublisher.sendRawLocationParamCompletionHandler = { completion in
             completion?(.success)
             expectationDidUpdateRawLocation.fulfill()
         }
@@ -387,6 +384,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         )
         wait(for: [expectationDidUpdateRawLocation], timeout: 5.0)
         
-        XCTAssertFalse(ablyService.sendRawLocationWasCalled)
+        XCTAssertFalse(ablyPublisher.sendRawLocationWasCalled)
     }
 }

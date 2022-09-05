@@ -3,10 +3,10 @@ import XCTest
 import AblyAssetTrackingCore
 import AblyAssetTrackingSubscriber
 import CoreLocation
+import Ably
 
 class SubscriberAuthenticationSystemTests: XCTestCase {
     
-    private let logConfiguration = LogConfiguration()
     private let clientId: String = {
         "Test-Subscriber_\(UUID().uuidString)"
     }()
@@ -56,7 +56,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
     func testSubscriberConnectsWithTokenDetails() throws {
         let fetchedTokenDetails = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
-            clientId: clientId
+            tokenParams: ARTTokenParams(clientId: clientId)
         )
         
         let connectionConfiguration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, resultHandler in
@@ -77,7 +77,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         
         let fetchedTokenString = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
-            clientId: keyName
+            tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
                 
         let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
@@ -105,14 +105,17 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         testSubscriberConnection(configuration: connectionConfiguration)
     }
     
-    private func testSubscriberConnection(configuration: ConnectionConfiguration) {
-        var resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
-        let subscriberStartExpectation = self.expectation(description: "Subscriber start expectation")
-        let subscriber = SubscriberFactory.subscribers()
-            .connection(configuration)
+    private func createSubscriberBuilder(connectionConfiguration: ConnectionConfiguration, trackingId: String) -> SubscriberBuilder {
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
+        return SubscriberFactory.subscribers()
+            .connection(connectionConfiguration)
             .resolution(resolution)
-            .trackingId("Trackable ID")
-            .log(logConfiguration)
+            .trackingId(trackingId)
+    }
+    
+    private func testSubscriberConnection(configuration: ConnectionConfiguration) {
+        let subscriberStartExpectation = self.expectation(description: "Subscriber start expectation")
+        let subscriber = createSubscriberBuilder(connectionConfiguration: configuration, trackingId: "Trackable ID")
             .start { result in
                 switch result {
                 case .success: ()
@@ -124,7 +127,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         waitForExpectations(timeout: 10.0)
     
         let resolutionCompletionExpectation = self.expectation(description: "Resolution completion expectation")
-        resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
+        let resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
         subscriber?.resolutionPreference(resolution: resolution, completion: { result in
             switch result {
             case .success: ()
@@ -141,5 +144,72 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             subscriberStopExpectation.fulfill()
         })
         waitForExpectations(timeout: 10.0)
+    }
+    
+    private func requestToken(withSubscriberCapabilitiesForTrackableIds trackableIds: [String], clientId: String) -> TokenDetails? {
+        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String : [String]] in
+            var newCapabilities = capabilities
+            newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence", "history"]
+            return newCapabilities
+        }
+        
+        let tokenParams = ARTTokenParams(clientId: clientId)
+        tokenParams.capability = try! capabilities.toJSONString()
+        
+        return AuthHelper().requestToken(
+            options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
+            tokenParams: tokenParams
+        )
+    }
+    
+    func testSubscriber_usingTokenAuth_start_whenEnterPresenceGivesCapabilityError_reauthorizesAblyAndEntersPresenceWithNewToken() throws {
+        let keyTokens = Secrets.ablyApiKey.split(separator: ":")
+        let keyName = String(keyTokens[0])
+        
+        let trackableId = UUID().uuidString
+        let otherTrackableId = UUID().uuidString
+        
+        // These are being done outside of the authCallback because it seems like calling requestToken inside there causes some sort of a hang. Tried to sort it out but didn’t get anywhere quickly.
+        let initialToken = try XCTUnwrap(requestToken(withSubscriberCapabilitiesForTrackableIds: [otherTrackableId], clientId: keyName))
+        let updatedToken = try XCTUnwrap(requestToken(withSubscriberCapabilitiesForTrackableIds: [otherTrackableId, trackableId], clientId: keyName))
+        
+        var hasRequestedInitialToken = false
+        var hasRequestedUpdatedToken = false
+        
+        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
+            if !hasRequestedInitialToken {
+                hasRequestedInitialToken = true
+                resultHandler(.success(.tokenDetails(initialToken)))
+            } else {
+                hasRequestedUpdatedToken = true
+                resultHandler(.success(.tokenDetails(updatedToken)))
+            }
+        })
+        
+        let subscriberStartExpectation = expectation(description: "Wait for subscriber to start")
+        let subscriber = createSubscriberBuilder(connectionConfiguration: connectionConfiguration, trackingId: trackableId)
+            .start { result in
+                switch result {
+                case .success:
+                    subscriberStartExpectation.fulfill()
+                case .failure(let error):
+                    XCTFail("Subscriber start failed with error: \(error)")
+                }
+            }
+        waitForExpectations(timeout: 10.0)
+        
+        XCTAssertTrue(hasRequestedInitialToken)
+        XCTAssertTrue(hasRequestedUpdatedToken)
+        
+        let subscriberStopExpectation = expectation(description: "Wait for subscriber to stop")
+        subscriber?.stop(completion: { result in
+            switch result {
+            case .success:
+                subscriberStopExpectation.fulfill()
+            case let .failure(errorInfo):
+                XCTFail("Failed to stop subscriber, with error \(errorInfo)")
+            }
+        })
+        waitForExpectations(timeout: 10)
     }
 }

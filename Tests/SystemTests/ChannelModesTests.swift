@@ -69,6 +69,7 @@ class ChannelModesTests: XCTestCase {
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: ablyApiKey, clientId: clientId)
         
         let defaultAbly = DefaultAbly(
+            factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
             logger: .init(label: "com.ably.tracking.SystemTests")
@@ -77,7 +78,6 @@ class ChannelModesTests: XCTestCase {
         return DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
-            logConfiguration: LogConfiguration(),
             routingProfile: .driving,
             resolutionPolicyFactory: MockResolutionPolicyFactory(),
             ablyPublisher: defaultAbly,
@@ -94,7 +94,6 @@ class ChannelModesTests: XCTestCase {
         return SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
-            .log(LogConfiguration())
             .delegate(self)
             .trackingId(trackableId)
             .start(completion: { _ in })!

@@ -1,0 +1,12 @@
+sources:
+  - Sources/AblyAssetTrackingInternal/AblyWrapper/SDK/AblySDKProtocols.swift
+  - Sources/AblyAssetTrackingInternal/AblyWrapper/AblySubscriber.swift
+templates:
+  - Sourcery/templates/AutoMockable.stencil
+output:
+  Tests/InternalTests/Mocks/GeneratedMocks.swift
+args:
+  autoMockableImports:
+    - AblyAssetTrackingCore
+    - AblyAssetTrackingInternal
+    - Ably

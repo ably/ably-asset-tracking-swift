@@ -7,8 +7,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var connection: ConnectionConfiguration?
     private var mapboxConfiguration: MapboxConfiguration?
     private var locationSource: LocationSource?
-    private var logConfiguration: LogConfiguration?
-    private var routingProfile: RoutingProfile?
+    private var routingProfile: RoutingProfile = .driving
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
     private var areRawLocationsEnabled: Bool = false
     private var isSendResolutionEnabled: Bool = true
@@ -19,9 +18,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
     
     private init(connection: ConnectionConfiguration?,
                  mapboxConfiguration: MapboxConfiguration?,
-                 logConfiguration: LogConfiguration?,
                  locationSource: LocationSource?,
-                 routingProfile: RoutingProfile?,
+                 routingProfile: RoutingProfile,
                  delegate: PublisherDelegate?,
                  resolutionPolicyFactory: ResolutionPolicyFactory?,
                  areRawLocationsEnabled: Bool = false,
@@ -29,7 +27,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  constantLocationEngineResolution: Resolution?) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
-        self.logConfiguration = logConfiguration
         self.locationSource = locationSource
         self.routingProfile = routingProfile
         self.delegate = delegate
@@ -50,22 +47,13 @@ class DefaultPublisherBuilder: PublisherBuilder {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "MapboxConfiguration", forBuilderOption: "mapboxConfiguration"))
         }
         
-        guard let logConfiguration = logConfiguration
-        else {
-            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
-        }
-        
-        guard let routingProfile = routingProfile
-        else {
-            throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "RoutingProfile", forBuilderOption: "routingProfile"))
-        }
-        
         guard let resolutionPolicyFactory = resolutionPolicyFactory
         else {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }
         
         let defaultAbly = DefaultAbly(
+            factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
             mode: .publish,
             logger: Logger(
@@ -75,7 +63,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
         
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
                                           mapboxConfiguration: mapboxConfiguration,
-                                          logConfiguration: logConfiguration,
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyPublisher: defaultAbly,
@@ -91,7 +78,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: configuration,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
                                        locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
@@ -104,20 +90,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution)
-    }
-    
-    func log(_ configuration: LogConfiguration) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: configuration,
                                        locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
@@ -130,7 +102,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func locationSource(_ source: LocationSource?) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
                                        locationSource: source,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
@@ -143,7 +114,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
                                        locationSource: locationSource,
                                        routingProfile: profile,
                                        delegate: delegate,
@@ -156,7 +126,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
                                        locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
@@ -169,7 +138,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func resolutionPolicyFactory(_ resolutionPolicyFactory: ResolutionPolicyFactory) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
                                        locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
@@ -182,7 +150,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func rawLocations(enabled: Bool) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
                                        locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
@@ -195,7 +162,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func constantLocationEngineResolution(resolution: Resolution?) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
                                        locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,
@@ -208,7 +174,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
     func sendResolution(enabled: Bool) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
-                                       logConfiguration: logConfiguration,
                                        locationSource: locationSource,
                                        routingProfile: routingProfile,
                                        delegate: delegate,

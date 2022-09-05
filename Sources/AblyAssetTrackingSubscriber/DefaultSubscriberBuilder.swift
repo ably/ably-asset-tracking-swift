@@ -5,7 +5,6 @@ import AblyAssetTrackingInternal
 
 class DefaultSubscriberBuilder: SubscriberBuilder {
     private var connection: ConnectionConfiguration?
-    private var logConfiguration: LogConfiguration?
     private var trackingId: String?
     private var resolution: Resolution?
     private weak var delegate: SubscriberDelegate?
@@ -13,12 +12,10 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     init() { }
 
     private init(connection: ConnectionConfiguration?,
-                 logConfiguration: LogConfiguration?,
                  trackingId: String?,
                  resolution: Resolution?,
                  delegate: SubscriberDelegate?) {
         self.connection = connection
-        self.logConfiguration = logConfiguration
         self.trackingId = trackingId
         self.resolution = resolution
         self.delegate = delegate
@@ -32,13 +29,6 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             return nil
         }
 
-        guard let logConfiguration = logConfiguration
-        else {
-            let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "LogConfiguration", forBuilderOption: "log"))
-            completion(.failure(error))
-            return nil
-        }
-
         guard let trackingId = trackingId
         else {
             let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
@@ -47,6 +37,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
         }
 
         let defaultAbly = DefaultAbly(
+            factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
             mode: .subscribe,
             logger: Logger(
@@ -54,7 +45,6 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             )
         )
         let subscriber = DefaultSubscriber(
-            logConfiguration: logConfiguration,
             ablySubscriber: defaultAbly,
             trackableId: trackingId,
             resolution: resolution
@@ -66,15 +56,6 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
 
     func connection(_ configuration: ConnectionConfiguration) -> SubscriberBuilder {
         return DefaultSubscriberBuilder(connection: configuration,
-                                        logConfiguration: logConfiguration,
-                                        trackingId: trackingId,
-                                        resolution: resolution,
-                                        delegate: delegate)
-    }
-
-    func log(_ configuration: LogConfiguration) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(connection: connection,
-                                        logConfiguration: configuration,
                                         trackingId: trackingId,
                                         resolution: resolution,
                                         delegate: delegate)
@@ -82,7 +63,6 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
 
     func trackingId(_ trackingId: String) -> SubscriberBuilder {
         return DefaultSubscriberBuilder(connection: connection,
-                                        logConfiguration: logConfiguration,
                                         trackingId: trackingId,
                                         resolution: resolution,
                                         delegate: delegate)
@@ -90,7 +70,6 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
 
     func resolution(_ resolution: Resolution) -> SubscriberBuilder {
         return DefaultSubscriberBuilder(connection: connection,
-                                        logConfiguration: logConfiguration,
                                         trackingId: trackingId,
                                         resolution: resolution,
                                         delegate: delegate)
@@ -98,7 +77,6 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
 
     func delegate(_ delegate: SubscriberDelegate) -> SubscriberBuilder {
         return DefaultSubscriberBuilder(connection: connection,
-                                        logConfiguration: logConfiguration,
                                         trackingId: trackingId,
                                         resolution: resolution,
                                         delegate: delegate)
