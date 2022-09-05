@@ -38,4 +38,13 @@ public protocol PublisherDelegate: AnyObject {
         - resolution: Most recent resolution.
     */
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution)
+    
+    /**
+     Called whenever the trackables list of a `Publisher` instance changes
+     
+     - Parameters:
+        - sender: `Publisher` instance.
+        - trackables: a list of trackables that are currently present on the `sender`'s instance
+    */
+    func publisher(sender: Publisher, didChangeTrackables trackables: Set<Trackable>)
 }
