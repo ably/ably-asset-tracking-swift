@@ -2,6 +2,7 @@ import CoreLocation
 import Foundation
 import AblyAssetTrackingCore
 
+//sourcery: AutoMockable
 public protocol SubscriberDelegate: AnyObject {
     /**
      Called when `Subscriber` spot any (location, network or permissions) error
