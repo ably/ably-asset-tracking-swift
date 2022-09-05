@@ -211,9 +211,9 @@ extension DefaultPublisher {
     }
 
     // MARK: Track
-    private func performTrackTrackableEvent(_ event: TrackTrackableEvent) {
+    private func performTrackTrackableEvent(_ event: Event.TrackTrackableEvent) {
         performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {
-            self.enqueue(event: TrackableReadyToTrackEvent(trackable: event.trackable, resultHandler: event.resultHandler))
+            self.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
         }
     }
 
@@ -305,8 +305,8 @@ extension DefaultPublisher {
 
             switch result {
             case .success:
-                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: event.trackable) { [weak self] _ in
-                    self?.callback(value: Void(), handler: event.resultHandler)
+                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable) { [weak self] _ in
+                    self?.callback(value: Void(), handler: resultHandler)
                 }))
             case .failure(let error):
                 self?.callback(error: error, handler: resultHandler)
@@ -314,7 +314,7 @@ extension DefaultPublisher {
         }
     }
     // MARK: Add trackable
-    private func performAddTrackableEvent(_ event: AddTrackableEvent) {
+    private func performAddTrackableEvent(_ event: Event.AddTrackableEvent) {
         performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {
             self.callback(value: Void(), handler: event.resultHandler)
         }
