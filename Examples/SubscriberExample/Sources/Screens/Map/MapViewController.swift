@@ -60,7 +60,7 @@ class MapViewController: UIViewController {
         setupControlsBehaviour()
         updateSubscriberResolutionLabels()
         
-        locationAnimator.subscribeForFrequentlyUpdatingPosition { [weak self] position in
+        locationAnimator.subscribeForPositionUpdates { [weak self] position in
             guard self?.animationSwitch.isOn == true else {
                 return
             }
@@ -69,7 +69,7 @@ class MapViewController: UIViewController {
             self?.updateHorizontalAccuracyAnnotation(position: position)
         }
         
-        locationAnimator.subscribeForInfrequentlyUpdatingPosition { [weak self] position in
+        locationAnimator.subscribeForCameraPositionUpdates { [weak self] position in
             guard self?.animationSwitch.isOn == true else {
                 return
             }
@@ -105,7 +105,6 @@ class MapViewController: UIViewController {
         subscriber = SubscriberFactory.subscribers()
             .connection(connectionConfiguration)
             .trackingId(trackingId)
-            .log(LogConfiguration())
             .resolution(resolution)
             .delegate(self)
             .start { [weak self] result in
@@ -281,7 +280,7 @@ extension MapViewController: SubscriberDelegate {
 
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         if animationSwitch.isOn {
-            locationAnimator.animateLocationUpdate(location: locationUpdate, interval: locationUpdateInterval / 1000.0)
+            locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateInterval / 1000.0)
         } else {
             updateTruckAnnotation(position: locationUpdate.location.toPosition())
             scrollToReceivedLocation(position: locationUpdate.location.toPosition())

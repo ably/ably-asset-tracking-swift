@@ -19,11 +19,6 @@ public protocol SubscriberBuilder {
     func connection(_ configuration: ConnectionConfiguration) -> SubscriberBuilder
 
     /**
-     Sets the mandatory `LogConfiguration` property
-     */
-    func log(_ configuration: LogConfiguration) -> SubscriberBuilder
-
-    /**
      Sets the mandatory `trackingId` property
      */
     func trackingId(_ trackingId: String) -> SubscriberBuilder

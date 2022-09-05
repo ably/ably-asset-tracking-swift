@@ -4,30 +4,35 @@ import Combine
 
 public protocol LocationAnimator {
     /**
-     Time interval (in seconds) for publishing `subscribeForInfrequentlyUpdatingPosition`.
-     Default value is 5.0 seconds
+     Defines how many animation steps need to be completed to publish `subscribeForCameraPositionUpdates`
+     Default value is 1
      */
-    var infrequentlyUpdatingPositionInterval: TimeInterval { get set }
+    var animationStepsBetweenCameraUpdates: Int { get set }
     
     /**
      This closure returns position in CADisplayLink framerate
      */
-    func subscribeForFrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void)
+    func subscribeForPositionUpdates(_ closure: @escaping (Position) -> Void)
     
     /**
-     This closure returns trackable position every `infrequentlyUpdatingPositionInterval`
+     This closure returns trackable position every `animationStepsBetweenCameraUpdates`
      */
-    func subscribeForInfrequentlyUpdatingPosition(_ closure: @escaping (Position) -> Void)
+    func subscribeForCameraPositionUpdates(_ closure: @escaping (Position) -> Void)
     
     /**
      Animate location method.
      Use this method to calculate animation keyframes between location updates.
      
-     - Parameter location        `LocationUpdate` object
-     - Parameter interval        expected interval between location updates in seconds
+     - Parameter location       `LocationUpdate` object
+     - Parameter expectedIntervalBetweenLocationUpdatesInMilliseconds       The expected interval of location updates in milliseconds.
      
      */
-    func animateLocationUpdate(location: LocationUpdate, interval: TimeInterval)
+    func animateLocationUpdate(location: LocationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: TimeInterval)
+    
+    /**
+     Stops the animation loop
+     */
+    func stop()
 }
 
 public struct Position: CustomDebugStringConvertible, CustomStringConvertible {
