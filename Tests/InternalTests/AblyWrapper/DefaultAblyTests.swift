@@ -331,4 +331,61 @@ class DefaultAblyTests: XCTestCase {
         XCTAssertEqual(presence.enterCallbackCallsCount, 1)
         XCTAssertEqual(auth.authorizeCallsCount, 1)
     }
+    
+    func test_subscribeForRawEvents_whenItReceivesMalformedLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError() {
+        let data = "{\"something\": \"somethingElse\"}"
+        test_subscribeForRawEvents_whenItReceivesThisLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError(data: data)
+    }
+    
+    func test_subscribeForRawEvents_whenItReceivesNonStringLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError() {
+        let data = ["something":"somethingElse"]
+        test_subscribeForRawEvents_whenItReceivesThisLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError(data: data)
+    }
+    
+    func test_subscribeForRawEvents_whenItReceivesThisLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError(data: Any) {
+        let presence = AblySDKRealtimePresenceMock()
+
+        presence.enterCallbackClosure = { _, callback in callback?(nil) }
+        
+        let channel = AblySDKRealtimeChannelMock()
+        
+        channel.subscribeCallbackClosure = { _, callback in
+            let message = ARTMessage(name: nil, data: data)
+            callback(message)
+            
+            return AblySDKEventListenerMock()
+        }
+        
+        channel.presence = presence
+        
+        let channels = AblySDKRealtimeChannelsMock()
+        channels.getChannelForTrackingIdOptionsReturnValue = channel
+        
+        let realtime = AblySDKRealtimeMock()
+        realtime.channels = channels
+        
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        
+        let connectionConfiguration = ConnectionConfiguration { _, callback in
+            callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
+        }
+        
+        let trackableId = "abc"
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        ably.connect(trackableId: trackableId, presenceData: .init(type: .subscriber), useRewind: false) { _ in }
+        
+        let subscriberDelegate = AblySubscriberDelegateMock()
+        ably.subscriberDelegate = subscriberDelegate
+        
+        let expectation = expectation(description: "Wait for subscriber delegate to receive error callback")
+        subscriberDelegate.ablySubscriberDidFailWithErrorClosure = { _, error in
+            XCTAssertEqual(error.code, ErrorCode.invalidMessage.rawValue)
+            expectation.fulfill()
+        }
+        
+        ably.subscribeForRawEvents(trackableId: trackableId)
+        
+        waitForExpectations(timeout: 10)
+    }
 }

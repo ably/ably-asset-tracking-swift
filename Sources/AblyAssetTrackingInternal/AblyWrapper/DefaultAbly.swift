@@ -122,13 +122,20 @@ public class DefaultAbly: AblyCommon {
         }
     }
     
-    public func disconnect(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Bool>) {
+    public func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
         guard let channelToRemove = channels[trackableId] else {
             completion(.success(false))
             return
         }
         
-        channelToRemove.presence.leave(presenceDataJSON(data: presenceData)) { [weak self] error in
+        let presenceDataJSON: Any?
+        if let presenceData = presenceData {
+            presenceDataJSON = self.presenceDataJSON(data: presenceData)
+        } else {
+            presenceDataJSON = nil
+        }
+        
+        channelToRemove.presence.leave(presenceDataJSON) { [weak self] error in
             guard let error = error else {
                 self?.logHandler?.d(message: "\(String(describing: Self.self)): Left channel [id: \(trackableId)] presence successfully", error: nil)
                 channelToRemove.presence.unsubscribe()
@@ -321,12 +328,8 @@ extension DefaultAbly: AblySubscriber {
     
     private func handleLocationUpdateResponse(forEvent event: EventName, messageData: Any?) {
         guard let json = messageData as? String else {
-            let errorInformation = ErrorInformation(
-                type: .subscriberError(
-                    errorMessage: "Cannot parse message data for \(event.rawValue) event: \(String(describing: messageData))"
-                )
-            )
-            logHandler?.e(message: "\(String(describing: Self.self)): Cannot parse message data for \(event.rawValue) event:", error: errorInformation)
+            let errorInformation = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 400, message: "Received a non-string message for \(event.rawValue) event: \(String(describing: messageData))", cause: nil, href: nil)
+            logHandler?.e(message: "\(String(describing: Self.self)): Received a non-string message for \(event.rawValue) event: \(String(describing: messageData))", error: errorInformation)
             subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
             
             return
@@ -347,8 +350,9 @@ extension DefaultAbly: AblySubscriber {
             }
         } catch let error {
             guard let errorInformation = error as? ErrorInformation else {
-                logHandler?.e(message: "\(String(describing: Self.self)): Cannot parse message data for \(event.rawValue) event:", error: error)
-                subscriberDelegate?.ablySubscriber(self, didFailWithError: ErrorInformation(error: error))
+                let errorInformation = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 400, message: "Received a malformed message for \(event.rawValue) event", cause: error, href: nil)
+                logHandler?.e(message: "\(String(describing: Self.self)): Received a malformed message for \(event.rawValue) event", error: errorInformation)
+                subscriberDelegate?.ablySubscriber(self, didFailWithError: errorInformation)
                 return
             }
             logHandler?.e(message: "\(String(describing: Self.self)): Cannot parse message data for \(event.rawValue) event:", error: errorInformation)

@@ -50,7 +50,7 @@ class MockAblyPublisher: AblyPublisher {
     var disconnectParamTrackableId: String?
     var disconnectParamResultHandler: ResultHandler<Bool>?
     var disconnectResultCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
-    func disconnect(trackableId: String, presenceData: PresenceData, completion: @escaping ResultHandler<Bool>) {
+    func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
         disconnectCalled = true
         disconnectParamTrackableId = trackableId
         disconnectParamResultHandler = completion

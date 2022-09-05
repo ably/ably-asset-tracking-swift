@@ -116,6 +116,7 @@ extension DefaultSubscriber {
             case .ablyClientConnectionStateChanged(let event): self?.performClientConnectionChanged(event)
             case .ablyChannelConnectionStateChanged(let event): self?.performChannelConnectionChanged(event)
             case .presenceUpdate(let event): self?.performPresenceUpdated(event)
+            case .ablyError(let event): self?.performAblyError(event)
             }
         }
     }
@@ -213,6 +214,11 @@ extension DefaultSubscriber {
     }
     
     private func handleConnectionStateChange() {
+        if currentTrackableConnectionState == .failed {
+            logHandler?.d(message: "\(String(describing: Self.self)): Ignoring state change since state is already .failed", error: nil)
+            return
+        }
+        
         var newConnectionState: ConnectionState = .offline
         
         switch receivedAblyClientConnectionState {
@@ -258,6 +264,22 @@ extension DefaultSubscriber {
             }
         }
     }
+    
+    private func performAblyError(_ event: Event.AblyErrorEvent) {
+        callback(event: .delegateError(.init(error: event.error)))
+        
+        if event.error.code == ErrorCode.invalidMessage.rawValue {
+            logHandler?.e(message: "\(String(describing: Self.self)): invalidMessage error received, emitting failed connection status", error: event.error)
+            currentTrackableConnectionState = .failed
+            callback(event: .delegateConnectionStatusChanged(.init(status: .failed)))
+
+            ablySubscriber.disconnect(trackableId: trackableId, presenceData: nil) { [weak self, trackableId] error in
+                if case .failure(let error) = error {
+                    self?.logHandler?.e(message: "\(String(describing: Self.self)): Failed to disconnect trackable (\(trackableId)) after receiving invalid message.", error: error)
+                }
+            }
+        }
+    }
 
     // MARK: Utils
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
@@ -287,7 +309,7 @@ extension DefaultSubscriber: AblySubscriberDelegate {
 
     func ablySubscriber(_ sender: AblySubscriber, didFailWithError error: ErrorInformation) {
         logHandler?.e(message: "\(String(describing: Self.self)): ablySubscriber.didFailWithError", error: error)
-        callback(event: .delegateError(.init(error: error)))
+        enqueue(event: .ablyError(.init(error: error)))
     }
 
     func ablySubscriber(_ sender: AblySubscriber, didReceiveRawLocation location: LocationUpdate) {

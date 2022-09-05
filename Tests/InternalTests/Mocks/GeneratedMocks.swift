@@ -75,6 +75,9 @@ class AblySDKConnectionMock: AblySDKConnection {
     }
 
 }
+class AblySDKEventListenerMock: AblySDKEventListener {
+
+}
 class AblySDKRealtimeMock: AblySDKRealtime {
     var channels: AblySDKRealtimeChannels {
         get { return underlyingChannels }
@@ -378,6 +381,128 @@ class AblySDKRealtimePresenceMock: AblySDKRealtimePresence {
     func unsubscribe() {
         unsubscribeCallsCount += 1
         unsubscribeClosure?()
+    }
+
+}
+class AblySubscriberDelegateMock: AblySubscriberDelegate {
+
+    //MARK: - ablySubscriber
+
+    var ablySubscriberDidChangeClientConnectionStateCallsCount = 0
+    var ablySubscriberDidChangeClientConnectionStateCalled: Bool {
+        return ablySubscriberDidChangeClientConnectionStateCallsCount > 0
+    }
+    var ablySubscriberDidChangeClientConnectionStateReceivedArguments: (sender: AblySubscriber, state: ConnectionState)?
+    var ablySubscriberDidChangeClientConnectionStateReceivedInvocations: [(sender: AblySubscriber, state: ConnectionState)] = []
+    var ablySubscriberDidChangeClientConnectionStateClosure: ((AblySubscriber, ConnectionState) -> Void)?
+
+    func ablySubscriber(_ sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState) {
+        ablySubscriberDidChangeClientConnectionStateCallsCount += 1
+        ablySubscriberDidChangeClientConnectionStateReceivedArguments = (sender: sender, state: state)
+        ablySubscriberDidChangeClientConnectionStateReceivedInvocations.append((sender: sender, state: state))
+        ablySubscriberDidChangeClientConnectionStateClosure?(sender, state)
+    }
+
+    //MARK: - ablySubscriber
+
+    var ablySubscriberDidChangeChannelConnectionStateCallsCount = 0
+    var ablySubscriberDidChangeChannelConnectionStateCalled: Bool {
+        return ablySubscriberDidChangeChannelConnectionStateCallsCount > 0
+    }
+    var ablySubscriberDidChangeChannelConnectionStateReceivedArguments: (sender: AblySubscriber, state: ConnectionState)?
+    var ablySubscriberDidChangeChannelConnectionStateReceivedInvocations: [(sender: AblySubscriber, state: ConnectionState)] = []
+    var ablySubscriberDidChangeChannelConnectionStateClosure: ((AblySubscriber, ConnectionState) -> Void)?
+
+    func ablySubscriber(_ sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState) {
+        ablySubscriberDidChangeChannelConnectionStateCallsCount += 1
+        ablySubscriberDidChangeChannelConnectionStateReceivedArguments = (sender: sender, state: state)
+        ablySubscriberDidChangeChannelConnectionStateReceivedInvocations.append((sender: sender, state: state))
+        ablySubscriberDidChangeChannelConnectionStateClosure?(sender, state)
+    }
+
+    //MARK: - ablySubscriber
+
+    var ablySubscriberDidReceivePresenceUpdateCallsCount = 0
+    var ablySubscriberDidReceivePresenceUpdateCalled: Bool {
+        return ablySubscriberDidReceivePresenceUpdateCallsCount > 0
+    }
+    var ablySubscriberDidReceivePresenceUpdateReceivedArguments: (sender: AblySubscriber, presence: Presence)?
+    var ablySubscriberDidReceivePresenceUpdateReceivedInvocations: [(sender: AblySubscriber, presence: Presence)] = []
+    var ablySubscriberDidReceivePresenceUpdateClosure: ((AblySubscriber, Presence) -> Void)?
+
+    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence) {
+        ablySubscriberDidReceivePresenceUpdateCallsCount += 1
+        ablySubscriberDidReceivePresenceUpdateReceivedArguments = (sender: sender, presence: presence)
+        ablySubscriberDidReceivePresenceUpdateReceivedInvocations.append((sender: sender, presence: presence))
+        ablySubscriberDidReceivePresenceUpdateClosure?(sender, presence)
+    }
+
+    //MARK: - ablySubscriber
+
+    var ablySubscriberDidFailWithErrorCallsCount = 0
+    var ablySubscriberDidFailWithErrorCalled: Bool {
+        return ablySubscriberDidFailWithErrorCallsCount > 0
+    }
+    var ablySubscriberDidFailWithErrorReceivedArguments: (sender: AblySubscriber, error: ErrorInformation)?
+    var ablySubscriberDidFailWithErrorReceivedInvocations: [(sender: AblySubscriber, error: ErrorInformation)] = []
+    var ablySubscriberDidFailWithErrorClosure: ((AblySubscriber, ErrorInformation) -> Void)?
+
+    func ablySubscriber(_ sender: AblySubscriber, didFailWithError error: ErrorInformation) {
+        ablySubscriberDidFailWithErrorCallsCount += 1
+        ablySubscriberDidFailWithErrorReceivedArguments = (sender: sender, error: error)
+        ablySubscriberDidFailWithErrorReceivedInvocations.append((sender: sender, error: error))
+        ablySubscriberDidFailWithErrorClosure?(sender, error)
+    }
+
+    //MARK: - ablySubscriber
+
+    var ablySubscriberDidReceiveEnhancedLocationCallsCount = 0
+    var ablySubscriberDidReceiveEnhancedLocationCalled: Bool {
+        return ablySubscriberDidReceiveEnhancedLocationCallsCount > 0
+    }
+    var ablySubscriberDidReceiveEnhancedLocationReceivedArguments: (sender: AblySubscriber, locationUpdate: LocationUpdate)?
+    var ablySubscriberDidReceiveEnhancedLocationReceivedInvocations: [(sender: AblySubscriber, locationUpdate: LocationUpdate)] = []
+    var ablySubscriberDidReceiveEnhancedLocationClosure: ((AblySubscriber, LocationUpdate) -> Void)?
+
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveEnhancedLocation locationUpdate: LocationUpdate) {
+        ablySubscriberDidReceiveEnhancedLocationCallsCount += 1
+        ablySubscriberDidReceiveEnhancedLocationReceivedArguments = (sender: sender, locationUpdate: locationUpdate)
+        ablySubscriberDidReceiveEnhancedLocationReceivedInvocations.append((sender: sender, locationUpdate: locationUpdate))
+        ablySubscriberDidReceiveEnhancedLocationClosure?(sender, locationUpdate)
+    }
+
+    //MARK: - ablySubscriber
+
+    var ablySubscriberDidReceiveRawLocationCallsCount = 0
+    var ablySubscriberDidReceiveRawLocationCalled: Bool {
+        return ablySubscriberDidReceiveRawLocationCallsCount > 0
+    }
+    var ablySubscriberDidReceiveRawLocationReceivedArguments: (sender: AblySubscriber, locationUpdate: LocationUpdate)?
+    var ablySubscriberDidReceiveRawLocationReceivedInvocations: [(sender: AblySubscriber, locationUpdate: LocationUpdate)] = []
+    var ablySubscriberDidReceiveRawLocationClosure: ((AblySubscriber, LocationUpdate) -> Void)?
+
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveRawLocation locationUpdate: LocationUpdate) {
+        ablySubscriberDidReceiveRawLocationCallsCount += 1
+        ablySubscriberDidReceiveRawLocationReceivedArguments = (sender: sender, locationUpdate: locationUpdate)
+        ablySubscriberDidReceiveRawLocationReceivedInvocations.append((sender: sender, locationUpdate: locationUpdate))
+        ablySubscriberDidReceiveRawLocationClosure?(sender, locationUpdate)
+    }
+
+    //MARK: - ablySubscriber
+
+    var ablySubscriberDidReceiveResolutionCallsCount = 0
+    var ablySubscriberDidReceiveResolutionCalled: Bool {
+        return ablySubscriberDidReceiveResolutionCallsCount > 0
+    }
+    var ablySubscriberDidReceiveResolutionReceivedArguments: (sender: AblySubscriber, resolution: Resolution)?
+    var ablySubscriberDidReceiveResolutionReceivedInvocations: [(sender: AblySubscriber, resolution: Resolution)] = []
+    var ablySubscriberDidReceiveResolutionClosure: ((AblySubscriber, Resolution) -> Void)?
+
+    func ablySubscriber(_ sender: AblySubscriber, didReceiveResolution resolution: Resolution) {
+        ablySubscriberDidReceiveResolutionCallsCount += 1
+        ablySubscriberDidReceiveResolutionReceivedArguments = (sender: sender, resolution: resolution)
+        ablySubscriberDidReceiveResolutionReceivedInvocations.append((sender: sender, resolution: resolution))
+        ablySubscriberDidReceiveResolutionClosure?(sender, resolution)
     }
 
 }

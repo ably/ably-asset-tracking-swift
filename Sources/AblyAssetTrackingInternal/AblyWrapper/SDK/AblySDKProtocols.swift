@@ -51,4 +51,5 @@ public protocol AblySDKAuth {
     func authorize(_ callback: @escaping ARTTokenDetailsCallback)
 }
 
+//sourcery: AutoMockable
 public protocol AblySDKEventListener {}
