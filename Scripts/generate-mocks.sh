@@ -15,3 +15,4 @@ run_sourcery () {
 }
 
 run_sourcery "InternalMocks"
+run_sourcery "SubscriberMocks"
