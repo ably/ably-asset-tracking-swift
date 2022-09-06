@@ -309,7 +309,7 @@ extension DefaultPublisher {
 
             switch result {
             case .success:
-                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable) { [weak self] _ in
+                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable) {_ in
                     completion()
                 }))
             case .failure(let error):
@@ -319,7 +319,7 @@ extension DefaultPublisher {
     }
     // MARK: Add trackable
     private func performAddTrackableEvent(_ event: Event.AddTrackableEvent) {
-        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {
+        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) { [weak self] in
             self?.callback(value: Void(), handler: event.resultHandler)
         }
     }
