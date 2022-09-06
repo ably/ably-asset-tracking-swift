@@ -379,10 +379,11 @@ extension DefaultPublisher {
 
         state = .stopping
 
+        //first stop updating location
+        locationService.stopUpdatingLocation()
         ablyPublisher.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
-                self?.locationService.stopUpdatingLocation()
                 self?.enqueue(event: .ablyConnectionClosed(.init(resultHandler: event.resultHandler)))
             case .failure(let error):
                 self?.callback(error: error, handler: event.resultHandler)
