@@ -7,6 +7,7 @@ public class DefaultAbly: AblyCommon {
     public weak var publisherDelegate: AblyPublisherDelegate?
     public weak var subscriberDelegate: AblySubscriberDelegate?
     
+     //log handler used to capture internal events from the Ably-Cocoa, and pass them to AblyLogHandler via `logCallback`
     private let internalARTLogHandler: InternalARTLogHandler = InternalARTLogHandler()
     
     private let logHandler: AblyLogHandler?
@@ -74,12 +75,11 @@ public class DefaultAbly: AblyCommon {
             self.logHandler?.d(message: "\(String(describing: Self.self)): Entered a channel [id: \(trackableId)] presence successfully", error: nil)
             
             let presenceEnterSuccess = { [weak self] in
-                guard let self = self else { return }
-                self.channels[trackableId] = channel
+                self?.channels[trackableId] = channel
                 completion(.success)
             }
             
-            let presenceEnterTerminalFailure = {[weak self] (error: ARTErrorInfo) in
+            let presenceEnterTerminalFailure = { [weak self] (error: ARTErrorInfo) in
                 self?.logHandler?.e(message: "\(String(describing: Self.self)): Error while joining a channel [id: \(trackableId)] presence", error: error)
                 completion(.failure(error.toErrorInformation()))
             }
@@ -91,7 +91,9 @@ public class DefaultAbly: AblyCommon {
             
             if error.code == ARTErrorCode.operationNotPermittedWithProvidedCapability.rawValue && self.connectionConfiguration.usesTokenAuth {
                 self.logHandler?.d(message: "\(String(describing: Self.self)): Failed to enter presence on channel [id: \(trackableId)], requesting Ably SDK to re-authorize", error: error)
-                self.client.auth.authorize { _, error in
+                self.client.auth.authorize { [weak self] _, error in
+                    guard let self = self
+                    else { return }
                     if let error = error {
                         self.logHandler?.e(message: "\(String(describing: Self.self)): Error calling authorize: \(String(describing: error))", error: error)
                         completion(.failure(ErrorInformation(error: error)))
@@ -433,9 +435,9 @@ extension DefaultAbly: AblyPublisher {
             let message = ARTMessage(name: EventName.raw.rawValue, data: data)
             
             channel.publish([message]) {[weak self] error in
-                guard let self = self else {
-                    return
-                }
+                guard let self = self
+                else { return }
+                
                 if let error = error {
                     self.logHandler?.e(message: "\(String(describing: Self.self)): Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
                     self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
