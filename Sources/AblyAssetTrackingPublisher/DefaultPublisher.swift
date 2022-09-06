@@ -254,7 +254,10 @@ extension DefaultPublisher {
         ablyPublisher.subscribeForChannelStateChange(trackable: event.trackable)
         
         trackables.insert(event.trackable)
-        locationService.startUpdatingLocation()
+        //Start updating location only after the first trackable
+        if (trackables.count == 1){
+            locationService.startUpdatingLocation()
+        }
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
         event.resultHandler(.success)
@@ -354,10 +357,11 @@ extension DefaultPublisher {
 
         state = .stopping
 
+        //first stop updating location
+        locationService.stopUpdatingLocation()
         ablyPublisher.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
-                self?.locationService.stopUpdatingLocation()
                 self?.enqueue(event: .ablyConnectionClosed(.init(resultHandler: event.resultHandler)))
             case .failure(let error):
                 self?.callback(error: error, handler: event.resultHandler)
