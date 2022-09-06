@@ -316,7 +316,7 @@ extension DefaultPublisher {
     }
     // MARK: Add trackable
     private func performAddTrackableEvent(_ event: Event.AddTrackableEvent) {
-        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) { [weak self] in
+        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {
             self?.callback(value: Void(), handler: event.resultHandler)
         }
     }
