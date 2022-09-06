@@ -212,7 +212,7 @@ extension DefaultPublisher {
 
     // MARK: Track
     private func performTrackTrackableEvent(_ event: Event.TrackTrackableEvent) {
-        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {
+        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {[weak self] in
             self.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
         }
     }
