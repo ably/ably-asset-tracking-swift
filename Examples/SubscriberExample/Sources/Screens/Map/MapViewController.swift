@@ -33,6 +33,8 @@ class MapViewController: UIViewController {
 
     private var currentResolution: Resolution?
     private var resolutionDebounceTimer: Timer?
+    
+    private let subscriberLogger = SubscriberLogger()
 
     private var location: CLLocation?
 
@@ -106,11 +108,12 @@ class MapViewController: UIViewController {
             .connection(connectionConfiguration)
             .trackingId(trackingId)
             .resolution(resolution)
+            .logHandler(handler: subscriberLogger)
             .delegate(self)
             .start { [weak self] result in
                 switch result {
                 case .success:
-                    logger.info("Subscriber started successfully.")
+                    self?.subscriberLogger.i(message: "Subscriber started successfully", error: nil)
                 case .failure(let error):
                     self?.showErrorDialog(withMessage: error.message)
                 }
@@ -145,7 +148,7 @@ class MapViewController: UIViewController {
     }
     
     private func createAnnotationIfNeeded<T: MKPointAnnotation>() -> T {
-        if let annotation = mapView.annotations.first(where: { $0 is T }) as? T  {
+        if let annotation = mapView.annotations.first(where: { $0 is T }) as? T {
             return annotation
         } else {
             let annotation = T()
@@ -188,7 +191,7 @@ class MapViewController: UIViewController {
             case .success:
                 self?.currentResolution = resolution
                 self?.updateSubscriberResolutionLabels()
-                logger.info("Updated resolution to: \(resolution)")
+                self?.subscriberLogger.i(message: "Updated resolution to: \(resolution)", error: nil)
             case .failure(let error):
                 let errorDescription = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .changeError(error))
                 self?.showErrorDialog(withMessage: errorDescription)
@@ -244,7 +247,7 @@ extension MapViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let zoom = mapView.getZoomLevel()
-        logger.debug("Current map zoom level: \(zoom)")
+        subscriberLogger.d(message: "Current map zoom level: \(zoom)", error: nil)
         scheduleResolutionUpdate()
     }
     

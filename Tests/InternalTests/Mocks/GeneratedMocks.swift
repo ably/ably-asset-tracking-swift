@@ -256,23 +256,23 @@ class AblySDKRealtimeFactoryMock: AblySDKRealtimeFactory {
 
     //MARK: - create
 
-    var createWithConfigurationCallsCount = 0
-    var createWithConfigurationCalled: Bool {
-        return createWithConfigurationCallsCount > 0
+    var createWithConfigurationLogHandlerCallsCount = 0
+    var createWithConfigurationLogHandlerCalled: Bool {
+        return createWithConfigurationLogHandlerCallsCount > 0
     }
-    var createWithConfigurationReceivedConfiguration: ConnectionConfiguration?
-    var createWithConfigurationReceivedInvocations: [ConnectionConfiguration] = []
-    var createWithConfigurationReturnValue: AblySDKRealtime!
-    var createWithConfigurationClosure: ((ConnectionConfiguration) -> AblySDKRealtime)?
+    var createWithConfigurationLogHandlerReceivedArguments: (configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler)?
+    var createWithConfigurationLogHandlerReceivedInvocations: [(configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler)] = []
+    var createWithConfigurationLogHandlerReturnValue: AblySDKRealtime!
+    var createWithConfigurationLogHandlerClosure: ((ConnectionConfiguration, InternalARTLogHandler) -> AblySDKRealtime)?
 
-    func create(withConfiguration configuration: ConnectionConfiguration) -> AblySDKRealtime {
-        createWithConfigurationCallsCount += 1
-        createWithConfigurationReceivedConfiguration = configuration
-        createWithConfigurationReceivedInvocations.append(configuration)
-        if let createWithConfigurationClosure = createWithConfigurationClosure {
-            return createWithConfigurationClosure(configuration)
+    func create(withConfiguration configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler) -> AblySDKRealtime {
+        createWithConfigurationLogHandlerCallsCount += 1
+        createWithConfigurationLogHandlerReceivedArguments = (configuration: configuration, logHandler: logHandler)
+        createWithConfigurationLogHandlerReceivedInvocations.append((configuration: configuration, logHandler: logHandler))
+        if let createWithConfigurationLogHandlerClosure = createWithConfigurationLogHandlerClosure {
+            return createWithConfigurationLogHandlerClosure(configuration, logHandler)
         } else {
-            return createWithConfigurationReturnValue
+            return createWithConfigurationLogHandlerReturnValue
         }
     }
 

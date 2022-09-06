@@ -66,6 +66,7 @@ class MapViewModel: ObservableObject {
                 .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
                 .rawLocations(enabled: SettingsModel.shared.areRawLocationsEnabled)
                 .constantLocationEngineResolution(resolution: constantResolution)
+                .logHandler(handler: PublisherLogger())
                 .start()
         
         let destination: LocationCoordinate? = nil
