@@ -44,7 +44,7 @@ public protocol PublisherDelegate: AnyObject {
      
      - Parameters:
         - sender: `Publisher` instance.
-        - trackables: a list of trackables that are currently present on the `sender`'s instance
+        - trackables: a set of trackables that are currently present on the `sender`'s instance
     */
     func publisher(sender: Publisher, didChangeTrackables trackables: Set<Trackable>)
 }
