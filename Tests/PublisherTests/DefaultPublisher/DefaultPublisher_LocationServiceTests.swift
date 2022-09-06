@@ -1,12 +1,10 @@
 import XCTest
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
-import Logging
 @testable import AblyAssetTrackingPublisher
 
 class DefaultPublisher_LocationServiceTests: XCTestCase {
     let publisherHelper = PublisherHelper()
-    let logger = Logger(label: "com.ably.tracking.DefaultPublisher_LocationServiceTests")
     
     var locationService: MockLocationService!
     var ablyPublisher: MockAblyPublisher!
@@ -20,11 +18,12 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var waitAsync: WaitAsync!
     var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
     var rawLocationState: TrackableState<RawLocationUpdate>!
+    var logger: MockAblyLogHandler!
     
     override func setUpWithError() throws {
         locationService = MockLocationService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
-        ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
+        ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         routeProvider = MockRouteProvider()
         resolutionPolicyFactory = MockResolutionPolicyFactory()
@@ -32,6 +31,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         waitAsync = WaitAsync()
         enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
         rawLocationState = TrackableState<RawLocationUpdate>()
+        logger = MockAblyLogHandler()
         
         trackable = Trackable(
             id: "TrackableId",
@@ -47,7 +47,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             ablyPublisher: ablyPublisher,
             locationService: locationService,
             routeProvider: routeProvider,
-            enhancedLocationState: enhancedLocationState
+            enhancedLocationState: enhancedLocationState,
+            logHandler: logger
         )
         
         publisher.delegate = delegate
@@ -193,7 +194,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let trackable = Trackable(id: "Trackable_1")
         let trackableState = TrackableState<EnhancedLocationUpdate>()
-        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
+        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         let publisher = PublisherHelper.createPublisher(ablyPublisher: ablyPublisher)
         
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
@@ -219,7 +220,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
         let trackable = Trackable(id: "Trackable_2")
         let enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
-        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
+        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         let delegate = MockPublisherDelegate()
         let publisher = PublisherHelper.createPublisher(
             ablyPublisher: ablyPublisher,
@@ -272,7 +273,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let nextLocation = Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2))
         let nextLocationUpdate = EnhancedLocationUpdate(location: nextLocation)
         let trackable = Trackable(id: "Trackable_2")
-        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
+        let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         let locationService = MockLocationService()
         let resolutionPolicyFactory = MockResolutionPolicyFactory()
         let publisher = PublisherHelper.createPublisher(
@@ -325,7 +326,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             ablyPublisher: ablyPublisher,
             locationService: locationService,
             routeProvider: routeProvider,
-            areRawLocationsEnabled: true
+            areRawLocationsEnabled: true,
+            logHandler: logger
         )
         
         let expectationAddTrackable = self.expectation(description: "Add Trackable Expectation")
@@ -361,7 +363,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             ablyPublisher: ablyPublisher,
             locationService: locationService,
             routeProvider: routeProvider,
-            areRawLocationsEnabled: false
+            areRawLocationsEnabled: false,
+            logHandler: logger
         )
         
         let expectationAddTrackable = self.expectation(description: "Add Trackable Expectation")

@@ -1,6 +1,5 @@
 import XCTest
 import CoreLocation
-import Logging
 import AblyAssetTrackingInternal
 import AblyAssetTrackingSubscriber
 @testable import AblyAssetTrackingPublisher
@@ -8,6 +7,7 @@ import AblyAssetTrackingSubscriber
 class ChannelModesTests: XCTestCase {
     private let defaultDelayTime: TimeInterval = 10.0
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
+    let logger = MockAblyLogHandler()
     
     func testShouldCreateOnlyOnePublisherAndOneSubscriberConnection() throws {
         let subscriberClientId = "Test-Subscriber_\(UUID().uuidString)"
@@ -64,7 +64,7 @@ class ChannelModesTests: XCTestCase {
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() })
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }), logHandler: logger
         )
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: ablyApiKey, clientId: clientId)
         
@@ -72,7 +72,7 @@ class ChannelModesTests: XCTestCase {
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
-            logger: .init(label: "com.ably.tracking.SystemTests")
+            logHandler: logger
         )
         
         return DefaultPublisher(
@@ -82,7 +82,8 @@ class ChannelModesTests: XCTestCase {
             resolutionPolicyFactory: MockResolutionPolicyFactory(),
             ablyPublisher: defaultAbly,
             locationService: defaultLocationService,
-            routeProvider: MockRouteProvider()
+            routeProvider: MockRouteProvider(),
+            logHandler: logger
         )
         
     }

@@ -62,4 +62,9 @@ public protocol PublisherBuilder {
      It's enabled by default
      */
     func sendResolution(enabled: Bool) -> PublisherBuilder
+    
+    /**
+     Sets an optional `logHandler` that can capture logs from all across the sdk
+     */
+    func logHandler(handler: AblyLogHandler?) -> PublisherBuilder
 }

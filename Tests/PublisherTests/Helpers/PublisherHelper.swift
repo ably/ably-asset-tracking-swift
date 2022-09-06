@@ -92,7 +92,8 @@ class PublisherHelper {
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
-        enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>()
+        enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>(),
+        logHandler: MockAblyLogHandler = MockAblyLogHandler()
     ) -> DefaultPublisher {
         
         DefaultPublisher(
@@ -103,7 +104,8 @@ class PublisherHelper {
             ablyPublisher: ablyPublisher,
             locationService: locationService,
             routeProvider: routeProvider,
-            enhancedLocationState: enhancedLocationState
+            enhancedLocationState: enhancedLocationState,
+            logHandler: logHandler
         )
     }
 }
