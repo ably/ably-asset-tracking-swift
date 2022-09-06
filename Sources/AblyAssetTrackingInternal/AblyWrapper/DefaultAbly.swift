@@ -75,7 +75,7 @@ public class DefaultAbly: AblyCommon {
             self.logHandler?.d(message: "\(String(describing: Self.self)): Entered a channel [id: \(trackableId)] presence successfully", error: nil)
             
             let presenceEnterSuccess = { [weak self] in
-                self.channels[trackableId] = channel
+                self?.channels[trackableId] = channel
                 completion(.success)
             }
             
