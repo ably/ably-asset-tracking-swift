@@ -6,10 +6,14 @@ import AblyAssetTrackingCore
 class DefaultLocationService: LocationService {
     private let locationManager: PassiveLocationManager
     private let replayLocationManager: ReplayLocationManager?
+    private let logHandler: AblyLogHandler?
 
     weak var delegate: LocationServiceDelegate?
 
-    init(mapboxConfiguration: MapboxConfiguration, historyLocation: [CLLocation]?) {
+    init(mapboxConfiguration: MapboxConfiguration,
+         historyLocation: [CLLocation]?,
+         logHandler: AblyLogHandler?) {
+        
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
         NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
         
@@ -18,7 +22,8 @@ class DefaultLocationService: LocationService {
         } else {
             replayLocationManager = nil
         }
-        
+        self.logHandler = logHandler
+
         self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
         self.locationManager.delegate = self
     }
@@ -44,7 +49,7 @@ class DefaultLocationService: LocationService {
 
 extension DefaultLocationService: PassiveLocationManagerDelegate {
     func passiveLocationManagerDidChangeAuthorization(_ manager: PassiveLocationManager) {
-        logger.debug("passiveLocationManager.passiveLocationManagerDidChangeAuthorization", source: String(describing: Self.self))
+        logHandler?.d(message: "\(String(describing: Self.self)), passiveLocationManager.passiveLocationManagerDidChangeAuthorization", error: nil)
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
@@ -53,11 +58,11 @@ extension DefaultLocationService: PassiveLocationManagerDelegate {
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
-        logger.debug("passiveLocationManager.didUpdateHeading", source: String(describing: Self.self))
+        logHandler?.d(message: "\(String(describing: Self.self)), passiveLocationManager.didUpdateHeading", error: nil)
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didFailWithError error: Error) {
-        logger.error("passiveLocationManager.didFailWithError", source: "DefaultLocationService")
+        logHandler?.e(message: "\(String(describing: Self.self)), passiveLocationManager.didFailWithError", error: error)
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: error.localizedDescription))
         delegate?.locationService(sender: self, didFailWithError: errorInformation)
     }

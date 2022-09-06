@@ -121,8 +121,8 @@ struct AblyCocoaSDKEventListener: AblySDKEventListener {
 public class AblyCocoaSDKRealtimeFactory: AblySDKRealtimeFactory {
     public init() {}
     
-    public func create(withConfiguration configuration: ConnectionConfiguration) -> AblySDKRealtime {
-        let realtime = ARTRealtime(options: configuration.getClientOptions())
+    public func create(withConfiguration configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler) -> AblySDKRealtime {
+        let realtime = ARTRealtime(options: configuration.getClientOptions(logHandler: logHandler))
         return AblyCocoaSDKRealtime(realtime: realtime)
     }
 }

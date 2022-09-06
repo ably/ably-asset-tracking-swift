@@ -1,5 +1,4 @@
 import XCTest
-import Logging
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingSubscriber
 
@@ -9,7 +8,7 @@ class DefaultSubscriberTests: XCTestCase {
     private var trackableId: String!
     
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
-    private let logger = Logger(label: "com.ably.tracking.DefaultSubscriberTests")
+    private let logger = MockAblyLogHandler()
     
     override func setUpWithError() throws {
         trackableId = "Trackable-\(UUID().uuidString)"
@@ -18,7 +17,8 @@ class DefaultSubscriberTests: XCTestCase {
         subscriber = DefaultSubscriber(
             ablySubscriber: ablySubscriber,
             trackableId: trackableId,
-            resolution: nil
+            resolution: nil,
+            logHandler: logger
         )
     }
     

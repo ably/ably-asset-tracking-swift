@@ -3,7 +3,6 @@ import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 import AblyAssetTrackingSubscriber
 import Ably
-import Logging
 import CoreLocation
 @testable import AblyAssetTrackingPublisher
 
@@ -33,6 +32,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         "Test-Publisher_\(UUID().uuidString)"
     }()
     
+    private let logger = MockAblyLogHandler()
+    
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
 
@@ -57,7 +58,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() })
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }), logHandler: logger
         )
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
@@ -66,7 +67,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
-            logger: .init(label: "com.ably.tracking.SystemTests")
+            logHandler: logger
         )
         
         publisher = DefaultPublisher(
@@ -78,7 +79,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             locationService: defaultLocationService,
             routeProvider: routeProvider,
             areRawLocationsEnabled: true,
-            isSendResolutionEnabled: true
+            isSendResolutionEnabled: true,
+            logHandler: logger
         )
         
         
@@ -138,7 +140,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() })
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }), logHandler: logger
         )
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
@@ -147,7 +149,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
-            logger: .init(label: "com.ably.tracking.SystemTests")
+            logHandler: logger
         )
         
         publisher = DefaultPublisher(
@@ -159,7 +161,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             locationService: defaultLocationService,
             routeProvider: routeProvider,
             areRawLocationsEnabled: true,
-            isSendResolutionEnabled: true
+            isSendResolutionEnabled: true,
+            logHandler: logger
         )
         
         let trackable = Trackable(id: trackableId)

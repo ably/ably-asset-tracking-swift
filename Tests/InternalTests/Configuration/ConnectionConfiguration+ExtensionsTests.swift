@@ -5,9 +5,11 @@ import AblyAssetTrackingCore
 
 class ConnectionConfigurationTests: XCTestCase {
 
+    let internalARTLogHandler = InternalARTLogHandler()
+    
     func testBasicAuthenticationConstructor() throws {
         let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
-        let clientOptions = configuration.getClientOptions()
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
         XCTAssertEqual(clientOptions.clientId, "A client ID")
         XCTAssertNil(clientOptions.authCallback)
     }
@@ -28,7 +30,7 @@ class ConnectionConfigurationTests: XCTestCase {
         })
         
         // Checking the clientOptions provided is structured correctly for Ably-cocoa
-        let clientOptions = configuration.getClientOptions()
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
         XCTAssertEqual(clientOptions.clientId, clientId)
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
         XCTAssertNotNil(clientOptions.authCallback)
@@ -59,7 +61,7 @@ class ConnectionConfigurationTests: XCTestCase {
             })
             
             // Checking the clientOptions provided is structured correctly for Ably-cocoa
-            let clientOptions = configuration.getClientOptions()
+            let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
             XCTAssertEqual(clientOptions.clientId, clientId)
             let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
             XCTAssertNotNil(clientOptions.authCallback)
@@ -88,7 +90,7 @@ class ConnectionConfigurationTests: XCTestCase {
         })
         
         // Checking the clientOptions provided is structured correctly for Ably-cocoa
-        let clientOptions = configuration.getClientOptions()
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
         XCTAssertEqual(clientOptions.clientId, clientId)
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
         XCTAssertNotNil(clientOptions.authCallback)
