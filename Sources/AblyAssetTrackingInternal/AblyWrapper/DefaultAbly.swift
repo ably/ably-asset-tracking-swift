@@ -3,7 +3,10 @@ import Ably
 import AblyAssetTrackingCore
 
 public class DefaultAbly: AblyCommon {
-    
+    enum AblyError : Error {
+        case connectionError(errorInfo: ARTErrorInfo)
+    }
+
     public weak var publisherDelegate: AblyPublisherDelegate?
     public weak var subscriberDelegate: AblySubscriberDelegate?
     
@@ -160,6 +163,49 @@ public class DefaultAbly: AblyCommon {
             completion(.failure(error.toErrorInformation()))
         }
     }
+
+    //This function is to be documented and must be invoked from a background thread
+    private func performChannelOperationWithRetry(channel:ARTRealtimeChannel, operation : (ARTRealtimeChannel)->Void) throws {
+      do {
+          logHandler?.w(message: "Trying to perform an operation on a suspended channel \(channel.name), waiting for the channel to be reconnected", error: nil)
+          try waitForChannelReconnection(channel: channel)
+          operation(channel)
+      } catch  AblyError.connectionError(let errorInfo) {
+           if errorInfo.isConnectionResumeException(){
+            
+               logHandler?.w(message: "Connection resume failed for channel \(channel.name), waiting for the channel to be reconnected",
+                       error: errorInfo
+               )
+               //We can try another time
+               do {
+                   try waitForChannelReconnection(channel: channel)
+                   operation(channel)
+               }catch AblyError.connectionError(let secondError){
+                   logHandler?.w(message: "Retrying the operation on channel \(channel.name) has failed for the second time",
+                                          error: secondError
+                                      )
+                   throw AblyError.connectionError(errorInfo: secondError)
+               }
+           }else {
+               throw AblyError.connectionError(errorInfo: errorInfo)
+           }
+      }
+    }
+
+    private func waitForChannelReconnection(channel:ARTRealtimeChannel, timeoutInMs:Int32 = 10_000) throws{
+        guard channel.state.toConnectionState() != .online else{
+            return
+        }
+        let blockingDispatchGroup = DispatchGroup()
+        blockingDispatchGroup.enter()
+        channel.on { stateChange in
+            if (stateChange.current.toConnectionState() == .online){
+                blockingDispatchGroup.leave()
+            }
+        }
+        blockingDispatchGroup.wait(timeout: .now() + Int((timeoutInMs / 1000)))
+    }
+    
     
     public func close(presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
         let closingDispatchGroup = DispatchGroup()
@@ -465,5 +511,13 @@ extension DefaultAbly: AblyPublisher {
 fileprivate extension ConnectionConfiguration {
     var usesTokenAuth: Bool {
         return authCallback != nil
+    }
+}
+
+extension ARTErrorInfo {
+    func isConnectionResumeException() -> Bool {
+        guard let errorInfo == toErrorInformation() else { return false }
+
+        return  errorInfo.message == "Connection resume failed" && errorInfo.code == 50000 && errorInfo.statusCode == 500
     }
 }
