@@ -148,6 +148,8 @@ class MapViewModel: ObservableObject {
 }
 
 extension MapViewModel: PublisherDelegate {
+    func publisher(sender: Publisher, didChangeTrackables trackables: Set<Trackable>) {}
+    
     func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
         updateErrorInfo(error)
     }
