@@ -307,7 +307,7 @@ extension DefaultPublisher {
             switch result {
             case .success:
                 self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable) { [weak self] _ in
-                    self?.callback(value: Void(), handler: resultHandler)
+                    completion()
                 }))
             case .failure(let error):
                 self?.callback(error: error, handler: resultHandler)
