@@ -1,5 +1,4 @@
 import XCTest
-import Logging
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 
@@ -19,21 +18,13 @@ class DefaultPublisherTests: XCTestCase {
     var delegate: MockPublisherDelegate!
     var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
     
-    let logger = Logger(label: "com.ably.tracking.DefaultPublisherTests")
+    let logger = MockAblyLogHandler()
     let waitAsync = WaitAsync()
-    
-    override class func setUp() {
-        LoggingSystem.bootstrap { label -> LogHandler in
-            var handler = StreamLogHandler.standardOutput(label: label)
-            handler.logLevel = .debug
-            return handler
-        }
-    }
     
     override func setUpWithError() throws {
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         locationService = MockLocationService()
-        ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish, logger: logger)
+        ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         routeProvider = MockRouteProvider()
@@ -49,7 +40,8 @@ class DefaultPublisherTests: XCTestCase {
                                      ablyPublisher: ablyPublisher,
                                      locationService: locationService,
                                      routeProvider: routeProvider,
-                                     enhancedLocationState: enhancedLocationState)
+                                     enhancedLocationState: enhancedLocationState,
+                                     logHandler: logger)
         publisher.delegate = delegate
     }
     
@@ -830,7 +822,8 @@ class DefaultPublisherTests: XCTestCase {
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,
             locationService: locationService,
-            routeProvider: routeProvider
+            routeProvider: routeProvider,
+            logHandler: logger
         )
         
         let connectCompletionExpectation = self.expectation(description: "Track completion expectation")
