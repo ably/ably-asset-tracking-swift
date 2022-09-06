@@ -212,34 +212,8 @@ extension DefaultPublisher {
 
     // MARK: Track
     private func performTrackTrackableEvent(_ event: Event.TrackTrackableEvent) {
-        guard !state.isStoppingOrStopped else {
-            publisherStoppedCallback(handler: event.resultHandler)
-            return
-        }
-
-        guard !trackables.contains(event.trackable) else {
-            enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
-            return
-        }
-
-        ablyPublisher.connect(
-            trackableId: event.trackable.id,
-            presenceData: presenceData,
-            useRewind: false
-        ) { [weak self] result in
-            switch result {
-            case .success:
-                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: event.trackable) { [weak self] result in
-                    switch result {
-                    case .success:
-                        self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
-                    default:
-                        return
-                    }
-                }))
-            case .failure(let error):
-                self?.callback(error: error, handler: event.resultHandler)
-            }
+        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {[weak self] in
+            self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
         }
     }
 
@@ -315,33 +289,38 @@ extension DefaultPublisher {
         self.route = event.route
     }
 
-    // MARK: Add trackable
-    private func performAddTrackableEvent(_ event: Event.AddTrackableEvent) {
+    private func performAddOrTrack(_ trackable: Trackable, resultHandler: @escaping ResultHandler<Void>, completion: @escaping () -> Void){
         guard !state.isStoppingOrStopped else {
-            publisherStoppedCallback(handler: event.resultHandler)
+            publisherStoppedCallback(handler: resultHandler)
             return
         }
 
-        guard !trackables.contains(event.trackable) else {
-            callback(value: Void(), handler: event.resultHandler)
+        guard !trackables.contains(trackable) else {
+            completion()
             return
         }
-     
-     
+
+
         ablyPublisher.connect(
-            trackableId: event.trackable.id,
-            presenceData: presenceData,
-            useRewind: false
+                trackableId: trackable.id,
+                presenceData: presenceData,
+                useRewind: false
         ) { [weak self] result in
-     
+
             switch result {
             case .success:
-                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: event.trackable) { [weak self] _ in
-                    self?.callback(value: Void(), handler: event.resultHandler)
+                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable) {_ in
+                    completion()
                 }))
             case .failure(let error):
-                self?.callback(error: error, handler: event.resultHandler)
+                self?.callback(error: error, handler: resultHandler)
             }
+        }
+    }
+    // MARK: Add trackable
+    private func performAddTrackableEvent(_ event: Event.AddTrackableEvent) {
+        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) { [weak self] in
+            self?.callback(value: Void(), handler: event.resultHandler)
         }
     }
 
