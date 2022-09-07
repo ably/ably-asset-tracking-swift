@@ -19,6 +19,9 @@ public class DefaultAbly: AblyCommon {
     let mode: AblyMode
     
     private var channels: [String: AblySDKRealtimeChannel] = [:]
+    
+    //This queue is intended to serialze async operations
+    private let operationQueue = DispatchQueue(label: "com.ably.tracking")
 
     public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: AblyLogHandler?) {
         self.logHandler = logHandler
@@ -133,6 +136,36 @@ public class DefaultAbly: AblyCommon {
             return
         }
         
+        do {
+            try performChannelOperationWithRetry(channel: channelToRemove, operation: { channel in
+                try disconnectChannel(channel: channel, presenceData: presenceData!)
+            })
+            
+            channels.removeValue(forKey: trackableId)
+            completion(.success(true))
+        }catch AblyError.connectionError(let errorInfo){
+            completion(.failure(errorInfo.toErrorInformation()))
+        }catch{
+            
+        }
+    }
+    
+    private func disconnectChannel(channel:AblySDKRealtimeChannel, presenceData: PresenceData) throws{
+        leavePresence(channel: channel, presenceData: presenceData) { leaveError in
+            if let leaveError = leaveError {
+                throw AblyError.connectionError(errorInfo: leaveError)
+            }
+            
+            channel.unsubscribe()
+            channel.presence.unsubscribe()
+            self.detachFromChannel(channel: channel) { detachError in
+                guard let error = detachError else { return }
+                throw AblyError.connectionError(errorInfo: error)
+            }
+        }
+    }
+    
+    private func leavePresence(channel:AblySDKRealtimeChannel, presenceData: PresenceData?, completion : @escaping (ARTErrorInfo?) throws -> Void){
         let presenceDataJSON: Any?
         if let presenceData = presenceData {
             presenceDataJSON = self.presenceDataJSON(data: presenceData)
@@ -140,46 +173,40 @@ public class DefaultAbly: AblyCommon {
             presenceDataJSON = nil
         }
         
-        channelToRemove.presence.leave(presenceDataJSON) { [weak self] error in
-            guard let error = error else {
-                self?.logHandler?.d(message: "\(String(describing: Self.self)): Left channel [id: \(trackableId)] presence successfully", error: nil)
-                channelToRemove.presence.unsubscribe()
-                channelToRemove.unsubscribe()
-                
-                channelToRemove.detach { [weak self] detachError in
-                    guard let error = detachError else {
-                        self?.channels.removeValue(forKey: trackableId)
-                        completion(.success(true))
-                        
-                        return
-                    }
-                    self?.logHandler?.e(message: "\(String(describing: Self.self)): Error during detach channel [id: \(trackableId)] presence", error: error)
-                    completion(.failure(error.toErrorInformation()))
-                }
-                
-                return
-            }
-            self?.logHandler?.e(message: "\(String(describing: Self.self)): Error while leaving the channel [id: \(trackableId)] presence", error: error)
-            completion(.failure(error.toErrorInformation()))
+         channel.presence.leave(presenceDataJSON){ errorInfo in
+             //This to maintain clousure signature
+             do{
+                 try completion(errorInfo)
+             }catch{}
+        }
+
+    }
+    
+    private func detachFromChannel(channel:AblySDKRealtimeChannel, completion : @escaping (ARTErrorInfo?) throws -> Void) {
+        channel.detach { errorInfo in
+            //maintain clousure signature
+            do{
+                try completion(errorInfo)
+            }catch{}
         }
     }
 
     //This function is to be documented and must be invoked from a background thread
-    private func performChannelOperationWithRetry(channel:ARTRealtimeChannel, operation : (ARTRealtimeChannel)->Void) throws {
+    private func performChannelOperationWithRetry(channel:AblySDKRealtimeChannel, operation : (AblySDKRealtimeChannel) throws ->Void) throws {
       do {
           logHandler?.w(message: "Trying to perform an operation on a suspended channel \(channel.name), waiting for the channel to be reconnected", error: nil)
           try waitForChannelReconnection(channel: channel)
-          operation(channel)
+          try operation(channel)
       } catch  AblyError.connectionError(let errorInfo) {
            if errorInfo.isConnectionResumeException(){
             
-               logHandler?.w(message: "Connection resume failed for channel \(channel.name), waiting for the channel to be reconnected",
+               logHandler?.w(message: "Connection resume failed for channel \(channel), waiting for the channel to be reconnected",
                        error: errorInfo
                )
                //We can try another time
                do {
                    try waitForChannelReconnection(channel: channel)
-                   operation(channel)
+                   try operation(channel)
                }catch AblyError.connectionError(let secondError){
                    logHandler?.w(message: "Retrying the operation on channel \(channel.name) has failed for the second time",
                                           error: secondError
@@ -192,7 +219,7 @@ public class DefaultAbly: AblyCommon {
       }
     }
 
-    private func waitForChannelReconnection(channel:ARTRealtimeChannel, timeoutInMs:Int = 10_000) throws{
+    private func waitForChannelReconnection(channel:AblySDKRealtimeChannel, timeoutInMs:Int = 10_000) throws{
         guard channel.state.toConnectionState() != .online else{
             return
         }
@@ -200,8 +227,10 @@ public class DefaultAbly: AblyCommon {
         blockingDispatchGroup.enter()
         channel.on { stateChange in
             if (stateChange.current.toConnectionState() == .online){
+                //i want to exit here or when this operation timed out
                 blockingDispatchGroup.leave()
             }
+            
         }
         let timeout: DispatchTime = .now() + .seconds(timeoutInMs / 1000)
         
