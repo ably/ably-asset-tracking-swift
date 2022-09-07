@@ -192,7 +192,7 @@ public class DefaultAbly: AblyCommon {
       }
     }
 
-    private func waitForChannelReconnection(channel:ARTRealtimeChannel, timeoutInMs:Int32 = 10_000) throws{
+    private func waitForChannelReconnection(channel:ARTRealtimeChannel, timeoutInMs:Int = 10_000) throws{
         guard channel.state.toConnectionState() != .online else{
             return
         }
@@ -203,7 +203,9 @@ public class DefaultAbly: AblyCommon {
                 blockingDispatchGroup.leave()
             }
         }
-        blockingDispatchGroup.wait(timeout: .now() + Int((timeoutInMs / 1000)))
+        let timeout: DispatchTime = .now() + .seconds(timeoutInMs / 1000)
+        
+        blockingDispatchGroup.wait(timeout: timeout)
     }
     
     
@@ -516,8 +518,7 @@ fileprivate extension ConnectionConfiguration {
 
 extension ARTErrorInfo {
     func isConnectionResumeException() -> Bool {
-        guard let errorInfo == toErrorInformation() else { return false }
-
+        let errorInfo = toErrorInformation()
         return  errorInfo.message == "Connection resume failed" && errorInfo.code == 50000 && errorInfo.statusCode == 500
     }
 }
