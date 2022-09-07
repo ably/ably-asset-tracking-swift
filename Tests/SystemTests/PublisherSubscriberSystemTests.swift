@@ -224,13 +224,3 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
         didUpdateResolutionExpectation.fulfill()
     }
 }
-
-extension PublisherAndSubscriberSystemTests: PublisherDelegate {
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didFailWithError error: ErrorInformation) {}
-    
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateEnhancedLocation location: EnhancedLocationUpdate) {}
-    
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {}
-    
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateResolution resolution: Resolution) {}
-}
