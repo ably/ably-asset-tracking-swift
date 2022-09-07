@@ -31,7 +31,20 @@ struct AblyCocoaSDKRealtimeChannels: AblySDKRealtimeChannels {
 }
 
 struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
+    
     fileprivate let channel: ARTRealtimeChannel
+    
+    var name: String {
+        get {
+            return channel.name
+        }
+    }
+    
+    var state: ARTRealtimeChannelState {
+        get {
+            return channel.state
+        }
+    }
     
     var presence: AblySDKRealtimePresence {
         return AblyCocoaSDKRealtimePresence(presence: channel.presence)

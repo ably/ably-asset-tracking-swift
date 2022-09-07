@@ -110,6 +110,16 @@ class AblySDKRealtimeMock: AblySDKRealtime {
 
 }
 class AblySDKRealtimeChannelMock: AblySDKRealtimeChannel {
+    var name: String {
+        get { return underlyingName }
+        set(value) { underlyingName = value }
+    }
+    var underlyingName: String!
+    var state: ARTRealtimeChannelState {
+        get { return underlyingState }
+        set(value) { underlyingState = value }
+    }
+    var underlyingState: ARTRealtimeChannelState!
     var presence: AblySDKRealtimePresence {
         get { return underlyingPresence }
         set(value) { underlyingPresence = value }

@@ -22,6 +22,8 @@ public protocol AblySDKRealtimeChannels {
 
 //sourcery: AutoMockable
 public protocol AblySDKRealtimeChannel {
+    var name : String { get }
+    var state: ARTRealtimeChannelState { get }
     var presence: AblySDKRealtimePresence { get }
     @discardableResult func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> AblySDKEventListener?
     func unsubscribe()
