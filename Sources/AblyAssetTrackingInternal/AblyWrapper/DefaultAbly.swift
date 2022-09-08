@@ -355,17 +355,30 @@ public class DefaultAbly: AblyCommon {
         }
     }
     
-    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
-        guard let channel = channels[trackableId] else {
-            return
-        }
-        
+    private func updatePresenceData(channel: AblySDKRealtimeChannel, presenceData: PresenceData, _ completion: ResultHandler<Void>?) {
         channel.presence.update(presenceDataJSON(data: presenceData)) { error in
             if let error = error {
                 completion?(.failure(error.toErrorInformation()))
             } else {
                 completion?(.success)
             }
+        }
+    }
+    
+    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
+        guard let channel = channels[trackableId] else {
+            return
+        }
+        do{
+           try performChannelOperationWithRetry(channel: channel) { channel in
+               updatePresenceData(channel: channel, presenceData: presenceData, completion)
+            }
+            completion?(.success)
+        } catch AblyError.connectionError(let errorInfo){
+            completion?(.failure(errorInfo.toErrorInformation()))
+        }catch{
+            let artErrorInfo = ARTErrorInfo.create(from: error)
+            completion?(.failure(artErrorInfo.toErrorInformation()))
         }
     }
     
