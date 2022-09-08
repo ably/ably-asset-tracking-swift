@@ -236,7 +236,11 @@ public class DefaultAbly: AblyCommon {
         }
         let timeout: DispatchTime = .now() + .seconds(timeoutInMs / 1000)
         
-        blockingDispatchGroup.wait(timeout: timeout)
+        let result = blockingDispatchGroup.wait(timeout: timeout)
+        
+        if (result == .timedOut){
+            throw AblyError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100000, message: "Timeout was thrown when waiting for channel to attach"))
+        }
     }
     
     
