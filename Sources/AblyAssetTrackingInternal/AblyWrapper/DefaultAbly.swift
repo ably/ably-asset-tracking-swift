@@ -136,6 +136,7 @@ public class DefaultAbly: AblyCommon {
             return
         }
         
+        
         do {
             try performChannelOperationWithRetry(channel: channelToRemove, operation: { channel in
                 try disconnectChannel(channel: channel, presenceData: presenceData!)
@@ -219,6 +220,7 @@ public class DefaultAbly: AblyCommon {
       }
     }
 
+    
     private func waitForChannelReconnection(channel:AblySDKRealtimeChannel, timeoutInMs:Int = 10_000) throws{
         guard channel.state.toConnectionState() != .online else{
             return
@@ -477,24 +479,39 @@ extension DefaultAbly: AblyPublisher {
             
             return
         }
-        
-        channel.publish([message]) { [weak self] error in
-            guard let self = self else {
-                return
-            }
-            
-            if let error = error {
-                self.logHandler?.e(message: "\(String(describing: Self.self)): Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
-                self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
-                
-                return
-            }
-            
-            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: .online, forTrackable: trackable)
-            completion?(.success)
-        }
+
+        sendMessageForTrackable(channel: channel, message: message, trackable: trackable, completion: completion)
     }
-    
+
+    private func sendMessageForTrackable(channel: AblySDKRealtimeChannel, message: ARTMessage, trackable: Trackable, completion: ResultHandler<()>?) {
+        do {
+            try performChannelOperationWithRetry(channel: channel) { channel in
+                channel.publish([message]) { [weak self] error in
+                    guard let self = self else {
+                        return
+                    }
+
+                    if let error = error {
+                        self.logHandler?.e(message: "\(String(describing: Self.self)): Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
+                        self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
+
+                        return
+                    }
+
+                    self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: .online, forTrackable: trackable)
+                    completion?(.success)
+                }
+            }
+
+        } catch AblyError.connectionError(let errorInfo){
+            completion?(.failure(errorInfo.toErrorInformation()))
+        }catch{
+            let artErrorInfo = ARTErrorInfo.create(from: error)
+            completion?(.failure(artErrorInfo.toErrorInformation()))
+        }
+
+    }
+
     public func sendRawLocation(
         location: RawLocationUpdate,
         trackable: Trackable,
@@ -510,18 +527,8 @@ extension DefaultAbly: AblyPublisher {
             let geoJson = try RawLocationUpdateMessage(locationUpdate: location)
             let data = try geoJson.toJSONString()
             let message = ARTMessage(name: EventName.raw.rawValue, data: data)
-            
-            channel.publish([message]) {[weak self] error in
-                guard let self = self
-                else { return }
-                
-                if let error = error {
-                    self.logHandler?.e(message: "\(String(describing: Self.self)): Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
-                    self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
-                } else {
-                    completion?(.success)
-                }
-            }
+
+            sendMessageForTrackable(channel: channel, message: message, trackable: trackable, completion: completion)
         } catch {
             let errorInformation = ErrorInformation(
                 type: .publisherError(errorMessage: "Cannot create location update message. Underlying error: \(error)")
