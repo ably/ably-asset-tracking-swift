@@ -502,6 +502,7 @@ extension DefaultAbly: AblyPublisher {
                     completion?(.success)
                 }
             }
+            completion?(.success)
 
         } catch AblyError.connectionError(let errorInfo){
             completion?(.failure(errorInfo.toErrorInformation()))
