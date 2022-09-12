@@ -138,7 +138,11 @@ public class DefaultAbly: AblyCommon {
 
         do {
             try performChannelOperationWithRetry(channel: channelToRemove, operation: { channel in
-                try disconnectChannel(channel: channel, presenceData: presenceData!)
+                guard let presenceData = presenceData else {
+                    return
+                }
+
+                try disconnectChannel(channel: channel, presenceData: presenceData)
             })
             
             channels.removeValue(forKey: trackableId)
