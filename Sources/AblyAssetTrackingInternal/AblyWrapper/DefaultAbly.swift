@@ -150,7 +150,7 @@ public class DefaultAbly: AblyCommon {
         }catch AblyError.connectionError(let errorInfo){
             completion(.failure(errorInfo.toErrorInformation()))
         }catch{
-            
+            completion(.failure(ErrorInformation(error: AblyError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100_000, message: "Unknown error while disconnecting")))))
         }
     }
     
