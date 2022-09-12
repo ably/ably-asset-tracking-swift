@@ -135,8 +135,7 @@ public class DefaultAbly: AblyCommon {
             completion(.success(false))
             return
         }
-        
-        
+
         do {
             try performChannelOperationWithRetry(channel: channelToRemove, operation: { channel in
                 try disconnectChannel(channel: channel, presenceData: presenceData!)
@@ -373,7 +372,6 @@ public class DefaultAbly: AblyCommon {
            try performChannelOperationWithRetry(channel: channel) { channel in
                updatePresenceData(channel: channel, presenceData: presenceData, completion)
             }
-            completion?(.success)
         } catch AblyError.connectionError(let errorInfo){
             completion?(.failure(errorInfo.toErrorInformation()))
         }catch{
@@ -519,7 +517,6 @@ extension DefaultAbly: AblyPublisher {
                     completion?(.success)
                 }
             }
-            completion?(.success)
 
         } catch AblyError.connectionError(let errorInfo){
             completion?(.failure(errorInfo.toErrorInformation()))
