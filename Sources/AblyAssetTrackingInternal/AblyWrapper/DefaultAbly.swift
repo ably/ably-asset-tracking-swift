@@ -178,7 +178,7 @@ public class DefaultAbly: AblyCommon {
         }
         
          channel.presence.leave(presenceDataJSON){ errorInfo in
-             //This to maintain clousure signature
+             //This is to maintain closure signature
              do{
                  try completion(errorInfo)
              }catch{}
@@ -188,14 +188,12 @@ public class DefaultAbly: AblyCommon {
     
     private func detachFromChannel(channel:AblySDKRealtimeChannel, completion : @escaping (ARTErrorInfo?) throws -> Void) {
         channel.detach { errorInfo in
-            //maintain clousure signature
             do{
                 try completion(errorInfo)
             }catch{}
         }
     }
 
-    //This function is to be documented and must be invoked from a background thread
     private func performChannelOperationWithRetry(channel:AblySDKRealtimeChannel, operation : (AblySDKRealtimeChannel) throws ->Void) throws {
       do {
           logHandler?.w(message: "Trying to perform an operation on a suspended channel \(channel.name), waiting for the channel to be reconnected", error: nil)
@@ -207,7 +205,7 @@ public class DefaultAbly: AblyCommon {
                logHandler?.w(message: "Connection resume failed for channel \(channel), waiting for the channel to be reconnected",
                        error: errorInfo
                )
-               //We can try another time
+
                do {
                    try waitForChannelReconnection(channel: channel)
                    try operation(channel)
@@ -232,7 +230,6 @@ public class DefaultAbly: AblyCommon {
         blockingDispatchGroup.enter()
         channel.on { stateChange in
             if (stateChange.current.toConnectionState() == .online){
-                //i want to exit here or when this operation timed out
                 blockingDispatchGroup.leave()
             }
             
