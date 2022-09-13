@@ -19,9 +19,6 @@ public class DefaultAbly: AblyCommon {
     let mode: AblyMode
     
     private var channels: [String: AblySDKRealtimeChannel] = [:]
-    
-    //This queue is intended to serialze async operations
-    private let operationQueue = DispatchQueue(label: "com.ably.tracking")
 
     public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: AblyLogHandler?) {
         self.logHandler = logHandler
