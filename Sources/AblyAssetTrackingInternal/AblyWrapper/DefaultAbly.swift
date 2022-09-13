@@ -225,7 +225,7 @@ public class DefaultAbly: AblyCommon {
 
     /**
      * Waits for the [channel] to change to the [ChannelState.attached] state.
-     * If this doesn't happen during the next [timeoutInMilliseconds] milliseconds, then an exception is thrown.
+     * If this doesn't happen during the next [timeoutInMs] milliseconds, then an exception is thrown.
      */
     private func waitForChannelReconnection(channel:AblySDKRealtimeChannel, timeoutInMs:Int = 10_000) throws{
         guard channel.state.toConnectionState() != .online else{
