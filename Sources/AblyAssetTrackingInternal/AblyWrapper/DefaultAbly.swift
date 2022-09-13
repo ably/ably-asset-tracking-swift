@@ -191,6 +191,11 @@ public class DefaultAbly: AblyCommon {
         }
     }
 
+    /**
+     * Performs the [operation] and if a "connection resume" exception is thrown it waits for the [channel] to
+     * reconnect and retries the [operation], otherwise it rethrows the exception. If the [operation] fails for
+     * the second time the exception is rethrown no matter if it was the "connection resume" exception or not.
+     */
     private func performChannelOperationWithRetry(channel:AblySDKRealtimeChannel, operation : (AblySDKRealtimeChannel) throws ->Void) throws {
       do {
           logHandler?.w(message: "Trying to perform an operation on a suspended channel \(channel.name), waiting for the channel to be reconnected", error: nil)
@@ -218,7 +223,10 @@ public class DefaultAbly: AblyCommon {
       }
     }
 
-    
+    /**
+     * Waits for the [channel] to change to the [ChannelState.attached] state.
+     * If this doesn't happen during the next [timeoutInMilliseconds] milliseconds, then an exception is thrown.
+     */
     private func waitForChannelReconnection(channel:AblySDKRealtimeChannel, timeoutInMs:Int = 10_000) throws{
         guard channel.state.toConnectionState() != .online else{
             return
