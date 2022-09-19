@@ -6,13 +6,13 @@ import AblyAssetTrackingCore
 class DefaultLocationService: LocationService {
     private let locationManager: PassiveLocationManager
     private let replayLocationManager: ReplayLocationManager?
-    private let logHandler: AblyLogHandler?
+    private let logHandler: LogHandler?
 
     weak var delegate: LocationServiceDelegate?
 
     init(mapboxConfiguration: MapboxConfiguration,
          historyLocation: [CLLocation]?,
-         logHandler: AblyLogHandler?) {
+         logHandler: LogHandler?) {
         
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
         NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)

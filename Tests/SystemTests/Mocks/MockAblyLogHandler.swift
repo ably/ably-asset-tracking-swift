@@ -1,6 +1,6 @@
 import Foundation
 import AblyAssetTrackingCore
 
-class MockAblyLogHandler: AblyLogHandler {
+class MockLogHandler: LogHandler {
     func logMessage(level: LogLevel, message: String, error: Error?) {}
 }

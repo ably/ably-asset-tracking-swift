@@ -1,6 +1,6 @@
 import Foundation
 
-public extension AblyLogHandler {
+public extension LogHandler {
     func v(message: String, error: Error?) {
         log(level: .verbose, message: message, error: error)
     }

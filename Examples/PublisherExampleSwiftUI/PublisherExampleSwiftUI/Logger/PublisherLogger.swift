@@ -2,7 +2,7 @@ import Foundation
 import AblyAssetTrackingCore
 import Logging
 
-class PublisherLogger: AblyLogHandler {
+class PublisherLogger: AblyAssetTrackingCore.LogHandler {
     var swiftLog: Logger
         
     init () {

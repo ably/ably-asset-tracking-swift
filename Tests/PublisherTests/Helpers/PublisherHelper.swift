@@ -93,7 +93,7 @@ class PublisherHelper {
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
         enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>(),
-        logHandler: MockAblyLogHandler = MockAblyLogHandler()
+        logHandler: MockLogHandler = MockLogHandler()
     ) -> DefaultPublisher {
         
         DefaultPublisher(

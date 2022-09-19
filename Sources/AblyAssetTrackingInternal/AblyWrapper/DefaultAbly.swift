@@ -7,17 +7,17 @@ public class DefaultAbly: AblyCommon {
     public weak var publisherDelegate: AblyPublisherDelegate?
     public weak var subscriberDelegate: AblySubscriberDelegate?
     
-     //log handler used to capture internal events from the Ably-Cocoa, and pass them to AblyLogHandler via `logCallback`
+     //log handler used to capture internal events from the Ably-Cocoa, and pass them to LogHandler via `logCallback`
     private let internalARTLogHandler: InternalARTLogHandler = InternalARTLogHandler()
     
-    private let logHandler: AblyLogHandler?
+    private let logHandler: LogHandler?
     private let client: AblySDKRealtime
     private let connectionConfiguration: ConnectionConfiguration
     let mode: AblyMode
     
     private var channels: [String: AblySDKRealtimeChannel] = [:]
 
-    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: AblyLogHandler?) {
+    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: LogHandler?) {
         self.logHandler = logHandler
         internalARTLogHandler.logCallback = { (message, level, error) in
             switch level {
