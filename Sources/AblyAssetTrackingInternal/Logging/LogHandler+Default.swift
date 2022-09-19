@@ -1,4 +1,5 @@
 import Foundation
+import AblyAssetTrackingCore
 
 public extension LogHandler {
     func v(message: String, error: Error?) {
