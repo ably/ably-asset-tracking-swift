@@ -49,7 +49,7 @@ class DefaultLocationService: LocationService {
 
 extension DefaultLocationService: PassiveLocationManagerDelegate {
     func passiveLocationManagerDidChangeAuthorization(_ manager: PassiveLocationManager) {
-        logHandler?.d(message: "\(String(describing: Self.self)), passiveLocationManager.passiveLocationManagerDidChangeAuthorization", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)), passiveLocationManager.passiveLocationManagerDidChangeAuthorization", error: nil)
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
@@ -58,11 +58,11 @@ extension DefaultLocationService: PassiveLocationManagerDelegate {
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
-        logHandler?.d(message: "\(String(describing: Self.self)), passiveLocationManager.didUpdateHeading", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)), passiveLocationManager.didUpdateHeading", error: nil)
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didFailWithError error: Error) {
-        logHandler?.e(message: "\(String(describing: Self.self)), passiveLocationManager.didFailWithError", error: error)
+        logHandler?.error(message: "\(String(describing: Self.self)), passiveLocationManager.didFailWithError", error: error)
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: error.localizedDescription))
         delegate?.locationService(sender: self, didFailWithError: errorInformation)
     }

@@ -2,27 +2,27 @@ import Foundation
 import AblyAssetTrackingCore
 
 public extension LogHandler {
-    func v(message: String, error: Error?) {
+    func verbose(message: String, error: Error?) {
         log(level: .verbose, message: message, error: error)
     }
     
-    func i(message: String, error: Error?) {
+    func info(message: String, error: Error?) {
         log(level: .info, message: message, error: error)
     }
     
-    func d(message: String, error: Error?) {
+    func debug(message: String, error: Error?) {
         log(level: .debug, message: message, error: error)
     }
     
-    func w(message: String, error: Error?) {
+    func warn(message: String, error: Error?) {
         log(level: .warn, message: message, error: error)
     }
     
-    func e(message: String, error: Error?) {
+    func error(message: String, error: Error?) {
         log(level: .error, message: message, error: error)
     }
 
-    func e(error: Error?) {
+    func error(error: Error?) {
         log(level: .error, message: "", error: error)
     }
     
