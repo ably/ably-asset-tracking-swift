@@ -197,7 +197,7 @@ extension DefaultPublisher {
         performOnMainThread { handler(.failure(error)) }
     }
 
-    private func callback(event: DelegateEvent) {
+    private func sendDelegateEvent(_ event: DelegateEvent) {
         logHandler?.verbose(message: "\(String(describing: Self.self)): received delegate event: \(event)", error: nil)
 
         performOnMainThread { [weak self] in
@@ -417,7 +417,7 @@ extension DefaultPublisher {
 
         if newTrackableState != currentTrackablesConnectionStates[trackable] {
             currentTrackablesConnectionStates[trackable] = newTrackableState
-            callback(event: .delegateTrackableConnectionStateChanged(.init(trackable: trackable, connectionState: newTrackableState)))
+            sendDelegateEvent(.delegateTrackableConnectionStateChanged(.init(trackable: trackable, connectionState: newTrackableState)))
         }
     }
 
@@ -611,7 +611,7 @@ extension DefaultPublisher {
         guard rawLocationState.shouldRetry(trackableId: event.trackable.id) else {
             rawLocationState.unmarkMessageAsPending(for: event.trackable.id)
             saveRawLocationForFurtherSending(trackableId: event.trackable.id, location: event.locationUpdate)
-            callback(event: .delegateError(.init(error: event.error)))
+            sendDelegateEvent(.delegateError(.init(error: event.error)))
             processNextWaitingRawLocationUpdate(for: event.trackable.id)
             return
         }
@@ -633,7 +633,7 @@ extension DefaultPublisher {
         guard enhancedLocationState.shouldRetry(trackableId: event.trackable.id) else {
             enhancedLocationState.unmarkMessageAsPending(for: event.trackable.id)
             saveEnhancedLocationForFurtherSending(trackableId: event.trackable.id, location: event.locationUpdate)
-            callback(event: .delegateError(.init(error: event.error)))
+            sendDelegateEvent(.delegateError(.init(error: event.error)))
             processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
             return
         }
@@ -851,7 +851,7 @@ extension DefaultPublisher {
 extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: ErrorInformation) {
         logHandler?.error(message: "\(String(describing: Self.self)): locationService.didFailWithError.", error: error)
-        callback(event: .delegateError(.init(error: error)))
+        sendDelegateEvent(.delegateError(.init(error: error)))
     }
 
     func locationService(sender: LocationService, didUpdateRawLocationUpdate locationUpdate: RawLocationUpdate) {
@@ -862,7 +862,7 @@ extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
         logHandler?.debug(message: "\(String(describing: Self.self)): locationService.didUpdateEnhancedLocation.", error: nil)
         enqueue(event: .enhancedLocationChanged(.init(locationUpdate: locationUpdate)))
-        callback(event: .delegateEnhancedLocationChanged(.init(locationUpdate: locationUpdate)))
+        sendDelegateEvent(.delegateEnhancedLocationChanged(.init(locationUpdate: locationUpdate)))
     }
 }
 
@@ -875,7 +875,7 @@ extension DefaultPublisher: AblyPublisherDelegate {
 
     func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation) {
         logHandler?.error(message: "\(String(describing: Self.self)): ablyPublisher.didFailWithError.", error: error)
-        callback(event: .delegateError(.init(error: error)))
+        sendDelegateEvent(.delegateError(.init(error: error)))
     }
 
     func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState) {
