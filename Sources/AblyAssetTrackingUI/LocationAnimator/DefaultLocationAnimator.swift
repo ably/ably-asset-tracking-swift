@@ -24,7 +24,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var animationRequestSubject = PassthroughSubject<AnimationRequest, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
-    private var animationStartTime: CFAbsoluteTime = .zero
+    private var animationStartTime: CFAbsoluteTime?
     private var animationStepStartTime: CFAbsoluteTime = .zero
     private var currentAnimationStepProgress = 1.0
     private var currentAnimationStep: AnimationStepWithTiming?
@@ -166,8 +166,12 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private func animationLoop(link: CADisplayLink) {
         if currentAnimationStepProgress >= 1 && !animationSteps.isEmpty {
             
-            if animationStartTime == .zero {
+            var animationStartTime: CFAbsoluteTime
+            if let currentAnimationStartTime = self.animationStartTime {
+                animationStartTime = currentAnimationStartTime
+            } else {
                 animationStartTime = link.timestamp
+                self.animationStartTime = animationStartTime
             }
             
             animationStepStartTime = link.timestamp
