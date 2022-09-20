@@ -152,7 +152,7 @@ class DefaultPublisher: Publisher {
 extension DefaultPublisher {
     private func enqueue(event: Event) {
         logHandler?.verbose(message: "\(String(describing: Self.self)): received event: \(event)", error: nil)
-        performOnWorkingThread { [weak self] in
+        performOnWorkingQueue { [weak self] in
             switch event {
             case .trackTrackable(let event): self?.performTrackTrackableEvent(event)
             case .presenceJoinedSuccessfully(let event): self?.performPresenceJoinedSuccessfullyEvent(event)
@@ -805,7 +805,7 @@ extension DefaultPublisher {
     }
 
     // MARK: Utils
-    private func performOnWorkingThread(_ operation: @escaping () -> Void) {
+    private func performOnWorkingQueue(_ operation: @escaping () -> Void) {
         workingQueue.async(execute: operation)
     }
 
