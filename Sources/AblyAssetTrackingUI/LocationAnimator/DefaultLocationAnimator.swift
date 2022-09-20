@@ -244,17 +244,17 @@ public extension Location {
     }
 }
 
-struct AnimationRequest {
+private struct AnimationRequest {
     let locationUpdate: LocationUpdate
     let expectedIntervalBetweenLocationUpdatesInMilliseconds: Double
 }
 
-struct AnimationStep {
+private struct AnimationStep {
     var startPosition: Position
     var endPosition: Position
 }
 
-struct AnimationStepWithTiming {
+private struct AnimationStepWithTiming {
     var step: AnimationStep
     var endTime: CFAbsoluteTime
     var duration: Double
