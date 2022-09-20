@@ -18,7 +18,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private let defaultDisplayLinkDuration: CFTimeInterval = 1.0/60.0
     
     // Dispatch queue for synchronized variable access
-    private let globalBackgroundSyncronizeDataQueue = DispatchQueue(label: "com.ably.tracking.SubscriberExample.locationAnimator.globalBackgroundSyncronizeSharedData")
+    private let globalBackgroundSynchronizeDataQueue = DispatchQueue(label: "com.ably.tracking.SubscriberExample.locationAnimator.globalBackgroundSyncronizeSharedData")
     
     // Dispatch queue for animation calculations
     private let processAnimationQueue = DispatchQueue(label: "com.ably.tracking.SubscriberExample.locationAnimator.processAnimationQueue")
@@ -34,12 +34,12 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var _animationSteps: [AnimationStep] = []
     private var animationSteps: [AnimationStep] {
         get {
-            return globalBackgroundSyncronizeDataQueue.sync {
+            return globalBackgroundSynchronizeDataQueue.sync {
                 _animationSteps
             }
         }
         set {
-            globalBackgroundSyncronizeDataQueue.sync {
+            globalBackgroundSynchronizeDataQueue.sync {
                 self._animationSteps = newValue
             }
         }
@@ -48,12 +48,12 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var _previousFinalPosition: Position?
     private var previousFinalPosition: Position? {
         get {
-            return globalBackgroundSyncronizeDataQueue.sync {
+            return globalBackgroundSynchronizeDataQueue.sync {
                 _previousFinalPosition
             }
         }
         set {
-            globalBackgroundSyncronizeDataQueue.sync {
+            globalBackgroundSynchronizeDataQueue.sync {
                 self._previousFinalPosition = newValue
             }
         }
@@ -167,7 +167,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         first + (second - first) * progress
     }
 
-    // Animation loop based od CADisplayLink
+    // Animation loop based on CADisplayLink
     @objc
     private func animationLoop(link: CADisplayLink) {
         if currentAnimationStepProgress >= 1 && !animationSteps.isEmpty {
