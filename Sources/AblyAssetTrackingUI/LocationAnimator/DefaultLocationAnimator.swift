@@ -14,8 +14,6 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
      * when we receive a location update later than we've expected.
      */
     public var intentionalAnimationDelay: TimeInterval = 2.0
-
-    private let defaultDisplayLinkDuration: CFTimeInterval = 1.0/60.0
     
     // Dispatch queue for synchronized variable access
     private let globalBackgroundSynchronizeDataQueue = DispatchQueue(label: "com.ably.tracking.SubscriberExample.locationAnimator.globalBackgroundSyncronizeSharedData")
