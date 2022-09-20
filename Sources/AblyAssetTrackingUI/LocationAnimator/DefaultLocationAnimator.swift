@@ -43,19 +43,6 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         }
     }
     
-    private var _previousFinalPosition: Position?
-    private var previousFinalPosition: Position? {
-        get {
-            return globalBackgroundSynchronizeDataQueue.sync {
-                _previousFinalPosition
-            }
-        }
-        set {
-            globalBackgroundSynchronizeDataQueue.sync {
-                self._previousFinalPosition = newValue
-            }
-        }
-    }
     private var displayLink: CADisplayLink?
     private var subscribeForPositionUpdatesClosure: ((Position) -> Void)?
     private var subscribeForCameraPositionUpdatesClosure: ((Position) -> Void)?
@@ -74,11 +61,8 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
                 return
             }
                         
-            let steps = DefaultLocationAnimator.createAnimationStepsFromLocationUpdate(request.locationUpdate, previousFinalPosition: self.previousFinalPosition)
-            
-            // Store last position from animation steps array
-            // In next iteration this position could be start position for the first step of the animation
-            self.previousFinalPosition = steps.last?.endPosition
+            let previousFinalPosition = self.animationSteps.last?.step.endPosition
+            let steps = DefaultLocationAnimator.createAnimationStepsFromLocationUpdate(request.locationUpdate, previousFinalPosition: previousFinalPosition)
             
             let stepsWithTiming = DefaultLocationAnimator.addTimingToAnimationSteps(steps,
                                                                                     intentionalAnimationDelay: self.intentionalAnimationDelay,
