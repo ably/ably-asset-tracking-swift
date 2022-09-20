@@ -28,11 +28,11 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var animationStartTime: CFAbsoluteTime = .zero
     private var animationStepStartTime: CFAbsoluteTime = .zero
     private var currentAnimationStepProgress: Double = 1.0
-    private var currentAnimationStep: AnimationStep?
+    private var currentAnimationStep: AnimationStepWithTiming?
     private var currentAnimationStepsSinceLastCameraUpdate: Int = 0
     
-    private var _animationSteps: [AnimationStep] = []
-    private var animationSteps: [AnimationStep] {
+    private var _animationSteps: [AnimationStepWithTiming] = []
+    private var animationSteps: [AnimationStepWithTiming] {
         get {
             return globalBackgroundSynchronizeDataQueue.sync {
                 _animationSteps
@@ -133,7 +133,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         displayLink.invalidate()
     }
     
-    private func createAnimationStepsFromRequest(_ request: AnimationRequest) -> [AnimationStep] {
+    private func createAnimationStepsFromRequest(_ request: AnimationRequest) -> [AnimationStepWithTiming] {
         let requestPositions = (request.locationUpdate.skippedLocations + [request.locationUpdate.location]).map { $0.toPosition() }
         return requestPositions.enumerated().reduce([]) { [weak self] partialResult, value in
             guard let self = self else {
@@ -144,7 +144,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             ? self.getNewAnimationStartingPosition(locationUpdate: request.locationUpdate)
             : requestPositions[value.offset - 1]
             
-            return partialResult + [AnimationStep(startPosition: startPosition, endPosition: value.element)]
+            return partialResult + [AnimationStepWithTiming(startPosition: startPosition, endPosition: value.element)]
         }
     }
     
@@ -240,7 +240,7 @@ struct AnimationRequest {
     let expectedIntervalBetweenLocationUpdatesInMilliseconds: Double
 }
 
-struct AnimationStep {
+struct AnimationStepWithTiming {
     let startPosition: Position
     let endPosition: Position
     var endTime: CFAbsoluteTime = .zero
