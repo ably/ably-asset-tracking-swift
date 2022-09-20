@@ -163,7 +163,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         return stepsWithTiming
     }
     
-    private func calculatePosition(firstPosition: Position, secondPosition: Position, stepProgress: Double) -> Position {
+    private static func calculatePosition(firstPosition: Position, secondPosition: Position, stepProgress: Double) -> Position {
         let latitude = interpolateLinear(first: firstPosition.latitude, second: secondPosition.latitude, progress: stepProgress)
         let longitude = interpolateLinear(first: firstPosition.longitude, second: secondPosition.longitude, progress: stepProgress)
         let accuracy = interpolateLinear(first: firstPosition.accuracy, second: secondPosition.accuracy, progress: stepProgress)
@@ -172,7 +172,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         return Position(latitude: latitude, longitude: longitude, accuracy: accuracy, bearing: bearing)
     }
     
-    private func interpolateLinear(first: Double, second: Double, progress: Double) -> Double {
+    private static func interpolateLinear(first: Double, second: Double, progress: Double) -> Double {
         first + (second - first) * progress
     }
 
@@ -217,7 +217,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         /**
          Current position is interpolated against current step animation progress
          */
-        let position = calculatePosition(
+        let position = DefaultLocationAnimator.calculatePosition(
             firstPosition: animationStep.step.startPosition,
             secondPosition: animationStep.step.endPosition,
             stepProgress: currentAnimationStepProgress
