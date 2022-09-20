@@ -155,9 +155,9 @@ extension DefaultPublisher {
     
     // MARK: Delegate handling events
     enum DelegateEvent {
-        case delegateError(ErrorEvent)
-        case delegateEnhancedLocationChanged(EnhancedLocationChangedEvent)
-        case delegateTrackableConnectionStateChanged(TrackableConnectionStateChangedEvent)
+        case error(ErrorEvent)
+        case enhancedLocationChanged(EnhancedLocationChangedEvent)
+        case trackableConnectionStateChanged(TrackableConnectionStateChangedEvent)
         
         struct ErrorEvent {
             let error: ErrorInformation
