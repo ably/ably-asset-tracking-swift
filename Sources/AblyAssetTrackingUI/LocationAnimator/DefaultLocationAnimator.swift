@@ -25,9 +25,9 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var subscriptions = Set<AnyCancellable>()
     private var animationStartTime: CFAbsoluteTime = .zero
     private var animationStepStartTime: CFAbsoluteTime = .zero
-    private var currentAnimationStepProgress: Double = 1.0
+    private var currentAnimationStepProgress = 1.0
     private var currentAnimationStep: AnimationStepWithTiming?
-    private var currentAnimationStepsSinceLastCameraUpdate: Int = 0
+    private var currentAnimationStepsSinceLastCameraUpdate = 0
     
     private var _animationSteps: [AnimationStepWithTiming] = []
     private var animationSteps: [AnimationStepWithTiming] {
