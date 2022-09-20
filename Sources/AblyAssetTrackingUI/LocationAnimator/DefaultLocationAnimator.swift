@@ -80,22 +80,12 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             // In next iteration this position could be start position for the first step of the animation
             self.previousFinalPosition = steps.last?.endPosition
             
-            // This is an animation duration for request
-            let expectedAnimationDuration = self.intentionalAnimationDelay + request.expectedIntervalBetweenLocationUpdatesInMilliseconds
-            
-            // Recalculate each animation step duration
-            let animationStepDuration = expectedAnimationDuration / Double(steps.count)
-            
-            var previousStepEndTime: CFAbsoluteTime = self.animationSteps.last?.endTime ?? .zero
-            for step in steps {
-                let stepWithTiming = AnimationStepWithTiming(
-                    step: step,
-                    endTime: previousStepEndTime + animationStepDuration,
-                    duration: animationStepDuration)
-                                
-                self.animationSteps.append(stepWithTiming)
-                previousStepEndTime = stepWithTiming.endTime
-            }
+            let stepsWithTiming = DefaultLocationAnimator.addTimingToAnimationSteps(steps,
+                                                                                    intentionalAnimationDelay: self.intentionalAnimationDelay,
+                                                                                    expectedIntervalBetweenLocationUpdatesInMilliseconds: request.expectedIntervalBetweenLocationUpdatesInMilliseconds,
+                                                                                    currentFinalStepEndTime: self.animationSteps.last?.endTime)
+
+            self.animationSteps += stepsWithTiming
         }.store(in: &subscriptions)
     }
     
@@ -147,6 +137,30 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         previousFinalPosition
             ?? locationUpdate.skippedLocations.first?.toPosition()
             ?? locationUpdate.location.toPosition()
+    }
+    
+    private static func addTimingToAnimationSteps(_ steps: [AnimationStep], intentionalAnimationDelay: TimeInterval, expectedIntervalBetweenLocationUpdatesInMilliseconds: Double, currentFinalStepEndTime: CFAbsoluteTime?) -> [AnimationStepWithTiming] {
+        var previousStepEndTime = currentFinalStepEndTime ?? .zero
+        
+        // This is an animation duration for request
+        let expectedAnimationDuration = intentionalAnimationDelay + expectedIntervalBetweenLocationUpdatesInMilliseconds
+        
+        // Recalculate each animation step duration
+        let animationStepDuration = expectedAnimationDuration / Double(steps.count)
+        
+        var stepsWithTiming: [AnimationStepWithTiming] = []
+        
+        for step in steps {
+            let stepWithTiming = AnimationStepWithTiming(
+                step: step,
+                endTime: previousStepEndTime + animationStepDuration,
+                duration: animationStepDuration)
+            
+            stepsWithTiming.append(stepWithTiming)
+            previousStepEndTime = stepWithTiming.endTime
+        }
+        
+        return stepsWithTiming
     }
     
     private func calculatePosition(firstPosition: Position, secondPosition: Position, stepProgress: Double) -> Position {
