@@ -76,7 +76,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
                 return
             }
                         
-            let steps = self.createAnimationStepsFromRequest(request)
+            let steps = DefaultLocationAnimator.createAnimationStepsFromRequest(request, previousFinalPosition: self.previousFinalPosition)
             
             // Store last position from animation steps array
             // In next iteration this position could be start position for the first step of the animation
@@ -134,22 +134,18 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         displayLink.invalidate()
     }
     
-    private func createAnimationStepsFromRequest(_ request: AnimationRequest) -> [AnimationStep] {
+    private static func createAnimationStepsFromRequest(_ request: AnimationRequest, previousFinalPosition: Position?) -> [AnimationStep] {
         let requestPositions = (request.locationUpdate.skippedLocations + [request.locationUpdate.location]).map { $0.toPosition() }
-        return requestPositions.enumerated().reduce([]) { [weak self] partialResult, value in
-            guard let self = self else {
-                return []
-            }
-            
+        return requestPositions.enumerated().reduce([]) { partialResult, value in
             let startPosition = value.offset == 0
-            ? self.getNewAnimationStartingPosition(locationUpdate: request.locationUpdate)
+            ? getNewAnimationStartingPosition(locationUpdate: request.locationUpdate, previousFinalPosition: previousFinalPosition)
             : requestPositions[value.offset - 1]
             
             return partialResult + [AnimationStep(startPosition: startPosition, endPosition: value.element)]
         }
     }
     
-    private func getNewAnimationStartingPosition(locationUpdate: LocationUpdate) -> Position {
+    private static func getNewAnimationStartingPosition(locationUpdate: LocationUpdate, previousFinalPosition: Position?) -> Position {
         previousFinalPosition
             ?? locationUpdate.skippedLocations.first?.toPosition()
             ?? locationUpdate.location.toPosition()
