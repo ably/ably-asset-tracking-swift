@@ -344,9 +344,12 @@ extension DefaultPublisher {
             switch result {
             case .success(let wasPresent):
                 self?.enhancedLocationState.remove(trackableId: event.trackable.id)
-                wasPresent
-                ? self?.enqueue(event: .clearRemovedTrackableMetadata(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
-                    : Self.callback(value: false, handler: event.resultHandler)
+                
+                if wasPresent {
+                    self?.enqueue(event: .clearRemovedTrackableMetadata(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
+                } else {
+                    Self.callback(value: false, handler: event.resultHandler)
+                }
             case .failure(let error):
                 Self.callback(error: error, handler: event.resultHandler)
             }
