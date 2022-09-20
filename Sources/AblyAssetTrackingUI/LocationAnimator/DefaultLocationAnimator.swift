@@ -90,12 +90,13 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             
             var previousStepEndTime: CFAbsoluteTime = self.animationSteps.last?.endTime ?? .zero
             for step in steps {
-                var step = step
-                step.endTime =  previousStepEndTime + animationStepDuration
-                step.duration = animationStepDuration
+                let stepWithTiming = AnimationStepWithTiming(
+                    step: step,
+                    endTime: previousStepEndTime + animationStepDuration,
+                    duration: animationStepDuration)
                                 
-                self.animationSteps.append(step)
-                previousStepEndTime = step.endTime
+                self.animationSteps.append(stepWithTiming)
+                previousStepEndTime = stepWithTiming.endTime
             }
         }.store(in: &subscriptions)
     }
@@ -133,7 +134,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         displayLink.invalidate()
     }
     
-    private func createAnimationStepsFromRequest(_ request: AnimationRequest) -> [AnimationStepWithTiming] {
+    private func createAnimationStepsFromRequest(_ request: AnimationRequest) -> [AnimationStep] {
         let requestPositions = (request.locationUpdate.skippedLocations + [request.locationUpdate.location]).map { $0.toPosition() }
         return requestPositions.enumerated().reduce([]) { [weak self] partialResult, value in
             guard let self = self else {
@@ -144,7 +145,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             ? self.getNewAnimationStartingPosition(locationUpdate: request.locationUpdate)
             : requestPositions[value.offset - 1]
             
-            return partialResult + [AnimationStepWithTiming(startPosition: startPosition, endPosition: value.element)]
+            return partialResult + [AnimationStep(startPosition: startPosition, endPosition: value.element)]
         }
     }
     
@@ -209,8 +210,8 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
          Current position is interpolated against current step animation progress
          */
         let position = calculatePosition(
-            firstPosition: animationStep.startPosition,
-            secondPosition: animationStep.endPosition,
+            firstPosition: animationStep.step.startPosition,
+            secondPosition: animationStep.step.endPosition,
             stepProgress: currentAnimationStepProgress
         )
 
@@ -240,9 +241,13 @@ struct AnimationRequest {
     let expectedIntervalBetweenLocationUpdatesInMilliseconds: Double
 }
 
+struct AnimationStep {
+    var startPosition: Position
+    var endPosition: Position
+}
+
 struct AnimationStepWithTiming {
-    let startPosition: Position
-    let endPosition: Position
-    var endTime: CFAbsoluteTime = .zero
-    var duration: Double = -1.0 // value -1 means `unknown duration`
+    var step: AnimationStep
+    var endTime: CFAbsoluteTime
+    var duration: Double
 }
