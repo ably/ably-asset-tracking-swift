@@ -26,7 +26,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     
     private var animationStartTime: CFAbsoluteTime?
     private var animationStepStartTime: CFAbsoluteTime = .zero
-    private var currentAnimationStepProgress = 1.0
+    private var currentAnimationStepProgress = 0.0
     private var currentAnimationStep: AnimationStepWithTiming?
     private var currentAnimationStepsSinceLastCameraUpdate = 0
     
@@ -164,7 +164,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     // Animation loop based on CADisplayLink
     @objc
     private func animationLoop(link: CADisplayLink) {
-        if currentAnimationStepProgress >= 1 && !animationSteps.isEmpty {
+        if (currentAnimationStep == nil || currentAnimationStepProgress >= 1) && !animationSteps.isEmpty {
             
             var animationStartTime: CFAbsoluteTime
             if let currentAnimationStartTime = self.animationStartTime {
