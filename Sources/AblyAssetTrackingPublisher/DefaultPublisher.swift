@@ -61,6 +61,8 @@ class DefaultPublisher: Publisher {
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
     private var currentTrackablesConnectionStates: [Trackable: ConnectionState] = [:]
+    
+    private var duplicateTrackableGuard = DuplicateTrackableGuard()
 
     public weak var delegate: PublisherDelegate?
     private(set) public var activeTrackable: Trackable?
@@ -269,6 +271,7 @@ extension DefaultPublisher {
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
         event.completion.handleSuccess()
+        duplicateTrackableGuard.finishAddingTrackableWithId(event.trackable.id, result: .success)
     }
 
     // MARK: RoutingProfile
@@ -304,6 +307,12 @@ extension DefaultPublisher {
     }
 
     private func performAddOrTrack(_ trackable: Trackable, completion: Callback<Void>){
+        guard !duplicateTrackableGuard.isCurrentlyAddingTrackableWithId(trackable.id) else {
+            self.logHandler?.debug(message: "\(Self.self): Trackable with ID \(trackable.id) is already being added; saving completion handler.", error: nil)
+            duplicateTrackableGuard.saveDuplicateAddCompletionHandler(completion, forTrackableWithId: trackable.id)
+            return
+        }
+        
         guard !state.isStoppingOrStopped else {
             completion.handlePublisherStopped()
             return
@@ -313,19 +322,20 @@ extension DefaultPublisher {
             completion.handleSuccess()
             return
         }
-
+        
+        duplicateTrackableGuard.startAddingTrackableWithId(trackable.id)
 
         ablyPublisher.connect(
                 trackableId: trackable.id,
                 presenceData: presenceData,
                 useRewind: false
         ) { [weak self] result in
-
             switch result {
             case .success:
                 self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, completion: completion)))
             case .failure(let error):
                 completion.handleError(error)
+                self?.duplicateTrackableGuard.finishAddingTrackableWithId(trackable.id, result: .failure(error))
             }
         }
     }

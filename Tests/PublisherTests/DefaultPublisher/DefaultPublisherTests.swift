@@ -353,6 +353,102 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
     
+    func testAdd_whenTrackableWithSameIdIsCurrentlyBeingAdded_itWaitsForTheFirstAddToComplete_andWhenTheFirstAddSucceeds_theSecondAddSucceedsToo() {
+        var numberOfTimesConnectCalled  = 0
+        let synchronizationQueue = DispatchQueue(label: #function)
+        var connectCompletion: ResultHandler<Void>? = nil
+        let connectCalledExpectation = expectation(description: "ablyPublisher’s connect method is called")
+        ablyPublisher.connectCompletionHandler = { completion in
+            synchronizationQueue.async {
+                numberOfTimesConnectCalled += 1
+            }
+            connectCompletion = completion
+            connectCalledExpectation.fulfill()
+        }
+        
+        let anotherTrackableWithSameId = Trackable(id: trackable.id,
+                                          metadata: "SomeOtherTrackableMetadata",
+                                          destination: LocationCoordinate(latitude: 10.42, longitude: 7.82))
+        
+        let trackableAddExpectation = expectation(description: "Add of trackable completes successfully")
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case let .failure(error):
+                XCTFail("Add of trackable unexpectedly failed: \(error)")
+            case .success:
+                trackableAddExpectation.fulfill()
+            }
+        }
+        
+        let anotherTrackableAddExpectation = expectation(description: "Add of anotherTrackable completes successfully")
+        publisher.add(trackable: anotherTrackableWithSameId) { result in
+            switch result {
+            case let .failure(error):
+                XCTFail("Add of anotherTrackable unexpectedly failed: \(error)")
+            case .success:
+                anotherTrackableAddExpectation.fulfill()
+            }
+        }
+        
+        wait(for: [connectCalledExpectation], timeout: 5.0)
+        connectCompletion!(.success)
+        
+        wait(for: [trackableAddExpectation, anotherTrackableAddExpectation], timeout: 5.0)
+        
+        synchronizationQueue.async {
+            XCTAssertEqual(numberOfTimesConnectCalled, 1)
+        }
+    }
+    
+    func testAdd_whenTrackableWithSameIdIsCurrentlyBeingAdded_itWaitsForTheFirstAddToComplete_andWhenTheFirstAddFails_theSecondAddFailsWithTheSameError() {
+        var numberOfTimesConnectCalled = 0
+        let synchronizationQueue = DispatchQueue(label: #function)
+        var connectCompletion: ResultHandler<Void>? = nil
+        let connectCalledExpectation = expectation(description: "ablyPublisher’s connect method is called")
+        ablyPublisher.connectCompletionHandler = { completion in
+            synchronizationQueue.async {
+                numberOfTimesConnectCalled += 1
+            }
+            connectCompletion = completion
+            connectCalledExpectation.fulfill()
+        }
+        
+        let anotherTrackableWithSameId = Trackable(id: trackable.id,
+                                          metadata: "SomeOtherTrackableMetadata",
+                                          destination: LocationCoordinate(latitude: 10.42, longitude: 7.82))
+        
+        let trackableAddExpectation = expectation(description: "Add of trackable completes successfully")
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case let .failure(error):
+                XCTAssertEqual(error.code, 12345)
+                trackableAddExpectation.fulfill()
+            case .success:
+                XCTFail("Add of trackable unexpectedly succeeded")
+            }
+        }
+        
+        let anotherTrackableAddExpectation = expectation(description: "Add of anotherTrackable completes successfully")
+        publisher.add(trackable: anotherTrackableWithSameId) { result in
+            switch result {
+            case let .failure(error):
+                XCTAssertEqual(error.code, 12345)
+                anotherTrackableAddExpectation.fulfill()
+            case .success:
+                XCTFail("Add of anotherTrackable unexpectedly succeeded")
+            }
+        }
+        
+        wait(for: [connectCalledExpectation], timeout: 5.0)
+        connectCompletion!(.failure(.init(code: 12345, statusCode: 0, message: "", cause: nil, href: nil)))
+        
+        wait(for: [trackableAddExpectation, anotherTrackableAddExpectation], timeout: 5.0)
+                
+        synchronizationQueue.async {
+            XCTAssertEqual(numberOfTimesConnectCalled, 1)
+        }
+    }
+        
     // MARK: remove
     func testRemove_success() {
         let wasPresent = true
