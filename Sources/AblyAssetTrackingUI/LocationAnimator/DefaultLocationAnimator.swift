@@ -76,7 +76,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
                 return
             }
                         
-            let steps = DefaultLocationAnimator.createAnimationStepsFromRequest(request, previousFinalPosition: self.previousFinalPosition)
+            let steps = DefaultLocationAnimator.createAnimationStepsFromLocationUpdate(request.locationUpdate, previousFinalPosition: self.previousFinalPosition)
             
             // Store last position from animation steps array
             // In next iteration this position could be start position for the first step of the animation
@@ -134,12 +134,12 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         displayLink.invalidate()
     }
     
-    private static func createAnimationStepsFromRequest(_ request: AnimationRequest, previousFinalPosition: Position?) -> [AnimationStep] {
-        let requestPositions = (request.locationUpdate.skippedLocations + [request.locationUpdate.location]).map { $0.toPosition() }
-        return requestPositions.enumerated().reduce([]) { partialResult, value in
+    private static func createAnimationStepsFromLocationUpdate(_ locationUpdate: LocationUpdate, previousFinalPosition: Position?) -> [AnimationStep] {
+        let locationUpdatePositions = (locationUpdate.skippedLocations + [locationUpdate.location]).map { $0.toPosition() }
+        return locationUpdatePositions.enumerated().reduce([]) { partialResult, value in
             let startPosition = value.offset == 0
-            ? getNewAnimationStartingPosition(locationUpdate: request.locationUpdate, previousFinalPosition: previousFinalPosition)
-            : requestPositions[value.offset - 1]
+            ? getNewAnimationStartingPosition(locationUpdate: locationUpdate, previousFinalPosition: previousFinalPosition)
+            : locationUpdatePositions[value.offset - 1]
             
             return partialResult + [AnimationStep(startPosition: startPosition, endPosition: value.element)]
         }
