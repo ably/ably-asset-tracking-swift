@@ -23,6 +23,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
 
     private var animationRequestSubject = PassthroughSubject<AnimationRequest, Never>()
     private var subscriptions = Set<AnyCancellable>()
+    
     private var animationStartTime: CFAbsoluteTime = .zero
     private var animationStepStartTime: CFAbsoluteTime = .zero
     private var currentAnimationStepProgress = 1.0
