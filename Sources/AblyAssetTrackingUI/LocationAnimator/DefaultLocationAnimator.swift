@@ -63,11 +63,14 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var subscribeForPositionUpdatesClosure: ((Position) -> Void)?
     private var subscribeForCameraPositionUpdatesClosure: ((Position) -> Void)?
     
+    private let logHandler: LogHandler?
+    
     deinit {
         stopAnimationLoop()
     }
     
-    public override init() {
+    public init(logHandler: LogHandler? = nil) {
+        self.logHandler = logHandler
         super.init()
         
         displayLinkTarget.locationAnimator = self
