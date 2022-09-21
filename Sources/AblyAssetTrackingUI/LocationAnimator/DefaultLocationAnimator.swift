@@ -264,6 +264,8 @@ private struct AnimationStep {
 
 private struct AnimationStepWithTiming {
     var step: AnimationStep
+    // Non-negative.
     var endTimeRelativeToAnimationStart: CFTimeInterval
+    // Non-negative.
     var duration: Double
 }
