@@ -32,9 +32,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var subscriptions = Set<AnyCancellable>()
     
     private var animationStartTime: CFAbsoluteTime?
-    private var animationStepStartTime: CFAbsoluteTime = .zero
-    private var currentAnimationStepProgress = 0.0
-    private var currentAnimationStep: AnimationStepWithTiming?
+    private var currentAnimationStepInfo: (stepWithTiming: AnimationStepWithTiming, startTime: CFAbsoluteTime, progress: Double)?
     private var currentAnimationStepsSinceLastCameraUpdate = 0
     
     private var _animationSteps: [AnimationStepWithTiming] = []
@@ -182,52 +180,55 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     // Animation loop based on CADisplayLink
     @objc
     private func animationLoop(link: CADisplayLink) {
-        if (currentAnimationStep == nil || currentAnimationStepProgress >= 1) && !animationSteps.isEmpty {
+        var currentAnimationStepInfoWithoutProgress: (stepWithTiming: AnimationStepWithTiming, startTime: CFAbsoluteTime)
+        
+        if let currentAnimationStepInfo = currentAnimationStepInfo, currentAnimationStepInfo.progress < 1 {
+            currentAnimationStepInfoWithoutProgress = (stepWithTiming: currentAnimationStepInfo.stepWithTiming, startTime: currentAnimationStepInfo.startTime)
+        } else {
+            if animationSteps.isEmpty {
+                currentAnimationStepInfo = nil
+                return
+            }
             
-            var animationStartTime: CFAbsoluteTime
+            let animationStartTime: CFAbsoluteTime
             if let currentAnimationStartTime = self.animationStartTime {
                 animationStartTime = currentAnimationStartTime
             } else {
                 animationStartTime = link.timestamp
                 self.animationStartTime = animationStartTime
             }
-            
-            animationStepStartTime = link.timestamp
-            
+
             /**
              Step index is calculated against the time elapsed since receive first animation request.
              Each animation step has it's unique `endTime` which is estimated animation end time.
              */
-            let stepIndex = animationSteps.firstIndex {
+            let nextStepIndex = animationSteps.firstIndex {
                 $0.endTimeRelativeToAnimationStart >= (link.timestamp - animationStartTime)
             } ?? .zero
-            currentAnimationStep = animationSteps[stepIndex]
+            
+            currentAnimationStepInfoWithoutProgress = (stepWithTiming: animationSteps[nextStepIndex], startTime: link.timestamp)
             
             // Remove used steps and increase the `currentAnimationStepsSinceLastCameraUpdate` count
-            let removeStepsRange = 0..<stepIndex
+            let removeStepsRange = 0..<nextStepIndex
             currentAnimationStepsSinceLastCameraUpdate += removeStepsRange.count
             animationSteps.removeSubrange(removeStepsRange)
-        } else if animationSteps.isEmpty && currentAnimationStepProgress >= 1 {
-            
-            currentAnimationStep = nil
-        }
-        
-        guard let animationStep = currentAnimationStep else {
-            return
         }
         
         /**
          Each animation step has it's own animation progress based on `animationStep` duration and `CADisplayLink` timestamp.
          */
-        currentAnimationStepProgress = (link.timestamp - animationStepStartTime) / animationStep.duration
+        let progress = (link.timestamp - currentAnimationStepInfoWithoutProgress.startTime) / currentAnimationStepInfoWithoutProgress.stepWithTiming.duration
+        
+        let currentAnimationStepInfo = (stepWithTiming: currentAnimationStepInfoWithoutProgress.stepWithTiming, startTime: currentAnimationStepInfoWithoutProgress.startTime, progress: progress)
+        self.currentAnimationStepInfo = currentAnimationStepInfo
 
         /**
          Current position is interpolated against current step animation progress
          */
         let position = DefaultLocationAnimator.calculatePosition(
-            firstPosition: animationStep.step.startPosition,
-            secondPosition: animationStep.step.endPosition,
-            stepProgress: currentAnimationStepProgress
+            firstPosition: currentAnimationStepInfo.stepWithTiming.step.startPosition,
+            secondPosition: currentAnimationStepInfo.stepWithTiming.step.endPosition,
+            stepProgress: currentAnimationStepInfo.progress
         )
 
         subscribeForPositionUpdatesClosure?(position)
