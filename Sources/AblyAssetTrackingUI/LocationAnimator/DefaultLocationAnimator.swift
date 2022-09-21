@@ -13,8 +13,14 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     /**
      * A constant delay added to the animation duration. It helps to smooth out movement
      * when we receive a location update later than we've expected.
+     *
+     * If you change this value, the new value must be non-negative.
      */
-    public var intentionalAnimationDelay: TimeInterval = 2.0
+    public var intentionalAnimationDelay: TimeInterval = 2.0 {
+        willSet {
+            precondition(newValue >= 0, "intentionalAnimationDelay must be non-negative")
+        }
+    }
 
     private let defaultDisplayLinkDuration: CFTimeInterval = 1.0/60.0
     
