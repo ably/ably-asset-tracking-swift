@@ -216,7 +216,9 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         /**
          Each animation step has it's own animation progress based on `animationStep` duration and `CADisplayLink` timestamp.
          */
-        let progress = (link.timestamp - currentAnimationStepInfoWithoutProgress.startTime) / currentAnimationStepInfoWithoutProgress.stepWithTiming.duration
+        let stepDuration = currentAnimationStepInfoWithoutProgress.stepWithTiming.duration
+        // in 0...1
+        let progress = stepDuration > 0 ? (link.timestamp - currentAnimationStepInfoWithoutProgress.startTime) / stepDuration : 1
         
         let currentAnimationStepInfo = (stepWithTiming: currentAnimationStepInfoWithoutProgress.stepWithTiming, startTime: currentAnimationStepInfoWithoutProgress.startTime, progress: progress)
         self.currentAnimationStepInfo = currentAnimationStepInfo
