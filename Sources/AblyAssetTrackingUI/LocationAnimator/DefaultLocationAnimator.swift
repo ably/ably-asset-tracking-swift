@@ -82,7 +82,15 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     }
    
     public func animateLocationUpdate(location: LocationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: Double) {
-        animationRequestSubject.send(AnimationRequest(locationUpdate: location, expectedIntervalBetweenLocationUpdatesInMilliseconds: expectedIntervalBetweenLocationUpdatesInMilliseconds))
+        let sanitisedExpectedIntervalBetweenLocationUpdatesInMilliseconds: Double
+        if expectedIntervalBetweenLocationUpdatesInMilliseconds < 0 {
+            logHandler?.w(message: "Received a negative expectedIntervalBetweenLocationUpdates (\(expectedIntervalBetweenLocationUpdatesInMilliseconds)); clamping to 0", error: nil)
+            sanitisedExpectedIntervalBetweenLocationUpdatesInMilliseconds = 0
+        } else {
+            sanitisedExpectedIntervalBetweenLocationUpdatesInMilliseconds = expectedIntervalBetweenLocationUpdatesInMilliseconds
+        }
+        
+        animationRequestSubject.send(AnimationRequest(locationUpdate: location, expectedIntervalBetweenLocationUpdatesInMilliseconds: sanitisedExpectedIntervalBetweenLocationUpdatesInMilliseconds))
     }
     
     public func subscribeForPositionUpdates(_ closure: @escaping (Position) -> Void) {
@@ -238,6 +246,7 @@ public extension Location {
 
 private struct AnimationRequest {
     let locationUpdate: LocationUpdate
+    // Non-negative.
     let expectedIntervalBetweenLocationUpdatesInMilliseconds: Double
 }
 
