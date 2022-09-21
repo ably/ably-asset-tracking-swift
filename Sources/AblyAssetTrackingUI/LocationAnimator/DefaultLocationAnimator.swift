@@ -12,8 +12,14 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     /**
      * A constant delay added to the animation duration. It helps to smooth out movement
      * when we receive a location update later than we've expected.
+     *
+     * If you change this value, the new value must be non-negative.
      */
-    public var intentionalAnimationDelay: TimeInterval = 2.0
+    public var intentionalAnimationDelay: TimeInterval = 2.0 {
+        didSet {
+            precondition(intentionalAnimationDelay >= 0, "intentionalAnimationDelay must be non-negative")
+        }
+    }
     
     // Dispatch queue for synchronized variable access
     private let globalBackgroundSynchronizeDataQueue = DispatchQueue(label: "com.ably.tracking.SubscriberExample.locationAnimator.globalBackgroundSyncronizeSharedData")
