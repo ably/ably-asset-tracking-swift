@@ -72,7 +72,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             let stepsWithTiming = DefaultLocationAnimator.addTimingToAnimationSteps(steps,
                                                                                     intentionalAnimationDelay: self.intentionalAnimationDelay,
                                                                                     expectedIntervalBetweenLocationUpdatesInMilliseconds: request.expectedIntervalBetweenLocationUpdatesInMilliseconds,
-                                                                                    currentFinalStepEndTime: self.animationSteps.last?.endTime)
+                                                                                    currentFinalStepEndTimeRelativeToAnimationStart: self.animationSteps.last?.endTimeRelativeToAnimationStart)
 
             self.animationSteps += stepsWithTiming
         }.store(in: &subscriptions)
@@ -136,8 +136,8 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
             ?? locationUpdate.location.toPosition()
     }
     
-    private static func addTimingToAnimationSteps(_ steps: [AnimationStep], intentionalAnimationDelay: TimeInterval, expectedIntervalBetweenLocationUpdatesInMilliseconds: Double, currentFinalStepEndTime: CFAbsoluteTime?) -> [AnimationStepWithTiming] {
-        var previousStepEndTime = currentFinalStepEndTime ?? .zero
+    private static func addTimingToAnimationSteps(_ steps: [AnimationStep], intentionalAnimationDelay: TimeInterval, expectedIntervalBetweenLocationUpdatesInMilliseconds: Double, currentFinalStepEndTimeRelativeToAnimationStart: CFAbsoluteTime?) -> [AnimationStepWithTiming] {
+        var previousStepEndTimeRelativeToAnimationStart = currentFinalStepEndTimeRelativeToAnimationStart ?? .zero
         
         // This is an animation duration for request
         let expectedAnimationDuration = intentionalAnimationDelay + expectedIntervalBetweenLocationUpdatesInMilliseconds
@@ -150,11 +150,11 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         for step in steps {
             let stepWithTiming = AnimationStepWithTiming(
                 step: step,
-                endTime: previousStepEndTime + animationStepDuration,
+                endTimeRelativeToAnimationStart: previousStepEndTimeRelativeToAnimationStart + animationStepDuration,
                 duration: animationStepDuration)
             
             stepsWithTiming.append(stepWithTiming)
-            previousStepEndTime = stepWithTiming.endTime
+            previousStepEndTimeRelativeToAnimationStart = stepWithTiming.endTimeRelativeToAnimationStart
         }
         
         return stepsWithTiming
@@ -193,7 +193,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
              Each animation step has it's unique `endTime` which is estimated animation end time.
              */
             let stepIndex = animationSteps.firstIndex {
-                $0.endTime >= (link.timestamp - animationStartTime)
+                $0.endTimeRelativeToAnimationStart >= (link.timestamp - animationStartTime)
             } ?? .zero
             currentAnimationStep = animationSteps[stepIndex]
             
@@ -258,6 +258,6 @@ private struct AnimationStep {
 
 private struct AnimationStepWithTiming {
     var step: AnimationStep
-    var endTime: CFTimeInterval
+    var endTimeRelativeToAnimationStart: CFTimeInterval
     var duration: Double
 }
