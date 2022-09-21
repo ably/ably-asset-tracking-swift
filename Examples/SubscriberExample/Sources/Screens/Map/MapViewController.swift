@@ -49,7 +49,7 @@ class MapViewController: UIViewController {
         self.subscriberLogger = SubscriberLogger(logger: logger)
         
         self.trackingId = trackingId
-        self.locationAnimator = DefaultLocationAnimator()
+        self.locationAnimator = DefaultLocationAnimator(logHandler: subscriberLogger)
         self.locationUpdateInterval = resolution.desiredInterval
 
         let viewControllerType = MapViewController.self
