@@ -257,6 +257,6 @@ private struct AnimationStep {
 
 private struct AnimationStepWithTiming {
     var step: AnimationStep
-    var endTime: CFAbsoluteTime
+    var endTime: CFTimeInterval
     var duration: Double
 }
