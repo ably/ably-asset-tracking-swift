@@ -54,7 +54,8 @@ let package = Package(
         .target(
             name: "AblyAssetTrackingUI",
             dependencies: [
-                "AblyAssetTrackingCore"
+                "AblyAssetTrackingCore",
+                "AblyAssetTrackingInternal",
             ]),
         .testTarget(
             name: "SystemTests",
