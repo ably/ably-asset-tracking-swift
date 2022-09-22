@@ -291,7 +291,7 @@ extension MapViewController: SubscriberDelegate {
 
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         if animationSwitch.isOn {
-            locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateInterval / 1000.0)
+            locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateInterval * 1000.0)
         } else {
             updateTruckAnnotation(position: locationUpdate.location.toPosition())
             scrollToReceivedLocation(position: locationUpdate.location.toPosition())
@@ -311,6 +311,6 @@ extension MapViewController: SubscriberDelegate {
     }
     
     func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {
-        locationUpdateInterval = interval
+        locationUpdateInterval = interval / 1000
     }
 }
