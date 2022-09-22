@@ -30,7 +30,7 @@ class MapViewController: UIViewController {
     private let locationAnimator: LocationAnimator
     private var subscriber: Subscriber?
     private var errors: [ErrorInformation] = []
-    private var locationUpdateInterval: TimeInterval = .zero
+    private var locationUpdateIntervalInMilliseconds: Double = .zero
 
     private var currentResolution: Resolution?
     private var resolutionDebounceTimer: Timer?
@@ -50,7 +50,7 @@ class MapViewController: UIViewController {
         
         self.trackingId = trackingId
         self.locationAnimator = DefaultLocationAnimator()
-        self.locationUpdateInterval = resolution.desiredInterval
+        self.locationUpdateIntervalInMilliseconds = resolution.desiredInterval
 
         let viewControllerType = MapViewController.self
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
@@ -291,7 +291,7 @@ extension MapViewController: SubscriberDelegate {
 
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         if animationSwitch.isOn {
-            locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateInterval / 1000.0)
+            locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateIntervalInMilliseconds)
         } else {
             updateTruckAnnotation(position: locationUpdate.location.toPosition())
             scrollToReceivedLocation(position: locationUpdate.location.toPosition())
@@ -311,6 +311,6 @@ extension MapViewController: SubscriberDelegate {
     }
     
     func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {
-        locationUpdateInterval = interval
+        locationUpdateIntervalInMilliseconds = interval
     }
 }
