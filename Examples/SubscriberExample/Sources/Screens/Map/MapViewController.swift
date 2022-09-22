@@ -2,6 +2,7 @@ import UIKit
 import MapKit
 import AblyAssetTrackingSubscriber
 import AblyAssetTrackingUI
+import CoreLocation
 
 private struct MapConstraints {
     static let regionLatitude: CLLocationDistance = 400
@@ -37,6 +38,8 @@ class MapViewController: UIViewController {
     private let subscriberLogger = SubscriberLogger()
 
     private var location: CLLocation?
+    
+    private var lastReceivedLocationUpdate: LocationUpdate?
 
     // MARK: - Initialization
     init(trackingId: String) {
@@ -65,6 +68,14 @@ class MapViewController: UIViewController {
         locationAnimator.subscribeForPositionUpdates { [weak self] position in
             guard self?.animationSwitch.isOn == true else {
                 return
+            }
+            
+            if let lastReceivedLocationUpdate = self?.lastReceivedLocationUpdate {
+                let lastReceivedLocation = CLLocation(latitude: lastReceivedLocationUpdate.location.coordinate.latitude, longitude: lastReceivedLocationUpdate.location.coordinate.longitude)
+                let animatedLocation = CLLocation(latitude: position.latitude, longitude: position.longitude)
+                
+                let distance = animatedLocation.distance(from: lastReceivedLocation)
+                self?.subscriberLogger.logMessage(level: .info, message: "Distance from animatedLocation to lastReceivedLocation is \(distance)", error: nil)
             }
             
             self?.updateTruckAnnotation(position: position)
@@ -282,6 +293,8 @@ extension MapViewController: SubscriberDelegate {
     }
 
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
+        lastReceivedLocationUpdate = locationUpdate
+        
         if animationSwitch.isOn {
             locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateInterval / 1000.0)
         } else {
