@@ -1,10 +1,11 @@
 import Foundation
 import AblyAssetTrackingCore
 import Logging
+import LoggingFormatAndPipe
 
 class SubscriberLogger: AblyAssetTrackingCore.LogHandler {
     let swiftLog: Logger
-        
+
     init (logger: Logger) {
         self.swiftLog = logger
     }

@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import Logging
+import LoggingFormatAndPipe
 import AblyAssetTrackingSubscriber
 import AblyAssetTrackingUI
 
@@ -36,7 +37,13 @@ class MapViewController: UIViewController {
     private var resolutionDebounceTimer: Timer?
     
     private let logger: Logger = {
-        var logger = Logger(label: "com.ably.SubscriberExample")
+        var logger = Logger(label: "com.ably.SubscriberExample") { _ in
+            let myDateFormat = DateFormatter()
+            myDateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+            
+            let format = BasicFormatter([.timestamp, .level, .message], timestampFormatter: myDateFormat)
+            return LoggingFormatAndPipe.Handler(formatter: format, pipe: LoggerTextOutputStreamPipe.standardError)
+        }
         logger.logLevel = .info
         return logger
     }()
