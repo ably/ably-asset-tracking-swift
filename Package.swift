@@ -87,6 +87,11 @@ let package = Package(
             name: "CoreTests",
             dependencies: [
                 "AblyAssetTrackingPublisher"
+            ]),
+        .testTarget(
+            name: "UITests",
+            dependencies: [
+                "AblyAssetTrackingUI"
             ])
     ]
 )
