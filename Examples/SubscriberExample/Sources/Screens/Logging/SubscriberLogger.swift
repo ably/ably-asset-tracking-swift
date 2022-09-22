@@ -1,12 +1,20 @@
 import Foundation
 import AblyAssetTrackingCore
 import Logging
+import LoggingFormatAndPipe
 
 class SubscriberLogger: AblyLogHandler {
     var swiftLog: Logger
         
     init () {
-        swiftLog = Logger(label: "com.ably.SubscriberExample")
+        swiftLog = Logger(label: "com.ably.SubscriberExample") { _ in
+            let myDateFormat = DateFormatter()
+            myDateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+            
+            let format = BasicFormatter([.timestamp, .level, .message], timestampFormatter: myDateFormat)
+            return LoggingFormatAndPipe.Handler(formatter: format, pipe: LoggerTextOutputStreamPipe.standardError)
+        }
+        
         swiftLog.logLevel = .info
     }
     

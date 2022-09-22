@@ -19,6 +19,7 @@
 		180F61C2258634420014B310 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B6258634420014B310 /* Assets.xcassets */; };
 		180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B7258634420014B310 /* LaunchScreen.storyboard */; };
 		188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */; };
+		2173D70A28DC9A7900928118 /* LoggingFormatAndPipe in Frameworks */ = {isa = PBXBuildFile; productRef = 2173D70928DC9A7900928118 /* LoggingFormatAndPipe */; };
 		AD0F84B52677D6C900C15DB7 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */; };
 		D55F03B028195552001F5F83 /* AblyAssetTrackingUI in Frameworks */ = {isa = PBXBuildFile; productRef = D55F03AF28195552001F5F83 /* AblyAssetTrackingUI */; };
 		D569B3A3283631C100E680AF /* HorizontalAccuracyAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569B3A2283631C100E680AF /* HorizontalAccuracyAnnotationView.swift */; };
@@ -65,6 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D55F03B028195552001F5F83 /* AblyAssetTrackingUI in Frameworks */,
+				2173D70A28DC9A7900928118 /* LoggingFormatAndPipe in Frameworks */,
 				D5DCC8B92785A8C300CC04E6 /* FirebaseCrashlytics in Frameworks */,
 				D5EBC174274B825500F4A16D /* AblyAssetTrackingSubscriber in Frameworks */,
 				D5DCC8B72785A8C300CC04E6 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -224,6 +226,7 @@
 				D5DCC8B82785A8C300CC04E6 /* FirebaseCrashlytics */,
 				D55F03AF28195552001F5F83 /* AblyAssetTrackingUI */,
 				0C2C2B0B28BF6B8300656F46 /* Logging */,
+				2173D70928DC9A7900928118 /* LoggingFormatAndPipe */,
 			);
 			productName = SubscriberExample;
 			productReference = 180F60D2258632B40014B310 /* SubscriberExample.app */;
@@ -255,6 +258,7 @@
 			packageReferences = (
 				D5DCC8B52785A8C300CC04E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				0C2C2B0A28BF6B8300656F46 /* XCRemoteSwiftPackageReference "swift-log" */,
+				2173D70828DC9A7900928118 /* XCRemoteSwiftPackageReference "swift-log-format-and-pipe" */,
 			);
 			productRefGroup = 180F60D3258632B40014B310 /* Products */;
 			projectDirPath = "";
@@ -527,6 +531,14 @@
 				version = 1.4.4;
 			};
 		};
+		2173D70828DC9A7900928118 /* XCRemoteSwiftPackageReference "swift-log-format-and-pipe" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:Adorkable/swift-log-format-and-pipe.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
 		D5DCC8B52785A8C300CC04E6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -542,6 +554,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0C2C2B0A28BF6B8300656F46 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
+		};
+		2173D70928DC9A7900928118 /* LoggingFormatAndPipe */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2173D70828DC9A7900928118 /* XCRemoteSwiftPackageReference "swift-log-format-and-pipe" */;
+			productName = LoggingFormatAndPipe;
 		};
 		D55F03AF28195552001F5F83 /* AblyAssetTrackingUI */ = {
 			isa = XCSwiftPackageProductDependency;
