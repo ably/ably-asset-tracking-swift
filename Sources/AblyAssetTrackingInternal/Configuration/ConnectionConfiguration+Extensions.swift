@@ -23,6 +23,10 @@ extension ConnectionConfiguration {
         
         clientOptions.addAgent("ably-asset-tracking-swift", version: Version.libraryVersion)
         
+        if let environment = environment {
+            clientOptions.environment = environment
+        }
+        
         return clientOptions
     }
     
