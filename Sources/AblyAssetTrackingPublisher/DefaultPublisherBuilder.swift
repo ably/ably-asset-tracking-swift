@@ -11,7 +11,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var areRawLocationsEnabled: Bool = false
     private var isSendResolutionEnabled: Bool = true
     private var constantLocationEngineResolution: Resolution?
-    private var logHandler: AblyLogHandler?
+    private var logHandler: LogHandler?
     private weak var delegate: PublisherDelegate?
     
     init() { }
@@ -25,7 +25,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  areRawLocationsEnabled: Bool = false,
                  isSendResolutionEnabled: Bool = true,
                  constantLocationEngineResolution: Resolution?,
-                 logHandler: AblyLogHandler?) {
+                 logHandler: LogHandler?) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
         self.locationSource = locationSource
@@ -180,7 +180,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logHandler: logHandler)
     }
     
-    func logHandler(handler: AblyLogHandler?) -> PublisherBuilder {
+    func logHandler(handler: LogHandler?) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        locationSource: locationSource,

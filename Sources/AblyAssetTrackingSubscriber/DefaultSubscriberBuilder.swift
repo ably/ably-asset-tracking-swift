@@ -6,7 +6,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     private var connection: ConnectionConfiguration?
     private var trackingId: String?
     private var resolution: Resolution?
-    private var logHandler: AblyLogHandler?
+    private var logHandler: LogHandler?
     private weak var delegate: SubscriberDelegate?
 
     init() { }
@@ -14,7 +14,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     private init(connection: ConnectionConfiguration?,
                  trackingId: String?,
                  resolution: Resolution?,
-                 logHandler: AblyLogHandler?,
+                 logHandler: LogHandler?,
                  delegate: SubscriberDelegate?) {
         self.connection = connection
         self.trackingId = trackingId
@@ -87,7 +87,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
                                         delegate: delegate)
     }
     
-    func logHandler(handler: AblyLogHandler?) -> SubscriberBuilder {
+    func logHandler(handler: LogHandler?) -> SubscriberBuilder {
         return DefaultSubscriberBuilder(connection: connection,
                                         trackingId: trackingId,
                                         resolution: resolution,

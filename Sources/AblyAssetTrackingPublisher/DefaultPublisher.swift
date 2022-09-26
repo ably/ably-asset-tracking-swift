@@ -56,7 +56,7 @@ class DefaultPublisher: Publisher {
     private var lastRawTimestamps: [Trackable: Double]
     private var route: Route?
     
-    private var logHandler: AblyLogHandler?
+    private var logHandler: LogHandler?
 
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
@@ -78,7 +78,7 @@ class DefaultPublisher: Publisher {
          areRawLocationsEnabled: Bool = false,
          isSendResolutionEnabled: Bool = true,
          constantLocationEngineResolution: Resolution? = nil,
-         logHandler: AblyLogHandler?
+         logHandler: LogHandler?
     ) {
         
         self.connectionConfiguration = connectionConfiguration
@@ -151,7 +151,7 @@ class DefaultPublisher: Publisher {
 // MARK: Threading events handling
 extension DefaultPublisher {
     private func enqueue(event: Event) {
-        logHandler?.v(message: "\(String(describing: Self.self)): received event: \(event)", error: nil)
+        logHandler?.verbose(message: "\(String(describing: Self.self)): received event: \(event)", error: nil)
         performOnWorkingThread { [weak self] in
             switch event {
             case .trackTrackable(let event): self?.performTrackTrackableEvent(event)
@@ -198,7 +198,7 @@ extension DefaultPublisher {
     }
 
     private func callback(event: DelegateEvent) {
-        logHandler?.v(message: "\(String(describing: Self.self)): received delegate event: \(event)", error: nil)
+        logHandler?.verbose(message: "\(String(describing: Self.self)): received delegate event: \(event)", error: nil)
 
         performOnMainThread { [weak self] in
             guard let self = self
@@ -237,7 +237,7 @@ extension DefaultPublisher {
                     case .success(let route):
                         self?.enqueue(event: .setDestinationSuccess(.init(route: route)))
                     case .failure(let error):
-                        self?.logHandler?.e(message: "\(String(describing: Self.self)): can't fetch route.", error: error)
+                        self?.logHandler?.error(message: "\(String(describing: Self.self)): can't fetch route.", error: error)
                         event.resultHandler(.failure(error))
                     }
                 }
@@ -283,7 +283,7 @@ extension DefaultPublisher {
                 self.enqueue(event: .setDestinationSuccess(.init(route: route)))
                 self.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):
-                self.logHandler?.e(message: "\(String(describing: Self.self)): can't change RoutingProfile", error: error)
+                self.logHandler?.error(message: "\(String(describing: Self.self)): can't change RoutingProfile", error: error)
                 self.callback(error: error, handler: event.resultHandler)
             }
         }
@@ -474,7 +474,7 @@ extension DefaultPublisher {
     // MARK: Location change
     private func performEnhancedLocationChanged(_ event: Event.EnhancedLocationChangedEvent) {
         guard !state.isStoppingOrStopped else {
-            logHandler?.e(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform EnhancedLocationChangedEvent. Publisher is either stopped or stopping.")))
+            logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform EnhancedLocationChangedEvent. Publisher is either stopped or stopping.")))
             return
         }
 
@@ -567,7 +567,7 @@ extension DefaultPublisher {
     
     private func performRawLocationChanged(_ event: Event.RawLocationChangedEvent) {
         guard !state.isStoppingOrStopped else {
-            logHandler?.e(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform RawLocationChanged. Publisher is either stopped or stopping.")))
+            logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform RawLocationChanged. Publisher is either stopped or stopping.")))
             return
         }
         
@@ -682,7 +682,7 @@ extension DefaultPublisher {
     // MARK: ResolutionPolicy
     private func performRefreshResolutionPolicyEvent(_ event: Event.RefreshResolutionPolicyEvent) {
         guard !state.isStoppingOrStopped else {
-            logHandler?.e(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform RefreshResolutionPolicyEvent. Publisher is either stopped or stopping.")))
+            logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform RefreshResolutionPolicyEvent. Publisher is either stopped or stopping.")))
             return
         }
 
@@ -710,7 +710,7 @@ extension DefaultPublisher {
 
     private func changeLocationEngineResolution(resolution: Resolution) {
         guard !state.isStoppingOrStopped else {
-            logHandler?.e(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform ChangeLocationEngineResolution. Publisher is either stopped or stopping.")))
+            logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform ChangeLocationEngineResolution. Publisher is either stopped or stopping.")))
             return
         }
         
@@ -745,7 +745,7 @@ extension DefaultPublisher {
     // MARK: Subscribers handling
     private func performPresenceUpdateEvent(_ event: Event.PresenceUpdateEvent) {
         guard !state.isStoppingOrStopped else {
-            logHandler?.e(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform PresenceUpdateEvent. Publisher is either stopped or stopping.")))
+            logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "\(String(describing: Self.self)): cannot perform PresenceUpdateEvent. Publisher is either stopped or stopping.")))
             return
         }
 
@@ -850,17 +850,17 @@ extension DefaultPublisher {
 // MARK: LocationServiceDelegate
 extension DefaultPublisher: LocationServiceDelegate {
     func locationService(sender: LocationService, didFailWithError error: ErrorInformation) {
-        logHandler?.e(message: "\(String(describing: Self.self)): locationService.didFailWithError.", error: error)
+        logHandler?.error(message: "\(String(describing: Self.self)): locationService.didFailWithError.", error: error)
         callback(event: .delegateError(.init(error: error)))
     }
 
     func locationService(sender: LocationService, didUpdateRawLocationUpdate locationUpdate: RawLocationUpdate) {
-        logHandler?.d(message: "\(String(describing: Self.self)): locationService.didUpdateRawLocation.", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): locationService.didUpdateRawLocation.", error: nil)
         enqueue(event: .rawLocationChanged(.init(locationUpdate: locationUpdate)))
     }
     
     func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
-        logHandler?.d(message: "\(String(describing: Self.self)): locationService.didUpdateEnhancedLocation.", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): locationService.didUpdateEnhancedLocation.", error: nil)
         enqueue(event: .enhancedLocationChanged(.init(locationUpdate: locationUpdate)))
         callback(event: .delegateEnhancedLocationChanged(.init(locationUpdate: locationUpdate)))
     }
@@ -869,17 +869,17 @@ extension DefaultPublisher: LocationServiceDelegate {
 // MARK: AblyPublisherDelegate
 extension DefaultPublisher: AblyPublisherDelegate {
     func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        logHandler?.d(message: "\(String(describing: Self.self)): ablyPublisher.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): ablyPublisher.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", error: nil)
         enqueue(event: .ablyChannelConnectionStateChanged(.init(trackable: trackable, connectionState: state)))
     }
 
     func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation) {
-        logHandler?.e(message: "\(String(describing: Self.self)): ablyPublisher.didFailWithError.", error: error)
+        logHandler?.error(message: "\(String(describing: Self.self)): ablyPublisher.didFailWithError.", error: error)
         callback(event: .delegateError(.init(error: error)))
     }
 
     func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState) {
-        logHandler?.d(message: "\(String(describing: Self.self)): ablyPublisher.didChangeConnectionState. State: \(state.description)", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): ablyPublisher.didChangeConnectionState. State: \(state.description)", error: nil)
         enqueue(event: .ablyClientConnectionStateChanged(.init(connectionState: state)))
     }
 
@@ -889,7 +889,7 @@ extension DefaultPublisher: AblyPublisherDelegate {
                           presenceData: PresenceData,
                           clientId: String) {
 
-        logHandler?.d(message: "\(String(describing: Self.self)): publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)", error: nil)
         enqueue(event: .presenceUpdate(.init(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId)))
     }
 }

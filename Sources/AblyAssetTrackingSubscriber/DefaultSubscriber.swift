@@ -20,7 +20,7 @@ class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
     private let trackableId: String
     private let presenceData: PresenceData
-    private let logHandler: AblyLogHandler?
+    private let logHandler: LogHandler?
     
     private var ablySubscriber: AblySubscriber
     private var subscriberState: SubscriberState = .working
@@ -35,7 +35,7 @@ class DefaultSubscriber: Subscriber {
         ablySubscriber: AblySubscriber,
         trackableId: String,
         resolution: Resolution?,
-        logHandler: AblyLogHandler?) {
+        logHandler: LogHandler?) {
             
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
         self.ablySubscriber = ablySubscriber
@@ -106,7 +106,7 @@ class DefaultSubscriber: Subscriber {
 
 extension DefaultSubscriber {
     private func enqueue(event: Event) {
-        logHandler?.v(message: "\(String(describing: Self.self)): enqueuing event: \(event)", error: nil)
+        logHandler?.verbose(message: "\(String(describing: Self.self)): enqueuing event: \(event)", error: nil)
         performOnWorkingThread { [weak self] in
             switch event {
             case .start(let event): self?.performStart(event)
@@ -130,7 +130,7 @@ extension DefaultSubscriber {
     }
 
     private func callback(event: DelegateEvent) {
-        logHandler?.v(message: "\(String(describing: Self.self)): received delegate event: \(event)", error: nil)
+        logHandler?.verbose(message: "\(String(describing: Self.self)): received delegate event: \(event)", error: nil)
         performOnMainThread { [weak self] in
             guard let self = self,
                   let delegate = self.delegate
@@ -215,7 +215,7 @@ extension DefaultSubscriber {
     
     private func handleConnectionStateChange() {
         if currentTrackableConnectionState == .failed {
-            logHandler?.d(message: "\(String(describing: Self.self)): Ignoring state change since state is already .failed", error: nil)
+            logHandler?.debug(message: "\(String(describing: Self.self)): Ignoring state change since state is already .failed", error: nil)
             return
         }
         
@@ -269,13 +269,13 @@ extension DefaultSubscriber {
         callback(event: .delegateError(.init(error: event.error)))
         
         if event.error.code == ErrorCode.invalidMessage.rawValue {
-            logHandler?.e(message: "\(String(describing: Self.self)): invalidMessage error received, emitting failed connection status", error: event.error)
+            logHandler?.error(message: "\(String(describing: Self.self)): invalidMessage error received, emitting failed connection status", error: event.error)
             currentTrackableConnectionState = .failed
             callback(event: .delegateConnectionStatusChanged(.init(status: .failed)))
 
             ablySubscriber.disconnect(trackableId: trackableId, presenceData: nil) { [weak self, trackableId] error in
                 if case .failure(let error) = error {
-                    self?.logHandler?.e(message: "\(String(describing: Self.self)): Failed to disconnect trackable (\(trackableId)) after receiving invalid message.", error: error)
+                    self?.logHandler?.error(message: "\(String(describing: Self.self)): Failed to disconnect trackable (\(trackableId)) after receiving invalid message.", error: error)
                 }
             }
         }
@@ -293,37 +293,37 @@ extension DefaultSubscriber {
 
 extension DefaultSubscriber: AblySubscriberDelegate {
     func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence) {
-        logHandler?.d(message: "\(String(describing: Self.self)): ablySubscriber.didReceivePresenceUpdate. Presence: \(presence)", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): ablySubscriber.didReceivePresenceUpdate. Presence: \(presence)", error: nil)
         enqueue(event: .presenceUpdate(.init(presence: presence)))
     }
     
     func ablySubscriber(_ sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState) {
-        logHandler?.d(message: "\(String(describing: Self.self)): ablySubscriber.didChangeClientConnectionState. Status: \(state)", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): ablySubscriber.didChangeClientConnectionState. Status: \(state)", error: nil)
         enqueue(event: .ablyClientConnectionStateChanged(.init(connectionState: state)))
     }
     
     func ablySubscriber(_ sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState) {
-        logHandler?.d(message: "\(String(describing: Self.self)): ablySubscriber.didChangeChannelConnectionState. Status: \(state)", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): ablySubscriber.didChangeChannelConnectionState. Status: \(state)", error: nil)
             enqueue(event: .ablyChannelConnectionStateChanged(.init(connectionState: state)))
     }
 
     func ablySubscriber(_ sender: AblySubscriber, didFailWithError error: ErrorInformation) {
-        logHandler?.e(message: "\(String(describing: Self.self)): ablySubscriber.didFailWithError", error: error)
+        logHandler?.error(message: "\(String(describing: Self.self)): ablySubscriber.didFailWithError", error: error)
         enqueue(event: .ablyError(.init(error: error)))
     }
 
     func ablySubscriber(_ sender: AblySubscriber, didReceiveRawLocation location: LocationUpdate) {
-        logHandler?.d(message: "\(String(describing: Self.self)): ablySubscriber.didReceiveRawLocation", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): ablySubscriber.didReceiveRawLocation", error: nil)
         callback(event: .delegateRawLocationReceived(.init(locationUpdate: location)))
     }
     
     func ablySubscriber(_ sender: AblySubscriber, didReceiveEnhancedLocation location: LocationUpdate) {
-        logHandler?.d(message: "\(String(describing: Self.self)): ablySubscriber.didReceiveEnhancedLocation", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): ablySubscriber.didReceiveEnhancedLocation", error: nil)
         callback(event: .delegateEnhancedLocationReceived(.init(locationUpdate: location)))
     }
     
     func ablySubscriber(_ sender: AblySubscriber, didReceiveResolution resolution: Resolution) {
-        logHandler?.d(message: "\(String(describing: Self.self)): ablySubscriber.didReceiveResolution", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): ablySubscriber.didReceiveResolution", error: nil)
         callback(event: .delegateResolutionReceived(.init(resolution: resolution)))
         callback(event: .delegateDesiredIntervalReceived(.init(desiredInterval: resolution.desiredInterval)))
     }

@@ -66,5 +66,5 @@ public protocol PublisherBuilder {
     /**
      Sets an optional `logHandler` that can capture logs from all across the sdk
      */
-    func logHandler(handler: AblyLogHandler?) -> PublisherBuilder
+    func logHandler(handler: LogHandler?) -> PublisherBuilder
 }
