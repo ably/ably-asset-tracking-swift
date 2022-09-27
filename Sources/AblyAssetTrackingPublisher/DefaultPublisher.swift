@@ -529,6 +529,8 @@ extension DefaultPublisher {
 
         enhancedLocationState.markMessageAsPending(for: trackable.id)
         
+        logHandler?.info(message: "Sending enhanced location update \(event.locationUpdate)", error: nil)
+        
         ablyPublisher.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackable: trackable) { [weak self] result in
             switch result {
             case .failure(let error):

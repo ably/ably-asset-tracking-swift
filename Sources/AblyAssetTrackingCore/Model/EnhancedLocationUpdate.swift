@@ -10,7 +10,7 @@ public enum LocationUpdateType: String, Codable {
 /**
  Model used to handle location updates.
  */
-public class EnhancedLocationUpdate: LocationUpdate {
+public class EnhancedLocationUpdate: LocationUpdate, CustomStringConvertible {
     public let location: Location
     public var skippedLocations: [Location] = []
 
@@ -20,6 +20,10 @@ public class EnhancedLocationUpdate: LocationUpdate {
 
     public init(location: Location) {
         self.location = location
+    }
+    
+    public var description: String {
+        return "skippedLocations: \(skippedLocations.map{$0.coordinate}), location: \(location.coordinate)"
     }
     
 }
