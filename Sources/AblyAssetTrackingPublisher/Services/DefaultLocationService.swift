@@ -16,14 +16,14 @@ class DefaultLocationService: LocationService {
          vehicleProfile: VehicleProfile) {
         
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
-        NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
-        NavigationSettings.shared.initialize(directions: directions, // or .shared
-                                             tileStoreConfiguration: .default, // or .default
-                                             navigatorPredictionInterval: 0,
-                                             statusPollingConfig: .init(unconditionalPollingPatience: .greatestFiniteMagnitude ,
-                                                                        unconditionalPollingInterval: nil)
+        
                                              
         if vehicleProfile == .Bicycle {
+            NavigationSettings.shared.initialize(directions: directions, // or .shared
+                                                 tileStoreConfiguration: .default, // or .default
+                                                 navigatorPredictionInterval: 0,
+                                                 statusPollingConfig: .init(unconditionalPollingPatience: .greatestFiniteMagnitude ,
+                                                                            unconditionalPollingInterval: nil))
             let cyclingConfig = [
                         "cache": [
                             "enableAssetsTrackingMode": true
@@ -35,6 +35,8 @@ class DefaultLocationService: LocationService {
                         ]
                     ]
             UserDefaults.standard.set(cyclingConfig, forKey: MapboxCoreNavigation.customConfigKey)
+        } else {
+            NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
         }
   
         if let historyLocation = historyLocation {
