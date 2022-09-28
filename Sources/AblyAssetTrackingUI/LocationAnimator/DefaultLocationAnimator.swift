@@ -170,7 +170,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         first + (second - first) * progress
     }
 
-    // Animation loop based od CADisplayLink
+    // Animation loop based on CADisplayLink
     private func animationLoop(link: CADisplayLink) {
         if currentAnimationStepProgress >= 1 && !animationSteps.isEmpty {
             
