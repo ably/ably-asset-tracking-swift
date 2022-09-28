@@ -41,9 +41,13 @@ class DefaultLocationService: LocationService {
             replayLocationManager = nil
         }
         self.logHandler = logHandler
-        //there are more than 2 profiles in mapbox - but we have two so I'm keeping it two for now
-        let profileIdentifier = vehicleProfile == .Bicycle ? ProfileIdentifier.cycling : ProfileIdentifier.automobile
-        self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager ,datasetProfileIdentifier: profileIdentifier)
+        //set location manager with profile identifier only if .Bicycle is provided by clients
+        if vehicleProfile == .Bicycle {
+            self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager ,datasetProfileIdentifier: .cycling)
+        } else {
+            self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
+        }
+       
         self.locationManager.delegate = self
     }
 
