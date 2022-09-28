@@ -19,8 +19,10 @@ class DefaultLocationService: LocationService {
         NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
         NavigationSettings.shared.initialize(directions: directions, // or .shared
                                              tileStoreConfiguration: .default, // or .default
-                                             navigatorPredictionInterval: 0)
-        
+                                             navigatorPredictionInterval: 0,
+                                             statusPollingConfig: .init(unconditionalPollingPatience: .greatestFiniteMagnitude ,
+                                                                        unconditionalPollingInterval: nil)
+                                             
         if vehicleProfile == .Bicycle {
             let cyclingConfig = [
                         "cache": [
