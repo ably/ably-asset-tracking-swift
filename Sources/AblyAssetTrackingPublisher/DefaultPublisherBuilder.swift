@@ -11,8 +11,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var areRawLocationsEnabled: Bool = false
     private var isSendResolutionEnabled: Bool = true
     private var constantLocationEngineResolution: Resolution?
-    private var logHandler: AblyLogHandler?
     private var vehicleProfile: VehicleProfile = VehicleProfile.Car
+    private var logHandler: LogHandler?
     private weak var delegate: PublisherDelegate?
     
     init() { }
@@ -26,7 +26,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  areRawLocationsEnabled: Bool = false,
                  isSendResolutionEnabled: Bool = true,
                  constantLocationEngineResolution: Resolution?,
-                 logHandler: AblyLogHandler?,
+                 logHandler: LogHandler?,
                  vehicleProfile: VehicleProfile = VehicleProfile.Car) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
@@ -183,7 +183,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logHandler: logHandler)
     }
     
-    func logHandler(handler: AblyLogHandler?) -> PublisherBuilder {
+    func logHandler(handler: LogHandler?) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        locationSource: locationSource,
@@ -208,7 +208,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        constantLocationEngineResolution: constantLocationEngineResolution,
                                        logHandler: logHandler)
     }
-    
+
     func vehicleProfile(vehicleProfile: VehicleProfile) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,

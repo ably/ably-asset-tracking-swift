@@ -59,6 +59,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         }
     }
     private var displayLink: CADisplayLink?
+    private let displayLinkTarget = DisplayLinkTarget()
     private var subscribeForPositionUpdatesClosure: ((Position) -> Void)?
     private var subscribeForCameraPositionUpdatesClosure: ((Position) -> Void)?
     
@@ -68,6 +69,8 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     
     public override init() {
         super.init()
+        
+        displayLinkTarget.locationAnimator = self
         
         startAnimationLoop()
         
@@ -118,7 +121,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     
     private func startAnimationLoop() {
         currentAnimationStepsSinceLastCameraUpdate = animationStepsBetweenCameraUpdates
-        let displayLink = CADisplayLink(target: self, selector: #selector(animationLoop))
+        let displayLink = CADisplayLink(target: displayLinkTarget, selector: #selector(displayLinkTarget.displayLinkDidFire))
         displayLink.add(to: .current, forMode: .default)
         
         self.displayLink = displayLink
@@ -168,7 +171,6 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     }
 
     // Animation loop based od CADisplayLink
-    @objc
     private func animationLoop(link: CADisplayLink) {
         if currentAnimationStepProgress >= 1 && !animationSteps.isEmpty {
             
@@ -219,6 +221,15 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         if currentAnimationStepsSinceLastCameraUpdate >= animationStepsBetweenCameraUpdates {
             currentAnimationStepsSinceLastCameraUpdate = 0
             subscribeForCameraPositionUpdatesClosure?(position)
+        }
+    }
+    
+    /// Used as our CADisplayLink’s strongly-referenced target, to avoid a strong reference cycle.
+    private class DisplayLinkTarget {
+        weak var locationAnimator: DefaultLocationAnimator?
+        
+        @objc func displayLinkDidFire(_ displayLink: CADisplayLink) {
+            locationAnimator?.animationLoop(link: displayLink)
         }
     }
 }

@@ -32,7 +32,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         "Test-Publisher_\(UUID().uuidString)"
     }()
     
-    private let logger = MockAblyLogHandler()
+    private let logger = MockLogHandler()
     
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
@@ -227,14 +227,4 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateResolution resolution: Resolution) {
         didUpdateResolutionExpectation.fulfill()
     }
-}
-
-extension PublisherAndSubscriberSystemTests: PublisherDelegate {
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didFailWithError error: ErrorInformation) {}
-    
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateEnhancedLocation location: EnhancedLocationUpdate) {}
-    
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {}
-    
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateResolution resolution: Resolution) {}
 }

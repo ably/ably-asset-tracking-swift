@@ -18,6 +18,11 @@ public class ConnectionConfiguration {
     public let apiKey: String?
     public let clientId: String?
     public let authCallback: AuthCallback?
+    /**
+     * For development or non-default production environments.
+     * Allows a non-default Ably environment to be used such as 'sandbox'.
+     */
+    public var environment: String?
     
     /**
      Connect to Ably using basic authentication (API Key)

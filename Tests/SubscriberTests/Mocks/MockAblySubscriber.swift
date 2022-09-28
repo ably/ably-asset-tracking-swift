@@ -9,11 +9,11 @@ class MockAblySubscriber: AblySubscriber {
         didSet { wasDelegateSet = true }
     }
     
-    let logger = MockAblyLogHandler()
+    let logger = MockLogHandler()
     
     var initConnectionConfiguration: ConnectionConfiguration?
     var initMode: AblyMode?
-    required init(configuration: ConnectionConfiguration, mode: AblyMode, logger: AblyLogHandler) {
+    required init(configuration: ConnectionConfiguration, mode: AblyMode, logger: LogHandler) {
         self.initConnectionConfiguration = configuration
         self.initMode = mode
     }

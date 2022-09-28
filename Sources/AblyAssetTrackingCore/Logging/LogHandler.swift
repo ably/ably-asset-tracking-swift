@@ -3,7 +3,7 @@ import Foundation
 /**
  * Simple protocol that allows to handle logs sent from the SDK.
  */
-public protocol AblyLogHandler {
+public protocol LogHandler {
     /**
      * Gets called when a log message is sent from the SDK.
      * param `level` - The importance level of the message.

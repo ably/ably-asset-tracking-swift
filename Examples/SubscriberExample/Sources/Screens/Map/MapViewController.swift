@@ -1,5 +1,6 @@
 import UIKit
 import MapKit
+import Logging
 import AblyAssetTrackingSubscriber
 import AblyAssetTrackingUI
 
@@ -29,20 +30,27 @@ class MapViewController: UIViewController {
     private let locationAnimator: LocationAnimator
     private var subscriber: Subscriber?
     private var errors: [ErrorInformation] = []
-    private var locationUpdateInterval: TimeInterval = .zero
+    private var locationUpdateIntervalInMilliseconds: Double = .zero
 
     private var currentResolution: Resolution?
     private var resolutionDebounceTimer: Timer?
     
-    private let subscriberLogger = SubscriberLogger()
+    private let logger: Logger = {
+        var logger = Logger(label: "com.ably.SubscriberExample")
+        logger.logLevel = .info
+        return logger
+    }()
+    private let subscriberLogger: SubscriberLogger
 
     private var location: CLLocation?
 
     // MARK: - Initialization
     init(trackingId: String) {
+        self.subscriberLogger = SubscriberLogger(logger: logger)
+        
         self.trackingId = trackingId
         self.locationAnimator = DefaultLocationAnimator()
-        self.locationUpdateInterval = resolution.desiredInterval
+        self.locationUpdateIntervalInMilliseconds = resolution.desiredInterval
 
         let viewControllerType = MapViewController.self
         super.init(nibName: String(describing: viewControllerType), bundle: Bundle(for: viewControllerType))
@@ -113,7 +121,7 @@ class MapViewController: UIViewController {
             .start { [weak self] result in
                 switch result {
                 case .success:
-                    self?.subscriberLogger.i(message: "Subscriber started successfully", error: nil)
+                    self?.logger.info("Subscriber started successfully")
                 case .failure(let error):
                     self?.showErrorDialog(withMessage: error.message)
                 }
@@ -191,7 +199,7 @@ class MapViewController: UIViewController {
             case .success:
                 self?.currentResolution = resolution
                 self?.updateSubscriberResolutionLabels()
-                self?.subscriberLogger.i(message: "Updated resolution to: \(resolution)", error: nil)
+                self?.logger.info("Updated resolution to: \(resolution)")
             case .failure(let error):
                 let errorDescription = DescriptionsHelper.ResolutionStateHelper.getDescription(for: .changeError(error))
                 self?.showErrorDialog(withMessage: errorDescription)
@@ -247,7 +255,7 @@ extension MapViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let zoom = mapView.getZoomLevel()
-        subscriberLogger.d(message: "Current map zoom level: \(zoom)", error: nil)
+        logger.debug("Current map zoom level: \(zoom)")
         scheduleResolutionUpdate()
     }
     
@@ -283,7 +291,7 @@ extension MapViewController: SubscriberDelegate {
 
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         if animationSwitch.isOn {
-            locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateInterval / 1000.0)
+            locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateIntervalInMilliseconds)
         } else {
             updateTruckAnnotation(position: locationUpdate.location.toPosition())
             scrollToReceivedLocation(position: locationUpdate.location.toPosition())
@@ -303,6 +311,6 @@ extension MapViewController: SubscriberDelegate {
     }
     
     func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {
-        locationUpdateInterval = interval
+        locationUpdateIntervalInMilliseconds = interval
     }
 }

@@ -186,9 +186,17 @@ locationAnimator.subscribeForInfrequentlyUpdatingPosition { position in
 ```
 
 ```swift
+var locationUpdateIntervalInMilliseconds: Double
+
+func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {
+    locationUpdateIntervalInMilliseconds = interval
+}
+```
+
+```swift
 // Feed animator with location changes from the `Subscriber SDK`
 func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
-    locationAnimator.animateLocationUpdate(location: locationUpdate, interval: locationUpdateInterval / 1000.0)
+    locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateIntervalInMilliseconds)
 }
 ```
 

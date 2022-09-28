@@ -18,7 +18,7 @@ class DefaultPublisherTests: XCTestCase {
     var delegate: MockPublisherDelegate!
     var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
     
-    let logger = MockAblyLogHandler()
+    let logger = MockLogHandler()
     let waitAsync = WaitAsync()
     
     override func setUpWithError() throws {
@@ -68,6 +68,10 @@ class DefaultPublisherTests: XCTestCase {
         // It should ask ably publisher to track given trackable
         XCTAssertTrue(ablyPublisher.connectCalled)
         XCTAssertEqual(ablyPublisher.connectTrackableId, trackable.id)
+        
+        // It should notify the delegate that the trackables changed
+        XCTAssertTrue(delegate.publisherDidChangeTrackablesCalled)
+        XCTAssertEqual(delegate.publisherDidChangeTrackablesParamTrackables, [trackable])
         
         // It should ask location service to start updating location
         XCTAssertTrue(locationService.startUpdatingLocationCalled)
@@ -241,6 +245,10 @@ class DefaultPublisherTests: XCTestCase {
         // It should ask location service to start updating location
         XCTAssertTrue(locationService.startUpdatingLocationCalled)
         
+        // It should notify the delegate that the trackables changed
+        XCTAssertTrue(delegate.publisherDidChangeTrackablesCalled)
+        XCTAssertEqual(delegate.publisherDidChangeTrackablesParamTrackables, [trackable])
+        
         // It should notify trackables hook that there is new trackable
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedCalled)
         XCTAssertEqual(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableAddedParamTrackable, trackable)
@@ -284,13 +292,22 @@ class DefaultPublisherTests: XCTestCase {
         let expectation = XCTestExpectation()
         
         // When adding a trackable and receive error response from ablyPublisher
-        publisher.add(trackable: trackable) { result in
+        publisher.add(trackable: trackable) { [weak self] result in
+            guard let self = self
+            else {
+                XCTFail("self shouldn't be nil")
+                return
+            }
             switch result {
             case .success:
                 XCTFail("Success callback shouldn't be called")
             case .failure(let error):
                 // It should call onError callback with received error
                 XCTAssertTrue(error.isEqual(to: errorInformation))
+                
+                // It should not notify the delegate that the trackables changed
+                XCTAssertFalse(self.delegate.publisherDidChangeTrackablesCalled)
+                XCTAssertEqual(self.delegate.publisherDidChangeTrackablesParamTrackables, nil)
                 expectation.fulfill()
             }
         }
@@ -373,6 +390,10 @@ class DefaultPublisherTests: XCTestCase {
         
         // It should NOT ask locationService to stop location updates as there are some tracked trackables
         XCTAssertFalse(locationService.stopUpdatingLocationCalled)
+        
+        // It should notify the delegate that the trackables changed
+        XCTAssertTrue(delegate.publisherDidChangeTrackablesCalled)
+        XCTAssertEqual(delegate.publisherDidChangeTrackablesParamTrackables?.count, 2)
         
         // It should notify trackables hook that trackable was removed (as it was present in ablyPublisher)
         XCTAssertTrue(resolutionPolicyFactory.resolutionPolicy!.trackablesSetListener.onTrackableRemovedCalled)
