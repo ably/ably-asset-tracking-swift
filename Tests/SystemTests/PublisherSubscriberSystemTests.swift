@@ -58,7 +58,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }), logHandler: logger
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
+            logHandler: logger,
+            vehicleProfile: VehicleProfile.Car
         )
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
@@ -140,7 +142,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }), logHandler: logger
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
+            logHandler: logger,
+            vehicleProfile: .Car
         )
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)

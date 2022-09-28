@@ -82,5 +82,17 @@ public protocol Publisher {
             - `success` called when the Publisher stopped successfuly.
             - `failure` when an error occurs.
     */
-    func stop(completion: @escaping ResultHandler<Void>) 
+    func stop(completion: @escaping ResultHandler<Void>)
+
+}
+
+public enum VehicleProfile{
+    /**
+        * For cars and motorcycles.
+        */
+    case Car
+    /**
+        * For bicycles and pedestrians.
+        */
+    case Bicycle
 }

@@ -12,19 +12,38 @@ class DefaultLocationService: LocationService {
 
     init(mapboxConfiguration: MapboxConfiguration,
          historyLocation: [CLLocation]?,
-         logHandler: AblyLogHandler?) {
+         logHandler: AblyLogHandler?,
+         vehicleProfile: VehicleProfile) {
         
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
         NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
+        NavigationSettings.shared.initialize(directions: directions, // or .shared
+                                             tileStoreConfiguration: .default, // or .default
+                                             navigatorPredictionInterval: 0)
         
+        if vehicleProfile == .Bicycle {
+            let cyclingConfig = [
+                        "cache": [
+                            "enableAssetsTrackingMode": true
+                        ],
+                        "navigation": [
+                            "routeLineFallbackPolicy": [
+                                "policy": 1
+                            ]
+                        ]
+                    ]
+            UserDefaults.standard.set(cyclingConfig, forKey: MapboxCoreNavigation.customConfigKey)
+        }
+  
         if let historyLocation = historyLocation {
             replayLocationManager = ReplayLocationManager(locations: historyLocation)
         } else {
             replayLocationManager = nil
         }
         self.logHandler = logHandler
-
-        self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
+        //there are more than 2 profiles in mapbox - but we have two so I'm keeping it two for now
+        let profileIdentifier = vehicleProfile == .Bicycle ? ProfileIdentifier.cycling : ProfileIdentifier.automobile
+        self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager ,datasetProfileIdentifier: profileIdentifier)
         self.locationManager.delegate = self
     }
 
