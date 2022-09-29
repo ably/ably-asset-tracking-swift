@@ -6,10 +6,16 @@ import QuartzCore
 public class DefaultLocationAnimator: NSObject, LocationAnimator {
             
     /**
-       Defines how many animation steps have to complete before an event is passed to
-       `subscribeForCameraPositionUpdatesClosure`
+     *  Defines how many animation steps have to complete before an event is passed to
+       `subscribeForCameraPositionUpdatesClosure`.
+     *
+     *  If you change this value, the new value must be non-negative.
      */
-    public var animationStepsBetweenCameraUpdates: Int = 1
+    public var animationStepsBetweenCameraUpdates: Int = 1 {
+        willSet {
+            precondition(newValue >= 0, "animationStepsBetweenCameraUpdates must be non-negative")
+        }
+    }
     /**
      * A constant delay added to the animation duration. It helps to smooth out movement
      * when we receive a location update later than we've expected.
