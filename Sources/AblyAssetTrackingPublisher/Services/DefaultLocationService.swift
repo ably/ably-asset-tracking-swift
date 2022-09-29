@@ -36,7 +36,9 @@ class DefaultLocationService: LocationService {
                     ]
             UserDefaults.standard.set(cyclingConfig, forKey: MapboxCoreNavigation.customConfigKey)
         } else {
-            NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
+            NavigationSettings.shared.initialize(directions: directions,
+                                                 tileStoreConfiguration: .default,
+                                                 navigatorPredictionInterval: 0)
         }
 
         if let historyLocation = historyLocation {
