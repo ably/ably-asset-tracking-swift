@@ -61,6 +61,8 @@ class DefaultPublisher: Publisher {
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
     private var currentTrackablesConnectionStates: [Trackable: ConnectionState] = [:]
+    private var lastSentLocation:Location?
+    var lastSkippedLocations: [Location]?
 
     public weak var delegate: PublisherDelegate?
     private(set) public var activeTrackable: Trackable?
@@ -529,6 +531,37 @@ extension DefaultPublisher {
 
         enhancedLocationState.markMessageAsPending(for: trackable.id)
         
+        self.logHandler?.logMessage(level: LogLevel.info, message: "Enhanced location - about to send \(event.locationUpdate.location)", error: nil)
+    
+        if lastSentLocation == nil {
+            lastSentLocation = event.locationUpdate.location
+        }else {
+            if (event.locationUpdate.location == lastSentLocation){
+                self.logHandler?.logMessage(level: LogLevel.warn, message: "Enhanced location is same as previous \(event.locationUpdate.location)", error: nil)
+            }
+            lastSentLocation = event.locationUpdate.location;
+        }
+        
+        //also check skipped locations -
+        if lastSkippedLocations == nil {
+            lastSkippedLocations = event.locationUpdate.skippedLocations
+        }else {
+            if (event.locationUpdate.skippedLocations == lastSkippedLocations){
+                self.logHandler?.logMessage(level: LogLevel.warn, message: "Enhanced skipped locations are same as previous \(event.locationUpdate.location)", error: nil)
+            }else {//check if skipped locations here also contains locations here
+                for location in event.locationUpdate.skippedLocations {
+                    for previousLocation in lastSkippedLocations! {
+                        if (previousLocation == location){
+                            self.logHandler?.logMessage(level: LogLevel.warn, message: "Skipped locations have same location from previous skipped list \(location)", error: nil)
+                        }
+                    }
+                }
+                
+            }
+            lastSkippedLocations = event.locationUpdate.skippedLocations;
+        }
+        
+        
         ablyPublisher.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackable: trackable) { [weak self] result in
             switch result {
             case .failure(let error):
@@ -538,6 +571,8 @@ extension DefaultPublisher {
             }
         }
     }
+    
+    
     
     private func sendRawLocationUpdate(event: Event.RawLocationChangedEvent, trackable: Trackable) {
         lastRawLocations[trackable] = event.locationUpdate.location
