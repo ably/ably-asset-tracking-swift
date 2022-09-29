@@ -40,8 +40,8 @@ class DescriptionsHelper {
     }
     
     enum AssetState {
-        case connectionState(_: ConnectionState)
-        case none
+        case connectionState(_: ConnectionState?)
+        case subscriberPresence(isPresent: Bool?)
     }
     
     // MARK: - AssetConnectionState
@@ -49,16 +49,28 @@ class DescriptionsHelper {
         static func getDescriptionAndColor(for state: AssetState) -> (desc: String, color: UIColor) {
             switch state {
             case .connectionState(let connectionState):
-                switch connectionState {
-                case .online:
-                    return ("online", .systemGreen)
-                case .offline:
-                    return ("offline", .systemRed)
-                case .failed:
-                    return ("failed", .systemRed)
+                if let connectionState = connectionState {
+                    switch connectionState {
+                    case .online:
+                        return ("online", .systemGreen)
+                    case .offline:
+                        return ("offline", .systemRed)
+                    case .failed:
+                        return ("failed", .systemRed)
+                    }
+                } else {
+                    return ("The asset connection status is not determined", .black)
                 }
-            case .none:
-                return ("The asset connection status is not determined", .black)
+            case .subscriberPresence(let isPresent):
+                if let isPresent = isPresent {
+                    if isPresent {
+                        return ("present", .systemGreen)
+                    } else {
+                        return ("not present", .systemRed)
+                    }
+                } else {
+                    return ("The publisher’s presence is not determined", .black)
+                }
             }
         }
     }
