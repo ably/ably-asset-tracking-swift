@@ -68,6 +68,8 @@ public protocol PublisherBuilder {
      */
     func logHandler(handler: LogHandler?) -> PublisherBuilder
     
-    
+    /**
+     Sets an optional `vehicleProfile`for the publisher, Currently there are two vehicle profiles : Bicycle and Car
+     */
     func vehicleProfile(vehicleProfile: VehicleProfile) -> PublisherBuilder
 }
