@@ -3,7 +3,7 @@ import Ably
 import AblyAssetTrackingCore
 
 public class DefaultAbly: AblyCommon {
-    enum AblyError : Error {
+    enum InternalError : Error {
         case connectionError(errorInfo: ARTErrorInfo)
     }
 
@@ -144,24 +144,24 @@ public class DefaultAbly: AblyCommon {
             
             channels.removeValue(forKey: trackableId)
             completion(.success(true))
-        }catch AblyError.connectionError(let errorInfo){
+        }catch InternalError.connectionError(let errorInfo){
             completion(.failure(errorInfo.toErrorInformation()))
         }catch{
-            completion(.failure(ErrorInformation(error: AblyError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100_000, message: "Unknown error while disconnecting")))))
+            completion(.failure(ErrorInformation(error: InternalError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100_000, message: "Unknown error while disconnecting")))))
         }
     }
     
     private func disconnectChannel(channel:AblySDKRealtimeChannel, presenceData: PresenceData) throws{
         leavePresence(channel: channel, presenceData: presenceData) { leaveError in
             if let leaveError = leaveError {
-                throw AblyError.connectionError(errorInfo: leaveError)
+                throw InternalError.connectionError(errorInfo: leaveError)
             }
             
             channel.unsubscribe()
             channel.presence.unsubscribe()
             self.detachFromChannel(channel: channel) { detachError in
                 guard let error = detachError else { return }
-                throw AblyError.connectionError(errorInfo: error)
+                throw InternalError.connectionError(errorInfo: error)
             }
         }
     }
@@ -199,7 +199,7 @@ public class DefaultAbly: AblyCommon {
     private func performChannelOperationWithRetry(channel:AblySDKRealtimeChannel, operation : (AblySDKRealtimeChannel) throws ->Void) throws {
       do {
           try operation(channel)
-      } catch  AblyError.connectionError(let errorInfo) {
+      } catch  InternalError.connectionError(let errorInfo) {
            if errorInfo.isConnectionResumeException(){
                logHandler?.w(message: "Connection resume failed for channel \(channel), waiting for the channel to be reconnected",
                        error: errorInfo
@@ -207,14 +207,14 @@ public class DefaultAbly: AblyCommon {
                do { try waitForChannelReconnection(channel: channel)
                    try waitForChannelReconnection(channel: channel)
                    try operation(channel)
-               }catch AblyError.connectionError(let secondError){
+               }catch InternalError.connectionError(let secondError){
                    logHandler?.w(message: "Retrying the operation on channel \(channel.name) has failed for the second time",
                                           error: secondError
                                       )
-                   throw AblyError.connectionError(errorInfo: secondError)
+                   throw InternalError.connectionError(errorInfo: secondError)
                }
            }else {
-               throw AblyError.connectionError(errorInfo: errorInfo)
+               throw InternalError.connectionError(errorInfo: errorInfo)
            }
       }
     }
@@ -240,7 +240,7 @@ public class DefaultAbly: AblyCommon {
         let result = blockingDispatchGroup.wait(timeout: timeout)
         
         if (result == .timedOut){
-            throw AblyError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100000, message: "Timeout was thrown when waiting for channel to attach"))
+            throw InternalError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100000, message: "Timeout was thrown when waiting for channel to attach"))
         }
     }
     
@@ -374,7 +374,7 @@ public class DefaultAbly: AblyCommon {
            try performChannelOperationWithRetry(channel: channel) { channel in
                updatePresenceData(channel: channel, presenceData: presenceData, completion)
             }
-        } catch AblyError.connectionError(let errorInfo){
+        } catch InternalError.connectionError(let errorInfo){
             completion?(.failure(errorInfo.toErrorInformation()))
         }catch{
             let artErrorInfo = ARTErrorInfo.create(from: error)
@@ -520,7 +520,7 @@ extension DefaultAbly: AblyPublisher {
                 }
             }
 
-        } catch AblyError.connectionError(let errorInfo){
+        } catch InternalError.connectionError(let errorInfo){
             completion?(.failure(errorInfo.toErrorInformation()))
         }catch{
             let artErrorInfo = ARTErrorInfo.create(from: error)
