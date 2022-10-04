@@ -17,8 +17,8 @@ class DefaultLocationService: LocationService {
 
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
 
-        NavigationSettings.shared.initialize(directions: directions, // or .shared
-                                             tileStoreConfiguration: .default, // or .default
+        NavigationSettings.shared.initialize(directions: directions,
+                                             tileStoreConfiguration: .default,
                                              navigatorPredictionInterval: 0,
                                              statusPollingConfig: .init(unconditionalPollingPatience: .greatestFiniteMagnitude ,
                                                                         unconditionalPollingInterval: nil))
