@@ -139,7 +139,7 @@ public class DefaultAbly: AblyCommon {
                     return
                 }
 
-                try disconnectChannel(channel: channel, presenceData: presenceData)
+                disconnectChannel(channel: channel, presenceData: presenceData)
             })
             
             channels.removeValue(forKey: trackableId)
@@ -151,7 +151,7 @@ public class DefaultAbly: AblyCommon {
         }
     }
     
-    private func disconnectChannel(channel:AblySDKRealtimeChannel, presenceData: PresenceData) throws{
+    private func disconnectChannel(channel:AblySDKRealtimeChannel, presenceData: PresenceData){
         leavePresence(channel: channel, presenceData: presenceData) { leaveError in
             if let leaveError = leaveError {
                 throw InternalError.connectionError(errorInfo: leaveError)
