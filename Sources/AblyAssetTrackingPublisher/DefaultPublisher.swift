@@ -539,6 +539,12 @@ extension DefaultPublisher {
             if  event.locationUpdate.skippedLocations.contains(previousLoc){
                 self.logHandler?.logMessage(level: LogLevel.warn, message: "Current skipped locations contain previously sent lcoation \(lastSentLocation)", error: nil)
             }
+            
+            ///check if it's only coordinates that are the same
+            let coordinates = event.locationUpdate.skippedLocations.map { $0.coordinate}
+            if coordinates.contains(previousLoc.coordinate){
+                self.logHandler?.logMessage(level: LogLevel.warn, message: "Only coordinates are the same \(lastSentLocation)", error: nil)
+            }
         }
        
     
