@@ -7,7 +7,7 @@ class PublisherLogger: AblyAssetTrackingCore.LogHandler {
         
     init () {
         swiftLog = Logger(label: "com.ably.PublisherExampleSwiftUI")
-        swiftLog.logLevel = .info
+        swiftLog.logLevel = .trace
     }
     
     func logMessage(level: LogLevel, message: String, error: Error?) {
