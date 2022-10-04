@@ -16,7 +16,9 @@ class DefaultLocationService: LocationService {
          logHandler: LogHandler?) {
         
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
-        NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
+        NavigationSettings.shared.initialize(directions: directions,
+                                             tileStoreConfiguration: .default,
+                                             statusUpdatingSettings: .init(updatingPatience: .greatestFiniteMagnitude, updatingInterval: nil))
         
         if let historyLocation = historyLocation {
             replayLocationManager = ReplayLocationManager(locations: historyLocation)
