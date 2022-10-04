@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-common-ios.git",
         "state": {
           "branch": null,
-          "revision": "e39540d5e8c8709db5ca53f0fdaeea64e351548c",
-          "version": "22.1.0"
+          "revision": "94505a90242f621ac537f9a275bbd0b4deb5a64e",
+          "version": "23.0.0"
         }
       },
       {
@@ -114,8 +114,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-core-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "2d9dc9f1fddf7e5fc14701b4d151b960c9c8745d",
-          "version": "10.7.0"
+          "revision": "d10cd7b364d29caa4366dddd990b0f5c3cba113d",
+          "version": "10.8.0"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-directions-swift.git",
         "state": {
           "branch": null,
-          "revision": "ad9ae364b2ec706886394e1ac460df7758222d93",
-          "version": "2.6.0"
+          "revision": "2bbd4e385ff7b3edd5022212c0f77d2474fc08c8",
+          "version": "2.7.0"
         }
       },
       {
@@ -141,8 +141,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-maps-ios.git",
         "state": {
           "branch": null,
-          "revision": "e50c17c992a9b1d519b2808e4d66193ca259cd39",
-          "version": "10.7.0"
+          "revision": "cc0f7d86b42194e3872b76a0184fd58064e29f10",
+          "version": "10.8.1"
         }
       },
       {
@@ -150,8 +150,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
         "state": {
           "branch": null,
-          "revision": "99bf016aa7afd170d1340e62e583ab2a53243073",
-          "version": "2.7.1"
+          "revision": "b2da981652bff257438fe153f14a478f268b433d",
+          "version": "2.8.0"
         }
       },
       {
@@ -159,8 +159,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
         "state": {
           "branch": null,
-          "revision": "1520d56638cdb073ac401628eb4ce55036d1a349",
-          "version": "111.0.1"
+          "revision": "6d15299dc45e4b2ca956247b27fc31528a1c95f0",
+          "version": "115.0.1"
         }
       },
       {
