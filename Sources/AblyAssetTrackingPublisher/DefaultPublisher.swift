@@ -42,9 +42,14 @@ class DefaultPublisher: Publisher {
     private var subscribers: [Trackable: Set<Subscriber>]
     private var resolutions: [Trackable: Resolution]
     private var locationEngineResolution: Resolution
-    private var trackables: Set<Trackable>
+    private var trackables: Set<Trackable> {
+        didSet {
+            notifyTrackablesChanged(trackables: trackables)
+        }
+    }
+    
     private var constantLocationEngineResolution: Resolution?
-
+    
     private var lastEnhancedLocations: [Trackable: Location]
     private var lastEnhancedTimestamps: [Trackable: Double]
     private var lastRawLocations: [Trackable: Location]
@@ -831,6 +836,13 @@ extension DefaultPublisher {
         performOnMainThread { [weak self] in
             guard let self = self else { return }
             self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
+        }
+    }
+    
+    private func notifyTrackablesChanged(trackables: Set<Trackable>) {
+        performOnMainThread { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.publisher(sender: self, didChangeTrackables: trackables)
         }
     }
 }

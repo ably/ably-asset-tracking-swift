@@ -49,4 +49,15 @@ class MockPublisherDelegate: PublisherDelegate {
         publisherDidUpdateResolutionParamResolution = resolution
         publisherDidUpdateResolutionCallback?()
     }
+    
+    var publisherDidChangeTrackablesCalled: Bool = false
+    var publisherDidChangeTrackablesParamSender: Publisher?
+    var publisherDidChangeTrackablesParamTrackables: Set<Trackable>?
+    var publisherDidChangeTrackablesCallback: (() -> Void)?
+    func publisher(sender: Publisher, didChangeTrackables trackables: Set<Trackable>) {
+        publisherDidChangeTrackablesCalled = true
+        publisherDidChangeTrackablesParamSender = sender
+        publisherDidChangeTrackablesParamTrackables = trackables
+        publisherDidChangeTrackablesCallback?()
+    }
 }
