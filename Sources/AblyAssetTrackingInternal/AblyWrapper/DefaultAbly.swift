@@ -198,17 +198,13 @@ public class DefaultAbly: AblyCommon {
      */
     private func performChannelOperationWithRetry(channel:AblySDKRealtimeChannel, operation : (AblySDKRealtimeChannel) throws ->Void) throws {
       do {
-          logHandler?.w(message: "Trying to perform an operation on a suspended channel \(channel.name), waiting for the channel to be reconnected", error: nil)
-          try waitForChannelReconnection(channel: channel)
           try operation(channel)
       } catch  AblyError.connectionError(let errorInfo) {
            if errorInfo.isConnectionResumeException(){
-            
                logHandler?.w(message: "Connection resume failed for channel \(channel), waiting for the channel to be reconnected",
                        error: errorInfo
                )
-
-               do {
+               do { try waitForChannelReconnection(channel: channel)
                    try waitForChannelReconnection(channel: channel)
                    try operation(channel)
                }catch AblyError.connectionError(let secondError){
