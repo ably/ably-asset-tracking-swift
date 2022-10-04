@@ -53,6 +53,7 @@ extension DefaultLocationService: PassiveLocationManagerDelegate {
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
+        logHandler?.verbose(message: "\(String(describing: Self.self)), passiveLocationManager(\(manager), didUpdateLocation: \(String(reflecting: location)), rawLocation: \(String(reflecting: rawLocation))", error: nil)
         delegate?.locationService(sender: self, didUpdateRawLocationUpdate: RawLocationUpdate(location: rawLocation.toLocation()))
         delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location.toLocation()))
     }
