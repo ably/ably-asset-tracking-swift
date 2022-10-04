@@ -204,7 +204,7 @@ public class DefaultAbly: AblyCommon {
                logHandler?.w(message: "Connection resume failed for channel \(channel), waiting for the channel to be reconnected",
                        error: errorInfo
                )
-               do { try waitForChannelReconnection(channel: channel)
+               do {
                    try waitForChannelReconnection(channel: channel)
                    try operation(channel)
                }catch InternalError.connectionError(let secondError){
