@@ -57,6 +57,7 @@ extension DefaultSubscriber {
         case delegateResolutionReceived(DelegateResolutionReceivedEvent)
         case delegateDesiredIntervalReceived(DelegateDesiredIntervalReceivedEvent)
         case delegateConnectionStatusChanged(DelegateConnectionStatusChangedEvent)
+        case delegateUpdatedPublisherPresence(DelegateUpdatedPublisherPresenceEvent)
         
         struct DelegateErrorEvent {
             let error: ErrorInformation
@@ -80,6 +81,10 @@ extension DefaultSubscriber {
         
         struct DelegateConnectionStatusChangedEvent {
             let status: ConnectionState
+        }
+        
+        struct DelegateUpdatedPublisherPresenceEvent {
+            let isPresent: Bool
         }
     }
 }

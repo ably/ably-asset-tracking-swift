@@ -53,6 +53,17 @@ public protocol SubscriberDelegate: AnyObject {
         - status: Updated connection status.
      */
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState)
+    
+    /**
+     Called when the `Subscriber` receives updated information about whether the publisher is present.
+     
+     > Note: This API is experimental and may change or be removed in the future.
+     
+     - Parameters:
+        - sender: `Subscriber` instance.
+        - isPresent: Whether the publisher is present.
+     */
+    func subscriber(sender: Subscriber, didUpdatePublisherPresence isPresent: Bool)
 }
 
 public extension SubscriberDelegate {
@@ -70,4 +81,9 @@ public extension SubscriberDelegate {
      Default implementation to make this method `optional`
     */
     func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {}
+    
+    /**
+     Default implementation to make this method `optional`
+    */
+    func subscriber(sender: Subscriber, didUpdatePublisherPresence isPresent: Bool) {}
 }

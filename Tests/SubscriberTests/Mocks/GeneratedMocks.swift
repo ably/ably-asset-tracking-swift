@@ -131,4 +131,21 @@ class SubscriberDelegateMock: SubscriberDelegate {
         subscriberSenderDidChangeAssetConnectionStatusClosure?(sender, status)
     }
 
+    //MARK: - subscriber
+
+    var subscriberSenderDidUpdatePublisherPresenceCallsCount = 0
+    var subscriberSenderDidUpdatePublisherPresenceCalled: Bool {
+        return subscriberSenderDidUpdatePublisherPresenceCallsCount > 0
+    }
+    var subscriberSenderDidUpdatePublisherPresenceReceivedArguments: (sender: Subscriber, isPresent: Bool)?
+    var subscriberSenderDidUpdatePublisherPresenceReceivedInvocations: [(sender: Subscriber, isPresent: Bool)] = []
+    var subscriberSenderDidUpdatePublisherPresenceClosure: ((Subscriber, Bool) -> Void)?
+
+    func subscriber(sender: Subscriber, didUpdatePublisherPresence isPresent: Bool) {
+        subscriberSenderDidUpdatePublisherPresenceCallsCount += 1
+        subscriberSenderDidUpdatePublisherPresenceReceivedArguments = (sender: sender, isPresent: isPresent)
+        subscriberSenderDidUpdatePublisherPresenceReceivedInvocations.append((sender: sender, isPresent: isPresent))
+        subscriberSenderDidUpdatePublisherPresenceClosure?(sender, isPresent)
+    }
+
 }
