@@ -532,6 +532,15 @@ extension DefaultPublisher {
         enhancedLocationState.markMessageAsPending(for: trackable.id)
         
         self.logHandler?.logMessage(level: LogLevel.info, message: "Enhanced location - about to send \(event.locationUpdate.location)", error: nil)
+        
+        //bug logger
+        
+        if let previousLoc = lastSentLocation {
+            if  event.locationUpdate.skippedLocations.contains(previousLoc){
+                self.logHandler?.logMessage(level: LogLevel.warn, message: "Current skipped locations contain previously sent lcoation \(lastSentLocation)", error: nil)
+            }
+        }
+       
     
         if lastSentLocation == nil {
             lastSentLocation = event.locationUpdate.location
