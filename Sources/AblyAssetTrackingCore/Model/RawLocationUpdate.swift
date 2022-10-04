@@ -9,3 +9,9 @@ public class RawLocationUpdate: LocationUpdate {
         self.location = location
     }
 }
+
+extension RawLocationUpdate: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "{ location: \(String(reflecting: location)), skippedLocations: \(String(reflecting: skippedLocations)) }"
+    }
+}

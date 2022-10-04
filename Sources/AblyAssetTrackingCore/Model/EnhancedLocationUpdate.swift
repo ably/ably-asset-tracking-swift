@@ -24,6 +24,12 @@ public class EnhancedLocationUpdate: LocationUpdate {
     
 }
 
+extension EnhancedLocationUpdate: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "{ location: \(String(reflecting: location)), skippedLocations: \(String(reflecting: skippedLocations)), type: \(String(reflecting: type)) }"
+    }
+}
+
 extension EnhancedLocationUpdate: Equatable {
     public static func == (lhs: EnhancedLocationUpdate, rhs: EnhancedLocationUpdate) -> Bool {
         lhs.location == rhs.location && lhs.skippedLocations == rhs.skippedLocations && lhs.type == rhs.type

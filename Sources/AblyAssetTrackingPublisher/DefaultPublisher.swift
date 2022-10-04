@@ -855,12 +855,12 @@ extension DefaultPublisher: LocationServiceDelegate {
     }
 
     func locationService(sender: LocationService, didUpdateRawLocationUpdate locationUpdate: RawLocationUpdate) {
-        logHandler?.debug(message: "\(String(describing: Self.self)): locationService.didUpdateRawLocation.", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): locationService.didUpdateRawLocation: \(String(reflecting: locationUpdate)).", error: nil)
         enqueue(event: .rawLocationChanged(.init(locationUpdate: locationUpdate)))
     }
     
     func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
-        logHandler?.debug(message: "\(String(describing: Self.self)): locationService.didUpdateEnhancedLocation.", error: nil)
+        logHandler?.debug(message: "\(String(describing: Self.self)): locationService.didUpdateEnhancedLocation: \(String(reflecting: locationUpdate)).", error: nil)
         enqueue(event: .enhancedLocationChanged(.init(locationUpdate: locationUpdate)))
         callback(event: .delegateEnhancedLocationChanged(.init(locationUpdate: locationUpdate)))
     }
