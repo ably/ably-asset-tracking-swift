@@ -132,41 +132,45 @@ public class DefaultAbly: AblyCommon {
             completion(.success(false))
             return
         }
-
-        do {
-            try performChannelOperationWithRetry(channel: channelToRemove, operation: { channel in
-                guard let presenceData = presenceData else {
-                    return
+        
+        let disconnectOperation : (AblySDKRealtimeChannel, @escaping (ARTErrorInfo?) -> Void ) -> Void = {channel, completion in
+            guard let presenceData = presenceData else {
+                return
+            }
+        
+            self.disconnectChannel(channel: channel, presenceData: presenceData,completion: completion)
+        }
+        
+        performChannelOperationWithRetry(channel: channelToRemove, operation: disconnectOperation) { error in
+            if let error = error {
+                switch error {
+                case .connectionError(let errorInfo):
+                    completion(.failure(errorInfo.toErrorInformation()))
                 }
-
-                disconnectChannel(channel: channel, presenceData: presenceData)
-            })
-            
-            channels.removeValue(forKey: trackableId)
-            completion(.success(true))
-        }catch InternalError.connectionError(let errorInfo){
-            completion(.failure(errorInfo.toErrorInformation()))
-        }catch{
-            completion(.failure(ErrorInformation(error: InternalError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100_000, message: "Unknown error while disconnecting")))))
+            }
         }
     }
     
-    private func disconnectChannel(channel:AblySDKRealtimeChannel, presenceData: PresenceData){
+    private func disconnectChannel(channel:AblySDKRealtimeChannel, presenceData: PresenceData, completion : @escaping (ARTErrorInfo?) -> Void){
         leavePresence(channel: channel, presenceData: presenceData) { leaveError in
             if let leaveError = leaveError {
-                throw InternalError.connectionError(errorInfo: leaveError)
+                completion(leaveError)
+                return
             }
             
             channel.unsubscribe()
             channel.presence.unsubscribe()
             self.detachFromChannel(channel: channel) { detachError in
-                guard let error = detachError else { return }
-                throw InternalError.connectionError(errorInfo: error)
+                guard let error = detachError else {
+                    completion(nil)
+                    return
+                }
+                completion(error)
             }
         }
     }
     
-    private func leavePresence(channel:AblySDKRealtimeChannel, presenceData: PresenceData?, completion : @escaping (ARTErrorInfo?) throws -> Void){
+    private func leavePresence(channel:AblySDKRealtimeChannel, presenceData: PresenceData?, completion : @escaping (ARTErrorInfo?) -> Void){
         let presenceDataJSON: Any?
         if let presenceData = presenceData {
             presenceDataJSON = self.presenceDataJSON(data: presenceData)
@@ -175,72 +179,84 @@ public class DefaultAbly: AblyCommon {
         }
         
          channel.presence.leave(presenceDataJSON){ errorInfo in
-             //This is to maintain closure signature
-             do{
-                 try completion(errorInfo)
-             }catch{}
+            completion(errorInfo)
         }
 
     }
     
-    private func detachFromChannel(channel:AblySDKRealtimeChannel, completion : @escaping (ARTErrorInfo?) throws -> Void) {
+    private func detachFromChannel(channel:AblySDKRealtimeChannel, completion : @escaping (ARTErrorInfo?) -> Void) {
         channel.detach { errorInfo in
-            do{
-                try completion(errorInfo)
-            }catch{}
+            completion(errorInfo)
         }
     }
 
     /**
-     * Performs the [operation] and if a "connection resume" exception is thrown it waits for the [channel] to
+     * Performs the [operation] and if a "connection resume" exception is occured, [channel] to
      * reconnect and retries the [operation], otherwise it rethrows the exception. If the [operation] fails for
      * the second time the exception is rethrown no matter if it was the "connection resume" exception or not.
+     * Please note that exceptions aren't thrown directly, they will be passed through completion handlers
      */
-    private func performChannelOperationWithRetry(channel:AblySDKRealtimeChannel, operation : (AblySDKRealtimeChannel) throws ->Void) throws {
-      do {
-          try operation(channel)
-      } catch  InternalError.connectionError(let errorInfo) {
-           if errorInfo.isConnectionResumeException(){
-               logHandler?.w(message: "Connection resume failed for channel \(channel), waiting for the channel to be reconnected",
-                       error: errorInfo
-               )
-               do {
-                   try waitForChannelReconnection(channel: channel)
-                   try operation(channel)
-               }catch InternalError.connectionError(let secondError){
-                   logHandler?.w(message: "Retrying the operation on channel \(channel.name) has failed for the second time",
-                                          error: secondError
-                                      )
-                   throw InternalError.connectionError(errorInfo: secondError)
-               }
-           }else {
-               throw InternalError.connectionError(errorInfo: errorInfo)
-           }
-      }
+    private func performChannelOperationWithRetry(channel:AblySDKRealtimeChannel,
+                                                  operation : @escaping (AblySDKRealtimeChannel, _ operationCompletion: @escaping (ARTErrorInfo?) -> Void) -> Void,
+                                                  completion: @escaping (InternalError?) -> Void) {
+        
+         operation(channel){ errorInfo in
+            if let errorInfo = errorInfo {
+                if errorInfo.isConnectionResumeException(){
+                    self.logHandler?.w(message: "Connection resume failed for channel \(channel), waiting for the channel to be reconnected",
+                                  error: errorInfo
+                    )
+                    self.waitForChannelReconnection(channel: channel) { error in
+                        if let error = error {
+                            self.logHandler?.w(message: "Retrying the operation on channel \(channel.name) has failed for the second time",
+                                          error: error
+                            )
+                            completion(InternalError.connectionError(errorInfo: ARTErrorInfo.create(from: error)))
+                        } else {
+                            operation(channel){ secondError in
+                                if let secondError = secondError {
+                                    self.logHandler?.w(message: "Retrying the operation on channel \(channel.name) has failed for the second time", error: secondError
+                                    )
+                                }else{
+                                    completion(nil)
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    completion(InternalError.connectionError(errorInfo: errorInfo))
+                }
+            } else {
+                completion(nil)
+            }
+        }
     }
 
     /**
      * Waits for the [channel] to change to the [ChannelState.attached] state.
-     * If this doesn't happen during the next [timeoutInMs] milliseconds, then an exception is thrown.
+     * If this doeen't happen in 10000ms compeltion callback will callback with error
      */
-    private func waitForChannelReconnection(channel:AblySDKRealtimeChannel, timeoutInMs:Int = 10_000) throws{
+    private func waitForChannelReconnection(channel:AblySDKRealtimeChannel,
+                                            completion: @escaping (_ error:InternalError?) -> Void){
+        
+        let timeoutInMs = 10_000
         guard channel.state.toConnectionState() != .online else{
+            completion(nil)
             return
         }
-        let blockingDispatchGroup = DispatchGroup()
-        blockingDispatchGroup.enter()
+        
+        let timeoutWorkItem = DispatchWorkItem(block: {
+            completion(InternalError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100000, message: "Timeout was thrown when waiting for channel to attach")))
+            
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(timeoutInMs / 1000), execute: timeoutWorkItem)
+        
         channel.on { stateChange in
             if (stateChange.current.toConnectionState() == .online){
-                blockingDispatchGroup.leave()
+                timeoutWorkItem.cancel()
+                completion(nil)
             }
-            
-        }
-        let timeout: DispatchTime = .now() + .seconds(timeoutInMs / 1000)
-        
-        let result = blockingDispatchGroup.wait(timeout: timeout)
-        
-        if (result == .timedOut){
-            throw InternalError.connectionError(errorInfo: ARTErrorInfo.create(withCode: 100000, message: "Timeout was thrown when waiting for channel to attach"))
         }
     }
     
@@ -356,12 +372,12 @@ public class DefaultAbly: AblyCommon {
         }
     }
     
-    private func updatePresenceData(channel: AblySDKRealtimeChannel, presenceData: PresenceData, _ completion: ResultHandler<Void>?) {
+    private func updatePresenceDataOnChannel(channel: AblySDKRealtimeChannel, presenceData: PresenceData, completion : @escaping (ARTErrorInfo?) -> Void){
         channel.presence.update(presenceDataJSON(data: presenceData)) { error in
             if let error = error {
-                completion?(.failure(error.toErrorInformation()))
+                completion(ARTErrorInfo.create(from: error))
             } else {
-                completion?(.success)
+                completion(nil)
             }
         }
     }
@@ -370,15 +386,20 @@ public class DefaultAbly: AblyCommon {
         guard let channel = channels[trackableId] else {
             return
         }
-        do{
-           try performChannelOperationWithRetry(channel: channel) { channel in
-               updatePresenceData(channel: channel, presenceData: presenceData, completion)
+        
+        let updatePresenceOperation : (AblySDKRealtimeChannel, @escaping (ARTErrorInfo?) -> Void ) -> Void = {channel, completion in
+            self.updatePresenceDataOnChannel(channel: channel, presenceData: presenceData, completion: completion)
+        }
+        
+        performChannelOperationWithRetry(channel: channel, operation: updatePresenceOperation) { error in
+            if let error = error {
+                switch error {
+                case .connectionError(let errorInfo):
+                    completion?(.failure(errorInfo.toErrorInformation()))
+                }
+            }else {
+                completion?(.success)
             }
-        } catch InternalError.connectionError(let errorInfo){
-            completion?(.failure(errorInfo.toErrorInformation()))
-        }catch{
-            let artErrorInfo = ARTErrorInfo.create(from: error)
-            completion?(.failure(artErrorInfo.toErrorInformation()))
         }
     }
     
@@ -501,32 +522,43 @@ extension DefaultAbly: AblyPublisher {
     }
 
     private func sendMessageForTrackable(channel: AblySDKRealtimeChannel, message: ARTMessage, trackable: Trackable, completion: ResultHandler<()>?) {
-        do {
-            try performChannelOperationWithRetry(channel: channel) { channel in
-                channel.publish([message]) { [weak self] error in
-                    guard let self = self else {
-                        return
-                    }
-
-                    if let error = error {
-                        self.logHandler?.e(message: "\(String(describing: Self.self)): Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
-                        self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
-
-                        return
-                    }
-
-                    self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: .online, forTrackable: trackable)
+        
+        let publishMessageOperation : (AblySDKRealtimeChannel, @escaping (ARTErrorInfo?) -> Void ) -> Void = {channel, completion in
+            self.publishOnChannel(trackable: trackable, channel: channel, message: message, completion: completion)
+            }
+            
+            self.performChannelOperationWithRetry(channel: channel, operation: publishMessageOperation) { error in
+                if let error = error {
+                    let artErrorInfo = ARTErrorInfo.create(from: error)
+                    completion?(.failure(artErrorInfo.toErrorInformation()))
+                } else {
                     completion?(.success)
                 }
             }
-
-        } catch InternalError.connectionError(let errorInfo){
-            completion?(.failure(errorInfo.toErrorInformation()))
-        }catch{
-            let artErrorInfo = ARTErrorInfo.create(from: error)
-            completion?(.failure(artErrorInfo.toErrorInformation()))
+            
         }
 
+    
+    private func publishOnChannel(trackable:Trackable,
+                                  channel: AblySDKRealtimeChannel,
+                                  message:ARTMessage,
+                                  completion: @escaping (ARTErrorInfo?) -> Void){
+       
+        channel.publish([message]) { [weak self] error in
+            guard let self = self else {
+                return
+            }
+            
+            if let error = error {
+                self.logHandler?.e(message: "\(String(describing: Self.self)): Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
+                self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
+                completion(error)
+                return
+            }
+            
+            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: .online, forTrackable: trackable)
+            completion(nil)
+        }
     }
 
     public func sendRawLocation(
