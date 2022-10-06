@@ -35,7 +35,15 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
 
-    func testSubscriberReceivesPublisherMessage() throws {
+    func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws{
+        try subscriberReceivesPublisherMessage(vehicleProfile: .Bicycle)
+    }
+    
+    func testSubscriberReceivesPublisherMessageWithCarProfile() throws{
+        try subscriberReceivesPublisherMessage(vehicleProfile: .Car)
+    }
+    
+    func subscriberReceivesPublisherMessage(vehicleProfile: VehicleProfile) throws {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
         } catch {
@@ -58,7 +66,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
             historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
             logHandler: logger,
-            vehicleProfile: VehicleProfile.Car
+            vehicleProfile: vehicleProfile
         )
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
@@ -131,7 +139,15 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         subscriber.stop(completion: { _ in })
     }
     
-    func testSubscriberReceivesAssetConnectionStatus() throws {
+    func testSubscriberReceivesAssetConnectionStatusWithBicycleProfile() throws {
+        subscriberReceivesAssetConnectionStatus(vehicleProfile: .Bicycle)
+    }
+    
+    func testSubscriberReceivesAssetConnectionStatusWithCarProfile() throws {
+        subscriberReceivesAssetConnectionStatus(vehicleProfile: .Car)
+    }
+    
+    func subscriberReceivesAssetConnectionStatus(vehicleProfile: VehicleProfile) throws {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
         } catch {
@@ -142,7 +158,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
             historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
             logHandler: logger,
-            vehicleProfile: .Car
+            vehicleProfile: vehicleProfile
         )
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
