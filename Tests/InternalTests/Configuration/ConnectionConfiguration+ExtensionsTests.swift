@@ -14,15 +14,24 @@ class ConnectionConfigurationTests: XCTestCase {
         XCTAssertNil(clientOptions.authCallback)
     }
     
+    @available(*, deprecated, message: "Testing deprecated ConnectionConfiguration(clientId:authCallback:) initializer")
+    func test_getClientOptions_populatesClientId() throws {
+        let clientId = "My client id"
+        let configuration = ConnectionConfiguration(clientId: clientId, authCallback: { _, _ in })
+        
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
+        
+        XCTAssertEqual(clientOptions.clientId, clientId)
+    }
+    
     func testTokenAuthenticationReturningTokenRequestPassedItToAblySDK() throws {
         var authCallbackCalled = false
         
-        let clientId = "My client id"
         let keyname = "ABCD"
         let timestamp = Date()
         let nonce = "12331"
         
-        let configuration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, resultHandler in
+        let configuration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
             authCallbackCalled = true
             let timestampEpochInMilliseconds = Int(tokenParams.timestamp!.timeIntervalSince1970 * 1000)
             let tokenRequest = TokenRequest(keyName: keyname, clientId: tokenParams.clientId!, capability: tokenParams.capability!, timestamp: timestampEpochInMilliseconds, nonce: tokenParams.nonce!, mac: "Some random mac")
@@ -31,7 +40,8 @@ class ConnectionConfigurationTests: XCTestCase {
         
         // Checking the clientOptions provided is structured correctly for Ably-cocoa
         let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
-        XCTAssertEqual(clientOptions.clientId, clientId)
+        
+        let clientId = "My client id"
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
         XCTAssertNotNil(clientOptions.authCallback)
         (clientOptions.authCallback!)(tokenParams) { result, error in
@@ -50,19 +60,19 @@ class ConnectionConfigurationTests: XCTestCase {
         func testTokenAuthenticationReturningTokenDetailsPassesItToAblySDK() throws {
             var authCallbackCalled = false
             
-            let clientId = "My client id"
             let timestamp = Date()
             let nonce = "12331"
             
-            let configuration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, resultHandler in
+            let configuration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
                 authCallbackCalled = true
-                let tokenDetails = TokenDetails(token: "Some token", expires: Date(), issued: Date(), capability: "", clientId: clientId)
+                let tokenDetails = TokenDetails(token: "Some token", expires: Date(), issued: Date(), capability: "", clientId: tokenParams.clientId!)
                 resultHandler(.success(.tokenDetails(tokenDetails)))
             })
             
             // Checking the clientOptions provided is structured correctly for Ably-cocoa
             let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
-            XCTAssertEqual(clientOptions.clientId, clientId)
+            
+            let clientId = "My client id"
             let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
             XCTAssertNotNil(clientOptions.authCallback)
             (clientOptions.authCallback!)(tokenParams) { result, error in
@@ -79,20 +89,19 @@ class ConnectionConfigurationTests: XCTestCase {
     func testTokenAuthenticationPassesTokenStringToAblySdk() throws {
         var authCallbackCalled = false
         
-        let clientId = "My client id"
         let timestamp = Date()
         let tokenString = "Token string or JWT"
         let nonce = "12331"
         
-        let configuration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, resultHandler in
+        let configuration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
             authCallbackCalled = true
             resultHandler(.success(.jwt(tokenString)))
         })
         
         // Checking the clientOptions provided is structured correctly for Ably-cocoa
         let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
-        XCTAssertEqual(clientOptions.clientId, clientId)
-        let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
+        
+        let tokenParams = TokenParams(ttl: 0, capability: "", clientId: "My client id", timestamp: timestamp, nonce: nonce).toARTTokenParams()
         XCTAssertNotNil(clientOptions.authCallback)
         (clientOptions.authCallback!)(tokenParams) { result, error in
             guard let actualTokenString = result as? String else {

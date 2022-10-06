@@ -145,7 +145,7 @@ let connectionConfiguration = ConnectionConfiguration(apiKey: ABLY_API_KEY, clie
 **To use token authentication, you can pass a closure which will be called when the Ably client needs to authenticate or reauthenticate:**
 
 ```swift
-let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { tokenParams, resultHandler in
+let connectionConfiguration = ConnectionConfiguration() { tokenParams, resultHandler in
 
     // Implement a request to your servers which provides either a TokenRequest (simplest), TokenDetails, JWT or token string.
 
