@@ -14,8 +14,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
 
     private var locationChangeTimer: Timer!
     private var locationsData: Locations!
-    private var subscriber: AblyAssetTrackingSubscriber.Subscriber!
-    private var publisher: Publisher!
 
     private let didChangeAssetConnectionStatusOnlineExpectation = XCTestExpectation(description: "Asset Connection Status Did Change To Online")
     private let didChangeAssetConnectionStatusOfflineExpectation = XCTestExpectation(description: "Asset Connection Status Did Change To Offline")
@@ -47,7 +45,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
-        subscriber = SubscriberFactory.subscribers()
+        let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
@@ -72,7 +70,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             logHandler: logger
         )
         
-        publisher = DefaultPublisher(
+        let publisher = DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
@@ -116,7 +114,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
-        subscriber = SubscriberFactory.subscribers()
+        let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
@@ -156,7 +154,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             logHandler: logger
         )
         
-        publisher = DefaultPublisher(
+        let publisher = DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
@@ -175,7 +173,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
-        subscriber = SubscriberFactory.subscribers()
+        let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
@@ -189,9 +187,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             stopPublisherExpectation.fulfill()
         })
         wait(for: [stopPublisherExpectation], timeout: 5)
-        
+
         wait(for: [didChangeAssetConnectionStatusOfflineExpectation], timeout: 5.0)
-        
+
         subscriber.stop(completion: { _ in })
     }
     
