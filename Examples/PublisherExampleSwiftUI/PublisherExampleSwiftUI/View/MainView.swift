@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var locationManager = LocationManager.shared
+    @ObservedObject var locationManager: LocationManager
+    
     @State private var trackableId: String = ""
     @State private var settingsOpened = false
     
@@ -73,6 +74,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(locationManager: .shared)
     }
 }
