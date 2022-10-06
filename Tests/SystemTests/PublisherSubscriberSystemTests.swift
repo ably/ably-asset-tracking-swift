@@ -140,11 +140,11 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     }
     
     func testSubscriberReceivesAssetConnectionStatusWithBicycleProfile() throws {
-        subscriberReceivesAssetConnectionStatus(vehicleProfile: .Bicycle)
+        try subscriberReceivesAssetConnectionStatus(vehicleProfile: .Bicycle)
     }
     
     func testSubscriberReceivesAssetConnectionStatusWithCarProfile() throws {
-        subscriberReceivesAssetConnectionStatus(vehicleProfile: .Car)
+        try subscriberReceivesAssetConnectionStatus(vehicleProfile: .Car)
     }
     
     func subscriberReceivesAssetConnectionStatus(vehicleProfile: VehicleProfile) throws {
