@@ -22,7 +22,7 @@ struct MainView: View {
                         .styled()
                         .disabled(locationManager.isLocationAuthorizationDenied)
                     NavigationLink {
-                        MapView(trackableId: trackableId)
+                        MapView(trackableId: trackableId, locationManager: locationManager)
                             .navigationTitle("Map")
                             .navigationBarTitleDisplayMode(.inline)
                     } label: {
