@@ -2,10 +2,11 @@
 
 import SwiftUI
 
-struct SettingsView: View {
-    @StateObject private var viewModel = SettingsViewModel()
-    @State private var showAccuracies = false
+struct SettingsView<ViewModel: SettingsViewModelProtocol>: View {
+    @ObservedObject var viewModel: ViewModel
     
+    @State private var showAccuracies = false
+
     var body: some View {
         List {
             Section {
@@ -57,6 +58,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(viewModel: SettingsViewModel())
     }
 }
