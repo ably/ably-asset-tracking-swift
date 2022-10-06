@@ -13,6 +13,7 @@ private struct MapConstraints {
 class MapViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet private weak var assetStatusLabel: UILabel!
+    @IBOutlet private weak var publisherPresenceLabel: UILabel!
     @IBOutlet private weak var animationSwitch: UISwitch!
     @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var subscriberResolutionAccuracyLabel: UILabel!
@@ -64,7 +65,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Tracking \(trackingId)"
-        assetStatusLabel.text = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .none).desc
+        assetStatusLabel.text = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .connectionState(nil)).desc
+        publisherPresenceLabel.text = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .subscriberPresence(isPresent: nil)).desc
         setupSubscriber()
         setupMapView()
         setupControlsBehaviour()
@@ -304,6 +306,12 @@ extension MapViewController: SubscriberDelegate {
         let statusDescAndColor = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .connectionState(status))
         assetStatusLabel.textColor = statusDescAndColor.color
         assetStatusLabel.text = statusDescAndColor.desc
+    }
+    
+    func subscriber(sender: Subscriber, didUpdatePublisherPresence isPresent: Bool) {
+        let presenceDescAndColor = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .subscriberPresence(isPresent: isPresent))
+        publisherPresenceLabel.textColor = presenceDescAndColor.color
+        publisherPresenceLabel.text = presenceDescAndColor.desc
     }
     
     func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {

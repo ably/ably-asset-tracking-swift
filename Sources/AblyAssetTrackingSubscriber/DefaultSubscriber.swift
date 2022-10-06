@@ -28,6 +28,7 @@ class DefaultSubscriber: Subscriber {
     private var receivedAblyChannelConnectionState: ConnectionState = .offline
     private var currentTrackableConnectionState: ConnectionState = .offline
     private var isPublisherOnline: Bool = false
+    private var lastEmittedIsPublisherOnline: Bool?
     
     weak var delegate: SubscriberDelegate?
 
@@ -143,6 +144,7 @@ extension DefaultSubscriber {
             case .delegateRawLocationReceived(let event): delegate.subscriber(sender: self, didUpdateRawLocation: event.locationUpdate)
             case .delegateResolutionReceived(let event): delegate.subscriber(sender: self, didUpdateResolution: event.resolution)
             case .delegateDesiredIntervalReceived(let event): delegate.subscriber(sender: self, didUpdateDesiredInterval: event.desiredInterval)
+            case .delegateUpdatedPublisherPresence(let event): delegate.subscriber(sender: self, didUpdatePublisherPresence: event.isPresent)
             }
         }
     }
@@ -195,6 +197,11 @@ extension DefaultSubscriber {
             isPublisherOnline = true
         } else if event.presence.action.isLeaveOrAbsent {
             isPublisherOnline = false
+        }
+        
+        if isPublisherOnline != lastEmittedIsPublisherOnline {
+            lastEmittedIsPublisherOnline = isPublisherOnline
+            callback(event: .delegateUpdatedPublisherPresence(.init(isPresent: isPublisherOnline)))
         }
     }
     

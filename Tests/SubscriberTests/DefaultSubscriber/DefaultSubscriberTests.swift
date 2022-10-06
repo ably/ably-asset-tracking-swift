@@ -1,5 +1,6 @@
 import XCTest
 import AblyAssetTrackingCore
+@testable import AblyAssetTrackingInternal
 @testable import AblyAssetTrackingSubscriber
 
 class DefaultSubscriberTests: XCTestCase {
@@ -361,5 +362,36 @@ class DefaultSubscriberTests: XCTestCase {
         ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didChangeChannelConnectionState: .online)
         
         RunLoop.main.run(until: Date() + 0.5)
+    }
+    
+    func test_whenItReceivesAPublisherPresentPresenceAction_itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresentTrue() {
+        test_whenItReceivesAPublisherPresenceAction(.present, itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresent: true)
+    }
+    
+    func test_whenItReceivesAPublisherEnterPresenceAction_itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresentTrue() {
+        test_whenItReceivesAPublisherPresenceAction(.enter, itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresent: true)
+    }
+    
+    func test_whenItReceivesAPublisherLeavePresenceAction_itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresentFalse() {
+        test_whenItReceivesAPublisherPresenceAction(.leave, itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresent: false)
+    }
+    
+    func test_whenItReceivesAPublisherAbsentPresenceAction_itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresentFalse() {
+        test_whenItReceivesAPublisherPresenceAction(.absent, itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresent: false)
+    }
+    
+    func test_whenItReceivesAPublisherPresenceAction(_ presenceAction: PresenceAction, itCallsDidUpdatePublisherPresenceOnDelegate_withIsPresent expectedIsPresent: Bool) {
+        let delegate = SubscriberDelegateMock()
+        subscriber.delegate = delegate
+        
+        let delegateDidFailWithErrorCalledExpectation = expectation(description: "Subscriber’s delegate receives didUpdatePublisherPresence with isPresent \(expectedIsPresent)")
+        delegate.subscriberSenderDidUpdatePublisherPresenceClosure = { _, isPresent in
+            XCTAssertEqual(isPresent, expectedIsPresent)
+            delegateDidFailWithErrorCalledExpectation.fulfill()
+        }
+        
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceUpdate: .init(action: presenceAction, type: .publisher))
+        
+        waitForExpectations(timeout: 10)
     }
 }
