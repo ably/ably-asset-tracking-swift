@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct MainView: View {
+struct MainView<LocationManager: LocationManagerProtocol>: View {
     @ObservedObject var locationManager: LocationManager
     
     @State private var trackableId: String = ""
     @State private var settingsOpened = false
-    
+
     var body: some View {
         NavigationView {
             GeometryReader { proxy in
@@ -74,6 +74,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(locationManager: .shared)
+        MainView(locationManager: LocationManager.shared)
     }
 }

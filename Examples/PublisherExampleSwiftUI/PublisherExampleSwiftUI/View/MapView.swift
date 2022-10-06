@@ -2,7 +2,7 @@ import SwiftUI
 import MapKit
 import AblyAssetTrackingPublisher
 
-struct MapView: View {
+struct MapView<LocationManager: LocationManagerProtocol>: View {
     var trackableId: String
     @ObservedObject var locationManager: LocationManager
 
@@ -71,7 +71,7 @@ struct MapView: View {
                 Map(coordinateRegion: $locationManager.currentRegion, showsUserLocation: true)
                     .edgesIgnoringSafeArea(.bottom)
                 Button {
-                    locationManager.updateRegion(true)
+                    locationManager.updateRegion(force: true)
                 } label: {
                     Image(systemName: "location.circle.fill")
                         .resizable()
@@ -98,6 +98,6 @@ struct MapView: View {
 
 struct MapView_Preview: PreviewProvider {
     static var previews: some View {
-        MapView(trackableId: "", locationManager: .shared)
+        MapView(trackableId: "", locationManager: LocationManager.shared)
     }
 }

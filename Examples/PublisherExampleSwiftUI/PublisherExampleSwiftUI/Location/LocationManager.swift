@@ -2,7 +2,17 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
-class LocationManager: NSObject, ObservableObject {
+protocol LocationManagerProtocol: ObservableObject {
+    var statusTitle: String { get set }
+    var isLocationAuthorizationDenied: Bool { get set }
+    var currentLocation: CLLocation { get set }
+    var currentRegion: MKCoordinateRegion { get set }
+    
+    func requestAuthorization()
+    func updateRegion(force: Bool)
+}
+
+class LocationManager: NSObject, LocationManagerProtocol {
     static let shared = LocationManager()
     
     @Published var statusTitle: String = "-"
@@ -71,10 +81,10 @@ extension LocationManager: CLLocationManagerDelegate {
         
         currentLocation = firstLocation
         
-        updateRegion()
+        updateRegion(force: false)
     }
     
-    func updateRegion(_ force: Bool = false) {
+    func updateRegion(force: Bool) {
         if force {
             didUpdateRegion = false
         }
