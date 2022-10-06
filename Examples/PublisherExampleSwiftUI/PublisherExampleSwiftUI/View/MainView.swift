@@ -74,6 +74,6 @@ struct MainView<LocationManager: LocationManagerProtocol>: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(locationManager: LocationManager.shared)
+        MainView(locationManager: PreviewLocationManager())
     }
 }

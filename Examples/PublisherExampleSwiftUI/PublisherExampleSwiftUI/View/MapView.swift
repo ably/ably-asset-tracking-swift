@@ -98,6 +98,6 @@ struct MapView<LocationManager: LocationManagerProtocol>: View {
 
 struct MapView_Preview: PreviewProvider {
     static var previews: some View {
-        MapView(trackableId: "", locationManager: LocationManager.shared)
+        MapView(trackableId: "", locationManager: PreviewLocationManager())
     }
 }
