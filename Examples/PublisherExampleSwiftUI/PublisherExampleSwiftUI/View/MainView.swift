@@ -2,8 +2,8 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject private var locationManager = LocationManager.shared
-    @State var trackableId: String = ""
-    @State var settingsOpened = false
+    @State private var trackableId: String = ""
+    @State private var settingsOpened = false
     
     var body: some View {
         NavigationView {

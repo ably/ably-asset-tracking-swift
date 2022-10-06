@@ -4,7 +4,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
-    @State var showAccuracies = false
+    @State private var showAccuracies = false
     
     var body: some View {
         List {
