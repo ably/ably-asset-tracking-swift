@@ -156,12 +156,6 @@ let connectionConfiguration = ConnectionConfiguration(clientId: clientId) { toke
 }
 ```
 
-**Alternatively, in token authentication, you can specify an _authUrl_, which will be used by Ably to authenticate.**
-
-```swift
-let connectionConfiguration = ConnectionConfiguration(authUrl: authUrl, clientId: clientId)
-```
-
 ### Ably Asset Tracking UI (Location Animator)
 
 The `Location Animator` can interpolate and animate map annotation view.
