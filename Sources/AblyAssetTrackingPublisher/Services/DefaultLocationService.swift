@@ -20,8 +20,8 @@ class DefaultLocationService: LocationService {
         NavigationSettings.shared.initialize(directions: directions,
                                              tileStoreConfiguration: .default,
                                              navigatorPredictionInterval: 0,
-                                             statusPollingConfig: .init(unconditionalPollingPatience: .greatestFiniteMagnitude ,
-                                                                        unconditionalPollingInterval: nil))
+                                             statusUpdatingSettings: .init(updatingPatience: .greatestFiniteMagnitude ,
+                                                                                                                        updatingInterval: nil))
         if vehicleProfile == .Bicycle {
             let cyclingConfig = [
                         "cache": [
