@@ -10,7 +10,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
     private let clientId: String = {
         "Test-Publisher_\(UUID().uuidString)"
     }()
-
+    
     override func setUpWithError() throws {}
     override func tearDownWithError() throws {}
     
@@ -22,9 +22,12 @@ class PublisherAuthenticationSystemTests: XCTestCase {
     }
 
     func testPublisherConnectsWithTokenRequest() throws {
+        let clientId = self.clientId
         let authCallbackCalledExpectation = self.expectation(description: "Auth Callback complete")
         // When a user configures an AuthCallback
-        let connectionConfiguration = ConnectionConfiguration(clientId: clientId, authCallback: { tokenParams, authResultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, authResultHandler in
+            XCTAssertNil(tokenParams.clientId)
+            
             // Here, users should make a network request to their auth servers, where their servers create the tokenRequest.
             // To emulate this, we use the api key to create a tokenRequest on the client side.
             let keyTokens = Secrets.ablyApiKey.split(separator: ":")
@@ -35,7 +38,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             var hmacComponents = [keyName,
                         tokenParams.ttl != nil ? String(tokenParams.ttl!) : "",
                         tokenParams.capability ?? "",
-                        tokenParams.clientId ?? "",
+                        clientId,
                         String(timestampEpochInMilliseconds),
                         "Random nonce"
             ].joined(separator: "\n")
@@ -44,7 +47,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             let hmac = hmacComponents.hmac(key: keySecret)
 
             let tokenRequest = TokenRequest(keyName: keyName,
-                         clientId: tokenParams.clientId,
+                         clientId: clientId,
                          capability: tokenParams.capability,
                          timestamp: timestampEpochInMilliseconds,
                          nonce: "Random nonce",
@@ -66,7 +69,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: keyName)
         )
         
-        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
             guard let tokenDetails = fetchedTokenDetails else {
                 XCTFail("TokenDetails doesn't exist")
                 return
@@ -87,7 +90,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
                 
-        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
             guard let tokenString = fetchedTokenString else {
                 XCTFail("TokenDetails doesn't exist")
                 return
@@ -188,7 +191,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         var hasRequestedInitialToken = false
         var hasRequestedUpdatedToken = false
         
-        let connectionConfiguration = ConnectionConfiguration(clientId: keyName, authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
             if !hasRequestedInitialToken {
                 hasRequestedInitialToken = true
                 resultHandler(.success(.tokenDetails(initialToken)))
