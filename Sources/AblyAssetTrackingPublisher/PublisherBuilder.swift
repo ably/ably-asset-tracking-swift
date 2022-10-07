@@ -67,4 +67,9 @@ public protocol PublisherBuilder {
      Sets an optional `logHandler` that can capture logs from all across the sdk
      */
     func logHandler(handler: LogHandler?) -> PublisherBuilder
+    
+    /**
+     Sets an optional `vehicleProfile` for the publisher, Currently there are two vehicle profiles : Bicycle and Car
+     */
+    func vehicleProfile(vehicleProfile: VehicleProfile) -> PublisherBuilder
 }

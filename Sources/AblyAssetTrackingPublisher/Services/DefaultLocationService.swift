@@ -12,19 +12,43 @@ class DefaultLocationService: LocationService {
 
     init(mapboxConfiguration: MapboxConfiguration,
          historyLocation: [CLLocation]?,
-         logHandler: LogHandler?) {
-        
+         logHandler: LogHandler?,
+         vehicleProfile: VehicleProfile) {
+
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
-        NavigationSettings.shared.initialize(directions: directions, tileStoreConfiguration: .default)
-        
+
+        NavigationSettings.shared.initialize(directions: directions,
+                                             tileStoreConfiguration: .default,
+                                             navigatorPredictionInterval: 0,
+                                             statusUpdatingSettings: .init(updatingPatience: .greatestFiniteMagnitude ,
+                                                                                                                        updatingInterval: nil))
+        if vehicleProfile == .Bicycle {
+            let cyclingConfig = [
+                        "cache": [
+                            "enableAssetsTrackingMode": true
+                        ],
+                        "navigation": [
+                            "routeLineFallbackPolicy": [
+                                "policy": 1
+                            ]
+                        ]
+                    ]
+            UserDefaults.standard.set(cyclingConfig, forKey: MapboxCoreNavigation.customConfigKey)
+        }
+
         if let historyLocation = historyLocation {
             replayLocationManager = ReplayLocationManager(locations: historyLocation)
         } else {
             replayLocationManager = nil
         }
         self.logHandler = logHandler
+        //set location manager with profile identifier only if .Bicycle is provided by clients
+        if vehicleProfile == .Bicycle {
+            self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager ,datasetProfileIdentifier: .cycling)
+        } else {
+            self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
+        }
 
-        self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
         self.locationManager.delegate = self
     }
 

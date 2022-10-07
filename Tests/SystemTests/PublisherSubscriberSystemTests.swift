@@ -14,8 +14,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
 
     private var locationChangeTimer: Timer!
     private var locationsData: Locations!
-    private var subscriber: AblyAssetTrackingSubscriber.Subscriber!
-    private var publisher: Publisher!
 
     private let didChangeAssetConnectionStatusOnlineExpectation = XCTestExpectation(description: "Asset Connection Status Did Change To Online")
     private let didChangeAssetConnectionStatusOfflineExpectation = XCTestExpectation(description: "Asset Connection Status Did Change To Offline")
@@ -37,7 +35,15 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
 
-    func testSubscriberReceivesPublisherMessage() throws {
+    func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws{
+        try subscriberReceivesPublisherMessage(vehicleProfile: .Bicycle)
+    }
+    
+    func testSubscriberReceivesPublisherMessageWithCarProfile() throws{
+        try subscriberReceivesPublisherMessage(vehicleProfile: .Car)
+    }
+    
+    func subscriberReceivesPublisherMessage(vehicleProfile: VehicleProfile) throws {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
         } catch {
@@ -47,7 +53,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
-        subscriber = SubscriberFactory.subscribers()
+        let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
@@ -58,7 +64,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }), logHandler: logger
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
+            logHandler: logger,
+            vehicleProfile: vehicleProfile
         )
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
@@ -70,7 +78,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             logHandler: logger
         )
         
-        publisher = DefaultPublisher(
+        let publisher = DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
@@ -114,7 +122,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
-        subscriber = SubscriberFactory.subscribers()
+        let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
@@ -131,7 +139,15 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         subscriber.stop(completion: { _ in })
     }
     
-    func testSubscriberReceivesAssetConnectionStatus() throws {
+    func testSubscriberReceivesAssetConnectionStatusWithBicycleProfile() throws {
+        try subscriberReceivesAssetConnectionStatus(vehicleProfile: .Bicycle)
+    }
+    
+    func testSubscriberReceivesAssetConnectionStatusWithCarProfile() throws {
+        try subscriberReceivesAssetConnectionStatus(vehicleProfile: .Car)
+    }
+    
+    func subscriberReceivesAssetConnectionStatus(vehicleProfile: VehicleProfile) throws {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
         } catch {
@@ -140,7 +156,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }), logHandler: logger
+            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
+            logHandler: logger,
+            vehicleProfile: vehicleProfile
         )
         
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
@@ -152,7 +170,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             logHandler: logger
         )
         
-        publisher = DefaultPublisher(
+        let publisher = DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
             mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
@@ -171,7 +189,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
-        subscriber = SubscriberFactory.subscribers()
+        let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
@@ -185,9 +203,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             stopPublisherExpectation.fulfill()
         })
         wait(for: [stopPublisherExpectation], timeout: 5)
-        
+
         wait(for: [didChangeAssetConnectionStatusOfflineExpectation], timeout: 5.0)
-        
+
         subscriber.stop(completion: { _ in })
     }
     
