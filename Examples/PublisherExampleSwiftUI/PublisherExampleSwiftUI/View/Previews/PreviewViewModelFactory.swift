@@ -1,8 +1,6 @@
-//
-//  PreviewViewModelFactory.swift
-//  PublisherExampleSwiftUI
-//
-//  Created by Lawrence Forooghian on 09/10/2022.
-//
-
-import Foundation
+/// A dummy implementation of ViewModelFactoryProtocol for use in Xcode view previews.
+class PreviewViewModelFactory: ViewModelFactoryProtocol {
+    func createSettingsViewModel() -> PreviewSettingsViewModel {
+        return PreviewSettingsViewModel()
+    }
+}

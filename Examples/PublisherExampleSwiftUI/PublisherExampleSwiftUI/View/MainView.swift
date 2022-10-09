@@ -1,10 +1,12 @@
 import SwiftUI
 
-struct MainView<LocationManager: LocationManagerProtocol>: View {
+struct MainView<LocationManager: LocationManagerProtocol, ViewModelFactory: ViewModelFactoryProtocol>: View {
     @ObservedObject var locationManager: LocationManager
     
     @State private var trackableId: String = ""
     @State private var settingsOpened = false
+    
+    let viewModelFactory: ViewModelFactory
 
     var body: some View {
         NavigationView {
@@ -56,7 +58,7 @@ struct MainView<LocationManager: LocationManagerProtocol>: View {
                     width: proxy.size.width,
                     height: proxy.size.height
                 )
-                NavigationLink(destination: SettingsView(viewModel: SettingsViewModel()), isActive: $settingsOpened) { EmptyView() }.hidden()
+                NavigationLink(destination: SettingsView(viewModel: viewModelFactory.createSettingsViewModel()), isActive: $settingsOpened) { EmptyView() }.hidden()
             }
             .onAppear() {
                 locationManager.requestAuthorization()
@@ -74,6 +76,7 @@ struct MainView<LocationManager: LocationManagerProtocol>: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(locationManager: PreviewLocationManager())
+        MainView(locationManager: PreviewLocationManager(),
+                 viewModelFactory: PreviewViewModelFactory())
     }
 }

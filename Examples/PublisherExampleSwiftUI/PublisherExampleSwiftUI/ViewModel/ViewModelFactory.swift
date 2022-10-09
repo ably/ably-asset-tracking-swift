@@ -1,8 +1,11 @@
-//
-//  File.swift
-//  PublisherExampleSwiftUI
-//
-//  Created by Lawrence Forooghian on 09/10/2022.
-//
+protocol ViewModelFactoryProtocol {
+    associatedtype SettingsViewModel: SettingsViewModelProtocol
+    
+    func createSettingsViewModel() -> SettingsViewModel
+}
 
-import Foundation
+class ViewModelFactory: ViewModelFactoryProtocol {
+    func createSettingsViewModel() -> SettingsViewModel {
+        return SettingsViewModel()
+    }
+}
