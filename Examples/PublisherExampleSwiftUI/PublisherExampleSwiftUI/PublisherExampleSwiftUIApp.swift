@@ -6,13 +6,10 @@ struct PublisherExampleSwiftUIApp: App {
         WindowGroup {
             TabView {
                 NavigationView {
-                    MainView()
+                    CreatePublisherView()
                 }
                 .tabItem {
                     Label("Publisher", systemImage: "car")
-                }
-                NavigationView {
-                    SettingsView()
                 }
                 /*
                 This navigationViewStyle(.stack) prevents UINavigationBar-related "Unable to
@@ -21,6 +18,11 @@ struct PublisherExampleSwiftUIApp: App {
                 nor why this fixes it; it's just something I tried after seeing vaguely similar
                 complaints on the Web, and it seems to do no harm.
                 */
+                .navigationViewStyle(.stack)
+                NavigationView {
+                    SettingsView()
+                }
+                // Same comment as above
                 .navigationViewStyle(.stack)
                 .tabItem {
                     Label("Settings", systemImage: "gear")

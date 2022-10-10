@@ -1,9 +1,11 @@
 import SwiftUI
+import AblyAssetTrackingPublisher
 
 struct MainView: View {
     @StateObject private var locationManager = LocationManager.shared
     @State var trackableId: String = ""
-    @State var settingsOpened = false
+    
+    @ObservedObject var publisher: ObservablePublisher
     
     var body: some View {
         GeometryReader { proxy in
@@ -54,25 +56,46 @@ struct MainView: View {
                 width: proxy.size.width,
                 height: proxy.size.height
             )
-            NavigationLink(destination: PublisherSettingsView(), isActive: $settingsOpened) { EmptyView() }.hidden()
         }
         .onAppear() {
             locationManager.requestAuthorization()
-        }
-        .toolbar {
-            ToolbarItem {
-                Button("Settings") {
-                    self.settingsOpened = true
-                }
-            }
         }
     }
 }
 
 struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            MainView()
+    class DummyPublisher: Publisher {
+        var delegate: AblyAssetTrackingPublisher.PublisherDelegate?
+        
+        func track(trackable: AblyAssetTrackingCore.Trackable, completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
+            
         }
+        
+        func add(trackable: AblyAssetTrackingCore.Trackable, completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
+            
+        }
+        
+        func remove(trackable: AblyAssetTrackingCore.Trackable, completion: @escaping AblyAssetTrackingCore.ResultHandler<Bool>) {
+            
+        }
+        
+        var activeTrackable: AblyAssetTrackingCore.Trackable? = nil
+        
+        var routingProfile: AblyAssetTrackingPublisher.RoutingProfile = .cycling
+        
+        func changeRoutingProfile(profile: AblyAssetTrackingPublisher.RoutingProfile, completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
+            
+        }
+        
+        func stop(completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
+            
+        }
+        
+        
+    }
+    
+    static var previews: some View {
+        let publisher = ObservablePublisher(publisher: DummyPublisher(), configInfo: .init(areRawLocationsEnabled: false))
+        MainView(publisher: publisher)
     }
 }
