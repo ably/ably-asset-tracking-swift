@@ -8,17 +8,17 @@ struct CreatePublisherView: View {
     @State var showConstantAccuracies = false
     @State var showVehicleProfiles = false
     @State var showRoutingProfiles = false
-    @State private var isShowingMainView = false
+    @State private var isShowingPublisherDetailsView = false
     @State private var publisher: ObservablePublisher?
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack {
             // https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-programmatic-navigation-in-swiftui
-            NavigationLink(isActive: $isShowingMainView) {
+            NavigationLink(isActive: $isShowingPublisherDetailsView) {
                 // This seems a bit dodgy, not really sure of the right way to pass data to the destination of a NavigationLink
                 if let publisher = publisher {
-                    MainView(publisher: publisher)
+                    PublisherDetailsView(publisher: publisher)
                 } else {
                     EmptyView()
                 }
@@ -110,7 +110,7 @@ struct CreatePublisherView: View {
                         
                         viewModel.save()
                         publisher = viewModel.createPublisher()
-                        isShowingMainView = true
+                        isShowingPublisherDetailsView = true
                     } label: {
                         Text("Create publisher")
                     }

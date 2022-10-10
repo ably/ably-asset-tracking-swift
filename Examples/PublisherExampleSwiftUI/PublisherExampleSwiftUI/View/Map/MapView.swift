@@ -3,15 +3,12 @@ import MapKit
 import AblyAssetTrackingPublisher
 
 struct MapView: View {
+    var trackableId: String
+    @ObservedObject var publisher: ObservablePublisher
+    
     @StateObject private var viewModel = MapViewModel()
     @StateObject private var locationManager = LocationManager.shared
     @State private var showRoutingProfileSheet: Bool = false
-    
-    private let trackableId: String
-    
-    init(trackableId: String) {
-        self.trackableId = trackableId
-    }
     
     var body: some View {
         VStack(alignment: .center, spacing: 3) {
@@ -107,6 +104,7 @@ struct MapView: View {
 
 struct MapView_Preview: PreviewProvider {
     static var previews: some View {
-        MapView(trackableId: "")
+        let publisher = ObservablePublisher(publisher: DummyPublisher(), configInfo: .init(areRawLocationsEnabled: false))
+        MapView(trackableId: "", publisher: publisher)
     }
 }
