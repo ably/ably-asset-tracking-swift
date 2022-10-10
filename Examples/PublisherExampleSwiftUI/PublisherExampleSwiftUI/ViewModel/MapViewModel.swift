@@ -2,7 +2,21 @@ import Foundation
 import AblyAssetTrackingPublisher
 import CoreLocation.CLLocation
 
-class MapViewModel: ObservableObject {
+protocol MapViewModelProtocol: ObservableObject {
+    var isConnected: Bool { get set }
+    var errorInfo: String? { get set }
+    var isDestinationAvailable: Bool { get set }
+    var didChangeRoutingProfile: Bool { get set }
+    var rawLocationsInfo: [StackedTextModel] { get set }
+    var constantResolutionInfo: [StackedTextModel] { get set }
+    var connectionStatusAndProfileInfo: [StackedTextModel] { get set }
+    var resolutionInfo: [StackedTextModel] { get set }
+    
+    func connectPublisher(trackableId: String)
+    func disconnectPublisher(_ completion: ((Result<Void, ErrorInformation>) -> Void)?)
+}
+
+class MapViewModel: MapViewModelProtocol {
     private var publisher: Publisher?
     private var trackableId: String?
     private var connectionState: ConnectionState = .offline {

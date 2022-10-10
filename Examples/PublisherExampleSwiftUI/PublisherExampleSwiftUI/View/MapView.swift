@@ -2,11 +2,11 @@ import SwiftUI
 import MapKit
 import AblyAssetTrackingPublisher
 
-struct MapView<LocationManager: LocationManagerProtocol>: View {
+struct MapView<LocationManager: LocationManagerProtocol, MapViewModel: MapViewModelProtocol>: View {
     var trackableId: String
     @ObservedObject var locationManager: LocationManager
-
-    @StateObject private var viewModel = MapViewModel()
+    @ObservedObject var viewModel: MapViewModel
+    
     @State private var showRoutingProfileSheet: Bool = false
     
     var body: some View {
@@ -91,7 +91,7 @@ struct MapView<LocationManager: LocationManagerProtocol>: View {
             viewModel.connectPublisher(trackableId: trackableId)
         }
         .onDisappear {
-            viewModel.disconnectPublisher()
+            viewModel.disconnectPublisher(nil)
         }
     }
 }

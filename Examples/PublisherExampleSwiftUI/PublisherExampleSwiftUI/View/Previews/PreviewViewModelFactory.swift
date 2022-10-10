@@ -3,4 +3,8 @@ class PreviewViewModelFactory: ViewModelFactoryProtocol {
     func createSettingsViewModel() -> PreviewSettingsViewModel {
         return PreviewSettingsViewModel()
     }
+    
+    func createMapViewModel() -> PreviewMapViewModel {
+        return PreviewMapViewModel()
+    }
 }
