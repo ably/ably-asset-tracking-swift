@@ -8,43 +8,12 @@ struct MapView: View {
     
     @StateObject private var viewModel = MapViewModel()
     @StateObject private var locationManager = LocationManager.shared
-    @State private var showRoutingProfileSheet: Bool = false
     
     var body: some View {
-        VStack(alignment: .center, spacing: 3) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    StackedText(texts: MapViewModel.createViewModel(forConnectionState: publisher.trackables.first { key, _ in key.id == trackableId }?.value.connectionState))
-                    Button {
-                        showRoutingProfileSheet = true
-                    } label: {
-                        HStack(spacing: 3) {
-                            Text("Change profile")
-                                .font(.system(size: 12))
-                            Image(systemName: "info.circle.fill")
-                                .resizable()
-                                .frame(width: 10, height: 10, alignment: .center)
-                        }
-                    }
-                    .disabled(!viewModel.didChangeRoutingProfile)
-                    .actionSheet(isPresented: $showRoutingProfileSheet) {
-                        var buttons: [Alert.Button] = RoutingProfile.all.map { profile in
-                            Alert.Button.default(Text(profile.asInfo())) {
-                                viewModel.routingProfile = profile
-                            }
-                        }
-                        
-                        buttons.append(.cancel())
-                        
-                        return ActionSheet(
-                            title: Text("Routing profiles"),
-                            message: Text("Select a profile"),
-                            buttons: buttons
-                        )
-                    }
-                }
-                .padding(5)
-            }
+        VStack(alignment: .leading, spacing: 3) {
+            StackedText(texts: MapViewModel.createViewModel(forConnectionState: publisher.trackables.first { key, _ in key.id == trackableId }?.value.connectionState))
+                .padding(.leading, 10)
+            
             ZStack(alignment: .bottomTrailing) {
                 if viewModel.useMapboxMap {
                     MapboxMap(center: $locationManager.currentRegionCenter)
@@ -69,12 +38,6 @@ struct MapView: View {
                     d.width + 10
                 }
             }
-        }
-        .onAppear {
-            viewModel.connectPublisher(trackableId: trackableId)
-        }
-        .onDisappear {
-            viewModel.disconnectPublisher()
         }
     }
 }
