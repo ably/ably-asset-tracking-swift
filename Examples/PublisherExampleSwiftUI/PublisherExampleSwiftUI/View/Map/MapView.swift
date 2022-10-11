@@ -11,7 +11,7 @@ struct MapView: View {
     @State private var showRoutingProfileSheet: Bool = false
     
     var body: some View {
-        let publisherInfoViewModel = MapViewModel.createPublisherInfoViewModel(fromPublisherConfigInfo: publisher.configInfo, resolution: publisher.resolution, routingProfile: publisher.routingProfile, lastError: publisher.lastError)
+        let publisherInfoViewModel = PublisherInfoViewModel.create(fromPublisherConfigInfo: publisher.configInfo, resolution: publisher.resolution, routingProfile: publisher.routingProfile, lastError: publisher.lastError)
         
         VStack(alignment: .center, spacing: 3) {
             HStack(alignment: .top) {
