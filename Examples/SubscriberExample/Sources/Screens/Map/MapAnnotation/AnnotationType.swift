@@ -1,4 +1,4 @@
-enum AnnotationType: Int {
+enum AnnotationType {
     case enhanced
     case raw
 }
