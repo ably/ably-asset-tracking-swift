@@ -28,8 +28,6 @@ class MapViewModel: ObservableObject {
     @Published var errorInfo: String? = nil
     @Published var isDestinationAvailable: Bool = false
     @Published var didChangeRoutingProfile = false
-    @Published var rawLocationsInfo: [StackedTextModel] = []
-    @Published var constantResolutionInfo: [StackedTextModel] = []
     @Published var connectionStatusAndProfileInfo: [StackedTextModel] = []
     @Published var resolutionInfo: [StackedTextModel] = []
     
@@ -40,15 +38,6 @@ class MapViewModel: ObservableObject {
             routingProfile: routingProfile?.asInfo()
         )
         updateResolutionInfo()
-        rawLocationsInfo = [.init(label: "Publish raw locations: ", value: "\(SettingsModel.shared.areRawLocationsEnabled ? "enabled" : "disabled")")]
-        
-        if SettingsModel.shared.isConstantResolutionEnabled {
-            constantResolutionInfo.append(.init(label: "Constant engine resolution", value: "", isHeader: true))
-            constantResolutionInfo.append(.init(label: "Desired accuracy: ", value: "\(SettingsModel.shared.constantResolution.accuracy)"))
-            constantResolutionInfo.append(.init(label: "Min displacement: ", value: "\(SettingsModel.shared.constantResolution.minimumDisplacement)m"))
-        } else {
-            constantResolutionInfo.append(.init(label: "Constant resolution: ", value:  "disabled"))
-        }
     }
     
     func connectPublisher(trackableId: String) {
@@ -150,6 +139,26 @@ class MapViewModel: ObservableObject {
                 self.updateErrorInfo(error)
             }
         }
+    }
+    
+    struct PublisherInfoViewModel {
+        var rawLocationsInfo: [StackedTextModel]
+        var constantResolutionInfo: [StackedTextModel]
+    }
+    
+    static func createPublisherInfoViewModel(fromPublisherConfigInfo publisherConfigInfo: ObservablePublisher.PublisherConfigInfo) -> PublisherInfoViewModel {
+        let rawLocationsInfo: [StackedTextModel] = [.init(label: "Publish raw locations: ", value: "\(publisherConfigInfo.areRawLocationsEnabled ? "enabled" : "disabled")")]
+        
+        var constantResolutionInfo: [StackedTextModel] = []
+        if let constantResolution = publisherConfigInfo.constantResolution {
+            constantResolutionInfo.append(.init(label: "Constant engine resolution", value: "", isHeader: true))
+            constantResolutionInfo.append(.init(label: "Desired accuracy: ", value: "\(constantResolution.accuracy)"))
+            constantResolutionInfo.append(.init(label: "Min displacement: ", value: "\(constantResolution.minimumDisplacement)m"))
+        } else {
+            constantResolutionInfo.append(.init(label: "Constant resolution: ", value:  "disabled"))
+        }
+        
+        return .init(rawLocationsInfo: rawLocationsInfo, constantResolutionInfo: constantResolutionInfo)
     }
 }
 

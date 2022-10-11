@@ -68,6 +68,8 @@ class CreatePublisherViewModel: ObservableObject {
         let constantResolution: Resolution? = SettingsModel.shared.isConstantResolutionEnabled ? SettingsModel.shared.constantResolution : nil
         let vehicleProfile = SettingsModel.shared.vehicleProfile
         let routingProfile = SettingsModel.shared.routingProfile
+        
+        let areRawLocationsEnabled = SettingsModel.shared.areRawLocationsEnabled
                 
         var publisher = try! PublisherFactory.publishers()
             .connection(connectionConfiguration)
@@ -76,7 +78,7 @@ class CreatePublisherViewModel: ObservableObject {
 //          .locationSource(.init(locationSource: SimulatedLocations.recordedLocations()))
             .routingProfile(routingProfile)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
-            .rawLocations(enabled: SettingsModel.shared.areRawLocationsEnabled)
+            .rawLocations(enabled: areRawLocationsEnabled)
             .constantLocationEngineResolution(resolution: constantResolution)
             .logHandler(handler: PublisherLogger())
             .vehicleProfile(vehicleProfile)
