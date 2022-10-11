@@ -27,7 +27,8 @@ class MapViewModel: ObservableObject {
     @Published var isConnected: Bool
     @Published var errorInfo: String? = nil
     @Published var didChangeRoutingProfile = false
-    @Published var connectionStatusAndProfileInfo: [StackedTextModel] = []
+    @Published var connectionStatusInfo: [StackedTextModel] = []
+    @Published var routingProfileInfo: [StackedTextModel] = []
     @Published var resolutionInfo: [StackedTextModel] = []
     
     init() {
@@ -98,10 +99,11 @@ class MapViewModel: ObservableObject {
     }
     
     private func updateConnectionStatusAndProfileInfo(_ connectionState: String, routingProfile: String?) {
-        connectionStatusAndProfileInfo.removeAll()
+        connectionStatusInfo.removeAll()
+        routingProfileInfo.removeAll()
         
-        connectionStatusAndProfileInfo.append(StackedTextModel(label: "Connection status:", value: " \(connectionState)"))
-        connectionStatusAndProfileInfo.append(StackedTextModel(label: "Routing profile:", value: " \(routingProfile ?? "-")"))
+        connectionStatusInfo.append(StackedTextModel(label: "Connection status:", value: " \(connectionState)"))
+        routingProfileInfo.append(StackedTextModel(label: "Routing profile:", value: " \(routingProfile ?? "-")"))
     }
     
     private func updateErrorInfo(_ error: ErrorInformation) {

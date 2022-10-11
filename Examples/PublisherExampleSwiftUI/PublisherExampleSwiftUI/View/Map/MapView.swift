@@ -16,7 +16,7 @@ struct MapView: View {
         VStack(alignment: .center, spacing: 3) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    StackedText(texts: viewModel.connectionStatusAndProfileInfo)
+                    StackedText(texts: viewModel.connectionStatusInfo + viewModel.routingProfileInfo)
                     Button {
                         showRoutingProfileSheet = true
                     } label: {
