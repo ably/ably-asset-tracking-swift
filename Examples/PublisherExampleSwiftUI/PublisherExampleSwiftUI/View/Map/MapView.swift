@@ -11,12 +11,12 @@ struct MapView: View {
     @State private var showRoutingProfileSheet: Bool = false
     
     var body: some View {
-        let publisherInfoViewModel = MapViewModel.createPublisherInfoViewModel(fromPublisherConfigInfo: publisher.configInfo, resolution: publisher.resolution)
+        let publisherInfoViewModel = MapViewModel.createPublisherInfoViewModel(fromPublisherConfigInfo: publisher.configInfo, resolution: publisher.resolution, routingProfile: publisher.routingProfile)
         
         VStack(alignment: .center, spacing: 3) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    StackedText(texts: viewModel.connectionStatusInfo + viewModel.routingProfileInfo)
+                    StackedText(texts: viewModel.connectionStatusInfo + publisherInfoViewModel.routingProfileInfo)
                     Button {
                         showRoutingProfileSheet = true
                     } label: {

@@ -8,9 +8,8 @@ class MapViewModel: ObservableObject {
     private var connectionState: ConnectionState = .offline {
         didSet {
             isConnected = connectionState == .online
-            updateConnectionStatusAndProfileInfo(
-                connectionState.asInfo(),
-                routingProfile: routingProfile?.asInfo()
+            updateConnectionStatusInfo(
+                connectionState.asInfo()
             )
         }
     }
@@ -28,13 +27,11 @@ class MapViewModel: ObservableObject {
     @Published var errorInfo: String? = nil
     @Published var didChangeRoutingProfile = false
     @Published var connectionStatusInfo: [StackedTextModel] = []
-    @Published var routingProfileInfo: [StackedTextModel] = []
     
     init() {
         isConnected = connectionState == .online
-        updateConnectionStatusAndProfileInfo(
-            connectionState.asInfo(),
-            routingProfile: routingProfile?.asInfo()
+        updateConnectionStatusInfo(
+            connectionState.asInfo()
         )
     }
     
@@ -82,12 +79,10 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    private func updateConnectionStatusAndProfileInfo(_ connectionState: String, routingProfile: String?) {
+    private func updateConnectionStatusInfo(_ connectionState: String) {
         connectionStatusInfo.removeAll()
-        routingProfileInfo.removeAll()
         
         connectionStatusInfo.append(StackedTextModel(label: "Connection status:", value: " \(connectionState)"))
-        routingProfileInfo.append(StackedTextModel(label: "Routing profile:", value: " \(routingProfile ?? "-")"))
     }
     
     private func updateErrorInfo(_ error: ErrorInformation) {
@@ -113,10 +108,7 @@ class MapViewModel: ObservableObject {
             self.didChangeRoutingProfile = true
             switch result {
             case .success:
-                self.updateConnectionStatusAndProfileInfo(
-                    self.connectionState.asInfo(),
-                    routingProfile: self.publisher?.routingProfile.asInfo()
-                )
+                break
             case .failure(let error):
                 self.updateErrorInfo(error)
             }
@@ -127,9 +119,10 @@ class MapViewModel: ObservableObject {
         var rawLocationsInfo: [StackedTextModel]
         var constantResolutionInfo: [StackedTextModel]
         var resolutionInfo: [StackedTextModel]
+        var routingProfileInfo: [StackedTextModel]
     }
     
-    static func createPublisherInfoViewModel(fromPublisherConfigInfo publisherConfigInfo: ObservablePublisher.PublisherConfigInfo, resolution: Resolution?) -> PublisherInfoViewModel {
+    static func createPublisherInfoViewModel(fromPublisherConfigInfo publisherConfigInfo: ObservablePublisher.PublisherConfigInfo, resolution: Resolution?, routingProfile: RoutingProfile?) -> PublisherInfoViewModel {
         let rawLocationsInfo: [StackedTextModel] = [.init(label: "Publish raw locations: ", value: "\(publisherConfigInfo.areRawLocationsEnabled ? "enabled" : "disabled")")]
         
         var constantResolutionInfo: [StackedTextModel] = []
@@ -153,7 +146,9 @@ class MapViewModel: ObservableObject {
             resolutionInfo.append(StackedTextModel(label: "Desired interval:", value: " -"))
         }
         
-        return .init(rawLocationsInfo: rawLocationsInfo, constantResolutionInfo: constantResolutionInfo, resolutionInfo: resolutionInfo)
+        let routingProfileInfo = [StackedTextModel(label: "Routing profile:", value: " \(routingProfile?.asInfo() ?? "-")")]
+        
+        return .init(rawLocationsInfo: rawLocationsInfo, constantResolutionInfo: constantResolutionInfo, resolutionInfo: resolutionInfo, routingProfileInfo: routingProfileInfo)
     }
 }
 
@@ -171,9 +166,8 @@ extension MapViewModel: PublisherDelegate {
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
         connectionState = state
         if isConnected {
-            updateConnectionStatusAndProfileInfo(
-                connectionState.asInfo(),
-                routingProfile: sender.routingProfile.asInfo()
+            updateConnectionStatusInfo(
+                connectionState.asInfo()
             )
             
             didChangeRoutingProfile = true
