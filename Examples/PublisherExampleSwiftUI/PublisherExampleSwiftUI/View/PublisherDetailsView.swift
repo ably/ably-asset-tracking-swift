@@ -3,6 +3,11 @@ import AblyAssetTrackingPublisher
 
 struct PublisherDetailsView: View {
     @StateObject private var locationManager = LocationManager.shared
+    @State private var isStoppingPublisher = false
+    @State private var hasStoppedPublisher = false
+    @State private var error: ErrorInformation?
+    @State private var showAlert = false
+    @Environment(\.presentationMode) private var presentationMode
     
     @ObservedObject var publisher: ObservablePublisher
     
@@ -43,6 +48,33 @@ struct PublisherDetailsView: View {
                     AddTrackableView(publisher: publisher)
                 } label: {
                     Text("Add trackable")
+                }
+                HStack {
+                    Button {
+                        isStoppingPublisher = true
+                        publisher.stop { result in
+                            isStoppingPublisher = false
+                            switch result {
+                            case .success:
+                                hasStoppedPublisher = true
+                                presentationMode.wrappedValue.dismiss()
+                            case .failure(let error):
+                                self.error = error
+                                showAlert = true
+                            }
+                        }
+                    } label: {
+                        Text("Stop publisher")
+                    }
+                    .accentColor(.red)
+                    .disabled(isStoppingPublisher || hasStoppedPublisher)
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: "Failed to stop publisher",
+                              errorInformation: error)
+                    }
+                    Spacer()
+                    ProgressView()
+                        .opacity(isStoppingPublisher ? 1 : 0)
                 }
             } header: {
                 Text("Actions")
