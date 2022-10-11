@@ -125,6 +125,42 @@ struct PublisherDetailsView: View {
             } header: {
                 Text("Actions")
             }
+            
+            Section {
+                let publisherInfoViewModel = PublisherInfoViewModel.create(fromPublisherConfigInfo: publisher.configInfo, resolution: publisher.resolution, routingProfile: publisher.routingProfile, lastError: publisher.lastError)
+
+                VStack {
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading) {
+                            StackedText(texts: publisherInfoViewModel.routingProfileInfo)
+                        }
+                        .padding(5)
+                        Spacer()
+                        VStack(alignment: .leading) {
+                            StackedText(texts: publisherInfoViewModel.resolutionInfo)
+                        }
+                        .padding(5)
+                    }
+                    Divider()
+                        .padding(4)
+                    HStack {
+                        StackedText(texts: publisherInfoViewModel.rawLocationsInfo)
+                            .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 10))
+                        Spacer()
+                    }
+                    Divider()
+                        .padding(4)
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading) {
+                            StackedText(texts: publisherInfoViewModel.constantResolutionInfo)
+                                .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
+                        }
+                        Spacer()
+                    }
+                }
+            } header: {
+                Text("Publisher info")
+            }
         }
         .navigationTitle("Publisher details")
         .navigationBarBackButtonHidden(true)
