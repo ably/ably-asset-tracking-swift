@@ -26,7 +26,6 @@ class MapViewModel: ObservableObject {
     
     @Published var isConnected: Bool
     @Published var errorInfo: String? = nil
-    @Published var isDestinationAvailable: Bool = false
     @Published var didChangeRoutingProfile = false
     @Published var connectionStatusAndProfileInfo: [StackedTextModel] = []
     @Published var resolutionInfo: [StackedTextModel] = []
@@ -102,10 +101,7 @@ class MapViewModel: ObservableObject {
         connectionStatusAndProfileInfo.removeAll()
         
         connectionStatusAndProfileInfo.append(StackedTextModel(label: "Connection status:", value: " \(connectionState)"))
-        
-        if isDestinationAvailable {
-            connectionStatusAndProfileInfo.append(StackedTextModel(label: "Routing profile:", value: " \(routingProfile ?? "-")"))
-        }
+        connectionStatusAndProfileInfo.append(StackedTextModel(label: "Routing profile:", value: " \(routingProfile ?? "-")"))
     }
     
     private func updateErrorInfo(_ error: ErrorInformation) {
@@ -174,7 +170,6 @@ extension MapViewModel: PublisherDelegate {
     }
     
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        isDestinationAvailable = trackable.destination != nil
         connectionState = state
         if isConnected {
             updateConnectionStatusAndProfileInfo(

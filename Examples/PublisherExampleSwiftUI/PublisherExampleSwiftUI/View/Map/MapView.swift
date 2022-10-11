@@ -17,34 +17,32 @@ struct MapView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     StackedText(texts: viewModel.connectionStatusAndProfileInfo)
-                    if viewModel.isDestinationAvailable {
-                        Button {
-                            showRoutingProfileSheet = true
-                        } label: {
-                            HStack(spacing: 3) {
-                                Text("Change profile")
-                                    .font(.system(size: 12))
-                                Image(systemName: "info.circle.fill")
-                                    .resizable()
-                                    .frame(width: 10, height: 10, alignment: .center)
+                    Button {
+                        showRoutingProfileSheet = true
+                    } label: {
+                        HStack(spacing: 3) {
+                            Text("Change profile")
+                                .font(.system(size: 12))
+                            Image(systemName: "info.circle.fill")
+                                .resizable()
+                                .frame(width: 10, height: 10, alignment: .center)
+                        }
+                    }
+                    .disabled(!viewModel.isConnected || !viewModel.didChangeRoutingProfile)
+                    .actionSheet(isPresented: $showRoutingProfileSheet) {
+                        var buttons: [Alert.Button] = RoutingProfile.all.map { profile in
+                            Alert.Button.default(Text(profile.asInfo())) {
+                                viewModel.routingProfile = profile
                             }
                         }
-                        .disabled(!viewModel.isConnected || !viewModel.didChangeRoutingProfile)
-                        .actionSheet(isPresented: $showRoutingProfileSheet) {
-                            var buttons: [Alert.Button] = RoutingProfile.all.map { profile in
-                                Alert.Button.default(Text(profile.asInfo())) {
-                                    viewModel.routingProfile = profile
-                                }
-                            }
-                            
-                            buttons.append(.cancel())
-                            
-                            return ActionSheet(
-                                title: Text("Routing profiles"),
-                                message: Text("Select a profile"),
-                                buttons: buttons
-                            )
-                        }
+                        
+                        buttons.append(.cancel())
+                        
+                        return ActionSheet(
+                            title: Text("Routing profiles"),
+                            message: Text("Select a profile"),
+                            buttons: buttons
+                        )
                     }
                 }
                 .padding(5)
