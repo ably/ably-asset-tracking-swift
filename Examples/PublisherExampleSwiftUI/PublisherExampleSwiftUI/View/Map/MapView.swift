@@ -11,7 +11,7 @@ struct MapView: View {
     @State private var showRoutingProfileSheet: Bool = false
     
     var body: some View {
-        let publisherInfoViewModel = MapViewModel.createPublisherInfoViewModel(fromPublisherConfigInfo: publisher.configInfo)
+        let publisherInfoViewModel = MapViewModel.createPublisherInfoViewModel(fromPublisherConfigInfo: publisher.configInfo, resolution: publisher.resolution)
         
         VStack(alignment: .center, spacing: 3) {
             HStack(alignment: .top) {
@@ -48,7 +48,7 @@ struct MapView: View {
                 .padding(5)
                 Spacer()
                 VStack(alignment: .leading) {
-                    StackedText(texts: viewModel.resolutionInfo)
+                    StackedText(texts: publisherInfoViewModel.resolutionInfo)
                 }
                 .padding(5)
             }

@@ -29,7 +29,6 @@ class MapViewModel: ObservableObject {
     @Published var didChangeRoutingProfile = false
     @Published var connectionStatusInfo: [StackedTextModel] = []
     @Published var routingProfileInfo: [StackedTextModel] = []
-    @Published var resolutionInfo: [StackedTextModel] = []
     
     init() {
         isConnected = connectionState == .online
@@ -37,7 +36,6 @@ class MapViewModel: ObservableObject {
             connectionState.asInfo(),
             routingProfile: routingProfile?.asInfo()
         )
-        updateResolutionInfo()
     }
     
     func connectPublisher(trackableId: String) {
@@ -81,20 +79,6 @@ class MapViewModel: ObservableObject {
         publisher?.stop {[weak self] result in
             self?.publisher = nil
             completion?(result)
-        }
-    }
-    
-    private func updateResolutionInfo(_ resolution: Resolution? = nil) {
-        resolutionInfo.removeAll()
-        resolutionInfo.append(.init(label: "Resolution policy", value: "", isHeader: true))
-        if let resolution = resolution {
-            resolutionInfo.append(StackedTextModel(label: "Accurancy:", value: " \(resolution.accuracy.asInfo())"))
-            resolutionInfo.append(StackedTextModel(label: "Min. displacement:", value: " \(resolution.minimumDisplacement)m"))
-            resolutionInfo.append(StackedTextModel(label: "Desired interval:", value: " \(resolution.desiredInterval)ms"))
-        } else {
-            resolutionInfo.append(StackedTextModel(label: "Accurancy:", value: " -"))
-            resolutionInfo.append(StackedTextModel(label: "Min. displacement:", value: " -"))
-            resolutionInfo.append(StackedTextModel(label: "Desired interval:", value: " -"))
         }
     }
     
@@ -142,9 +126,10 @@ class MapViewModel: ObservableObject {
     struct PublisherInfoViewModel {
         var rawLocationsInfo: [StackedTextModel]
         var constantResolutionInfo: [StackedTextModel]
+        var resolutionInfo: [StackedTextModel]
     }
     
-    static func createPublisherInfoViewModel(fromPublisherConfigInfo publisherConfigInfo: ObservablePublisher.PublisherConfigInfo) -> PublisherInfoViewModel {
+    static func createPublisherInfoViewModel(fromPublisherConfigInfo publisherConfigInfo: ObservablePublisher.PublisherConfigInfo, resolution: Resolution?) -> PublisherInfoViewModel {
         let rawLocationsInfo: [StackedTextModel] = [.init(label: "Publish raw locations: ", value: "\(publisherConfigInfo.areRawLocationsEnabled ? "enabled" : "disabled")")]
         
         var constantResolutionInfo: [StackedTextModel] = []
@@ -156,7 +141,19 @@ class MapViewModel: ObservableObject {
             constantResolutionInfo.append(.init(label: "Constant resolution: ", value:  "disabled"))
         }
         
-        return .init(rawLocationsInfo: rawLocationsInfo, constantResolutionInfo: constantResolutionInfo)
+        var resolutionInfo: [StackedTextModel] = []
+        resolutionInfo.append(.init(label: "Resolution policy", value: "", isHeader: true))
+        if let resolution = resolution {
+            resolutionInfo.append(StackedTextModel(label: "Accurancy:", value: " \(resolution.accuracy.asInfo())"))
+            resolutionInfo.append(StackedTextModel(label: "Min. displacement:", value: " \(resolution.minimumDisplacement)m"))
+            resolutionInfo.append(StackedTextModel(label: "Desired interval:", value: " \(resolution.desiredInterval)ms"))
+        } else {
+            resolutionInfo.append(StackedTextModel(label: "Accurancy:", value: " -"))
+            resolutionInfo.append(StackedTextModel(label: "Min. displacement:", value: " -"))
+            resolutionInfo.append(StackedTextModel(label: "Desired interval:", value: " -"))
+        }
+        
+        return .init(rawLocationsInfo: rawLocationsInfo, constantResolutionInfo: constantResolutionInfo, resolutionInfo: resolutionInfo)
     }
 }
 
@@ -183,9 +180,7 @@ extension MapViewModel: PublisherDelegate {
         }
     }
     
-    func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {
-        updateResolutionInfo(resolution)
-    }
+    func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {}
 }
 
 private extension Accuracy {
