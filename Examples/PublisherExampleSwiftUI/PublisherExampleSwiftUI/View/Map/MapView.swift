@@ -14,7 +14,7 @@ struct MapView: View {
         VStack(alignment: .center, spacing: 3) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    StackedText(texts: viewModel.connectionStatusInfo)
+                    StackedText(texts: MapViewModel.createViewModel(forConnectionState: publisher.trackables.first { key, _ in key.id == trackableId }?.value.connectionState))
                     Button {
                         showRoutingProfileSheet = true
                     } label: {
@@ -26,7 +26,7 @@ struct MapView: View {
                                 .frame(width: 10, height: 10, alignment: .center)
                         }
                     }
-                    .disabled(!viewModel.isConnected || !viewModel.didChangeRoutingProfile)
+                    .disabled(!viewModel.didChangeRoutingProfile)
                     .actionSheet(isPresented: $showRoutingProfileSheet) {
                         var buttons: [Alert.Button] = RoutingProfile.all.map { profile in
                             Alert.Button.default(Text(profile.asInfo())) {

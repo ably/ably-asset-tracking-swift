@@ -5,14 +5,6 @@ import CoreLocation.CLLocation
 class MapViewModel: ObservableObject {
     private var publisher: Publisher?
     private var trackableId: String?
-    private var connectionState: ConnectionState = .offline {
-        didSet {
-            isConnected = connectionState == .online
-            updateConnectionStatusInfo(
-                connectionState.asInfo()
-            )
-        }
-    }
     var routingProfile: RoutingProfile? = nil {
         didSet {
             updateRoutingProfile(routingProfile)
@@ -23,16 +15,7 @@ class MapViewModel: ObservableObject {
         SettingsModel.shared.useMapboxMap
     }
     
-    @Published var isConnected: Bool
     @Published var didChangeRoutingProfile = false
-    @Published var connectionStatusInfo: [StackedTextModel] = []
-    
-    init() {
-        isConnected = connectionState == .online
-        updateConnectionStatusInfo(
-            connectionState.asInfo()
-        )
-    }
     
     func connectPublisher(trackableId: String) {
         self.trackableId = trackableId
@@ -78,12 +61,6 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    private func updateConnectionStatusInfo(_ connectionState: String) {
-        connectionStatusInfo.removeAll()
-        
-        connectionStatusInfo.append(StackedTextModel(label: "Connection status:", value: " \(connectionState)"))
-    }
-    
     private func updateRoutingProfile(_ profile: RoutingProfile?) {
         guard let profile = profile else {
             return
@@ -104,6 +81,10 @@ class MapViewModel: ObservableObject {
             }
         }
     }
+    
+    static func createViewModel(forConnectionState connectionState: ConnectionState?) -> [StackedTextModel] {
+        return [.init(label: "Connection status:", value: " \(connectionState?.asInfo() ?? "-")")]
+    }
 }
 
 extension MapViewModel: PublisherDelegate {
@@ -116,14 +97,6 @@ extension MapViewModel: PublisherDelegate {
     }
     
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        connectionState = state
-        if isConnected {
-            updateConnectionStatusInfo(
-                connectionState.asInfo()
-            )
-            
-            didChangeRoutingProfile = true
-        }
     }
     
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution) {}
