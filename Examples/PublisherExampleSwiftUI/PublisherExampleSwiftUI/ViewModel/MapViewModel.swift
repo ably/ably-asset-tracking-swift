@@ -24,7 +24,6 @@ class MapViewModel: ObservableObject {
     }
     
     @Published var isConnected: Bool
-    @Published var errorInfo: String? = nil
     @Published var didChangeRoutingProfile = false
     @Published var connectionStatusInfo: [StackedTextModel] = []
     
@@ -85,15 +84,6 @@ class MapViewModel: ObservableObject {
         connectionStatusInfo.append(StackedTextModel(label: "Connection status:", value: " \(connectionState)"))
     }
     
-    private func updateErrorInfo(_ error: ErrorInformation) {
-        errorInfo = """
-        Code: \(error.code)
-        Status code: \(error.statusCode)
-        
-        \(error.message)
-        """
-    }
-    
     private func updateRoutingProfile(_ profile: RoutingProfile?) {
         guard let profile = profile else {
             return
@@ -109,8 +99,8 @@ class MapViewModel: ObservableObject {
             switch result {
             case .success:
                 break
-            case .failure(let error):
-                self.updateErrorInfo(error)
+            case .failure:
+                break
             }
         }
     }
@@ -120,9 +110,10 @@ class MapViewModel: ObservableObject {
         var constantResolutionInfo: [StackedTextModel]
         var resolutionInfo: [StackedTextModel]
         var routingProfileInfo: [StackedTextModel]
+        var errorInfo: String?
     }
     
-    static func createPublisherInfoViewModel(fromPublisherConfigInfo publisherConfigInfo: ObservablePublisher.PublisherConfigInfo, resolution: Resolution?, routingProfile: RoutingProfile?) -> PublisherInfoViewModel {
+    static func createPublisherInfoViewModel(fromPublisherConfigInfo publisherConfigInfo: ObservablePublisher.PublisherConfigInfo, resolution: Resolution?, routingProfile: RoutingProfile?, lastError: ErrorInformation?) -> PublisherInfoViewModel {
         let rawLocationsInfo: [StackedTextModel] = [.init(label: "Publish raw locations: ", value: "\(publisherConfigInfo.areRawLocationsEnabled ? "enabled" : "disabled")")]
         
         var constantResolutionInfo: [StackedTextModel] = []
@@ -148,16 +139,27 @@ class MapViewModel: ObservableObject {
         
         let routingProfileInfo = [StackedTextModel(label: "Routing profile:", value: " \(routingProfile?.asInfo() ?? "-")")]
         
-        return .init(rawLocationsInfo: rawLocationsInfo, constantResolutionInfo: constantResolutionInfo, resolutionInfo: resolutionInfo, routingProfileInfo: routingProfileInfo)
+        let errorInfo: String?
+        
+        if let lastError = lastError {
+            errorInfo = """
+            Code: \(lastError.code)
+            Status code: \(lastError.statusCode)
+            
+            \(lastError.message)
+            """
+        } else {
+            errorInfo = nil
+        }
+        
+        return .init(rawLocationsInfo: rawLocationsInfo, constantResolutionInfo: constantResolutionInfo, resolutionInfo: resolutionInfo, routingProfileInfo: routingProfileInfo, errorInfo: errorInfo)
     }
 }
 
 extension MapViewModel: PublisherDelegate {
     func publisher(sender: Publisher, didChangeTrackables trackables: Set<Trackable>) {}
     
-    func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {
-        updateErrorInfo(error)
-    }
+    func publisher(sender: Publisher, didFailWithError error: ErrorInformation) {}
     
     func publisher(sender: Publisher, didUpdateEnhancedLocation location: EnhancedLocationUpdate) {
         updatedLocations.insert(location.location.toCoreLocation())
