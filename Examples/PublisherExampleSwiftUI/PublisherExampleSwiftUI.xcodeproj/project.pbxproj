@@ -25,6 +25,7 @@
 		21E6EBF828F97B200057AC7C /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6EBF728F97B200057AC7C /* Map.swift */; };
 		21CF8E0328F875DF005E7CE6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0228F875DF005E7CE6 /* SettingsView.swift */; };
 		21CF8E0528F875E8005E7CE6 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0428F875E8005E7CE6 /* SettingsViewModel.swift */; };
+		2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */; };
 		D511FDD427FED05E00EBF3D6 /* SimulatedLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511FDD327FED05D00EBF3D6 /* SimulatedLocations.swift */; };
 		D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */; };
 		D544FAFA2771B3580015925C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D544FAF92771B3580015925C /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 		21E6EBF728F97B200057AC7C /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		21CF8E0228F875DF005E7CE6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		21CF8E0428F875E8005E7CE6 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+ErrorInformation.swift"; sourceTree = "<group>"; };
 		D511FDD327FED05D00EBF3D6 /* SimulatedLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimulatedLocations.swift; sourceTree = "<group>"; };
 		D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExampleSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExampleSwiftUIApp.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				D544FB4A277333A20015925C /* Environment.swift */,
 				0CC893B928FEBBB3004F7B9A /* VehicleProfile+description.swift */,
 				0C50478428FECFA000E84038 /* RoutingProfile+description.swift */,
+				2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				0CC893BA28FEBBB3004F7B9A /* VehicleProfile+description.swift in Sources */,
 				D544FB142771C34B0015925C /* CustomTextFieldStyle.swift in Sources */,
 				D544FB0C2771BA680015925C /* CustomButtonStyle.swift in Sources */,
+				2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */,
 				D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */,
 				D5DBAF7527748116008B8DED /* RoutingProfile.swift in Sources */,
 				D544FB2A2773010B0015925C /* CustomText.swift in Sources */,
