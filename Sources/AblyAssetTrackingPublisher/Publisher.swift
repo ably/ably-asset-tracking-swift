@@ -88,7 +88,7 @@ public protocol Publisher {
 
 public enum VehicleProfile{
     /** For cars and motorcycles.*/
-    case Car
+    case car
     /** For bicycles and pedestrians.*/
-    case Bicycle
+    case bicycle
 }
