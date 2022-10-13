@@ -66,7 +66,7 @@ class ChannelModesTests: XCTestCase {
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
             historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
             logHandler: logger,
-            vehicleProfile: VehicleProfile.Car
+            vehicleProfile: VehicleProfile.car
         )
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: ablyApiKey, clientId: clientId)
         

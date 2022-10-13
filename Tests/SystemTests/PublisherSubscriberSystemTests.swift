@@ -35,12 +35,12 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
 
-    func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws{
-        try subscriberReceivesPublisherMessage(vehicleProfile: .Bicycle)
+    func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws {
+        try subscriberReceivesPublisherMessage(vehicleProfile: .bicycle)
     }
     
-    func testSubscriberReceivesPublisherMessageWithCarProfile() throws{
-        try subscriberReceivesPublisherMessage(vehicleProfile: .Car)
+    func testSubscriberReceivesPublisherMessageWithCarProfile() throws {
+        try subscriberReceivesPublisherMessage(vehicleProfile: .car)
     }
     
     func subscriberReceivesPublisherMessage(vehicleProfile: VehicleProfile) throws {
@@ -140,11 +140,11 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     }
     
     func testSubscriberReceivesAssetConnectionStatusWithBicycleProfile() throws {
-        try subscriberReceivesAssetConnectionStatus(vehicleProfile: .Bicycle)
+        try subscriberReceivesAssetConnectionStatus(vehicleProfile: .bicycle)
     }
     
     func testSubscriberReceivesAssetConnectionStatusWithCarProfile() throws {
-        try subscriberReceivesAssetConnectionStatus(vehicleProfile: .Car)
+        try subscriberReceivesAssetConnectionStatus(vehicleProfile: .car)
     }
     
     func subscriberReceivesAssetConnectionStatus(vehicleProfile: VehicleProfile) throws {
