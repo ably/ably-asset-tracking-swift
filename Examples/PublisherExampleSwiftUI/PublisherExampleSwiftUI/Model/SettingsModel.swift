@@ -10,6 +10,8 @@ class SettingsModel {
         minimumDisplacement: 100.0
     )
     
+    private let fallbackVehicleProfile = VehicleProfile.car
+    
     var areRawLocationsEnabled: Bool {
         get {
             UserDefaults.standard.bool(forKey: "areRawLocationsEnabled")
@@ -51,6 +53,19 @@ class SettingsModel {
         }
         set {
             UserDefaults.standard.save(newValue, forKey: "defaultResolution")
+        }
+    }
+    
+    var vehicleProfile: VehicleProfile {
+        get {
+            guard let profile: VehicleProfile = UserDefaults.standard.get("vehicleProfile") else {
+                return fallbackVehicleProfile
+            }
+            
+            return profile
+        }
+        set {
+            UserDefaults.standard.save(newValue, forKey: "vehicleProfile")
         }
     }
     

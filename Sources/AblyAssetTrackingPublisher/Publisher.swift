@@ -86,9 +86,9 @@ public protocol Publisher {
 
 }
 
-public enum VehicleProfile{
+public enum VehicleProfile: String, Codable {
     /** For cars and motorcycles.*/
-    case Car
+    case car
     /** For bicycles and pedestrians.*/
-    case Bicycle
+    case bicycle
 }
