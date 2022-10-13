@@ -4,7 +4,7 @@ import Foundation
 import SwiftUI
 import AblyAssetTrackingPublisher
 
-class SettingsViewModel: ObservableObject {
+class PublisherSettingsViewModel: ObservableObject {
     @Published var areRawLocationsEnabled: Bool = SettingsModel.shared.areRawLocationsEnabled {
         didSet {
             SettingsModel.shared.areRawLocationsEnabled = areRawLocationsEnabled

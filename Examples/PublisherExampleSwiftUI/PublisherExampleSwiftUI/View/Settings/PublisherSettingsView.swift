@@ -3,8 +3,8 @@
 import SwiftUI
 import AblyAssetTrackingPublisher
 
-struct SettingsView: View {
-    @StateObject private var viewModel = SettingsViewModel()
+struct PublisherSettingsView: View {
+    @StateObject private var viewModel = PublisherSettingsViewModel()
     @State var showConstantAccuracies = false
     @State var showDefaultAccuracies = false
     @State var showVehicleProfiles = false
@@ -121,8 +121,8 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
+struct PublisherSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        PublisherSettingsView()
     }
 }

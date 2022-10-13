@@ -55,7 +55,7 @@ struct MainView: View {
                     width: proxy.size.width,
                     height: proxy.size.height
                 )
-                NavigationLink(destination: SettingsView(), isActive: $settingsOpened) { EmptyView() }.hidden()
+                NavigationLink(destination: PublisherSettingsView(), isActive: $settingsOpened) { EmptyView() }.hidden()
             }
             .onAppear() {
                 locationManager.requestAuthorization()
