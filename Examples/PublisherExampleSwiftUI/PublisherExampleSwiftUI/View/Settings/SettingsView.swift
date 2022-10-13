@@ -4,17 +4,54 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
-    @State var showAccuracies = false
+    @State var showConstantAccuracies = false
+    @State var showDefaultAccuracies = false
     
     var body: some View {
         List {
             Section {
-                TitleValueListItem(title: "Desired Accuracy", value: viewModel.accuracy)
+                TitleValueListItem(title: "Accuracy", value: viewModel.defaultResolutionAccuracy)
                     .onTapGesture {
-                        self.showAccuracies = true
+                        self.showDefaultAccuracies = true
+                    }
+                    .actionSheet(isPresented: $showDefaultAccuracies) {
+                        var buttons: [Alert.Button] = viewModel.accuracies.map { accuracy in
+                            Alert.Button.default(Text(accuracy.lowercased())) {
+                                viewModel.defaultResolutionAccuracy = accuracy
+                            }
+                        }
+                        buttons.append(.cancel())
+                        return ActionSheet(
+                            title: Text("Default resolution accuracy"),
+                            message: Text("Select accuracy"),
+                            buttons: buttons
+                        )
+                    }
+                TitleTextFieldListItem(title: "Desired interval (ms)", value: $viewModel.defaultResolutionDesiredInterval, placeholder: "value", keyboardType: .numberPad)
+                TitleTextFieldListItem(title: "Minimum displacement (meters)", value: $viewModel.defaultResolutionMinimumDisplacement, placeholder: "value", keyboardType: .numberPad)
+            } header: {
+                Text("Default resolution")
+            }
+            Section {
+                TitleValueListItem(title: "Desired Accuracy", value: viewModel.constantResolutionAccuracy)
+                    .onTapGesture {
+                        self.showConstantAccuracies = true
                     }
                     .disabled(!viewModel.isConstantResolutionEnabled)
-                TitleTextFieldListItem(title: "Min Displacement (meters)", value: $viewModel.minimumDisplacement, placeholder: "value", keyboardType: .numberPad)
+                    .actionSheet(isPresented: $showConstantAccuracies) {
+                        var buttons: [Alert.Button] = viewModel.accuracies.map { accuracy in
+                            Alert.Button.default(Text(accuracy.lowercased())) {
+                                viewModel.constantResolutionAccuracy = accuracy
+                            }
+                        }
+                        buttons.append(.cancel())
+                        return ActionSheet(
+                            title: Text("Desired constant resolution accuracy"),
+                            message: Text("Select accuracy"),
+                            buttons: buttons
+                        )
+                    }
+                TitleTextFieldListItem(title: "Min Displacement (meters)", value: $viewModel.constantResolutionMinimumDisplacement, placeholder: "value", keyboardType: .numberPad)
                     .disabled(!viewModel.isConstantResolutionEnabled)
             } header: {
                 HStack {
@@ -30,21 +67,6 @@ struct SettingsView: View {
             } header: {
                 Text("Other settings")
             }
-        }
-        .actionSheet(isPresented: $showAccuracies) {
-            var buttons: [Alert.Button] = viewModel.accuracies.map { accuracy in
-                Alert.Button.default(Text(accuracy.lowercased())) {
-                    viewModel.accuracy = accuracy
-                }
-            }
-            
-            buttons.append(.cancel())
-            
-            return ActionSheet(
-                title: Text("Desired accuracy"),
-                message: Text("Select accuracy"),
-                buttons: buttons
-            )
         }
         .listStyle(.grouped)
         .navigationBarTitle("Settings")
