@@ -5,10 +5,12 @@ struct PublisherExampleSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
             TabView {
-                MainView()
-                    .tabItem {
-                        Label("Publisher", systemImage: "car")
-                    }
+                NavigationView {
+                    MainView()
+                }
+                .tabItem {
+                    Label("Publisher", systemImage: "car")
+                }
                 NavigationView {
                     SettingsView()
                 }
