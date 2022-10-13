@@ -74,13 +74,10 @@ struct MapView: View {
             ZStack(alignment: .bottomTrailing) {
                 if viewModel.useMapboxMap {
                     MapboxMap(center: $locationManager.currentRegionCenter)
-                        .edgesIgnoringSafeArea(.bottom)
                 }
                 else {
                     Map(center: $locationManager.currentRegionCenter)
-                        .edgesIgnoringSafeArea(.bottom)
                 }
-                
                 
                 Button {
                     locationManager.updateRegion(true)

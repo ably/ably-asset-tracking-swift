@@ -16,12 +16,6 @@ class PublisherSettingsViewModel: ObservableObject {
             SettingsModel.shared.isConstantResolutionEnabled = isConstantResolutionEnabled
         }
     }
-    
-    @Published var useMapboxMap: Bool = SettingsModel.shared.useMapboxMap {
-        didSet {
-            SettingsModel.shared.useMapboxMap = useMapboxMap
-        }
-    }
 	
     @Published var vehicleProfile: VehicleProfile = SettingsModel.shared.vehicleProfile {
         didSet {
@@ -36,11 +30,8 @@ class PublisherSettingsViewModel: ObservableObject {
     }
     
     @Published var constantResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.constantResolution.minimumDisplacement)"
-    @Published var defaultResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
-    @Published var defaultResolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
     
     var constantResolutionAccuracy: String = SettingsModel.shared.constantResolution.accuracy.rawValue
-    var defaultResolutionAccuracy: String = SettingsModel.shared.defaultResolution.accuracy.rawValue
     var accuracies: [String] {
         [Accuracy.low,
          Accuracy.high,
@@ -67,14 +58,6 @@ class PublisherSettingsViewModel: ObservableObject {
             SettingsModel.shared.constantResolution = .init(accuracy: constantAccuracy,
                                                             desiredInterval: .zero,
                                                             minimumDisplacement: constantDisplacement)
-        }
-        
-        if let defaultAccuracy = Accuracy(rawValue: defaultResolutionAccuracy),
-        let defaultDisplacement = Double(defaultResolutionMinimumDisplacement),
-        let defaultDesiredInterval = Double(defaultResolutionDesiredInterval) {
-            SettingsModel.shared.defaultResolution = .init(accuracy: defaultAccuracy,
-                                                           desiredInterval: defaultDesiredInterval,
-                                                           minimumDisplacement: defaultDisplacement)
         }
     }
 }
