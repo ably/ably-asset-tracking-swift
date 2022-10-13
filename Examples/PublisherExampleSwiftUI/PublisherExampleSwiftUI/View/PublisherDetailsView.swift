@@ -5,8 +5,12 @@ struct PublisherDetailsView: View {
     @StateObject private var locationManager = LocationManager.shared
     @State private var isStoppingPublisher = false
     @State private var hasStoppedPublisher = false
-    @State private var error: ErrorInformation?
-    @State private var showAlert = false
+    @State private var stopPublisherError: ErrorInformation?
+    @State private var showStopPublisherErrorAlert = false
+    @State private var changeRoutingProfileError: ErrorInformation?
+    @State private var showChangeRoutingProfileErrorAlert = false
+    @State private var showRoutingProfileSheet = false
+    @State private var isChangingRoutingProfile = false
     @Environment(\.presentationMode) private var presentationMode
     
     @ObservedObject var publisher: ObservablePublisher
@@ -49,6 +53,48 @@ struct PublisherDetailsView: View {
                 } label: {
                     Text("Add trackable")
                 }
+                
+                Button {
+                    showRoutingProfileSheet = true
+                } label: {
+                    HStack {
+                        Text("Change routing profile")
+                            .padding(.trailing)
+                        ProgressView()
+                            .opacity(isChangingRoutingProfile ? 1 : 0)
+                    }
+                }
+                .disabled(isChangingRoutingProfile)
+                .actionSheet(isPresented: $showRoutingProfileSheet) {
+                    var buttons: [Alert.Button] = RoutingProfile.all.map { profile in
+                        Alert.Button.default(Text(profile.asInfo())) {
+                            isChangingRoutingProfile = true
+                            publisher.changeRoutingProfile(profile: profile) { result in
+                                isChangingRoutingProfile = false
+                                switch result {
+                                case .success:
+                                    break
+                                case .failure(let error):
+                                    changeRoutingProfileError = error
+                                    showChangeRoutingProfileErrorAlert = true
+                                }
+                            }
+                        }
+                    }
+                    
+                    buttons.append(.cancel())
+                    
+                    return ActionSheet(
+                        title: Text("Routing profiles"),
+                        message: Text("Select a profile"),
+                        buttons: buttons
+                    )
+                }
+                .alert(isPresented: $showChangeRoutingProfileErrorAlert) {
+                    Alert(title: "Failed to change routing profile",
+                          errorInformation: changeRoutingProfileError)
+                }
+                
                 HStack {
                     Button {
                         isStoppingPublisher = true
@@ -59,8 +105,8 @@ struct PublisherDetailsView: View {
                                 hasStoppedPublisher = true
                                 presentationMode.wrappedValue.dismiss()
                             case .failure(let error):
-                                self.error = error
-                                showAlert = true
+                                self.stopPublisherError = error
+                                showStopPublisherErrorAlert = true
                             }
                         }
                     } label: {
@@ -68,9 +114,9 @@ struct PublisherDetailsView: View {
                     }
                     .accentColor(.red)
                     .disabled(isStoppingPublisher || hasStoppedPublisher)
-                    .alert(isPresented: $showAlert) {
+                    .alert(isPresented: $showStopPublisherErrorAlert) {
                         Alert(title: "Failed to stop publisher",
-                              errorInformation: error)
+                              errorInformation: stopPublisherError)
                     }
                     Spacer()
                     ProgressView()

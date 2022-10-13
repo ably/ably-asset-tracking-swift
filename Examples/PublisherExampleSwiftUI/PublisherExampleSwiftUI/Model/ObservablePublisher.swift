@@ -38,6 +38,10 @@ class ObservablePublisher: ObservableObject {
         publisher.remove(trackable: trackable, completion: completion)
     }
     
+    func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>) {
+        publisher.changeRoutingProfile(profile: profile, completion: completion)
+    }
+    
     private func updateTrackables(latestReceived: Set<Trackable>) {
         trackables = latestReceived.reduce([:]) { accum, trackable in
             var newAccum = accum
