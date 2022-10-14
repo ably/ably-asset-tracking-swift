@@ -8,15 +8,9 @@ class LocationManager: NSObject, ObservableObject {
     @Published var statusTitle: String = "-"
     @Published var isLocationAuthorizationDenied: Bool = false
     @Published var currentLocation: CLLocation = .init(latitude: 0, longitude: 0)
-    @Published var currentRegion: MKCoordinateRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: 0,
-            longitude: 0
-        ),
-        span: MKCoordinateSpan(
-            latitudeDelta: 0.2,
-            longitudeDelta: 0.2
-        )
+    @Published var currentRegionCenter = CLLocationCoordinate2D(
+        latitude: 0,
+        longitude: 0
     )
     private let locationManager = CLLocationManager()
     private var didUpdateRegion = false
@@ -80,7 +74,7 @@ extension LocationManager: CLLocationManagerDelegate {
         }
         
         if !didUpdateRegion {
-            currentRegion.center = currentLocation.coordinate
+            currentRegionCenter = currentLocation.coordinate
             didUpdateRegion = true
         }
     }

@@ -72,8 +72,12 @@ struct MapView: View {
                 Spacer()
             }
             ZStack(alignment: .bottomTrailing) {
-                Map(coordinateRegion: $locationManager.currentRegion, showsUserLocation: true)
-                    .edgesIgnoringSafeArea(.bottom)
+                Map(
+                    center: $locationManager.currentRegionCenter,
+                    showsUserLocation: true
+                )
+                .edgesIgnoringSafeArea(.bottom)
+                
                 Button {
                     locationManager.updateRegion(true)
                 } label: {
