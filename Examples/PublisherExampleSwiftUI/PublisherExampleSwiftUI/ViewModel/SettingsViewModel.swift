@@ -17,6 +17,12 @@ class SettingsViewModel: ObservableObject {
         }
     }
     
+    @Published var useMapBox: Bool = SettingsModel.shared.useMapBox {
+        didSet {
+            SettingsModel.shared.useMapBox = useMapBox
+        }
+    }
+    
     @Published var minimumDisplacement: String  = "\(SettingsModel.shared.constantResolution.minimumDisplacement)"
     
     var accuracy: String = SettingsModel.shared.constantResolution.accuracy.rawValue

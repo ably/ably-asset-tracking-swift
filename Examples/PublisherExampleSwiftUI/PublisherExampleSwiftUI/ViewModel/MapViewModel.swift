@@ -20,6 +20,9 @@ class MapViewModel: ObservableObject {
         }
     }
     private var updatedLocations: Set<CLLocation> = []
+    var useMapBox: Bool {
+        SettingsModel.shared.useMapBox
+    }
     
     @Published var isConnected: Bool
     @Published var errorInfo: String? = nil

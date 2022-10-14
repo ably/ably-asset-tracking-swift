@@ -41,6 +41,15 @@ class SettingsModel {
         }
     }
     
+    var useMapBox: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "useMapBox")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "useMapBox")
+        }
+    }
+    
     private init() {}
 }
 
