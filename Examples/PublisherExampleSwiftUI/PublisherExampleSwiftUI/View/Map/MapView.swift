@@ -72,11 +72,15 @@ struct MapView: View {
                 Spacer()
             }
             ZStack(alignment: .bottomTrailing) {
-                Map(
-                    center: $locationManager.currentRegionCenter,
-                    showsUserLocation: true
-                )
-                .edgesIgnoringSafeArea(.bottom)
+                if viewModel.useMapBox {
+                    MapBoxMap(center: $locationManager.currentRegionCenter)
+                        .edgesIgnoringSafeArea(.bottom)
+                }
+                else {
+                    Map(center: $locationManager.currentRegionCenter)
+                        .edgesIgnoringSafeArea(.bottom)
+                }
+                
                 
                 Button {
                     locationManager.updateRegion(true)
@@ -91,7 +95,7 @@ struct MapView: View {
                     d.height + 40
                 }
                 .alignmentGuide(HorizontalAlignment.trailing) { d in
-                    d.width + 2
+                    d.width + 10
                 }
             }
         }

@@ -4,8 +4,6 @@ import MapKit
 struct Map: View {
     
     @Binding private var center: CLLocationCoordinate2D
-    private let showsUserLocation: Bool
-    
     @State private var span: MKCoordinateSpan?
 
     private var region: Binding<MKCoordinateRegion> {
@@ -24,15 +22,14 @@ struct Map: View {
         }
     }
     
-    init(center: Binding<CLLocationCoordinate2D>, showsUserLocation: Bool) {
-        self.showsUserLocation = showsUserLocation
+    init(center: Binding<CLLocationCoordinate2D>) {
         _center = center
     }
     
     var body: some View {
         MapKit.Map(
             coordinateRegion: region,
-            showsUserLocation: self.showsUserLocation
+            showsUserLocation: true
         )
     }
 }
@@ -40,6 +37,6 @@ struct Map: View {
 struct Map_Previews: PreviewProvider {
         
     static var previews: some View {
-        Map(center: .constant(CLLocationCoordinate2D(latitude: 0, longitude: 0)), showsUserLocation: true)
+        Map(center: .constant(CLLocationCoordinate2D(latitude: 0, longitude: 0)))
     }
 }
