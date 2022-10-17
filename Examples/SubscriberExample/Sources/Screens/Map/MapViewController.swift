@@ -77,8 +77,8 @@ class MapViewController: UIViewController {
                 return
             }
             
-            self?.updateTruckAnnotation(position: position)
-            self?.updateHorizontalAccuracyAnnotation(position: position)
+            self?.updateTruckAnnotation(position: position, type: .enhanced)
+            self?.updateHorizontalAccuracyAnnotation(position: position, type: .enhanced)
         }
         
         locationAnimator.subscribeForCameraPositionUpdates { [weak self] position in
@@ -131,10 +131,10 @@ class MapViewController: UIViewController {
     }
     
     // MARK: Utils
-    private func updateTruckAnnotation(position: Position) {
+    private func updateTruckAnnotation(position: Position, type: AnnotationType) {
         let coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
         
-        let annotation: TruckAnnotation = createAnnotationIfNeeded()
+        let annotation: TruckAnnotation = createAnnotationIfNeeded(type: type)
         annotation.bearing = position.bearing
         annotation.coordinate = coordinate
         
@@ -143,12 +143,12 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func updateHorizontalAccuracyAnnotation(position: Position) {
+    private func updateHorizontalAccuracyAnnotation(position: Position, type: AnnotationType) {
         let coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: position.accuracy, longitudinalMeters: position.accuracy)
         let rect = mapView.convert(region, toRectTo: mapView)
 
-        let annotation: HorizontalAccuracyAnnotation = createAnnotationIfNeeded()
+        let annotation: HorizontalAccuracyAnnotation = createAnnotationIfNeeded(type: type)
         annotation.accuracy = position.accuracy
         annotation.coordinate = coordinate
         
@@ -157,11 +157,17 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func createAnnotationIfNeeded<T: MKPointAnnotation>() -> T {
-        if let annotation = mapView.annotations.first(where: { $0 is T }) as? T {
+    private func createAnnotationIfNeeded<T: MKPointAnnotation & Annotatable>(type: AnnotationType) -> T {
+        if let annotation = mapView.annotations.first(where: {
+            if let object = $0 as? T {
+                return object.type == type
+            }
+            return false
+        }) as? T {
             return annotation
         } else {
-            let annotation = T()
+            var annotation = T()
+            annotation.type = type
             mapView.addAnnotation(annotation)
             
             return annotation
@@ -295,11 +301,17 @@ extension MapViewController: SubscriberDelegate {
         if animationSwitch.isOn {
             locationAnimator.animateLocationUpdate(location: locationUpdate, expectedIntervalBetweenLocationUpdatesInMilliseconds: locationUpdateIntervalInMilliseconds)
         } else {
-            updateTruckAnnotation(position: locationUpdate.location.toPosition())
+            updateTruckAnnotation(position: locationUpdate.location.toPosition(), type: .enhanced)
             scrollToReceivedLocation(position: locationUpdate.location.toPosition())
         }
         
         self.location = locationUpdate.location.toCoreLocation()
+    }
+    
+    func subscriber(sender: Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate) {
+        let position = locationUpdate.location.toPosition()
+        updateTruckAnnotation(position: position, type: .raw)
+        updateHorizontalAccuracyAnnotation(position: position, type: .raw)
     }
 
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {

@@ -4,7 +4,7 @@ import AblyAssetTrackingPublisher
 class SettingsModel {
     static let shared = SettingsModel()
     
-    private let defaultConstantResolution = Resolution(
+    private let fallbackResolution = Resolution(
         accuracy: .balanced,
         desiredInterval: 2000.0,
         minimumDisplacement: 100.0
@@ -31,7 +31,7 @@ class SettingsModel {
     var constantResolution: Resolution {
         get {
             guard let resolution: Resolution = UserDefaults.standard.get("constantResolution") else {
-                return defaultConstantResolution
+                return fallbackResolution
             }
             
             return resolution
@@ -41,14 +41,27 @@ class SettingsModel {
         }
     }
     
+    var defaultResolution: Resolution {
+        get {
+            guard let resolution: Resolution = UserDefaults.standard.get("defaultResolution") else {
+                return fallbackResolution
+            }
+            
+            return resolution
+        }
+        set {
+            UserDefaults.standard.save(newValue, forKey: "defaultResolution")
+        }
+    }
+	
     var useMapBox: Bool {
         get {
             UserDefaults.standard.bool(forKey: "useMapBox")
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "useMapBox")
-        }
-    }
+		}
+	}
     
     private init() {}
 }

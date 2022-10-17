@@ -22,10 +22,13 @@ class SettingsViewModel: ObservableObject {
             SettingsModel.shared.useMapBox = useMapBox
         }
     }
+	
+    @Published var constantResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.constantResolution.minimumDisplacement)"
+    @Published var defaultResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
+    @Published var defaultResolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
     
-    @Published var minimumDisplacement: String  = "\(SettingsModel.shared.constantResolution.minimumDisplacement)"
-    
-    var accuracy: String = SettingsModel.shared.constantResolution.accuracy.rawValue
+    var constantResolutionAccuracy: String = SettingsModel.shared.constantResolution.accuracy.rawValue
+    var defaultResolutionAccuracy: String = SettingsModel.shared.defaultResolution.accuracy.rawValue
     var accuracies: [String] {
         [Accuracy.low,
          Accuracy.high,
@@ -35,8 +38,19 @@ class SettingsViewModel: ObservableObject {
     }
     
     func save() {
-        if let accuracy = Accuracy(rawValue: self.accuracy), let displacement = Double(minimumDisplacement) {
-            SettingsModel.shared.constantResolution = .init(accuracy: accuracy, desiredInterval: .zero, minimumDisplacement: displacement)
+        if let constantAccuracy = Accuracy(rawValue: constantResolutionAccuracy),
+           let constantDisplacement = Double(constantResolutionMinimumDisplacement) {
+            SettingsModel.shared.constantResolution = .init(accuracy: constantAccuracy,
+                                                            desiredInterval: .zero,
+                                                            minimumDisplacement: constantDisplacement)
+        }
+        
+        if let defaultAccuracy = Accuracy(rawValue: defaultResolutionAccuracy),
+        let defaultDisplacement = Double(defaultResolutionMinimumDisplacement),
+        let defaultDesiredInterval = Double(defaultResolutionDesiredInterval) {
+            SettingsModel.shared.defaultResolution = .init(accuracy: defaultAccuracy,
+                                                           desiredInterval: defaultDesiredInterval,
+                                                           minimumDisplacement: defaultDisplacement)
         }
     }
 }

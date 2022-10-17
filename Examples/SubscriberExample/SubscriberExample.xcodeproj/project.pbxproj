@@ -19,6 +19,8 @@
 		180F61C2258634420014B310 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B6258634420014B310 /* Assets.xcassets */; };
 		180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 180F61B7258634420014B310 /* LaunchScreen.storyboard */; };
 		188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */; };
+		216C0D3628F57BE1003E5E55 /* AnnotationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216C0D3528F57BE1003E5E55 /* AnnotationType.swift */; };
+		216C0D3828F57BE8003E5E55 /* Annotatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216C0D3728F57BE8003E5E55 /* Annotatable.swift */; };
 		AD0F84B52677D6C900C15DB7 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */; };
 		D55F03B028195552001F5F83 /* AblyAssetTrackingUI in Frameworks */ = {isa = PBXBuildFile; productRef = D55F03AF28195552001F5F83 /* AblyAssetTrackingUI */; };
 		D569B3A3283631C100E680AF /* HorizontalAccuracyAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569B3A2283631C100E680AF /* HorizontalAccuracyAnnotationView.swift */; };
@@ -46,6 +48,8 @@
 		180F61B8258634420014B310 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		180F61B9258634420014B310 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Zoom.swift"; sourceTree = "<group>"; };
+		216C0D3528F57BE1003E5E55 /* AnnotationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationType.swift; sourceTree = "<group>"; };
+		216C0D3728F57BE8003E5E55 /* Annotatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotatable.swift; sourceTree = "<group>"; };
 		AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = ../../Secrets.xcconfig; sourceTree = "<group>"; };
 		ADAAE6192661562B00A8F214 /* Subscriber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Subscriber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAAE61F266157C800A8F214 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,10 +171,12 @@
 			isa = PBXGroup;
 			children = (
 				D569B3A628366C1F00E680AF /* Identifiable.swift */,
+				216C0D3728F57BE8003E5E55 /* Annotatable.swift */,
 				180F61AF258634420014B310 /* TruckAnnotation.swift */,
 				180F61B1258634420014B310 /* TruckAnnotationView.swift */,
 				D569B3A2283631C100E680AF /* HorizontalAccuracyAnnotationView.swift */,
 				D569B3A42836625200E680AF /* HorizontalAccuracyAnnotation.swift */,
+				216C0D3528F57BE1003E5E55 /* AnnotationType.swift */,
 			);
 			path = MapAnnotation;
 			sourceTree = "<group>";
@@ -306,6 +312,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				216C0D3628F57BE1003E5E55 /* AnnotationType.swift in Sources */,
+				216C0D3828F57BE8003E5E55 /* Annotatable.swift in Sources */,
 				180F61C0258634420014B310 /* AppDelegate.swift in Sources */,
 				D569B3A728366C1F00E680AF /* Identifiable.swift in Sources */,
 				D569B3A52836625200E680AF /* HorizontalAccuracyAnnotation.swift in Sources */,
