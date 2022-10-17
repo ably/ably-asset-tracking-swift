@@ -56,13 +56,14 @@ class MapViewModel: ObservableObject {
 
         let constantResolution: Resolution? = SettingsModel.shared.isConstantResolutionEnabled ? SettingsModel.shared.constantResolution : nil
         let vehicleProfile = SettingsModel.shared.vehicleProfile
+        let routingProfile = SettingsModel.shared.routingProfile
         
         publisher = try! PublisherFactory.publishers()
                 .connection(connectionConfiguration)
                 .mapboxConfiguration(MapboxConfiguration(mapboxKey: EnvironmentHelper.MAPBOX_ACCESS_TOKEN))
 //                Uncomment below line to enable simulated location
 //                .locationSource(.init(locationSource: SimulatedLocations.recordedLocations()))
-                .routingProfile(.driving)
+                .routingProfile(routingProfile)
                 .delegate(self)
                 .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
                 .rawLocations(enabled: SettingsModel.shared.areRawLocationsEnabled)

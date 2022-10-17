@@ -5,6 +5,11 @@ import SwiftUI
 import AblyAssetTrackingPublisher
 
 class SettingsViewModel: ObservableObject {
+    private let routingProfileDrivingString = "driving"
+    private let routingProfileCyclingString = "cycling"
+    private let routingProfileDrivingTrafficString = "drivingTraffic"
+    private let routingProfileWalkingString = "walking"
+    
     @Published var areRawLocationsEnabled: Bool = SettingsModel.shared.areRawLocationsEnabled {
         didSet {
             SettingsModel.shared.areRawLocationsEnabled = areRawLocationsEnabled
@@ -20,6 +25,12 @@ class SettingsViewModel: ObservableObject {
     @Published var vehicleProfile: VehicleProfile = SettingsModel.shared.vehicleProfile {
         didSet {
             SettingsModel.shared.vehicleProfile = vehicleProfile
+        }
+    }
+    
+    @Published var routingProfile: RoutingProfile = SettingsModel.shared.routingProfile {
+        didSet {
+            SettingsModel.shared.routingProfile = routingProfile
         }
     }
     
@@ -40,6 +51,43 @@ class SettingsViewModel: ObservableObject {
     var vehicleProfiles: [String] {
         [VehicleProfile.bicycle,
          VehicleProfile.car].map(\.rawValue)
+    }
+    
+    var routingProfiles: [String] {
+        [RoutingProfile.cycling,
+         RoutingProfile.driving,
+         RoutingProfile.drivingTraffic,
+         RoutingProfile.walking].map { getRoutingProfileDescription(routingProfile: $0) }
+    }
+    
+    func getRoutingProfileDescription(routingProfile: RoutingProfile) -> String {
+        switch routingProfile {
+        case .driving:
+            return routingProfileDrivingString
+        case .cycling:
+            return routingProfileCyclingString
+        case .walking:
+            return routingProfileWalkingString
+        case .drivingTraffic:
+            return routingProfileDrivingTrafficString
+        }
+    }
+    
+    func getRoutingProfileFromDescription(description: String) -> RoutingProfile {
+        if description == routingProfileDrivingString {
+            return .driving
+        }
+        if description == routingProfileCyclingString {
+            return .cycling
+        }
+        if description == routingProfileWalkingString {
+            return .walking
+        }
+        if description ==  routingProfileDrivingTrafficString {
+            return .drivingTraffic
+        }
+        
+        return .driving
     }
         
     func save() {

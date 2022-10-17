@@ -8,6 +8,7 @@ struct SettingsView: View {
     @State var showConstantAccuracies = false
     @State var showDefaultAccuracies = false
     @State var showVehicleProfiles = false
+    @State var showRoutingProfiles = false
     
     var body: some View {
         List {
@@ -62,7 +63,7 @@ struct SettingsView: View {
                 }
             }
             Section {
-                TitleValueListItem(title: "Vehicle Profile", value: viewModel.vehicleProfile.rawValue)
+                TitleValueListItem(title: "Vehicle profile", value: viewModel.vehicleProfile.rawValue)
                     .onTapGesture {
                         self.showVehicleProfiles = true
                     }
@@ -70,6 +71,23 @@ struct SettingsView: View {
                         var buttons: [Alert.Button] = viewModel.vehicleProfiles.map { profile in
                             Alert.Button.default(Text(profile)) {
                                 viewModel.vehicleProfile = VehicleProfile(rawValue: profile)!
+                            }
+                        }
+                        buttons.append(.cancel())
+                        return ActionSheet(
+                            title: Text("Vehicle Profile"),
+                            message: Text("Select vehicle profile"),
+                            buttons: buttons
+                        )
+                    }
+                TitleValueListItem(title: "Routing profile", value: viewModel.getRoutingProfileDescription(routingProfile: viewModel.routingProfile))
+                    .onTapGesture {
+                        self.showRoutingProfiles = true
+                    }
+                    .actionSheet(isPresented: $showRoutingProfiles) {
+                        var buttons: [Alert.Button] = viewModel.routingProfiles.map { profile in
+                            Alert.Button.default(Text(profile)) {
+                                viewModel.routingProfile = viewModel.getRoutingProfileFromDescription(description: profile)
                             }
                         }
                         buttons.append(.cancel())
