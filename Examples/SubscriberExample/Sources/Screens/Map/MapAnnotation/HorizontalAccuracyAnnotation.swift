@@ -1,6 +1,7 @@
 import Foundation
 import MapKit
 
-class HorizontalAccuracyAnnotation: MKPointAnnotation {
+class HorizontalAccuracyAnnotation: MKPointAnnotation, Annotatable {
+    var type: AnnotationType = .enhanced
     var accuracy: Double = .zero
 }
