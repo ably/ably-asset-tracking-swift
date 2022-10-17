@@ -60,8 +60,8 @@ class SettingsModel {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "useMapBox")
-		}
-	}
+        }
+    }
     
     private init() {}
 }
