@@ -21,7 +21,6 @@
 		188F5EDB25AF6FD900202C97 /* MKMapView+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5EDA25AF6FD900202C97 /* MKMapView+Zoom.swift */; };
 		216C0D3628F57BE1003E5E55 /* AnnotationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216C0D3528F57BE1003E5E55 /* AnnotationType.swift */; };
 		216C0D3828F57BE8003E5E55 /* Annotatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216C0D3728F57BE8003E5E55 /* Annotatable.swift */; };
-		AD0F84B52677D6C900C15DB7 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AD0F84B32677D6C900C15DB7 /* Secrets.xcconfig */; };
 		D55F03B028195552001F5F83 /* AblyAssetTrackingUI in Frameworks */ = {isa = PBXBuildFile; productRef = D55F03AF28195552001F5F83 /* AblyAssetTrackingUI */; };
 		D569B3A3283631C100E680AF /* HorizontalAccuracyAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569B3A2283631C100E680AF /* HorizontalAccuracyAnnotationView.swift */; };
 		D569B3A52836625200E680AF /* HorizontalAccuracyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569B3A42836625200E680AF /* HorizontalAccuracyAnnotation.swift */; };
@@ -242,7 +241,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					180F60D1258632B40014B310 = {
 						CreatedOnToolsVersion = 12.2;
@@ -277,7 +276,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				180F61BF258634420014B310 /* MapViewController.xib in Resources */,
-				AD0F84B52677D6C900C15DB7 /* Secrets.xcconfig in Resources */,
 				180F61C3258634420014B310 /* LaunchScreen.storyboard in Resources */,
 				180F61C2258634420014B310 /* Assets.xcassets in Resources */,
 				180F61BA258634420014B310 /* SettingsViewController.xib in Resources */,
