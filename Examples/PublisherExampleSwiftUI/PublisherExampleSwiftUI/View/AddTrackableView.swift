@@ -6,23 +6,54 @@ struct AddTrackableView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     @StateObject private var locationManager = LocationManager.shared
-    @State private var trackableId: String = ""
     @State private var error: ErrorInformation?
     @State private var showAlert = false
     @State private var isAdding = false
     @State private var hasAdded = false
+    @StateObject private var viewModel = AddTrackableViewModel()
+    @State var showDefaultAccuracies = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Form {
                 Section(header: Text("Trackable ID")) {
-                    TextField("Trackable ID", text: $trackableId)
+                    TextField("Trackable ID", text: $viewModel.trackableId)
                         .disabled(locationManager.isLocationAuthorizationDenied)
                 }
                 
                 Section {
+                    Toggle(isOn: $viewModel.setResolutionConstraints) {
+                        Text("Set resolution constraints")
+                    }
+                    
+                    if viewModel.setResolutionConstraints {                        
+                        TitleValueListItem(title: "Accuracy", value: viewModel.resolutionAccuracy)
+                            .onTapGesture {
+                                self.showDefaultAccuracies = true
+                            }
+                            .actionSheet(isPresented: $showDefaultAccuracies) {
+                                var buttons: [Alert.Button] = viewModel.accuracies.map { accuracy in
+                                    Alert.Button.default(Text(accuracy.lowercased())) {
+                                        viewModel.resolutionAccuracy = accuracy
+                                    }
+                                }
+                                buttons.append(.cancel())
+                                return ActionSheet(
+                                    title: Text("Default resolution accuracy"),
+                                    message: Text("Select accuracy"),
+                                    buttons: buttons
+                                )
+                            }
+                        TitleTextFieldListItem(title: "Desired interval (ms)", value: $viewModel.resolutionDesiredInterval, placeholder: "value", keyboardType: .numberPad)
+                        TitleTextFieldListItem(title: "Minimum displacement (meters)", value: $viewModel.resolutionMinimumDisplacement, placeholder: "value", keyboardType: .numberPad)
+                    }
+                } header: {
+                    Text("Resolution constraints")
+                }
+                
+                Section {
                     Button {
-                        let trackable = Trackable(id: trackableId)
+                        let trackable = viewModel.createTrackable()
                         isAdding = true
                         publisher.track(trackable: trackable) { result in
                             isAdding = false
@@ -43,7 +74,8 @@ struct AddTrackableView: View {
                                 .opacity(isAdding ? 1 : 0)
                         }
                     }
-                    .disabled(trackableId.isEmpty || locationManager.isLocationAuthorizationDenied ||
+                    .disabled(!viewModel.isValid ||
+                              locationManager.isLocationAuthorizationDenied ||
                               isAdding ||
                               hasAdded)
                     .alert(isPresented: $showAlert) {

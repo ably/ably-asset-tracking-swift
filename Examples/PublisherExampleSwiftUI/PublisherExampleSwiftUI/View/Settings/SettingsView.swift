@@ -27,7 +27,7 @@ struct SettingsView: View {
                 TitleTextFieldListItem(title: "Desired interval (ms)", value: $viewModel.defaultResolutionDesiredInterval, placeholder: "value", keyboardType: .numberPad)
                 TitleTextFieldListItem(title: "Minimum displacement (meters)", value: $viewModel.defaultResolutionMinimumDisplacement, placeholder: "value", keyboardType: .numberPad)
             } header: {
-                Text("Default resolution")
+                Text("Default resolution when setting resolution constraints")
             }
             
             Section {
