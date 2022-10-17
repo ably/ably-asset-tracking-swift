@@ -22,7 +22,7 @@ class DefaultLocationService: LocationService {
                                              navigatorPredictionInterval: 0,
                                              statusUpdatingSettings: .init(updatingPatience: .greatestFiniteMagnitude ,
                                                                                                                         updatingInterval: nil))
-        if vehicleProfile == .Bicycle {
+        if vehicleProfile == .bicycle {
             let cyclingConfig = [
                         "cache": [
                             "enableAssetsTrackingMode": true
@@ -43,7 +43,7 @@ class DefaultLocationService: LocationService {
         }
         self.logHandler = logHandler
         //set location manager with profile identifier only if .Bicycle is provided by clients
-        if vehicleProfile == .Bicycle {
+        if vehicleProfile == .bicycle {
             self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager ,datasetProfileIdentifier: .cycling)
         } else {
             self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
