@@ -80,14 +80,14 @@ struct SettingsView: View {
                             buttons: buttons
                         )
                     }
-                TitleValueListItem(title: "Routing profile", value: viewModel.getRoutingProfileDescription(routingProfile: viewModel.routingProfile))
+                TitleValueListItem(title: "Routing profile", value: viewModel.routingProfile.description())
                     .onTapGesture {
                         self.showRoutingProfiles = true
                     }
                     .actionSheet(isPresented: $showRoutingProfiles) {
                         var buttons: [Alert.Button] = viewModel.routingProfiles.map { profile in
                             Alert.Button.default(Text(profile)) {
-                                viewModel.routingProfile = viewModel.getRoutingProfileFromDescription(description: profile)
+                                viewModel.routingProfile = RoutingProfile.fromDescription(description: profile)
                             }
                         }
                         buttons.append(.cancel())

@@ -5,11 +5,6 @@ import SwiftUI
 import AblyAssetTrackingPublisher
 
 class SettingsViewModel: ObservableObject {
-    private let routingProfileDrivingString = "driving"
-    private let routingProfileCyclingString = "cycling"
-    private let routingProfileDrivingTrafficString = "drivingTraffic"
-    private let routingProfileWalkingString = "walking"
-    
     @Published var areRawLocationsEnabled: Bool = SettingsModel.shared.areRawLocationsEnabled {
         didSet {
             SettingsModel.shared.areRawLocationsEnabled = areRawLocationsEnabled
@@ -57,37 +52,7 @@ class SettingsViewModel: ObservableObject {
         [RoutingProfile.cycling,
          RoutingProfile.driving,
          RoutingProfile.drivingTraffic,
-         RoutingProfile.walking].map { getRoutingProfileDescription(routingProfile: $0) }
-    }
-    
-    func getRoutingProfileDescription(routingProfile: RoutingProfile) -> String {
-        switch routingProfile {
-        case .driving:
-            return routingProfileDrivingString
-        case .cycling:
-            return routingProfileCyclingString
-        case .walking:
-            return routingProfileWalkingString
-        case .drivingTraffic:
-            return routingProfileDrivingTrafficString
-        }
-    }
-    
-    func getRoutingProfileFromDescription(description: String) -> RoutingProfile {
-        if description == routingProfileDrivingString {
-            return .driving
-        }
-        if description == routingProfileCyclingString {
-            return .cycling
-        }
-        if description == routingProfileWalkingString {
-            return .walking
-        }
-        if description ==  routingProfileDrivingTrafficString {
-            return .drivingTraffic
-        }
-        
-        return .driving
+         RoutingProfile.walking].map { $0.description() }
     }
         
     func save() {
