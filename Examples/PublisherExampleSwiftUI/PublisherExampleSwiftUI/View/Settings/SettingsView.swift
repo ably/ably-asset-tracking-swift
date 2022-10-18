@@ -1,11 +1,13 @@
 //
 
 import SwiftUI
+import AblyAssetTrackingPublisher
 
 struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @State var showConstantAccuracies = false
     @State var showDefaultAccuracies = false
+    @State var showVehicleProfiles = false
     
     var body: some View {
         List {
@@ -58,6 +60,27 @@ struct SettingsView: View {
                     Text("Constant Resolution")
                     Toggle(isOn: $viewModel.isConstantResolutionEnabled) {}
                 }
+            }
+            Section {
+                TitleValueListItem(title: "Vehicle Profile", value: viewModel.vehicleProfile.description())
+                    .onTapGesture {
+                        self.showVehicleProfiles = true
+                    }
+                    .actionSheet(isPresented: $showVehicleProfiles) {
+                        var buttons: [Alert.Button] = viewModel.vehicleProfiles.map { profile in
+                            Alert.Button.default(Text(profile)) {
+                                viewModel.vehicleProfile = VehicleProfile.fromDescription(description: profile)
+                            }
+                        }
+                        buttons.append(.cancel())
+                        return ActionSheet(
+                            title: Text("Vehicle Profile"),
+                            message: Text("Select vehicle profile"),
+                            buttons: buttons
+                        )
+                    }
+            } header: {
+                Text("Navigation Settings")
             }
             
             Section {

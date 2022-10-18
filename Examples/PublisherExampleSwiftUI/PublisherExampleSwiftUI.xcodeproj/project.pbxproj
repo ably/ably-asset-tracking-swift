@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C3E7C3F28BF695000171D14 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 0C3E7C3E28BF695000171D14 /* Logging */; };
 		0C9E6B1D28BBA637001A54E1 /* PublisherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9E6B1C28BBA637001A54E1 /* PublisherLogger.swift */; };
+		0CC893BA28FEBBB3004F7B9A /* VehicleProfile+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC893B928FEBBB3004F7B9A /* VehicleProfile+description.swift */; };
 		0CFCA2FD289130E700A1A6B5 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA2F9289130E700A1A6B5 /* ListItem.swift */; };
 		0CFCA2FE289130E700A1A6B5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA2FA289130E700A1A6B5 /* SettingsView.swift */; };
 		0CFCA2FF289130E700A1A6B5 /* TitleValueListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA2FB289130E700A1A6B5 /* TitleValueListItem.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		0C9E6B1C28BBA637001A54E1 /* PublisherLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherLogger.swift; sourceTree = "<group>"; };
+		0CC893B928FEBBB3004F7B9A /* VehicleProfile+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VehicleProfile+description.swift"; sourceTree = "<group>"; };
 		0CFCA2F9289130E700A1A6B5 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		0CFCA2FA289130E700A1A6B5 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0CFCA2FB289130E700A1A6B5 /* TitleValueListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleValueListItem.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */,
 				0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */,
 				D544FB4A277333A20015925C /* Environment.swift */,
+				0CC893B928FEBBB3004F7B9A /* VehicleProfile+description.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				0CFCA3042891315700A1A6B5 /* SettingsModel.swift in Sources */,
 				D544FB122771BC1E0015925C /* Button.swift in Sources */,
 				D544FB182771C4E50015925C /* TextField.swift in Sources */,
+				0CC893BA28FEBBB3004F7B9A /* VehicleProfile+description.swift in Sources */,
 				D544FB142771C34B0015925C /* CustomTextFieldStyle.swift in Sources */,
 				D544FB0C2771BA680015925C /* CustomButtonStyle.swift in Sources */,
 				D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */,
@@ -540,7 +544,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.holdapp.PublisherExampleSwiftUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.PublisherExampleSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -574,7 +578,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.holdapp.PublisherExampleSwiftUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.PublisherExampleSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

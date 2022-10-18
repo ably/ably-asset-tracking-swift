@@ -58,6 +58,7 @@ class MapViewModel: ObservableObject {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
 
         let constantResolution: Resolution? = SettingsModel.shared.isConstantResolutionEnabled ? SettingsModel.shared.constantResolution : nil
+        let vehicleProfile = SettingsModel.shared.vehicleProfile
         
         publisher = try! PublisherFactory.publishers()
                 .connection(connectionConfiguration)
@@ -70,6 +71,7 @@ class MapViewModel: ObservableObject {
                 .rawLocations(enabled: SettingsModel.shared.areRawLocationsEnabled)
                 .constantLocationEngineResolution(resolution: constantResolution)
                 .logHandler(handler: PublisherLogger())
+                .vehicleProfile(vehicleProfile)
                 .start()
         
         let destination: LocationCoordinate? = nil

@@ -11,7 +11,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var areRawLocationsEnabled: Bool = false
     private var isSendResolutionEnabled: Bool = true
     private var constantLocationEngineResolution: Resolution?
-    private var vehicleProfile: VehicleProfile = VehicleProfile.Car
+    private var vehicleProfile: VehicleProfile = VehicleProfile.car
     private var logHandler: LogHandler?
     private weak var delegate: PublisherDelegate?
     
@@ -27,7 +27,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                  isSendResolutionEnabled: Bool = true,
                  constantLocationEngineResolution: Resolution?,
                  logHandler: LogHandler?,
-                 vehicleProfile: VehicleProfile = VehicleProfile.Car) {
+                 vehicleProfile: VehicleProfile = VehicleProfile.car) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
         self.locationSource = locationSource
@@ -209,7 +209,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logHandler: logHandler)
     }
 
-    func vehicleProfile(vehicleProfile: VehicleProfile) -> PublisherBuilder {
+    func vehicleProfile(_ vehicleProfile: VehicleProfile) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        locationSource: locationSource,
