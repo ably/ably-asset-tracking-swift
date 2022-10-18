@@ -17,6 +17,12 @@ class SettingsViewModel: ObservableObject {
         }
     }
     
+    @Published var vehicleProfile: VehicleProfile = SettingsModel.shared.vehicleProfile {
+        didSet {
+            SettingsModel.shared.vehicleProfile = vehicleProfile
+        }
+    }
+    
     @Published var constantResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.constantResolution.minimumDisplacement)"
     @Published var defaultResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
     @Published var defaultResolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
@@ -31,6 +37,11 @@ class SettingsViewModel: ObservableObject {
          Accuracy.minimum].sorted().map(\.rawValue)
     }
     
+    var vehicleProfiles: [String] {
+        [VehicleProfile.bicycle,
+         VehicleProfile.car].map{ $0.description() }
+    }
+        
     func save() {
         if let constantAccuracy = Accuracy(rawValue: constantResolutionAccuracy),
            let constantDisplacement = Double(constantResolutionMinimumDisplacement) {
