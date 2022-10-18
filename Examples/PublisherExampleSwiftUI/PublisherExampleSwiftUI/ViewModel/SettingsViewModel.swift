@@ -5,9 +5,6 @@ import SwiftUI
 import AblyAssetTrackingPublisher
 
 class SettingsViewModel: ObservableObject {
-    private let vehicleProfileCarString = "car"
-    private let vehicleProfileBicycleString = "bicycle"
-    
     @Published var areRawLocationsEnabled: Bool = SettingsModel.shared.areRawLocationsEnabled {
         didSet {
             SettingsModel.shared.areRawLocationsEnabled = areRawLocationsEnabled
@@ -42,29 +39,8 @@ class SettingsViewModel: ObservableObject {
     
     var vehicleProfiles: [String] {
         [VehicleProfile.bicycle,
-         VehicleProfile.car].map{ getVehicleProfileDescription(vehicleProfile: $0) }
+         VehicleProfile.car].map{ $0.description() }
     }
-    
-    func getVehicleProfileDescription(vehicleProfile: VehicleProfile) -> String {
-        switch vehicleProfile {
-        case .bicycle:
-            return vehicleProfileBicycleString
-        case .car:
-            return vehicleProfileCarString
-        }
-    }
-    
-    func getRoutingProfileFromDescription(description: String) -> VehicleProfile {
-        if description == vehicleProfileCarString {
-            return .car
-        }
-        if description == vehicleProfileBicycleString {
-            return .bicycle
-        }
-        
-        return .car
-    }
-
         
     func save() {
         if let constantAccuracy = Accuracy(rawValue: constantResolutionAccuracy),
