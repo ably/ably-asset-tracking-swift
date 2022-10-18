@@ -9,4 +9,15 @@ extension VehicleProfile {
             return "car"
         }
     }
+    
+    static func fromDescription(description: String) -> VehicleProfile {
+        if description == "car" {
+            return .car
+        }
+        if description == "bicycle" {
+            return .bicycle
+        }
+        
+        return .car
+    }
 }
