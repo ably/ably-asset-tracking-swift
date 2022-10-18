@@ -209,7 +209,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                        logHandler: logHandler)
     }
 
-    func vehicleProfile(vehicleProfile: VehicleProfile) -> PublisherBuilder {
+    func vehicleProfile(_ vehicleProfile: VehicleProfile) -> PublisherBuilder {
         return DefaultPublisherBuilder(connection: connection,
                                        mapboxConfiguration: mapboxConfiguration,
                                        locationSource: locationSource,
