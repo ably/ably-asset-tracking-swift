@@ -87,6 +87,9 @@ struct SettingsView: View {
                 Toggle(isOn: $viewModel.areRawLocationsEnabled) {
                     Text("Raw locations enabled")
                 }
+                Toggle(isOn: $viewModel.useMapboxMap) {
+                    Text("Use Mapbox map")
+                }
             } header: {
                 Text("Other settings")
             }

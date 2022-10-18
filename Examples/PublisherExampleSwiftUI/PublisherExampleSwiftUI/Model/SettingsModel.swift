@@ -55,6 +55,15 @@ class SettingsModel {
             UserDefaults.standard.save(newValue, forKey: "defaultResolution")
         }
     }
+	
+    var useMapboxMap: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "useMapboxMap")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "useMapboxMap")
+        }
+    }
     
     var vehicleProfile: VehicleProfile {
         get {
