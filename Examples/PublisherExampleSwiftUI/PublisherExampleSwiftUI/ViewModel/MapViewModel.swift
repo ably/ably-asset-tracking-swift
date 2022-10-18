@@ -69,7 +69,7 @@ class MapViewModel: ObservableObject {
                 .rawLocations(enabled: SettingsModel.shared.areRawLocationsEnabled)
                 .constantLocationEngineResolution(resolution: constantResolution)
                 .logHandler(handler: PublisherLogger())
-                .vehicleProfile(vehicleProfile: vehicleProfile)
+                .vehicleProfile(vehicleProfile)
                 .start()
         
         let destination: LocationCoordinate? = nil

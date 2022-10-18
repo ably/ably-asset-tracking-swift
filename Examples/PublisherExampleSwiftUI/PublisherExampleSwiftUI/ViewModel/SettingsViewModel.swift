@@ -50,7 +50,7 @@ class SettingsViewModel: ObservableObject {
     
     var vehicleProfiles: [String] {
         [VehicleProfile.bicycle,
-         VehicleProfile.car].map(\.rawValue)
+         VehicleProfile.car].map{ $0.description() }
     }
     
     var routingProfiles: [String] {

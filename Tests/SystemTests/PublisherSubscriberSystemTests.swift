@@ -35,11 +35,11 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
 
-    func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws {
+    func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws{
         try subscriberReceivesPublisherMessage(vehicleProfile: .bicycle)
     }
     
-    func testSubscriberReceivesPublisherMessageWithCarProfile() throws {
+    func testSubscriberReceivesPublisherMessageWithCarProfile() throws{
         try subscriberReceivesPublisherMessage(vehicleProfile: .car)
     }
     

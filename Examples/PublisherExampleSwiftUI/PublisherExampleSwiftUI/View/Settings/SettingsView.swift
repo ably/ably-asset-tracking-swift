@@ -63,14 +63,14 @@ struct SettingsView: View {
                 }
             }
             Section {
-                TitleValueListItem(title: "Vehicle profile", value: viewModel.vehicleProfile.rawValue)
+                TitleValueListItem(title: "Vehicle Profile", value: viewModel.vehicleProfile.description())
                     .onTapGesture {
                         self.showVehicleProfiles = true
                     }
                     .actionSheet(isPresented: $showVehicleProfiles) {
                         var buttons: [Alert.Button] = viewModel.vehicleProfiles.map { profile in
                             Alert.Button.default(Text(profile)) {
-                                viewModel.vehicleProfile = VehicleProfile(rawValue: profile)!
+                                viewModel.vehicleProfile = VehicleProfile.fromDescription(description: profile)
                             }
                         }
                         buttons.append(.cancel())
