@@ -1,7 +1,7 @@
 import UIKit
 import MapboxMaps
 
-class MapBoxMapViewController: UIViewController {
+class MapboxMapViewController: UIViewController {
     internal var mapView: MapboxMaps.MapView?
     
     var center: CLLocationCoordinate2D? {
@@ -41,7 +41,7 @@ class MapBoxMapViewController: UIViewController {
     }
 }
 
-extension MapBoxMapViewController: GestureManagerDelegate {
+extension MapboxMapViewController: GestureManagerDelegate {
     
     func gestureManager(_ gestureManager: MapboxMaps.GestureManager, didBegin gestureType: MapboxMaps.GestureType) {
     }

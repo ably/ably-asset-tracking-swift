@@ -72,8 +72,8 @@ struct MapView: View {
                 Spacer()
             }
             ZStack(alignment: .bottomTrailing) {
-                if viewModel.useMapBox {
-                    MapBoxMap(center: $locationManager.currentRegionCenter)
+                if viewModel.useMapboxMap {
+                    MapboxMap(center: $locationManager.currentRegionCenter)
                         .edgesIgnoringSafeArea(.bottom)
                 }
                 else {

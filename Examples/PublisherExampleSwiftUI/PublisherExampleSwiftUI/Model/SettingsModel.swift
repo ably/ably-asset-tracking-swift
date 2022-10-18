@@ -54,12 +54,12 @@ class SettingsModel {
         }
     }
 	
-    var useMapBox: Bool {
+    var useMapboxMap: Bool {
         get {
-            UserDefaults.standard.bool(forKey: "useMapBox")
+            UserDefaults.standard.bool(forKey: "useMapboxMap")
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "useMapBox")
+            UserDefaults.standard.set(newValue, forKey: "useMapboxMap")
         }
     }
     

@@ -18,8 +18,8 @@
 		0CFCA307289131AB00A1A6B5 /* UserDefaults+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */; };
 		0CFCA308289131AB00A1A6B5 /* CloseKeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */; };
 		0CFCA30A2891325700A1A6B5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA3092891325700A1A6B5 /* MainView.swift */; };
-		21E6EBF328F836FF0057AC7C /* MapBoxMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6EBF228F836FF0057AC7C /* MapBoxMap.swift */; };
-		21E6EBF528F837380057AC7C /* MapBoxMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6EBF428F837380057AC7C /* MapBoxMapViewController.swift */; };
+		21E6EBF328F836FF0057AC7C /* MapboxMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6EBF228F836FF0057AC7C /* MapboxMap.swift */; };
+		21E6EBF528F837380057AC7C /* MapboxMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6EBF428F837380057AC7C /* MapboxMapViewController.swift */; };
 		21E6EBF828F97B200057AC7C /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6EBF728F97B200057AC7C /* Map.swift */; };
 		D511FDD427FED05E00EBF3D6 /* SimulatedLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511FDD327FED05D00EBF3D6 /* SimulatedLocations.swift */; };
 		D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */; };
@@ -53,8 +53,8 @@
 		0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Codable.swift"; sourceTree = "<group>"; };
 		0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseKeyboardHelper.swift; sourceTree = "<group>"; };
 		0CFCA3092891325700A1A6B5 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		21E6EBF228F836FF0057AC7C /* MapBoxMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxMap.swift; sourceTree = "<group>"; };
-		21E6EBF428F837380057AC7C /* MapBoxMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxMapViewController.swift; sourceTree = "<group>"; };
+		21E6EBF228F836FF0057AC7C /* MapboxMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxMap.swift; sourceTree = "<group>"; };
+		21E6EBF428F837380057AC7C /* MapboxMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxMapViewController.swift; sourceTree = "<group>"; };
 		21E6EBF728F97B200057AC7C /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		D511FDD327FED05D00EBF3D6 /* SimulatedLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimulatedLocations.swift; sourceTree = "<group>"; };
 		D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExampleSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,13 +112,13 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		21E6EBF128F836F50057AC7C /* MapBox */ = {
+		21E6EBF128F836F50057AC7C /* Mapbox */ = {
 			isa = PBXGroup;
 			children = (
-				21E6EBF228F836FF0057AC7C /* MapBoxMap.swift */,
-				21E6EBF428F837380057AC7C /* MapBoxMapViewController.swift */,
+				21E6EBF228F836FF0057AC7C /* MapboxMap.swift */,
+				21E6EBF428F837380057AC7C /* MapboxMapViewController.swift */,
 			);
-			path = MapBox;
+			path = Mapbox;
 			sourceTree = "<group>";
 		};
 		21E6EBF628F9789E0057AC7C /* Map */ = {
@@ -126,7 +126,7 @@
 			children = (
 				D544FB242772102F0015925C /* MapView.swift */,
 				21E6EBF728F97B200057AC7C /* Map.swift */,
-				21E6EBF128F836F50057AC7C /* MapBox */,
+				21E6EBF128F836F50057AC7C /* Mapbox */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -374,8 +374,8 @@
 				D5DBAF7527748116008B8DED /* RoutingProfile.swift in Sources */,
 				D544FB2A2773010B0015925C /* CustomText.swift in Sources */,
 				D544FB4B277333A20015925C /* Environment.swift in Sources */,
-				21E6EBF328F836FF0057AC7C /* MapBoxMap.swift in Sources */,
-				21E6EBF528F837380057AC7C /* MapBoxMapViewController.swift in Sources */,
+				21E6EBF328F836FF0057AC7C /* MapboxMap.swift in Sources */,
+				21E6EBF528F837380057AC7C /* MapboxMapViewController.swift in Sources */,
 				D511FDD427FED05E00EBF3D6 /* SimulatedLocations.swift in Sources */,
 				0CFCA2FD289130E700A1A6B5 /* ListItem.swift in Sources */,
 				21E6EBF828F97B200057AC7C /* Map.swift in Sources */,

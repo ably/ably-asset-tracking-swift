@@ -17,9 +17,9 @@ class SettingsViewModel: ObservableObject {
         }
     }
     
-    @Published var useMapBox: Bool = SettingsModel.shared.useMapBox {
+    @Published var useMapboxMap: Bool = SettingsModel.shared.useMapboxMap {
         didSet {
-            SettingsModel.shared.useMapBox = useMapBox
+            SettingsModel.shared.useMapboxMap = useMapboxMap
         }
     }
 	

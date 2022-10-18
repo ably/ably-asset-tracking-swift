@@ -1,11 +1,11 @@
 import SwiftUI
 import MapboxMaps
 
-struct MapBoxMap: UIViewControllerRepresentable {
+struct MapboxMap: UIViewControllerRepresentable {
     @Binding var center: CLLocationCoordinate2D
     
-    func makeUIViewController(context: Context) -> MapBoxMapViewController {
-        let viewController = MapBoxMapViewController()
+    func makeUIViewController(context: Context) -> MapboxMapViewController {
+        let viewController = MapboxMapViewController()
         viewController.center = center
         viewController.onCameraChange = { center in
             self.center = center
@@ -13,7 +13,7 @@ struct MapBoxMap: UIViewControllerRepresentable {
         return viewController
     }
       
-    func updateUIViewController(_ viewController: MapBoxMapViewController, context: Context) {
+    func updateUIViewController(_ viewController: MapboxMapViewController, context: Context) {
         viewController.center = center
     }
 }
