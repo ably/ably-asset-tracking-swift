@@ -29,6 +29,12 @@ class SettingsViewModel: ObservableObject {
         }
     }
     
+    @Published var routingProfile: RoutingProfile = SettingsModel.shared.routingProfile {
+        didSet {
+            SettingsModel.shared.routingProfile = routingProfile
+        }
+    }
+    
     @Published var constantResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.constantResolution.minimumDisplacement)"
     @Published var defaultResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
     @Published var defaultResolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
@@ -46,6 +52,13 @@ class SettingsViewModel: ObservableObject {
     var vehicleProfiles: [String] {
         [VehicleProfile.bicycle,
          VehicleProfile.car].map{ $0.description() }
+    }
+    
+    var routingProfiles: [String] {
+        [RoutingProfile.cycling,
+         RoutingProfile.driving,
+         RoutingProfile.drivingTraffic,
+         RoutingProfile.walking].map { $0.description() }
     }
         
     func save() {

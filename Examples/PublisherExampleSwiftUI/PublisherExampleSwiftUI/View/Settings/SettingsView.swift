@@ -8,6 +8,7 @@ struct SettingsView: View {
     @State var showConstantAccuracies = false
     @State var showDefaultAccuracies = false
     @State var showVehicleProfiles = false
+    @State var showRoutingProfiles = false
     
     var body: some View {
         List {
@@ -70,6 +71,23 @@ struct SettingsView: View {
                         var buttons: [Alert.Button] = viewModel.vehicleProfiles.map { profile in
                             Alert.Button.default(Text(profile)) {
                                 viewModel.vehicleProfile = VehicleProfile.fromDescription(description: profile)
+                            }
+                        }
+                        buttons.append(.cancel())
+                        return ActionSheet(
+                            title: Text("Vehicle Profile"),
+                            message: Text("Select vehicle profile"),
+                            buttons: buttons
+                        )
+                    }
+                TitleValueListItem(title: "Routing profile", value: viewModel.routingProfile.description())
+                    .onTapGesture {
+                        self.showRoutingProfiles = true
+                    }
+                    .actionSheet(isPresented: $showRoutingProfiles) {
+                        var buttons: [Alert.Button] = viewModel.routingProfiles.map { profile in
+                            Alert.Button.default(Text(profile)) {
+                                viewModel.routingProfile = RoutingProfile.fromDescription(description: profile)
                             }
                         }
                         buttons.append(.cancel())

@@ -11,6 +11,7 @@ class SettingsModel {
     )
     
     private let fallbackVehicleProfile = VehicleProfile.car
+    private let fallbackRoutingProfile = RoutingProfile.driving
     
     var areRawLocationsEnabled: Bool {
         get {
@@ -75,6 +76,21 @@ class SettingsModel {
         }
         set {
             UserDefaults.standard.save(newValue, forKey: "vehicleProfile")
+        }
+    }
+    
+    var routingProfile: RoutingProfile {
+        get {
+            guard let profileRawValue: Int = UserDefaults.standard.get("routingProfile"),
+                  let profile = RoutingProfile.init(rawValue: profileRawValue)
+            else {
+                return fallbackRoutingProfile
+            }
+            
+            return profile
+        }
+        set {
+            UserDefaults.standard.save(newValue.rawValue, forKey: "routingProfile")
         }
     }
     

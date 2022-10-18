@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C3E7C3F28BF695000171D14 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 0C3E7C3E28BF695000171D14 /* Logging */; };
+		0C50478528FECFA000E84038 /* RoutingProfile+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C50478428FECFA000E84038 /* RoutingProfile+description.swift */; };
 		0C9E6B1D28BBA637001A54E1 /* PublisherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9E6B1C28BBA637001A54E1 /* PublisherLogger.swift */; };
 		0CC893BA28FEBBB3004F7B9A /* VehicleProfile+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC893B928FEBBB3004F7B9A /* VehicleProfile+description.swift */; };
 		0CFCA2FD289130E700A1A6B5 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA2F9289130E700A1A6B5 /* ListItem.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C50478428FECFA000E84038 /* RoutingProfile+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutingProfile+description.swift"; sourceTree = "<group>"; };
 		0C9E6B1C28BBA637001A54E1 /* PublisherLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherLogger.swift; sourceTree = "<group>"; };
 		0CC893B928FEBBB3004F7B9A /* VehicleProfile+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VehicleProfile+description.swift"; sourceTree = "<group>"; };
 		0CFCA2F9289130E700A1A6B5 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */,
 				D544FB4A277333A20015925C /* Environment.swift */,
 				0CC893B928FEBBB3004F7B9A /* VehicleProfile+description.swift */,
+				0C50478428FECFA000E84038 /* RoutingProfile+description.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				D5DBAF732774625C008B8DED /* StackedTextModel.swift in Sources */,
 				D544FB47277332760015925C /* MapViewModel.swift in Sources */,
 				0CFCA2FE289130E700A1A6B5 /* SettingsView.swift in Sources */,
+				0C50478528FECFA000E84038 /* RoutingProfile+description.swift in Sources */,
 				0CFCA3022891312F00A1A6B5 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
