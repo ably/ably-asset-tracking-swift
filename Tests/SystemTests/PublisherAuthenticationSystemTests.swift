@@ -132,10 +132,15 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         // TODO check that connection is made/ Await successfully connection callback with an expectation
         // Here, I am creating a trackable instead of just checking the connection, because there doesn't
         // seem to be a way to check that the client is connected to Ably.
-        let expectation = self.expectation(description: "Publisher.track completes")
+        let expectation = self.expectation(description: "Publisher.track completes successfully")
         let trackable = Trackable(id: "Trackable ID")
-        publisher.track(trackable: trackable) { _ in
-            expectation.fulfill()
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail("Publisher failed to track trackable, error: \(error)")
+            }
         }
 
         waitForExpectations(timeout: 10)
