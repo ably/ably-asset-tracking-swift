@@ -3,84 +3,63 @@ import MapKit
 import AblyAssetTrackingPublisher
 
 struct MapView: View {
+    var trackableId: String
+    @ObservedObject var publisher: ObservablePublisher
+    @Environment(\.presentationMode) private var presentationMode
+    
     @StateObject private var viewModel = MapViewModel()
     @StateObject private var locationManager = LocationManager.shared
-    @State private var showRoutingProfileSheet: Bool = false
-    
-    private let trackableId: String
-    
-    init(trackableId: String) {
-        self.trackableId = trackableId
-    }
+    @State private var isRemoving = false
+    @State private var hasRemoved = false
+    @State private var error: ErrorInformation?
+    @State private var showAlert = false
     
     var body: some View {
-        VStack(alignment: .center, spacing: 3) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    StackedText(texts: viewModel.connectionStatusAndProfileInfo)
-                    if viewModel.isDestinationAvailable {
-                        Button {
-                            showRoutingProfileSheet = true
-                        } label: {
-                            HStack(spacing: 3) {
-                                Text("Change profile")
-                                    .font(.system(size: 12))
-                                Image(systemName: "info.circle.fill")
-                                    .resizable()
-                                    .frame(width: 10, height: 10, alignment: .center)
-                            }
-                        }
-                        .disabled(!viewModel.isConnected || !viewModel.didChangeRoutingProfile)
-                        .actionSheet(isPresented: $showRoutingProfileSheet) {
-                            var buttons: [Alert.Button] = RoutingProfile.all.map { profile in
-                                Alert.Button.default(Text(profile.asInfo())) {
-                                    viewModel.routingProfile = profile
-                                }
-                            }
-                            
-                            buttons.append(.cancel())
-                            
-                            return ActionSheet(
-                                title: Text("Routing profiles"),
-                                message: Text("Select a profile"),
-                                buttons: buttons
-                            )
+        VStack(alignment: .leading, spacing: 10) {
+            StackedText(texts: MapViewModel.createViewModel(forConnectionState: publisher.trackables.first { key, _ in key.id == trackableId }?.value.connectionState))
+                .padding(.leading, 10)
+            // This padding is very bad - for some reason, I wasn't able to tap on the "Remove trackable" button without it. I'm probably doing something very very wrong but don't have time to look into it now. See https://github.com/ably/ably-asset-tracking-swift/issues/422
+                .padding(.bottom, 25)
+            
+            HStack {
+                Spacer()
+                Button {
+                    isRemoving = true
+                    let trackable = publisher.trackables.first { key, _ in key.id == trackableId }?.key
+                    guard let trackable = trackable else { return }
+                    publisher.remove(trackable: trackable) { result in
+                        isRemoving = false
+                        switch result {
+                        case .success:
+                            hasRemoved = true
+                            presentationMode.wrappedValue.dismiss()
+                        case .failure(let error):
+                            self.error = error
+                            showAlert = true
                         }
                     }
+                } label: {
+                    Text("Remove trackable")
+                        .accentColor(.red)
                 }
-                .padding(5)
-                Spacer()
-                VStack(alignment: .leading) {
-                    StackedText(texts: viewModel.resolutionInfo)
+                .disabled(isRemoving || hasRemoved)
+                .alert(isPresented: $showAlert) {
+                    Alert(title: "Failed to stop publisher",
+                          errorInformation: error)
                 }
-                .padding(5)
-            }
-            Divider()
-                .padding(4)
-            HStack {
-                StackedText(texts: viewModel.rawLocationsInfo)
-                    .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 10))
-                Spacer()
-            }
-            Divider()
-                .padding(4)
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    StackedText(texts: viewModel.constantResolutionInfo)
-                        .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
-                }
+                .padding(.trailing)
+                ProgressView()
+                    .opacity(isRemoving ? 1 : 0)
                 Spacer()
             }
+            
             ZStack(alignment: .bottomTrailing) {
                 if viewModel.useMapboxMap {
                     MapboxMap(center: $locationManager.currentRegionCenter)
-                        .edgesIgnoringSafeArea(.bottom)
                 }
                 else {
                     Map(center: $locationManager.currentRegionCenter)
-                        .edgesIgnoringSafeArea(.bottom)
                 }
-                
                 
                 Button {
                     locationManager.updateRegion(true)
@@ -99,17 +78,12 @@ struct MapView: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.connectPublisher(trackableId: trackableId)
-        }
-        .onDisappear {
-            viewModel.disconnectPublisher()
-        }
     }
 }
 
 struct MapView_Preview: PreviewProvider {
     static var previews: some View {
-        MapView(trackableId: "")
+        let publisher = ObservablePublisher(publisher: DummyPublisher(), configInfo: .init(areRawLocationsEnabled: false))
+        MapView(trackableId: "", publisher: publisher)
     }
 }
