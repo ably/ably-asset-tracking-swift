@@ -6,68 +6,109 @@ struct AddTrackableView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     @StateObject private var locationManager = LocationManager.shared
-    @State private var trackableId: String = ""
     @State private var error: ErrorInformation?
     @State private var showAlert = false
     @State private var isAdding = false
     @State private var hasAdded = false
-        
+    @StateObject private var viewModel = AddTrackableViewModel()
+    @State var showDefaultAccuracies = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            TextField("Trackable ID", text: $trackableId)
-                .styled()
-                .disabled(locationManager.isLocationAuthorizationDenied)
-            Button {
-                let trackable = Trackable(id: trackableId)
-                isAdding = true
-                publisher.track(trackable: trackable) { result in
-                    isAdding = false
-                    switch result {
-                    case .success:
-                        presentationMode.wrappedValue.dismiss()
-                        hasAdded = true
-                    case .failure(let error):
-                        self.error = error
-                        showAlert = true
-                    }
+            Form {
+                Section(header: Text("Trackable ID")) {
+                    TextField("Trackable ID", text: $viewModel.trackableId)
+                        .disabled(locationManager.isLocationAuthorizationDenied)
                 }
-            } label: {
-                HStack {
-                    CustomText("Add trackable")
-                        .padding(.trailing)
-                    ProgressView()
-                        .opacity(isAdding ? 1 : 0)
-                }
-            }
-            .disabled(trackableId.isEmpty || locationManager.isLocationAuthorizationDenied ||
-                      isAdding ||
-                      hasAdded)
-            .alert(isPresented: $showAlert) {
-                Alert(title: "Failed to add trackable",
-                      errorInformation: error)
-            }
-            Text("Location permission status:")
-                .foregroundColor(.gray)
-                .font(.system(size: 10)) +
-            Text(locationManager.statusTitle)
-                .font(.system(size: 10))
-                .bold()
-            if locationManager.isLocationAuthorizationDenied {
-                Button("Open system preferences") {
-                    guard
-                        let settingsURL = URL(string: UIApplication.openSettingsURLString),
-                        UIApplication.shared.canOpenURL(settingsURL)
-                    else {
-                        return
+                
+                Section {
+                    Toggle(isOn: $viewModel.setResolutionConstraints) {
+                        Text("Set resolution constraints")
                     }
                     
-                    UIApplication.shared.open(settingsURL)
+                    if viewModel.setResolutionConstraints {                        
+                        TitleValueListItem(title: "Accuracy", value: viewModel.resolutionAccuracy)
+                            .onTapGesture {
+                                self.showDefaultAccuracies = true
+                            }
+                            .actionSheet(isPresented: $showDefaultAccuracies) {
+                                var buttons: [Alert.Button] = viewModel.accuracies.map { accuracy in
+                                    Alert.Button.default(Text(accuracy.lowercased())) {
+                                        viewModel.resolutionAccuracy = accuracy
+                                    }
+                                }
+                                buttons.append(.cancel())
+                                return ActionSheet(
+                                    title: Text("Default resolution accuracy"),
+                                    message: Text("Select accuracy"),
+                                    buttons: buttons
+                                )
+                            }
+                        TitleTextFieldListItem(title: "Desired interval (ms)", value: $viewModel.resolutionDesiredInterval, placeholder: "value", keyboardType: .numberPad)
+                        TitleTextFieldListItem(title: "Minimum displacement (meters)", value: $viewModel.resolutionMinimumDisplacement, placeholder: "value", keyboardType: .numberPad)
+                    }
+                } header: {
+                    Text("Resolution constraints")
                 }
-                .font(.system(size: 10))
+                
+                Section {
+                    Button {
+                        let trackable = viewModel.createTrackable()
+                        isAdding = true
+                        publisher.track(trackable: trackable) { result in
+                            isAdding = false
+                            switch result {
+                            case .success:
+                                presentationMode.wrappedValue.dismiss()
+                                hasAdded = true
+                            case .failure(let error):
+                                self.error = error
+                                showAlert = true
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text("Add trackable")
+                                .padding(.trailing)
+                            ProgressView()
+                                .opacity(isAdding ? 1 : 0)
+                        }
+                    }
+                    .disabled(!viewModel.isValid ||
+                              locationManager.isLocationAuthorizationDenied ||
+                              isAdding ||
+                              hasAdded)
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: "Failed to add trackable",
+                              errorInformation: error)
+                    }
+                    
+                }
+                
+                Section {
+                    Text("Location permission status:")
+                        .foregroundColor(.gray)
+                        .font(.system(size: 10)) +
+                    Text(locationManager.statusTitle)
+                        .font(.system(size: 10))
+                        .bold()
+                    if locationManager.isLocationAuthorizationDenied {
+                        Button("Open system preferences") {
+                            guard
+                                let settingsURL = URL(string: UIApplication.openSettingsURLString),
+                                UIApplication.shared.canOpenURL(settingsURL)
+                            else {
+                                return
+                            }
+                            
+                            UIApplication.shared.open(settingsURL)
+                        }
+                        .font(.system(size: 10))
+                    }
+                    
+                }
             }
-            
         }
-        .padding()
         .onAppear() {
             locationManager.requestAuthorization()
         }
