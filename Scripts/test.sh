@@ -23,4 +23,18 @@ struct Secrets {
 }
 EOF
 
-set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 12' | xcpretty
+# If xcodebuild fails (e.g. due to failed tests), we want to defer the failure
+# of this script until we’ve had a chance to copy the test results JUnit report
+# to the place where test-observability-action expects it to be. Hence we
+# temporarily disable the -e option.
+set +e
+# --report: "Creates a JUnit-style XML report at build/reports/junit.xml"
+set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 12' \
+	| xcpretty --report junit
+xcodebuild_exit_status=$?
+set -e
+
+# test-observability-action looks for .junit files
+cp build/reports/junit.xml results.junit
+
+exit $xcodebuild_exit_status

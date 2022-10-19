@@ -34,3 +34,6 @@ PublisherExample/amplifyconfiguration.json
 
 # AppCode IDE
 .idea
+
+# Test results
+/results.junit

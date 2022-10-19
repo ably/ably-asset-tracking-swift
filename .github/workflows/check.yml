@@ -36,3 +36,10 @@ jobs:
         with:
           name: xcodebuild-logs
           path: ~/Library/Developer/Xcode/DerivedData/*/Logs
+
+      - name: Upload test results
+        if: always()
+        uses: ably/test-observability-action@v1
+        with:
+          server-auth: ${{ secrets.TEST_OBSERVABILITY_SERVER_AUTH_KEY }}
+          path: '.'
