@@ -12,6 +12,7 @@ class SettingsModel {
     
     private let fallbackVehicleProfile = VehicleProfile.car
     private let fallbackRoutingProfile = RoutingProfile.driving
+    private let fallbackLocationSource = LocationSourceOption.phone
     
     var areRawLocationsEnabled: Bool {
         get {
@@ -91,6 +92,33 @@ class SettingsModel {
         }
         set {
             UserDefaults.standard.save(newValue.rawValue, forKey: "routingProfile")
+        }
+    }
+    
+    var locationSourceOption: LocationSourceOption {
+        get {
+            guard let value: LocationSourceOption = UserDefaults.standard.get("locationSource") else {
+                return fallbackLocationSource
+            }
+            
+            return value
+        }
+        set {
+            UserDefaults.standard.save(newValue, forKey: "locationSource")
+        }
+    }
+    
+    var s3FileName: String? {
+        get {
+            return UserDefaults.standard.get("s3FileName")
+        }
+        set {
+            if let newValue = newValue {
+                UserDefaults.standard.save(newValue, forKey: "s3FileName")
+            }
+            else {
+                UserDefaults.standard.removeObject(forKey: "s3FileName")
+            }
         }
     }
     

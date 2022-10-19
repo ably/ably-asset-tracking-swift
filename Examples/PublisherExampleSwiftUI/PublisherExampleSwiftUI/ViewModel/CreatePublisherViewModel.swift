@@ -5,6 +5,21 @@ import SwiftUI
 import AblyAssetTrackingPublisher
 
 class CreatePublisherViewModel: ObservableObject {
+    
+    private let s3Helper: S3Helper?
+    
+    private var isS3Available: Bool {
+        s3Helper != nil
+    }
+    
+    init() {
+        do {
+            self.s3Helper = try S3Helper()
+        } catch {
+            self.s3Helper = nil
+        }
+    }
+    
     @Published var areRawLocationsEnabled: Bool = SettingsModel.shared.areRawLocationsEnabled {
         didSet {
             SettingsModel.shared.areRawLocationsEnabled = areRawLocationsEnabled
@@ -26,6 +41,18 @@ class CreatePublisherViewModel: ObservableObject {
     @Published var routingProfile: RoutingProfile = SettingsModel.shared.routingProfile {
         didSet {
             SettingsModel.shared.routingProfile = routingProfile
+        }
+    }
+    
+    @Published var locationSource: LocationSourceOption = SettingsModel.shared.locationSourceOption {
+        didSet {
+            SettingsModel.shared.locationSourceOption = locationSource
+        }
+    }
+    
+    @Published var s3FileName: String? = SettingsModel.shared.s3FileName {
+        didSet {
+            SettingsModel.shared.s3FileName = s3FileName
         }
     }
     
@@ -52,6 +79,14 @@ class CreatePublisherViewModel: ObservableObject {
          RoutingProfile.walking].map { $0.description() }
     }
     
+    var locationSources: [String] {
+        var sources: [LocationSourceOption] = [.phone]
+        if isS3Available {
+            sources.append(.s3File)
+        }
+        return sources.map { $0.description() }
+    }
+    
     func save() {
         if let constantAccuracy = Accuracy(rawValue: constantResolutionAccuracy),
            let constantDisplacement = Double(constantResolutionMinimumDisplacement) {
@@ -61,21 +96,34 @@ class CreatePublisherViewModel: ObservableObject {
         }
     }
     
-    func createPublisher() -> ObservablePublisher {
+    func createPublisher() async throws -> ObservablePublisher {
         let connectionConfiguration = ConnectionConfiguration(apiKey: EnvironmentHelper.ABLY_API_KEY, clientId: "Asset Tracking Publisher Example")
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
 
         let constantResolution: Resolution? = SettingsModel.shared.isConstantResolutionEnabled ? SettingsModel.shared.constantResolution : nil
         let vehicleProfile = SettingsModel.shared.vehicleProfile
         let routingProfile = SettingsModel.shared.routingProfile
+        let locationSourceOption = SettingsModel.shared.locationSourceOption
         
         let areRawLocationsEnabled = SettingsModel.shared.areRawLocationsEnabled
-                
-        var publisher = try! PublisherFactory.publishers()
+        
+        let locationSource: AblyAssetTrackingPublisher.LocationSource?
+        if let s3FileName = SettingsModel.shared.s3FileName, locationSourceOption == .s3File {
+            guard let s3Helper = s3Helper else {
+                // This ignores the case where we used to have S3 configured on a previous run of the app and still have something hanging around in user defaults, but will ignore that edge case for now.
+                fatalError("Trying to use S3 when it has not been configured. This should not have been allowed by the UI.")
+            }
+            
+            let locationHistoryData = try await s3Helper.downloadHistoryData(fileName: s3FileName)
+            locationSource = .init(locationHistoryData: locationHistoryData)
+        } else {
+            locationSource = nil
+        }
+            
+        var publisher = try PublisherFactory.publishers()
             .connection(connectionConfiguration)
             .mapboxConfiguration(MapboxConfiguration(mapboxKey: EnvironmentHelper.MAPBOX_ACCESS_TOKEN))
-            // Uncomment below line to enable simulated location
-//          .locationSource(.init(locationSource: SimulatedLocations.recordedLocations()))
+            .locationSource(locationSource)
             .routingProfile(routingProfile)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .rawLocations(enabled: areRawLocationsEnabled)

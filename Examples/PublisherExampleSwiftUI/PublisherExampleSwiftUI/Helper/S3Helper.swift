@@ -27,16 +27,25 @@ class S3Helper {
         case couldNotFindConfiguration
     }
     
+    private static var hasConfiguredAmplify = false
+    
     init() throws {
-            try Amplify.add(plugin: AWSCognitoAuthPlugin())
-            try Amplify.add(plugin: AWSS3StoragePlugin())
-            guard let url = Bundle.main.url(forResource: "amplifyconfiguration",
-                                            withExtension: "json",
-                                            subdirectory: "Optional Resources") else {
-                throw Error.couldNotFindConfiguration
-            }
-            let config = try AmplifyConfiguration(configurationFile: url)
-            try Amplify.configure(config)
+        guard !Self.hasConfiguredAmplify else {
+            return
+        }
+        
+        // Trying to configure Amplify more than once gives an error
+        Self.hasConfiguredAmplify = true
+        
+        try Amplify.add(plugin: AWSCognitoAuthPlugin())
+        try Amplify.add(plugin: AWSS3StoragePlugin())
+        guard let url = Bundle.main.url(forResource: "amplifyconfiguration",
+                                        withExtension: "json",
+                                        subdirectory: "Optional Resources") else {
+            throw Error.couldNotFindConfiguration
+        }
+        let config = try AmplifyConfiguration(configurationFile: url)
+        try Amplify.configure(config)
     }
     
     func fetchLocationHistoryFilenames() async throws -> [File] {

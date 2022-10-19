@@ -87,6 +87,10 @@ _You can find the version on the [releases](https://github.com/ably/ably-asset-t
 - Open `AblyAssetTracking.xcworkspace` to open an Xcode workspace containing the Subscriber example app and the Swift Package containing the SDKs that showcase how to use the subscriber part of the Ably Asset Tracking SDKs.
 - Open `PublisherExampleSwiftUI.xcodeproj` to open an Xcode workspace containing the Publisher exmple app
 
+### AWS S3 support in publisher app (optional)
+
+The publisher example app is able to fetch a location history file from an AWS S3 bucket and use it to replay previously-recorded journeys. To enable this functionality, you need to place an [Amplify configuration file](https://docs.amplify.aws/lib/project-setup/create-application/q/platform/ios/#3-provision-the-backend-with-amplify-cli) at `Examples/PublisherExampleSwiftUI/PublisherExampleSwiftUI/Optional Resources/amplifyconfiguration.json`. The example app is configured to use Cognito for auth and S3 for storage.
+
 ## Usage
 
 ### Publisher SDK
