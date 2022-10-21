@@ -20,7 +20,17 @@ struct AddTrackableView: View {
                     TextField("Trackable ID", text: $viewModel.trackableId)
                         .disabled(locationManager.isLocationAuthorizationDenied)
                 }
-                
+                Section(header: Text("Destination")) {
+                    HStack(alignment: .firstTextBaseline, spacing: 10) {
+                        Text("Lat: \(viewModel.getLatitudeString())").frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Long: \(viewModel.getLongitudeString())").frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    NavigationLink {
+                        SelectDestinationView(destination: $viewModel.destination)
+                    } label: {
+                        Text("Select destination")
+                    }
+                }
                 Section {
                     Toggle(isOn: $viewModel.setResolutionConstraints) {
                         Text("Set resolution constraints")
