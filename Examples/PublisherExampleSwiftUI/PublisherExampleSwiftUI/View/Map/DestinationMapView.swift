@@ -9,6 +9,9 @@ struct DestinationMapView: UIViewRepresentable {
     var center: CLLocationCoordinate2D
     private var span: MKCoordinateSpan?
     @Binding private var destination: LocationCoordinate?
+        
+    fileprivate let centerAnnotationTitle = "Current Location"
+    fileprivate let destinationAnnotationTitle = "Destination"
 
     let mapView = MKMapView()
     
@@ -27,11 +30,17 @@ struct DestinationMapView: UIViewRepresentable {
         mapView.region = startRegion
         
         if let destination = destination {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude)
-            mapView.addAnnotation(annotation)
+            let destinationAnnotation = MKPointAnnotation()
+            destinationAnnotation.coordinate = CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude)
+            destinationAnnotation.title = destinationAnnotationTitle
+            mapView.addAnnotation(destinationAnnotation)
         }
         
+        let centerAnnotation = MKPointAnnotation()
+        centerAnnotation.coordinate = center
+        centerAnnotation.title = centerAnnotationTitle
+        mapView.addAnnotation(centerAnnotation)
+        mapView.delegate = context.coordinator
         return mapView
     }
 
@@ -42,22 +51,30 @@ struct DestinationMapView: UIViewRepresentable {
     }
     
     func changeDestination(coordinate: CLLocationCoordinate2D) {
-        if destination != nil {
-            mapView.removeAnnotations(mapView.annotations)
+        removeDestinationAnnotation()
+        
+        if let _ = destination {
             destination = nil
             return
         }
-        
-        mapView.removeAnnotations(mapView.annotations)
-    
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
+            
+        let destinationAnnotation = MKPointAnnotation()
+        destinationAnnotation.coordinate = coordinate
+        destinationAnnotation.title = destinationAnnotationTitle
+        mapView.addAnnotation(destinationAnnotation)
         
         destination = LocationCoordinate(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
+    
+    func removeDestinationAnnotation() {
+        for annotation in mapView.annotations {
+            if annotation.title == destinationAnnotationTitle {
+                mapView.removeAnnotation(annotation)
+            }
+        }
+    }
 
-    class Coordinator: NSObject, UIGestureRecognizerDelegate {
+    class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
         var parent: DestinationMapView
 
         var gRecognizer = UITapGestureRecognizer()
@@ -77,6 +94,17 @@ struct DestinationMapView: UIViewRepresentable {
             let selectedCoordinate = self.parent.mapView.convert(location, toCoordinateFrom: self.parent.mapView)
             
             parent.changeDestination(coordinate: selectedCoordinate)
+        }
+        
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "centerAnnotation")
+            if annotation.title == parent.centerAnnotationTitle {
+                annotationView.markerTintColor = .blue
+            }
+            if annotation.title == parent.destinationAnnotationTitle {
+                annotationView.markerTintColor = .red
+            }
+            return annotationView
         }
     }
 }
