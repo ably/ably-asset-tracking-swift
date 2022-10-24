@@ -2,6 +2,9 @@ import SwiftUI
 import MapKit
 import AblyAssetTrackingCore
 
+// Since SwiftUI's MapView has problems with capturing tap events (more specifically - getting the tap's latitude
+// and longitude) I couldn't find a way to use it here. Instead I used the UIKit's MKMapView implementation.
+// Heavily inspired by this solution: https://stackoverflow.com/a/63111267
 struct DestinationMapView: UIViewRepresentable {
     var center: CLLocationCoordinate2D
     private var span: MKCoordinateSpan?
