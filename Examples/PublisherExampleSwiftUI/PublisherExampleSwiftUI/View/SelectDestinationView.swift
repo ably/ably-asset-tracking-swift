@@ -4,7 +4,6 @@ import MapKit
 
 struct SelectDestinationView: View {
     @Binding var destination: LocationCoordinate?
-    @StateObject private var viewModel = SelectDestinationViewModel()
     @StateObject private var locationManager = LocationManager.shared
 
     init(destination: Binding<LocationCoordinate?>) {

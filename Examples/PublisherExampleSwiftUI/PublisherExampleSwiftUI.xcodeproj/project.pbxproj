@@ -22,7 +22,6 @@
 		0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */; };
 		2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */; };
 		2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8202908276F00958144 /* SelectDestinationView.swift */; };
-		2144B8232908277E00958144 /* SelectDestinationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8222908277E00958144 /* SelectDestinationViewModel.swift */; };
 		2144B8252908278B00958144 /* DestinationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8242908278B00958144 /* DestinationMapView.swift */; };
 		21B6446B28FDC68C00156F94 /* AddTrackableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */; };
 		21CF8DFE28F8566D005E7CE6 /* ObservablePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */; };
@@ -64,7 +63,6 @@
 		0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackableView.swift; sourceTree = "<group>"; };
 		2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+ErrorInformation.swift"; sourceTree = "<group>"; };
 		2144B8202908276F00958144 /* SelectDestinationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDestinationView.swift; sourceTree = "<group>"; };
-		2144B8222908277E00958144 /* SelectDestinationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDestinationViewModel.swift; sourceTree = "<group>"; };
 		2144B8242908278B00958144 /* DestinationMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationMapView.swift; sourceTree = "<group>"; };
 		21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackableViewModel.swift; sourceTree = "<group>"; };
 		21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservablePublisher.swift; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 		D544FB45277332670015925C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				2144B8222908277E00958144 /* SelectDestinationViewModel.swift */,
 				21F1993528FF41B2004FE626 /* PublisherInfoViewModel.swift */,
 				0CFCA3012891312F00A1A6B5 /* CreatePublisherViewModel.swift */,
 				D544FB46277332760015925C /* MapViewModel.swift */,
@@ -402,7 +399,6 @@
 				0CFCA2FE289130E700A1A6B5 /* CreatePublisherView.swift in Sources */,
 				0C50478528FECFA000E84038 /* RoutingProfile+description.swift in Sources */,
 				0CFCA3022891312F00A1A6B5 /* CreatePublisherViewModel.swift in Sources */,
-				2144B8232908277E00958144 /* SelectDestinationViewModel.swift in Sources */,
 				21CF8E0528F875E8005E7CE6 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
