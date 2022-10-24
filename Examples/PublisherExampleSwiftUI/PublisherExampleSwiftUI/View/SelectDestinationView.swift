@@ -12,13 +12,8 @@ struct SelectDestinationView: View {
     }
     
     var body: some View {
-        if viewModel.useMapboxMap {
-            MapboxMap(center: $locationManager.currentRegionCenter)
-        }
-        else {
-            DestinationMapView(center: locationManager.currentRegionCenter, destination: $destination)
+        DestinationMapView(center: locationManager.currentRegionCenter, destination: $destination)
                 .navigationTitle("Select Destination")
-        }
     }
 }
 

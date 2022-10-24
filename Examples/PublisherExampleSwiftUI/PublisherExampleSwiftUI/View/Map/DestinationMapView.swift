@@ -24,8 +24,6 @@ struct DestinationMapView: UIViewRepresentable {
         )
         
         let startRegion = MKCoordinateRegion(center: center, span: startSpan)
-        
-        mapView.delegate = context.coordinator
         mapView.region = startRegion
         
         if let destination = destination {
@@ -43,7 +41,7 @@ struct DestinationMapView: UIViewRepresentable {
         return Coordinator(self)
     }
     
-    mutating func changeDestination(coordinates: CLLocationCoordinate2D) {
+    mutating func changeDestination(coordinate: CLLocationCoordinate2D) {
         if destination != nil {
             mapView.removeAnnotations(mapView.annotations)
             destination = nil
@@ -53,13 +51,13 @@ struct DestinationMapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
     
         let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinates
+        annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
         
-        destination = LocationCoordinate(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        destination = LocationCoordinate(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
 
-    class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
+    class Coordinator: NSObject, UIGestureRecognizerDelegate {
         var parent: DestinationMapView
 
         var gRecognizer = UITapGestureRecognizer()
@@ -76,10 +74,9 @@ struct DestinationMapView: UIViewRepresentable {
             // position on the screen, CGPoint
             let location = gRecognizer.location(in: self.parent.mapView)
             // position on the map, CLLocationCoordinate2D
-            let selectedCoordinates = self.parent.mapView.convert(location, toCoordinateFrom: self.parent.mapView)
+            let selectedCoordinate = self.parent.mapView.convert(location, toCoordinateFrom: self.parent.mapView)
             
-            parent.changeDestination(coordinates: selectedCoordinates)
-            print("coordinates: \(selectedCoordinates)")
+            parent.changeDestination(coordinate: selectedCoordinate)
         }
     }
 }
