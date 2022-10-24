@@ -16,8 +16,8 @@ struct SelectDestinationView: View {
             MapboxMap(center: $locationManager.currentRegionCenter)
         }
         else {
-            DestinationMapView(centerCoordinate: $locationManager.currentRegionCenter)
-//            Map(center: $locationManager.currentRegionCenter)
+            DestinationMapView(center: locationManager.currentRegionCenter, destination: $destination)
+                .navigationTitle("Select Destination")
         }
     }
 }

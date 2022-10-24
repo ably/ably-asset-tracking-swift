@@ -61,6 +61,6 @@ class AddTrackableViewModel: ObservableObject {
             constraints = nil
         }
         
-        return Trackable(id: trackableId, constraints: constraints)
+        return Trackable(id: trackableId, destination: destination, constraints: constraints)
     }
 }
