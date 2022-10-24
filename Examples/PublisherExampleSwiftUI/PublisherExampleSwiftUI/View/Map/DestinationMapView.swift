@@ -24,6 +24,13 @@ struct DestinationMapView: UIViewRepresentable {
         
         mapView.delegate = context.coordinator
         mapView.region = startRegion
+        
+        if let destination = destination {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude)
+            mapView.addAnnotation(annotation)
+        }
+        
         return mapView
     }
 
@@ -34,6 +41,12 @@ struct DestinationMapView: UIViewRepresentable {
     }
     
     mutating func changeDestination(coordinates: CLLocationCoordinate2D) {
+        if destination != nil {
+            mapView.removeAnnotations(mapView.annotations)
+            destination = nil
+            return
+        }
+        
         mapView.removeAnnotations(mapView.annotations)
     
         let annotation = MKPointAnnotation()
