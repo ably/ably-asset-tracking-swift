@@ -66,7 +66,7 @@ struct DestinationMapView: UIViewRepresentable {
         destination = LocationCoordinate(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
     
-    func removeDestinationAnnotation() {
+    private func removeDestinationAnnotation() {
         for annotation in mapView.annotations {
             if annotation.title == destinationAnnotationTitle {
                 mapView.removeAnnotation(annotation)
