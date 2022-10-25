@@ -17,6 +17,10 @@ public class LocationSource {
     public init(locations: [CLLocation]) {
         self.locations = locations
     }
+    
+    public init(locationHistoryData: LocationHistoryData) {
+        self.locations = locationHistoryData.events.map({ $0.toCoreLocation() })
+    }
 
     @available(*, deprecated, message: "To use the device’s location, either do not call PublisherBuilder.locationSource(_:), or pass nil to it.")
     public init() {
