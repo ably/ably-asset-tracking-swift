@@ -7,18 +7,13 @@ import AblyAssetTrackingCore
 // Heavily inspired by this solution: https://stackoverflow.com/a/63111267
 struct DestinationMapView: UIViewRepresentable {
     var center: CLLocationCoordinate2D
-    private var span: MKCoordinateSpan?
-    @Binding private var destination: LocationCoordinate?
+    var span: MKCoordinateSpan?
+    @Binding var destination: LocationCoordinate?
         
     fileprivate let centerAnnotationTitle = "Current Location"
     fileprivate let destinationAnnotationTitle = "Destination"
 
     let mapView = MKMapView()
-    
-    init(center: CLLocationCoordinate2D, destination: Binding<LocationCoordinate?>) {
-        self.center = center
-        self._destination = destination
-    }
 
     func makeUIView(context: Context) -> MKMapView {
         let startSpan = MKCoordinateSpan(
