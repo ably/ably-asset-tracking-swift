@@ -21,6 +21,8 @@
 		0CFCA308289131AB00A1A6B5 /* CloseKeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */; };
 		0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */; };
 		2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */; };
+		2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8202908276F00958144 /* SelectDestinationView.swift */; };
+		2144B8252908278B00958144 /* DestinationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8242908278B00958144 /* DestinationMapView.swift */; };
 		21B6446B28FDC68C00156F94 /* AddTrackableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */; };
 		21CF8DFE28F8566D005E7CE6 /* ObservablePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */; };
 		21CF8E0328F875DF005E7CE6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0228F875DF005E7CE6 /* SettingsView.swift */; };
@@ -60,6 +62,8 @@
 		0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseKeyboardHelper.swift; sourceTree = "<group>"; };
 		0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackableView.swift; sourceTree = "<group>"; };
 		2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+ErrorInformation.swift"; sourceTree = "<group>"; };
+		2144B8202908276F00958144 /* SelectDestinationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDestinationView.swift; sourceTree = "<group>"; };
+		2144B8242908278B00958144 /* DestinationMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationMapView.swift; sourceTree = "<group>"; };
 		21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackableViewModel.swift; sourceTree = "<group>"; };
 		21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservablePublisher.swift; sourceTree = "<group>"; };
 		21CF8E0228F875DF005E7CE6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 		21E6EBF628F9789E0057AC7C /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				2144B8242908278B00958144 /* DestinationMapView.swift */,
 				D544FB242772102F0015925C /* MapView.swift */,
 				21E6EBF728F97B200057AC7C /* Map.swift */,
 				21E6EBF128F836F50057AC7C /* Mapbox */,
@@ -227,6 +232,7 @@
 		D544FB202771D8290015925C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2144B8202908276F00958144 /* SelectDestinationView.swift */,
 				21F1993128FF40E6004FE626 /* PublisherDetailsView.swift */,
 				21F1993028FF40B7004FE626 /* Previews */,
 				0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */,
@@ -366,6 +372,7 @@
 				2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */,
 				D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */,
 				D5DBAF7527748116008B8DED /* RoutingProfile.swift in Sources */,
+				2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */,
 				21B6446B28FDC68C00156F94 /* AddTrackableViewModel.swift in Sources */,
 				D544FB4B277333A20015925C /* Environment.swift in Sources */,
 				21E6EBF328F836FF0057AC7C /* MapboxMap.swift in Sources */,
@@ -376,6 +383,7 @@
 				0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */,
 				21CF8DFE28F8566D005E7CE6 /* ObservablePublisher.swift in Sources */,
 				0CFCA307289131AB00A1A6B5 /* UserDefaults+Codable.swift in Sources */,
+				2144B8252908278B00958144 /* DestinationMapView.swift in Sources */,
 				21F1992F28FF40B2004FE626 /* DummyPublisher.swift in Sources */,
 				0CFCA2FF289130E700A1A6B5 /* TitleValueListItem.swift in Sources */,
 				D544FB252772102F0015925C /* MapView.swift in Sources */,
