@@ -20,10 +20,18 @@
 		0CFCA307289131AB00A1A6B5 /* UserDefaults+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */; };
 		0CFCA308289131AB00A1A6B5 /* CloseKeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */; };
 		0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */; };
+		2108B75329097498002778CA /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75229097498002778CA /* AWSCognitoAuthPlugin */; };
+		2108B75529097498002778CA /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75429097498002778CA /* AWSS3StoragePlugin */; };
+		2108B75729097498002778CA /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75629097498002778CA /* Amplify */; };
+		2108B759290974B8002778CA /* S3Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108B758290974B8002778CA /* S3Helper.swift */; };
+		2108B75B290975BC002778CA /* Optional Resources in Resources */ = {isa = PBXBuildFile; fileRef = 2108B75A290975BC002778CA /* Optional Resources */; };
 		2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */; };
 		2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8202908276F00958144 /* SelectDestinationView.swift */; };
 		2144B8252908278B00958144 /* DestinationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8242908278B00958144 /* DestinationMapView.swift */; };
 		21B6446B28FDC68C00156F94 /* AddTrackableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */; };
+		21B6B2A829097EAF001E2FB7 /* LocationSourceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2A729097EAF001E2FB7 /* LocationSourceOption.swift */; };
+		21B6B2AA29097FEC001E2FB7 /* S3FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2A929097FEB001E2FB7 /* S3FilesView.swift */; };
+		21B6B2AC2909800B001E2FB7 /* S3FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2AB2909800B001E2FB7 /* S3FilesViewModel.swift */; };
 		21CF8DFE28F8566D005E7CE6 /* ObservablePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */; };
 		21CF8E0328F875DF005E7CE6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0228F875DF005E7CE6 /* SettingsView.swift */; };
 		21CF8E0528F875E8005E7CE6 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0428F875E8005E7CE6 /* SettingsViewModel.swift */; };
@@ -34,7 +42,6 @@
 		21F1993228FF40E6004FE626 /* PublisherDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F1993128FF40E6004FE626 /* PublisherDetailsView.swift */; };
 		21F1993428FF40F3004FE626 /* ConnectionState+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F1993328FF40F3004FE626 /* ConnectionState+Formatting.swift */; };
 		21F1993628FF41B2004FE626 /* PublisherInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F1993528FF41B2004FE626 /* PublisherInfoViewModel.swift */; };
-		D511FDD427FED05E00EBF3D6 /* SimulatedLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511FDD327FED05D00EBF3D6 /* SimulatedLocations.swift */; };
 		D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */; };
 		D544FAFA2771B3580015925C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D544FAF92771B3580015925C /* Assets.xcassets */; };
 		D544FAFD2771B3580015925C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D544FAFC2771B3580015925C /* Preview Assets.xcassets */; };
@@ -61,10 +68,15 @@
 		0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Codable.swift"; sourceTree = "<group>"; };
 		0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseKeyboardHelper.swift; sourceTree = "<group>"; };
 		0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackableView.swift; sourceTree = "<group>"; };
+		2108B758290974B8002778CA /* S3Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3Helper.swift; sourceTree = "<group>"; };
+		2108B75A290975BC002778CA /* Optional Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Optional Resources"; sourceTree = "<group>"; };
 		2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+ErrorInformation.swift"; sourceTree = "<group>"; };
 		2144B8202908276F00958144 /* SelectDestinationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDestinationView.swift; sourceTree = "<group>"; };
 		2144B8242908278B00958144 /* DestinationMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationMapView.swift; sourceTree = "<group>"; };
 		21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackableViewModel.swift; sourceTree = "<group>"; };
+		21B6B2A729097EAF001E2FB7 /* LocationSourceOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSourceOption.swift; sourceTree = "<group>"; };
+		21B6B2A929097FEB001E2FB7 /* S3FilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3FilesView.swift; sourceTree = "<group>"; };
+		21B6B2AB2909800B001E2FB7 /* S3FilesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3FilesViewModel.swift; sourceTree = "<group>"; };
 		21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservablePublisher.swift; sourceTree = "<group>"; };
 		21CF8E0228F875DF005E7CE6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		21CF8E0428F875E8005E7CE6 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -75,7 +87,6 @@
 		21F1993128FF40E6004FE626 /* PublisherDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherDetailsView.swift; sourceTree = "<group>"; };
 		21F1993328FF40F3004FE626 /* ConnectionState+Formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConnectionState+Formatting.swift"; sourceTree = "<group>"; };
 		21F1993528FF41B2004FE626 /* PublisherInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherInfoViewModel.swift; sourceTree = "<group>"; };
-		D511FDD327FED05D00EBF3D6 /* SimulatedLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimulatedLocations.swift; sourceTree = "<group>"; };
 		D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExampleSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExampleSwiftUIApp.swift; sourceTree = "<group>"; };
 		D544FAF92771B3580015925C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -98,7 +109,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C3E7C3F28BF695000171D14 /* Logging in Frameworks */,
+				2108B75729097498002778CA /* Amplify in Frameworks */,
 				D544FB072771B3850015925C /* AblyAssetTrackingPublisher in Frameworks */,
+				2108B75329097498002778CA /* AWSCognitoAuthPlugin in Frameworks */,
+				2108B75529097498002778CA /* AWSS3StoragePlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +187,7 @@
 		D544FAF42771B3560015925C /* PublisherExampleSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				2108B75A290975BC002778CA /* Optional Resources */,
 				0C9E6B1B28BBA626001A54E1 /* Logger */,
 				D5DBAF7127746249008B8DED /* Model */,
 				D544FB49277333940015925C /* Helper */,
@@ -232,6 +247,7 @@
 		D544FB202771D8290015925C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				21B6B2A929097FEB001E2FB7 /* S3FilesView.swift */,
 				2144B8202908276F00958144 /* SelectDestinationView.swift */,
 				21F1993128FF40E6004FE626 /* PublisherDetailsView.swift */,
 				21F1993028FF40B7004FE626 /* Previews */,
@@ -254,6 +270,7 @@
 		D544FB45277332670015925C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				21B6B2AB2909800B001E2FB7 /* S3FilesViewModel.swift */,
 				21F1993528FF41B2004FE626 /* PublisherInfoViewModel.swift */,
 				0CFCA3012891312F00A1A6B5 /* CreatePublisherViewModel.swift */,
 				D544FB46277332760015925C /* MapViewModel.swift */,
@@ -266,6 +283,8 @@
 		D544FB49277333940015925C /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				21B6B2A729097EAF001E2FB7 /* LocationSourceOption.swift */,
+				2108B758290974B8002778CA /* S3Helper.swift */,
 				21F1993328FF40F3004FE626 /* ConnectionState+Formatting.swift */,
 				0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */,
 				0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */,
@@ -282,7 +301,6 @@
 			children = (
 				21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */,
 				0CFCA3032891315700A1A6B5 /* SettingsModel.swift */,
-				D511FDD327FED05D00EBF3D6 /* SimulatedLocations.swift */,
 				D5DBAF722774625C008B8DED /* StackedTextModel.swift */,
 			);
 			path = Model;
@@ -307,6 +325,9 @@
 			packageProductDependencies = (
 				D544FB062771B3850015925C /* AblyAssetTrackingPublisher */,
 				0C3E7C3E28BF695000171D14 /* Logging */,
+				2108B75229097498002778CA /* AWSCognitoAuthPlugin */,
+				2108B75429097498002778CA /* AWSS3StoragePlugin */,
+				2108B75629097498002778CA /* Amplify */,
 			);
 			productName = PublisherExampleSwiftUI;
 			productReference = D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */;
@@ -338,6 +359,7 @@
 			mainGroup = D544FAE92771B3550015925C;
 			packageReferences = (
 				0C3E7C3D28BF695000171D14 /* XCRemoteSwiftPackageReference "swift-log" */,
+				2108B75129097498002778CA /* XCRemoteSwiftPackageReference "amplify-swift" */,
 			);
 			productRefGroup = D544FAF32771B3560015925C /* Products */;
 			projectDirPath = "";
@@ -353,6 +375,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2108B75B290975BC002778CA /* Optional Resources in Resources */,
 				D544FAFD2771B3580015925C /* Preview Assets.xcassets in Resources */,
 				D544FAFA2771B3580015925C /* Assets.xcassets in Resources */,
 			);
@@ -373,11 +396,12 @@
 				D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */,
 				D5DBAF7527748116008B8DED /* RoutingProfile.swift in Sources */,
 				2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */,
+				21B6B2AA29097FEC001E2FB7 /* S3FilesView.swift in Sources */,
+				21B6B2AC2909800B001E2FB7 /* S3FilesViewModel.swift in Sources */,
 				21B6446B28FDC68C00156F94 /* AddTrackableViewModel.swift in Sources */,
 				D544FB4B277333A20015925C /* Environment.swift in Sources */,
 				21E6EBF328F836FF0057AC7C /* MapboxMap.swift in Sources */,
 				21E6EBF528F837380057AC7C /* MapboxMapViewController.swift in Sources */,
-				D511FDD427FED05E00EBF3D6 /* SimulatedLocations.swift in Sources */,
 				0CFCA2FD289130E700A1A6B5 /* ListItem.swift in Sources */,
 				21E6EBF828F97B200057AC7C /* Map.swift in Sources */,
 				0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */,
@@ -388,6 +412,7 @@
 				0CFCA2FF289130E700A1A6B5 /* TitleValueListItem.swift in Sources */,
 				D544FB252772102F0015925C /* MapView.swift in Sources */,
 				D544FB232771D8510015925C /* LocationManager.swift in Sources */,
+				2108B759290974B8002778CA /* S3Helper.swift in Sources */,
 				0CFCA300289130E700A1A6B5 /* TitleTextFieldListItem.swift in Sources */,
 				21F1993628FF41B2004FE626 /* PublisherInfoViewModel.swift in Sources */,
 				21F1993428FF40F3004FE626 /* ConnectionState+Formatting.swift in Sources */,
@@ -397,6 +422,7 @@
 				D5DBAF732774625C008B8DED /* StackedTextModel.swift in Sources */,
 				D544FB47277332760015925C /* MapViewModel.swift in Sources */,
 				0CFCA2FE289130E700A1A6B5 /* CreatePublisherView.swift in Sources */,
+				21B6B2A829097EAF001E2FB7 /* LocationSourceOption.swift in Sources */,
 				0C50478528FECFA000E84038 /* RoutingProfile+description.swift in Sources */,
 				0CFCA3022891312F00A1A6B5 /* CreatePublisherViewModel.swift in Sources */,
 				21CF8E0528F875E8005E7CE6 /* SettingsViewModel.swift in Sources */,
@@ -622,6 +648,14 @@
 				version = 1.4.4;
 			};
 		};
+		2108B75129097498002778CA /* XCRemoteSwiftPackageReference "amplify-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/amplify-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -629,6 +663,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0C3E7C3D28BF695000171D14 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
+		};
+		2108B75229097498002778CA /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2108B75129097498002778CA /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		2108B75429097498002778CA /* AWSS3StoragePlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2108B75129097498002778CA /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSS3StoragePlugin;
+		};
+		2108B75629097498002778CA /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2108B75129097498002778CA /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = Amplify;
 		};
 		D544FB062771B3850015925C /* AblyAssetTrackingPublisher */ = {
 			isa = XCSwiftPackageProductDependency;

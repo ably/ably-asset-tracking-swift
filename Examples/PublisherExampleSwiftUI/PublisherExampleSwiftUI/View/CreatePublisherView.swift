@@ -8,8 +8,13 @@ struct CreatePublisherView: View {
     @State var showConstantAccuracies = false
     @State var showVehicleProfiles = false
     @State var showRoutingProfiles = false
+    @State var showLocationSources = false
+    @State var showS3Files = false
     @State private var isShowingPublisherDetailsView = false
     @State private var publisher: ObservablePublisher?
+    @State private var isCreatingPublisher = false
+    @State private var error: ErrorInformation?
+    @State private var showAlert = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -64,6 +69,32 @@ struct CreatePublisherView: View {
                 }
                 
                 Section {
+                    TitleValueListItem(title: "Location Source", value: viewModel.locationSource.description())
+                        .onTapGesture {
+                            self.showLocationSources = true
+                        }
+                        .actionSheet(isPresented: $showLocationSources) {
+                            var buttons: [Alert.Button] = viewModel.locationSources.map { source in
+                                Alert.Button.default(Text(source)) {
+                                    viewModel.locationSource = LocationSourceOption.fromDescription(description: source)
+                                }
+                            }
+                            buttons.append(.cancel())
+                            return ActionSheet(
+                                title: Text("Location Source"),
+                                message: Text("Select location source"),
+                                buttons: buttons
+                            )
+                        }
+                    if viewModel.locationSource == .s3File {
+                        TitleValueListItem(title: "S3 File", value: viewModel.s3FileName ?? "")
+                            .onTapGesture {
+                                self.showS3Files = true
+                            }
+                            .sheet(isPresented: $showS3Files) {
+                                S3FilesView(fileName: $viewModel.s3FileName)
+                            }
+                    }
                     TitleValueListItem(title: "Vehicle Profile", value: viewModel.vehicleProfile.description())
                         .onTapGesture {
                             self.showVehicleProfiles = true
@@ -81,7 +112,7 @@ struct CreatePublisherView: View {
                                 buttons: buttons
                             )
                         }
-                    TitleValueListItem(title: "Routing profile", value: viewModel.routingProfile.description())
+                    TitleValueListItem(title: "Routing Profile", value: viewModel.routingProfile.description())
                         .onTapGesture {
                             self.showRoutingProfiles = true
                         }
@@ -93,8 +124,8 @@ struct CreatePublisherView: View {
                             }
                             buttons.append(.cancel())
                             return ActionSheet(
-                                title: Text("Vehicle Profile"),
-                                message: Text("Select vehicle profile"),
+                                title: Text("Routing Profile"),
+                                message: Text("Select routing profile"),
                                 buttons: buttons
                             )
                         }
@@ -104,15 +135,34 @@ struct CreatePublisherView: View {
                 
                 Section {
                     Button {
+                        isCreatingPublisher = true
                         // This is a temporary workaround so that the keyboard is no longer present if we
                         // navigate back to this screen. We can remove it after the fix to #421 below.
                         UIApplication.endEditing(true)
                         
                         viewModel.save()
-                        publisher = viewModel.createPublisher()
-                        isShowingPublisherDetailsView = true
+                        Task {
+                            do {
+                                publisher = try await viewModel.createPublisher()
+                                isShowingPublisherDetailsView = true
+                            }
+                            catch {
+                                self.error = .init(error: error)
+                                showAlert = true
+                            }
+                            isCreatingPublisher = false
+                        }
                     } label: {
-                        Text("Create publisher")
+                        HStack {
+                            Text("Create publisher")
+                                .padding(.trailing)
+                            ProgressView()
+                                .opacity(isCreatingPublisher ? 1 : 0)
+                        }
+                    }
+                    .disabled(isCreatingPublisher)
+                    .alert(isPresented: $showAlert) {
+                        .init(title: "Failed to create publisher", errorInformation: error)
                     }
                 }
                 

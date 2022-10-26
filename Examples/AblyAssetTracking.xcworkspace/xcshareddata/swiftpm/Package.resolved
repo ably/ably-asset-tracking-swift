@@ -20,6 +20,42 @@
         }
       },
       {
+        "package": "Amplify",
+        "repositoryURL": "https://github.com/aws-amplify/amplify-swift",
+        "state": {
+          "branch": null,
+          "revision": "d1bbbe0d4e89dde4da19c83a5edabf7ad6b2bd1f",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "AppSyncRealTimeClient",
+        "repositoryURL": "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "da88cf1cab82e281e7277cd9feb9efc87a057041",
+          "version": "2.1.1"
+        }
+      },
+      {
+        "package": "AwsCrt",
+        "repositoryURL": "https://github.com/awslabs/aws-crt-swift.git",
+        "state": {
+          "branch": null,
+          "revision": "d654b82a55aec736ad8b4354027acab17394a060",
+          "version": "0.2.2"
+        }
+      },
+      {
+        "package": "AWSSwiftSDK",
+        "repositoryURL": "https://github.com/awslabs/aws-sdk-swift.git",
+        "state": {
+          "branch": null,
+          "revision": "76d1b43bfc3eeafd9d09e5aa307e629882192a7d",
+          "version": "0.2.7"
+        }
+      },
+      {
         "package": "BoringSSL-GRPC",
         "repositoryURL": "https://github.com/firebase/boringssl-SwiftPM.git",
         "state": {
@@ -209,6 +245,15 @@
         }
       },
       {
+        "package": "ClientRuntime",
+        "repositoryURL": "https://github.com/awslabs/smithy-swift.git",
+        "state": {
+          "branch": null,
+          "revision": "83de16a9d66c942248305aafd57f842eb2363358",
+          "version": "0.2.5"
+        }
+      },
+      {
         "package": "Solar",
         "repositoryURL": "https://github.com/ceeK/Solar.git",
         "state": {
@@ -218,12 +263,39 @@
         }
       },
       {
+        "package": "SQLite.swift",
+        "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "5f5ad81ac0d0a0f3e56e39e646e8423c617df523",
+          "version": "0.13.2"
+        }
+      },
+      {
+        "package": "Starscream",
+        "repositoryURL": "https://github.com/daltoniam/Starscream",
+        "state": {
+          "branch": null,
+          "revision": "df8d82047f6654d8e4b655d1b1525c64e1059d21",
+          "version": "4.0.4"
+        }
+      },
+      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
           "revision": "e1465042f195f374b94f915ba8ca49de24300a0d",
           "version": "1.0.2"
+        }
+      },
+      {
+        "package": "swift-collections",
+        "repositoryURL": "https://github.com/apple/swift-collections",
+        "state": {
+          "branch": null,
+          "revision": "f504716c27d2e5d4144fa4794b12129301d17729",
+          "version": "1.0.3"
         }
       },
       {
@@ -251,6 +323,15 @@
           "branch": null,
           "revision": "dbc07b0a298d642414d3abec59c9eaba1fb3367f",
           "version": "2.5.0"
+        }
+      },
+      {
+        "package": "XMLCoder",
+        "repositoryURL": "https://github.com/MaxDesiatov/XMLCoder.git",
+        "state": {
+          "branch": null,
+          "revision": "ca932442d7481700f5434a7b138c47dd42d9902b",
+          "version": "0.14.0"
         }
       }
     ]
