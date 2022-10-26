@@ -14,6 +14,7 @@ public class LocationSource {
         self.locationSource = locationSource
     }
     
+    @available(*, deprecated, message: "To use the device’s location, either do not call PublisherBuilder.locationSource(_:), or pass nil to it.")
     public init() {
         self.type = .default
         self.locationSource = nil
