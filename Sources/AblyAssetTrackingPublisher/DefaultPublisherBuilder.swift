@@ -69,7 +69,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyPublisher: defaultAbly,
-                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locationSource, logHandler: logHandler, vehicleProfile: vehicleProfile),
+                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: logHandler, vehicleProfile: vehicleProfile),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration),
                                           areRawLocationsEnabled: areRawLocationsEnabled,
                                           isSendResolutionEnabled: isSendResolutionEnabled,

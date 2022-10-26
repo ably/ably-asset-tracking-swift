@@ -7,14 +7,19 @@ public enum LocationSourceType: Int {
 }
 
 public class LocationSource {
-    let locationSource: [CLLocation]?
+    let locations: [CLLocation]?
     
+    @available(*, deprecated, message: "To create a location source which overrides the device’s location, use init(locations:) instead.")
     public init(locationSource: [CLLocation]?) {
-        self.locationSource = locationSource
+        self.locations = locationSource
     }
     
+    public init(locations: [CLLocation]) {
+        self.locations = locations
+    }
+
     @available(*, deprecated, message: "To use the device’s location, either do not call PublisherBuilder.locationSource(_:), or pass nil to it.")
     public init() {
-        self.locationSource = nil
+        self.locations = nil
     }
 }
