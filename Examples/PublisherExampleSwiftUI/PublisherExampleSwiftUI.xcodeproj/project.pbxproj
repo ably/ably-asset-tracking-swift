@@ -20,6 +20,7 @@
 		0CFCA307289131AB00A1A6B5 /* UserDefaults+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */; };
 		0CFCA308289131AB00A1A6B5 /* CloseKeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */; };
 		0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */; };
+		21036A832911A5B900704723 /* LocationHistoryUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21036A822911A5B900704723 /* LocationHistoryUploader.swift */; };
 		2108B75329097498002778CA /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75229097498002778CA /* AWSCognitoAuthPlugin */; };
 		2108B75529097498002778CA /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75429097498002778CA /* AWSS3StoragePlugin */; };
 		2108B75729097498002778CA /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75629097498002778CA /* Amplify */; };
@@ -73,6 +74,7 @@
 		0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Codable.swift"; sourceTree = "<group>"; };
 		0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseKeyboardHelper.swift; sourceTree = "<group>"; };
 		0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackableView.swift; sourceTree = "<group>"; };
+		21036A822911A5B900704723 /* LocationHistoryUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHistoryUploader.swift; sourceTree = "<group>"; };
 		2108B758290974B8002778CA /* S3Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3Helper.swift; sourceTree = "<group>"; };
 		2108B75A290975BC002778CA /* Optional Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Optional Resources"; sourceTree = "<group>"; };
 		2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+ErrorInformation.swift"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				21AE71A5290B27BE00427F04 /* UploadsManager.swift */,
 				21BB909329119015005C78AF /* UploadRequest.swift */,
 				21BB909629119067005C78AF /* Upload.swift */,
+				21036A822911A5B900704723 /* LocationHistoryUploader.swift */,
 			);
 			path = Uploads;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				21BB909729119067005C78AF /* Upload.swift in Sources */,
 				D5DBAF7027746105008B8DED /* StackedText.swift in Sources */,
 				0CFCA3042891315700A1A6B5 /* SettingsModel.swift in Sources */,
+				21036A832911A5B900704723 /* LocationHistoryUploader.swift in Sources */,
 				21F1993228FF40E6004FE626 /* PublisherDetailsView.swift in Sources */,
 				0CC893BA28FEBBB3004F7B9A /* VehicleProfile+description.swift in Sources */,
 				2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */,
