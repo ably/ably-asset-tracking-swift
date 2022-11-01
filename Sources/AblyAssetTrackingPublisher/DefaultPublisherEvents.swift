@@ -158,6 +158,7 @@ extension DefaultPublisher {
         case error(ErrorEvent)
         case enhancedLocationChanged(EnhancedLocationChangedEvent)
         case trackableConnectionStateChanged(TrackableConnectionStateChangedEvent)
+        case finishedRecordingLocationHistoryData(FinishedRecordingLocationHistoryDataEvent)
         
         struct ErrorEvent {
             let error: ErrorInformation
@@ -170,6 +171,10 @@ extension DefaultPublisher {
         struct TrackableConnectionStateChangedEvent {
             let trackable: Trackable
             let connectionState: ConnectionState
+        }
+        
+        struct FinishedRecordingLocationHistoryDataEvent {
+            let locationHistoryData: LocationHistoryData
         }
     }
 }

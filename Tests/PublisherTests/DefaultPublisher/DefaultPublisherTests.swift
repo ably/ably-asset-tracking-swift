@@ -895,6 +895,7 @@ class DefaultPublisherTests: XCTestCase {
     func testStopEventCauseImpossibilityOfEnqueueOtherEvents() {
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.closeResultCompletionHandler = { completion in completion?(.success)}
+        locationService.stopRecordingLocationCallback = { completion in completion(.success(nil)) }
         
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,
