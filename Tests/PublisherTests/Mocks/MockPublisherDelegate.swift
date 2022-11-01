@@ -60,4 +60,15 @@ class MockPublisherDelegate: PublisherDelegate {
         publisherDidChangeTrackablesParamTrackables = trackables
         publisherDidChangeTrackablesCallback?()
     }
+    
+    var publisherDidFinishRecordingLocationHistoryDataCalled: Bool = false
+    var publisherDidFinishRecordingLocationHistoryDataParamSender: Publisher?
+    var publisherDidFinishRecordingLocationHistoryDataParamLocationHistoryData: LocationHistoryData?
+    var publisherDidFinishRecordingLocationHistoryDataCallback: (() -> Void)?
+    func publisher(sender: Publisher, didFinishRecordingLocationHistoryData locationHistoryData: LocationHistoryData) {
+        publisherDidFinishRecordingLocationHistoryDataCalled = true
+        publisherDidFinishRecordingLocationHistoryDataParamSender = sender
+        publisherDidFinishRecordingLocationHistoryDataParamLocationHistoryData = locationHistoryData
+        publisherDidFinishRecordingLocationHistoryDataCallback?()
+    }
 }

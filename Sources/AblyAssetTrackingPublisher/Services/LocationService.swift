@@ -11,5 +11,7 @@ protocol LocationService: AnyObject {
     var delegate: LocationServiceDelegate? { get set }
     func startUpdatingLocation()
     func stopUpdatingLocation()
+    func startRecordingLocation()
+    func stopRecordingLocation(completion: @escaping ResultHandler<LocationHistoryData?>)
     func changeLocationEngineResolution(resolution: Resolution)
 }

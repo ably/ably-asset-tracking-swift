@@ -7,6 +7,7 @@ class DefaultLocationService: LocationService {
     private let locationManager: PassiveLocationManager
     private let replayLocationManager: ReplayLocationManager?
     private let logHandler: LogHandler?
+    private let workQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.workQueue")
 
     weak var delegate: LocationServiceDelegate?
 
@@ -35,6 +36,15 @@ class DefaultLocationService: LocationService {
                     ]
             UserDefaults.standard.set(cyclingConfig, forKey: MapboxCoreNavigation.customConfigKey)
         }
+        
+        // Mapbox told us that we should configure the history storage location _before_ creating the PassiveLocationManager instance:
+        // https://github.com/mapbox-collab/Ably-DH-Collab/issues/6#issuecomment-1310126245
+        // This was in response to us asking why HistoryReader was returning an empty list of events.
+        do {
+            try LocationHistoryTemporaryStorageConfiguration.configureMapboxHistoryStorageLocation()
+        } catch {
+            logHandler?.error(message: "\(Self.self): Failed to configure Mapbox history storage location", error: error)
+        }
 
         if let historyLocation = historyLocation {
             replayLocationManager = ReplayLocationManager(locations: historyLocation)
@@ -59,6 +69,90 @@ class DefaultLocationService: LocationService {
 
     func stopUpdatingLocation() {
         locationManager.systemLocationManager.stopUpdatingLocation()
+    }
+    
+    enum LocationHistoryTemporaryStorageConfiguration {
+        private static let fileManager = FileManager.default
+        
+        static func configureMapboxHistoryStorageLocation() throws {
+            guard PassiveLocationManager.historyDirectoryURL == nil else {
+                // Mapbox’s storage already configured
+                return
+            }
+                        
+            let storageDirectoryURL = try storageDirectoryURL
+            try ensureStorageDirectoryExists(atURL: storageDirectoryURL)
+            PassiveLocationManager.historyDirectoryURL = storageDirectoryURL
+        }
+        
+        private static func ensureStorageDirectoryExists(atURL storageDirectoryURL: URL) throws {
+            if !fileManager.fileExists(atPath: storageDirectoryURL.path, isDirectory: nil) {
+                try fileManager.createDirectory(at: storageDirectoryURL, withIntermediateDirectories: true)
+            }
+        }
+        
+        private static var storageDirectoryURL: URL {
+            get throws {
+                let cachesURL = try fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                return cachesURL.appendingPathComponent("com.ably.AblyAssetTracking.publisher")
+            }
+        }
+    }
+    
+    func startRecordingLocation() {
+        PassiveLocationManager.startRecordingHistory()
+    }
+    
+    func stopRecordingLocation(completion: @escaping ResultHandler<LocationHistoryData?>) {
+        PassiveLocationManager.stopRecordingHistory { [weak self] historyFileURL in
+            self?.workQueue.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                guard let historyFileURL = historyFileURL else {
+                    let error = ErrorInformation(type: .commonError(errorMessage: "PassiveLocationManager.stopRecordingHistory did not return a file URL"))
+                    self.logHandler?.info(message: "\(Self.self): PassiveLocationManager.stopRecordingHistory returned a nil historyFileURL – not treating as an error since it might be that we never started recording history", error: error)
+                    completion(.success(nil))
+                    return
+                }
+                
+                guard let reader = HistoryReader(fileUrl: historyFileURL) else {
+                    let error = ErrorInformation(type: .commonError(errorMessage: "HistoryReader(fileUrl:) returned nil"))
+                    self.logHandler?.error(message: "\(Self.self): Failed to complete recording of history", error: error)
+                    completion(.failure(.init(type: .commonError(errorMessage: "Failed to create HistoryReader"))))
+                    return
+                }
+                
+                let locationHistoryData: LocationHistoryData
+                do {
+                    let events = try reader.compactMap { event -> GeoJSONMessage? in
+                        guard let locationUpdateHistoryEvent = event as? LocationUpdateHistoryEvent else {
+                            return nil
+                        }
+                        
+                        let location = locationUpdateHistoryEvent.location.toLocation()
+                        return try GeoJSONMessage(location: location)
+                    }
+                    
+                    locationHistoryData = LocationHistoryData(events: events)
+                } catch {
+                    self.logHandler?.error(message: "\(Self.self): Failed to map location history reader events to GeoJSONMessage", error: error)
+                    completion(.failure(.init(error: error)))
+                    return
+                }
+                
+                do {
+                    try FileManager.default.removeItem(at: historyFileURL)
+                } catch {
+                    self.logHandler?.error(message: "\(Self.self): Failed to delete history file at \(historyFileURL)", error: error)
+                    completion(.failure(.init(error: error)))
+                    return
+                }
+                
+                completion(.success(locationHistoryData))
+            }
+        }
     }
 
     func changeLocationEngineResolution(resolution: Resolution) {

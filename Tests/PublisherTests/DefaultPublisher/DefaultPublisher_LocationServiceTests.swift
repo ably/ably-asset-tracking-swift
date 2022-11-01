@@ -389,4 +389,127 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         XCTAssertFalse(ablyPublisher.sendRawLocationWasCalled)
     }
+    
+    func test_addFirstTrackable_callsStartRecordingLocationOnLocationService() {
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        
+        let addTrackableExpectation = expectation(description: "Trackable added successfully")
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                addTrackableExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("Failed to add trackable: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertTrue(locationService.startRecordingLocationCalled)
+    }
+    
+    func test_addSecondTrackable_doesNotCallStartRecordingLocationOnLocationService() {
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        
+        let addFirstTrackableExpectation = expectation(description: "First trackable added successfully")
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                addFirstTrackableExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("Failed to add first trackable: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+        
+        locationService.startRecordingLocationCalled = false
+        
+        let secondTrackable = Trackable(id: UUID().uuidString)
+        let addSecondTrackableExpectation = self.expectation(description: "Second trackable added successfully")
+        publisher.add(trackable: secondTrackable) { result in
+            switch result {
+            case .success:
+                addSecondTrackableExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("Failed to add second trackable: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertFalse(locationService.startRecordingLocationCalled)
+    }
+    
+    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatReturnsALocationHistoryData_itCallsDidFinishRecordingLocationHistoryDataOnDelegate_andSuccessfullyStops() {
+        ablyPublisher.closeResultCompletionHandler = { completion in
+            completion?(.success)
+        }
+        locationService.stopRecordingLocationCallback = { completion in
+            completion(.success(LocationHistoryData(events: [])))
+        }
+        
+        let stopExpectation = expectation(description: "Publisher successfully stops")
+        publisher.stop { result in
+            switch result {
+            case .success:
+                stopExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("Failed to stop publisher: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertTrue(locationService.stopRecordingLocationCalled)
+        XCTAssertTrue(delegate.publisherDidFinishRecordingLocationHistoryDataCalled)
+    }
+    
+    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatDoesNotReturnALocationHistoryData_itDoesNotCallDidFinishRecordingLocationHistoryDataOnDelegate_butStillSuccessfullyStops() {
+        ablyPublisher.closeResultCompletionHandler = { completion in
+            completion?(.success)
+        }
+        locationService.stopRecordingLocationCallback = { completion in
+            completion(.success(nil))
+        }
+        
+        let stopExpectation = expectation(description: "Publisher successfully stops")
+        publisher.stop { result in
+            switch result {
+            case .success:
+                stopExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("Failed to stop publisher: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertTrue(locationService.stopRecordingLocationCalled)
+        XCTAssertFalse(delegate.publisherDidFinishRecordingLocationHistoryDataCalled)
+    }
+    
+    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatFails_itDoesNotCallDidFinishRecordingLocationHistoryDataOnDelegate_butStillSuccessfullyStops() {
+        ablyPublisher.closeResultCompletionHandler = { completion in
+            completion?(.success)
+        }
+        locationService.stopRecordingLocationCallback = { completion in
+            completion(.failure(.init(type: .commonError(errorMessage: "Example error"))))
+        }
+        
+        let stopExpectation = expectation(description: "Publisher successfully stops")
+        publisher.stop { result in
+            switch result {
+            case .success:
+                stopExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("Failed to stop publisher: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertTrue(locationService.stopRecordingLocationCalled)
+        XCTAssertFalse(delegate.publisherDidFinishRecordingLocationHistoryDataCalled)
+    }
 }
