@@ -20,9 +20,9 @@ struct CreatePublisherView: View {
         
     private var s3Helper: S3Helper?
 
-    init(logger: Logger, s3Helper: S3Helper? = nil) {
+    init(logger: Logger, s3Helper: S3Helper? = nil, locationHistoryDataHandler: LocationHistoryDataHandlerProtocol? = nil) {
         self.s3Helper = s3Helper
-        _viewModel = StateObject(wrappedValue: CreatePublisherViewModel(logger: logger, s3Helper: s3Helper))
+        _viewModel = StateObject(wrappedValue: CreatePublisherViewModel(logger: logger, s3Helper: s3Helper, locationHistoryDataHandler: locationHistoryDataHandler))
     }
     
     var body: some View {
