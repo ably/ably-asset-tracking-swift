@@ -60,4 +60,8 @@ class S3Helper {
         return object
     }
     
+    func upload(_ request: UploadRequest) async throws -> Void {
+        let data = try JSONEncoder().encode(request.data)
+        try await Amplify.Storage.uploadData(key: request.filename, data: data)
+    }
 }
