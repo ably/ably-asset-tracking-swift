@@ -1,12 +1,19 @@
 import SwiftUI
+import Logging
 
 @main
 struct PublisherExampleSwiftUIApp: App {
+    @State private var logger: Logger = {
+        var logger = Logger(label: "com.ably.PublisherExampleSwiftUI")
+        logger.logLevel = .info
+        return logger
+    }()
+    
     var body: some Scene {
         WindowGroup {
             TabView {
                 NavigationView {
-                    CreatePublisherView()
+                    CreatePublisherView(logger: logger)
                 }
                 .tabItem {
                     Label("Publisher", systemImage: "car")

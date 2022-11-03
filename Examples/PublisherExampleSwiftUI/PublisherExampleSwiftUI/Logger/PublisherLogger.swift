@@ -3,11 +3,10 @@ import AblyAssetTrackingCore
 import Logging
 
 class PublisherLogger: AblyAssetTrackingCore.LogHandler {
-    var swiftLog: Logger
+    private let swiftLog: Logger
         
-    init () {
-        swiftLog = Logger(label: "com.ably.PublisherExampleSwiftUI")
-        swiftLog.logLevel = .info
+    init(swiftLog: Logger) {
+        self.swiftLog = swiftLog
     }
     
     func logMessage(level: LogLevel, message: String, error: Error?) {

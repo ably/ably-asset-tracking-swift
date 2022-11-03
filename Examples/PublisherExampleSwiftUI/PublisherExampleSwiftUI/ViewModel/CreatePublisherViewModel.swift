@@ -3,21 +3,25 @@
 import Foundation
 import SwiftUI
 import AblyAssetTrackingPublisher
+import Logging
 
 class CreatePublisherViewModel: ObservableObject {
     
     private let s3Helper: S3Helper?
+    private let logger: Logger
     
     private var isS3Available: Bool {
         s3Helper != nil
     }
     
-    init() {
+    init(logger: Logger) {
         do {
             self.s3Helper = try S3Helper()
         } catch {
             self.s3Helper = nil
         }
+        
+        self.logger = logger
     }
     
     @Published var areRawLocationsEnabled: Bool = SettingsModel.shared.areRawLocationsEnabled {
@@ -128,7 +132,7 @@ class CreatePublisherViewModel: ObservableObject {
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .rawLocations(enabled: areRawLocationsEnabled)
             .constantLocationEngineResolution(resolution: constantResolution)
-            .logHandler(handler: PublisherLogger())
+            .logHandler(handler: PublisherLogger(swiftLog: logger))
             .vehicleProfile(vehicleProfile)
             .start()
         

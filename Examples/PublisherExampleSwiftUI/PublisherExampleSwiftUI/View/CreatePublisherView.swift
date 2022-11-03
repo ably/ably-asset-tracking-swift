@@ -2,9 +2,10 @@
 
 import SwiftUI
 import AblyAssetTrackingPublisher
+import Logging
 
 struct CreatePublisherView: View {
-    @StateObject private var viewModel = CreatePublisherViewModel()
+    @StateObject private var viewModel: CreatePublisherViewModel
     @State var showConstantAccuracies = false
     @State var showVehicleProfiles = false
     @State var showRoutingProfiles = false
@@ -16,6 +17,10 @@ struct CreatePublisherView: View {
     @State private var error: ErrorInformation?
     @State private var showAlert = false
     @Environment(\.colorScheme) var colorScheme
+        
+    init(logger: Logger) {
+        _viewModel = StateObject(wrappedValue: CreatePublisherViewModel(logger: logger))
+    }
     
     var body: some View {
         VStack {
@@ -197,6 +202,6 @@ struct CreatePublisherView: View {
 
 struct CreatePublisherView_Previews: PreviewProvider {
     static var previews: some View {
-        CreatePublisherView()
+        CreatePublisherView(logger: Logger(label: ""))
     }
 }
