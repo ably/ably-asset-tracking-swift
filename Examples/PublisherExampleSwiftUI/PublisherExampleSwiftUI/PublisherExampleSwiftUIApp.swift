@@ -8,12 +8,13 @@ struct PublisherExampleSwiftUIApp: App {
         logger.logLevel = .info
         return logger
     }()
+    @State private var s3Helper = try? S3Helper()
     
     var body: some Scene {
         WindowGroup {
             TabView {
                 NavigationView {
-                    CreatePublisherView(logger: logger)
+                    CreatePublisherView(logger: logger, s3Helper: s3Helper)
                 }
                 .tabItem {
                     Label("Publisher", systemImage: "car")

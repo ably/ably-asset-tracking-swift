@@ -14,13 +14,8 @@ class CreatePublisherViewModel: ObservableObject {
         s3Helper != nil
     }
     
-    init(logger: Logger) {
-        do {
-            self.s3Helper = try S3Helper()
-        } catch {
-            self.s3Helper = nil
-        }
-        
+    init(logger: Logger, s3Helper: S3Helper?) {
+        self.s3Helper = s3Helper
         self.logger = logger
     }
     

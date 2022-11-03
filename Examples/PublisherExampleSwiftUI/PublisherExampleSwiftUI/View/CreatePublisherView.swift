@@ -18,8 +18,11 @@ struct CreatePublisherView: View {
     @State private var showAlert = false
     @Environment(\.colorScheme) var colorScheme
         
-    init(logger: Logger) {
-        _viewModel = StateObject(wrappedValue: CreatePublisherViewModel(logger: logger))
+    private var s3Helper: S3Helper?
+
+    init(logger: Logger, s3Helper: S3Helper? = nil) {
+        self.s3Helper = s3Helper
+        _viewModel = StateObject(wrappedValue: CreatePublisherViewModel(logger: logger, s3Helper: s3Helper))
     }
     
     var body: some View {
@@ -97,7 +100,7 @@ struct CreatePublisherView: View {
                                 self.showS3Files = true
                             }
                             .sheet(isPresented: $showS3Files) {
-                                S3FilesView(fileName: $viewModel.s3FileName)
+                                S3FilesView(s3Helper: s3Helper, fileName: $viewModel.s3FileName)
                             }
                     }
                     TitleValueListItem(title: "Vehicle Profile", value: viewModel.vehicleProfile.description())
