@@ -96,7 +96,7 @@ class CreatePublisherViewModel: ObservableObject {
         }
     }
     
-    func createPublisher() async throws -> ObservablePublisher {
+    @MainActor func createPublisher() async throws -> ObservablePublisher {
         let connectionConfiguration = ConnectionConfiguration(apiKey: EnvironmentHelper.ABLY_API_KEY, clientId: "Asset Tracking Publisher Example")
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
 
