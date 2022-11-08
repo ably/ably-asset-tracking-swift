@@ -49,9 +49,18 @@ public class ConnectionConfiguration {
         given token parameters.
         - clientId: Optional identifier to be assigned to this client.
      */
-    public convenience init(clientId: String? = nil, authCallback: @escaping AuthCallback) {
+    @available(*, deprecated,
+                message: "The ability to specify a client ID when using token-based authentication has been deprecated. You should use init(authCallback:) instead, which will use the client ID contained in the fetched token.",
+                renamed: "init(authCallback:)")
+    public convenience init(clientId: String, authCallback: @escaping AuthCallback) {
         self.init(apiKey: nil,
                   clientId: clientId,
+                  authCallback: authCallback)
+    }
+    
+    public convenience init(authCallback: @escaping AuthCallback) {
+        self.init(apiKey: nil,
+                  clientId: nil,
                   authCallback: authCallback)
     }
     
