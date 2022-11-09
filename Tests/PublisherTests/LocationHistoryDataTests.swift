@@ -10,6 +10,17 @@ final class LocationHistoryDataTests: XCTestCase {
         XCTAssertEqual(locationHistoryData.version, 1)
     }
     
+    func testAgents() throws {
+        let locationHistoryData = LocationHistoryData(events: [])
+        
+        let agents = try XCTUnwrap(locationHistoryData.agents)
+        
+        // e.g. "ably-cocoa/1.2.16 ably-asset-tracking-swift/1.0.0-rc.1 iOS/16.1.0"
+        XCTAssertTrue(agents.contains("ably-cocoa/"))
+        XCTAssertTrue(agents.contains("ably-asset-tracking-swift/"))
+        XCTAssertTrue(agents.contains("iOS/"))
+    }
+    
     // MARK: Decodable
     
     func testDecodable_decodesTestResource_version1_validAndroid() throws {
@@ -25,7 +36,9 @@ final class LocationHistoryDataTests: XCTestCase {
         let jsonData = try Data(contentsOf: jsonFileUrl)
         
         let decoder = JSONDecoder()
-        let _ = try decoder.decode(LocationHistoryData.self, from: jsonData)
+        let locationHistoryData = try decoder.decode(LocationHistoryData.self, from: jsonData)
+        
+        XCTAssertEqual(locationHistoryData.agents, "ably-cocoa/1.2.16 ably-asset-tracking-swift/1.0.0-rc.1 iOS/16.1.0")
     }
     
     func testDecodable_withMajorVersionGreaterThan2_throwsUnsupportedVersionError() throws {
@@ -51,6 +64,18 @@ final class LocationHistoryDataTests: XCTestCase {
         let jsonObject = try JSONSerialization.jsonObject(with: jsonData)
         let dictionary = try XCTUnwrap(jsonObject as? [String: Any])
         
-        XCTAssertEqual(dictionary["version"] as? String, "2.0.0-wip")
+        XCTAssertEqual(dictionary["version"] as? String, "2.0.0")
+    }
+    
+    func testEncodable_encodesAgents() throws {
+        let locationHistoryData = LocationHistoryData(events: [])
+        
+        let encoder = JSONEncoder()
+        let jsonData = try encoder.encode(locationHistoryData)
+        
+        let jsonObject = try JSONSerialization.jsonObject(with: jsonData)
+        let dictionary = try XCTUnwrap(jsonObject as? [String: Any])
+        
+        XCTAssertEqual(dictionary["agents"] as? String, locationHistoryData.agents)
     }
 }
