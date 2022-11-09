@@ -120,7 +120,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         let publisher = try! PublisherFactory.publishers()
             .connection(connectionConfiguration)
             .mapboxConfiguration(MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken))
-            .locationSource(LocationSource(locationSource: [CLLocation(latitude: 0.0, longitude: 0.0), CLLocation(latitude: 1.0, longitude: 1.0)]))
+            .locationSource(.init(locations: [CLLocation(latitude: 0.0, longitude: 0.0), CLLocation(latitude: 1.0, longitude: 1.0)]))
             .routingProfile(.driving)
             .vehicleProfile(.bicycle)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
