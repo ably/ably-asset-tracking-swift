@@ -21,7 +21,7 @@ extension ConnectionConfiguration {
         clientOptions.logLevel = .verbose
         clientOptions.logHandler = logHandler
         
-        clientOptions.agents = ["ably-asset-tracking-swift": Version.libraryVersion]
+        clientOptions.agents = Agents.libraryAgents.ablyCocoaAgentsDictionary
         
         if let environment = environment {
             clientOptions.environment = environment
