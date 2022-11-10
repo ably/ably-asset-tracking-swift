@@ -23,8 +23,13 @@ class DefaultRouteProvider: NSObject, RouteProvider {
 
     func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
         self.routingProfile = routingProfile
-        guard let destination = self.destination,
-              !isCalculating(resultHandler: completion) else {
+        guard let destination = destination else {
+            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Cannot change routing profile when destination is not available"))
+            completion(.failure(errorInformation))
+            return
+        }
+        
+        if isCalculating(resultHandler: completion){
             return
         }
 
