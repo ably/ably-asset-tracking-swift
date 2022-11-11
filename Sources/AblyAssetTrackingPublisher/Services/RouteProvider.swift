@@ -3,7 +3,7 @@ import MapboxDirections
 import AblyAssetTrackingCore
 
 protocol RouteProvider {
-    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
+    func getRoute(to destination: CLLocationCoordinate2D?, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
     func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
 }
 
@@ -23,12 +23,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
 
     func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
         self.routingProfile = routingProfile
-        guard let destination = destination else {
-            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Cannot change routing profile when destination is not available"))
-            completion(.failure(errorInformation))
-            return
-        }
-        
+    
         if isCalculating(resultHandler: completion){
             return
         }
@@ -38,7 +33,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
                  completion: completion)
     }
 
-    func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
+    func getRoute(to destination: CLLocationCoordinate2D?, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
 
         if isCalculating(resultHandler: completion) {
             return
