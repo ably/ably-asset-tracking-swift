@@ -32,6 +32,7 @@
 		21B6B2A829097EAF001E2FB7 /* LocationSourceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2A729097EAF001E2FB7 /* LocationSourceOption.swift */; };
 		21B6B2AA29097FEC001E2FB7 /* S3FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2A929097FEB001E2FB7 /* S3FilesView.swift */; };
 		21B6B2AC2909800B001E2FB7 /* S3FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2AB2909800B001E2FB7 /* S3FilesViewModel.swift */; };
+		21BB909429119015005C78AF /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB909329119015005C78AF /* UploadRequest.swift */; };
 		21CF8DFE28F8566D005E7CE6 /* ObservablePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */; };
 		21CF8E0328F875DF005E7CE6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0228F875DF005E7CE6 /* SettingsView.swift */; };
 		21CF8E0528F875E8005E7CE6 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0428F875E8005E7CE6 /* SettingsViewModel.swift */; };
@@ -77,6 +78,7 @@
 		21B6B2A729097EAF001E2FB7 /* LocationSourceOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSourceOption.swift; sourceTree = "<group>"; };
 		21B6B2A929097FEB001E2FB7 /* S3FilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3FilesView.swift; sourceTree = "<group>"; };
 		21B6B2AB2909800B001E2FB7 /* S3FilesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3FilesViewModel.swift; sourceTree = "<group>"; };
+		21BB909329119015005C78AF /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
 		21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservablePublisher.swift; sourceTree = "<group>"; };
 		21CF8E0228F875DF005E7CE6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		21CF8E0428F875E8005E7CE6 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -136,6 +138,14 @@
 				0CFCA2FC289130E700A1A6B5 /* TitleTextFieldListItem.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		21BB909529119053005C78AF /* Uploads */ = {
+			isa = PBXGroup;
+			children = (
+				21BB909329119015005C78AF /* UploadRequest.swift */,
+			);
+			path = Uploads;
 			sourceTree = "<group>";
 		};
 		21E6EBF128F836F50057AC7C /* Mapbox */ = {
@@ -299,6 +309,7 @@
 		D5DBAF7127746249008B8DED /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				21BB909529119053005C78AF /* Uploads */,
 				21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */,
 				0CFCA3032891315700A1A6B5 /* SettingsModel.swift */,
 				D5DBAF722774625C008B8DED /* StackedTextModel.swift */,
@@ -402,6 +413,7 @@
 				D544FB4B277333A20015925C /* Environment.swift in Sources */,
 				21E6EBF328F836FF0057AC7C /* MapboxMap.swift in Sources */,
 				21E6EBF528F837380057AC7C /* MapboxMapViewController.swift in Sources */,
+				21BB909429119015005C78AF /* UploadRequest.swift in Sources */,
 				0CFCA2FD289130E700A1A6B5 /* ListItem.swift in Sources */,
 				21E6EBF828F97B200057AC7C /* Map.swift in Sources */,
 				0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */,
