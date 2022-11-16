@@ -29,6 +29,14 @@ Configuration of download token for Mapbox SDK is described [here](https://docs.
 
 The SPM command doesn't support testing on a specified destination, like "iOS, iOS, tvOS Simulator or macOS" when creating this document. The recommended way is to use the "xcodebuild" command when used from the command line.
 
+## Initializing Git submodules
+
+After checking out the repository you must first initialize the Git submodules:
+
+```bash
+git submodule update --init --recursive
+```
+
 ## Running tests from the command line
 
 To run tests, you have to configure the download token for the Mapbox described [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) and then set environment variables:

@@ -12,6 +12,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Select Specific Xcode Version
         run: |
