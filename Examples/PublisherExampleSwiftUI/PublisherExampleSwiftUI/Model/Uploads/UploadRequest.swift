@@ -15,6 +15,6 @@ struct UploadRequest {
     
     var filename: String {
         let formattedDate = Self.dateFormatter.string(from: generatedAt)
-        return "\(data.version)_\(formattedDate)"
+        return "\(LocationHistoryData.archiveVersion)_\(formattedDate)"
     }
 }
