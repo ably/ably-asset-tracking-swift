@@ -75,7 +75,8 @@ let package = Package(
             name: "PublisherTests",
             dependencies: [
                 "AblyAssetTrackingPublisher"
-            ]),
+            ],
+            resources: [.copy("common")]),
         .testTarget(
             name: "InternalTests",
             dependencies: [
