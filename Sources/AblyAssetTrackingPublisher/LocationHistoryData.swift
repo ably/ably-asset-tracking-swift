@@ -1,11 +1,11 @@
 import Foundation
 
 public struct LocationHistoryData: Codable {
-    let events: [GeoJSONMessage]
-    let version: Int
+    public let events: [GeoJSONMessage]
+    public let version: Int
     
-    public init(events: [GeoJSONMessage], version: Int) {
+    public init(events: [GeoJSONMessage]) {
         self.events = events
-        self.version = version
+        self.version = 1
     }
 }
