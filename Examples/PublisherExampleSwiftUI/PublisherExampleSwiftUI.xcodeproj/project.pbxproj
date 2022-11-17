@@ -573,6 +573,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PublisherExampleSwiftUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Asset Publisher";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Used to send your location to asset subscribers";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Used to send your location to asset subscribers";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -585,8 +586,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.PublisherExampleSwiftUI;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.example.publisher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -607,6 +608,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PublisherExampleSwiftUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Asset Publisher";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Used to send your location to asset subscribers";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Used to send your location to asset subscribers";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -619,8 +621,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.PublisherExampleSwiftUI;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ably.tracking.example.publisher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
