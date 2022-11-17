@@ -61,8 +61,8 @@ public class ConnectionConfiguration {
                             remainPresentForMilliseconds: Int? = nil) {
         self.init(apiKey: nil,
                   clientId: clientId,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds,
-                  authCallback: authCallback)
+                  authCallback: authCallback,
+                  remainPresentForMilliseconds: remainPresentForMilliseconds)
     }
     
     public convenience init(
@@ -70,8 +70,8 @@ public class ConnectionConfiguration {
                             remainPresentForMilliseconds: Int? = nil) {
         self.init(apiKey: nil,
                   clientId: nil,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds,
-                  authCallback: authCallback)
+                  authCallback: authCallback,
+                  remainPresentForMilliseconds: remainPresentForMilliseconds)
     }
     
     public convenience init(apiKey: String,
@@ -79,7 +79,7 @@ public class ConnectionConfiguration {
                             remainPresentForMilliseconds: Int? = nil) {
         self.init(apiKey: apiKey,
                   clientId: clientId,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds,
-                  authCallback: nil)
+                  authCallback: nil,
+                  remainPresentForMilliseconds: remainPresentForMilliseconds)
     }
 }
