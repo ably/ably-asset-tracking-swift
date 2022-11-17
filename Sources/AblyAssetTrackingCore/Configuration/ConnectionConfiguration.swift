@@ -36,12 +36,12 @@ public class ConnectionConfiguration {
      */
     private init(apiKey: String?,
                  clientId: String?,
-                 remainPresentForMilliseconds: Int?,
-                 authCallback: AuthCallback?) {
+                 authCallback: AuthCallback?,
+                 remainPresentForMilliseconds: Int?) {
         self.apiKey = apiKey
         self.clientId = clientId
-        self.remainPresentForMilliseconds = remainPresentForMilliseconds
         self.authCallback = authCallback
+        self.remainPresentForMilliseconds = remainPresentForMilliseconds
     }
     
     // TODO make clientId optional [RSA7b2], and use the clientId provided in the auth callback. Pending ably-cocoa: https://github.com/ably/ably-cocoa/issues/1126
@@ -57,23 +57,25 @@ public class ConnectionConfiguration {
                 message: "The ability to specify a client ID when using token-based authentication has been deprecated. You should use init(authCallback:) instead, which will use the client ID contained in the fetched token.",
                 renamed: "init(authCallback:)")
     public convenience init(clientId: String,
-                            remainPresentForMilliseconds: Int? = nil,
-                            authCallback: @escaping AuthCallback) {
+                            authCallback: @escaping AuthCallback,
+                            remainPresentForMilliseconds: Int? = nil) {
         self.init(apiKey: nil,
                   clientId: clientId,
                   remainPresentForMilliseconds: remainPresentForMilliseconds,
                   authCallback: authCallback)
     }
     
-    public convenience init(remainPresentForMilliseconds: Int? = nil,
-                            authCallback: @escaping AuthCallback) {
+    public convenience init(
+                            authCallback: @escaping AuthCallback,
+                            remainPresentForMilliseconds: Int? = nil) {
         self.init(apiKey: nil,
                   clientId: nil,
                   remainPresentForMilliseconds: remainPresentForMilliseconds,
                   authCallback: authCallback)
     }
     
-    public convenience init(apiKey: String, clientId: String? = nil,
+    public convenience init(apiKey: String,
+                            clientId: String? = nil,
                             remainPresentForMilliseconds: Int? = nil) {
         self.init(apiKey: apiKey,
                   clientId: clientId,
