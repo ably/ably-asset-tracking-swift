@@ -17,6 +17,7 @@ public typealias AuthCallback = (TokenParams, @escaping (Result<AuthResult, Erro
 public class ConnectionConfiguration {
     public let apiKey: String?
     public let clientId: String?
+    public let remainPresentForMilliseconds: Int?
     public let authCallback: AuthCallback?
     /**
      * For development or non-default production environments.
@@ -31,12 +32,15 @@ public class ConnectionConfiguration {
         - apiKey: API key string obtained from application dashboard.
         - clientId: Optional identifier to be assigned to this client.
         - authCallback: A callback that will be used to authenticate with Ably, including at initial connection and for renewing an expired token.
+        - remainPresentForMilliseconds: Specifies for how long should the SDK remain present in a channel when the connection is gone. For more details please see https://ably.com/docs/realtime/presence#unstable-connections
      */
     private init(apiKey: String?,
                  clientId: String?,
+                 remainPresentForMilliseconds: Int?,
                  authCallback: AuthCallback?) {
         self.apiKey = apiKey
         self.clientId = clientId
+        self.remainPresentForMilliseconds = remainPresentForMilliseconds
         self.authCallback = authCallback
     }
     
@@ -52,21 +56,28 @@ public class ConnectionConfiguration {
     @available(*, deprecated,
                 message: "The ability to specify a client ID when using token-based authentication has been deprecated. You should use init(authCallback:) instead, which will use the client ID contained in the fetched token.",
                 renamed: "init(authCallback:)")
-    public convenience init(clientId: String, authCallback: @escaping AuthCallback) {
+    public convenience init(clientId: String,
+                            remainPresentForMilliseconds: Int? = nil,
+                            authCallback: @escaping AuthCallback) {
         self.init(apiKey: nil,
                   clientId: clientId,
+                  remainPresentForMilliseconds: remainPresentForMilliseconds,
                   authCallback: authCallback)
     }
     
-    public convenience init(authCallback: @escaping AuthCallback) {
+    public convenience init(remainPresentForMilliseconds: Int? = nil,
+                            authCallback: @escaping AuthCallback) {
         self.init(apiKey: nil,
                   clientId: nil,
+                  remainPresentForMilliseconds: remainPresentForMilliseconds,
                   authCallback: authCallback)
     }
     
-    public convenience init(apiKey: String, clientId: String? = nil) {
+    public convenience init(apiKey: String, clientId: String? = nil,
+                            remainPresentForMilliseconds: Int? = nil) {
         self.init(apiKey: apiKey,
                   clientId: clientId,
+                  remainPresentForMilliseconds: remainPresentForMilliseconds,
                   authCallback: nil)
     }
 }

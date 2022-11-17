@@ -6,7 +6,7 @@ extension ConnectionConfiguration {
     /**
      Create ClientOptions for Ably SDK, to be passed to Ably Client
      */
-    public func getClientOptions(logHandler: InternalARTLogHandler) -> ARTClientOptions {
+    public func getClientOptions(logHandler: InternalARTLogHandler, remainPresentForMilliseconds: Int?) -> ARTClientOptions {
         let clientOptions = ARTClientOptions()
         if let clientId = clientId {
             clientOptions.clientId = clientId
@@ -25,6 +25,11 @@ extension ConnectionConfiguration {
         
         if let environment = environment {
             clientOptions.environment = environment
+        }
+        
+        if let remainPresentForMilliseconds = remainPresentForMilliseconds {
+            let remainPresentForStringifiable = ARTStringifiable.withNumber(remainPresentForMilliseconds as NSNumber)
+            clientOptions.transportParams = ["remainPresentFor": remainPresentForStringifiable]
         }
         
         return clientOptions
