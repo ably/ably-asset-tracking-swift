@@ -64,6 +64,10 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
     func attach(_ callback: ARTCallback?) {
         channel.attach(callback)
     }
+    
+    var state: ARTRealtimeChannelState {
+        return channel.state
+    }
 }
 
 struct AblyCocoaSDKRealtimePresence: AblySDKRealtimePresence {

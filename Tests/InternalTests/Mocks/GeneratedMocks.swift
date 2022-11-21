@@ -115,6 +115,11 @@ class AblySDKRealtimeChannelMock: AblySDKRealtimeChannel {
         set(value) { underlyingPresence = value }
     }
     var underlyingPresence: AblySDKRealtimePresence!
+    var state: ARTRealtimeChannelState {
+        get { return underlyingState }
+        set(value) { underlyingState = value }
+    }
+    var underlyingState: ARTRealtimeChannelState!
 
     //MARK: - subscribe
 
