@@ -1,12 +1,20 @@
 import SwiftUI
+import Logging
 
 @main
 struct PublisherExampleSwiftUIApp: App {
+    @State private var logger: Logger = {
+        var logger = Logger(label: "com.ably.PublisherExampleSwiftUI")
+        logger.logLevel = .info
+        return logger
+    }()
+    @State private var s3Helper = try? S3Helper()
+    
     var body: some Scene {
         WindowGroup {
             TabView {
                 NavigationView {
-                    CreatePublisherView()
+                    CreatePublisherView(logger: logger, s3Helper: s3Helper)
                 }
                 .tabItem {
                     Label("Publisher", systemImage: "car")
