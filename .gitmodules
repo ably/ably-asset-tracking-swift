@@ -1,0 +1,3 @@
+[submodule "external/common"]
+	path = external/common
+	url = git@github.com:ably/ably-asset-tracking-common.git
