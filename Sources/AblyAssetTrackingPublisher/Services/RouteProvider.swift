@@ -4,7 +4,6 @@ import AblyAssetTrackingCore
 
 protocol RouteProvider {
     func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
-    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
 }
 
 class DefaultRouteProvider: NSObject, RouteProvider {
@@ -19,18 +18,6 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         directions = Directions(credentials: mapboxConfiguration.getCredentials())
 
         super.init()
-    }
-
-    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
-        self.routingProfile = routingProfile
-        guard let destination = self.destination,
-              !isCalculating(resultHandler: completion) else {
-            return
-        }
-
-        self.getRoute(to: destination,
-                 withRoutingProfile: routingProfile,
-                 completion: completion)
     }
 
     func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {

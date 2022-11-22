@@ -8,19 +8,12 @@ class MockRouteProvider: RouteProvider{
     var getRouteParamDestination: CLLocationCoordinate2D?
     var getRouteParamRoutingProfile: RoutingProfile?
     var getRouteParamResultHandler: ResultHandler<Route>?
+    var getRouteBody: ((ResultHandler<Route>) -> Void)?
     func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
         getRouteCalled = true
         getRouteParamDestination = destination
         getRouteParamRoutingProfile = routingProfile
         getRouteParamResultHandler = completion
-    }
-    
-    var changeRoutingProfileCalled: Bool = false
-    var changeRoutingProfileParamRoutingProfile: RoutingProfile?
-    var changeRoutingProfileParamResultHandler: ResultHandler<Route>?
-    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
-        changeRoutingProfileCalled = true
-        changeRoutingProfileParamRoutingProfile = routingProfile
-        changeRoutingProfileParamResultHandler = completion
+        getRouteBody?(completion)
     }
 }
