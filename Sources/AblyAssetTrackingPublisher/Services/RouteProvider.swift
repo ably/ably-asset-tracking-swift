@@ -11,7 +11,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     private var resultHandler: ResultHandler<Route>?
     private var destination: CLLocationCoordinate2D?
     private var routingProfile: RoutingProfile?
-    private var directions: Directions?
+    private let directions: Directions
 
     init(mapboxConfiguration: MapboxConfiguration) {
         locationManager = CLLocationManager()
@@ -34,12 +34,6 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     private func handleLocationUpdate(location: CLLocation) {
-        guard let directions = self.directions else {
-            let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Missing Directions object."))
-            self.handleErrorCallback(error: errorInformation)
-            return
-        }
-
         guard let destination = destination,
               let routingProfile = routingProfile else { return }
 
