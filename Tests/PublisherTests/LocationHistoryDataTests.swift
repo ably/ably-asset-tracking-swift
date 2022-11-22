@@ -8,8 +8,8 @@ final class LocationHistoryDataTests: XCTestCase {
         XCTAssertEqual(locationHistoryData.version, 1)
     }
     
-    func testDecodable_decodesTestResource_validAndroid() throws {
-        let jsonFileUrl = try XCTUnwrap(CommonResources.url(forTestResourceJson: "valid-android", subdirectory: "geo/location-history-data"))
+    func testDecodable_decodesTestResource_version1_validAndroid() throws {
+        let jsonFileUrl = try XCTUnwrap(CommonResources.url(forGeoTestDataJson: "valid-android", subdirectory: "location-history-data/version-1"))
         let jsonData = try Data(contentsOf: jsonFileUrl)
         
         let decoder = JSONDecoder()
