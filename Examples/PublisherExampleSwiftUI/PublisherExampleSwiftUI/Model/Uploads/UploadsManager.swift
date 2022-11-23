@@ -68,7 +68,7 @@ class UploadsManager: ObservableObject {
     }
     
     @MainActor func upload(locationHistoryData: LocationHistoryData) {
-        guard let s3Helper = s3Helper else {
+        guard s3Helper != nil else {
             logger.info("Skipping upload of location history data since S3 is not configured")
             return
         }
@@ -99,9 +99,20 @@ class UploadsManager: ObservableObject {
             logger.error("Failed to save upload \(upload.id): \(error)")
         }
         
+        performUpload(upload)
+    }
+    
+    @MainActor func performUpload(_ upload: Upload) {
+        guard let s3Helper = s3Helper else {
+            logger.info("Skipping upload of location history data since S3 is not configured")
+            return
+        }
+        
         Task {
             do {
-                try await s3Helper.upload(request, dataFileURL: dataFileURL)
+                let storageDirectoryURL = try Storage.storageDirectoryURL(forUploadId: upload.id.uuidString)
+                let dataFileURL = Storage.dataURL(forStorageDirectoryURL: storageDirectoryURL)
+                try await s3Helper.upload(upload.request, dataFileURL: dataFileURL)
             } catch {
                 logger.error("Upload \(upload.id) of location history data failed: \(error.localizedDescription)")
                 updateStatus(forUploadWithId: upload.id, status: .failed(error.localizedDescription))
@@ -135,5 +146,12 @@ class UploadsManager: ObservableObject {
         let storageDirectoryURL = try Storage.storageDirectoryURL(forUploadId: upload.id.uuidString)
         let metadataURL = Storage.metadataURL(forStorageDirectoryURL: storageDirectoryURL)
         try data.write(to: metadataURL)
+    }
+    
+    @MainActor func retry(_ upload: Upload) {
+        guard case .failed = upload.status else {
+            return
+        }
+        performUpload(upload)
     }
 }

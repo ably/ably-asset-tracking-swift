@@ -2,10 +2,13 @@ import SwiftUI
 
 struct UploadsView: View {
     var uploads: [Upload]
+    var retry: (Upload) -> Void
     
     var body: some View {
         List(uploads.sorted(by: { $0.request.generatedAt > $1.request.generatedAt })) { upload in
-            UploadView(upload: upload)
+            UploadView(upload: upload, retry: {
+                retry(upload)
+            })
         }
         .navigationTitle("Uploads")
     }
@@ -18,7 +21,7 @@ struct UploadsView_Previews: PreviewProvider {
         }
         
         NavigationView {
-            UploadsView(uploads: uploads)
+            UploadsView(uploads: uploads) { _ in }
         }
     }
 }

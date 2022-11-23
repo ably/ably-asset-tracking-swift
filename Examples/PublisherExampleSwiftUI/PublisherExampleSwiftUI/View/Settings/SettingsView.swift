@@ -4,6 +4,7 @@ struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @State var showDefaultAccuracies = false
     var uploads: [Upload]
+    var retry: (Upload) -> Void
     
     var body: some View {
         List {
@@ -37,7 +38,9 @@ struct SettingsView: View {
                 }
                 
                 NavigationLink("Uploads") {
-                    UploadsView(uploads: uploads)
+                    UploadsView(uploads: uploads, retry: { upload in
+                        retry(upload)
+                    })
                 }
             } header: {
                 Text("Other settings")
@@ -57,6 +60,6 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         let upload = Upload(id: UUID(), request: .init(type: .locationHistoryData(archiveVersion: ""), generatedAt: Date()), status: .uploading)
-        SettingsView(uploads: [upload])
+        SettingsView(uploads: [upload]) { _ in }
     }
 }
