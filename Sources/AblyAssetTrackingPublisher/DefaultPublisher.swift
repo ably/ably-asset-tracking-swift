@@ -274,8 +274,14 @@ extension DefaultPublisher {
             Self.publisherStoppedCallback(handler: event.resultHandler)
             return
         }
-
-        routeProvider.changeRoutingProfile(to: routingProfile) { [weak self] result in
+        
+        guard let destination = activeTrackable?.destination else {
+            self.routingProfile = event.profile
+            Self.callback(value: Void(), handler: event.resultHandler)
+            return
+        }
+        
+        routeProvider.getRoute(to: destination.toCoreLocationCoordinate2d(), withRoutingProfile: event.profile) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let route):
