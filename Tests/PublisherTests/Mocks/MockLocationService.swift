@@ -31,9 +31,9 @@ class MockLocationService: LocationService {
     }
     
     var stopRecordingLocationCalled = false
-    var stopRecordingLocationParamCompletion: ResultHandler<LocationHistoryData?>?
-    var stopRecordingLocationCallback: ((@escaping ResultHandler<LocationHistoryData?>) -> Void)?
-    func stopRecordingLocation(completion: @escaping ResultHandler<LocationHistoryData?>) {
+    var stopRecordingLocationParamCompletion: ResultHandler<LocationRecordingResult?>?
+    var stopRecordingLocationCallback: ((@escaping ResultHandler<LocationRecordingResult?>) -> Void)?
+    func stopRecordingLocation(completion: @escaping ResultHandler<LocationRecordingResult?>) {
         stopRecordingLocationCalled = true
         stopRecordingLocationParamCompletion = completion
         stopRecordingLocationCallback?(completion)

@@ -441,12 +441,26 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         XCTAssertFalse(locationService.startRecordingLocationCalled)
     }
     
-    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatReturnsALocationHistoryData_itCallsDidFinishRecordingLocationHistoryDataOnDelegate_andSuccessfullyStops() {
+    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatReturnsALocationRecordingResult_itCallsDidFinishRecordingLocationHistoryDataOnDelegate_andCallsDidFinishRecordingRawMapboxDataOnDelegate_andSuccessfullyStops() {
         ablyPublisher.closeResultCompletionHandler = { completion in
             completion?(.success)
         }
         locationService.stopRecordingLocationCallback = { completion in
-            completion(.success(LocationHistoryData(events: [])))
+            let fileManager = FileManager.default
+            let temporaryDirectoryURL = fileManager.temporaryDirectory
+            let fileURL = temporaryDirectoryURL.appendingPathComponent(UUID().uuidString)
+            do {
+                try Data().write(to: fileURL)
+            } catch {
+                XCTFail("Failed to write temporary file: \(error)")
+            }
+            
+            let recordingResult = LocationRecordingResult(
+                locationHistoryData: LocationHistoryData(events: []),
+                rawHistoryFile: TemporaryFile(fileURL: fileURL, logHandler: nil)
+            )
+            
+            completion(.success(recordingResult))
         }
         
         let stopExpectation = expectation(description: "Publisher successfully stops")
@@ -463,9 +477,10 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         XCTAssertTrue(locationService.stopRecordingLocationCalled)
         XCTAssertTrue(delegate.publisherDidFinishRecordingLocationHistoryDataCalled)
+        XCTAssertTrue(delegate.publisherDidFinishRecordingRawMapboxDataToTemporaryFileCalled)
     }
     
-    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatDoesNotReturnALocationHistoryData_itDoesNotCallDidFinishRecordingLocationHistoryDataOnDelegate_butStillSuccessfullyStops() {
+    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatDoesNotReturnALocationRecordingResult_itDoesNotCallDidFinishRecordingLocationHistoryDataOnDelegate_andDoesNotCallDidFinishRecordingRawMapboxDataOnDelegate_butStillSuccessfullyStops() {
         ablyPublisher.closeResultCompletionHandler = { completion in
             completion?(.success)
         }
@@ -487,9 +502,10 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         XCTAssertTrue(locationService.stopRecordingLocationCalled)
         XCTAssertFalse(delegate.publisherDidFinishRecordingLocationHistoryDataCalled)
+        XCTAssertFalse(delegate.publisherDidFinishRecordingRawMapboxDataToTemporaryFileCalled)
     }
     
-    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatFails_itDoesNotCallDidFinishRecordingLocationHistoryDataOnDelegate_butStillSuccessfullyStops() {
+    func test_stop_callsStopRecordingLocationOnLocationService_andWhenThatFails_itDoesNotCallDidFinishRecordingLocationHistoryDataOnDelegate_andDoesNotCallDidFinishRecordingRawMapboxDataOnDelegate_butStillSuccessfullyStops() {
         ablyPublisher.closeResultCompletionHandler = { completion in
             completion?(.success)
         }
@@ -511,5 +527,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         XCTAssertTrue(locationService.stopRecordingLocationCalled)
         XCTAssertFalse(delegate.publisherDidFinishRecordingLocationHistoryDataCalled)
+        XCTAssertFalse(delegate.publisherDidFinishRecordingRawMapboxDataToTemporaryFileCalled)
     }
 }
