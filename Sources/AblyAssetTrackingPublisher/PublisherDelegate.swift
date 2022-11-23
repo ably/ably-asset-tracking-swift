@@ -47,4 +47,16 @@ public protocol PublisherDelegate: AnyObject {
         - trackables: a set of trackables that are currently present on the `sender`'s instance
     */
     func publisher(sender: Publisher, didChangeTrackables trackables: Set<Trackable>)
+    
+    /**
+     Called when the publisher has finished recording location history data, to expose the data that it recorded. The publisher will call this method after it receives the ``Publisher/stop(completion:)`` method call and before that method’s completion handler is called. It will only do so if at least one trackable was added to the publisher during its lifetime.
+     */
+    func publisher(sender: Publisher, didFinishRecordingLocationHistoryData locationHistoryData: LocationHistoryData)
+}
+
+public extension PublisherDelegate {
+    /**
+     Default implementation to make this method `optional`
+     */
+    func publisher(sender: Publisher, didFinishRecordingLocationHistoryData locationHistoryData: LocationHistoryData) {}
 }

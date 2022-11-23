@@ -4,6 +4,7 @@ import AblyAssetTrackingPublisher
 class ObservablePublisher: ObservableObject {
     private let publisher: AblyAssetTrackingPublisher.Publisher
     let configInfo: PublisherConfigInfo
+    let locationHistoryDataHandler: LocationHistoryDataHandlerProtocol?
     
     struct PublisherConfigInfo {
         var areRawLocationsEnabled: Bool
@@ -20,10 +21,11 @@ class ObservablePublisher: ObservableObject {
     @Published private(set) var lastError: ErrorInformation?
     
     // After initialising an ObservablePublisher instance, you need to manually set the publisher’s delegate to the created instance.
-    init(publisher: AblyAssetTrackingPublisher.Publisher, configInfo: PublisherConfigInfo) {
+    init(publisher: AblyAssetTrackingPublisher.Publisher, configInfo: PublisherConfigInfo, locationHistoryDataHandler: LocationHistoryDataHandlerProtocol? = nil) {
         self.publisher = publisher
         self.configInfo = configInfo
         self.routingProfile = publisher.routingProfile
+        self.locationHistoryDataHandler = locationHistoryDataHandler
     }
     
     func stop(completion: @escaping ResultHandler<Void>) {
@@ -79,5 +81,9 @@ extension ObservablePublisher: PublisherDelegate {
     
     func publisher(sender: AblyAssetTrackingPublisher.Publisher, didChangeTrackables trackables: Set<AblyAssetTrackingCore.Trackable>) {
         updateTrackables(latestReceived: trackables)
+    }
+    
+    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didFinishRecordingLocationHistoryData locationHistoryData: LocationHistoryData) {
+        locationHistoryDataHandler?.handleLocationHistoryData(locationHistoryData)
     }
 }

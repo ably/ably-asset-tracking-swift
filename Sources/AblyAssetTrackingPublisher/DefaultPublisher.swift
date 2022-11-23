@@ -211,6 +211,8 @@ extension DefaultPublisher {
                 self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
             case .enhancedLocationChanged(let event):
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
+            case .finishedRecordingLocationHistoryData(let event):
+                self.delegate?.publisher(sender: self, didFinishRecordingLocationHistoryData: event.locationHistoryData)
             }
         }
     }
@@ -261,6 +263,7 @@ extension DefaultPublisher {
         trackables.insert(event.trackable)
         //Start updating location only after the first trackable
         if (trackables.count == 1){
+            locationService.startRecordingLocation()
             locationService.startUpdatingLocation()
         }
         resolveResolution(trackable: event.trackable)
@@ -370,15 +373,30 @@ extension DefaultPublisher {
         }
 
         state = .stopping
-
-        //first stop updating location
-        locationService.stopUpdatingLocation()
-        ablyPublisher.close(presenceData: presenceData) { [weak self] result in
+        
+        self.locationService.stopUpdatingLocation()
+        
+        locationService.stopRecordingLocation() { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
             switch result {
-            case .success:
-                self?.enqueue(event: .ablyConnectionClosed(.init(resultHandler: event.resultHandler)))
             case .failure(let error):
-                Self.callback(error: error, handler: event.resultHandler)
+                self.logHandler?.error(message: "\(Self.self): Failed to stop recording location", error: error)
+            case .success(let locationHistoryData):
+                if let locationHistoryData = locationHistoryData {
+                    self.sendDelegateEvent(.finishedRecordingLocationHistoryData(.init(locationHistoryData: locationHistoryData)))
+                }
+            }
+                        
+            self.ablyPublisher.close(presenceData: self.presenceData) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.enqueue(event: .ablyConnectionClosed(.init(resultHandler: event.resultHandler)))
+                case .failure(let error):
+                    Self.callback(error: error, handler: event.resultHandler)
+                }
             }
         }
     }

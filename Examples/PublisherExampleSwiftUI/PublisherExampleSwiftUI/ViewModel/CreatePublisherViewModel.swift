@@ -9,14 +9,16 @@ class CreatePublisherViewModel: ObservableObject {
     
     private let s3Helper: S3Helper?
     private let logger: Logger
+    private let locationHistoryDataHandler: LocationHistoryDataHandlerProtocol?
     
     private var isS3Available: Bool {
         s3Helper != nil
     }
     
-    init(logger: Logger, s3Helper: S3Helper?) {
+    init(logger: Logger, s3Helper: S3Helper?, locationHistoryDataHandler: LocationHistoryDataHandlerProtocol?) {
         self.s3Helper = s3Helper
         self.logger = logger
+        self.locationHistoryDataHandler = locationHistoryDataHandler
     }
     
     @Published var areRawLocationsEnabled: Bool = SettingsModel.shared.areRawLocationsEnabled {
@@ -134,7 +136,7 @@ class CreatePublisherViewModel: ObservableObject {
         
         let configInfo = ObservablePublisher.PublisherConfigInfo(areRawLocationsEnabled: areRawLocationsEnabled, constantResolution: constantResolution)
         
-        let observablePublisher = ObservablePublisher(publisher: publisher, configInfo: configInfo)
+        let observablePublisher = ObservablePublisher(publisher: publisher, configInfo: configInfo, locationHistoryDataHandler: locationHistoryDataHandler)
         publisher.delegate = observablePublisher
         
         return observablePublisher

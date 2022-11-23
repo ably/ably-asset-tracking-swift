@@ -20,6 +20,7 @@
 		0CFCA307289131AB00A1A6B5 /* UserDefaults+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */; };
 		0CFCA308289131AB00A1A6B5 /* CloseKeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */; };
 		0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */; };
+		21036A832911A5B900704723 /* LocationHistoryUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21036A822911A5B900704723 /* LocationHistoryUploader.swift */; };
 		2108B75329097498002778CA /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75229097498002778CA /* AWSCognitoAuthPlugin */; };
 		2108B75529097498002778CA /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75429097498002778CA /* AWSS3StoragePlugin */; };
 		2108B75729097498002778CA /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 2108B75629097498002778CA /* Amplify */; };
@@ -28,11 +29,15 @@
 		2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */; };
 		2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8202908276F00958144 /* SelectDestinationView.swift */; };
 		2144B8252908278B00958144 /* DestinationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8242908278B00958144 /* DestinationMapView.swift */; };
+		21AE71A4290B1D6500427F04 /* UploadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AE71A3290B1D6500427F04 /* UploadsView.swift */; };
+		21AE71A6290B27BE00427F04 /* UploadsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AE71A5290B27BE00427F04 /* UploadsManager.swift */; };
 		21B6446B28FDC68C00156F94 /* AddTrackableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */; };
 		21B6B2A829097EAF001E2FB7 /* LocationSourceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2A729097EAF001E2FB7 /* LocationSourceOption.swift */; };
 		21B6B2AA29097FEC001E2FB7 /* S3FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2A929097FEB001E2FB7 /* S3FilesView.swift */; };
 		21B6B2AC2909800B001E2FB7 /* S3FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6B2AB2909800B001E2FB7 /* S3FilesViewModel.swift */; };
 		21BB909429119015005C78AF /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB909329119015005C78AF /* UploadRequest.swift */; };
+		21BB909729119067005C78AF /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB909629119067005C78AF /* Upload.swift */; };
+		21BB909A291190E7005C78AF /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB9099291190E7005C78AF /* UploadView.swift */; };
 		21CF8DFE28F8566D005E7CE6 /* ObservablePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */; };
 		21CF8E0328F875DF005E7CE6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0228F875DF005E7CE6 /* SettingsView.swift */; };
 		21CF8E0528F875E8005E7CE6 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF8E0428F875E8005E7CE6 /* SettingsViewModel.swift */; };
@@ -69,16 +74,21 @@
 		0CFCA305289131AB00A1A6B5 /* UserDefaults+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Codable.swift"; sourceTree = "<group>"; };
 		0CFCA306289131AB00A1A6B5 /* CloseKeyboardHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseKeyboardHelper.swift; sourceTree = "<group>"; };
 		0CFCA3092891325700A1A6B5 /* AddTrackableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackableView.swift; sourceTree = "<group>"; };
+		21036A822911A5B900704723 /* LocationHistoryUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHistoryUploader.swift; sourceTree = "<group>"; };
 		2108B758290974B8002778CA /* S3Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3Helper.swift; sourceTree = "<group>"; };
 		2108B75A290975BC002778CA /* Optional Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Optional Resources"; sourceTree = "<group>"; };
 		2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+ErrorInformation.swift"; sourceTree = "<group>"; };
 		2144B8202908276F00958144 /* SelectDestinationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDestinationView.swift; sourceTree = "<group>"; };
 		2144B8242908278B00958144 /* DestinationMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationMapView.swift; sourceTree = "<group>"; };
+		21AE71A3290B1D6500427F04 /* UploadsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadsView.swift; sourceTree = "<group>"; };
+		21AE71A5290B27BE00427F04 /* UploadsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadsManager.swift; sourceTree = "<group>"; };
 		21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackableViewModel.swift; sourceTree = "<group>"; };
 		21B6B2A729097EAF001E2FB7 /* LocationSourceOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSourceOption.swift; sourceTree = "<group>"; };
 		21B6B2A929097FEB001E2FB7 /* S3FilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3FilesView.swift; sourceTree = "<group>"; };
 		21B6B2AB2909800B001E2FB7 /* S3FilesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3FilesViewModel.swift; sourceTree = "<group>"; };
 		21BB909329119015005C78AF /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
+		21BB909629119067005C78AF /* Upload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		21BB9099291190E7005C78AF /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		21CF8DFD28F8566D005E7CE6 /* ObservablePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservablePublisher.swift; sourceTree = "<group>"; };
 		21CF8E0228F875DF005E7CE6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		21CF8E0428F875E8005E7CE6 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -143,7 +153,19 @@
 		21BB909529119053005C78AF /* Uploads */ = {
 			isa = PBXGroup;
 			children = (
+				21AE71A5290B27BE00427F04 /* UploadsManager.swift */,
 				21BB909329119015005C78AF /* UploadRequest.swift */,
+				21BB909629119067005C78AF /* Upload.swift */,
+				21036A822911A5B900704723 /* LocationHistoryUploader.swift */,
+			);
+			path = Uploads;
+			sourceTree = "<group>";
+		};
+		21BB9098291190C8005C78AF /* Uploads */ = {
+			isa = PBXGroup;
+			children = (
+				21AE71A3290B1D6500427F04 /* UploadsView.swift */,
+				21BB9099291190E7005C78AF /* UploadView.swift */,
 			);
 			path = Uploads;
 			sourceTree = "<group>";
@@ -257,6 +279,7 @@
 		D544FB202771D8290015925C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				21BB9098291190C8005C78AF /* Uploads */,
 				21B6B2A929097FEB001E2FB7 /* S3FilesView.swift */,
 				2144B8202908276F00958144 /* SelectDestinationView.swift */,
 				21F1993128FF40E6004FE626 /* PublisherDetailsView.swift */,
@@ -399,12 +422,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21BB909729119067005C78AF /* Upload.swift in Sources */,
 				D5DBAF7027746105008B8DED /* StackedText.swift in Sources */,
 				0CFCA3042891315700A1A6B5 /* SettingsModel.swift in Sources */,
+				21036A832911A5B900704723 /* LocationHistoryUploader.swift in Sources */,
 				21F1993228FF40E6004FE626 /* PublisherDetailsView.swift in Sources */,
 				0CC893BA28FEBBB3004F7B9A /* VehicleProfile+description.swift in Sources */,
 				2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */,
 				D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */,
+				21AE71A4290B1D6500427F04 /* UploadsView.swift in Sources */,
 				D5DBAF7527748116008B8DED /* RoutingProfile.swift in Sources */,
 				2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */,
 				21B6B2AA29097FEC001E2FB7 /* S3FilesView.swift in Sources */,
@@ -417,8 +443,10 @@
 				0CFCA2FD289130E700A1A6B5 /* ListItem.swift in Sources */,
 				21E6EBF828F97B200057AC7C /* Map.swift in Sources */,
 				0CFCA30A2891325700A1A6B5 /* AddTrackableView.swift in Sources */,
+				21AE71A6290B27BE00427F04 /* UploadsManager.swift in Sources */,
 				21CF8DFE28F8566D005E7CE6 /* ObservablePublisher.swift in Sources */,
 				0CFCA307289131AB00A1A6B5 /* UserDefaults+Codable.swift in Sources */,
+				21BB909A291190E7005C78AF /* UploadView.swift in Sources */,
 				2144B8252908278B00958144 /* DestinationMapView.swift in Sources */,
 				21F1992F28FF40B2004FE626 /* DummyPublisher.swift in Sources */,
 				0CFCA2FF289130E700A1A6B5 /* TitleValueListItem.swift in Sources */,

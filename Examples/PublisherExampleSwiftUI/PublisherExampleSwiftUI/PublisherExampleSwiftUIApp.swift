@@ -3,18 +3,33 @@ import Logging
 
 @main
 struct PublisherExampleSwiftUIApp: App {
-    @State private var logger: Logger = {
-        var logger = Logger(label: "com.ably.PublisherExampleSwiftUI")
-        logger.logLevel = .info
-        return logger
-    }()
-    @State private var s3Helper = try? S3Helper()
+    @State private var logger: Logger
+    @State private var s3Helper: S3Helper?
+    @StateObject private var uploadsManager: UploadsManager
+    @State private var locationHistoryDataHandler: LocationHistoryDataHandlerProtocol
+    
+    init() {
+        let logger: Logger = {
+            var logger = Logger(label: "com.ably.PublisherExampleSwiftUI")
+            logger.logLevel = .info
+            return logger
+        }()
+        self._logger = State(wrappedValue: logger)
+        
+        let s3Helper = try? S3Helper()
+        self._s3Helper = State(wrappedValue: s3Helper)
+        
+        let uploadsManager = UploadsManager(s3Helper: s3Helper, logger: logger)
+        _uploadsManager = StateObject(wrappedValue: uploadsManager)
+        
+        self._locationHistoryDataHandler = State(wrappedValue: LocationHistoryDataUploader(uploadsManager: uploadsManager))
+    }
     
     var body: some Scene {
         WindowGroup {
             TabView {
                 NavigationView {
-                    CreatePublisherView(logger: logger, s3Helper: s3Helper)
+                    CreatePublisherView(logger: logger, s3Helper: s3Helper, locationHistoryDataHandler: locationHistoryDataHandler)
                 }
                 .tabItem {
                     Label("Publisher", systemImage: "car")
@@ -28,7 +43,7 @@ struct PublisherExampleSwiftUIApp: App {
                 */
                 .navigationViewStyle(.stack)
                 NavigationView {
-                    SettingsView()
+                    SettingsView(uploads: uploadsManager.uploads)
                 }
                 // Same comment as above
                 .navigationViewStyle(.stack)
