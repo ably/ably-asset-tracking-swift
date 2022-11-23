@@ -1,8 +1,19 @@
 import Foundation
 import AblyAssetTrackingPublisher
 
-struct UploadRequest {
-    var data: LocationHistoryData
+struct UploadRequest: Codable {
+    enum UploadType: CustomStringConvertible, Codable {
+        case locationHistoryData(archiveVersion: String)
+        
+        var description: String {
+            switch self {
+            case .locationHistoryData:
+                return "Location history data"
+            }
+        }
+    }
+    
+    var type: UploadType
     var generatedAt: Date
     
     private static let dateFormatter: DateFormatter = {
@@ -14,7 +25,10 @@ struct UploadRequest {
     }()
     
     var filename: String {
-        let formattedDate = Self.dateFormatter.string(from: generatedAt)
-        return "\(LocationHistoryData.archiveVersion)_\(formattedDate)"
+        switch type {
+        case let .locationHistoryData(archiveVersion):
+            let formattedDate = Self.dateFormatter.string(from: generatedAt)
+            return "\(archiveVersion)_\(formattedDate)"
+        }
     }
 }

@@ -56,7 +56,7 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        let upload = Upload(request: .init(data: .init(events: []), generatedAt: Date()), status: .uploading)
+        let upload = Upload(id: UUID(), request: .init(type: .locationHistoryData(archiveVersion: ""), generatedAt: Date()), status: .uploading)
         SettingsView(uploads: [upload])
     }
 }

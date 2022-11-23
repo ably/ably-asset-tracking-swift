@@ -14,7 +14,7 @@ struct UploadsView: View {
 struct UploadsView_Previews: PreviewProvider {
     static var previews: some View {
         let uploads = (1...10).map { _ in
-            Upload(request: .init(data: .init(events: []), generatedAt: Date()), status: .uploading)
+            Upload(id: UUID(), request: .init(type: .locationHistoryData(archiveVersion: ""), generatedAt: Date()), status: .uploading)
         }
         
         NavigationView {
