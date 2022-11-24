@@ -1,19 +1,19 @@
 import Foundation
 
-struct Upload: Identifiable {
-    var id = UUID()
+struct Upload: Identifiable, Codable {
+    var id: UUID
     var request: UploadRequest
     
-    enum Status: CustomStringConvertible {
+    enum Status: CustomStringConvertible, Codable {
         case uploading
         case uploaded
-        case failed(Error)
+        case failed(String)
         
         var description: String {
             switch self {
             case .uploading: return "Uploading"
             case .uploaded: return "Uploaded"
-            case .failed(let error): return "Failed: \(error.localizedDescription)"
+            case .failed(let errorDescription): return "Failed: \(errorDescription)"
             }
         }
     }

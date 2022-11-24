@@ -43,7 +43,9 @@ struct PublisherExampleSwiftUIApp: App {
                 */
                 .navigationViewStyle(.stack)
                 NavigationView {
-                    SettingsView(uploads: uploadsManager.uploads)
+                    SettingsView(uploads: uploadsManager.uploads, retry: { upload in
+                        uploadsManager.retry(upload)
+                    })
                 }
                 // Same comment as above
                 .navigationViewStyle(.stack)
