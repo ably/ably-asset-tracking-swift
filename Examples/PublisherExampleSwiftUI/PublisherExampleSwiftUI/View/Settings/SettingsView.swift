@@ -3,6 +3,8 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @State var showDefaultAccuracies = false
+    var uploads: [Upload]
+    var retry: (Upload) -> Void
     
     var body: some View {
         List {
@@ -34,13 +36,21 @@ struct SettingsView: View {
                 Toggle(isOn: $viewModel.useMapboxMap) {
                     Text("Use Mapbox map")
                 }
+                
+                NavigationLink("Uploads") {
+                    UploadsView(uploads: uploads, retry: { upload in
+                        retry(upload)
+                    })
+                }
             } header: {
                 Text("Other settings")
             }
         }
         .listStyle(.grouped)
         .navigationBarTitle("Settings")
-        .resignKeyboardOnTapGesture()
+        // Had to remove this because it stops the "Create publisher" button from doing anything.
+        // See https://github.com/ably/ably-asset-tracking-swift/issues/421
+        // .resignKeyboardOnTapGesture()
         .onDisappear {
             viewModel.save()
         }
@@ -49,6 +59,7 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        let upload = Upload(id: UUID(), request: .init(type: .locationHistoryData(archiveVersion: ""), generatedAt: Date()), status: .uploading)
+        SettingsView(uploads: [upload]) { _ in }
     }
 }

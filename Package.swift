@@ -23,8 +23,9 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", from: "2.8.0"),
-        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.16")
+        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", from: "2.9.0"),
+        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.17"),
+        .package(url: "https://github.com/mxcl/Version", from: "2.0.1")
     ],
     targets: [
         .target(
@@ -41,6 +42,7 @@ let package = Package(
                 "AblyAssetTrackingInternal",
                 .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "MapboxNavigation", package: "MapboxNavigation"),
+                .product(name: "Version", package: "Version")
             ]),
         .target(
             name: "AblyAssetTrackingInternal",
@@ -75,7 +77,8 @@ let package = Package(
             name: "PublisherTests",
             dependencies: [
                 "AblyAssetTrackingPublisher"
-            ]),
+            ],
+            resources: [.copy("common")]),
         .testTarget(
             name: "InternalTests",
             dependencies: [

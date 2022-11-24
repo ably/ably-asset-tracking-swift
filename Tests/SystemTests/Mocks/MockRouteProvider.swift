@@ -14,13 +14,4 @@ class MockRouteProvider: RouteProvider{
         getRouteParamRoutingProfile = routingProfile
         getRouteParamResultHandler = completion
     }
-    
-    var changeRoutingProfileCalled: Bool = false
-    var changeRoutingProfileParamRoutingProfile: RoutingProfile?
-    var changeRoutingProfileParamResultHandler: ResultHandler<Route>?
-    func changeRoutingProfile(to routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
-        changeRoutingProfileCalled = true
-        changeRoutingProfileParamRoutingProfile = routingProfile
-        changeRoutingProfileParamResultHandler = completion
-    }
 }

@@ -13,6 +13,7 @@ class DefaultAblyTests: XCTestCase {
         }
         
         let channel = AblySDKRealtimeChannelMock()
+        channel.state = .initialized
         channel.presence = presence
         
         let channels = AblySDKRealtimeChannelsMock()
@@ -56,6 +57,7 @@ class DefaultAblyTests: XCTestCase {
         }
         
         let channel = AblySDKRealtimeChannelMock()
+        channel.state = .initialized
         channel.presence = presence
         
         let channels = AblySDKRealtimeChannelsMock()
@@ -95,6 +97,7 @@ class DefaultAblyTests: XCTestCase {
         }
         
         let channel = AblySDKRealtimeChannelMock()
+        channel.state = .initialized
         channel.presence = presence
         
         let channels = AblySDKRealtimeChannelsMock()
@@ -134,6 +137,7 @@ class DefaultAblyTests: XCTestCase {
         }
         
         let channel = AblySDKRealtimeChannelMock()
+        channel.state = .initialized
         channel.presence = presence
         
         channel.attachClosure = { callback in
@@ -191,6 +195,7 @@ class DefaultAblyTests: XCTestCase {
         }
         
         let channel = AblySDKRealtimeChannelMock()
+        channel.state = .initialized
         channel.presence = presence
         
         channel.attachClosure = { callback in
@@ -242,6 +247,7 @@ class DefaultAblyTests: XCTestCase {
         }
         
         let channel = AblySDKRealtimeChannelMock()
+        channel.state = .initialized
         channel.presence = presence
         
         channel.attachClosure = { callback in
@@ -293,6 +299,7 @@ class DefaultAblyTests: XCTestCase {
         }
         
         let channel = AblySDKRealtimeChannelMock()
+        channel.state = .initialized
         channel.presence = presence
         
         let channels = AblySDKRealtimeChannelsMock()
@@ -332,6 +339,58 @@ class DefaultAblyTests: XCTestCase {
         XCTAssertEqual(auth.authorizeCallsCount, 1)
     }
     
+    func test_connect_whenChannelIsInDetachedState_itAttachesToTheChannelBeforeCallingPresenceEnter() {
+        test_connect_whenChannelIsInThisState_itAttachesToTheChannelBeforeCallingPresenceEnter(.detached)
+    }
+    
+    func test_connect_whenChannelIsInFailedState_itAttachesToTheChannelBeforeCallingPresenceEnter() {
+        test_connect_whenChannelIsInThisState_itAttachesToTheChannelBeforeCallingPresenceEnter(.failed)
+    }
+    
+    func test_connect_whenChannelIsInThisState_itAttachesToTheChannelBeforeCallingPresenceEnter(_ state: ARTRealtimeChannelState) {
+        let channel = AblySDKRealtimeChannelMock()
+        channel.state = state
+        var attachCompleted = false
+        channel.attachClosure = { callback in
+            attachCompleted = true
+            callback?(nil)
+        }
+        
+        let presence = AblySDKRealtimePresenceMock()
+        let presenceEnterExpectation = expectation(description: "Presence enter called")
+        presence.enterCallbackClosure = { data, callback in
+            XCTAssertTrue(attachCompleted, "Expected channel.attach to have completed before presence enter called")
+            presenceEnterExpectation.fulfill()
+            callback?(nil)
+        }
+        channel.presence = presence
+        
+        let channels = AblySDKRealtimeChannelsMock()
+        channels.getChannelForTrackingIdOptionsReturnValue = channel
+        
+        let realtime = AblySDKRealtimeMock()
+        realtime.channels = channels
+        
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "")
+        
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        
+        let connectSuccessExpectation = expectation(description: "DefaultAbly connects successfully")
+        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+            switch result {
+            case .success:
+                connectSuccessExpectation.fulfill()
+            case let .failure(error):
+                XCTFail("Unexpected failure in ably.connect: \(error)")
+            }
+        }
+                
+        waitForExpectations(timeout: 10)
+    }
+    
     func test_subscribeForRawEvents_whenItReceivesMalformedLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError() {
         let data = "{\"something\": \"somethingElse\"}"
         test_subscribeForRawEvents_whenItReceivesThisLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError(data: data)
@@ -348,6 +407,7 @@ class DefaultAblyTests: XCTestCase {
         presence.enterCallbackClosure = { _, callback in callback?(nil) }
         
         let channel = AblySDKRealtimeChannelMock()
+        channel.state = .initialized
         
         channel.subscribeCallbackClosure = { _, callback in
             let message = ARTMessage(name: nil, data: data)

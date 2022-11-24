@@ -551,33 +551,93 @@ class DefaultPublisherTests: XCTestCase {
     // MARK: stop
     
     // MARK: ChangeRoutingProfile
-    func testChangeRoutingProfile_called() {
+    func testChangeRoutingProfile_withNoActiveTrackable_updatesRoutingProfile_andCallsCallbackWithSuccess() {
+        let expectation = expectation(description: "changeRoutingProfile completes successfully")
+        
         // Given: Default RoutingProfile set to .driving
         publisher.changeRoutingProfile(profile: .cycling) { result in
             switch result {
             case .success:
-                XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
-                XCTAssertEqual(self.routeProvider.changeRoutingProfileParamRoutingProfile, .cycling)
-            case .failure:
-                XCTFail("Failure callback shouldn't be called")
+                XCTAssertFalse(self.routeProvider.getRouteCalled)
+                XCTAssertEqual(self.publisher.routingProfile, .cycling)
+                expectation.fulfill()
+            case let .failure(error):
+                XCTFail("changeRoutingProfile failed with unexpected error: \(error)")
             }
         }
+        
+        waitForExpectations(timeout: 10)
     }
     
-    func testChangeRoutingProfile_shouldCallGetRouteForDestination() {
-        // Given: Default destination set to:
-        let expectedDestination = LocationCoordinate(latitude: 3.1415, longitude: 2.7182)
+    func testChangeRoutingProfile_withActiveTrackableWithoutDestination_updatesRoutingProfile_andCallsCallbackWithSuccess() {
+        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+
+        let trackExpectation = expectation(description: "track completes successfully")
         
+        publisher.track(trackable: .init(id: UUID().uuidString)) { result in
+            switch result {
+            case .success:
+                trackExpectation.fulfill()
+            case let .failure(error):
+                XCTFail("changeRoutingProfile failed with unexpected error: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+        
+        let changeRoutingProfileExpectation = expectation(description: "changeRoutingProfile completes successfully")
+        
+        // Given: Default RoutingProfile set to .driving
         publisher.changeRoutingProfile(profile: .cycling) { result in
             switch result {
             case .success:
-                XCTAssertTrue(self.routeProvider.changeRoutingProfileCalled)
-                XCTAssertTrue(self.routeProvider.getRouteCalled)
-                XCTAssertEqual(self.routeProvider.getRouteParamDestination?.toLocationCoordinate(), expectedDestination)
+                XCTAssertFalse(self.routeProvider.getRouteCalled)
+                XCTAssertEqual(self.publisher.routingProfile, .cycling)
+                changeRoutingProfileExpectation.fulfill()
             case .failure:
                 XCTFail("Failure callback shouldn't be called")
             }
         }
+        
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testChangeRoutingProfile_withActiveTrackableWithDestination_callsGetRouteOnRouteProvider_andWhenThatSucceeds_itUpdatesRoutingProfile_andCallsCallbackWithSuccess() {
+        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        routeProvider.getRouteBody = { handler in handler(.success(.init(legs: [], shape: nil, distance: .infinity, expectedTravelTime: 0))) }
+
+        let trackExpectation = expectation(description: "track completes successfully")
+        
+        let destination = LocationCoordinate(latitude: 3.1415, longitude: 2.7182)
+        
+        publisher.track(trackable: .init(id: UUID().uuidString, destination: destination)) { result in
+            switch result {
+            case .success:
+                trackExpectation.fulfill()
+            case let .failure(error):
+                XCTFail("track failed with unexpected error: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+        
+        let changeRoutingProfileExpectation = expectation(description: "changeRoutingProfile completes successfully")
+        
+        // Given: Default RoutingProfile set to .driving
+        publisher.changeRoutingProfile(profile: .cycling) { result in
+            switch result {
+            case .success:
+                XCTAssertTrue(self.routeProvider.getRouteCalled)
+                XCTAssertEqual(self.routeProvider.getRouteParamDestination, destination.toCoreLocationCoordinate2d())
+                XCTAssertEqual(self.routeProvider.getRouteParamRoutingProfile, .cycling)
+                XCTAssertEqual(self.publisher.routingProfile, .cycling)
+                changeRoutingProfileExpectation.fulfill()
+            case .failure(let error):
+                XCTFail("changeRoutingProfile failed with unexpected error: \(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
     }
     
     func test_closeConnection_success() {
@@ -835,6 +895,7 @@ class DefaultPublisherTests: XCTestCase {
     func testStopEventCauseImpossibilityOfEnqueueOtherEvents() {
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.closeResultCompletionHandler = { completion in completion?(.success)}
+        locationService.stopRecordingLocationCallback = { completion in completion(.success(nil)) }
         
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,

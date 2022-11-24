@@ -68,6 +68,28 @@ public class DefaultAbly: AblyCommon {
         
         let channel = client.channels.getChannelFor(trackingId: trackableId, options: options)
         
+        if [.detached, .failed].contains(channel.state) {
+            logHandler?.debug(message: "\(String(describing: self.self)): Channel for trackable \(trackableId) is in state \(channel.state); attaching", error: nil)
+            channel.attach { [weak self] error in
+                guard let self = self else { return }
+                if let error = error {
+                    self.logHandler?.error(message: "\(String(describing: self.self)): Failed to attach to channel for trackable \(trackableId)", error: error)
+                    completion(.failure(error.toErrorInformation()))
+                    return
+                }
+                self.enterPresence(trackableId: trackableId, presenceData: presenceData, channel: channel, completion: completion)
+            }
+        } else {
+            enterPresence(trackableId: trackableId, presenceData: presenceData, channel: channel, completion: completion)
+        }
+    }
+    
+    private func enterPresence(
+        trackableId: String,
+        presenceData: PresenceData,
+        channel: AblySDKRealtimeChannel,
+        completion: @escaping ResultHandler<Void>
+    ) {
         let presenceDataJSON = self.presenceDataJSON(data: presenceData)
                 
         channel.presence.enter(presenceDataJSON) { [weak self] error in

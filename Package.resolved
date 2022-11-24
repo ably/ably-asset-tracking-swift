@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/ably/ably-cocoa",
         "state": {
           "branch": null,
-          "revision": "d0cd1603716e02d50c534400fded2120da31387f",
-          "version": "1.2.16"
+          "revision": "11b74cc94182833694649753ec95332b223e1c6a",
+          "version": "1.2.17"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-directions-swift.git",
         "state": {
           "branch": null,
-          "revision": "2bbd4e385ff7b3edd5022212c0f77d2474fc08c8",
-          "version": "2.7.0"
+          "revision": "2f91fad31087e6c66bd7cc65f31095babb038493",
+          "version": "2.8.0"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-ios.git",
         "state": {
           "branch": null,
-          "revision": "b1bccccc17bfb3bbbf54397c4e94e405752852da",
-          "version": "2.8.1"
+          "revision": "63a7d36f241c71799521bd0a6e12838619b38207",
+          "version": "2.9.0"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/mapbox/mapbox-navigation-native-ios.git",
         "state": {
           "branch": null,
-          "revision": "6d15299dc45e4b2ca956247b27fc31528a1c95f0",
-          "version": "115.0.1"
+          "revision": "c29035bf1f77029a71bb8f8973da4e60d2381d38",
+          "version": "119.0.1"
         }
       },
       {
@@ -132,8 +132,17 @@
         "repositoryURL": "https://github.com/mapbox/turf-swift.git",
         "state": {
           "branch": null,
-          "revision": "dbc07b0a298d642414d3abec59c9eaba1fb3367f",
-          "version": "2.5.0"
+          "revision": "87b5b37108ba9f37f0885b586d8f6355d8240dd8",
+          "version": "2.6.1"
+        }
+      },
+      {
+        "package": "Version",
+        "repositoryURL": "https://github.com/mxcl/Version",
+        "state": {
+          "branch": null,
+          "revision": "1fe824b80d89201652e7eca7c9252269a1d85e25",
+          "version": "2.0.1"
         }
       }
     ]

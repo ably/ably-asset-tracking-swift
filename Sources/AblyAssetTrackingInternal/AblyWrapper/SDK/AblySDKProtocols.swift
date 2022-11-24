@@ -29,6 +29,7 @@ public protocol AblySDKRealtimeChannel {
     @discardableResult func on(_ callback: @escaping (ARTChannelStateChange) -> ()) -> AblySDKEventListener
     func publish(_ messages: [ARTMessage], callback: ARTCallback?)
     func attach(_ callback: ARTCallback?)
+    var state: ARTRealtimeChannelState { get }
 }
 
 //sourcery: AutoMockable
