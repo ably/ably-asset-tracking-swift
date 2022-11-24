@@ -1,5 +1,6 @@
 import Combine
 import AblyAssetTrackingPublisher
+import Foundation
 
 class ObservablePublisher: ObservableObject {
     private let publisher: AblyAssetTrackingPublisher.Publisher
@@ -89,5 +90,10 @@ extension ObservablePublisher: PublisherDelegate {
     
     func publisher(sender: AblyAssetTrackingPublisher.Publisher, didFinishRecordingLocationHistoryData locationHistoryData: LocationHistoryData) {
         locationHistoryDataHandler?.handleLocationHistoryData(locationHistoryData)
+    }
+    
+    // As mentioned in the documentation for this delegate method, this is an experimental Ably-only API that we are using to debug the Asset Tracking (in this case, we upload the raw location history data to S3 for analysis by the Mapbox team).
+    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didFinishRecordingRawMapboxDataToTemporaryFile temporaryFile: TemporaryFile) {
+        locationHistoryDataHandler?.handleRawMapboxData(inTemporaryFile: temporaryFile)
     }
 }

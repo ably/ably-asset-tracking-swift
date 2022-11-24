@@ -4,11 +4,14 @@ import AblyAssetTrackingPublisher
 struct UploadRequest: Codable {
     enum UploadType: CustomStringConvertible, Codable {
         case locationHistoryData(archiveVersion: String)
+        case rawMapboxHistory(originalFilename: String)
         
         var description: String {
             switch self {
             case .locationHistoryData:
                 return "Location history data"
+            case .rawMapboxHistory:
+                return "Raw Mapbox history"
             }
         }
     }
@@ -25,10 +28,13 @@ struct UploadRequest: Codable {
     }()
     
     var filename: String {
+        let formattedDate = Self.dateFormatter.string(from: generatedAt)
+
         switch type {
         case let .locationHistoryData(archiveVersion):
-            let formattedDate = Self.dateFormatter.string(from: generatedAt)
             return "\(archiveVersion)_\(formattedDate)"
+        case let .rawMapboxHistory(originalFilename):
+            return "RawMapboxHistory/\(formattedDate)_\(originalFilename)"
         }
     }
 }
