@@ -31,6 +31,7 @@ class UploadsManager: ObservableObject {
             } catch {
                 logger.error("Upload \(upload.id) of location history data failed: \(error.localizedDescription)")
                 updateStatus(forUploadWithId: upload.id, status: .failed(error))
+                return
             }
             
             logger.info("Upload \(upload.id) of location history data succeeded.")
