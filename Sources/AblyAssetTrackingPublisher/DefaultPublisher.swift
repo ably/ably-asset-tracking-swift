@@ -213,6 +213,8 @@ extension DefaultPublisher {
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
             case .finishedRecordingLocationHistoryData(let event):
                 self.delegate?.publisher(sender: self, didFinishRecordingLocationHistoryData: event.locationHistoryData)
+            case .finishedRecordingRawMapboxData(let event):
+                self.delegate?.publisher(sender: self, didFinishRecordingRawMapboxDataToTemporaryFile: event.temporaryFile)
             }
         }
     }
@@ -384,9 +386,10 @@ extension DefaultPublisher {
             switch result {
             case .failure(let error):
                 self.logHandler?.error(message: "\(Self.self): Failed to stop recording location", error: error)
-            case .success(let locationHistoryData):
-                if let locationHistoryData = locationHistoryData {
-                    self.sendDelegateEvent(.finishedRecordingLocationHistoryData(.init(locationHistoryData: locationHistoryData)))
+            case .success(let locationRecordingResult):
+                if let locationRecordingResult = locationRecordingResult {
+                    self.sendDelegateEvent(.finishedRecordingLocationHistoryData(.init(locationHistoryData: locationRecordingResult.locationHistoryData)))
+                    self.sendDelegateEvent(.finishedRecordingRawMapboxData(.init(temporaryFile: locationRecordingResult.rawHistoryFile)))
                 }
             }
                         

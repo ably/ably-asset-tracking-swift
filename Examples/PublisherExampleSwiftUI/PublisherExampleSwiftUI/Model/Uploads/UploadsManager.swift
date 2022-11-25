@@ -102,9 +102,46 @@ class UploadsManager: ObservableObject {
         performUpload(upload)
     }
     
+    @MainActor func uploadRawMapboxData(inTemporaryFile temporaryFile: TemporaryFile) {
+        guard s3Helper != nil else {
+            logger.info("Skipping upload of raw Mapbox data since S3 is not configured")
+            return
+        }
+        
+        let uploadId = UUID()
+        let dataFileURL: URL
+        do {
+            let storageDirectoryURL = try Storage.storageDirectoryURL(forUploadId: uploadId.uuidString)
+            try Storage.ensureStorageDirectoryExists(atURL: storageDirectoryURL)
+            dataFileURL = Storage.dataURL(forStorageDirectoryURL: storageDirectoryURL)
+            
+            try temporaryFile.stayAlive {
+                try FileManager.default.copyItem(at: temporaryFile.fileURL, to: dataFileURL)
+            }
+            logger.debug("Copied Mapbox raw history file to file: \(dataFileURL.path)")
+        } catch {
+            logger.error("Failed to copy Mapbox raw history file: \(error)")
+            return
+        }
+        
+        let request = UploadRequest(type: .rawMapboxHistory(originalFilename: temporaryFile.fileURL.lastPathComponent), generatedAt: Date())
+        
+        let upload = Upload(id: uploadId, request: request, status: .uploading)
+        logger.info("Starting upload \(upload.id) of raw Mapbox data")
+        uploads.insert(upload, at: 0)
+        do {
+            try saveUpload(upload)
+        } catch {
+            logger.error("Failed to save upload \(upload.id): \(error)")
+        }
+        
+        performUpload(upload)
+    }
+
+    
     @MainActor func performUpload(_ upload: Upload) {
         guard let s3Helper = s3Helper else {
-            logger.info("Skipping upload of location history data since S3 is not configured")
+            logger.info("Skipping upload \(upload.id) since S3 is not configured")
             return
         }
         
@@ -114,12 +151,12 @@ class UploadsManager: ObservableObject {
                 let dataFileURL = Storage.dataURL(forStorageDirectoryURL: storageDirectoryURL)
                 try await s3Helper.upload(upload.request, dataFileURL: dataFileURL)
             } catch {
-                logger.error("Upload \(upload.id) of location history data failed: \(error.localizedDescription)")
+                logger.error("Upload \(upload.id) failed: \(error.localizedDescription)")
                 updateStatus(forUploadWithId: upload.id, status: .failed(error.localizedDescription))
                 return
             }
             
-            logger.info("Upload \(upload.id) of location history data succeeded.")
+            logger.info("Upload \(upload.id) succeeded.")
             updateStatus(forUploadWithId: upload.id, status: .uploaded)
         }
     }

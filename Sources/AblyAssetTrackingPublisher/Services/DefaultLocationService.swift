@@ -103,7 +103,7 @@ class DefaultLocationService: LocationService {
         PassiveLocationManager.startRecordingHistory()
     }
     
-    func stopRecordingLocation(completion: @escaping ResultHandler<LocationHistoryData?>) {
+    func stopRecordingLocation(completion: @escaping ResultHandler<LocationRecordingResult?>) {
         PassiveLocationManager.stopRecordingHistory { [weak self] historyFileURL in
             self?.workQueue.async { [weak self] in
                 guard let self = self else {
@@ -142,15 +142,8 @@ class DefaultLocationService: LocationService {
                     return
                 }
                 
-                do {
-                    try FileManager.default.removeItem(at: historyFileURL)
-                } catch {
-                    self.logHandler?.error(message: "\(Self.self): Failed to delete history file at \(historyFileURL)", error: error)
-                    completion(.failure(.init(error: error)))
-                    return
-                }
-                
-                completion(.success(locationHistoryData))
+                let rawHistoryTemporaryFile = TemporaryFile(fileURL: historyFileURL, logHandler: self.logHandler)
+                completion(.success(.init(locationHistoryData: locationHistoryData, rawHistoryFile: rawHistoryTemporaryFile)))
             }
         }
     }

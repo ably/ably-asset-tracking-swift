@@ -71,4 +71,15 @@ class MockPublisherDelegate: PublisherDelegate {
         publisherDidFinishRecordingLocationHistoryDataParamLocationHistoryData = locationHistoryData
         publisherDidFinishRecordingLocationHistoryDataCallback?()
     }
+    
+    var publisherDidFinishRecordingRawMapboxDataToTemporaryFileCalled: Bool = false
+    var publisherDidFinishRecordingRawMapboxDataToTemporaryFileParamSender: Publisher?
+    var publisherDidFinishRecordingRawMapboxDataToTemporaryFileParamTemporaryFile: TemporaryFile?
+    var publisherDidFinishRecordingRawMapboxDataToTemporaryFileCallback: (() -> Void)?
+    func publisher(sender: Publisher, didFinishRecordingRawMapboxDataToTemporaryFile temporaryFile: TemporaryFile) {
+        publisherDidFinishRecordingRawMapboxDataToTemporaryFileCalled = true
+        publisherDidFinishRecordingRawMapboxDataToTemporaryFileParamSender = sender
+        publisherDidFinishRecordingRawMapboxDataToTemporaryFileParamTemporaryFile = temporaryFile
+        publisherDidFinishRecordingRawMapboxDataToTemporaryFileCallback?()
+    }
 }
