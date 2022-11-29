@@ -113,4 +113,12 @@ class ConnectionConfigurationTests: XCTestCase {
         }
         XCTAssertTrue(authCallbackCalled)
     }
+    
+    func testRemainPresentForMillisecondsPassesToAblySDK() {
+        let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
+
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: 100)
+        
+        XCTAssertEqual(clientOptions.transportParams?["remainPresentFor"]?.stringValue, "100")
+    }
 }
