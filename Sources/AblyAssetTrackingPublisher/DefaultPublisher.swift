@@ -263,12 +263,18 @@ extension DefaultPublisher {
         ablyPublisher.subscribeForChannelStateChange(trackable: event.trackable)
         
         trackables.insert(event.trackable)
-        //Start updating location only after the first trackable
         if (trackables.count == 1){
+            //Start updating location only after the first trackable
             locationService.startRecordingLocation()
             locationService.startUpdatingLocation()
+        } else {
+            // We do this to increase the chances of receiving an enhanced location update for this trackable, so that the trackable can move into the online connection state as quickly as possible (see the hasSentAtLeastOneLocation check inside handleConnectionStateChange).
+            
+            // If we did not do this, then (since startUpdatingLocation has already been called on the location service) in the case of a slowly-moving or stationary device, the trackable would not move into the online connection state until the device had moved a distance deemed worthy (by the resolution policy) of a new location update.
+            locationService.requestLocationUpdate()
         }
         resolveResolution(trackable: event.trackable)
+
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
         event.resultHandler(.success)
     }

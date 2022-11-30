@@ -71,6 +71,16 @@ class DefaultLocationService: LocationService {
         locationManager.systemLocationManager.stopUpdatingLocation()
     }
     
+    func requestLocationUpdate() {
+        /*
+         From reading the ``CLLocationManager/startUpdatingLocation`` documentation, this seems to be the only programmatic way to provoke it into emitting a location event:
+        
+        > Calling this method several times in succession does not automatically result in new events being generated. Calling stopUpdatingLocation() in between, however, does cause a new initial event to be sent the next time you call this method.
+        */
+        locationManager.systemLocationManager.stopUpdatingLocation()
+        locationManager.systemLocationManager.startUpdatingLocation()
+    }
+    
     enum LocationHistoryTemporaryStorageConfiguration {
         private static let fileManager = FileManager.default
         

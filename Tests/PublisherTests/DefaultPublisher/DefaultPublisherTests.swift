@@ -286,6 +286,39 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertEqual(publisher.activeTrackable, trackable)
     }
     
+    func testAddSecondTrackable_callsRequestLocationUpdateOnLocationService() {
+        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 2
+        
+        // When tracking a trackable
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+        
+        // It should not yet have called requestLocationUpdate on the location service
+        XCTAssertFalse(locationService.requestLocationUpdateCalled)
+        
+        // And then adding another trackable
+        publisher.add(trackable: Trackable(id: "TestAddedTrackableId1")) { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Failure callback shouldn't be called")
+            }
+        }
+        wait(for: [expectation], timeout: 5.0)
+        
+        // It should call requestLocationUpdate on the location service
+        XCTAssertTrue(locationService.requestLocationUpdateCalled)
+    }
+    
     func testAdd_track_error() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }

@@ -38,4 +38,9 @@ class MockLocationService: LocationService {
         stopRecordingLocationParamCompletion = completion
         stopRecordingLocationCallback?(completion)
     }
+    
+    var requestLocationUpdateCalled = false
+    func requestLocationUpdate() {
+        requestLocationUpdateCalled = true
+    }
 }
