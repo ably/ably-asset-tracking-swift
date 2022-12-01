@@ -35,37 +35,37 @@ extension DefaultPublisher {
         
         struct TrackTrackableEvent {
             let trackable: Trackable
-            let resultHandler: ResultHandler<Void>
+            let resultHandler: Callback<Void>
         }
         
         struct AddTrackableEvent {
             let trackable: Trackable
-            let resultHandler: ResultHandler<Void>
+            let resultHandler: Callback<Void>
         }
         
         struct RemoveTrackableEvent {
             let trackable: Trackable
-            let resultHandler: ResultHandler<Bool>
+            let resultHandler: Callback<Bool>
         }
         
         struct ClearActiveTrackableEvent {
             let trackable: Trackable
-            let resultHandler: ResultHandler<Bool>
+            let resultHandler: Callback<Bool>
         }
         
         struct ClearRemovedTrackableMetadataEvent {
             let trackable: Trackable
-            let resultHandler: ResultHandler<Bool>
+            let resultHandler: Callback<Bool>
         }
         
         struct PresenceJoinedSuccessfullyEvent {
             let trackable: Trackable
-            let resultHandler: ResultHandler<Void>
+            let resultHandler: Callback<Void>
         }
         
         struct TrackableReadyToTrackEvent {
             let trackable: Trackable
-            let resultHandler: ResultHandler<Void>
+            let resultHandler: Callback<Void>
         }
         
         struct SetDestinationSuccessEvent {
@@ -108,7 +108,7 @@ extension DefaultPublisher {
         
         struct ChangeRoutingProfileEvent {
             let profile: RoutingProfile
-            let resultHandler: ResultHandler<Void>
+            let resultHandler: Callback<Void>
         }
         
         struct PresenceUpdateEvent {
@@ -119,11 +119,11 @@ extension DefaultPublisher {
         }
         
         struct StopEvent {
-            let resultHandler: ResultHandler<Void>
+            let resultHandler: Callback<Void>
         }
         
         struct AblyConnectionClosedEvent {
-            let resultHandler: ResultHandler<Void>
+            let resultHandler: Callback<Void>
         }
         
         struct AblyClientConnectionStateChangedEvent {
