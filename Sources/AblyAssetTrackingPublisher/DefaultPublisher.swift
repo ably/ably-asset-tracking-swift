@@ -127,29 +127,29 @@ class DefaultPublisher: Publisher {
         }
     }
 
-    func track(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
-        let callback = Callback(source: .publicAPI, resultHandler: completion)
-        enqueue(event: .trackTrackable(.init(trackable: trackable, resultHandler: callback)))
+    func track(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Void>) {
+        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        enqueue(event: .trackTrackable(.init(trackable: trackable, completion: completion)))
     }
 
-    func add(trackable: Trackable, completion: @escaping ResultHandler<Void>) {
-        let callback = Callback(source: .publicAPI, resultHandler: completion)
-        enqueue(event: .addTrackable(.init(trackable: trackable, resultHandler: callback)))
+    func add(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Void>) {
+        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        enqueue(event: .addTrackable(.init(trackable: trackable, completion: completion)))
     }
 
-    func remove(trackable: Trackable, completion: @escaping ResultHandler<Bool>) {
-        let callback = Callback(source: .publicAPI, resultHandler: completion)
-        enqueue(event: .removeTrackable(.init(trackable: trackable, resultHandler: callback)))
+    func remove(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Bool>) {
+        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        enqueue(event: .removeTrackable(.init(trackable: trackable, completion: completion)))
     }
 
-    func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>) {
-        let callback = Callback(source: .publicAPI, resultHandler: completion)
-        enqueue(event: .changeRoutingProfile(.init(profile: profile, resultHandler: callback)))
+    func changeRoutingProfile(profile: RoutingProfile, completion publicCompletion: @escaping ResultHandler<Void>) {
+        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        enqueue(event: .changeRoutingProfile(.init(profile: profile, completion: completion)))
     }
 
-    func stop(completion: @escaping ResultHandler<Void>) {
-        let callback = Callback(source: .publicAPI, resultHandler: completion)
-        enqueue(event: .stop(.init(resultHandler: callback)))
+    func stop(completion publicCompletion: @escaping ResultHandler<Void>) {
+        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        enqueue(event: .stop(.init(completion: completion)))
     }
 }
 
@@ -213,20 +213,20 @@ extension DefaultPublisher {
 
     // MARK: Track
     private func performTrackTrackableEvent(_ event: Event.TrackTrackableEvent) {
-        let callback = Callback<Void>(source: .publisherInternal) { [weak self] result in
+        let completion = Callback<Void>(source: .publisherInternal) { [weak self] result in
             switch result {
             case .success:
-                self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
+                self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, completion: event.completion)))
             case .failure(let error):
-                event.resultHandler.handleError(error)
+                event.completion.handleError(error)
             }
         }
-        performAddOrTrack(event.trackable, resultHandler: callback)
+        performAddOrTrack(event.trackable, completion: completion)
     }
 
     private func performTrackableReadyToTrack(_ event: Event.TrackableReadyToTrackEvent) {
         guard !state.isStoppingOrStopped else {
-            event.resultHandler.handlePublisherStopped()
+            event.completion.handlePublisherStopped()
             return
         }
 
@@ -240,7 +240,7 @@ extension DefaultPublisher {
                         self?.enqueue(event: .setDestinationSuccess(.init(route: route)))
                     case .failure(let error):
                         self?.logHandler?.error(message: "\(String(describing: Self.self)): can't fetch route.", error: error)
-                        event.resultHandler.handleError(error)
+                        event.completion.handleError(error)
                     }
                 }
             } else {
@@ -248,12 +248,12 @@ extension DefaultPublisher {
             }
         }
 
-        event.resultHandler.handleSuccess()
+        event.completion.handleSuccess()
     }
 
     private func performPresenceJoinedSuccessfullyEvent(_ event: Event.PresenceJoinedSuccessfullyEvent) {
         guard !state.isStoppingOrStopped else {
-            event.resultHandler.handlePublisherStopped()
+            event.completion.handlePublisherStopped()
             return
         }
 
@@ -268,19 +268,19 @@ extension DefaultPublisher {
         }
         resolveResolution(trackable: event.trackable)
         hooks.trackables?.onTrackableAdded(trackable: event.trackable)
-        event.resultHandler.handleSuccess()
+        event.completion.handleSuccess()
     }
 
     // MARK: RoutingProfile
     private func performChangeRoutingProfileEvent(_ event: Event.ChangeRoutingProfileEvent) {
         guard !state.isStoppingOrStopped else {
-            event.resultHandler.handlePublisherStopped()
+            event.completion.handlePublisherStopped()
             return
         }
         
         guard let destination = activeTrackable?.destination else {
             self.routingProfile = event.profile
-            event.resultHandler.handleSuccess()
+            event.completion.handleSuccess()
             return
         }
         
@@ -290,10 +290,10 @@ extension DefaultPublisher {
             case .success(let route):
                 self.routingProfile = event.profile
                 self.enqueue(event: .setDestinationSuccess(.init(route: route)))
-                event.resultHandler.handleSuccess()
+                event.completion.handleSuccess()
             case .failure(let error):
                 self.logHandler?.error(message: "\(String(describing: Self.self)): can't change RoutingProfile", error: error)
-                event.resultHandler.handleError(error)
+                event.completion.handleError(error)
             }
         }
     }
@@ -303,14 +303,14 @@ extension DefaultPublisher {
         self.route = event.route
     }
 
-    private func performAddOrTrack(_ trackable: Trackable, resultHandler: Callback<Void>){
+    private func performAddOrTrack(_ trackable: Trackable, completion: Callback<Void>){
         guard !state.isStoppingOrStopped else {
-            resultHandler.handlePublisherStopped()
+            completion.handlePublisherStopped()
             return
         }
 
         guard !trackables.contains(trackable) else {
-            resultHandler.handleSuccess()
+            completion.handleSuccess()
             return
         }
 
@@ -323,21 +323,21 @@ extension DefaultPublisher {
 
             switch result {
             case .success:
-                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, resultHandler: resultHandler)))
+                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, completion: completion)))
             case .failure(let error):
-                resultHandler.handleError(error)
+                completion.handleError(error)
             }
         }
     }
     // MARK: Add trackable
     private func performAddTrackableEvent(_ event: Event.AddTrackableEvent) {
-        performAddOrTrack(event.trackable, resultHandler: event.resultHandler)
+        performAddOrTrack(event.trackable, completion: event.completion)
     }
 
     // MARK: Remove trackable
     private func performRemoveTrackableEvent(_ event: Event.RemoveTrackableEvent) {
         guard !state.isStoppingOrStopped else {
-            event.resultHandler.handlePublisherStopped()
+            event.completion.handlePublisherStopped()
             return
         }
         
@@ -351,12 +351,12 @@ extension DefaultPublisher {
                 self?.enhancedLocationState.remove(trackableId: event.trackable.id)
                 
                 if wasPresent {
-                    self?.enqueue(event: .clearRemovedTrackableMetadata(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
+                    self?.enqueue(event: .clearRemovedTrackableMetadata(.init(trackable: event.trackable, completion: event.completion)))
                 } else {
-                    event.resultHandler.handleValue(false)
+                    event.completion.handleValue(false)
                 }
             case .failure(let error):
-                event.resultHandler.handleError(error)
+                event.completion.handleError(error)
             }
         }
     }
@@ -364,7 +364,7 @@ extension DefaultPublisher {
     // MARK: Stop publisher
     private func performStopPublisherEvent(_ event: Event.StopEvent) {
         if state.isStoppingOrStopped {
-            event.resultHandler.handleSuccess()
+            event.completion.handleSuccess()
             return
         }
 
@@ -390,9 +390,9 @@ extension DefaultPublisher {
             self.ablyPublisher.close(presenceData: self.presenceData) { [weak self] result in
                 switch result {
                 case .success:
-                    self?.enqueue(event: .ablyConnectionClosed(.init(resultHandler: event.resultHandler)))
+                    self?.enqueue(event: .ablyConnectionClosed(.init(completion: event.completion)))
                 case .failure(let error):
-                    event.resultHandler.handleError(error)
+                    event.completion.handleError(error)
                 }
             }
         }
@@ -402,7 +402,7 @@ extension DefaultPublisher {
         state = .stopped
         enhancedLocationState.removeAll()
         rawLocationState.removeAll()
-        event.resultHandler.handleSuccess()
+        event.completion.handleSuccess()
     }
 
     private func performAblyClientConnectionChangedEvent(_ event: Event.AblyClientConnectionStateChangedEvent) {
@@ -451,7 +451,7 @@ extension DefaultPublisher {
 
     private func performClearRemovedTrackableMetadataEvent(_ event: Event.ClearRemovedTrackableMetadataEvent) {
         guard !state.isStoppingOrStopped else {
-            event.resultHandler.handlePublisherStopped()
+            event.completion.handlePublisherStopped()
             return
         }
 
@@ -463,12 +463,12 @@ extension DefaultPublisher {
         lastEnhancedLocations.removeValue(forKey: event.trackable)
         lastRawLocations.removeValue(forKey: event.trackable)
 
-        enqueue(event: .clearActiveTrackable(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
+        enqueue(event: .clearActiveTrackable(.init(trackable: event.trackable, completion: event.completion)))
     }
 
     private func performClearActiveTrackableEvent(_ event: Event.ClearActiveTrackableEvent) {
         guard !state.isStoppingOrStopped else {
-            event.resultHandler.handlePublisherStopped()
+            event.completion.handlePublisherStopped()
             return
         }
 
@@ -482,7 +482,7 @@ extension DefaultPublisher {
             locationService.stopUpdatingLocation()
         }
 
-        event.resultHandler.handleValue(true)
+        event.completion.handleValue(true)
     }
 
     private func removeAllSubscribers(forTrackable trackable: Trackable) {
