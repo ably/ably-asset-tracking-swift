@@ -213,9 +213,15 @@ extension DefaultPublisher {
 
     // MARK: Track
     private func performTrackTrackableEvent(_ event: Event.TrackTrackableEvent) {
-        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {[weak self] in
-            self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
+        let callback = Callback<Void>(source: .publisherInternal) { [weak self] result in
+            switch result {
+            case .success:
+                self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, resultHandler: event.resultHandler)))
+            case .failure(let error):
+                event.resultHandler.handleError(error)
+            }
         }
+        performAddOrTrack(event.trackable, resultHandler: callback)
     }
 
     private func performTrackableReadyToTrack(_ event: Event.TrackableReadyToTrackEvent) {
@@ -297,14 +303,14 @@ extension DefaultPublisher {
         self.route = event.route
     }
 
-    private func performAddOrTrack(_ trackable: Trackable, resultHandler: Callback<Void>, completion: @escaping () -> Void){
+    private func performAddOrTrack(_ trackable: Trackable, resultHandler: Callback<Void>){
         guard !state.isStoppingOrStopped else {
             resultHandler.handlePublisherStopped()
             return
         }
 
         guard !trackables.contains(trackable) else {
-            completion()
+            resultHandler.handleSuccess()
             return
         }
 
@@ -317,10 +323,7 @@ extension DefaultPublisher {
 
             switch result {
             case .success:
-                let presenceCallback = Callback<Void>(source: .publisherInternal) { _ in
-                    completion()
-                }
-                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, resultHandler: presenceCallback)))
+                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, resultHandler: resultHandler)))
             case .failure(let error):
                 resultHandler.handleError(error)
             }
@@ -328,9 +331,7 @@ extension DefaultPublisher {
     }
     // MARK: Add trackable
     private func performAddTrackableEvent(_ event: Event.AddTrackableEvent) {
-        performAddOrTrack(event.trackable, resultHandler: event.resultHandler) {
-            event.resultHandler.handleSuccess()
-        }
+        performAddOrTrack(event.trackable, resultHandler: event.resultHandler)
     }
 
     // MARK: Remove trackable
