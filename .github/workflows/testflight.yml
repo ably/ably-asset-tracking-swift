@@ -1,0 +1,52 @@
+name: Upload iOS example apps to TestFlight
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Select Specific Xcode Version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_13.4.1.app
+          echo "Selected Xcode version:"
+          xcodebuild -version
+
+      - name: Configure Mapbox SDK download token
+        run: |
+          echo "machine api.mapbox.com" >> ~/.netrc
+          echo "login mapbox" >> ~/.netrc
+          echo "password $MAPBOX_DOWNLOADS_TOKEN" >> ~/.netrc
+        env:
+          MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+          
+      - name: Configure runtime secrets
+        run: |
+          echo "MAPBOX_ACCESS_TOKEN = $EXAMPLE_APPS_MAPBOX_ACCESS_TOKEN" >> Examples/Secrets.xcconfig
+          echo "ABLY_API_KEY = $EXAMPLE_APPS_ABLY_API_KEY" >> Examples/Secrets.xcconfig
+        env:
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.EXAMPLE_APPS_MAPBOX_ACCESS_TOKEN }}
+          ABLY_API_KEY: ${{ secrets.EXAMPLE_APPS_ABLY_API_KEY }}
+          AMPLIFY_CONFIGURATION: ${{ secrets.AMPLIFY_CONFIGURATION }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
+      - name: Configure remaining runtime env
+        env:
+          FASTLANE_XCODE_LIST_TIMEOUT: 100
+          FASTLANE_XCODEBUILD_SETTINGS_RETRIES: 15
+          
+      - name: Setup Bundler
+        run: |
+          bundle install
+          
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          
+      - name: Run Fastlane
+        run: bundle exec fastlane build_and_upload_to_testflight
