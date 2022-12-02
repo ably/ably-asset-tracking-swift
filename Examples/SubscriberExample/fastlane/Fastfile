@@ -1,0 +1,46 @@
+default_platform(:ios)
+    platform :ios do
+    desc "Build and upload the Subscriber Example app to TestFlight"
+    lane :build_and_upload_to_testflight do
+        # Creates a temporary keychain. Without this, the build could
+        # freeze and never finish. https://docs.fastlane.tools/actions/setup_ci/
+        setup_ci if ENV['CI']
+        update_project_team(
+            path: "SubscriberExample.xcodeproj",
+            teamid: "XXY98AVDR6")
+        update_build_number
+        match(
+          git_url: ENV["MATCH_GIT_URL"],
+          app_identifier: "com.ably.tracking.example.subscriber",
+          type: "appstore",
+          readonly: true)
+        build_app(scheme: "SubscriberExample",
+                project: "SubscriberExample.xcodeproj",
+                export_method: 'app-store',
+                output_name: "SubscriberExample.ipa",
+                clean: true,
+                include_bitcode: true)
+        upload_to_testflight(
+            skip_submission: true,
+            skip_waiting_for_build_processing: true,
+            apple_id: "6444409821",
+            itc_provider:"XXY98AVDR6")
+        end
+
+        # Example output: 2022.12.1.1454
+        desc "Set build number based on current time"
+        private_lane :update_build_number do
+        build_number = Time.new.strftime("%Y.%m.%d.%H%M")
+        increment_build_number(
+            build_number: build_number,
+            xcodeproj: "SubscriberExample.xcodeproj")
+    end
+
+    # Helper lane, not used by CI, but can be used on local machines
+    # to fetch currently used certificate and profile from match repo
+    # by running `bundle exec fastlane fetch_certificate`
+    desc "Fetch the distribution certificate and appstore provisioning profile from git repo"
+    lane :fetch_certificate do
+      match(type: "appstore", readonly: true)
+    end
+end
