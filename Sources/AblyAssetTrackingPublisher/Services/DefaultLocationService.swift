@@ -77,8 +77,10 @@ class DefaultLocationService: LocationService {
         
         > Calling this method several times in succession does not automatically result in new events being generated. Calling stopUpdatingLocation() in between, however, does cause a new initial event to be sent the next time you call this method.
         */
+        logHandler?.info(message: "START requestLocationUpdate", error: nil)
         locationManager.systemLocationManager.stopUpdatingLocation()
         locationManager.systemLocationManager.startUpdatingLocation()
+        logHandler?.info(message: "END requestLocationUpdate", error: nil)
     }
     
     enum LocationHistoryTemporaryStorageConfiguration {
@@ -174,6 +176,7 @@ extension DefaultLocationService: PassiveLocationManagerDelegate {
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
+        logHandler?.info(message: "BEGIN didUpdateLocation", error: nil)
         delegate?.locationService(sender: self, didUpdateRawLocationUpdate: RawLocationUpdate(location: rawLocation.toLocation()))
         delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location.toLocation()))
     }

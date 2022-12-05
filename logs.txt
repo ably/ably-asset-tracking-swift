@@ -1,0 +1,425 @@
+2022-12-05 18:48:21.196835-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Info, common]: Using Mapbox Common SDK v23.1.0(c88f279af)
+2022-12-05 18:48:21.209057-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Info, maps-core]: Using Mapbox Core Maps SDK v10.9.0(10541225b5)
+2022-12-05T18:48:33-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:48:33.324: Reachability: started listening for host realtime.ably.io. 
+2022-12-05 18:48:33.325229-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003e9dea0-ARTRealtimeConnectionEventConnecting
+2022-12-05 18:48:33.325303-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003e9dea0
+2022-12-05 18:48:33.349070-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Warning, nav-native]: `common::Scheduler::GetCurrent()` hasn't returned a scheduler. `common::RunLoop::getOrCreateForThisThread()` will be used to get a main scheduler.
+2022-12-05 18:48:33.352740-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Info, nav-native]: PersistentConfig path: /Users/lawrence/Library/Developer/CoreSimulator/Devices/4B95244E-2CF3-4F5A-BDA2-30A0DFF2AD5D/data/Containers/Data/Application/A85A7C3C-12E8-4E1B-A044-BD0615C1B93C/Library/Application Support/.mapbox/tile_store/navigation/config.json
+2022-12-05 18:48:33.368361-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-05 18:48:33.368576-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-05 18:48:33.370104-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Info, nav-native]: Tiles path = "/Users/lawrence/Library/Developer/CoreSimulator/Devices/4B95244E-2CF3-4F5A-BDA2-30A0DFF2AD5D/data/Containers/Data/Application/A85A7C3C-12E8-4E1B-A044-BD0615C1B93C/Library/Application Support/.mapbox/tile_store"
+2022-12-05 18:48:33.370165-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Info, nav-native]: TileStore instance was passed
+2022-12-05 18:48:33.370221-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Info, nav-native]: Endpoint config = "{"dataSet":"mapbox/driving-traffic","host":"https://api.mapbox.com","isFallback":false,"minDiffInDaysToConsiderServerVersion":0,"navigatorVersion":"119.0.1","token":"***...*","userAgent":"PublisherExampleSwiftUI/1.0.0 MapboxNavigation/2.9.0 MapboxCoreNavigation/2.9.0 iOS/16.1.0 (arm64; Simulator)","version":"","versionBeforeFallback":""}"
+2022-12-05 18:48:33.370267-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Info, nav-native]: Creating navigator v.119.0.1
+2022-12-05 18:48:33.371623-0300 PublisherExampleSwiftUI[37612:514698] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-05T18:48:33-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:48:33.377: Reachability: host realtime.ably.io is reachable: true. 
+2022-12-05 18:48:33.388293-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-05 18:48:33.388663-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-05 18:48:33.388843-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-05 18:48:33.389044-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+Thread Performance Checker: Thread running at QOS_CLASS_USER_INTERACTIVE waiting on a lower QoS thread running at QOS_CLASS_DEFAULT. Investigate ways to avoid priority inversions
+PID: 37612, TID: 514698
+Backtrace
+=================================================================
+3   PublisherExampleSwiftUI             0x00000001010b3098 -[ARTSRRunLoopThread runLoop] + 44
+4   PublisherExampleSwiftUI             0x00000001010b4f28 +[NSRunLoop(ARTSRWebSocket) ARTSR_networkRunLoop] + 56
+5   PublisherExampleSwiftUI             0x00000001010b1a9c -[ARTSRProxyConnect _openConnection] + 72
+6   PublisherExampleSwiftUI             0x00000001010b0f0c -[ARTSRProxyConnect _configureProxy] + 876
+7   PublisherExampleSwiftUI             0x00000001010b0748 -[ARTSRProxyConnect openNetworkStreamWithCompletion:] + 92
+8   PublisherExampleSwiftUI             0x00000001010a70e8 -[ARTSRWebSocket open] + 596
+9   PublisherExampleSwiftUI             0x00000001010a2000 -[ARTWebSocketTransport connectWithKey:] + 472
+10  PublisherExampleSwiftUI             0x000000010106dd38 -[ARTRealtimeInternal transportConnectForcingNewToken:newConnection:] + 200
+11  PublisherExampleSwiftUI             0x000000010106a924 -[ARTRealtimeInternal transitionSideEffects:] + 1256
+12  PublisherExampleSwiftUI             0x000000010106a0f4 -[ARTRealtimeInternal transition:withErrorInfo:] + 388
+13  PublisherExampleSwiftUI             0x0000000101069f64 -[ARTRealtimeInternal transition:] + 44
+14  PublisherExampleSwiftUI             0x000000010106936c -[ARTRealtimeInternal _connect] + 120
+15  PublisherExampleSwiftUI             0x0000000101067d84 -[ARTRealtimeInternal initWithOptions:] + 1240
+16  PublisherExampleSwiftUI             0x0000000101067274 -[ARTRealtime initWithOptions:] + 144
+17  PublisherExampleSwiftUI             0x00000001010dff48 $sSo11ARTRealtimeC7optionsABSo16ARTClientOptionsC_tcfcTO + 36
+18  PublisherExampleSwiftUI             0x00000001010dfde0 $sSo11ARTRealtimeC7optionsABSo16ARTClientOptionsC_tcfC + 44
+19  PublisherExampleSwiftUI             0x00000001010dfd08 $s25AblyAssetTrackingInternal0A23CocoaSDKRealtimeFactoryC6create17withConfiguration10logHandlerAA0aF0_p0abC4Core010ConnectionJ0C_AA0d6ARTLogL0CtF + 128
+20  PublisherExampleSwiftUI             0x00000001010dfe6c $s25AblyAssetTrackingInternal0A23CocoaSDKRealtimeFactoryCAA0afG0A2aDP6create17withConfiguration10logHandlerAA0aF0_p0abC4Core010ConnectionJ0C_AA0d6ARTLogL0CtFTW + 28
+21  PublisherExampleSwiftUI             0x00000001010ce460 $s25AblyAssetTrackingInternal07DefaultA0C7factory13configuration4mode10logHandlerAcA0A18SDKRealtimeFactory_p_0abC4Core23ConnectionConfigurationCAA0A4ModeVAI03LogJ0_pSgtcfc + 464
+22  PublisherExampleSwiftUI             0x00000001010ce280 $s25AblyAssetTrackingInternal07DefaultA0C7factory13configuration4mode10logHandlerAcA0A18SDKRealtimeFactory_p_0abC4Core23ConnectionConfigurationCAA0A4ModeVAI03LogJ0_pSgtcfC + 80
+23  PublisherExampleSwiftUI             0x0000000100fdaa8c $s26AblyAssetTrackingPublisher07DefaultD7BuilderC5startAA0D0_pyKF + 516
+24  PublisherExampleSwiftUI             0x0000000100fdd36c $s26AblyAssetTrackingPublisher07DefaultD7BuilderCAA0dF0A2aDP5startAA0D0_pyKFTW + 32
+25  PublisherExampleSwiftUI             0x0000000100dfde78 $s23PublisherExampleSwiftUI06CreateA9ViewModelC06createA0AA010ObservableA0CyYaKFTY0_ + 2872
+26  libswift_Concurrency.dylib          0x00000001af0754f8 _ZN5swift34runJobInEstablishedExecutorContextEPNS_3JobE + 336
+27  libswift_Concurrency.dylib          0x00000001af076170 _ZL17swift_job_runImplPN5swift3JobENS_11ExecutorRefE + 80
+28  libdispatch.dylib                   0x0000000108bf2634 _dispatch_main_queue_drain + 848
+29  libdispatch.dylib                   0x0000000108bf22d4 _dispatch_main_queue_callback_4CF + 40
+30  CoreFoundation                      0x0000000180372cf4 __CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__ + 12
+31  CoreFoundation                      0x000000018036d3b0 __CFRunLoopRun + 1956
+32  CoreFoundation                      0x000000018036c7f4 CFRunLoopRunSpecific + 584
+33  GraphicsServices                    0x0000000188faec98 GSEventRunModal + 160
+34  UIKitCore                           0x000000010bfd45d4 -[UIApplication _run] + 868
+35  UIKitCore                           0x000000010bfd85cc UIApplicationMain + 124
+36  SwiftUI                             0x00000001158beb18 OUTLINED_FUNCTION_51 + 496
+37  SwiftUI                             0x00000001158be9c0 OUTLINED_FUNCTION_51 + 152
+38  SwiftUI                             0x000000011506236c OUTLINED_FUNCTION_10 + 88
+39  PublisherExampleSwiftUI             0x0000000100d7f6c8 $s23PublisherExampleSwiftUI0abC5UIAppV5$mainyyFZ + 40
+40  PublisherExampleSwiftUI             0x0000000100d7f76c main + 12
+2022-12-05 18:48:33.872968-0300 PublisherExampleSwiftUI[37612:515160] [Mapbox] [Info, nav-native]: Async version config for mapbox/driving-traffic resolved with version 2022_11_26-03_00_05 [{"map":{"tileset_version":"2022_11_26-03_00_05"}}]
+2022-12-05 18:48:33.927161-0300 PublisherExampleSwiftUI[37612:515170] ARTDeviceIdentityTokenDetails unarchive failed: Error Domain=NSCocoaErrorDomain Code=4864 "*** -[NSKeyedUnarchiver _initForReadingFromData:error:throwLegacyExceptions:]: data is NULL" UserInfo={NSDebugDescription=*** -[NSKeyedUnarchiver _initForReadingFromData:error:throwLegacyExceptions:]: data is NULL}
+2022-12-05 18:48:33.927504-0300 PublisherExampleSwiftUI[37612:515170] VERBOSE: PublicEventEmitter Notification emitted 0x600003e9dea0-ARTRealtimeConnectionEventConnected
+2022-12-05 18:48:33.927567-0300 PublisherExampleSwiftUI[37612:515170] VERBOSE: PublicEventEmitter Notification emitted 0x600003e9dea0
+2022-12-05 18:48:37.946142-0300 PublisherExampleSwiftUI[37612:514864] VERBOSE: PublicEventEmitter Notification emitted 0x600003e0e8f0-ARTChannelEventAttaching
+2022-12-05 18:48:37.946339-0300 PublisherExampleSwiftUI[37612:514864] VERBOSE: PublicEventEmitter Notification emitted 0x600003e0e8f0
+2022-12-05 18:48:38.116646-0300 PublisherExampleSwiftUI[37612:514864] VERBOSE: PublicEventEmitter Notification emitted 0x600003e0e8f0-ARTChannelEventAttached
+2022-12-05 18:48:38.116870-0300 PublisherExampleSwiftUI[37612:514864] VERBOSE: PublicEventEmitter Notification emitted 0x600003e0e8f0
+2022-12-05 18:48:38.292946-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095119525812737ns <= 1670276917328963072ns. No status will be produced.
+2022-12-05 18:48:38.303560-0300 PublisherExampleSwiftUI[37612:514698] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x600001cd6900> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2022-12-05T18:48:38-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:48:38.354: BEGIN didUpdateLocation. 
+2022-12-05 18:48:38.489836-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:48:38.490362-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:48:38.655805-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:48:38.780542-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:48:38.850947-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:48:38.992574-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:48:39.148625-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:48:48.346213-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095108516889857ns <= 1670276928337885952ns. No status will be produced.
+2022-12-05T18:48:48-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:48:48.352: BEGIN didUpdateLocation. 
+2022-12-05 18:48:48.504132-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:48:48.644015-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:48:48.732396-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:48:49.011032-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:48:49.094366-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:48:49.159397-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:48:49.456256-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:48:54.349643-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095102512943617ns <= 1670276934341832192ns. No status will be produced.
+2022-12-05T18:48:54-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:48:54.355: BEGIN didUpdateLocation. 
+2022-12-05 18:48:54.491345-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:48:54.712732-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:48:54.849282-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:48:54.849703-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:48:54.990359-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:48:55.146963-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:48:55.213318-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:48:59.344637-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095097519348737ns <= 1670276939335427072ns. No status will be produced.
+2022-12-05T18:48:59-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:48:59.350: BEGIN didUpdateLocation. 
+2022-12-05 18:48:59.486920-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:48:59.491974-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:48:59.629804-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:48:59.631022-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:48:59.766706-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:48:59.769359-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:48:59.909202-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:03.336888-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095093525909761ns <= 1670276943328866048ns. No status will be produced.
+2022-12-05T18:49:03-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:03.342: BEGIN didUpdateLocation. 
+2022-12-05 18:49:03.496571-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:03.497071-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:03.640100-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:03.642022-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:03.812692-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:03.813241-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:03.813269-0300 PublisherExampleSwiftUI[37612:515153] [connection] nw_connection_add_timestamp_locked_on_nw_queue [C2] Hit maximum timestamp count, will start dropping events
+2022-12-05 18:49:03.961861-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:07.338942-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095089524940801ns <= 1670276947329835008ns. No status will be produced.
+2022-12-05T18:49:07-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:07.344: BEGIN didUpdateLocation. 
+2022-12-05 18:49:07.484179-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:07.484843-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:07.626500-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:07.627016-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:07.763668-0300 PublisherExampleSwiftUI[37612:515153] [connection] nw_connection_add_timestamp_locked_on_nw_queue [C3] Hit maximum timestamp count, will start dropping events
+2022-12-05 18:49:07.766202-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:07.766648-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:07.901241-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:09.077103-0300 PublisherExampleSwiftUI[37612:514698] Metal GPU Frame Capture Enabled
+2022-12-05 18:49:09.633812-0300 PublisherExampleSwiftUI[37612:515171] [VKDefault] Missing MeshRenderables for ground mesh layer for (4/4) of ground tiles. Tile debug info: (Key: 164.396.10.255 t:34 kt:0, Has mesh errors: 0, MeshInstance count: 1, PendingMaterial count: 1, Invisible MeshInstances count: 0 | Key: 165.397.10.255 t:34 kt:0, Has mesh errors: 0, MeshInstance count: 1, PendingMaterial count: 1, Invisible MeshInstances count: 0 | Key: 164.397.10.255 t:34 kt:0, Has mesh errors: 0, MeshInstance count: 1, PendingMaterial count: 1, Invisible MeshInstances count: 0 | Key: 165.396.10.255 t:34 kt:0, Has mesh errors: 0, MeshInstance count: 1, PendingMaterial count: 1, Invisible MeshInstances count: 0)
+2022-12-05 18:49:11.339647-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095085526300929ns <= 1670276951328474880ns. No status will be produced.
+2022-12-05T18:49:11-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:11.341: BEGIN didUpdateLocation. 
+2022-12-05 18:49:11.487273-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:11.488281-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:11.626511-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:11.627419-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:11.771083-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:11.771285-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:11.905956-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:15.328128-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095081531619841ns <= 1670276955323155968ns. No status will be produced.
+2022-12-05T18:49:15-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:15.328: BEGIN didUpdateLocation. 
+2022-12-05 18:49:15.466114-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:15.467817-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:15.607253-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:15.740369-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:15.831671-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:15.875784-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:15.967931-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:18.344222-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095078514778881ns <= 1670276958339996928ns. No status will be produced.
+2022-12-05T18:49:18-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:18.344: BEGIN didUpdateLocation. 
+2022-12-05 18:49:18.505936-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:18.506875-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:18.639986-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:18.647063-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:18.787328-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:18.923888-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:18.999835-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:21.348920-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095075522579713ns <= 1670276961332196096ns. No status will be produced.
+2022-12-05T18:49:21-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:21.349: BEGIN didUpdateLocation. 
+2022-12-05 18:49:21.493835-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:21.494816-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:21.626159-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:21.632909-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:21.757310-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:21.771822-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:21.898383-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:24.352237-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095072518618881ns <= 1670276964336156928ns. No status will be produced.
+2022-12-05T18:49:24-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:24.353: BEGIN didUpdateLocation. 
+2022-12-05 18:49:24.490291-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:24.493942-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:24.625293-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:24.633542-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:24.759950-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:24.771166-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:24.898568-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:28.347289-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095068516512769ns <= 1670276968338263040ns. No status will be produced.
+2022-12-05T18:49:28-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:28.357: BEGIN didUpdateLocation. 
+2022-12-05 18:49:28.499449-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:28.662320-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:28.724036-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:28.859627-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:29.025780-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:29.255103-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:29.381629-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:31.401653-0300 PublisherExampleSwiftUI[37612:515153] VERBOSE: PublicEventEmitter Notification emitted 0x600003e02f80-ARTChannelEventAttaching
+2022-12-05 18:49:31.401800-0300 PublisherExampleSwiftUI[37612:515153] VERBOSE: PublicEventEmitter Notification emitted 0x600003e02f80
+2022-12-05 18:49:31.577377-0300 PublisherExampleSwiftUI[37612:515284] VERBOSE: PublicEventEmitter Notification emitted 0x600003e02f80-ARTChannelEventAttached
+2022-12-05 18:49:31.577590-0300 PublisherExampleSwiftUI[37612:515284] VERBOSE: PublicEventEmitter Notification emitted 0x600003e02f80
+2022-12-05T18:49:31-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:31.723: START requestLocationUpdate. 
+2022-12-05T18:49:31-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:31.724: END requestLocationUpdate. 
+2022-12-05 18:49:31.734103-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095065525618945ns <= 1670276971329156864ns. No status will be produced.
+2022-12-05T18:49:31-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:31.734: BEGIN didUpdateLocation. 
+2022-12-05 18:49:31.865006-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:31.873691-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:31.999730-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:32.010729-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:32.143165-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:32.148278-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:32.280042-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:35.342578-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095061523878913ns <= 1670276975330896896ns. No status will be produced.
+2022-12-05T18:49:35-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:35.349: BEGIN didUpdateLocation. 
+2022-12-05 18:49:35.486636-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:35.487796-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:35.632477-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:35.633011-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:35.778726-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:35.779300-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:35.915202-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:39.343819-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095057516632833ns <= 1670276979338142976ns. No status will be produced.
+2022-12-05T18:49:39-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:39.346: BEGIN didUpdateLocation. 
+2022-12-05 18:49:39.484414-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:39.485461-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:39.628838-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:39.638970-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:39.765623-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:39.770900-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:39.898645-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:42.331087-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095054529363713ns <= 1670276982325412096ns. No status will be produced.
+2022-12-05T18:49:42-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:42.334: BEGIN didUpdateLocation. 
+2022-12-05 18:49:42.471877-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:42.472472-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:42.606843-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:42.741372-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:42.838947-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:42.878754-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:42.974251-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05T18:49:45-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:45.359: BEGIN didUpdateLocation. 
+2022-12-05 18:49:45.356881-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095051521350657ns <= 1670276985333425152ns. No status will be produced.
+2022-12-05 18:49:45.542279-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:45.552284-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:45.702096-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:45.865614-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:45.940323-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:46.053224-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:46.167124-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:49.340679-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095047524486913ns <= 1670276989330288896ns. No status will be produced.
+2022-12-05T18:49:49-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:49.344: BEGIN didUpdateLocation. 
+2022-12-05 18:49:49.698576-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:49.847047-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:50.013079-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:50.070916-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:50.225510-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:50.360829-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:50.383497-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:51.060903-0300 PublisherExampleSwiftUI[37612:516185] VERBOSE: PublicEventEmitter Notification emitted 0x600003df29e0-ARTChannelEventAttaching
+2022-12-05 18:49:51.061297-0300 PublisherExampleSwiftUI[37612:516185] VERBOSE: PublicEventEmitter Notification emitted 0x600003df29e0
+2022-12-05 18:49:51.782838-0300 PublisherExampleSwiftUI[37612:515284] VERBOSE: PublicEventEmitter Notification emitted 0x600003df29e0-ARTChannelEventAttached
+2022-12-05 18:49:51.783238-0300 PublisherExampleSwiftUI[37612:515284] VERBOSE: PublicEventEmitter Notification emitted 0x600003df29e0
+2022-12-05T18:49:51-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:51.921: START requestLocationUpdate. 
+2022-12-05T18:49:51-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:51.922: END requestLocationUpdate. 
+2022-12-05T18:49:51-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:51.974: BEGIN didUpdateLocation. 
+2022-12-05 18:49:51.973853-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095045519558913ns <= 1670276991335216896ns. No status will be produced.
+2022-12-05 18:49:52.121931-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:52.259803-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:52.360130-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:52.396575-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:52.494587-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:52.528425-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:52.631679-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:55.329534-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095041532146945ns <= 1670276995322628864ns. No status will be produced.
+2022-12-05T18:49:55-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:55.332: BEGIN didUpdateLocation. 
+2022-12-05 18:49:55.494023-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:55.610595-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:55.710377-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:55.746181-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:55.883391-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:56.017535-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:49:56.074322-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:59.342810-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095037519707905ns <= 1670276999335067904ns. No status will be produced.
+2022-12-05T18:49:59-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:49:59.347: BEGIN didUpdateLocation. 
+2022-12-05 18:49:59.494329-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:49:59.495449-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:49:59.643820-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:49:59.644833-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:49:59.801875-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:49:59.802373-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:49:59.940137-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:02.337802-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095034525617921ns <= 1670277002329157888ns. No status will be produced.
+2022-12-05T18:50:02-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:02.341: BEGIN didUpdateLocation. 
+2022-12-05 18:50:02.483075-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:02.622952-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:02.707797-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:02.758600-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:02.846876-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:02.894635-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:02.978835-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:05.340611-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095031523545601ns <= 1670277005331230208ns. No status will be produced.
+2022-12-05T18:50:05-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:05.345: BEGIN didUpdateLocation. 
+2022-12-05 18:50:05.478255-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:05.632143-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:05.702585-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:05.774872-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:05.838819-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:05.910727-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:05.971055-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:08.363519-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095028498661889ns <= 1670277008356113920ns. No status will be produced.
+2022-12-05T18:50:08-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:08.369: BEGIN didUpdateLocation. 
+2022-12-05 18:50:08.504371-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:08.788045-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:08.870623-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:08.951207-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:09.005660-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:09.085608-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:09.150358-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:11.350461-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095025513385729ns <= 1670277011341390080ns. No status will be produced.
+2022-12-05T18:50:11-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:11.356: BEGIN didUpdateLocation. 
+2022-12-05 18:50:11.495872-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:11.496319-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:11.658331-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:11.794150-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:11.863071-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:11.929150-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:11.997706-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:14.337480-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095022526582785ns <= 1670277014328193024ns. No status will be produced.
+2022-12-05T18:50:14-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:14.342: BEGIN didUpdateLocation. 
+2022-12-05 18:50:14.476501-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:14.478520-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:14.611933-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:14.612625-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:14.757636-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:14.758252-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:14.908262-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:17.340510-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095019523419649ns <= 1670277017331356160ns. No status will be produced.
+2022-12-05T18:50:17-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:17.347: BEGIN didUpdateLocation. 
+2022-12-05 18:50:17.483052-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:17.484216-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:17.626608-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:17.641270-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:17.804790-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:17.943946-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:17.996983-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:20.339935-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095016520517633ns <= 1670277020334258176ns. No status will be produced.
+2022-12-05T18:50:20-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:20.343: BEGIN didUpdateLocation. 
+2022-12-05 18:50:20.480190-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:20.480877-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:20.617674-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:20.618215-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:20.750672-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:20.752063-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:21.111527-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:23.338185-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095013522223873ns <= 1670277023332551936ns. No status will be produced.
+2022-12-05T18:50:23-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:23.341: BEGIN didUpdateLocation. 
+2022-12-05 18:50:23.476358-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:23.477089-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:23.638615-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:23.772797-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:23.841759-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:23.905745-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:24.244555-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:26.334746-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095010526957057ns <= 1670277026327818752ns. No status will be produced.
+2022-12-05T18:50:26-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:26.337: BEGIN didUpdateLocation. 
+2022-12-05 18:50:26.471771-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:26.614100-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:26.702348-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:26.751615-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:26.842550-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:26.892747-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:26.977371-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:29.343075-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095007517667585ns <= 1670277029337108224ns. No status will be produced.
+2022-12-05T18:50:29-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:29.346: BEGIN didUpdateLocation. 
+2022-12-05 18:50:29.482726-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:29.483232-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:29.621322-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:29.622741-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:29.756125-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:29.757521-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:29.892429-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05 18:50:32.335568-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7553095004528582913ns <= 1670277032326192896ns. No status will be produced.
+2022-12-05T18:50:32-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:32.340: BEGIN didUpdateLocation. 
+2022-12-05 18:50:32.476004-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-05 18:50:32.476537-0300 PublisherExampleSwiftUI[37612:515159] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-05 18:50:32.619194-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-05 18:50:32.620273-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-05 18:50:32.757400-0300 PublisherExampleSwiftUI[37612:515156] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-05 18:50:32.759592-0300 PublisherExampleSwiftUI[37612:515158] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-05 18:50:32.897027-0300 PublisherExampleSwiftUI[37612:515157] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_11_26-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-05T18:50:33-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] Starting upload C407D1D5-2D46-4D2C-8E56-1874ACC48D75 of location history data
+2022-12-05T18:50:33-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] Starting upload 34B70E0E-056D-4F9F-9CA1-8FE0AC034403 of raw Mapbox data
+2022-12-05T18:50:33-0300 info CognitoIdentityClient : [Logging] Request: POST https:443 
+ Path: /, 
+ x-amz-user-agent: aws-sdk-swift/1.0, 
+Host: cognito-identity.us-east-1.amazonaws.com, 
+Content-Type: application/x-amz-json-1.1, 
+User-Agent: aws-sdk-swift/1.0 api/cognito-identity/1.0 os/iOS/16.1.0 lang/swift/5.7 lib/amplify-ios/2.0.0, 
+Content-Length: 75, 
+X-Amz-Target: AWSCognitoIdentityService.GetCredentialsForIdentity 
+ Optional([])
+2022-12-05T18:50:33-0300 info SerialExecutor : [Logging] Creating connection pool for Optional("https://cognito-identity.us-east-1.amazonaws.com/?")with max connections: 50
+2022-12-05T18:50:33-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] Upload C407D1D5-2D46-4D2C-8E56-1874ACC48D75 succeeded.
+2022-12-05T18:50:33-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] Upload 34B70E0E-056D-4F9F-9CA1-8FE0AC034403 succeeded.
+2022-12-05T18:50:33-0300 error com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:33.736: . The operation couldn’t be completed. (AblyAssetTrackingCore.ErrorInformation error 1.)
+2022-12-05T18:50:33-0300 error com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:33.741: . The operation couldn’t be completed. (AblyAssetTrackingCore.ErrorInformation error 1.)
+2022-12-05T18:50:33-0300 error com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:33.742: . The operation couldn’t be completed. (AblyAssetTrackingCore.ErrorInformation error 1.)
+2022-12-05 18:50:34.241352-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003df29e0-ARTChannelEventDetaching
+2022-12-05 18:50:34.241628-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003df29e0
+2022-12-05 18:50:34.243597-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003e0e8f0-ARTChannelEventDetaching
+2022-12-05 18:50:34.243690-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003e0e8f0
+2022-12-05 18:50:34.245778-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003e02f80-ARTChannelEventDetaching
+2022-12-05 18:50:34.245915-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003e02f80
+2022-12-05 18:50:34.372638-0300 PublisherExampleSwiftUI[37612:515741] VERBOSE: PublicEventEmitter Notification emitted 0x600003df29e0-ARTChannelEventDetached
+2022-12-05 18:50:34.372782-0300 PublisherExampleSwiftUI[37612:515741] VERBOSE: PublicEventEmitter Notification emitted 0x600003df29e0
+2022-12-05T18:50:34-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:34.374: DefaultAbly: Trackable 345 removed successfully. Was present true. 
+2022-12-05 18:50:34.385254-0300 PublisherExampleSwiftUI[37612:516185] VERBOSE: PublicEventEmitter Notification emitted 0x600003e0e8f0-ARTChannelEventDetached
+2022-12-05 18:50:34.385377-0300 PublisherExampleSwiftUI[37612:516185] VERBOSE: PublicEventEmitter Notification emitted 0x600003e0e8f0
+2022-12-05T18:50:34-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:34.387: DefaultAbly: Trackable 123 removed successfully. Was present true. 
+2022-12-05 18:50:34.387993-0300 PublisherExampleSwiftUI[37612:516185] VERBOSE: PublicEventEmitter Notification emitted 0x600003e02f80-ARTChannelEventDetached
+2022-12-05 18:50:34.388081-0300 PublisherExampleSwiftUI[37612:516185] VERBOSE: PublicEventEmitter Notification emitted 0x600003e02f80
+2022-12-05T18:50:34-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:34.389: DefaultAbly: Trackable 234 removed successfully. Was present true. 
+2022-12-05T18:50:34-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:34.389: DefaultAbly: All trackables removed.. 
+2022-12-05T18:50:34-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:34.390: Reachability: stopped listening for host realtime.ably.io. 
+2022-12-05 18:50:34.391224-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003e9dea0-ARTRealtimeConnectionEventClosing
+2022-12-05 18:50:34.391330-0300 PublisherExampleSwiftUI[37612:514698] VERBOSE: PublicEventEmitter Notification emitted 0x600003e9dea0
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] Connection was acquired to: Optional("https://cognito-identity.us-east-1.amazonaws.com/?")
+2022-12-05T18:50:34-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:34.529: R:0x6000022c9860 Realtime closed. 
+2022-12-05 18:50:34.530524-0300 PublisherExampleSwiftUI[37612:515741] VERBOSE: PublicEventEmitter Notification emitted 0x600003e9dea0-ARTRealtimeConnectionEventClosed
+2022-12-05 18:50:34.530634-0300 PublisherExampleSwiftUI[37612:515741] VERBOSE: PublicEventEmitter Notification emitted 0x600003e9dea0
+2022-12-05T18:50:34-0300 info com.ably.PublisherExampleSwiftUI : [PublisherExampleSwiftUI] 05-12-2022 18:50:34.532: DefaultAbly: Ably connection closed successfully.. 
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] headers were received
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] headers were received
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] headers were received
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] headers were received
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] headers were received
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] headers were received
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] header block is done
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] incoming data
+2022-12-05T18:50:34-0300 info CRTClientEngine : [Logging] stream completed
+2022-12-05T18:50:34-0300 info SerialExecutor : [Logging] Connection to endpoint: Optional("https://cognito-identity.us-east-1.amazonaws.com/?") is closing
