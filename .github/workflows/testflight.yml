@@ -50,6 +50,6 @@ jobs:
           submodules: recursive
           
       - name: Run Fastlane for the Subscriber example app
-        run: |
-        cd Examples/SubscriberExample
+        working-directory: ./Examples/SubscriberExample
+        run: |        
         bundle exec fastlane build_and_upload_to_testflight
