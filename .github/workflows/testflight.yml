@@ -9,12 +9,20 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          
+      - name: Setup Bundler
+        run: |
+          bundle install
+
       - name: Select Specific Xcode Version
         run: |
           sudo xcode-select -s /Applications/Xcode_13.4.1.app
           echo "Selected Xcode version:"
           xcodebuild -version
-
+        
       - name: Configure Mapbox SDK download token
         run: |
           echo "machine api.mapbox.com" >> ~/.netrc
@@ -23,33 +31,29 @@ jobs:
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
           
-      - name: Configure runtime secrets
+      - name: Configure runtime secrets and ENVs
+        run: |
+          echo "MAPBOX_ACCESS_TOKEN = $MAPBOX_ACCESS_TOKEN" >> Examples/Secrets.xcconfig
+          echo "ABLY_API_KEY = $ASSET_TRACKING_TESTING_ABLY_API_KEY" >> Examples/Secrets.xcconfig
         env:
-          MAPBOX_ACCESS_TOKEN: ${{ secrets.EXAMPLE_APPS_MAPBOX_ACCESS_TOKEN }}
-          ABLY_API_KEY: ${{ secrets.EXAMPLE_APPS_ABLY_API_KEY }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.ASSET_TRACKING_TESTING_MAPBOX_ACCESS_TOKEN }}
+          ABLY_API_KEY: ${{ secrets.ASSET_TRACKING_TESTING_ABLY_API_KEY }}
           AMPLIFY_CONFIGURATION: ${{ secrets.AMPLIFY_CONFIGURATION }}
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: |
-          echo "MAPBOX_ACCESS_TOKEN = $EXAMPLE_APPS_MAPBOX_ACCESS_TOKEN" >> Examples/Secrets.xcconfig
-          echo "ABLY_API_KEY = $EXAMPLE_APPS_ABLY_API_KEY" >> Examples/Secrets.xcconfig
 
-
-      - name: Configure remaining runtime env
-        env:
-          FASTLANE_XCODE_LIST_TIMEOUT: 100
-          FASTLANE_XCODEBUILD_SETTINGS_RETRIES: 15
-          
-      - name: Setup Bundler
-        run: |
-          bundle install
-          
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          
       - name: Run Fastlane for the Subscriber example app
-        working-directory: ./Examples/SubscriberExample
+        working-directory: Examples/SubscriberExample
         run: |        
-          bundle exec fastlane build_and_upload_to_testflight 
+          echo "$MATCH_DEPLOY_KEY" > deployKey
+          eval "$(ssh-agent -s)"
+          chmod 400 deployKey
+          ssh-add deployKey
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          bundle exec fastlane build_and_upload_to_testflight
+        env:
+          MATCH_DEPLOY_KEY: ${{ secrets.APPLE_APPS_MATCH_DEPLOY_KEY }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APPS_APPLICATION_SPECIFIC_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.APPLE_APPS_MATCH_GIT_URL }}
+          MATCH_PASSWORD: ${{ secrets.APPLE_APPS_MATCH_ENCRYPTION_PASSPHRASE }}
+          FASTLANE_XCODE_LIST_TIMEOUT: 100
+          FASTLANE_XCODEBUILD_SETTINGS_RETRIES: 6
+          
