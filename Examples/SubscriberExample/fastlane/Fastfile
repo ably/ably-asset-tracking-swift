@@ -13,6 +13,7 @@ default_platform(:ios)
           git_url: ENV["MATCH_GIT_URL"],
           app_identifier: "com.ably.tracking.example.subscriber",
           type: "appstore",
+          git_basic_authorization: Base64.strict_encode64(ENV["GIT_AUTHORIZATION"]),
           readonly: true)
         build_app(scheme: "SubscriberExample",
                 project: "SubscriberExample.xcodeproj",

@@ -24,9 +24,6 @@ jobs:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
           
       - name: Configure runtime secrets
-        run: |
-          echo "MAPBOX_ACCESS_TOKEN = $EXAMPLE_APPS_MAPBOX_ACCESS_TOKEN" >> Examples/Secrets.xcconfig
-          echo "ABLY_API_KEY = $EXAMPLE_APPS_ABLY_API_KEY" >> Examples/Secrets.xcconfig
         env:
           MAPBOX_ACCESS_TOKEN: ${{ secrets.EXAMPLE_APPS_MAPBOX_ACCESS_TOKEN }}
           ABLY_API_KEY: ${{ secrets.EXAMPLE_APPS_ABLY_API_KEY }}
@@ -34,6 +31,10 @@ jobs:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        run: |
+          echo "MAPBOX_ACCESS_TOKEN = $EXAMPLE_APPS_MAPBOX_ACCESS_TOKEN" >> Examples/Secrets.xcconfig
+          echo "ABLY_API_KEY = $EXAMPLE_APPS_ABLY_API_KEY" >> Examples/Secrets.xcconfig
+
 
       - name: Configure remaining runtime env
         env:
@@ -48,5 +49,7 @@ jobs:
         with:
           submodules: recursive
           
-      - name: Run Fastlane
-        run: bundle exec fastlane build_and_upload_to_testflight
+      - name: Run Fastlane for the Subscriber example app
+        run: |
+        cd Examples/SubscriberExample
+        bundle exec fastlane build_and_upload_to_testflight
