@@ -52,4 +52,4 @@ jobs:
       - name: Run Fastlane for the Subscriber example app
         working-directory: ./Examples/SubscriberExample
         run: |        
-        bundle exec fastlane build_and_upload_to_testflight
+          bundle exec fastlane build_and_upload_to_testflight 
