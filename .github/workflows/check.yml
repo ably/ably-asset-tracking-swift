@@ -60,3 +60,7 @@ jobs:
       - name: Build LogParserExample app
         run: swift build
         working-directory: Tools/Library/LogParserExample
+
+      - name: Build AnalyzeLocationEventFrequencies app
+        run: swift build
+        working-directory: Tools/Analysis/AnalyzeLocationEventFrequencies

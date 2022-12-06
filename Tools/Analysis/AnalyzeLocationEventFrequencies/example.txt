@@ -1,0 +1,1564 @@
+2022-12-15 16:52:07.897840-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Info, common]: Using Mapbox Common SDK v23.1.0(c88f279af)
+2022-12-15 16:52:07.901698-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Info, maps-core]: Using Mapbox Core Maps SDK v10.9.0(10541225b5)
+2022-12-15 16:52:07.991838-0300 PublisherExampleSwiftUI[25086:2129708] [SceneConfiguration] Info.plist contained no UIScene configuration dictionary (looking for configuration named "(no name)")
+2022-12-15 16:52:07.991923-0300 PublisherExampleSwiftUI[25086:2129708] [SceneConfiguration] Info.plist contained no UIScene configuration dictionary (looking for configuration named "(no name)")
+2022-12-15 16:52:07.991986-0300 PublisherExampleSwiftUI[25086:2129708] [SceneConfiguration] Info.plist contained no UIScene configuration dictionary (looking for configuration named "(no name)")
+2022-12-15T16:52:16.311000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTAuth.m:152) RS:0x600000292b20 validating <ARTClientOptions: 0x13eb233c0> - 
+	 key: 4v8EIQ.F3rJog:HRzgFlPm12ZrMHK2QN7MDqKHWKtTPrTc-ol1tXeSZOI; 
+	 token: (null); 
+	 authUrl: (null); 
+	 authMethod: GET; 
+	 hasAuthCallback: 0;
+	 clientId: Asset Tracking Publisher Example;
+2022-12-15T16:52:16.312000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTAuth.m:158) RS:0x600000292b20 setting up auth method Basic (anonymous)
+2022-12-15T16:52:16.312000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RT:0x600000c8d3b0 realtime is transitioning from 0 - Initialized to 1 - Connecting
+2022-12-15T16:52:16.312000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTWebSocketTransport.m:119) R:0x600000c8d3b0 WS:0x6000017bb120 websocket connect with key
+2022-12-15T16:52:16.313000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTWebSocketTransport.m:190) R:0x600000c8d3b0 WS:0x6000017bb120 url wss://realtime.ably.io:443/?agent=ably-asset-tracking-swift/1.0.0-rc.1%20ably-cocoa/1.2.19%20iOS/16.2.0&key=4v8EIQ.F3rJog:HRzgFlPm12ZrMHK2QN7MDqKHWKtTPrTc-ol1tXeSZOI&clientId=Asset%20Tracking%20Publisher%20Example&echo=true&v=1.2&format=msgpack
+2022-12-15T16:52:16.335000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] Reachability: started listening for host realtime.ably.io
+2022-12-15 16:52:16.341404-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Warning, nav-native]: `common::Scheduler::GetCurrent()` hasn't returned a scheduler. `common::RunLoop::getOrCreateForThisThread()` will be used to get a main scheduler.
+2022-12-15 16:52:16.342193-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Info, nav-native]: PersistentConfig path: /Users/lawrence/Library/Developer/CoreSimulator/Devices/4EDF4713-21D4-4BF1-920A-38999893F359/data/Containers/Data/Application/950A8DFF-EB4D-4A39-AE7F-08F52329F481/Library/Application Support/.mapbox/tile_store/navigation/config.json
+2022-12-15 16:52:16.342371-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-15 16:52:16.342472-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-15 16:52:16.345601-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Info, nav-native]: Tiles path = "/Users/lawrence/Library/Developer/CoreSimulator/Devices/4EDF4713-21D4-4BF1-920A-38999893F359/data/Containers/Data/Application/950A8DFF-EB4D-4A39-AE7F-08F52329F481/Library/Application Support/.mapbox/tile_store"
+2022-12-15 16:52:16.345662-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Info, nav-native]: TileStore instance was passed
+2022-12-15 16:52:16.345733-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Info, nav-native]: Endpoint config = "{"dataSet":"mapbox/driving-traffic","host":"https://api.mapbox.com","isFallback":false,"minDiffInDaysToConsiderServerVersion":0,"navigatorVersion":"119.0.1","token":"***...*","userAgent":"PublisherExampleSwiftUI/1.0.0 MapboxNavigation/2.9.0 MapboxCoreNavigation/2.9.0 iOS/16.2.0 (arm64; Simulator)","version":"","versionBeforeFallback":""}"
+2022-12-15 16:52:16.345799-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Info, nav-native]: Creating navigator v.119.0.1
+2022-12-15 16:52:16.345894-0300 PublisherExampleSwiftUI[25086:2129708] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-15 16:52:16.346947-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-15T16:52:16.349000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] Reachability: host realtime.ably.io is reachable: true
+2022-12-15 16:52:16.350284-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-15 16:52:16.350770-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-15 16:52:16.351893-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Warning, valhalla]: No metadata found for tiles
+2022-12-15T16:52:16.386000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:175) passiveLocationManager.passiveLocationManagerDidChangeAuthorization
+2022-12-15 16:52:16.556199-0300 PublisherExampleSwiftUI[25086:2129870] [Mapbox] [Info, nav-native]: Async version config for mapbox/driving-traffic resolved with version 2022_12_11-03_00_05 [{"map":{"tileset_version":"2022_12_11-03_00_05"}}]
+2022-12-15T16:52:16.894000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTWebSocketTransport.m:262) R:0x600000c8d3b0 WS:0x6000017bb120 websocket did open
+2022-12-15T16:52:16.913000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 404, bytes = 0x85a66163 74696f6e 04ac636f 6e6e6563 ... 65727661 6ccd3a98 }'; got: {
+    action = 4;
+    connectionDetails =     {
+        clientId = "Asset Tracking Publisher Example";
+        connectionKey = "e7dwChmfwBJBBp!3kD7nUjLktJS80Lm-21cf6";
+        connectionStateTtl = 120000;
+        maxFrameSize = 262144;
+        maxIdleInterval = 15000;
+        maxInboundRate = 15;
+        maxMessageSize = 16384;
+        maxOutboundRate = 15;
+        serverId = "frontend.d242.4.us-east-1-A.i-073b0e93826c9e82b.e7dwChmfwBJBBp";
+    };
+    connectionId = 3kD7nUjLkt;
+    connectionKey = "e7dwChmfwBJBBp!3kD7nUjLktJS80Lm-21cf6";
+    connectionSerial = "-1";
+}
+2022-12-15T16:52:16.914000-03:00 error: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] ARTDeviceIdentityTokenDetails unarchive failed: Error Domain=NSCocoaErrorDomain Code=4864 "*** -[NSKeyedUnarchiver _initForReadingFromData:error:throwLegacyExceptions:]: data is NULL" UserInfo={NSDebugDescription=*** -[NSKeyedUnarchiver _initForReadingFromData:error:throwLegacyExceptions:]: data is NULL}
+2022-12-15T16:52:16.915000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RT:0x600000c8d3b0 realtime is transitioning from 1 - Connecting to 2 - Connected
+2022-12-15T16:52:16.915000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:220) Connection to Ably changed. New state: ConnectionState.online
+2022-12-15T16:52:16.915000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:922) ablyPublisher.didChangeConnectionState. State: ConnectionState.online
+2022-12-15 16:52:18.603029-0300 PublisherExampleSwiftUI[25086:2129708] [SceneConfiguration] Info.plist contained no UIScene configuration dictionary (looking for configuration named "(no name)")
+2022-12-15T16:52:19.710000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRestChannel.m:126) RS:0x6000017d2b20 instantiating under 'tracking:123'
+2022-12-15T16:52:19.711000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) channel state transitions from 0 - Initialized to 1 - Attaching
+2022-12-15T16:52:19.711000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 10;
+    channel = "tracking:123";
+    flags = 720896;
+}'; got: {length = 41, bytes = 0x83a76368 616e6e65 6cac7472 61636b69 ... 616773ce 000b0000 }
+2022-12-15T16:52:19.711000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 10 - Attach
+2022-12-15T16:52:19.841000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 81, bytes = 0x84a66163 74696f6e 0ba5666c 616773ce ... 39323733 373a2d31 }'; got: {
+    action = 11;
+    channel = "tracking:123";
+    channelSerial = "e7dXYO_QQBJB0841992737:-1";
+    flags = 720897;
+}
+2022-12-15T16:52:19.842000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a86140 (tracking:123) received channel message 11 - Attached
+2022-12-15T16:52:19.842000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:666) R:0x600000c8d3b0 C:0x600000a86140 (tracking:123) <ARTProtocolMessage: 0x60000018d7a0> {
+ count: 0,
+ id: (null),
+ action: 11 (Attached),
+ channel: tracking:123,
+ channelSerial: e7dXYO_QQBJB0841992737:-1,
+ connectionId: (null),
+ connectionKey: (null),
+ connectionSerial: 0,
+ msgSerial: (null),
+ timestamp: (null),
+ flags: 720897,
+ flags.hasPresence: YES,
+ flags.hasBacklog: NO,
+ flags.resumed: NO,
+ messages: (null)
+ params: (null)
+}
+2022-12-15T16:52:19.842000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:170) 0x6000013813b0 PresenceMap sync started
+2022-12-15T16:52:19.842000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) channel state transitions from 1 - Attaching to 2 - Attached
+2022-12-15T16:52:19.843000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:123";
+    msgSerial = 0;
+    presence =     (
+                {
+            action = 2;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 132, bytes = 0x84a96d73 67536572 69616c00 a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:52:19.843000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15T16:52:19.964000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c00 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 0;
+}
+2022-12-15T16:52:19.964000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:102) Entered a channel [id: 123] presence successfully
+2022-12-15T16:52:19.964000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 317, bytes = 0x88a66163 74696f6e 0ea26964 ac336b44 ... a6616374 696f6e02 }'; got: {
+    action = 14;
+    channel = "tracking:123";
+    channelSerial = "e7dXYO_QQBJB0841992737:0";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 0;
+    id = "3kD7nUjLkt:0";
+    presence =     (
+                {
+            action = 2;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:0:0";
+            timestamp = 1671133939880;
+        }
+    );
+    timestamp = 1671133939880;
+}
+2022-12-15T16:52:19.965000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a86140 (tracking:123) received channel message 14 - Presence
+2022-12-15T16:52:19.965000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) handle PRESENCE message
+2022-12-15T16:52:19.965000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:106) local member 3kD7nUjLkt:Asset Tracking Publisher Example with action PRESENT has been added
+2022-12-15T16:52:19.967000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimePresence.m:201) R:0x600000c8d3b0 C:0x600000a86140 (tracking:123) sync is in progress, waiting until the presence members is synchronized
+2022-12-15T16:52:19.969000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:123";
+    msgSerial = 1;
+    presence =     (
+                {
+            action = 4;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"resolution\":{\"desiredInterval\":5000,\"minimumDisplacement\":100,\"accuracy\":\"BALANCED\"},\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 218, bytes = 0x84a96d73 67536572 69616c01 a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:52:19.969000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15 16:52:19.972409-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238097433659905ns <= 1671133939421115904ns. No status will be produced.
+2022-12-15 16:52:19.995271-0300 PublisherExampleSwiftUI[25086:2129708] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x6000032e9aa0> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2022-12-15 16:52:20.021833-0300 PublisherExampleSwiftUI[25086:2129708]   HALC_ProxyObjectMap.cpp:153    HALC_ProxyObjectMap::_CopyObjectByObjectID: failed to create the local object
+2022-12-15 16:52:20.021963-0300 PublisherExampleSwiftUI[25086:2129708]      HALC_ShellDevice.cpp:2606   HALC_ShellDevice::RebuildControlList: couldn't find the control object
+2022-12-15T16:52:20.035000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:52:20.035000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:52:20.036000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:52:20.038000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.0325498,37.335195720000002,0]},\"properties\":{\"bearing\":179.64999389648438,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":1.940000057220459,\"time\":1671133939.4211159,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 2;
+}'; got: {length = 429, bytes = 0x84a96d73 67536572 69616c02 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:20.038000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:52:20.054000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 239, bytes = 0x84a66163 74696f6e 10a76368 616e6e65 ... a6616374 696f6e01 }'; got: {
+    action = 16;
+    channel = "tracking:123";
+    channelSerial = "e7dwChmfwBJBBp23352802:";
+    presence =     (
+                {
+            action = 1;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:0:0";
+            timestamp = 1671133939880;
+        }
+    );
+}
+2022-12-15T16:52:20.054000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a86140 (tracking:123) received channel message 16 - Sync
+2022-12-15T16:52:20.054000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:886) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) PresenceMap sync is in progress
+2022-12-15T16:52:20.054000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:91) Presence member "3kD7nUjLkt:Asset Tracking Publisher Example" with action Present has been ignored
+2022-12-15T16:52:20.054000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:132) 0x6000013813b0 cleaning up absent members (syncSessionId=1)
+2022-12-15T16:52:20.054000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:142) 0x6000013813b0 leaving members not present in sync (syncSessionId=1)
+2022-12-15T16:52:20.054000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:154) 0x6000013813b0 reentering local members missed from sync (syncSessionId=1)
+2022-12-15T16:52:20.059000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:132) 0x6000013813b0 cleaning up absent members (syncSessionId=1)
+2022-12-15T16:52:20.059000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:184) 0x6000013813b0 PresenceMap sync ended
+2022-12-15T16:52:20.059000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:899) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) PresenceMap sync ended
+2022-12-15T16:52:20.092000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 403, bytes = 0x88a66163 74696f6e 0ea26964 ac336b44 ... a6616374 696f6e04 }'; got: {
+    action = 14;
+    channel = "tracking:123";
+    channelSerial = "e7dXYO_QQBJB0841992737:1";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 1;
+    id = "3kD7nUjLkt:1";
+    presence =     (
+                {
+            action = 4;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"resolution\":{\"desiredInterval\":5000,\"minimumDisplacement\":100,\"accuracy\":\"BALANCED\"},\"rawLocations\":false}";
+            id = "3kD7nUjLkt:1:0";
+            timestamp = 1671133940006;
+        }
+    );
+    timestamp = 1671133940006;
+}
+2022-12-15T16:52:20.092000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a86140 (tracking:123) received channel message 14 - Presence
+2022-12-15T16:52:20.092000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) handle PRESENCE message
+2022-12-15T16:52:20.092000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:106) local member 3kD7nUjLkt:Asset Tracking Publisher Example with action PRESENT has been added
+2022-12-15 16:52:20.112651-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15T16:52:20.114000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:239) Get presence update from channel
+2022-12-15T16:52:20.116000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.present, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15T16:52:20.118000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:250) Received presence update from channel
+2022-12-15T16:52:20.118000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.update, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15 16:52:20.124989-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:52:20.233737-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:52:20.358213-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15T16:52:20.469000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c01 }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 1;
+}
+2022-12-15T16:52:20.469000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:52:20.470947-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:52:20.592131-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:52:20.704092-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15T16:52:31.966000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 9, bytes = 0x81a6616374696f6e00}'; got: {
+    action = 0;
+}
+2022-12-15 16:52:32.437739-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238084426237953ns <= 1671133952428537856ns. No status will be produced.
+2022-12-15T16:52:32.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:52:32.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:52:32.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:52:32.444000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.03369603,37.334779769999997,0]},\"properties\":{\"bearing\":255.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":17.209999084472656,\"time\":1671133952.4285378,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 3;
+}'; got: {length = 431, bytes = 0x84a96d73 67536572 69616c03 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:32.444000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:52:32.571000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c03 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 3;
+}
+2022-12-15T16:52:32.571000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:52:32.571703-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:52:32.802513-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:52:32.923491-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:52:32.925871-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:52:33.051061-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:52:33.179466-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:52:33.276214-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:52:38.439062-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238078421879553ns <= 1671133958432896256ns. No status will be produced.
+2022-12-15T16:52:38.441000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:52:38.441000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:52:38.441000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:52:38.441000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.0350347,37.33460316,0]},\"properties\":{\"bearing\":265.07998657226562,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":22.450000762939453,\"time\":1671133958.4328961,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 4;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c04 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:38.442000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:52:38.561000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c04 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 4;
+}
+2022-12-15T16:52:38.561000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:52:38.837138-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:52:38.837729-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:52:39.238856-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:52:39.239472-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:52:39.363096-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:52:39.652598-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:52:39.710931-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:52:43.433337-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238073431572737ns <= 1671133963423203072ns. No status will be produced.
+2022-12-15T16:52:43.439000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:52:43.439000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:52:43.439000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:52:43.440000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.03638578,37.33454218,0]},\"properties\":{\"bearing\":268.95001220703125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":25.100000381469727,\"time\":1671133963.423203,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 5;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c05 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:43.440000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15 16:52:43.564714-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:52:43.565582-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15T16:52:43.580000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c05 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 5;
+}
+2022-12-15T16:52:43.581000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:52:43.693344-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:52:43.817221-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:52:43.918188-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:52:43.941218-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:52:44.045205-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:52:47.025000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 9, bytes = 0x81a6616374696f6e00}'; got: {
+    action = 0;
+}
+2022-12-15 16:52:47.428658-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238069435787777ns <= 1671133967418988032ns. No status will be produced.
+2022-12-15 16:52:47.431574-0300 PublisherExampleSwiftUI[25086:2130120] [connection] nw_connection_add_timestamp_locked_on_nw_queue [C2] Hit maximum timestamp count, will start dropping events
+2022-12-15T16:52:47.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:52:47.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:52:47.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:52:47.435000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.03753997,37.33453652,0]},\"properties\":{\"bearing\":268.95001220703125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":26.120000839233398,\"time\":1671133967.418988,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 6;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c06 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:47.447000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15 16:52:47.563636-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:52:47.564165-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15T16:52:47.564000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c06 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 6;
+}
+2022-12-15T16:52:47.564000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:52:47.694222-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:52:47.695733-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:52:47.822231-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:52:47.822981-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:52:47.955464-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:52:51.432646-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238065433461761ns <= 1671133971421314048ns. No status will be produced.
+2022-12-15T16:52:51.442000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:52:51.442000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:52:51.442000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:52:51.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.03875936999999,37.334503789999999,0]},\"properties\":{\"bearing\":267.8900146484375,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":27.979999542236328,\"time\":1671133971.421314,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 7;
+}'; got: {length = 435, bytes = 0x84a96d73 67536572 69616c07 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:51.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15 16:52:51.561609-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15T16:52:51.564000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c07 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 7;
+}
+2022-12-15T16:52:51.564000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:52:51.684716-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:52:51.784321-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:52:51.808129-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:52:51.912747-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:52:51.934234-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:52:52.035241-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:52:53.337000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRestChannel.m:126) RS:0x6000017e8c00 instantiating under 'tracking:234'
+2022-12-15T16:52:53.337000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) channel state transitions from 0 - Initialized to 1 - Attaching
+2022-12-15T16:52:53.337000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 10;
+    channel = "tracking:234";
+    flags = 720896;
+}'; got: {length = 41, bytes = 0x83a76368 616e6e65 6cac7472 61636b69 ... 616773ce 000b0000 }
+2022-12-15T16:52:53.337000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 10 - Attach
+2022-12-15T16:52:53.469000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 81, bytes = 0x84a66163 74696f6e 0ba5666c 616773ce ... 37373636 303a2d31 }'; got: {
+    action = 11;
+    channel = "tracking:234";
+    channelSerial = "e7dCEbzgQBJB9k43077660:-1";
+    flags = 720897;
+}
+2022-12-15T16:52:53.470000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) received channel message 11 - Attached
+2022-12-15T16:52:53.470000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:666) R:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) <ARTProtocolMessage: 0x6000001a6490> {
+ count: 0,
+ id: (null),
+ action: 11 (Attached),
+ channel: tracking:234,
+ channelSerial: e7dCEbzgQBJB9k43077660:-1,
+ connectionId: (null),
+ connectionKey: (null),
+ connectionSerial: 0,
+ msgSerial: (null),
+ timestamp: (null),
+ flags: 720897,
+ flags.hasPresence: YES,
+ flags.hasBacklog: NO,
+ flags.resumed: NO,
+ messages: (null)
+ params: (null)
+}
+2022-12-15T16:52:53.470000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:170) 0x600001392350 PresenceMap sync started
+2022-12-15T16:52:53.470000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) channel state transitions from 1 - Attaching to 2 - Attached
+2022-12-15T16:52:53.471000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:234";
+    msgSerial = 8;
+    presence =     (
+                {
+            action = 2;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 132, bytes = 0x84a96d73 67536572 69616c08 a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:52:53.471000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15T16:52:53.600000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c08 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 8;
+}
+2022-12-15T16:52:53.601000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:102) Entered a channel [id: 234] presence successfully
+2022-12-15T16:52:53.602000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 317, bytes = 0x88a66163 74696f6e 0ea26964 ac336b44 ... a6616374 696f6e02 }'; got: {
+    action = 14;
+    channel = "tracking:234";
+    channelSerial = "e7dCEbzgQBJB9k43077660:0";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 2;
+    id = "3kD7nUjLkt:8";
+    presence =     (
+                {
+            action = 2;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:8:0";
+            timestamp = 1671133973508;
+        }
+    );
+    timestamp = 1671133973508;
+}
+2022-12-15T16:52:53.602000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) received channel message 14 - Presence
+2022-12-15T16:52:53.602000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) handle PRESENCE message
+2022-12-15T16:52:53.602000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:106) local member 3kD7nUjLkt:Asset Tracking Publisher Example with action PRESENT has been added
+2022-12-15T16:52:53.603000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimePresence.m:201) R:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) sync is in progress, waiting until the presence members is synchronized
+2022-12-15T16:52:53.603000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:81) Received requestLocationUpdate
+2022-12-15T16:52:53.605000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:234";
+    msgSerial = 9;
+    presence =     (
+                {
+            action = 4;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"resolution\":{\"desiredInterval\":5000,\"minimumDisplacement\":100,\"accuracy\":\"BALANCED\"},\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 218, bytes = 0x84a96d73 67536572 69616c09 a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:52:53.605000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15 16:52:53.614500-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238063426798849ns <= 1671133973427976960ns. No status will be produced.
+2022-12-15T16:52:53.615000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:52:53.615000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:52:53.615000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:52:53.616000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.03941089,37.33448791,0]},\"properties\":{\"bearing\":267.8900146484375,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":29.239999771118164,\"time\":1671133973.4279768,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 10;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c0a a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:53.616000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:52:53.675000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 239, bytes = 0x84a66163 74696f6e 10a76368 616e6e65 ... a6616374 696f6e01 }'; got: {
+    action = 16;
+    channel = "tracking:234";
+    channelSerial = "e7dwChmfwBJBBp82787442:";
+    presence =     (
+                {
+            action = 1;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:8:0";
+            timestamp = 1671133973508;
+        }
+    );
+}
+2022-12-15T16:52:53.675000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) received channel message 16 - Sync
+2022-12-15T16:52:53.675000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:886) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) PresenceMap sync is in progress
+2022-12-15T16:52:53.676000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:91) Presence member "3kD7nUjLkt:Asset Tracking Publisher Example" with action Present has been ignored
+2022-12-15T16:52:53.676000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:132) 0x600001392350 cleaning up absent members (syncSessionId=1)
+2022-12-15T16:52:53.676000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:142) 0x600001392350 leaving members not present in sync (syncSessionId=1)
+2022-12-15T16:52:53.676000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:154) 0x600001392350 reentering local members missed from sync (syncSessionId=1)
+2022-12-15T16:52:53.676000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:132) 0x600001392350 cleaning up absent members (syncSessionId=1)
+2022-12-15T16:52:53.676000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:184) 0x600001392350 PresenceMap sync ended
+2022-12-15T16:52:53.676000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:899) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) PresenceMap sync ended
+2022-12-15T16:52:53.693000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:239) Get presence update from channel
+2022-12-15T16:52:53.693000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.present, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15T16:52:53.724000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 403, bytes = 0x88a66163 74696f6e 0ea26964 ac336b44 ... a6616374 696f6e04 }'; got: {
+    action = 14;
+    channel = "tracking:234";
+    channelSerial = "e7dCEbzgQBJB9k43077660:1";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 3;
+    id = "3kD7nUjLkt:9";
+    presence =     (
+                {
+            action = 4;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"resolution\":{\"desiredInterval\":5000,\"minimumDisplacement\":100,\"accuracy\":\"BALANCED\"},\"rawLocations\":false}";
+            id = "3kD7nUjLkt:9:0";
+            timestamp = 1671133973640;
+        }
+    );
+    timestamp = 1671133973640;
+}
+2022-12-15T16:52:53.724000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) received channel message 14 - Presence
+2022-12-15T16:52:53.724000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) handle PRESENCE message
+2022-12-15T16:52:53.724000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:106) local member 3kD7nUjLkt:Asset Tracking Publisher Example with action PRESENT has been added
+2022-12-15T16:52:53.724000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:250) Received presence update from channel
+2022-12-15T16:52:53.724000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.update, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15 16:52:53.737912-0300 PublisherExampleSwiftUI[25086:2130122] [connection] nw_connection_add_timestamp_locked_on_nw_queue [C3] Hit maximum timestamp count, will start dropping events
+2022-12-15 16:52:53.739471-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:52:53.739959-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:52:53.862693-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:52:53.864246-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:52:53.989906-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:52:53.990084-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15T16:52:54.092000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c09 }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 9;
+}
+2022-12-15T16:52:54.093000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15 16:52:54.344778-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:52:57.426570-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238059434558721ns <= 1671133977420217088ns. No status will be produced.
+2022-12-15T16:52:57.429000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:52:57.429000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:52:57.429000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:52:57.429000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04077830999999,37.334458400000003,0]},\"properties\":{\"bearing\":268.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":31.670000076293945,\"time\":1671133977.420217,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 11;
+}'; got: {length = 436, bytes = 0x84a96d73 67536572 69616c0b a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:57.429000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:52:57.433000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.03941089,37.33448791,0]},\"properties\":{\"bearing\":267.8900146484375,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":29.239999771118164,\"time\":1671133973.4279768,\"accuracySpeed\":0}}],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04077830999999,37.334458400000003,0]},\"properties\":{\"bearing\":268.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":31.670000076293945,\"time\":1671133977.420217,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 12;
+}'; got: {length = 683, bytes = 0x84a96d73 67536572 69616c0c a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:52:57.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:52:57.554000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c0b }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 11;
+}
+2022-12-15T16:52:57.555000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15 16:52:57.556653-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:52:57.571162-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:52:57.684346-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:52:57.812698-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:52:57.922390-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:52:57.936347-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:52:58.049388-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:52:58.052000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c0c }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 12;
+}
+2022-12-15T16:52:58.053000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:53:01.430351-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238055428056833ns <= 1671133981426718976ns. No status will be produced.
+2022-12-15T16:53:01.433000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:01.433000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:01.433000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:01.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04226334000001,37.334448430000002,0]},\"properties\":{\"bearing\":270,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.610000610351562,\"time\":1671133981.426719,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 13;
+}'; got: {length = 421, bytes = 0x84a96d73 67536572 69616c0d a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:01.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:01.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04226334000001,37.334448430000002,0]},\"properties\":{\"bearing\":270,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.610000610351562,\"time\":1671133981.426719,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 14;
+}'; got: {length = 421, bytes = 0x84a96d73 67536572 69616c0e a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:01.435000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15 16:53:01.554090-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15T16:53:01.556000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c0d }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 13;
+}
+2022-12-15T16:53:01.557000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15 16:53:01.558655-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:01.731158-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:01.901961-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15T16:53:01.915000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 9, bytes = 0x81a6616374696f6e00}'; got: {
+    action = 0;
+}
+2022-12-15T16:53:02.061000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c0e }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 14;
+}
+2022-12-15T16:53:02.063000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:53:02.084364-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:02.238598-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:53:02.248248-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:04.439497-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238052426173953ns <= 1671133984428601856ns. No status will be produced.
+2022-12-15T16:53:04.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:04.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:04.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:04.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04342255,37.334459449999997,0]},\"properties\":{\"bearing\":270,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":34.509998321533203,\"time\":1671133984.4286017,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 15;
+}'; got: {length = 416, bytes = 0x84a96d73 67536572 69616c0f a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:04.453000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:04.453000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04342255,37.334459449999997,0]},\"properties\":{\"bearing\":270,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":34.509998321533203,\"time\":1671133984.4286017,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 16;
+}'; got: {length = 416, bytes = 0x84a96d73 67536572 69616c10 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:04.453000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:04.572000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c0f }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 15;
+}
+2022-12-15T16:53:04.573000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15 16:53:04.574819-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:53:04.707771-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:04.792380-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:04.841916-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:04.920099-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:04.968197-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:05.046385-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:53:05.076000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c10 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 16;
+}
+2022-12-15T16:53:05.076000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:53:07.442577-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238049420856833ns <= 1671133987433918976ns. No status will be produced.
+2022-12-15T16:53:07.447000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:07.447000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:07.447000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:07.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04458579,37.33445442,0]},\"properties\":{\"bearing\":269.64999389648438,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":34.060001373291016,\"time\":1671133987.433919,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 17;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c11 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:07.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:07.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04458579,37.33445442,0]},\"properties\":{\"bearing\":269.64999389648438,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":34.060001373291016,\"time\":1671133987.433919,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 18;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c12 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:07.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15 16:53:07.575737-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:07.576294-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15T16:53:07.586000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c11 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 17;
+}
+2022-12-15T16:53:07.586000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15 16:53:07.712174-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:07.713567-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:07.847059-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:07.975921-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:53:08.065284-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15T16:53:08.082000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c12 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 18;
+}
+2022-12-15T16:53:08.083000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:53:10.438092-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238046422109953ns <= 1671133990432665856ns. No status will be produced.
+2022-12-15T16:53:10.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:10.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:10.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:10.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04571727,37.334436570000001,0]},\"properties\":{\"bearing\":267.54000854492188,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.009998321533203,\"time\":1671133990.4326658,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 19;
+}'; got: {length = 431, bytes = 0x84a96d73 67536572 69616c13 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:10.444000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:10.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04571727,37.334436570000001,0]},\"properties\":{\"bearing\":267.54000854492188,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.009998321533203,\"time\":1671133990.4326658,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 20;
+}'; got: {length = 431, bytes = 0x84a96d73 67536572 69616c14 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:10.447000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:10.563000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c13 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 19;
+}
+2022-12-15T16:53:10.563000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15 16:53:10.570486-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:53:10.699561-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:10.791404-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:10.826685-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:10.920821-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:10.949621-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:11.047334-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:53:11.065000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c14 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 20;
+}
+2022-12-15T16:53:11.066000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15T16:53:11.674000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRestChannel.m:126) RS:0x600001705ce0 instantiating under 'tracking:345'
+2022-12-15T16:53:11.674000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) channel state transitions from 0 - Initialized to 1 - Attaching
+2022-12-15T16:53:11.674000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 10;
+    channel = "tracking:345";
+    flags = 720896;
+}'; got: {length = 41, bytes = 0x83a76368 616e6e65 6cac7472 61636b69 ... 616773ce 000b0000 }
+2022-12-15T16:53:11.674000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 10 - Attach
+2022-12-15T16:53:11.803000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 81, bytes = 0x84a66163 74696f6e 0ba5666c 616773ce ... 36333332 313a2d31 }'; got: {
+    action = 11;
+    channel = "tracking:345";
+    channelSerial = "e7dXYO_QQBJB0866163321:-1";
+    flags = 720897;
+}
+2022-12-15T16:53:11.803000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a27020 (tracking:345) received channel message 11 - Attached
+2022-12-15T16:53:11.803000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:666) R:0x600000c8d3b0 C:0x600000a27020 (tracking:345) <ARTProtocolMessage: 0x6000001a6760> {
+ count: 0,
+ id: (null),
+ action: 11 (Attached),
+ channel: tracking:345,
+ channelSerial: e7dXYO_QQBJB0866163321:-1,
+ connectionId: (null),
+ connectionKey: (null),
+ connectionSerial: 0,
+ msgSerial: (null),
+ timestamp: (null),
+ flags: 720897,
+ flags.hasPresence: YES,
+ flags.hasBacklog: NO,
+ flags.resumed: NO,
+ messages: (null)
+ params: (null)
+}
+2022-12-15T16:53:11.803000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:170) 0x6000013af570 PresenceMap sync started
+2022-12-15T16:53:11.803000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) channel state transitions from 1 - Attaching to 2 - Attached
+2022-12-15T16:53:11.803000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:345";
+    msgSerial = 21;
+    presence =     (
+                {
+            action = 2;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 132, bytes = 0x84a96d73 67536572 69616c15 a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:53:11.803000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15T16:53:11.923000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c15 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 21;
+}
+2022-12-15T16:53:11.923000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:102) Entered a channel [id: 345] presence successfully
+2022-12-15T16:53:11.923000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimePresence.m:201) R:0x600000c8d3b0 C:0x600000a27020 (tracking:345) sync is in progress, waiting until the presence members is synchronized
+2022-12-15T16:53:11.923000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:81) Received requestLocationUpdate
+2022-12-15T16:53:11.924000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:345";
+    msgSerial = 22;
+    presence =     (
+                {
+            action = 4;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"resolution\":{\"desiredInterval\":5000,\"minimumDisplacement\":100,\"accuracy\":\"BALANCED\"},\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 218, bytes = 0x84a96d73 67536572 69616c16 a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:53:11.924000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15T16:53:11.924000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 319, bytes = 0x88a66163 74696f6e 0ea26964 ad336b44 ... a6616374 696f6e02 }'; got: {
+    action = 14;
+    channel = "tracking:345";
+    channelSerial = "e7dXYO_QQBJB0866163321:0";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 4;
+    id = "3kD7nUjLkt:21";
+    presence =     (
+                {
+            action = 2;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:21:0";
+            timestamp = 1671133991840;
+        }
+    );
+    timestamp = 1671133991840;
+}
+2022-12-15T16:53:11.925000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a27020 (tracking:345) received channel message 14 - Presence
+2022-12-15T16:53:11.925000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) handle PRESENCE message
+2022-12-15T16:53:11.925000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:106) local member 3kD7nUjLkt:Asset Tracking Publisher Example with action PRESENT has been added
+2022-12-15T16:53:11.928000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:11.928000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:11.928000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15 16:53:11.927761-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238045430835969ns <= 1671133991423939840ns. No status will be produced.
+2022-12-15T16:53:11.928000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:345";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04607568,37.334417080000001,0]},\"properties\":{\"bearing\":265.42999267578125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":32.659999847412109,\"time\":1671133991.4239399,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 23;
+}'; got: {length = 431, bytes = 0x84a96d73 67536572 69616c17 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:11.928000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:11.929000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:250) Received presence update from channel
+2022-12-15T16:53:11.929000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.enter, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15T16:53:12.017000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 240, bytes = 0x84a66163 74696f6e 10a76368 616e6e65 ... a6616374 696f6e01 }'; got: {
+    action = 16;
+    channel = "tracking:345";
+    channelSerial = "e7dwChmfwBJBBp75625610:";
+    presence =     (
+                {
+            action = 1;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:21:0";
+            timestamp = 1671133991840;
+        }
+    );
+}
+2022-12-15T16:53:12.017000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a27020 (tracking:345) received channel message 16 - Sync
+2022-12-15T16:53:12.017000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:886) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) PresenceMap sync is in progress
+2022-12-15T16:53:12.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:91) Presence member "3kD7nUjLkt:Asset Tracking Publisher Example" with action Present has been ignored
+2022-12-15T16:53:12.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:132) 0x6000013af570 cleaning up absent members (syncSessionId=1)
+2022-12-15T16:53:12.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:142) 0x6000013af570 leaving members not present in sync (syncSessionId=1)
+2022-12-15T16:53:12.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:154) 0x6000013af570 reentering local members missed from sync (syncSessionId=1)
+2022-12-15T16:53:12.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:132) 0x6000013af570 cleaning up absent members (syncSessionId=1)
+2022-12-15T16:53:12.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:184) 0x6000013af570 PresenceMap sync ended
+2022-12-15T16:53:12.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:239) Get presence update from channel
+2022-12-15T16:53:12.025000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:899) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) PresenceMap sync ended
+2022-12-15T16:53:12.026000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.present, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15T16:53:12.048000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 405, bytes = 0x88a66163 74696f6e 0ea26964 ad336b44 ... a6616374 696f6e04 }'; got: {
+    action = 14;
+    channel = "tracking:345";
+    channelSerial = "e7dXYO_QQBJB0866163321:1";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 5;
+    id = "3kD7nUjLkt:22";
+    presence =     (
+                {
+            action = 4;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"resolution\":{\"desiredInterval\":5000,\"minimumDisplacement\":100,\"accuracy\":\"BALANCED\"},\"rawLocations\":false}";
+            id = "3kD7nUjLkt:22:0";
+            timestamp = 1671133991961;
+        }
+    );
+    timestamp = 1671133991961;
+}
+2022-12-15T16:53:12.048000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a27020 (tracking:345) received channel message 14 - Presence
+2022-12-15T16:53:12.048000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) handle PRESENCE message
+2022-12-15T16:53:12.048000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTPresenceMap.m:106) local member 3kD7nUjLkt:Asset Tracking Publisher Example with action PRESENT has been added
+2022-12-15T16:53:12.048000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:250) Received presence update from channel
+2022-12-15T16:53:12.048000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.update, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15 16:53:12.049428-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:12.052414-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:53:12.174455-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:12.300944-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:12.403446-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:12.422813-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15T16:53:12.424000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c16 }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 22;
+}
+2022-12-15T16:53:12.424000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 345
+2022-12-15 16:53:12.525832-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:53:15.427651-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238041436836865ns <= 1671133995417938944ns. No status will be produced.
+2022-12-15T16:53:15.433000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:15.433000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:15.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:15.434000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:345";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04751057999999,37.334269849999998,0]},\"properties\":{\"bearing\":259.10000610351562,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":30.940000534057617,\"time\":1671133995.4179389,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 24;
+}'; got: {length = 437, bytes = 0x84a96d73 67536572 69616c18 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:15.442000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:15.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04607568,37.334417080000001,0]},\"properties\":{\"bearing\":265.42999267578125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":32.659999847412109,\"time\":1671133991.4239399,\"accuracySpeed\":0}}],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04751057999999,37.334269849999998,0]},\"properties\":{\"bearing\":259.10000610351562,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":30.940000534057617,\"time\":1671133995.4179389,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 25;
+}'; got: {length = 692, bytes = 0x84a96d73 67536572 69616c19 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:15.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:15.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04607568,37.334417080000001,0]},\"properties\":{\"bearing\":265.42999267578125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":32.659999847412109,\"time\":1671133991.4239399,\"accuracySpeed\":0}}],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04751057999999,37.334269849999998,0]},\"properties\":{\"bearing\":259.10000610351562,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":30.940000534057617,\"time\":1671133995.4179389,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 26;
+}'; got: {length = 692, bytes = 0x84a96d73 67536572 69616c1a a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:15.444000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:15.561000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c18 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 24;
+}
+2022-12-15T16:53:15.562000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 345
+2022-12-15 16:53:15.563915-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:53:15.565230-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:15.697411-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:15.698334-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:15.824044-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:15.827473-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:15.952374-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:53:16.062000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c19 }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 25;
+}
+2022-12-15T16:53:16.062000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15T16:53:16.062000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15T16:53:16.920000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 9, bytes = 0x81a6616374696f6e00}'; got: {
+    action = 0;
+}
+2022-12-15 16:53:19.433578-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238037431190785ns <= 1671133999423585024ns. No status will be produced.
+2022-12-15T16:53:19.439000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:19.439000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:19.440000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:19.440000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:345";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04886543000001,37.333987759999999,0]},\"properties\":{\"bearing\":254.17999267578125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":31.600000381469727,\"time\":1671133999.4235849,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 27;
+}'; got: {length = 437, bytes = 0x84a96d73 67536572 69616c1b a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:19.440000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:19.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04886543000001,37.333987759999999,0]},\"properties\":{\"bearing\":254.17999267578125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":31.600000381469727,\"time\":1671133999.4235849,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 28;
+}'; got: {length = 437, bytes = 0x84a96d73 67536572 69616c1c a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:19.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:19.449000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.04886543000001,37.333987759999999,0]},\"properties\":{\"bearing\":254.17999267578125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":31.600000381469727,\"time\":1671133999.4235849,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 29;
+}'; got: {length = 437, bytes = 0x84a96d73 67536572 69616c1d a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:19.449000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:19.566000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c1b }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 27;
+}
+2022-12-15T16:53:19.567000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 345
+2022-12-15 16:53:19.568591-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:19.593131-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:53:19.723373-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:19.853297-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:19.922718-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:19.981508-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:20.052595-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:53:20.068000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c1c }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 28;
+}
+2022-12-15T16:53:20.068000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15T16:53:20.069000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:53:23.442225-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238033421356801ns <= 1671134003433419008ns. No status will be produced.
+2022-12-15T16:53:23.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:23.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:23.448000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:23.449000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:345";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05028306,37.333679979999999,0]},\"properties\":{\"bearing\":255.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":32.979999542236328,\"time\":1671134003.433419,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 30;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c1e a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:23.449000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:23.458000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05028306,37.333679979999999,0]},\"properties\":{\"bearing\":255.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":32.979999542236328,\"time\":1671134003.433419,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 31;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c1f a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:23.458000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:23.460000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05028306,37.333679979999999,0]},\"properties\":{\"bearing\":255.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":32.979999542236328,\"time\":1671134003.433419,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 32;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c20 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:23.460000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:23.576000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c1e }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 30;
+}
+2022-12-15 16:53:23.576145-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15T16:53:23.576000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 345
+2022-12-15 16:53:23.577482-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:53:23.701858-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:23.703887-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:23.830418-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:23.955786-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:53:24.059545-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15T16:53:24.078000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c1f }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 31;
+}
+2022-12-15T16:53:24.078000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15T16:53:24.079000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:53:26.430210-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238030434414849ns <= 1671134006420360960ns. No status will be produced.
+2022-12-15T16:53:26.436000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:26.436000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:26.436000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:26.437000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:345";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05137547,37.33344889,0]},\"properties\":{\"bearing\":255.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.729999542236328,\"time\":1671134006.420361,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 33;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c21 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:26.437000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:26.446000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05137547,37.33344889,0]},\"properties\":{\"bearing\":255.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.729999542236328,\"time\":1671134006.420361,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 34;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c22 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:26.447000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:26.447000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05137547,37.33344889,0]},\"properties\":{\"bearing\":255.58999633789062,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.729999542236328,\"time\":1671134006.420361,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 35;
+}'; got: {length = 423, bytes = 0x84a96d73 67536572 69616c23 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:26.447000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15 16:53:26.560184-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15T16:53:26.566000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c21 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 33;
+}
+2022-12-15T16:53:26.566000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 345
+2022-12-15 16:53:26.686468-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:26.802642-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:26.934993-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:27.044456-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15T16:53:27.071000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c22 }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 34;
+}
+2022-12-15T16:53:27.072000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15T16:53:27.072000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:53:27.178113-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15 16:53:27.288279-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:29.439693-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238027425431553ns <= 1671134009429344256ns. No status will be produced.
+2022-12-15T16:53:29.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:29.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:29.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:29.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:345";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05246948,37.333211009999999,0]},\"properties\":{\"bearing\":254.8800048828125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.490001678466797,\"time\":1671134009.4293442,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 36;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c24 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:29.445000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:29.454000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05246948,37.333211009999999,0]},\"properties\":{\"bearing\":254.8800048828125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.490001678466797,\"time\":1671134009.4293442,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 37;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c25 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:29.454000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:29.454000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05246948,37.333211009999999,0]},\"properties\":{\"bearing\":254.8800048828125,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.490001678466797,\"time\":1671134009.4293442,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 38;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c26 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:29.455000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15 16:53:29.571029-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:29.572225-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15T16:53:29.575000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c24 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 36;
+}
+2022-12-15T16:53:29.575000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 345
+2022-12-15 16:53:29.701401-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:29.702367-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:29.832330-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:29.832724-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15 16:53:29.961390-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:53:30.076000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c25 }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 37;
+}
+2022-12-15T16:53:30.076000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15T16:53:30.077000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15T16:53:31.914000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 9, bytes = 0x81a6616374696f6e00}'; got: {
+    action = 0;
+}
+2022-12-15 16:53:33.438071-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Warning, nav-native]: Got location timestamp from the past: -7552238023425520897ns <= 1671134013429254912ns. No status will be produced.
+2022-12-15T16:53:33.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService]@(DefaultLocationService.swift:179) passiveLocationManager.didUpdateLocation
+2022-12-15T16:53:33.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:898) locationService.didUpdateRawLocation.
+2022-12-15T16:53:33.443000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:903) locationService.didUpdateEnhancedLocation.
+2022-12-15T16:53:33.444000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:345";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05391527,37.332904059999997,0]},\"properties\":{\"bearing\":255.22999572753906,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.419998168945312,\"time\":1671134013.429255,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 39;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c27 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:33.444000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:33.444000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:234";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05391527,37.332904059999997,0]},\"properties\":{\"bearing\":255.22999572753906,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.419998168945312,\"time\":1671134013.429255,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 40;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c28 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:33.454000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:33.455000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 15;
+    channel = "tracking:123";
+    messages =     (
+                {
+            connectionId = 3kD7nUjLkt;
+            data = "{\"skippedLocations\":[],\"type\":\"ACTUAL\",\"intermediateLocations\":[],\"location\":{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.05391527,37.332904059999997,0]},\"properties\":{\"bearing\":255.22999572753906,\"accuracyBearing\":0,\"accuracyHorizontal\":5,\"speed\":33.419998168945312,\"time\":1671134013.429255,\"accuracySpeed\":0}}}";
+            name = enhanced;
+        }
+    );
+    msgSerial = 41;
+}'; got: {length = 430, bytes = 0x84a96d73 67536572 69616c29 a86d6573 ... a6616374 696f6e0f }
+2022-12-15T16:53:33.455000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 15 - Message
+2022-12-15T16:53:33.568000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c27 }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 39;
+}
+2022-12-15T16:53:33.568000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 345
+2022-12-15 16:53:33.575766-0300 PublisherExampleSwiftUI[25086:2130100] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733191/0 status = Unauthorized
+2022-12-15 16:53:33.823024-0300 PublisherExampleSwiftUI[25086:2130102] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/733192/0 status = Unauthorized
+2022-12-15 16:53:33.925878-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731751/0 status = Unauthorized
+2022-12-15 16:53:34.056453-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45777/0 status = Unauthorized
+2022-12-15T16:53:34.064000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c28 }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 40;
+}
+2022-12-15T16:53:34.065000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 234
+2022-12-15T16:53:34.065000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: online for trackable: 123
+2022-12-15 16:53:34.173684-0300 PublisherExampleSwiftUI[25086:2130101] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 2/731752/0 status = Unauthorized
+2022-12-15 16:53:34.178658-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 1/45778/0 status = Unauthorized
+2022-12-15 16:53:34.301432-0300 PublisherExampleSwiftUI[25086:2130099] [Mapbox] [Error, nav-native]: Failed tile response:  dataset mapbox/driving-traffic version 2022_12_11-03_00_05 tile = 0/2804/0 status = Unauthorized
+2022-12-15T16:53:35.021000-03:00 debug: Received location history data: {"version":"2.0.0","agents":"ably-asset-tracking-swift\/1.0.0-rc.1 ably-cocoa\/1.2.19 iOS\/16.2.0","events":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.0325498,37.335195720000002,0]},"properties":{"bearing":179.64999389648438,"accuracyBearing":0,"accuracyHorizontal":5,"speed":1.940000057220459,"time":1671133939.4211159,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.03369603,37.334779769999997,0]},"properties":{"bearing":255.58999633789062,"accuracyBearing":0,"accuracyHorizontal":5,"speed":17.209999084472656,"time":1671133952.4285378,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.0350347,37.33460316,0]},"properties":{"bearing":265.07998657226562,"accuracyBearing":0,"accuracyHorizontal":5,"speed":22.450000762939453,"time":1671133958.4328961,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.03638578,37.33454218,0]},"properties":{"bearing":268.95001220703125,"accuracyBearing":0,"accuracyHorizontal":5,"speed":25.100000381469727,"time":1671133963.423203,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.03753997,37.33453652,0]},"properties":{"bearing":268.95001220703125,"accuracyBearing":0,"accuracyHorizontal":5,"speed":26.120000839233398,"time":1671133967.418988,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.03875936999999,37.334503789999999,0]},"properties":{"bearing":267.8900146484375,"accuracyBearing":0,"accuracyHorizontal":5,"speed":27.979999542236328,"time":1671133971.421314,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.03941089,37.33448791,0]},"properties":{"bearing":267.8900146484375,"accuracyBearing":0,"accuracyHorizontal":5,"speed":29.239999771118164,"time":1671133973.4279768,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.04077830999999,37.334458400000003,0]},"properties":{"bearing":268.58999633789062,"accuracyBearing":0,"accuracyHorizontal":5,"speed":31.670000076293945,"time":1671133977.420217,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.04226334000001,37.334448430000002,0]},"properties":{"bearing":270,"accuracyBearing":0,"accuracyHorizontal":5,"speed":33.610000610351562,"time":1671133981.426719,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.04342255,37.334459449999997,0]},"properties":{"bearing":270,"accuracyBearing":0,"accuracyHorizontal":5,"speed":34.509998321533203,"time":1671133984.4286017,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.04458579,37.33445442,0]},"properties":{"bearing":269.64999389648438,"accuracyBearing":0,"accuracyHorizontal":5,"speed":34.060001373291016,"time":1671133987.433919,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.04571727,37.334436570000001,0]},"properties":{"bearing":267.54000854492188,"accuracyBearing":0,"accuracyHorizontal":5,"speed":33.009998321533203,"time":1671133990.4326658,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.04607568,37.334417080000001,0]},"properties":{"bearing":265.42999267578125,"accuracyBearing":0,"accuracyHorizontal":5,"speed":32.659999847412109,"time":1671133991.4239399,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.04751057999999,37.334269849999998,0]},"properties":{"bearing":259.10000610351562,"accuracyBearing":0,"accuracyHorizontal":5,"speed":30.940000534057617,"time":1671133995.4179389,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.04886543000001,37.333987759999999,0]},"properties":{"bearing":254.17999267578125,"accuracyBearing":0,"accuracyHorizontal":5,"speed":31.600000381469727,"time":1671133999.4235849,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.05028306,37.333679979999999,0]},"properties":{"bearing":255.58999633789062,"accuracyBearing":0,"accuracyHorizontal":5,"speed":32.979999542236328,"time":1671134003.433419,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.05137547,37.33344889,0]},"properties":{"bearing":255.58999633789062,"accuracyBearing":0,"accuracyHorizontal":5,"speed":33.729999542236328,"time":1671134006.420361,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.05246948,37.333211009999999,0]},"properties":{"bearing":254.8800048828125,"accuracyBearing":0,"accuracyHorizontal":5,"speed":33.490001678466797,"time":1671134009.4293442,"accuracySpeed":0}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.05391527,37.332904059999997,0]},"properties":{"bearing":255.22999572753906,"accuracyBearing":0,"accuracyHorizontal":5,"speed":33.419998168945312,"time":1671134013.429255,"accuracySpeed":0}}]}
+2022-12-15T16:53:35.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:234";
+    msgSerial = 42;
+    presence =     (
+                {
+            action = 3;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 132, bytes = 0x84a96d73 67536572 69616c2a a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:53:35.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15T16:53:35.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:345";
+    msgSerial = 43;
+    presence =     (
+                {
+            action = 3;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 132, bytes = 0x84a96d73 67536572 69616c2b a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:53:35.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15T16:53:35.021000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 14;
+    channel = "tracking:123";
+    msgSerial = 44;
+    presence =     (
+                {
+            action = 3;
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+        }
+    );
+}'; got: {length = 132, bytes = 0x84a96d73 67536572 69616c2c a8707265 ... a6616374 696f6e0e }
+2022-12-15T16:53:35.023000-03:00 debug: Wrote location history data to file: /Users/lawrence/Library/Developer/CoreSimulator/Devices/4EDF4713-21D4-4BF1-920A-38999893F359/data/Containers/Data/Application/950A8DFF-EB4D-4A39-AE7F-08F52329F481/Library/Application Support/com.ably.tracking.example.publisher/uploads/8A03A966-ABBF-4A04-93D1-BAF61DED6B2B/data
+2022-12-15T16:53:35.026000-03:00 info: Starting upload 8A03A966-ABBF-4A04-93D1-BAF61DED6B2B of location history data
+2022-12-15T16:53:35.026000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 14 - Presence
+2022-12-15T16:53:35.042000-03:00 debug: Copied Mapbox raw history file to file: /Users/lawrence/Library/Developer/CoreSimulator/Devices/4EDF4713-21D4-4BF1-920A-38999893F359/data/Containers/Data/Application/950A8DFF-EB4D-4A39-AE7F-08F52329F481/Library/Application Support/com.ably.tracking.example.publisher/uploads/7956D9BA-6AF6-497E-ADC8-029E5EA660C5/data
+2022-12-15T16:53:35.042000-03:00 info: Starting upload 7956D9BA-6AF6-497E-ADC8-029E5EA660C5 of raw Mapbox data
+2022-12-15T16:53:35.045000-03:00 debug: [noError] [assetTracking.publisher.DefaultLocationService.TemporaryFile]@(TemporaryFile.swift:29) Removed file at file:///Users/lawrence/Library/Developer/CoreSimulator/Devices/4EDF4713-21D4-4BF1-920A-38999893F359/data/Containers/Data/Application/950A8DFF-EB4D-4A39-AE7F-08F52329F481/Library/Caches/com.ably.AblyAssetTracking.publisher/2022-12-15T19-52-19Z_66fdd51b-a2cf-4707-92f0-d41ef40aa5a0.pbf.gz
+2022-12-15T16:53:35.058000-03:00 info: Upload 8A03A966-ABBF-4A04-93D1-BAF61DED6B2B succeeded.
+2022-12-15T16:53:35.071000-03:00 info: Upload 7956D9BA-6AF6-497E-ADC8-029E5EA660C5 succeeded.
+2022-12-15T16:53:35.144000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7401 ... 67536572 69616c2a }'; got: {
+    action = 1;
+    count = 1;
+    msgSerial = 42;
+}
+2022-12-15T16:53:35.144000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:169) Left channel [id: 234] presence successfully
+2022-12-15T16:53:35.144000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 320, bytes = 0x88a66163 74696f6e 0ea26964 ad336b44 ... a6616374 696f6e03 }'; got: {
+    action = 14;
+    channel = "tracking:234";
+    channelSerial = "e7dCEbzgQBJB9k43077660:14";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 6;
+    id = "3kD7nUjLkt:42";
+    presence =     (
+                {
+            action = 3;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:42:0";
+            timestamp = 1671134015058;
+        }
+    );
+    timestamp = 1671134015058;
+}
+2022-12-15T16:53:35.144000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) received channel message 14 - Presence
+2022-12-15T16:53:35.144000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) handle PRESENCE message
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 319, bytes = 0x88a66163 74696f6e 0ea26964 ad336b44 ... a6616374 696f6e03 }'; got: {
+    action = 14;
+    channel = "tracking:345";
+    channelSerial = "e7dXYO_QQBJB0866163321:9";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 7;
+    id = "3kD7nUjLkt:43";
+    presence =     (
+                {
+            action = 3;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:43:0";
+            timestamp = 1671134015061;
+        }
+    );
+    timestamp = 1671134015061;
+}
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a27020 (tracking:345) received channel message 14 - Presence
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) handle PRESENCE message
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) channel state transitions from 2 - Attached to 3 - Detaching
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 12;
+    channel = "tracking:234";
+}'; got: {length = 30, bytes = 0x82a76368 616e6e65 6cac7472 61636b69 ... a6616374 696f6e0c }
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 12 - Detach
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:250) Received presence update from channel
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.leave, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:250) Received presence update from channel
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.leave, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:297) Channel state for trackable 234 changed. New state: ConnectionState.offline
+2022-12-15T16:53:35.146000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: offline for trackable: 234
+2022-12-15T16:53:35.148000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 320, bytes = 0x88a66163 74696f6e 0ea26964 ad336b44 ... a6616374 696f6e03 }'; got: {
+    action = 14;
+    channel = "tracking:123";
+    channelSerial = "e7dXYO_QQBJB0841992737:19";
+    connectionId = 3kD7nUjLkt;
+    connectionSerial = 8;
+    id = "3kD7nUjLkt:44";
+    presence =     (
+                {
+            action = 3;
+            clientId = "Asset Tracking Publisher Example";
+            connectionId = 3kD7nUjLkt;
+            data = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}";
+            id = "3kD7nUjLkt:44:0";
+            timestamp = 1671134015064;
+        }
+    );
+    timestamp = 1671134015064;
+}
+2022-12-15T16:53:35.148000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a86140 (tracking:123) received channel message 14 - Presence
+2022-12-15T16:53:35.148000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:848) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) handle PRESENCE message
+2022-12-15T16:53:35.148000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:250) Received presence update from channel
+2022-12-15T16:53:35.148000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:932) publisherService.didReceivePresenceUpdate. Presence: Presence(action: AblyAssetTrackingInternal.PresenceAction.leave, type: AblyAssetTrackingInternal.PresenceType.publisher), Trackable: AblyAssetTrackingCore.Trackable
+2022-12-15T16:53:35.150000-03:00 error: [error(len:86): The operation couldn’t be completed. (AblyAssetTrackingCore.ErrorInformation error 1.)] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:788) 
+2022-12-15T16:53:35.150000-03:00 error: [error(len:86): The operation couldn’t be completed. (AblyAssetTrackingCore.ErrorInformation error 1.)] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:788) 
+2022-12-15T16:53:35.150000-03:00 error: [error(len:86): The operation couldn’t be completed. (AblyAssetTrackingCore.ErrorInformation error 1.)] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:788) 
+2022-12-15T16:53:35.265000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 30, bytes = 0x82a66163 74696f6e 0da76368 616e6e65 ... 6b696e67 3a323334 }'; got: {
+    action = 13;
+    channel = "tracking:234";
+}
+2022-12-15T16:53:35.265000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) received channel message 13 - Detached
+2022-12-15T16:53:35.265000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a26f40 (tracking:234) channel state transitions from 3 - Detaching to 4 - Detached
+2022-12-15T16:53:35.265000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:297) Channel state for trackable 234 changed. New state: ConnectionState.offline
+2022-12-15T16:53:35.265000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: offline for trackable: 234
+2022-12-15T16:53:35.265000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:199) Trackable 234 removed successfully. Was present true
+2022-12-15T16:53:35.643000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 27, bytes = 0x83a66163 74696f6e 01a5636f 756e7402 ... 67536572 69616c2b }'; got: {
+    action = 1;
+    count = 2;
+    msgSerial = 43;
+}
+2022-12-15T16:53:35.644000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:169) Left channel [id: 345] presence successfully
+2022-12-15T16:53:35.644000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) channel state transitions from 2 - Attached to 3 - Detaching
+2022-12-15T16:53:35.644000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 12;
+    channel = "tracking:345";
+}'; got: {length = 30, bytes = 0x82a76368 616e6e65 6cac7472 61636b69 ... a6616374 696f6e0c }
+2022-12-15T16:53:35.644000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 12 - Detach
+2022-12-15T16:53:35.645000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:169) Left channel [id: 123] presence successfully
+2022-12-15T16:53:35.645000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) channel state transitions from 2 - Attached to 3 - Detaching
+2022-12-15T16:53:35.645000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 12;
+    channel = "tracking:123";
+}'; got: {length = 30, bytes = 0x82a76368 616e6e65 6cac7472 61636b69 ... a6616374 696f6e0c }
+2022-12-15T16:53:35.645000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtime.m:1169) RT:0x600000c8d3b0 sending action 12 - Detach
+2022-12-15T16:53:35.645000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:297) Channel state for trackable 345 changed. New state: ConnectionState.offline
+2022-12-15T16:53:35.645000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: offline for trackable: 345
+2022-12-15T16:53:35.645000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:297) Channel state for trackable 123 changed. New state: ConnectionState.offline
+2022-12-15T16:53:35.646000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: offline for trackable: 123
+2022-12-15T16:53:35.764000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 30, bytes = 0x82a66163 74696f6e 0da76368 616e6e65 ... 6b696e67 3a333435 }'; got: {
+    action = 13;
+    channel = "tracking:345";
+}
+2022-12-15T16:53:35.765000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a27020 (tracking:345) received channel message 13 - Detached
+2022-12-15T16:53:35.765000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a27020 (tracking:345) channel state transitions from 3 - Detaching to 4 - Detached
+2022-12-15T16:53:35.765000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:297) Channel state for trackable 345 changed. New state: ConnectionState.offline
+2022-12-15T16:53:35.765000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: offline for trackable: 345
+2022-12-15T16:53:35.765000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:199) Trackable 345 removed successfully. Was present true
+2022-12-15T16:53:35.769000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 30, bytes = 0x82a66163 74696f6e 0da76368 616e6e65 ... 6b696e67 3a313233 }'; got: {
+    action = 13;
+    channel = "tracking:123";
+}
+2022-12-15T16:53:35.769000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:663) R:0x600000c8d3b0 C:0x600000a86140 (tracking:123) received channel message 13 - Detached
+2022-12-15T16:53:35.769000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTRealtimeChannel.m:590) RT:0x600000c8d3b0 C:0x600000a86140 (tracking:123) channel state transitions from 3 - Detaching to 4 - Detached
+2022-12-15T16:53:35.770000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:297) Channel state for trackable 123 changed. New state: ConnectionState.offline
+2022-12-15T16:53:35.770000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:912) ablyPublisher.didChangeChannelConnectionState. State: offline for trackable: 123
+2022-12-15T16:53:35.770000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:199) Trackable 123 removed successfully. Was present true
+2022-12-15T16:53:35.771000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:208) All trackables removed.
+2022-12-15T16:53:35.771000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] Reachability: stopped listening for host realtime.ably.io
+2022-12-15T16:53:35.771000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RT:0x600000c8d3b0 realtime is transitioning from 2 - Connected to 5 - Closing
+2022-12-15T16:53:35.771000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTWebSocketTransport.m:102) R:0x600000c8d3b0 WS:0x6000017bb120 websocket sending action 7 - Close
+2022-12-15T16:53:35.771000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> encoding '{
+    action = 7;
+}'; got: {length = 9, bytes = 0x81a6616374696f6e07}
+2022-12-15T16:53:35.771000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:220) Connection to Ably changed. New state: ConnectionState.offline
+2022-12-15T16:53:35.771000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:922) ablyPublisher.didChangeConnectionState. State: ConnectionState.offline
+2022-12-15T16:53:35.888000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RS:0x600000292b20 ARTJsonLikeEncoder<msgpack> decoding '{length = 9, bytes = 0x81a6616374696f6e08}'; got: {
+    action = 8;
+}
+2022-12-15T16:53:35.889000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] R:0x600000c8d3b0 Realtime closed
+2022-12-15T16:53:35.889000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] RT:0x600000c8d3b0 realtime is transitioning from 5 - Closing to 6 - Closed
+2022-12-15T16:53:35.889000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly.ablySDK] (ARTAuth.m:643) RS:0x600000292b20 authorization cancelled with (null)
+2022-12-15T16:53:35.889000-03:00 debug: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:220) Connection to Ably changed. New state: ConnectionState.offline
+2022-12-15T16:53:35.889000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:922) ablyPublisher.didChangeConnectionState. State: ConnectionState.offline
+2022-12-15T16:53:35.891000-03:00 info: [noError] [assetTracking.publisher.DefaultAbly]@(DefaultAbly.swift:320) Ably connection closed successfully.
