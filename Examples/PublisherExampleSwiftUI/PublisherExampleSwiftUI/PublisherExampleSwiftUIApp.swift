@@ -1,5 +1,6 @@
 import SwiftUI
 import Logging
+import LoggingFormatAndPipe
 
 @main
 struct PublisherExampleSwiftUIApp: App {
@@ -9,13 +10,25 @@ struct PublisherExampleSwiftUIApp: App {
     @State private var locationHistoryDataHandler: LocationHistoryDataHandlerProtocol
     
     init() {
-        let logger: Logger = {
-            var logger = Logger(label: "com.ably.PublisherExampleSwiftUI")
-            logger.logLevel = .info
-            return logger
-        }()
+        let logger = Logger(label: "com.ably.PublisherExampleSwiftUI") { _ in
+            // Format logged timestamps as an ISO 8601 timestamp with fractional seconds.
+            // Unfortunately BasicFormatter doesn’t allow us to pass an ISO8601DateFormatter,
+            // so we fall back to following https://developer.apple.com/library/archive/qa/qa1480/_index.html
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSSSSSZZZZZ"
+            dateFormatter.locale = .init(identifier: "en_US_POSIX")
+            let formatter = BasicFormatter(BasicFormatter.apple.format, timestampFormatter: dateFormatter)
+            
+            var handler = LoggingFormatAndPipe.Handler(formatter: formatter,
+                                                       pipe: LoggerTextOutputStreamPipe.standardError)
+            
+            handler.logLevel = .info
+            
+            return handler
+        }
+            
         self._logger = State(wrappedValue: logger)
-        
+                
         let s3Helper = try? S3Helper()
         self._s3Helper = State(wrappedValue: s3Helper)
         
