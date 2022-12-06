@@ -29,6 +29,7 @@
 		2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2139286628F783A40073DE99 /* Alert+ErrorInformation.swift */; };
 		2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8202908276F00958144 /* SelectDestinationView.swift */; };
 		2144B8252908278B00958144 /* DestinationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2144B8242908278B00958144 /* DestinationMapView.swift */; };
+		216D34A7293EA35D006233DD /* LoggingFormatAndPipe in Frameworks */ = {isa = PBXBuildFile; productRef = 216D34A6293EA35D006233DD /* LoggingFormatAndPipe */; };
 		21AE71A4290B1D6500427F04 /* UploadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AE71A3290B1D6500427F04 /* UploadsView.swift */; };
 		21AE71A6290B27BE00427F04 /* UploadsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AE71A5290B27BE00427F04 /* UploadsManager.swift */; };
 		21B6446B28FDC68C00156F94 /* AddTrackableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6446A28FDC68C00156F94 /* AddTrackableViewModel.swift */; };
@@ -121,6 +122,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C3E7C3F28BF695000171D14 /* Logging in Frameworks */,
+				216D34A7293EA35D006233DD /* LoggingFormatAndPipe in Frameworks */,
 				2108B75729097498002778CA /* Amplify in Frameworks */,
 				D544FB072771B3850015925C /* AblyAssetTrackingPublisher in Frameworks */,
 				2108B75329097498002778CA /* AWSCognitoAuthPlugin in Frameworks */,
@@ -362,6 +364,7 @@
 				2108B75229097498002778CA /* AWSCognitoAuthPlugin */,
 				2108B75429097498002778CA /* AWSS3StoragePlugin */,
 				2108B75629097498002778CA /* Amplify */,
+				216D34A6293EA35D006233DD /* LoggingFormatAndPipe */,
 			);
 			productName = PublisherExampleSwiftUI;
 			productReference = D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */;
@@ -394,6 +397,7 @@
 			packageReferences = (
 				0C3E7C3D28BF695000171D14 /* XCRemoteSwiftPackageReference "swift-log" */,
 				2108B75129097498002778CA /* XCRemoteSwiftPackageReference "amplify-swift" */,
+				216D34A5293EA35D006233DD /* XCRemoteSwiftPackageReference "swift-log-format-and-pipe" */,
 			);
 			productRefGroup = D544FAF32771B3560015925C /* Products */;
 			projectDirPath = "";
@@ -698,6 +702,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		216D34A5293EA35D006233DD /* XCRemoteSwiftPackageReference "swift-log-format-and-pipe" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:Adorkable/swift-log-format-and-pipe.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -720,6 +732,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2108B75129097498002778CA /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = Amplify;
+		};
+		216D34A6293EA35D006233DD /* LoggingFormatAndPipe */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 216D34A5293EA35D006233DD /* XCRemoteSwiftPackageReference "swift-log-format-and-pipe" */;
+			productName = LoggingFormatAndPipe;
 		};
 		D544FB062771B3850015925C /* AblyAssetTrackingPublisher */ = {
 			isa = XCSwiftPackageProductDependency;
