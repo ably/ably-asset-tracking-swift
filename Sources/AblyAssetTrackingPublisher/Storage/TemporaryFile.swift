@@ -26,10 +26,10 @@ public final class TemporaryFile {
         Self.cleanupQueue.async { [fileURL, logHandler, didDeleteCallback] in
             do {
                 try FileManager.default.removeItem(at: fileURL)
-                logHandler?.debug(message: "\(Self.self): Removed file at \(fileURL)", error: nil)
+                logHandler?.debug(message: "Removed file at \(fileURL)", error: nil)
                 didDeleteCallback?()
             } catch {
-                logHandler?.error(message: "\(Self.self): Failed to remove file at \(fileURL)", error: error)
+                logHandler?.error(message: "Failed to remove file at \(fileURL)", error: error)
             }
         }
     }
