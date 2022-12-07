@@ -21,7 +21,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var waitAsync: WaitAsync!
     var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
     var rawLocationState: TrackableState<RawLocationUpdate>!
-    var logger: LogHandlerMock!
+    var logger: MockHierarchicalLogHandler!
     
     override func setUpWithError() throws {
         locationService = MockLocationService()
@@ -34,7 +34,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         waitAsync = WaitAsync()
         enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
         rawLocationState = TrackableState<RawLocationUpdate>()
-        logger = LogHandlerMock()
+        logger = MockHierarchicalLogHandler()
         
         trackable = Trackable(
             id: "TrackableId",

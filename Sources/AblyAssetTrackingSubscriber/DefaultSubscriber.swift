@@ -36,13 +36,13 @@ class DefaultSubscriber: Subscriber {
         ablySubscriber: AblySubscriber,
         trackableId: String,
         resolution: Resolution?,
-        logHandler: LogHandler?) {
+        logHandler: HierarchicalLogHandler?) {
             
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
-        self.logHandler = logHandler
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
         
         self.ablySubscriber.subscriberDelegate = self
         

@@ -1,17 +1,18 @@
 import Foundation
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
 
 /// A reference to a temporary file which will be deleted once there are no remaining strong references to this object.
 public final class TemporaryFile {
     public let fileURL: URL
-    private let logHandler: LogHandler?
+    private let logHandler: HierarchicalLogHandler?
     // For testing this class.
     private let didDeleteCallback: (() -> Void)?
     private static let cleanupQueue = DispatchQueue(label: "com.ably.AssetTracking.TemporaryFile.cleanupQueue", qos: .background)
     
-    init(fileURL: URL, logHandler: LogHandler?, didDeleteCallback: (() -> Void)? = nil) {
+    init(fileURL: URL, logHandler: HierarchicalLogHandler?, didDeleteCallback: (() -> Void)? = nil) {
         self.fileURL = fileURL
-        self.logHandler = logHandler
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
         self.didDeleteCallback = didDeleteCallback
     }
     
