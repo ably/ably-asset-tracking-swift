@@ -57,11 +57,14 @@ class DefaultPublisherBuilder: PublisherBuilder {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }
         
+        let hierarchicalLogHandler = DefaultHierarchicalLogHandler(logHandler: logHandler,
+                                                                   subsystem: .named("publisher"))
+        
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
             mode: .publish,
-            logHandler: logHandler
+            logHandler: hierarchicalLogHandler
         )
         
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
@@ -69,12 +72,12 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyPublisher: defaultAbly,
-                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: logHandler, vehicleProfile: vehicleProfile),
+                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: hierarchicalLogHandler, vehicleProfile: vehicleProfile),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration),
                                           areRawLocationsEnabled: areRawLocationsEnabled,
                                           isSendResolutionEnabled: isSendResolutionEnabled,
                                           constantLocationEngineResolution: constantLocationEngineResolution,
-                                          logHandler: logHandler)
+                                          logHandler: hierarchicalLogHandler)
         publisher.delegate = delegate
         return publisher
     }

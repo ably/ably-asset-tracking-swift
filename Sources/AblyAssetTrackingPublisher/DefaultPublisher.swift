@@ -56,7 +56,7 @@ class DefaultPublisher: Publisher {
     private var lastRawTimestamps: [Trackable: Double]
     private var route: Route?
     
-    private var logHandler: LogHandler?
+    private var logHandler: HierarchicalLogHandler?
 
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
@@ -78,7 +78,7 @@ class DefaultPublisher: Publisher {
          areRawLocationsEnabled: Bool = false,
          isSendResolutionEnabled: Bool = true,
          constantLocationEngineResolution: Resolution? = nil,
-         logHandler: LogHandler?
+         logHandler: HierarchicalLogHandler?
     ) {
         
         self.connectionConfiguration = connectionConfiguration
@@ -90,7 +90,7 @@ class DefaultPublisher: Publisher {
         self.routeProvider = routeProvider
         self.enhancedLocationState = enhancedLocationState
         self.rawLocationState = rawLocationState
-        self.logHandler = logHandler
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
 
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
         

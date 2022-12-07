@@ -7,6 +7,7 @@ import CoreLocation
 @testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingCoreTesting
 import AblyAssetTrackingPublisherTesting
+import AblyAssetTrackingInternalTesting
 
 struct Locations: Codable {
     let locations: [GeoJSONMessage]
@@ -32,7 +33,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         "Test-Publisher_\(UUID().uuidString)"
     }()
     
-    private let logger = MockLogHandler()
+    private let logger = MockHierarchicalLogHandler()
     
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }

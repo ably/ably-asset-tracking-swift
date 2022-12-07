@@ -10,27 +10,28 @@ public class DefaultAbly: AblyCommon {
      //log handler used to capture internal events from the Ably-Cocoa, and pass them to LogHandler via `logCallback`
     private let internalARTLogHandler: InternalARTLogHandler = InternalARTLogHandler()
     
-    private let logHandler: LogHandler?
+    private let logHandler: HierarchicalLogHandler?
     private let client: AblySDKRealtime
     private let connectionConfiguration: ConnectionConfiguration
     let mode: AblyMode
     
     private var channels: [String: AblySDKRealtimeChannel] = [:]
 
-    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: LogHandler?) {
-        self.logHandler = logHandler
+    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: HierarchicalLogHandler?) {
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
+        let ablySystemLogHandler = self.logHandler?.addingSubsystem(.named("ably"))
         internalARTLogHandler.logCallback = { (message, level, error) in
             switch level {
             case .verbose:
-                logHandler?.verbose(message: message, error: error)
+                ablySystemLogHandler?.verbose(message: message, error: error)
             case .info:
-                logHandler?.info(message: message, error: error)
+                ablySystemLogHandler?.info(message: message, error: error)
             case .debug:
-                logHandler?.debug(message: message, error: error)
+                ablySystemLogHandler?.debug(message: message, error: error)
             case .warn:
-                logHandler?.warn(message: message, error: error)
+                ablySystemLogHandler?.warn(message: message, error: error)
             case .error:
-                logHandler?.error(message: message, error: error)
+                ablySystemLogHandler?.error(message: message, error: error)
             }
         }
         self.client = factory.create(withConfiguration: configuration, logHandler: internalARTLogHandler)
