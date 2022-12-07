@@ -29,7 +29,7 @@ Build and upload the Subscriber Example app to TestFlight
 [bundle exec] fastlane ios fetch_certificate
 ```
 
-Fetch the distribution certificate and appstore provisioning profile from git repo
+Fetch the distribution certificate and appstore provisioning profile from match git repo
 
 ----
 

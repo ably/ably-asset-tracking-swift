@@ -5,10 +5,16 @@ default_platform(:ios)
         # Creates a temporary keychain. Without this, the build could
         # freeze and never finish. https://docs.fastlane.tools/actions/setup_ci/
         setup_ci if ENV['CI']
-        update_project_team(
-            path: "SubscriberExample.xcodeproj",
-            teamid: "XXY98AVDR6")
-        # update_build_number
+        # We want to leave the default config as Automatic code signing, since it's easier
+        # to use for users. So instead of changing those settings in pbxproj, we're using the 
+        # `update_code_signing_settings` step.
+        update_code_signing_settings(
+          use_automatic_signing: false,
+          path: "SubscriberExample.xcodeproj",
+          team_id: "XXY98AVDR6",
+          code_sign_identity: "iPhone Distribution",
+          profile_name: "match dist com.ably.tracking.example.subscriber")
+        update_build_number
         match(
           git_url: ENV["MATCH_GIT_URL"],
           app_identifier: "com.ably.tracking.example.subscriber",
@@ -16,7 +22,8 @@ default_platform(:ios)
           readonly: true)
         build_app(scheme: "SubscriberExample",
                 project: "SubscriberExample.xcodeproj",
-                export_method: 'app-store',
+                configuration: "Release",
+                export_method: "app-store",
                 output_name: "SubscriberExample.ipa",
                 clean: true,
                 include_bitcode: true)
@@ -39,7 +46,7 @@ default_platform(:ios)
     # Helper lane, not used by CI, but can be used on local machines
     # to fetch currently used certificate and profile from match repo
     # by running `bundle exec fastlane fetch_certificate`
-    desc "Fetch the distribution certificate and appstore provisioning profile from git repo"
+    desc "Fetch the distribution certificate and appstore provisioning profile from match git repo"
     lane :fetch_certificate do
       match(type: "appstore", readonly: true)
     end
