@@ -9,7 +9,7 @@ class ConnectionConfigurationTests: XCTestCase {
     
     func testBasicAuthenticationConstructor() throws {
         let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
         XCTAssertEqual(clientOptions.clientId, "A client ID")
         XCTAssertNil(clientOptions.authCallback)
     }
@@ -19,7 +19,7 @@ class ConnectionConfigurationTests: XCTestCase {
         let clientId = "My client id"
         let configuration = ConnectionConfiguration(clientId: clientId, authCallback: { _, _ in })
         
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
         
         XCTAssertEqual(clientOptions.clientId, clientId)
     }
@@ -39,7 +39,7 @@ class ConnectionConfigurationTests: XCTestCase {
         })
         
         // Checking the clientOptions provided is structured correctly for Ably-cocoa
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
         
         let clientId = "My client id"
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
@@ -70,7 +70,7 @@ class ConnectionConfigurationTests: XCTestCase {
             })
             
             // Checking the clientOptions provided is structured correctly for Ably-cocoa
-            let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
+            let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
             
             let clientId = "My client id"
             let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
@@ -99,7 +99,7 @@ class ConnectionConfigurationTests: XCTestCase {
         })
         
         // Checking the clientOptions provided is structured correctly for Ably-cocoa
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
         
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: "My client id", timestamp: timestamp, nonce: nonce).toARTTokenParams()
         XCTAssertNotNil(clientOptions.authCallback)
@@ -112,5 +112,13 @@ class ConnectionConfigurationTests: XCTestCase {
             // Note, the capability doesn't have to be the same, since the server might not grant the capabilities requested by client.
         }
         XCTAssertTrue(authCallbackCalled)
+    }
+    
+    func testRemainPresentForMillisecondsPassesToAblySDK() {
+        let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
+
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: 100)
+        
+        XCTAssertEqual(clientOptions.transportParams?["remainPresentFor"]?.stringValue, "100")
     }
 }

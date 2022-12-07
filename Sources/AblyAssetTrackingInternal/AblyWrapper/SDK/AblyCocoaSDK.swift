@@ -126,7 +126,7 @@ public class AblyCocoaSDKRealtimeFactory: AblySDKRealtimeFactory {
     public init() {}
     
     public func create(withConfiguration configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler) -> AblySDKRealtime {
-        let realtime = ARTRealtime(options: configuration.getClientOptions(logHandler: logHandler))
+        let realtime = ARTRealtime(options: configuration.getClientOptions(logHandler: logHandler, remainPresentForMilliseconds: configuration.remainPresentForMilliseconds))
         return AblyCocoaSDKRealtime(realtime: realtime)
     }
 }
