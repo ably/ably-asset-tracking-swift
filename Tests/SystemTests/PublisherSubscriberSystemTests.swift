@@ -5,6 +5,7 @@ import AblyAssetTrackingSubscriber
 import Ably
 import CoreLocation
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCoreTesting
 
 struct Locations: Codable {
     let locations: [GeoJSONMessage]

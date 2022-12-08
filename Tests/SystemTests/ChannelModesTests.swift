@@ -3,6 +3,7 @@ import CoreLocation
 import AblyAssetTrackingInternal
 import AblyAssetTrackingSubscriber
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCoreTesting
 
 class ChannelModesTests: XCTestCase {
     private let defaultDelayTime: TimeInterval = 10.0

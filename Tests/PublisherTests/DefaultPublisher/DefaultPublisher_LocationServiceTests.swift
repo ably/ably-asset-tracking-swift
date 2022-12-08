@@ -2,6 +2,7 @@ import XCTest
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCoreTesting
 
 class DefaultPublisher_LocationServiceTests: XCTestCase {
     let publisherHelper = PublisherHelper()

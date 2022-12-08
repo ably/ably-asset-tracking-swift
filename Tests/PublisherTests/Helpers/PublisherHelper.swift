@@ -3,6 +3,7 @@ import CoreLocation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCoreTesting
 
 class PublisherHelper {    
     enum SendLocationResultPolicy {

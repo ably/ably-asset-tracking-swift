@@ -2,6 +2,7 @@ import XCTest
 import AblyAssetTrackingInternal
 import AblyAssetTrackingCore
 import Ably
+import AblyAssetTrackingCoreTesting
 
 class DefaultAblyTests: XCTestCase {
     let logger = MockLogHandler()

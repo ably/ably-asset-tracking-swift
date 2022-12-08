@@ -2,6 +2,7 @@ import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 @testable import AblyAssetTrackingSubscriber
+import AblyAssetTrackingCoreTesting
 
 class MockAblySubscriber: AblySubscriber {
     var wasDelegateSet: Bool = false

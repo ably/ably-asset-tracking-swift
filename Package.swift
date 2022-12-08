@@ -62,6 +62,7 @@ let package = Package(
         .testTarget(
             name: "SystemTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingSubscriber",
                 "AblyAssetTrackingPublisher",
                 "AblyAssetTrackingInternal",
@@ -71,17 +72,20 @@ let package = Package(
         .testTarget(
             name: "SubscriberTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingSubscriber"
             ]),
         .testTarget(
             name: "PublisherTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingPublisher"
             ],
             resources: [.copy("common")]),
         .testTarget(
             name: "InternalTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingInternal",
                 "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa")
@@ -89,12 +93,21 @@ let package = Package(
         .testTarget(
             name: "CoreTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingPublisher"
             ]),
         .testTarget(
             name: "UITests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingUI"
-            ])
+            ]),
+        .target(
+            name: "AblyAssetTrackingCoreTesting",
+            dependencies: [
+                "AblyAssetTrackingCore"
+            ],
+            path: "Tests/Support/AblyAssetTrackingCoreTesting"
+        )
     ]
 )
