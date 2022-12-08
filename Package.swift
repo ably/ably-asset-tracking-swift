@@ -64,6 +64,7 @@ let package = Package(
             dependencies: [
                 "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingSubscriberTesting",
+                "AblyAssetTrackingPublisherTesting",
                 "AblyAssetTrackingInternalTesting",
                 "AblyAssetTrackingSubscriber",
                 "AblyAssetTrackingPublisher",
@@ -84,6 +85,7 @@ let package = Package(
             dependencies: [
                 "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingInternalTesting",
+                "AblyAssetTrackingPublisherTesting",
                 "AblyAssetTrackingPublisher"
             ],
             resources: [.copy("common")]),
@@ -128,6 +130,13 @@ let package = Package(
                 "AblyAssetTrackingSubscriber"
             ],
             path: "Tests/Support/AblyAssetTrackingSubscriberTesting"
+        ),
+        .target(
+            name: "AblyAssetTrackingPublisherTesting",
+            dependencies: [
+                "AblyAssetTrackingPublisher"
+            ],
+            path: "Tests/Support/AblyAssetTrackingPublisherTesting"
         )
     ]
 )
