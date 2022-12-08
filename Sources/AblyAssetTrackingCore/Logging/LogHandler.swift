@@ -3,6 +3,7 @@ import Foundation
 /**
  * Simple protocol that allows to handle logs sent from the SDK.
  */
+//sourcery: AutoMockable
 public protocol LogHandler {
     /**
      * Gets called when a log message is sent from the SDK.
