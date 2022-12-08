@@ -1,6 +1,6 @@
 default_platform(:ios)
     platform :ios do
-    desc "Build and upload the Subscriber Example app to TestFlight"
+    desc "Build and upload the Publisher Example app to TestFlight"
     lane :build_and_upload_to_testflight do
         # Creates a temporary keychain. Without this, the build could
         # freeze and never finish. https://docs.fastlane.tools/actions/setup_ci/
@@ -10,29 +10,29 @@ default_platform(:ios)
         # `update_code_signing_settings` step.
         update_code_signing_settings(
           use_automatic_signing: false,
-          path: "SubscriberExample.xcodeproj",
+          path: "PublisherExampleSwiftUI.xcodeproj",
           team_id: "XXY98AVDR6",
           code_sign_identity: "iPhone Distribution",
-          profile_name: "match dist com.ably.tracking.example.subscriber")
+          profile_name: "match appstore com.ably.tracking.example.publisher")
         update_build_number
         match(
           git_url: ENV["MATCH_GIT_URL"],
-          app_identifier: "com.ably.tracking.example.subscriber",
+          app_identifier: "com.ably.tracking.example.publisher",
           type: "appstore",
           readonly: true)
-        build_app(scheme: "SubscriberExample",
-          project: "SubscriberExample.xcodeproj",
+        build_app(scheme: "PublisherExampleSwiftUI",
+          project: "PublisherExampleSwiftUI.xcodeproj",
           configuration: "Release",
           export_method: "app-store",
-          output_name: "SubscriberExample.ipa",
+          output_name: "PublisherExample.ipa",
           clean: true,
           include_bitcode: true)
-        #upload_to_testflight(
+       # upload_to_testflight(
             #skip_submission: true,
             #skip_waiting_for_build_processing: true,
-            #apple_id: "6444409821",
+            #apple_id: "6444406485",
             #username: ENV["APPLE_APPS_USERNAME"],
-            #itc_provider:"XXY98AVDR6")
+           # itc_provider:"XXY98AVDR6")
         end
 
         # Example output: 2022.12.1.1454
@@ -49,6 +49,6 @@ default_platform(:ios)
     lane :fetch_certificate do
       match(type: "appstore",
       readonly: true,
-      app_identifier: com.ably.tracking.example.subscriber)
+      app_identifier: com.ably.tracking.example.publisher)
     end
 end

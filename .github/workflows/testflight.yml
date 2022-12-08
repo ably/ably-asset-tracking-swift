@@ -5,6 +5,14 @@ on:
     branches:
       - main
 
+env:
+  FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APPS_APPLICATION_SPECIFIC_PASSWORD }}
+  MATCH_GIT_URL: ${{ secrets.APPLE_APPS_MATCH_GIT_URL }}
+  MATCH_PASSWORD: ${{ secrets.APPLE_APPS_MATCH_ENCRYPTION_PASSPHRASE }}
+  FASTLANE_XCODE_LIST_TIMEOUT: 100
+  FASTLANE_XCODEBUILD_SETTINGS_RETRIES: 6
+  MATCH_DEPLOY_KEY: ${{ secrets.APPLE_APPS_MATCH_DEPLOY_KEY }}
+
 jobs:
   build:
     runs-on: macos-latest
@@ -40,6 +48,27 @@ jobs:
           ABLY_API_KEY: ${{ secrets.ASSET_TRACKING_TESTING_ABLY_API_KEY }}
           AMPLIFY_CONFIGURATION: ${{ secrets.AMPLIFY_CONFIGURATION }}
 
+      # Needed for communication with the Match secrets repo
+     # - name: Add deploy key to keychain
+        # run: |
+        #   echo "$MATCH_DEPLOY_KEY" > deployKey
+        #   eval "$(ssh-agent -s)"
+        #   chmod 400 deployKey
+        #   ssh-add deployKey
+        #   ssh-keyscan github.com >> ~/.ssh/known_hosts
+        # env:
+        #   MATCH_DEPLOY_KEY: ${{ secrets.APPLE_APPS_MATCH_DEPLOY_KEY }}
+
+      - name: Run Fastlane for the Publisher example app
+        working-directory: Examples/PublisherExampleSwiftUI
+        run: |        
+          echo "$MATCH_DEPLOY_KEY" > deployKey
+          eval "$(ssh-agent -s)"
+          chmod 400 deployKey
+          ssh-add deployKey
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          bundle exec fastlane build_and_upload_to_testflight
+
       - name: Run Fastlane for the Subscriber example app
         working-directory: Examples/SubscriberExample
         run: |        
@@ -49,11 +78,6 @@ jobs:
           ssh-add deployKey
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           bundle exec fastlane build_and_upload_to_testflight
-        env:
-          MATCH_DEPLOY_KEY: ${{ secrets.APPLE_APPS_MATCH_DEPLOY_KEY }}
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APPS_APPLICATION_SPECIFIC_PASSWORD }}
-          MATCH_GIT_URL: ${{ secrets.APPLE_APPS_MATCH_GIT_URL }}
-          MATCH_PASSWORD: ${{ secrets.APPLE_APPS_MATCH_ENCRYPTION_PASSPHRASE }}
-          FASTLANE_XCODE_LIST_TIMEOUT: 100
-          FASTLANE_XCODEBUILD_SETTINGS_RETRIES: 6
+
+
           
