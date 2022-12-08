@@ -1,4 +1,4 @@
-// Generated using Sourcery 1.8.2 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 1.9.2 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
 // swiftlint:disable line_length
@@ -27,19 +27,28 @@ import AblyAssetTrackingSubscriber
 
 
 
-class SubscriberDelegateMock: SubscriberDelegate {
+
+
+
+
+
+
+public class SubscriberDelegateMock: SubscriberDelegate {
+
+    public init() {}
+
 
     //MARK: - subscriber
 
-    var subscriberSenderDidFailWithErrorCallsCount = 0
-    var subscriberSenderDidFailWithErrorCalled: Bool {
+    public var subscriberSenderDidFailWithErrorCallsCount = 0
+    public var subscriberSenderDidFailWithErrorCalled: Bool {
         return subscriberSenderDidFailWithErrorCallsCount > 0
     }
-    var subscriberSenderDidFailWithErrorReceivedArguments: (sender: Subscriber, error: ErrorInformation)?
-    var subscriberSenderDidFailWithErrorReceivedInvocations: [(sender: Subscriber, error: ErrorInformation)] = []
-    var subscriberSenderDidFailWithErrorClosure: ((Subscriber, ErrorInformation) -> Void)?
+    public var subscriberSenderDidFailWithErrorReceivedArguments: (sender: Subscriber, error: ErrorInformation)?
+    public var subscriberSenderDidFailWithErrorReceivedInvocations: [(sender: Subscriber, error: ErrorInformation)] = []
+    public var subscriberSenderDidFailWithErrorClosure: ((Subscriber, ErrorInformation) -> Void)?
 
-    func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
+    public func subscriber(sender: Subscriber, didFailWithError error: ErrorInformation) {
         subscriberSenderDidFailWithErrorCallsCount += 1
         subscriberSenderDidFailWithErrorReceivedArguments = (sender: sender, error: error)
         subscriberSenderDidFailWithErrorReceivedInvocations.append((sender: sender, error: error))
@@ -48,15 +57,15 @@ class SubscriberDelegateMock: SubscriberDelegate {
 
     //MARK: - subscriber
 
-    var subscriberSenderDidUpdateEnhancedLocationCallsCount = 0
-    var subscriberSenderDidUpdateEnhancedLocationCalled: Bool {
+    public var subscriberSenderDidUpdateEnhancedLocationCallsCount = 0
+    public var subscriberSenderDidUpdateEnhancedLocationCalled: Bool {
         return subscriberSenderDidUpdateEnhancedLocationCallsCount > 0
     }
-    var subscriberSenderDidUpdateEnhancedLocationReceivedArguments: (sender: Subscriber, locationUpdate: LocationUpdate)?
-    var subscriberSenderDidUpdateEnhancedLocationReceivedInvocations: [(sender: Subscriber, locationUpdate: LocationUpdate)] = []
-    var subscriberSenderDidUpdateEnhancedLocationClosure: ((Subscriber, LocationUpdate) -> Void)?
+    public var subscriberSenderDidUpdateEnhancedLocationReceivedArguments: (sender: Subscriber, locationUpdate: LocationUpdate)?
+    public var subscriberSenderDidUpdateEnhancedLocationReceivedInvocations: [(sender: Subscriber, locationUpdate: LocationUpdate)] = []
+    public var subscriberSenderDidUpdateEnhancedLocationClosure: ((Subscriber, LocationUpdate) -> Void)?
 
-    func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
+    public func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         subscriberSenderDidUpdateEnhancedLocationCallsCount += 1
         subscriberSenderDidUpdateEnhancedLocationReceivedArguments = (sender: sender, locationUpdate: locationUpdate)
         subscriberSenderDidUpdateEnhancedLocationReceivedInvocations.append((sender: sender, locationUpdate: locationUpdate))
@@ -65,15 +74,15 @@ class SubscriberDelegateMock: SubscriberDelegate {
 
     //MARK: - subscriber
 
-    var subscriberSenderDidUpdateRawLocationCallsCount = 0
-    var subscriberSenderDidUpdateRawLocationCalled: Bool {
+    public var subscriberSenderDidUpdateRawLocationCallsCount = 0
+    public var subscriberSenderDidUpdateRawLocationCalled: Bool {
         return subscriberSenderDidUpdateRawLocationCallsCount > 0
     }
-    var subscriberSenderDidUpdateRawLocationReceivedArguments: (sender: Subscriber, locationUpdate: LocationUpdate)?
-    var subscriberSenderDidUpdateRawLocationReceivedInvocations: [(sender: Subscriber, locationUpdate: LocationUpdate)] = []
-    var subscriberSenderDidUpdateRawLocationClosure: ((Subscriber, LocationUpdate) -> Void)?
+    public var subscriberSenderDidUpdateRawLocationReceivedArguments: (sender: Subscriber, locationUpdate: LocationUpdate)?
+    public var subscriberSenderDidUpdateRawLocationReceivedInvocations: [(sender: Subscriber, locationUpdate: LocationUpdate)] = []
+    public var subscriberSenderDidUpdateRawLocationClosure: ((Subscriber, LocationUpdate) -> Void)?
 
-    func subscriber(sender: Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate) {
+    public func subscriber(sender: Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate) {
         subscriberSenderDidUpdateRawLocationCallsCount += 1
         subscriberSenderDidUpdateRawLocationReceivedArguments = (sender: sender, locationUpdate: locationUpdate)
         subscriberSenderDidUpdateRawLocationReceivedInvocations.append((sender: sender, locationUpdate: locationUpdate))
@@ -82,15 +91,15 @@ class SubscriberDelegateMock: SubscriberDelegate {
 
     //MARK: - subscriber
 
-    var subscriberSenderDidUpdateResolutionCallsCount = 0
-    var subscriberSenderDidUpdateResolutionCalled: Bool {
+    public var subscriberSenderDidUpdateResolutionCallsCount = 0
+    public var subscriberSenderDidUpdateResolutionCalled: Bool {
         return subscriberSenderDidUpdateResolutionCallsCount > 0
     }
-    var subscriberSenderDidUpdateResolutionReceivedArguments: (sender: Subscriber, resolution: Resolution)?
-    var subscriberSenderDidUpdateResolutionReceivedInvocations: [(sender: Subscriber, resolution: Resolution)] = []
-    var subscriberSenderDidUpdateResolutionClosure: ((Subscriber, Resolution) -> Void)?
+    public var subscriberSenderDidUpdateResolutionReceivedArguments: (sender: Subscriber, resolution: Resolution)?
+    public var subscriberSenderDidUpdateResolutionReceivedInvocations: [(sender: Subscriber, resolution: Resolution)] = []
+    public var subscriberSenderDidUpdateResolutionClosure: ((Subscriber, Resolution) -> Void)?
 
-    func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {
+    public func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {
         subscriberSenderDidUpdateResolutionCallsCount += 1
         subscriberSenderDidUpdateResolutionReceivedArguments = (sender: sender, resolution: resolution)
         subscriberSenderDidUpdateResolutionReceivedInvocations.append((sender: sender, resolution: resolution))
@@ -99,15 +108,15 @@ class SubscriberDelegateMock: SubscriberDelegate {
 
     //MARK: - subscriber
 
-    var subscriberSenderDidUpdateDesiredIntervalCallsCount = 0
-    var subscriberSenderDidUpdateDesiredIntervalCalled: Bool {
+    public var subscriberSenderDidUpdateDesiredIntervalCallsCount = 0
+    public var subscriberSenderDidUpdateDesiredIntervalCalled: Bool {
         return subscriberSenderDidUpdateDesiredIntervalCallsCount > 0
     }
-    var subscriberSenderDidUpdateDesiredIntervalReceivedArguments: (sender: Subscriber, interval: Double)?
-    var subscriberSenderDidUpdateDesiredIntervalReceivedInvocations: [(sender: Subscriber, interval: Double)] = []
-    var subscriberSenderDidUpdateDesiredIntervalClosure: ((Subscriber, Double) -> Void)?
+    public var subscriberSenderDidUpdateDesiredIntervalReceivedArguments: (sender: Subscriber, interval: Double)?
+    public var subscriberSenderDidUpdateDesiredIntervalReceivedInvocations: [(sender: Subscriber, interval: Double)] = []
+    public var subscriberSenderDidUpdateDesiredIntervalClosure: ((Subscriber, Double) -> Void)?
 
-    func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {
+    public func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {
         subscriberSenderDidUpdateDesiredIntervalCallsCount += 1
         subscriberSenderDidUpdateDesiredIntervalReceivedArguments = (sender: sender, interval: interval)
         subscriberSenderDidUpdateDesiredIntervalReceivedInvocations.append((sender: sender, interval: interval))
@@ -116,15 +125,15 @@ class SubscriberDelegateMock: SubscriberDelegate {
 
     //MARK: - subscriber
 
-    var subscriberSenderDidChangeAssetConnectionStatusCallsCount = 0
-    var subscriberSenderDidChangeAssetConnectionStatusCalled: Bool {
+    public var subscriberSenderDidChangeAssetConnectionStatusCallsCount = 0
+    public var subscriberSenderDidChangeAssetConnectionStatusCalled: Bool {
         return subscriberSenderDidChangeAssetConnectionStatusCallsCount > 0
     }
-    var subscriberSenderDidChangeAssetConnectionStatusReceivedArguments: (sender: Subscriber, status: ConnectionState)?
-    var subscriberSenderDidChangeAssetConnectionStatusReceivedInvocations: [(sender: Subscriber, status: ConnectionState)] = []
-    var subscriberSenderDidChangeAssetConnectionStatusClosure: ((Subscriber, ConnectionState) -> Void)?
+    public var subscriberSenderDidChangeAssetConnectionStatusReceivedArguments: (sender: Subscriber, status: ConnectionState)?
+    public var subscriberSenderDidChangeAssetConnectionStatusReceivedInvocations: [(sender: Subscriber, status: ConnectionState)] = []
+    public var subscriberSenderDidChangeAssetConnectionStatusClosure: ((Subscriber, ConnectionState) -> Void)?
 
-    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
+    public func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
         subscriberSenderDidChangeAssetConnectionStatusCallsCount += 1
         subscriberSenderDidChangeAssetConnectionStatusReceivedArguments = (sender: sender, status: status)
         subscriberSenderDidChangeAssetConnectionStatusReceivedInvocations.append((sender: sender, status: status))
@@ -133,15 +142,15 @@ class SubscriberDelegateMock: SubscriberDelegate {
 
     //MARK: - subscriber
 
-    var subscriberSenderDidUpdatePublisherPresenceCallsCount = 0
-    var subscriberSenderDidUpdatePublisherPresenceCalled: Bool {
+    public var subscriberSenderDidUpdatePublisherPresenceCallsCount = 0
+    public var subscriberSenderDidUpdatePublisherPresenceCalled: Bool {
         return subscriberSenderDidUpdatePublisherPresenceCallsCount > 0
     }
-    var subscriberSenderDidUpdatePublisherPresenceReceivedArguments: (sender: Subscriber, isPresent: Bool)?
-    var subscriberSenderDidUpdatePublisherPresenceReceivedInvocations: [(sender: Subscriber, isPresent: Bool)] = []
-    var subscriberSenderDidUpdatePublisherPresenceClosure: ((Subscriber, Bool) -> Void)?
+    public var subscriberSenderDidUpdatePublisherPresenceReceivedArguments: (sender: Subscriber, isPresent: Bool)?
+    public var subscriberSenderDidUpdatePublisherPresenceReceivedInvocations: [(sender: Subscriber, isPresent: Bool)] = []
+    public var subscriberSenderDidUpdatePublisherPresenceClosure: ((Subscriber, Bool) -> Void)?
 
-    func subscriber(sender: Subscriber, didUpdatePublisherPresence isPresent: Bool) {
+    public func subscriber(sender: Subscriber, didUpdatePublisherPresence isPresent: Bool) {
         subscriberSenderDidUpdatePublisherPresenceCallsCount += 1
         subscriberSenderDidUpdatePublisherPresenceReceivedArguments = (sender: sender, isPresent: isPresent)
         subscriberSenderDidUpdatePublisherPresenceReceivedInvocations.append((sender: sender, isPresent: isPresent))
