@@ -4,6 +4,7 @@ import AblyAssetTrackingCore
 @testable import AblyAssetTrackingSubscriber
 import AblyAssetTrackingCoreTesting
 import AblyAssetTrackingInternalTesting
+import AblyAssetTrackingSubscriberTesting
 
 class DefaultSubscriberTests: XCTestCase {
     private var ablySubscriber: MockAblySubscriber!
