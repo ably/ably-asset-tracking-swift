@@ -48,17 +48,6 @@ jobs:
           ABLY_API_KEY: ${{ secrets.ASSET_TRACKING_TESTING_ABLY_API_KEY }}
           AMPLIFY_CONFIGURATION: ${{ secrets.AMPLIFY_CONFIGURATION }}
 
-      # Needed for communication with the Match secrets repo
-     # - name: Add deploy key to keychain
-        # run: |
-        #   echo "$MATCH_DEPLOY_KEY" > deployKey
-        #   eval "$(ssh-agent -s)"
-        #   chmod 400 deployKey
-        #   ssh-add deployKey
-        #   ssh-keyscan github.com >> ~/.ssh/known_hosts
-        # env:
-        #   MATCH_DEPLOY_KEY: ${{ secrets.APPLE_APPS_MATCH_DEPLOY_KEY }}
-
       - name: Run Fastlane for the Publisher example app
         working-directory: Examples/PublisherExampleSwiftUI
         run: |        

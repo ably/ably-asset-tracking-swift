@@ -105,3 +105,28 @@ We use [Sourcery](https://github.com/krzysztofzablocki/Sourcery) to generate moc
 At the time of writing, there is no way to automatically generate these mocks as part of the SPM build process, so when you update these files you’ll need to manually run the command `Scripts/generate-mocks.sh`.
 
 When [Swift package plugins](https://developer.apple.com/videos/play/wwdc2022/110359/) get introduced in Swift 5.6, we might be able to generate these mocks automatically.
+
+## Example apps distribution to TestFlight
+
+We have a `testflight.yml` workflow that builds and uploads both the Publisher and Subscriber example apps to testflight for internal testing whenever code is pushed to the `main` branch.
+
+`testflight.yml` workflow uses [fastlane](https://docs.fastlane.tools/) for creating and uploading builds, along with [match](https://docs.fastlane.tools/actions/match/) for handling code signing. The match secrets repo is available under git organization level secrets - `secrets.APPLE_APPS_MATCH_GIT_URL`, with it's `secrets.APPLE_APPS_MATCH_ENCRYPTION_PASSPHRASE`.
+There are two separate `Fastfile`s that fastlane uses in this workflow - one for the publisher, and one for the example apps: `Examples/PublisherExampleSwiftUI/fastlane/Fastfile` and `Examples/SubscriberExample/fastlane/Fastfile`.
+
+`testflight.yml` workflow will need some manual maintenance, since the distribution signing certificate used for signing the example apps builds expires a year after it's creation date. 
+Whenever that happens, we will need to recreate it, and the corresponding provisioning profiles (currently named `match dist com.ably.tracking.example.subscriber` and `match appstore com.ably.tracking.example.publisher`) and upload them to the `Match secrets repo`.
+
+This can be done automatically by `match` using `bundle exec fastlane match appstore` command from `Examples/SubsriberExample` and `Examples/PublisherExampleSwiftUI`, however this command creates both a new distribution cert and an appstore provisioning profile each time it is run - so it will create two distribution certs. 
+
+Since the ammount of distribution certificates linked to an App Store Connect organization is limited, it's preferable to create a new distribution certificate manually in Xcode, and then [export it](https://sarunw.com/posts/how-to-share-ios-distribution-certificate/#exporting-a-certificate) from your keychain - both the .p12 and .cer files.
+
+Then create new `App Store` type provisioning profiles for both example apps in [Apple dev center](https://developer.apple.com/account/resources/profiles/list), and download them.
+
+Finally, run the command `bundle exec fastlane match import --readonly true --type appstore` to import the created distribution cert and provisioning profiles into the match secrets repo.
+
+If provisioning profiles' names were changed in the process, make sure to update the corresponing values in both fastfiles: 
+```
+update_code_signing_settings(
+    ...
+    profile_name: "new name")
+```

@@ -6,8 +6,8 @@ default_platform(:ios)
         # freeze and never finish. https://docs.fastlane.tools/actions/setup_ci/
         setup_ci if ENV['CI']
         # We want to leave the default config as Automatic code signing, since it's easier
-        # to use for users. So instead of changing those settings in pbxproj, we're using the 
-        # `update_code_signing_settings` step.
+        # to use for users. So instead of changing those settings in pbxproj in git, we're using
+        # the `update_code_signing_settings` step here.
         update_code_signing_settings(
           use_automatic_signing: false,
           path: "PublisherExampleSwiftUI.xcodeproj",
