@@ -27,12 +27,12 @@ default_platform(:ios)
           output_name: "PublisherExample.ipa",
           clean: true,
           include_bitcode: true)
-       # upload_to_testflight(
-            #skip_submission: true,
-            #skip_waiting_for_build_processing: true,
-            #apple_id: "6444406485",
-            #username: ENV["APPLE_APPS_USERNAME"],
-           # itc_provider:"XXY98AVDR6")
+        upload_to_testflight(
+          skip_submission: true,
+          skip_waiting_for_build_processing: true,
+          apple_id: "6444406485",
+          username: ENV["APPLE_APPS_USERNAME"],
+          itc_provider:"XXY98AVDR6")
         end
 
         # Example output: 2022.12.1.1454
