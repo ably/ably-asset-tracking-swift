@@ -4,7 +4,7 @@ sources:
 templates:
   - Sourcery/templates/AutoMockable.stencil
 output:
-  Tests/InternalTests/Mocks/GeneratedMocks.swift
+  Tests/Support/AblyAssetTrackingInternalTesting/Mocks/GeneratedMocks.swift
 args:
   autoMockableImports:
     - AblyAssetTrackingCore
