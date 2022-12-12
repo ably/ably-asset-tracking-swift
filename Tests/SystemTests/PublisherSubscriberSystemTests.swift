@@ -33,7 +33,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         "Test-Publisher_\(UUID().uuidString)"
     }()
     
-    private let logger = MockInternalLogHandler()
+    private let logger = InternalLogHandlerMock.configured
     
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }

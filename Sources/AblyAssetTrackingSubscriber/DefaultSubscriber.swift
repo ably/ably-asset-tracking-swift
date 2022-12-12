@@ -20,7 +20,7 @@ class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
     private let trackableId: String
     private let presenceData: PresenceData
-    private let logHandler: LogHandler?
+    private let logHandler: InternalLogHandler?
     
     private var ablySubscriber: AblySubscriber
     private var subscriberState: SubscriberState = .working

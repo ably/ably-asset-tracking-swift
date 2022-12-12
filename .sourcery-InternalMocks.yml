@@ -1,6 +1,7 @@
 sources:
   - Sources/AblyAssetTrackingInternal/AblyWrapper/SDK/AblySDKProtocols.swift
   - Sources/AblyAssetTrackingInternal/AblyWrapper/AblySubscriber.swift
+  - Sources/AblyAssetTrackingInternal/Logging/InternalLogHandler.swift
 templates:
   - Sourcery/templates/AutoMockable.stencil
 output:
