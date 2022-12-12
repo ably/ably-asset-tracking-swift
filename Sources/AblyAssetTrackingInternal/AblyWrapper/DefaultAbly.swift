@@ -21,17 +21,21 @@ public class DefaultAbly: AblyCommon {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
         let ablySDKSubsystemLogHandler = self.logHandler?.addingSubsystem(.named("ablySDK"))
         internalARTLogHandler.logCallback = { (message, level, error) in
+            // We don't add line numbers to messages emitted by ably-cocoa,
+            // since it doesn’t expose that information to us through the
+            // ARTLog interface. Also, some (but not all) log messages from
+            // ably-cocoa already include line number information.
             switch level {
             case .verbose:
-                ablySDKSubsystemLogHandler?.verbose(message: message, error: error)
+                ablySDKSubsystemLogHandler?.verbose(message: message, error: error, file: nil, line: nil)
             case .info:
-                ablySDKSubsystemLogHandler?.info(message: message, error: error)
+                ablySDKSubsystemLogHandler?.info(message: message, error: error, file: nil, line: nil)
             case .debug:
-                ablySDKSubsystemLogHandler?.debug(message: message, error: error)
+                ablySDKSubsystemLogHandler?.debug(message: message, error: error, file: nil, line: nil)
             case .warn:
-                ablySDKSubsystemLogHandler?.warn(message: message, error: error)
+                ablySDKSubsystemLogHandler?.warn(message: message, error: error, file: nil, line: nil)
             case .error:
-                ablySDKSubsystemLogHandler?.error(message: message, error: error)
+                ablySDKSubsystemLogHandler?.error(message: message, error: error, file: nil, line: nil)
             }
         }
         self.client = factory.create(withConfiguration: configuration, logHandler: internalARTLogHandler)
