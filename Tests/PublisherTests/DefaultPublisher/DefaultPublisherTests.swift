@@ -1,6 +1,9 @@
 import XCTest
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCoreTesting
+import AblyAssetTrackingInternalTesting
+import AblyAssetTrackingPublisherTesting
 
 enum ClientConfigError : Error {
     case cannotRedefineConnectionConfiguration

@@ -62,6 +62,10 @@ let package = Package(
         .testTarget(
             name: "SystemTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
+                "AblyAssetTrackingSubscriberTesting",
+                "AblyAssetTrackingPublisherTesting",
+                "AblyAssetTrackingInternalTesting",
                 "AblyAssetTrackingSubscriber",
                 "AblyAssetTrackingPublisher",
                 "AblyAssetTrackingInternal",
@@ -71,17 +75,25 @@ let package = Package(
         .testTarget(
             name: "SubscriberTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
+                "AblyAssetTrackingInternalTesting",
+                "AblyAssetTrackingSubscriberTesting",
                 "AblyAssetTrackingSubscriber"
             ]),
         .testTarget(
             name: "PublisherTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
+                "AblyAssetTrackingInternalTesting",
+                "AblyAssetTrackingPublisherTesting",
                 "AblyAssetTrackingPublisher"
             ],
             resources: [.copy("common")]),
         .testTarget(
             name: "InternalTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
+                "AblyAssetTrackingInternalTesting",
                 "AblyAssetTrackingInternal",
                 "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa")
@@ -89,12 +101,42 @@ let package = Package(
         .testTarget(
             name: "CoreTests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingPublisher"
             ]),
         .testTarget(
             name: "UITests",
             dependencies: [
+                "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingUI"
-            ])
+            ]),
+        .target(
+            name: "AblyAssetTrackingCoreTesting",
+            dependencies: [
+                "AblyAssetTrackingCore"
+            ],
+            path: "Tests/Support/AblyAssetTrackingCoreTesting"
+        ),
+        .target(
+            name: "AblyAssetTrackingInternalTesting",
+            dependencies: [
+                "AblyAssetTrackingInternal"
+            ],
+            path: "Tests/Support/AblyAssetTrackingInternalTesting"
+        ),
+        .target(
+            name: "AblyAssetTrackingSubscriberTesting",
+            dependencies: [
+                "AblyAssetTrackingSubscriber"
+            ],
+            path: "Tests/Support/AblyAssetTrackingSubscriberTesting"
+        ),
+        .target(
+            name: "AblyAssetTrackingPublisherTesting",
+            dependencies: [
+                "AblyAssetTrackingPublisher"
+            ],
+            path: "Tests/Support/AblyAssetTrackingPublisherTesting"
+        )
     ]
 )
