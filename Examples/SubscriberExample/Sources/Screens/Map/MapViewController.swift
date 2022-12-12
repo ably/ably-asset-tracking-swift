@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import Logging
+import LoggingFormatAndPipe
 import AblyAssetTrackingSubscriber
 import AblyAssetTrackingUI
 
@@ -36,11 +37,22 @@ class MapViewController: UIViewController {
     private var currentResolution: Resolution?
     private var resolutionDebounceTimer: Timer?
     
-    private let logger: Logger = {
-        var logger = Logger(label: "com.ably.SubscriberExample")
-        logger.logLevel = .info
-        return logger
-    }()
+    private let logger = Logger(label: "com.ably.SubscriberExample") { _ in
+        // Format logged timestamps as an ISO 8601 timestamp with fractional seconds.
+        // Unfortunately BasicFormatter doesn’t allow us to pass an ISO8601DateFormatter,
+        // so we fall back to following https://developer.apple.com/library/archive/qa/qa1480/_index.html
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSSSSSZZZZZ"
+        dateFormatter.locale = .init(identifier: "en_US_POSIX")
+        let formatter = BasicFormatter(BasicFormatter.apple.format, timestampFormatter: dateFormatter)
+        
+        var handler = LoggingFormatAndPipe.Handler(formatter: formatter,
+                                                   pipe: LoggerTextOutputStreamPipe.standardError)
+        
+        handler.logLevel = .info
+        
+        return handler
+    }
     private let subscriberLogger: SubscriberLogger
 
     private var location: CLLocation?
