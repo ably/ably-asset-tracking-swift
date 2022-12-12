@@ -551,19 +551,19 @@ public class InternalLogHandlerMock: InternalLogHandler {
 
     //MARK: - logMessage
 
-    public var logMessageLevelMessageErrorCallsCount = 0
-    public var logMessageLevelMessageErrorCalled: Bool {
-        return logMessageLevelMessageErrorCallsCount > 0
+    public var logMessageLevelMessageErrorCodeLocationCallsCount = 0
+    public var logMessageLevelMessageErrorCodeLocationCalled: Bool {
+        return logMessageLevelMessageErrorCodeLocationCallsCount > 0
     }
-    public var logMessageLevelMessageErrorReceivedArguments: (level: LogLevel, message: String, error: Error?)?
-    public var logMessageLevelMessageErrorReceivedInvocations: [(level: LogLevel, message: String, error: Error?)] = []
-    public var logMessageLevelMessageErrorClosure: ((LogLevel, String, Error?) -> Void)?
+    public var logMessageLevelMessageErrorCodeLocationReceivedArguments: (level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?)?
+    public var logMessageLevelMessageErrorCodeLocationReceivedInvocations: [(level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?)] = []
+    public var logMessageLevelMessageErrorCodeLocationClosure: ((LogLevel, String, Error?, CodeLocation?) -> Void)?
 
-    public func logMessage(level: LogLevel, message: String, error: Error?) {
-        logMessageLevelMessageErrorCallsCount += 1
-        logMessageLevelMessageErrorReceivedArguments = (level: level, message: message, error: error)
-        logMessageLevelMessageErrorReceivedInvocations.append((level: level, message: message, error: error))
-        logMessageLevelMessageErrorClosure?(level, message, error)
+    public func logMessage(level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?) {
+        logMessageLevelMessageErrorCodeLocationCallsCount += 1
+        logMessageLevelMessageErrorCodeLocationReceivedArguments = (level: level, message: message, error: error, codeLocation: codeLocation)
+        logMessageLevelMessageErrorCodeLocationReceivedInvocations.append((level: level, message: message, error: error, codeLocation: codeLocation))
+        logMessageLevelMessageErrorCodeLocationClosure?(level, message, error, codeLocation)
     }
 
     //MARK: - addingSubsystem
