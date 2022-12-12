@@ -544,3 +544,48 @@ public class AblySubscriberDelegateMock: AblySubscriberDelegate {
     }
 
 }
+public class InternalLogHandlerMock: InternalLogHandler {
+
+    public init() {}
+
+
+    //MARK: - logMessage
+
+    public var logMessageLevelMessageErrorCallsCount = 0
+    public var logMessageLevelMessageErrorCalled: Bool {
+        return logMessageLevelMessageErrorCallsCount > 0
+    }
+    public var logMessageLevelMessageErrorReceivedArguments: (level: LogLevel, message: String, error: Error?)?
+    public var logMessageLevelMessageErrorReceivedInvocations: [(level: LogLevel, message: String, error: Error?)] = []
+    public var logMessageLevelMessageErrorClosure: ((LogLevel, String, Error?) -> Void)?
+
+    public func logMessage(level: LogLevel, message: String, error: Error?) {
+        logMessageLevelMessageErrorCallsCount += 1
+        logMessageLevelMessageErrorReceivedArguments = (level: level, message: message, error: error)
+        logMessageLevelMessageErrorReceivedInvocations.append((level: level, message: message, error: error))
+        logMessageLevelMessageErrorClosure?(level, message, error)
+    }
+
+    //MARK: - addingSubsystem
+
+    public var addingSubsystemCallsCount = 0
+    public var addingSubsystemCalled: Bool {
+        return addingSubsystemCallsCount > 0
+    }
+    public var addingSubsystemReceivedSubsystem: Subsystem?
+    public var addingSubsystemReceivedInvocations: [Subsystem] = []
+    public var addingSubsystemReturnValue: InternalLogHandler!
+    public var addingSubsystemClosure: ((Subsystem) -> InternalLogHandler)?
+
+    public func addingSubsystem(_ subsystem: Subsystem) -> InternalLogHandler {
+        addingSubsystemCallsCount += 1
+        addingSubsystemReceivedSubsystem = subsystem
+        addingSubsystemReceivedInvocations.append(subsystem)
+        if let addingSubsystemClosure = addingSubsystemClosure {
+            return addingSubsystemClosure(subsystem)
+        } else {
+            return addingSubsystemReturnValue
+        }
+    }
+
+}

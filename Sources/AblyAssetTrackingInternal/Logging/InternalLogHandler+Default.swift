@@ -1,7 +1,7 @@
 import Foundation
 import AblyAssetTrackingCore
 
-public extension LogHandler {
+public extension InternalLogHandler {
     func verbose(message: String, error: Error?) {
         logMessage(level: .verbose, message: message, error: error)
     }

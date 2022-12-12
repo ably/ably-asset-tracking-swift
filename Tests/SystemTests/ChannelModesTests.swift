@@ -10,7 +10,7 @@ import AblyAssetTrackingInternalTesting
 class ChannelModesTests: XCTestCase {
     private let defaultDelayTime: TimeInterval = 10.0
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
-    let logger = MockInternalLogHandler()
+    let logger = InternalLogHandlerMock()
     
     func testShouldCreateOnlyOnePublisherAndOneSubscriberConnection() throws {
         let subscriberClientId = "Test-Subscriber_\(UUID().uuidString)"
