@@ -9,7 +9,7 @@ public class MockAblySubscriber: AblySubscriber {
         didSet { wasDelegateSet = true }
     }
     
-    let logger = MockLogHandler()
+    let logger = LogHandlerMock()
     
     public var initConnectionConfiguration: ConnectionConfiguration?
     public var initMode: AblyMode?
