@@ -1,11 +1,11 @@
 import Foundation
 
 /**
- Indicates Asset connection status (i.e. if courier is publishing his location)
+ Indicates Asset connection status (i.e. if courier is publishing their location)
  */
 public enum ConnectionState: Int {
     /**
-     Asset is connected to tracking system and we're receiving his position
+     Asset is connected to tracking system and we're receiving their position
      */
     case online
 

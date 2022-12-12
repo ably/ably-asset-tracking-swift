@@ -3,7 +3,7 @@ sources:
 templates:
   - Sourcery/templates/AutoMockable.stencil
 output:
-  Tests/SubscriberTests/Mocks/GeneratedMocks.swift
+  Tests/Support/AblyAssetTrackingSubscriberTesting/Mocks/GeneratedMocks.swift
 args:
   autoMockableImports:
     - AblyAssetTrackingSubscriber

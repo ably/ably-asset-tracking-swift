@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/ably/ably-cocoa",
         "state": {
           "branch": null,
-          "revision": "11b74cc94182833694649753ec95332b223e1c6a",
-          "version": "1.2.17"
+          "revision": "5c3d12f37e72411bef7cbd7d7bb60d98e4d73169",
+          "version": "1.2.19"
         }
       },
       {
@@ -305,6 +305,15 @@
           "branch": null,
           "revision": "6fe203dc33195667ce1759bf0182975e4653ba1c",
           "version": "1.4.4"
+        }
+      },
+      {
+        "package": "swift-log-format-and-pipe",
+        "repositoryURL": "https://github.com/Adorkable/swift-log-format-and-pipe",
+        "state": {
+          "branch": null,
+          "revision": "bd29badb9e6b18122ec10b84eed534db83cad279",
+          "version": "0.1.1"
         }
       },
       {

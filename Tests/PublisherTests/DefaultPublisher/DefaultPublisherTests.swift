@@ -1,6 +1,9 @@
 import XCTest
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCoreTesting
+import AblyAssetTrackingInternalTesting
+import AblyAssetTrackingPublisherTesting
 
 enum ClientConfigError : Error {
     case cannotRedefineConnectionConfiguration
@@ -18,7 +21,7 @@ class DefaultPublisherTests: XCTestCase {
     var delegate: MockPublisherDelegate!
     var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
     
-    let logger = MockLogHandler()
+    let logger = LogHandlerMock()
     let waitAsync = WaitAsync()
     
     override func setUpWithError() throws {
