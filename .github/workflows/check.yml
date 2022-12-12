@@ -45,3 +45,16 @@ jobs:
         with:
           server-auth: ${{ secrets.TEST_OBSERVABILITY_SERVER_AUTH_KEY }}
           path: '.'
+
+  check-log-parser:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: Tools/LogParser
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Run LogParser tests
+        run: swift test
