@@ -3,11 +3,13 @@ import CoreLocation
 import AblyAssetTrackingInternal
 import AblyAssetTrackingSubscriber
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCoreTesting
+import AblyAssetTrackingPublisherTesting
 
 class ChannelModesTests: XCTestCase {
     private let defaultDelayTime: TimeInterval = 10.0
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
-    let logger = MockLogHandler()
+    let logger = LogHandlerMock()
     
     func testShouldCreateOnlyOnePublisherAndOneSubscriberConnection() throws {
         let subscriberClientId = "Test-Subscriber_\(UUID().uuidString)"

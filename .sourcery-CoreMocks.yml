@@ -1,0 +1,9 @@
+sources:
+  - Sources/AblyAssetTrackingCore/Logging/LogHandler.swift
+templates:
+  - Sourcery/templates/AutoMockable.stencil
+output:
+  Tests/Support/AblyAssetTrackingCoreTesting/Mocks/GeneratedMocks.swift
+args:
+  autoMockableImports:
+    - AblyAssetTrackingCore

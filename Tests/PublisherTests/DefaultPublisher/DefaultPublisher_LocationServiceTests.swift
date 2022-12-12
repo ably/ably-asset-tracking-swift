@@ -2,6 +2,9 @@ import XCTest
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCoreTesting
+import AblyAssetTrackingInternalTesting
+import AblyAssetTrackingPublisherTesting
 
 class DefaultPublisher_LocationServiceTests: XCTestCase {
     let publisherHelper = PublisherHelper()
@@ -18,7 +21,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var waitAsync: WaitAsync!
     var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
     var rawLocationState: TrackableState<RawLocationUpdate>!
-    var logger: MockLogHandler!
+    var logger: LogHandlerMock!
     
     override func setUpWithError() throws {
         locationService = MockLocationService()
@@ -31,7 +34,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         waitAsync = WaitAsync()
         enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
         rawLocationState = TrackableState<RawLocationUpdate>()
-        logger = MockLogHandler()
+        logger = LogHandlerMock()
         
         trackable = Trackable(
             id: "TrackableId",
