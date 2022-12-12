@@ -12,6 +12,7 @@ env:
   FASTLANE_XCODE_LIST_TIMEOUT: 100
   FASTLANE_XCODEBUILD_SETTINGS_RETRIES: 6
   MATCH_DEPLOY_KEY: ${{ secrets.APPLE_APPS_MATCH_DEPLOY_KEY }}
+  APPLE_APPS_USERNAME: ${{ secrets.APPLE_APPS_USERNAME }}
 
 jobs:
   build:
@@ -39,16 +40,17 @@ jobs:
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
           
-      - name: Configure runtime secrets and ENVs
+      - name: Create runtime secret files
         run: |
           echo "MAPBOX_ACCESS_TOKEN = $MAPBOX_ACCESS_TOKEN" >> Examples/Secrets.xcconfig
           echo "ABLY_API_KEY = $ASSET_TRACKING_TESTING_ABLY_API_KEY" >> Examples/Secrets.xcconfig
+          echo "AMPLIFY_CONFIGURATION" = $AMPLIFY_CONFIGURATION >> Examples/PublisherExampleSwiftUI/PublisherExampleSwiftUI/Optional\ Resources/amplifyconfiguration.json
         env:
           MAPBOX_ACCESS_TOKEN: ${{ secrets.ASSET_TRACKING_TESTING_MAPBOX_ACCESS_TOKEN }}
           ABLY_API_KEY: ${{ secrets.ASSET_TRACKING_TESTING_ABLY_API_KEY }}
           AMPLIFY_CONFIGURATION: ${{ secrets.AMPLIFY_CONFIGURATION }}
 
-      - name: Run Fastlane for the Publisher example app
+      - name: Configure Match Deploy key and Run Fastlane for the Publisher example app
         working-directory: Examples/PublisherExampleSwiftUI
         run: |        
           echo "$MATCH_DEPLOY_KEY" > deployKey
@@ -58,7 +60,7 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           bundle exec fastlane build_and_upload_to_testflight
 
-      - name: Run Fastlane for the Subscriber example app
+      - name: Configure Match Deploy key and run Fastlane for the Subscriber example app
         working-directory: Examples/SubscriberExample
         run: |        
           echo "$MATCH_DEPLOY_KEY" > deployKey
@@ -67,6 +69,3 @@ jobs:
           ssh-add deployKey
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           bundle exec fastlane build_and_upload_to_testflight
-
-
-          
