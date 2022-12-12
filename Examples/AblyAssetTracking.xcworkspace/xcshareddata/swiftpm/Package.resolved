@@ -308,6 +308,15 @@
         }
       },
       {
+        "package": "swift-log-format-and-pipe",
+        "repositoryURL": "https://github.com/Adorkable/swift-log-format-and-pipe",
+        "state": {
+          "branch": null,
+          "revision": "bd29badb9e6b18122ec10b84eed534db83cad279",
+          "version": "0.1.1"
+        }
+      },
+      {
         "package": "SwiftProtobuf",
         "repositoryURL": "https://github.com/apple/swift-protobuf.git",
         "state": {
