@@ -36,7 +36,7 @@ class DefaultSubscriber: Subscriber {
         ablySubscriber: AblySubscriber,
         trackableId: String,
         resolution: Resolution?,
-        logHandler: HierarchicalLogHandler?) {
+        logHandler: InternalLogHandler?) {
             
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
         self.ablySubscriber = ablySubscriber

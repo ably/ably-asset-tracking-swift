@@ -38,8 +38,8 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             return nil
         }
         
-        let hierarchicalLogHandler = DefaultHierarchicalLogHandler(logHandler: logHandler,
-                                                                   subsystem: .named("subscriber"))
+        let hierarchicalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
+                                                               subsystem: .named("subscriber"))
 
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),

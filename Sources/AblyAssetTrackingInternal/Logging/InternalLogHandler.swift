@@ -18,19 +18,21 @@ public enum Subsystem {
     }
 }
 
-/// A log handler that stores a hierarchy of subsystems of increasing granularity, for example ["asset-tracking", "publisher", "DefaultPublisher"]. It is expected that it will use this information to output some sort of information about these subsystems in the log messages that it outputs, for example by adding a string "[asset-tracking.publisher.DefaultPublisher]".
-public protocol HierarchicalLogHandler: LogHandler {
+/// A log handler to be used by components of the Asset Tracking SDKs. It provides SDK components with functionality for augmenting the log output.
+///
+/// It stores a hierarchy of subsystems of increasing granularity, for example ["asset-tracking", "publisher", "DefaultPublisher"]. It is expected that it will use this information to output some sort of information about these subsystems in the log messages that it outputs, for example by adding a string "[asset-tracking.publisher.DefaultPublisher]".
+public protocol InternalLogHandler: LogHandler {
     /// Adds another subsystem to the log handler’s list.
     /// - Parameter subsystem: The subsystem to add. This will be added at a higher level of granularity then the subsystems currently in the log handler’s list.
     /// - Returns: A new log handler.
-    func addingSubsystem(_ subsystem: Subsystem) -> HierarchicalLogHandler
+    func addingSubsystem(_ subsystem: Subsystem) -> InternalLogHandler
 }
 
-extension HierarchicalLogHandler {
+extension InternalLogHandler {
     /// A convenience method for adding a Swift type to the log handler’s list.
     /// - Parameter type: The Swift type to add, for example `DefaultPublisher.self`.
     /// - Returns: A new log handler.
-    public func addingSubsystem(_ type: Any.Type) -> HierarchicalLogHandler {
+    public func addingSubsystem(_ type: Any.Type) -> InternalLogHandler {
         return addingSubsystem(.typed(type))
     }
 }
