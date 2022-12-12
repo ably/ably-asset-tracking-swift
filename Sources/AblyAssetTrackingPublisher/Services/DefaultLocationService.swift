@@ -7,14 +7,14 @@ import AblyAssetTrackingInternal
 class DefaultLocationService: LocationService {
     private let locationManager: PassiveLocationManager
     private let replayLocationManager: ReplayLocationManager?
-    private let logHandler: HierarchicalLogHandler?
+    private let logHandler: InternalLogHandler?
     private let workQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.workQueue")
 
     weak var delegate: LocationServiceDelegate?
 
     init(mapboxConfiguration: MapboxConfiguration,
          historyLocation: [CLLocation]?,
-         logHandler: HierarchicalLogHandler?,
+         logHandler: InternalLogHandler?,
          vehicleProfile: VehicleProfile) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
 

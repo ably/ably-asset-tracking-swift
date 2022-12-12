@@ -57,8 +57,8 @@ class DefaultPublisherBuilder: PublisherBuilder {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }
         
-        let hierarchicalLogHandler = DefaultHierarchicalLogHandler(logHandler: logHandler,
-                                                                   subsystem: .named("publisher"))
+        let hierarchicalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
+                                                               subsystem: .named("publisher"))
         
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),

@@ -1,10 +1,10 @@
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
-public class MockHierarchicalLogHandler: HierarchicalLogHandler {
+public class MockInternalLogHandler: InternalLogHandler {
     public init() {}
     
-    public func addingSubsystem(_ subsystem: Subsystem) -> AblyAssetTrackingInternal.HierarchicalLogHandler {
+    public func addingSubsystem(_ subsystem: Subsystem) -> AblyAssetTrackingInternal.InternalLogHandler {
         return self
     }
     

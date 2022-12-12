@@ -2,14 +2,14 @@ import XCTest
 import AblyAssetTrackingInternal
 import AblyAssetTrackingCoreTesting
 
-class DefaultHierarchicalLogHandlerTests: XCTestCase {
+class DefaultInternalLogHandlerTests: XCTestCase {
     func test_init_withNilLogHandler_returnsNil() {
-        XCTAssertNil(DefaultHierarchicalLogHandler(logHandler: nil))
+        XCTAssertNil(DefaultInternalLogHandler(logHandler: nil))
     }
     
     func test_addSubsystem_causesLoggedMessagesToIncludeSubsystemName() throws {
         let underlyingLogHandler = LogHandlerMock()
-        let logHandler = try XCTUnwrap(DefaultHierarchicalLogHandler(logHandler: underlyingLogHandler))
+        let logHandler = try XCTUnwrap(DefaultInternalLogHandler(logHandler: underlyingLogHandler))
             .addingSubsystem(.named("myComponent"))
 
         logHandler.logMessage(level: .info, message: "Here is a message", error: nil)
