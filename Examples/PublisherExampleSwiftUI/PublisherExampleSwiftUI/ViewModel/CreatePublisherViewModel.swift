@@ -129,7 +129,7 @@ class CreatePublisherViewModel: ObservableObject {
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .rawLocations(enabled: areRawLocationsEnabled)
             .constantLocationEngineResolution(resolution: constantResolution)
-            .logHandler(handler: PublisherLogger(swiftLog: logger))
+            .logHandler(handler: PublisherLogger(logger: logger))
             .vehicleProfile(vehicleProfile)
             .start()
         
