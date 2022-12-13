@@ -32,7 +32,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private var subscribeForPositionUpdatesClosure: ((Position) -> Void)?
     private var subscribeForCameraPositionUpdatesClosure: ((Position) -> Void)?
         
-    private let logHandler: LogHandler?
+    private let logHandler: HierarchicalLogHandler?
     
     private var nextLocationUpdatePrediction: DefaultLocationAnimatorCalculator.Input.Context.NextLocationUpdatePrediction?
     private var state = DefaultLocationAnimatorCalculator.Input.State.initial
@@ -42,7 +42,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     }
     
     public init(logHandler: LogHandler? = nil) {
-        self.logHandler = logHandler
+        self.logHandler = DefaultHierarchicalLogHandler(logHandler: logHandler, subsystem: .typed(Self.self))
         super.init()
         
         displayLinkTarget.locationAnimator = self

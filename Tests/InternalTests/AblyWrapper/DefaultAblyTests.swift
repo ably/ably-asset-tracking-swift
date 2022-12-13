@@ -6,7 +6,7 @@ import AblyAssetTrackingCoreTesting
 import AblyAssetTrackingInternalTesting
 
 class DefaultAblyTests: XCTestCase {
-    let logger = LogHandlerMock()
+    let logger = MockHierarchicalLogHandler()
 
     func test_connect_whenNotConfiguredToUseToken_whenPresenceEnterFails_withAnErrorRelatedToCapabilities_itFails() {
         let presence = AblySDKRealtimePresenceMock()

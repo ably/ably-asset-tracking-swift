@@ -2,19 +2,21 @@ import CoreLocation
 import MapboxCoreNavigation
 import MapboxDirections
 import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
 
 class DefaultLocationService: LocationService {
     private let locationManager: PassiveLocationManager
     private let replayLocationManager: ReplayLocationManager?
-    private let logHandler: LogHandler?
+    private let logHandler: HierarchicalLogHandler?
     private let workQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.workQueue")
 
     weak var delegate: LocationServiceDelegate?
 
     init(mapboxConfiguration: MapboxConfiguration,
          historyLocation: [CLLocation]?,
-         logHandler: LogHandler?,
+         logHandler: HierarchicalLogHandler?,
          vehicleProfile: VehicleProfile) {
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
 
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
 
@@ -43,7 +45,7 @@ class DefaultLocationService: LocationService {
         do {
             try LocationHistoryTemporaryStorageConfiguration.configureMapboxHistoryStorageLocation()
         } catch {
-            logHandler?.error(message: "\(Self.self): Failed to configure Mapbox history storage location", error: error)
+            self.logHandler?.error(message: "Failed to configure Mapbox history storage location", error: error)
         }
 
         if let historyLocation = historyLocation {
@@ -51,7 +53,6 @@ class DefaultLocationService: LocationService {
         } else {
             replayLocationManager = nil
         }
-        self.logHandler = logHandler
         //set location manager with profile identifier only if .Bicycle is provided by clients
         if vehicleProfile == .bicycle {
             self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager ,datasetProfileIdentifier: .cycling)
@@ -112,14 +113,14 @@ class DefaultLocationService: LocationService {
                 
                 guard let historyFileURL = historyFileURL else {
                     let error = ErrorInformation(type: .commonError(errorMessage: "PassiveLocationManager.stopRecordingHistory did not return a file URL"))
-                    self.logHandler?.info(message: "\(Self.self): PassiveLocationManager.stopRecordingHistory returned a nil historyFileURL – not treating as an error since it might be that we never started recording history", error: error)
+                    self.logHandler?.info(message: "PassiveLocationManager.stopRecordingHistory returned a nil historyFileURL – not treating as an error since it might be that we never started recording history", error: error)
                     completion(.success(nil))
                     return
                 }
                 
                 guard let reader = HistoryReader(fileUrl: historyFileURL) else {
                     let error = ErrorInformation(type: .commonError(errorMessage: "HistoryReader(fileUrl:) returned nil"))
-                    self.logHandler?.error(message: "\(Self.self): Failed to complete recording of history", error: error)
+                    self.logHandler?.error(message: "Failed to complete recording of history", error: error)
                     completion(.failure(.init(type: .commonError(errorMessage: "Failed to create HistoryReader"))))
                     return
                 }
@@ -137,7 +138,7 @@ class DefaultLocationService: LocationService {
                     
                     locationHistoryData = LocationHistoryData(events: events)
                 } catch {
-                    self.logHandler?.error(message: "\(Self.self): Failed to map location history reader events to GeoJSONMessage", error: error)
+                    self.logHandler?.error(message: "Failed to map location history reader events to GeoJSONMessage", error: error)
                     completion(.failure(.init(error: error)))
                     return
                 }
@@ -160,7 +161,7 @@ class DefaultLocationService: LocationService {
 
 extension DefaultLocationService: PassiveLocationManagerDelegate {
     func passiveLocationManagerDidChangeAuthorization(_ manager: PassiveLocationManager) {
-        logHandler?.debug(message: "\(String(describing: Self.self)), passiveLocationManager.passiveLocationManagerDidChangeAuthorization", error: nil)
+        logHandler?.debug(message: "passiveLocationManager.passiveLocationManagerDidChangeAuthorization", error: nil)
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
@@ -169,11 +170,11 @@ extension DefaultLocationService: PassiveLocationManagerDelegate {
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
-        logHandler?.debug(message: "\(String(describing: Self.self)), passiveLocationManager.didUpdateHeading", error: nil)
+        logHandler?.debug(message: "passiveLocationManager.didUpdateHeading", error: nil)
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didFailWithError error: Error) {
-        logHandler?.error(message: "\(String(describing: Self.self)), passiveLocationManager.didFailWithError", error: error)
+        logHandler?.error(message: "passiveLocationManager.didFailWithError", error: error)
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: error.localizedDescription))
         delegate?.locationService(sender: self, didFailWithError: errorInformation)
     }
