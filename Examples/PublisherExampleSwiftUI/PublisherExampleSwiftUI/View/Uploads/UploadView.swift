@@ -6,8 +6,14 @@ struct UploadView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("📄 \(upload.request.filename)")
-                .fontWeight(.bold)
+            if #available(iOS 15.0, *) {
+                Text("📄 \(upload.request.filename)")
+                    .fontWeight(.bold)
+                    .textSelection(.enabled)
+            } else {
+                Text("📄 \(upload.request.filename)")
+                    .fontWeight(.bold)
+            }
             Text(String(describing: upload.request.type))
                 .italic()
             HStack {
