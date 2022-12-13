@@ -58,3 +58,5 @@ jobs:
 
       - name: Run LogParser tests
         run: swift test
+      - name: Build LogParser command-line example app
+        run: swift build --target CommandLineExample

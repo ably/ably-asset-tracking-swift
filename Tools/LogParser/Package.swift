@@ -12,6 +12,12 @@ let package = Package(
         .library(
             name: "LogParser",
             targets: ["LogParser"]),
+        .executable(
+            name: "CommandLineExample",
+            targets: ["CommandLineExample"])
+    ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0")
     ],
     targets: [
         .target(
@@ -20,6 +26,14 @@ let package = Package(
         .testTarget(
             name: "LogParserTests",
             dependencies: ["LogParser"]
+        ),
+        .executableTarget(
+            name: "CommandLineExample",
+            dependencies: [
+                "LogParser",
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
+            ],
+            path: "Examples/CommandLineExample/Sources"
         )
     ]
 )
