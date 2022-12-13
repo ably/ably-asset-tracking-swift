@@ -3,25 +3,25 @@ import AblyAssetTrackingCore
 import Logging
 
 class PublisherLogger: AblyAssetTrackingCore.LogHandler {
-    private let swiftLog: Logger
+    private let logger: Logger
         
-    init(swiftLog: Logger) {
-        self.swiftLog = swiftLog
+    init(logger: Logger) {
+        self.logger = logger
     }
     
     func logMessage(level: LogLevel, message: String, error: Error?) {
         let errorString = error?.localizedDescription
         switch level {
         case .verbose:
-            swiftLog.log(level: .trace, "\(message). \(errorString ?? "")")
+            logger.log(level: .trace, "\(message). \(errorString ?? "")")
         case .info:
-            swiftLog.log(level: .info, "\(message). \(errorString ?? "")")
+            logger.log(level: .info, "\(message). \(errorString ?? "")")
         case .debug:
-            swiftLog.log(level: .debug, "\(message). \(errorString ?? "")")
+            logger.log(level: .debug, "\(message). \(errorString ?? "")")
         case .warn:
-            swiftLog.log(level: .warning, "\(message). \(errorString ?? "")")
+            logger.log(level: .warning, "\(message). \(errorString ?? "")")
         case .error:
-            swiftLog.log(level: .error, "\(message). \(errorString ?? "")")
+            logger.log(level: .error, "\(message). \(errorString ?? "")")
         }
     }
 }
