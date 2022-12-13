@@ -105,3 +105,7 @@ We use [Sourcery](https://github.com/krzysztofzablocki/Sourcery) to generate moc
 At the time of writing, there is no way to automatically generate these mocks as part of the SPM build process, so when you update these protocols you’ll need to manually run the command `Scripts/generate-mocks.sh`.
 
 When [Swift package plugins](https://developer.apple.com/videos/play/wwdc2022/110359/) get introduced in Swift 5.6, we might be able to generate these mocks automatically.
+
+## Analysing log output
+
+This repository contains a Swift library [`LogParser`](Tools/LogParser) for parsing the log output of the Asset Tracking SDKs and their example apps. This can come in useful if you want to write a script to perform some analysis on these logs. See the `README` in that directory for more details.
