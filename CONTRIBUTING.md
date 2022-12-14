@@ -94,6 +94,10 @@ and then manually merge the delta contents in to the main change log (where `v1.
 - Please remove default Xcode header comments (with author, license and creation date) as they're not necessary.
 - If you're adding or modifying any part of the public interface of SDK, please also update [QuickHelp](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/SymbolDocumentation.html#//apple_ref/doc/uid/TP40016497-CH51-SW1) documentation.
 
+### Logging
+
+Inside the SDK we pass around a logger that conforms to the [`InternalLogHandler` protocol](Sources/AblyAssetTrackingInternal/Logging/InternalLogHandler.swift). This logger stores information about which subsystem the logged messages come from. When you create a new subsystem (e.g. adding a new type, or introducing a dependency on an external SDK) you should create a new log handler instance to store this subsystem information, using the logger’s `addingSubsystem(_:)` method.
+
 ## Generating mocks
 
 We use [Sourcery](https://github.com/krzysztofzablocki/Sourcery) to generate mocks for the protocols that are marked with a `//sourcery: AutoMockable` comment.
