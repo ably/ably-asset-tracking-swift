@@ -1,0 +1,54 @@
+default_platform(:ios)
+    platform :ios do
+    desc "Build and upload the Publisher Example app to TestFlight"
+    lane :build_and_upload_to_testflight do
+        # Creates a temporary keychain. Without this, the build could
+        # freeze and never finish. https://docs.fastlane.tools/actions/setup_ci/
+        setup_ci if ENV['CI']
+        # We want to leave the default config as Automatic code signing, since it's easier
+        # to use for users. So instead of changing those settings in pbxproj in git, we're using
+        # the `update_code_signing_settings` step here.
+        update_code_signing_settings(
+          use_automatic_signing: false,
+          path: "PublisherExampleSwiftUI.xcodeproj",
+          team_id: "XXY98AVDR6",
+          code_sign_identity: "iPhone Distribution",
+          profile_name: "match appstore com.ably.tracking.example.publisher")
+        update_build_number
+        match(
+          git_url: ENV["MATCH_GIT_URL"],
+          app_identifier: "com.ably.tracking.example.publisher",
+          type: "appstore",
+          readonly: true)
+        build_app(scheme: "PublisherExampleSwiftUI",
+          project: "PublisherExampleSwiftUI.xcodeproj",
+          configuration: "Release",
+          export_method: "app-store",
+          output_name: "PublisherExample.ipa",
+          clean: true,
+          include_bitcode: true)
+        upload_to_testflight(
+          skip_submission: true,
+          skip_waiting_for_build_processing: true,
+          apple_id: "6444406485",
+          username: ENV["APPLE_APPS_USERNAME"],
+          itc_provider:"XXY98AVDR6")
+        end
+
+        # Example output: 2022.12.1.1454
+        desc "Set build number based on current time"
+        private_lane :update_build_number do
+          build_number = Time.new.strftime("%Y.%m.%d.%H%M")
+          increment_build_number(build_number: build_number)
+    end
+
+    # Helper lane, not used by CI, but can be used on local machines
+    # to fetch currently used certificate and profile from match repo
+    # by running `bundle exec fastlane fetch_certificate`
+    desc "Fetch the distribution certificate and appstore provisioning profile from match git repo"
+    lane :fetch_certificate do
+      match(type: "appstore",
+      readonly: true,
+      app_identifier: com.ably.tracking.example.publisher)
+    end
+end
