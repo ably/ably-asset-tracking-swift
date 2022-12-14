@@ -56,7 +56,7 @@ class DefaultPublisher: Publisher {
     private var lastRawTimestamps: [Trackable: Double]
     private var route: Route?
     
-    private var logHandler: HierarchicalLogHandler?
+    private var logHandler: InternalLogHandler?
 
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
@@ -80,7 +80,7 @@ class DefaultPublisher: Publisher {
          areRawLocationsEnabled: Bool = false,
          isSendResolutionEnabled: Bool = true,
          constantLocationEngineResolution: Resolution? = nil,
-         logHandler: HierarchicalLogHandler?
+         logHandler: InternalLogHandler?
     ) {
         
         self.connectionConfiguration = connectionConfiguration

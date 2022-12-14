@@ -20,7 +20,7 @@ class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
     private let trackableId: String
     private let presenceData: PresenceData
-    private let logHandler: LogHandler?
+    private let logHandler: InternalLogHandler?
     
     private var ablySubscriber: AblySubscriber
     private var subscriberState: SubscriberState = .working
@@ -36,7 +36,7 @@ class DefaultSubscriber: Subscriber {
         ablySubscriber: AblySubscriber,
         trackableId: String,
         resolution: Resolution?,
-        logHandler: HierarchicalLogHandler?) {
+        logHandler: InternalLogHandler?) {
             
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
         self.ablySubscriber = ablySubscriber

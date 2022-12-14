@@ -544,3 +544,48 @@ public class AblySubscriberDelegateMock: AblySubscriberDelegate {
     }
 
 }
+public class InternalLogHandlerMock: InternalLogHandler {
+
+    public init() {}
+
+
+    //MARK: - logMessage
+
+    public var logMessageLevelMessageErrorCodeLocationCallsCount = 0
+    public var logMessageLevelMessageErrorCodeLocationCalled: Bool {
+        return logMessageLevelMessageErrorCodeLocationCallsCount > 0
+    }
+    public var logMessageLevelMessageErrorCodeLocationReceivedArguments: (level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?)?
+    public var logMessageLevelMessageErrorCodeLocationReceivedInvocations: [(level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?)] = []
+    public var logMessageLevelMessageErrorCodeLocationClosure: ((LogLevel, String, Error?, CodeLocation?) -> Void)?
+
+    public func logMessage(level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?) {
+        logMessageLevelMessageErrorCodeLocationCallsCount += 1
+        logMessageLevelMessageErrorCodeLocationReceivedArguments = (level: level, message: message, error: error, codeLocation: codeLocation)
+        logMessageLevelMessageErrorCodeLocationReceivedInvocations.append((level: level, message: message, error: error, codeLocation: codeLocation))
+        logMessageLevelMessageErrorCodeLocationClosure?(level, message, error, codeLocation)
+    }
+
+    //MARK: - addingSubsystem
+
+    public var addingSubsystemCallsCount = 0
+    public var addingSubsystemCalled: Bool {
+        return addingSubsystemCallsCount > 0
+    }
+    public var addingSubsystemReceivedSubsystem: Subsystem?
+    public var addingSubsystemReceivedInvocations: [Subsystem] = []
+    public var addingSubsystemReturnValue: InternalLogHandler!
+    public var addingSubsystemClosure: ((Subsystem) -> InternalLogHandler)?
+
+    public func addingSubsystem(_ subsystem: Subsystem) -> InternalLogHandler {
+        addingSubsystemCallsCount += 1
+        addingSubsystemReceivedSubsystem = subsystem
+        addingSubsystemReceivedInvocations.append(subsystem)
+        if let addingSubsystemClosure = addingSubsystemClosure {
+            return addingSubsystemClosure(subsystem)
+        } else {
+            return addingSubsystemReturnValue
+        }
+    }
+
+}
