@@ -55,8 +55,8 @@ jobs:
 
       - name: Run LogParser tests
         run: swift test
-        working-directory: Tools/LogParser
+        working-directory: Tools/Library/LogParser
 
       - name: Build LogParserExample app
         run: swift build
-        working-directory: Tools/LogParserExample
+        working-directory: Tools/Library/LogParserExample
