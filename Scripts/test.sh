@@ -23,18 +23,39 @@ struct Secrets {
 }
 EOF
 
+# We want to specify a custom derived data directory so that we know where to
+# find the test result .xcresult bundle. However, it appears that putting the
+# derived data directory inside a Swift package’s repo causes build errors (see
+# https://forums.swift.org/t/xcode-and-swift-package-manager/44704/6). So I’m
+# following the suggestion there of placing the derived data directory outside
+# the repo.
+temp_dir=`mktemp -d -t ably-asset-tracking-swift`
+derived_data_dir="${temp_dir}/DerivedData"
+
 # If xcodebuild fails (e.g. due to failed tests), we want to defer the failure
-# of this script until we’ve had a chance to copy the test results JUnit report
-# to the place where test-observability-action expects it to be. Hence we
-# temporarily disable the -e option.
+# of this script until we’ve had a chance to process and copy the logs that
+# xcodebuild created. Hence we temporarily disable the -e option.
 set +e
-# --report: "Creates a JUnit-style XML report at build/reports/junit.xml"
-set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 12' \
-	| xcpretty --report junit
+set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 12' -derivedDataPath "${derived_data_dir}" \
+	| xcpretty
 xcodebuild_exit_status=$?
 set -e
 
-# test-observability-action looks for .junit files
-cp build/reports/junit.xml results.junit
+# Create a directory to store all of the files that we wish to pass to
+# subsequent actions in the GitHub workflow that called this script.
+mkdir test-results
+
+derived_data_logs_dir="${derived_data_dir}/Logs"
+
+# Convert the .xcresult bundle into a JUnit report file for test-observability-action
+mkdir test-results/junit
+
+derived_data_test_logs_dir="${derived_data_logs_dir}/Test"
+bundle exec fastlane run trainer "path:${derived_data_test_logs_dir}" extension:".junit" fail_build:"false"
+cp "${derived_data_test_logs_dir}"/*.junit test-results/junit
+
+# Copy the Logs directory from derived data for the "Xcodebuild Logs Artifact" step in check.yml
+mkdir test-results/xcodebuild-logs
+cp -r "${derived_data_logs_dir}" test-results/xcodebuild-logs
 
 exit $xcodebuild_exit_status

@@ -13,6 +13,7 @@ xcuserdata/
 
 # Build products
 archives/
+test-results/
 
 # Fastlane reports
 /fastlane/report.xml

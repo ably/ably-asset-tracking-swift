@@ -37,14 +37,14 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: xcodebuild-logs
-          path: ~/Library/Developer/Xcode/DerivedData/*/Logs
+          path: test-results/xcodebuild-logs/Logs
 
       - name: Upload test results
         if: always()
         uses: ably/test-observability-action@v1
         with:
           server-auth: ${{ secrets.TEST_OBSERVABILITY_SERVER_AUTH_KEY }}
-          path: '.'
+          path: 'test-results/junit'
 
   check-log-parser:
     runs-on: macos-latest
