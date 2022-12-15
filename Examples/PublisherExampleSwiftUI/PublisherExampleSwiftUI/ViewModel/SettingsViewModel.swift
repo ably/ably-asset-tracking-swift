@@ -9,6 +9,12 @@ class SettingsViewModel: ObservableObject {
         }
     }
     
+    @Published var logLocationHistoryJSON: Bool = SettingsModel.shared.logLocationHistoryJSON {
+        didSet {
+            SettingsModel.shared.logLocationHistoryJSON = logLocationHistoryJSON
+        }
+    }
+    
     @Published var defaultResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
     @Published var defaultResolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
     
