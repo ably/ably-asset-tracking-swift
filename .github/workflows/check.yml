@@ -48,9 +48,6 @@ jobs:
 
   check-log-parser:
     runs-on: macos-latest
-    defaults:
-      run:
-        working-directory: Tools/LogParser
     steps:
       - uses: actions/checkout@v2
         with:
@@ -58,5 +55,8 @@ jobs:
 
       - name: Run LogParser tests
         run: swift test
-      - name: Build LogParser command-line example app
-        run: swift build --target CommandLineExample
+        working-directory: Tools/LogParser
+
+      - name: Build LogParserExample app
+        run: swift build
+        working-directory: Tools/LogParserExample
