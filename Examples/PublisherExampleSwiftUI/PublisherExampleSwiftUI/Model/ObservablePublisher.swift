@@ -1,9 +1,11 @@
 import Combine
 import AblyAssetTrackingPublisher
 import Foundation
+import Logging
 
 class ObservablePublisher: ObservableObject {
     private let publisher: AblyAssetTrackingPublisher.Publisher
+    private let logger: Logger?
     let configInfo: PublisherConfigInfo
     let locationHistoryDataHandler: LocationHistoryDataHandlerProtocol?
     
@@ -22,11 +24,12 @@ class ObservablePublisher: ObservableObject {
     @Published private(set) var lastError: ErrorInformation?
     
     // After initialising an ObservablePublisher instance, you need to manually set the publisher’s delegate to the created instance.
-    init(publisher: AblyAssetTrackingPublisher.Publisher, configInfo: PublisherConfigInfo, locationHistoryDataHandler: LocationHistoryDataHandlerProtocol? = nil) {
+    init(publisher: AblyAssetTrackingPublisher.Publisher, configInfo: PublisherConfigInfo, locationHistoryDataHandler: LocationHistoryDataHandlerProtocol? = nil, logger: Logger? = nil) {
         self.publisher = publisher
         self.configInfo = configInfo
         self.routingProfile = publisher.routingProfile
         self.locationHistoryDataHandler = locationHistoryDataHandler
+        self.logger = logger
     }
     
     func stop(completion: @escaping ResultHandler<Void>) {
@@ -89,6 +92,19 @@ extension ObservablePublisher: PublisherDelegate {
     }
     
     func publisher(sender: AblyAssetTrackingPublisher.Publisher, didFinishRecordingLocationHistoryData locationHistoryData: LocationHistoryData) {
+        if SettingsModel.shared.logLocationHistoryJSON {
+            do {
+                let jsonData = try JSONEncoder().encode(locationHistoryData)
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    logger?.log(level: .debug, "Received location history data: \(jsonString)")
+                } else {
+                    logger?.log(level: .error, "Failed to convert location history data to string")
+                }
+            } catch {
+                logger?.log(level: .error, "Failed to serialize location history data to JSON: \(error.localizedDescription)")
+            }
+        }
+        
         locationHistoryDataHandler?.handleLocationHistoryData(locationHistoryData)
     }
     

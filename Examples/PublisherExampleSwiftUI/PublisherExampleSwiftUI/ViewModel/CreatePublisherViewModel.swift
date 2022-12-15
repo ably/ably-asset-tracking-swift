@@ -136,7 +136,7 @@ class CreatePublisherViewModel: ObservableObject {
         
         let configInfo = ObservablePublisher.PublisherConfigInfo(areRawLocationsEnabled: areRawLocationsEnabled, constantResolution: constantResolution)
         
-        let observablePublisher = ObservablePublisher(publisher: publisher, configInfo: configInfo, locationHistoryDataHandler: locationHistoryDataHandler)
+        let observablePublisher = ObservablePublisher(publisher: publisher, configInfo: configInfo, locationHistoryDataHandler: locationHistoryDataHandler, logger: logger)
         publisher.delegate = observablePublisher
         
         return observablePublisher

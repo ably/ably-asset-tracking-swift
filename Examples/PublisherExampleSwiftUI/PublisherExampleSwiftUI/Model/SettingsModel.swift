@@ -67,6 +67,15 @@ class SettingsModel {
         }
     }
     
+    var logLocationHistoryJSON: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "logLocationHistoryJSON")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "logLocationHistoryJSON")
+        }
+    }
+    
     var vehicleProfile: VehicleProfile {
         get {
             guard let profile: VehicleProfile = UserDefaults.standard.get("vehicleProfile") else {

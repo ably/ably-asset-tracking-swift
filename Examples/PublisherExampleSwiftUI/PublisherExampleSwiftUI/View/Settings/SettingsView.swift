@@ -45,6 +45,15 @@ struct SettingsView: View {
             } header: {
                 Text("Other settings")
             }
+            
+            Section {
+                Toggle(isOn: $viewModel.logLocationHistoryJSON) {
+                    Text("Log location history JSON")
+                    Text("Causes the app to emit a `debug` level log message when a `LocationHistoryData` is received from the Asset Tracking SDK. The log message will contain a JSON serialization of this history data.")
+                }
+            } header: {
+                Text("Developer settings")
+            }
         }
         .listStyle(.grouped)
         .navigationBarTitle("Settings")
