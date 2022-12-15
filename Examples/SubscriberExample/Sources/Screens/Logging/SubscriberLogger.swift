@@ -11,17 +11,18 @@ class SubscriberLogger: AblyAssetTrackingCore.LogHandler {
     
     func logMessage(level: LogLevel, message: String, error: Error?) {
         let errorString = error?.localizedDescription
-        switch level {
-        case .verbose:
-            logger.log(level: .trace, "\(message). \(errorString ?? "")")
-        case .info:
-            logger.log(level: .info, "\(message). \(errorString ?? "")")
-        case .debug:
-            logger.log(level: .debug, "\(message). \(errorString ?? "")")
-        case .warn:
-            logger.log(level: .warning, "\(message). \(errorString ?? "")")
-        case .error:
-            logger.log(level: .error, "\(message). \(errorString ?? "")")
+        logger.log(level: level.swiftLogLevel, "\(message). \(errorString ?? "")")
+    }
+}
+
+private extension LogLevel {
+    var swiftLogLevel: Logger.Level {
+        switch self {
+        case .verbose: return .trace
+        case .info: return .info
+        case .debug: return .debug
+        case .warn: return .warning
+        case .error: return .error
         }
     }
 }
