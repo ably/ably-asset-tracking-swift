@@ -3,21 +3,21 @@ import LogParser
 
 class ExampleAppSDKLogLineTests: XCTestCase {
     func test_init_withLogLineEmittedBySDK_parsesTimestamp() throws {
-        let line = "2022-12-13T09:06:06.341000-03:00 debug: [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online."
+        let line = "2022-12-13T09:06:06.341000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online."
         let result = try ExampleAppSDKLogLine(line: line)
         
         XCTAssertEqual(result.timestamp, Date(timeIntervalSince1970: 1670933166.341))
     }
     
     func test_init_withLogLineEmittedBySDK_parsesLogLevel() throws {
-        let line = "2022-12-13T09:06:06.341000-03:00 debug: [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online."
+        let line = "2022-12-13T09:06:06.341000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online."
         let result = try ExampleAppSDKLogLine(line: line)
         
         XCTAssertEqual(result.logLevel, "debug")
     }
     
     func test_init_withLogLineEmittedBySDK_parsesMessage() throws {
-        let line = "2022-12-13T09:06:06.341000-03:00 debug: [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online."
+        let line = "2022-12-13T09:06:06.341000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online."
         let result = try ExampleAppSDKLogLine(line: line)
         
         let expectedMessage = SDKLogMessage(
@@ -29,10 +29,24 @@ class ExampleAppSDKLogLineTests: XCTestCase {
     }
 
     func test_init_withLogLineEmittedBySDK_withTrailingLineTerminator_parsesMessage_strippingLineTerminator() throws {
-        let line = "2022-12-13T09:06:06.341000-03:00 debug: [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online.\n"
+        let line = "2022-12-13T09:06:06.341000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online.\n"
         let result = try ExampleAppSDKLogLine(line: line)
         
         XCTAssertEqual(result.message.message, "ablyPublisher.didChangeConnectionState. State: ConnectionState.online.")
+    }
+    
+    func test_init_withLogLineEmittedBySDK_withNoError_hasNilErrorMessage() throws {
+        let line = "2022-12-13T09:06:06.341000-03:00 debug: [noError] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online."
+        let result = try ExampleAppSDKLogLine(line: line)
+        
+        XCTAssertNil(result.errorMessage)
+    }
+    
+    func test_init_withLogLineEmittedBySDK_withError_parsesErrorMessage() throws {
+        let line = "2022-12-13T09:06:06.341000-03:00 error: [error(len:24): Here is an error message] [assetTracking.publisher.DefaultPublisher]@(DefaultPublisher.swift:906) ablyPublisher.didChangeConnectionState. State: ConnectionState.online."
+        let result = try ExampleAppSDKLogLine(line: line)
+        
+        XCTAssertEqual(result.errorMessage, "Here is an error message")
     }
     
     func test_init_withLogLineNotFromSDK_throwsError() {

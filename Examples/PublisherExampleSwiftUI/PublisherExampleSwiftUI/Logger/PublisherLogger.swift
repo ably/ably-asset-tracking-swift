@@ -10,8 +10,17 @@ class PublisherLogger: AblyAssetTrackingCore.LogHandler {
     }
     
     func logMessage(level: LogLevel, message: String, error: Error?) {
-        let errorString = error?.localizedDescription
-        logger.log(level: level.swiftLogLevel, "\(message). \(errorString ?? "")")
+        let prefix: String
+
+        if let error = error {
+            // The LogParser library needs to be able to extract the error description from the log message; for this reason we emit its length
+            let errorDescription = error.localizedDescription
+            prefix = "[error(len:\(errorDescription.count)): \(errorDescription)] "
+        } else {
+            prefix = "[noError] "
+        }
+        
+        logger.log(level: level.swiftLogLevel, "\(prefix)\(message)")
     }
 }
 
