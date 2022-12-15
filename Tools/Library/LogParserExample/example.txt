@@ -1,3 +1,4 @@
-2022-12-13T09:06:06.341000-03:00 debug: [assetTracking.someComponent] Here is a message
+2022-12-13T09:06:06.341000-03:00 debug: [noError] [assetTracking.someComponent] Here is a message
 Some other line
-2022-12-13T09:06:10.729000-03:00 info: [assetTracking.someOtherComponent]@(MyFile.swift:130) Here is another message
+2022-12-13T09:06:10.729000-03:00 info: [noError] [assetTracking.someOtherComponent]@(MyFile.swift:130) Here is another message
+2022-12-13T09:06:32.282000-03:00 info: [error(len:24): Here is an error message] [assetTracking.someComponent] Here is a message with an attached error

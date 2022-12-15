@@ -6,15 +6,17 @@ public struct ExampleAppSDKLogLine: Equatable {
     public var timestamp: Date
     /// The log level described by the log line.
     public var logLevel: String
-    /// The remainder of the log line.
-    ///
-    /// > Note: The ``SDKLogMessage/message`` of this value is not necessarily the exact value that was passed as the `message` argument of AblyAssetTrackingCore’s `LogHandler.logMessage(level:message:error:)`. It may contain a suffix added by the example apps’ log handlers, to add a trailing full stop and information about the `error` argument.
-    ///
-    /// Future versions of this library might address this issue.
+    /// The message received from the Asset Tracking SDK.
     public var message: SDKLogMessage
+    /// The `localizedDescription` of the error received from the Asset Tracking SDK, if any.
+    public var errorMessage: String?
     
     public enum ParseError: Error {
         case generalError
+        case missingErrorMarker
+        case missingErrorMessageLength
+        case missingErrorLengthTerminator
+        case missingErrorTerminator
     }
     
     private static let isoDateFormatter = {
@@ -52,13 +54,36 @@ public struct ExampleAppSDKLogLine: Equatable {
             throw ParseError.generalError
         }
         
+        if scanner.scanString("[noError] ") != nil {
+            self.errorMessage = nil
+        } else if scanner.scanString("[error(len:") != nil {
+            var errorMessageLength = 0
+            guard scanner.scanInt(&errorMessageLength) else {
+                throw ParseError.missingErrorMessageLength
+            }
+            guard scanner.scanString("): ") != nil else {
+                throw ParseError.missingErrorLengthTerminator
+            }
+            
+            let errorMessageEndIndex = line.index(scanner.currentIndex, offsetBy: errorMessageLength)
+            self.errorMessage = String(line[scanner.currentIndex..<errorMessageEndIndex])
+            scanner.currentIndex = errorMessageEndIndex
+            
+            guard scanner.scanString("] ") != nil else {
+                throw ParseError.missingErrorTerminator
+            }
+        } else {
+            throw ParseError.missingErrorMarker
+        }
+        
         let remainder = scanner.isAtEnd ? "" : line[scanner.currentIndex...]
         self.message = try .init(emittedMessage: String(remainder))
     }
     
-    public init(timestamp: Date, logLevel: String, message: SDKLogMessage) {
+    public init(timestamp: Date, logLevel: String, message: SDKLogMessage, errorMessage: String?) {
         self.timestamp = timestamp
         self.logLevel = logLevel
         self.message = message
+        self.errorMessage = errorMessage
     }
 }
