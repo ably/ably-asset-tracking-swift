@@ -44,7 +44,7 @@ class GeoJSONMessageCodableTests: XCTestCase {
         XCTAssertEqual(message.geometry.latitude, decodedMessage.geometry.latitude, accuracy: .ulpOfOne)
         XCTAssertEqual(message.geometry.altitude, decodedMessage.geometry.altitude, accuracy: .ulpOfOne)
     
-        XCTAssertEqual(message.properties.accuracyHorizontal, decodedMessage.properties.accuracyHorizontal, accuracy: .ulpOfOne)
+        XCTAssertEqual(message.properties.accuracyHorizontal!, decodedMessage.properties.accuracyHorizontal!, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.accuracyVertical!, decodedMessage.properties.accuracyVertical!, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.bearing!, decodedMessage.properties.bearing!, accuracy: .ulpOfOne)
         XCTAssertEqual(message.properties.speed!, decodedMessage.properties.speed!, accuracy: .ulpOfOne)

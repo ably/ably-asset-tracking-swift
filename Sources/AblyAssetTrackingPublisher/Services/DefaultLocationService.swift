@@ -125,25 +125,32 @@ class DefaultLocationService: LocationService {
                     return
                 }
                 
-                let locationHistoryData: LocationHistoryData
+                var locationHistoryData: LocationHistoryData? = nil
                 do {
                     let events = try reader.compactMap { event -> GeoJSONMessage? in
                         guard let locationUpdateHistoryEvent = event as? LocationUpdateHistoryEvent else {
                             return nil
                         }
                         
-                        let location = locationUpdateHistoryEvent.location.toLocation()
+                        let location = try locationUpdateHistoryEvent.location.toLocation().get()
                         return try GeoJSONMessage(location: location)
                     }
-                    
                     locationHistoryData = LocationHistoryData(events: events)
-                } catch {
+                }
+                catch let error as LocationValidationError {
+                    self.logHandler?.verbose(message: "Swallowing invalid enhanced location from Mapbox, validation error was: \(error)", error: error)
+                }
+                catch {
                     self.logHandler?.error(message: "Failed to map location history reader events to GeoJSONMessage", error: error)
                     completion(.failure(.init(error: error)))
                     return
                 }
                 
                 let rawHistoryTemporaryFile = TemporaryFile(fileURL: historyFileURL, logHandler: self.logHandler)
+                guard let locationHistoryData = locationHistoryData else {
+                    return
+                }
+
                 completion(.success(.init(locationHistoryData: locationHistoryData, rawHistoryFile: rawHistoryTemporaryFile)))
             }
         }
@@ -165,9 +172,25 @@ extension DefaultLocationService: PassiveLocationManagerDelegate {
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
-        delegate?.locationService(sender: self, didUpdateRawLocationUpdate: RawLocationUpdate(location: rawLocation.toLocation()))
-        delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location.toLocation()))
+        ///Validate
+        let rawLocationResult = rawLocation.toLocation()
+        do {
+            let rawLocationFromResult = try rawLocationResult.get()
+            delegate?.locationService(sender: self, didUpdateRawLocationUpdate: RawLocationUpdate(location: rawLocationFromResult))
+        } catch {
+            logHandler?.verbose(message: "Swallowing invalid raw location from Mapbox, validation error was: \(error as? LocationValidationError)", error: error)
+        }
+        
+        let enhancedLocationResult = location.toLocation()
+        do {
+            let enhancedLocationFromResult = try enhancedLocationResult.get()
+            delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: enhancedLocationFromResult))
+        } catch {
+            logHandler?.verbose(message: "Swallowing invalid enhanced location from Mapbox, validation error was: \(error as? LocationValidationError)", error: error)
+        }
     }
+    
+    
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
         logHandler?.debug(message: "passiveLocationManager.didUpdateHeading", error: nil)
