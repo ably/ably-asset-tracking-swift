@@ -2,40 +2,41 @@
 import CoreLocation
 import MapboxCoreNavigation
 
-public class MockLocationManagerHandlerDelegate: LocationManagerHandlerDelegate {
+public class MockPassiveLocationManagerHandlerDelegate: PassiveLocationManagerHandlerDelegate {
+
     public init() {}
 
-    public var locationManagerHandlerDidChangeAuthorizationCalled = false
-    public func locationManagerHandlerDidChangeAuthorization() {
-        locationManagerHandlerDidChangeAuthorizationCalled = true
+    public var passiveLocationManagerHandlerDidChangeAuthorizationCalled = false
+    public func passiveLocationManagerHandlerDidChangeAuthorization(handler: PassiveLocationManagerHandler) {
+        passiveLocationManagerHandlerDidChangeAuthorizationCalled = true
     }
     
-    public var locationManagerHandlerDidUpdateEnhancedLocationParamLocation: Location?
-    public var locationManagerHandlerDidUpdateEnhancedLocationCalled = false
-    public func locationManagerHandler(handler: LocationManagerHandler, didUpdateEnhancedLocation location: Location) {
-        locationManagerHandlerDidUpdateEnhancedLocationCalled = true
-        locationManagerHandlerDidUpdateEnhancedLocationParamLocation = location
+    public var passiveLocationManagerHandlerDidUpdateEnhancedLocationParamLocation: Location?
+    public var passiveLocationManagerHandlerDidUpdateEnhancedLocationCalled = false
+    public func passiveLocationManagerHandler(handler: PassiveLocationManagerHandler, didUpdateEnhancedLocation location: Location) {
+        passiveLocationManagerHandlerDidUpdateEnhancedLocationCalled = true
+        passiveLocationManagerHandlerDidUpdateEnhancedLocationParamLocation = location
     }
     
-    public var locationManagerHandlerDidUpdateRawLocationParamLocation: Location?
-    public var locationManagerHandlerDidUpdateRawLocationCalled = false
-    public func locationManagerHandler(handler: LocationManagerHandler, didUpdateRawLocation location: Location) {
-        locationManagerHandlerDidUpdateRawLocationCalled = true
-        locationManagerHandlerDidUpdateRawLocationParamLocation = location
+    public var passiveLocationManagerHandlerDidUpdateRawLocationParamLocation: Location?
+    public var passiveLocationManagerHandlerDidUpdateRawLocationCalled = false
+    public func passiveLocationManagerHandler(handler: PassiveLocationManagerHandler, didUpdateRawLocation location: Location) {
+        passiveLocationManagerHandlerDidUpdateRawLocationCalled = true
+        passiveLocationManagerHandlerDidUpdateRawLocationParamLocation = location
     }
     
-    public var locationManagerHandlerDidUpdateHeadingCalled = false
-    public var locationManagerHandlerDidUpdateHeadingParamNewHeading: CLHeading?
-    public func locationManagerHandler(handler: LocationManagerHandler, didUpdateHeading newHeading: CLHeading) {
-        locationManagerHandlerDidUpdateHeadingCalled = true
-        locationManagerHandlerDidUpdateHeadingParamNewHeading = newHeading
+    public var passiveLocationManagerHandlerDidUpdateHeadingCalled = false
+    public var passiveLocationManagerHandlerDidUpdateHeadingParamNewHeading: CLHeading?
+    public func passiveLocationManagerHandler(handler: PassiveLocationManagerHandler, didUpdateHeading newHeading: CLHeading) {
+        passiveLocationManagerHandlerDidUpdateHeadingCalled = true
+        passiveLocationManagerHandlerDidUpdateHeadingParamNewHeading = newHeading
     }
     
-    public var locationManagerHandlerErrorDidFailWithErrorCalled = false
-    public var locationManagerHandlerErrorDidFailWithErrorParamError: Error?
-    public func locationManagerHandler(handler: LocationManagerHandler, didFailWithError error: Error) {
-        locationManagerHandlerErrorDidFailWithErrorCalled = true
-        locationManagerHandlerErrorDidFailWithErrorParamError = error
+    public var passiveLocationManagerHandlerErrorDidFailWithErrorCalled = false
+    public var passiveLocationManagerHandlerErrorDidFailWithErrorParamError: Error?
+    public func passiveLocationManagerHandler(handler: PassiveLocationManagerHandler, didFailWithError error: Error) {
+        passiveLocationManagerHandlerErrorDidFailWithErrorCalled = true
+        passiveLocationManagerHandlerErrorDidFailWithErrorParamError = error
     }
     
 }
