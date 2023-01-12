@@ -9,15 +9,17 @@ class DefaultLocationService: LocationService {
     private let replayLocationManager: ReplayLocationManager?
     private let logHandler: InternalLogHandler?
     private let workQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.workQueue")
+    private let locationManagerHandler: LocationManagerHandler
 
     weak var delegate: LocationServiceDelegate?
-
+    
     init(mapboxConfiguration: MapboxConfiguration,
          historyLocation: [CLLocation]?,
          logHandler: InternalLogHandler?,
          vehicleProfile: VehicleProfile) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
-
+        self.locationManagerHandler = LocationManagerHandler(logHandler: logHandler)
+        
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
 
         NavigationSettings.shared.initialize(directions: directions,
@@ -60,7 +62,7 @@ class DefaultLocationService: LocationService {
             self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
         }
 
-        self.locationManager.delegate = self
+        self.locationManager.delegate = locationManagerHandler
     }
 
     func startUpdatingLocation() {
@@ -166,38 +168,91 @@ class DefaultLocationService: LocationService {
     }
 }
 
-extension DefaultLocationService: PassiveLocationManagerDelegate {
-    func passiveLocationManagerDidChangeAuthorization(_ manager: PassiveLocationManager) {
-        logHandler?.debug(message: "passiveLocationManager.passiveLocationManagerDidChangeAuthorization", error: nil)
+protocol LocationManagerHandlerDelegate: AnyObject {
+    @available(iOS 14.0, *)
+    func locationManagerHandlerDidChangeAuthorization()
+    
+    func locationManagerHandler(handler:LocationManagerHandler, didUpdateEnhancedLocation location: Location)
+    
+    func locationManagerHandler(handler:LocationManagerHandler, didUpdateRawLocation location: Location)
+    
+    func locationManagerHandler(handler:LocationManagerHandler, didUpdateHeading newHeading: CLHeading)
+    
+    func locationManagerHandler(handler:LocationManagerHandler, didFailWithError error: Error)
+}
+
+/**
+ An independently testable utility class used by the DefaultLocationService implementation
+ that receives, validates, sanitizes and transforms mapbox locations before sending them on to AAT.
+*/
+internal class LocationManagerHandler: PassiveLocationManagerDelegate {
+    let logHandler: InternalLogHandler?
+    
+    weak var delegate: LocationManagerHandlerDelegate?
+    
+    init(logHandler: InternalLogHandler?) {
+        self.logHandler = logHandler
     }
     
-    func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
-        ///Validate
-        let rawLocationResult = rawLocation.toLocation()
-        do {
-            let rawLocationFromResult = try rawLocationResult.get()
-            delegate?.locationService(sender: self, didUpdateRawLocationUpdate: RawLocationUpdate(location: rawLocationFromResult))
-        } catch {
-            logHandler?.verbose(message: "Swallowing invalid raw location from Mapbox, validation error was: \(error as? LocationValidationError)", error: error)
+    func passiveLocationManagerDidChangeAuthorization(_ manager: PassiveLocationManager) {
+        if #available(iOS 14.0, *) {
+            delegate?.locationManagerHandlerDidChangeAuthorization()
         }
-        
+    }
+    
+    func handleEnhancedLocationUpdate(location: CLLocation) {
         let enhancedLocationResult = location.toLocation()
         do {
             let enhancedLocationFromResult = try enhancedLocationResult.get()
-            delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: enhancedLocationFromResult))
+            delegate?.locationManagerHandler(handler: self, didUpdateEnhancedLocation: enhancedLocationFromResult)
         } catch {
             logHandler?.verbose(message: "Swallowing invalid enhanced location from Mapbox, validation error was: \(error as? LocationValidationError)", error: error)
         }
     }
     
+    func handleRawLocationUpdate(location: CLLocation) {
+        let rawLocationResult = location.toLocation()
+        
+        do {
+            let rawLocationFromResult = try rawLocationResult.get()
+            delegate?.locationManagerHandler(handler: self, didUpdateRawLocation: rawLocationFromResult)
+        } catch {
+            logHandler?.verbose(message: "Swallowing invalid raw location from Mapbox, validation error was: \(error as? LocationValidationError)", error: error)
+        }
+    }
     
+    func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
+       handleEnhancedLocationUpdate(location: location)
+    }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
-        logHandler?.debug(message: "passiveLocationManager.didUpdateHeading", error: nil)
+        delegate?.locationManagerHandler(handler: self, didUpdateHeading: newHeading)
     }
     
     func passiveLocationManager(_ manager: PassiveLocationManager, didFailWithError error: Error) {
-        logHandler?.error(message: "passiveLocationManager.didFailWithError", error: error)
+        delegate?.locationManagerHandler(handler: self, didFailWithError: error)
+    }
+}
+
+extension DefaultLocationService: LocationManagerHandlerDelegate {
+    func locationManagerHandlerDidChangeAuthorization() {
+        logHandler?.debug(message: "locationManagerHandler.locationManagerHandlerDidChangeAuthorization", error: nil)
+    }
+    
+    func locationManagerHandler(handler: LocationManagerHandler, didUpdateEnhancedLocation location: Location) {
+        delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location))
+    }
+    
+    func locationManagerHandler(handler: LocationManagerHandler, didUpdateRawLocation location: Location) {
+        delegate?.locationService(sender: self, didUpdateRawLocationUpdate: RawLocationUpdate(location: location))
+    }
+    
+    func locationManagerHandler(handler: LocationManagerHandler, didUpdateHeading newHeading: CLHeading) {
+        logHandler?.debug(message: "locationManagerHandler.didUpdateHeading", error: nil)
+    }
+    
+    func locationManagerHandler(handler: LocationManagerHandler, didFailWithError error: Error) {
+        logHandler?.error(message: "locationManagerHandler.didFailWithError", error: error)
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: error.localizedDescription))
         delegate?.locationService(sender: self, didFailWithError: errorInformation)
     }
