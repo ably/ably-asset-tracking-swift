@@ -18,4 +18,9 @@ public enum PresenceType {
 public struct Presence {
     public let action: PresenceAction
     public let type: PresenceType
+    
+    public init(action: PresenceAction, type: PresenceType) {
+        self.action = action
+        self.type = type
+    }
 }

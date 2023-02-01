@@ -95,4 +95,6 @@ public protocol AblySubscriber: AblyCommon {
      - Parameter trackableId: The identifier of the channel.
      */
     func subscribeForRawEvents(trackableId: String)
+    
+    func getCurrentPresence(trackableId: String, completion: Result<[ARTPresenceMessage], ErrorInformation>)
 }

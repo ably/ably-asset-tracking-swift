@@ -73,16 +73,16 @@ class DefaultSubscriber: Subscriber {
         enqueue(event: .start(.init(resultHandler: completion)))
     }
     
-    func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        start { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
+//    func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
+//        start { result in
+//            switch result {
+//            case .success:
+//                onSuccess()
+//            case .failure(let error):
+//                onError(error)
+//            }
+//        }
+//    }
     
     func stop(completion: @escaping ResultHandler<Void>) {
         guard !subscriberState.isStoppingOrStopped else {
