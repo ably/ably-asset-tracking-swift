@@ -2,7 +2,7 @@ import Foundation
 import AblyAssetTrackingCore
 
 /// The WorkerQueue is responsible for enqueueing ``Worker``s and executing them.
-class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType: Properties {
+class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType: WorkerQueueProperties {
     private var properties: PropertiesType
     private let workingQueue: DispatchQueue
     private let logHandler: InternalLogHandler?
