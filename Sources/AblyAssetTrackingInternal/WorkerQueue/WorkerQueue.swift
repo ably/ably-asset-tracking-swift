@@ -1,6 +1,7 @@
 import Foundation
 import AblyAssetTrackingCore
 
+/// The WorkerQueue is responsible for enqueueing ``Worker``s and executing them.
 class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType: Properties {
     private var properties: PropertiesType
     private let workingQueue: DispatchQueue
@@ -16,6 +17,10 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
         self.getStoppedError = getStoppedError
     }
     
+    
+    /// Enqueue worker created from passed specification for execution.
+    /// - parameters:
+    ///    - workerSpecification: ``WorkerSpecificationType`` specification of worker to be executed.
     func enqueue(workerSpecification: WorkerSpecificationType) {
         let worker = workerFactory.createWorker(workerSpecification: workerSpecification)
         
