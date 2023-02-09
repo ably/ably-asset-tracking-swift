@@ -20,7 +20,7 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     /// - Returns: updated Properties modified by this worker.
     func doWork(
         properties: PropertiesType,
-        doAsyncWork: (() throws -> Void) -> Void,
+        doAsyncWork: (@escaping () throws -> Void) -> Void,
         postWork: @escaping (WorkerSpecificationType) -> Void
     ) throws -> PropertiesType
     

@@ -8,13 +8,16 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
     private let logHandler: InternalLogHandler?
     private let workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>
     private let getStoppedError: () -> Error
+    private let asyncWorkQueue: DispatchQueue
 
-    init(properties: PropertiesType, queue: DispatchQueue, logHandler: InternalLogHandler?, workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>, getStoppedError: @escaping () -> Error) {
+    init(properties: PropertiesType, queue: DispatchQueue, logHandler: InternalLogHandler?, workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>, asyncWorkWorkingQueue: DispatchQueue,
+ getStoppedError: @escaping () -> Error) {
         self.properties = properties
         self.workingQueue = queue
         self.logHandler = logHandler
         self.workerFactory = workerFactory
         self.getStoppedError = getStoppedError
+        self.asyncWorkQueue = asyncWorkWorkingQueue
     }
     
     
@@ -34,15 +37,18 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
                 }
                 else {
                     try self.properties = worker.doWork(properties: self.properties) { asyncWork in
-                        do {
-                            try asyncWork()
-                        }
-                        catch {
-                            self.logHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker))", error: error)
-                            worker.onUnexpectedAsyncError(error: error) { asyncErrorWorker in
-                                self.enqueue(workerSpecification: asyncErrorWorker)
+                        self.asyncWorkQueue.async {
+                            do {
+                                try asyncWork()
+                            }
+                            catch {
+                                self.logHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker))", error: error)
+                                worker.onUnexpectedAsyncError(error: error) { asyncErrorWorker in
+                                    self.enqueue(workerSpecification: asyncErrorWorker)
+                                }
                             }
                         }
+                        
                     } postWork: { postWorker in
                         self.enqueue(workerSpecification: postWorker)
                     }
