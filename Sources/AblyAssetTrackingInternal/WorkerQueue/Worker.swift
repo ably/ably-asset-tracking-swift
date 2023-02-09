@@ -9,7 +9,6 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     associatedtype WorkerSpecificationType
     
     var completion: ResultHandler<Void> { get }
-    var workerTypeDescription: String { get }
     
     /// This function is provided in order for implementors to implement synchronous work. Any asynchronous tasks
     /// should be executed inside [doAsyncWork] function. If a worker needs to delegate another task to the queue
