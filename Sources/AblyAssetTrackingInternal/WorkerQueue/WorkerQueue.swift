@@ -14,7 +14,7 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
  getStoppedError: @escaping () -> Error) {
         self.properties = properties
         self.workingQueue = queue
-        self.logHandler = logHandler
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
         self.workerFactory = workerFactory
         self.getStoppedError = getStoppedError
         self.asyncWorkQueue = asyncWorkWorkingQueue
