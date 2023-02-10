@@ -23,10 +23,12 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
     
     /// Enqueue worker created from passed specification for execution.
     /// - parameters:
-    ///    - workerSpecification: ``WorkerSpecificationType`` specification of worker to be executed.
-    func enqueue(workerSpecification: WorkerSpecificationType) {
-        let worker = workerFactory.createWorker(workerSpecification: workerSpecification)
-        
+    ///    - workRequest: an identifiable wrapper for the  ``WorkRequest.workerSpecification`` that contains the specification
+    ///    of worker to be executed.
+    func enqueue(workRequest: WorkRequest<WorkerSpecificationType>) {
+        let worker = workerFactory.createWorker(workerSpecification: workRequest.workerSpecification)
+        let workerLogHandler = logHandler?.addingSubsystem(.named("request-\(workRequest.id)"))
+        workerLogHandler?.debug(message: "Worker Queue enqueued worker: \(type(of: worker))", error: nil)
         workingQueue.async { [weak self] in
             guard let self = self
             else { return }
@@ -42,22 +44,22 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
                                 try asyncWork()
                             }
                             catch {
-                                self.logHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker))", error: error)
+                                workerLogHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker))", error: error)
                                 worker.onUnexpectedAsyncError(error: error) { asyncErrorWorker in
-                                    self.enqueue(workerSpecification: asyncErrorWorker)
+                                    self.enqueue(workRequest: WorkRequest(workerSpecification: asyncErrorWorker))
                                 }
                             }
                         }
                         
                     } postWork: { postWorker in
-                        self.enqueue(workerSpecification: postWorker)
+                        self.enqueue(workRequest: WorkRequest(workerSpecification: postWorker))
                     }
                 }
             }
             catch {
-                self.logHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker))", error: error)
+                workerLogHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker))", error: error)
                 worker.onUnexpectedError(error: error) { postWorker in
-                    self.enqueue(workerSpecification: postWorker)
+                    self.enqueue(workRequest: WorkRequest(workerSpecification: postWorker))
                 }
             }
         }
