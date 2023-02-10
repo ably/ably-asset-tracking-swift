@@ -7,9 +7,7 @@ import AblyAssetTrackingCore
 public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     associatedtype PropertiesType
     associatedtype WorkerSpecificationType
-    
-    var completion: ResultHandler<Void> { get }
-    
+        
     /// This function is provided in order for implementors to implement synchronous work. Any asynchronous tasks
     /// should be executed inside [doAsyncWork] function. If a worker needs to delegate another task to the queue
     /// pass it to [postWork] function.
@@ -53,11 +51,49 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     
     
     /// This function is used to define what should happen when the worker breaks due to an unexpected error while the
-    /// async work from ``dowWork`` is being executed.
+    /// async work from ``doWork`` is being executed.
     /// This should usually be a rollback operation and/or a call to the worker's ``completion`` function with a failure
     /// with an ``Error``
     /// - parameters:
     ///    - error: an unexpected error that broke the worker.
     ///    - postWork: functionn that allows the worker to add other workers to the queue.
     func onUnexpectedAsyncError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void)
+}
+
+/// A protocol used to avoid duplication of default ``doWork``, ``doWhenStopped``,  ``onUnexpectedError`` and
+/// ``onUnexpectedAsyncError`` implementation for workers without callbacks
+protocol DefaultWorker<PropertiesType, WorkerSpecificationType>: Worker {}
+
+/// A protocol used to avoid duplication of default ``doWork``, ``doWhenStopped``,  ``onUnexpectedError`` and
+/// ``onUnexpectedAsyncError`` implementation for workers with a callback
+protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
+    var callbackFunction: ResultHandler<Void> { get set }
+}
+
+extension DefaultWorker {
+    func doWork(properties: PropertiesType, doAsyncWork: (@escaping () throws -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
+        return properties
+    }
+    
+    func doWhenStopped(error: Error) {}
+    func onUnexpectedError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {}
+    func onUnexpectedAsyncError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {}
+}
+
+extension CallbackWorker {
+    func doWork(properties: PropertiesType, doAsyncWork: (@escaping () throws -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
+        return properties
+    }
+
+    func doWhenStopped(error: Error) {
+        callbackFunction(Result.failure(ErrorInformation(error: error)))
+    }
+
+    func onUnexpectedError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {
+        callbackFunction(Result.failure(ErrorInformation(error: error)))
+    }
+
+    func onUnexpectedAsyncError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {
+        callbackFunction(Result.failure(ErrorInformation(error: error)))
+    }
 }
