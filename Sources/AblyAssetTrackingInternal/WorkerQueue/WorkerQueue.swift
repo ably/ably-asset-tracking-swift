@@ -40,12 +40,16 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
             
             do {
                 if self.properties.isStopped {
+                    workerLogHandler?.debug(message: "Worker \(type(of: worker)) invoked doWhenStopped", error: nil)
                     worker.doWhenStopped(error: self.getStoppedError())
                 }
                 else {
+                    workerLogHandler?.verbose(message: "Worker Queue's properties before invoking doWork on \(type(of: worker)): \(self.properties)", error: nil)
+                    workerLogHandler?.debug(message: "Worker \(type(of: worker)) invoked doWork", error: nil)
                     try self.properties = worker.doWork(properties: self.properties) { asyncWork in
                         self.asyncWorkQueue.async {
                             do {
+                                workerLogHandler?.debug(message: "Worker \(type(of: worker)) invoked asyncWork", error: nil)
                                 try asyncWork()
                             }
                             catch {
@@ -55,8 +59,11 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
                                 }
                             }
                         }
-                        
+                        workerLogHandler?.debug(message: "Worker \(type(of: worker)) finished doWork", error: nil)
+                        workerLogHandler?.verbose(message: "Worker Queue's properties after executing doWork on \(type(of: worker)): \(self.properties)", error: nil)
                     } postWork: { postWorker in
+                        let postWorkRequest = WorkRequest(workerSpecification: postWorker)
+                        workerLogHandler?.debug(message: "Worker \(type(of: worker)) posted further work: \(type(of: postWorker)), with ID: \(postWorkRequest.id)", error: nil)
                         self.enqueue(workRequest: WorkRequest(workerSpecification: postWorker))
                     }
                 }
