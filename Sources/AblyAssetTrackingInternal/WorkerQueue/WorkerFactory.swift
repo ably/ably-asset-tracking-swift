@@ -8,5 +8,5 @@ public protocol WorkerFactory<PropertiesType, WorkerSpecificationType> {
     /// - parameters:
     ///    - workerSpecification: indicates which implementation of ``Worker`` should be created.
     ///    - Returns: a new ``Worker`` instance.
-    func createWorker(workerSpecification: WorkerSpecificationType) -> any Worker<PropertiesType, WorkerSpecificationType>
+    func createWorker(workerSpecification: WorkerSpecificationType, logHandler: InternalLogHandler?) -> any Worker<PropertiesType, WorkerSpecificationType>
 }

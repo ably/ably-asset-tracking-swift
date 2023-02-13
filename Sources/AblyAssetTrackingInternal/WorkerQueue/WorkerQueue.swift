@@ -30,8 +30,9 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
     ///    - workRequest: an identifiable wrapper for the  ``WorkRequest.workerSpecification`` that contains the specification
     ///    of worker to be executed.
     func enqueue(workRequest: WorkRequest<WorkerSpecificationType>) {
-        let worker = workerFactory.createWorker(workerSpecification: workRequest.workerSpecification)
         let workerLogHandler = logHandler?.addingSubsystem(.named("request-\(workRequest.id)"))
+        let worker = workerFactory.createWorker(workerSpecification: workRequest.workerSpecification, logHandler: workerLogHandler)
+
         workerLogHandler?.debug(message: "Worker Queue enqueued worker: \(type(of: worker))", error: nil)
         workingQueue.async { [weak self] in
             guard let self = self
