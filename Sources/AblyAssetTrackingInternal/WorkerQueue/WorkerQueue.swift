@@ -2,6 +2,10 @@ import Foundation
 import AblyAssetTrackingCore
 
 /// The WorkerQueue is responsible for enqueueing ``Worker``s and executing them.
+/// - parameters:
+///     - PropertiesType - the type of properties used by workers as both input and output. To reduce a risk of shared mutable state, this param must have value
+///     semantics
+///     - WorkerSpecificationType - the type of specification used to post worker back to the queue
 class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType: WorkerQueueProperties {
     private var properties: PropertiesType
     private let workingQueue: DispatchQueue
