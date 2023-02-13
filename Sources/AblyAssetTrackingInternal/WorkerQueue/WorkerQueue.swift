@@ -62,7 +62,7 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
                 }
             }
             catch {
-                workerLogHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker))", error: error)
+                workerLogHandler?.error(message: "Unexpected error thrown from the synchronous work of \(type(of: worker))", error: error)
                 worker.onUnexpectedError(error: error) { postWorker in
                     self.enqueue(workRequest: WorkRequest(workerSpecification: postWorker))
                 }
