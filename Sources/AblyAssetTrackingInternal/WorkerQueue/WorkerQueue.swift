@@ -6,18 +6,18 @@ import AblyAssetTrackingCore
 ///     - PropertiesType - the type of properties used by workers as both input and output. To reduce a risk of shared mutable state, this param must have value
 ///     semantics
 ///     - WorkerSpecificationType - the type of specification used to post worker back to the queue
-class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType: WorkerQueueProperties {
-    private var properties: PropertiesType
-    private let workingQueue: DispatchQueue
-    private let logHandler: InternalLogHandler?
-    private let workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>
-    private let getStoppedError: () -> Error
-    private let asyncWorkQueue: DispatchQueue
-
-    init(properties: PropertiesType, queue: DispatchQueue, logHandler: InternalLogHandler?, workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>, asyncWorkWorkingQueue: DispatchQueue,
+public class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType: WorkerQueueProperties {
+    var properties: PropertiesType
+    let workingQueue: DispatchQueue
+    let logHandler: InternalLogHandler?
+    let workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>
+    let getStoppedError: () -> Error
+    let asyncWorkQueue: DispatchQueue
+    
+    public init(properties: PropertiesType, workingQueue: DispatchQueue, logHandler: InternalLogHandler?, workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>, asyncWorkWorkingQueue: DispatchQueue,
  getStoppedError: @escaping () -> Error) {
         self.properties = properties
-        self.workingQueue = queue
+        self.workingQueue = workingQueue
         self.logHandler = logHandler?.addingSubsystem(Self.self)
         self.workerFactory = workerFactory
         self.getStoppedError = getStoppedError
@@ -29,7 +29,7 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
     /// - parameters:
     ///    - workRequest: an identifiable wrapper for the  ``WorkRequest.workerSpecification`` that contains the specification
     ///    of worker to be executed.
-    func enqueue(workRequest: WorkRequest<WorkerSpecificationType>) {
+    public func enqueue(workRequest: WorkRequest<WorkerSpecificationType>) {
         let workerLogHandler = logHandler?.addingSubsystem(.named("request-\(workRequest.id)"))
         let worker = workerFactory.createWorker(workerSpecification: workRequest.workerSpecification, logHandler: workerLogHandler)
 
@@ -40,7 +40,6 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
             
             do {
                 if self.properties.isStopped {
-                    workerLogHandler?.debug(message: "Worker \(type(of: worker)) invoked doWhenStopped", error: nil)
                     worker.doWhenStopped(error: self.getStoppedError())
                 }
                 else {
