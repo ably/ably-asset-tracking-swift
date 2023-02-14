@@ -39,17 +39,6 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     ///     - postWork: a function that allows a worker to add othe workers to a queue.
     func onUnexpectedError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void)
     
-    /**
-     * This function is provided in order for implementors to define what should happen when the worker
-     * breaks due to an unexpected exception while the async work from [doWork] is being executed.
-     * This should usually be a rollback operation and/or a call to the worker's callback function
-     * with a failure with the [exception].
-     *
-     * @param exception The unexpected exception that broke the worker.
-     * @param postWork this function allows worker to add other workers to the queue calling it.
-     */
-    
-    
     /// This function is used to define what should happen when the worker breaks due to an unexpected error while the
     /// async work from ``doWork`` is being executed.
     /// This should usually be a rollback operation and/or a call to the worker's ``completion`` function with a failure
