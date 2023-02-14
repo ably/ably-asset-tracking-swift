@@ -45,15 +45,15 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
                 }
                 else {
                     workerLogHandler?.verbose(message: "Worker Queue's properties before invoking doWork on \(type(of: worker)): \(self.properties)", error: nil)
-                    workerLogHandler?.debug(message: "Worker \(type(of: worker)) invoked doWork", error: nil)
+                    workerLogHandler?.debug(message: "Worker Queue invoking doWork on \(type(of: worker))", error: nil)
                     try self.properties = worker.doWork(properties: self.properties) { asyncWork in
                         self.asyncWorkQueue.async {
                             do {
-                                workerLogHandler?.debug(message: "Worker \(type(of: worker)) invoked asyncWork", error: nil)
+                                workerLogHandler?.debug(message: "Performing async work posted by worker \(type(of: worker))", error: nil)
                                 try asyncWork()
                             }
                             catch {
-                                workerLogHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker))", error: error)
+                                workerLogHandler?.error(message: "Unexpected error thrown from the asynchronous work of \(type(of: worker)). Worker Queue invoking onUnexpectedAsyncError", error: error)
                                 worker.onUnexpectedAsyncError(error: error) { asyncErrorWorker in
                                     self.enqueue(workRequest: WorkRequest(workerSpecification: asyncErrorWorker))
                                 }
@@ -69,7 +69,7 @@ class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType:
                 }
             }
             catch {
-                workerLogHandler?.error(message: "Unexpected error thrown from the synchronous work of \(type(of: worker))", error: error)
+                workerLogHandler?.error(message: "Unexpected error thrown from the synchronous work of \(type(of: worker)). Worker Queue invoking onUnexpectedError", error: error)
                 worker.onUnexpectedError(error: error) { postWorker in
                     self.enqueue(workRequest: WorkRequest(workerSpecification: postWorker))
                 }
