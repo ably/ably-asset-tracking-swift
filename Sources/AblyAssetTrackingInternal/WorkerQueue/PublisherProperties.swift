@@ -1,8 +1,10 @@
-//
-//  File.swift
-//  
-//
-//  Created by Andy Ford on 15/02/2023.
-//
-
 import Foundation
+
+public class PublisherProperties : WorkerQueueProperties
+{
+    public var isStopped = false
+    
+    public init() {
+        
+    }
+}

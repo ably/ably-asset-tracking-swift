@@ -17,7 +17,7 @@ class DefaultPublisher: Publisher {
         }
     }
     
-    private let workingQueue: DispatchQueue
+    private let workerQueue: WorkerQueue<PublisherProperties, PublisherWorkSpecification>
     private let connectionConfiguration: ConnectionConfiguration
     private let mapboxConfiguration: MapboxConfiguration
     private let locationService: LocationService
@@ -86,7 +86,18 @@ class DefaultPublisher: Publisher {
         self.connectionConfiguration = connectionConfiguration
         self.mapboxConfiguration = mapboxConfiguration
         self.routingProfile = routingProfile
-        self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher", qos: .default)
+        self.workerQueue = WorkerQueue(
+            properties: PublisherProperties(),
+            workingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher", qos: .default),
+            logHandler: nil,
+            workerFactory: PublisherWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher.async", qos: .default),
+            getStoppedError: { return ErrorInformation(code: 1,
+                                                       statusCode: 1,
+                                                       message: "Stopped",
+                                                       cause: nil,
+                                                       href: nil)}
+        )
         self.locationService = locationService
         self.ablyPublisher = ablyPublisher
         self.routeProvider = routeProvider
@@ -837,7 +848,11 @@ extension DefaultPublisher {
 
     // MARK: Utils
     private func performOnWorkingQueue(_ operation: @escaping () -> Void) {
-        workingQueue.async(execute: operation)
+        workerQueue.enqueue(
+            workRequest: WorkRequest<PublisherWorkSpecification>(
+                workerSpecification: PublisherWorkSpecification.Legacy(callback: operation)
+            )
+        )
     }
 
     static private func performOnMainThread(_ operation: @escaping () -> Void) {

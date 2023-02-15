@@ -9,11 +9,12 @@ public class PublisherWorkerFactory: WorkerFactory
         
     }
     
-    public func createWorker(workerSpecification: PublisherWorkSpecification, logHandler: InternalLogHandler?) -> Worker<PropertiesType, WorkerSpecificationType> {
+    public func createWorker(workerSpecification: PublisherWorkSpecification, logHandler: InternalLogHandler?)
+        -> any Worker<PropertiesType, WorkerSpecificationType> {
         if (workerSpecification is PublisherWorkSpecification.Legacy) {
-            return LegacyWorker(workerSpecification.callback)
+            return LegacyWorker(work: (workerSpecification as! PublisherWorkSpecification.Legacy).callback)
         }
         
-        return LegacyWorker(() -> Void)
+        return LegacyWorker(work: {})
     }
 }
