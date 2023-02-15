@@ -2,6 +2,13 @@ import Foundation
 import AblyAssetTrackingCore
 
 /// The WorkerQueue is responsible for enqueueing ``Worker``s and executing them.
+/// It internally manages a ``PropertiesType`` variable, starting from the value passed to the initializer, and then based on the work of the subsequent workers.
+/// Workers are executed serially on an internally defined DispatchQueue (``workingQueue``).
+/// Workers can post  asynchronous work using``Worker.asyncWork`` that's executed on a separate DispatchQueue (``asyncWorkQueue``) without
+/// blocking the ``workingQueue``.
+///
+/// Errors thrown during WorkerQueue's operation are handled using the ``Worker.onUnexpectedAsyncError`` and ``Worker.onUnexpectedError``,
+/// depending on whether they were thrown during the ``Worker.asyncWork`` excution during any part of the synchronous work.
 /// - parameters:
 ///     - PropertiesType - the type of properties used by workers as both input and output. To reduce a risk of shared mutable state, this param must have value
 ///     semantics
