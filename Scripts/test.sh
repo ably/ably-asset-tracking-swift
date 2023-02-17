@@ -36,7 +36,7 @@ derived_data_dir="${temp_dir}/DerivedData"
 # of this script until we’ve had a chance to process and copy the logs that
 # xcodebuild created. Hence we temporarily disable the -e option.
 set +e
-set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 12' -derivedDataPath "${derived_data_dir}" \
+set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 13' -derivedDataPath "${derived_data_dir}" \
 	| xcpretty
 xcodebuild_exit_status=$?
 set -e
