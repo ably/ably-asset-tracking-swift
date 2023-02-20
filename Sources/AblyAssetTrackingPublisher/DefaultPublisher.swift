@@ -761,8 +761,15 @@ extension DefaultPublisher {
         else { return }
 
         let checker = ThresholdChecker()
-        let destination = activeTrackable?.destination != nil ?
-        CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude).toLocation() : nil
+        var destination: Location? = nil
+        do {
+            destination = try activeTrackable?.destination != nil ?
+            CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude).toLocation().get() : nil
+        }
+        catch {
+            logHandler?.verbose(message: "Invalid destination, validation error was: \(error)", error: error as? LocationValidationError)
+            return
+        }
         let estimatedArrivalTime = route?.expectedTravelTime == nil ? nil :
             route!.expectedTravelTime + Date().timeIntervalSince1970
 
