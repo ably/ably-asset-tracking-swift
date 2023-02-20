@@ -6,17 +6,6 @@ import AblyAssetTrackingInternal
 
 class DefaultPublisher: Publisher {
     
-    // Publisher state
-    private enum State {
-        case working
-        case stopping
-        case stopped
-
-        var isStoppingOrStopped: Bool {
-            self == .stopping || self == .stopped
-        }
-    }
-    
     private let workerQueue: WorkerQueue<PublisherProperties, PublisherWorkSpecification>
     private let connectionConfiguration: ConnectionConfiguration
     private let mapboxConfiguration: MapboxConfiguration
@@ -29,7 +18,7 @@ class DefaultPublisher: Publisher {
     private var ablyPublisher: AblyPublisher
     private var enhancedLocationState: TrackableState<EnhancedLocationUpdate>
     private var rawLocationState: TrackableState<RawLocationUpdate>
-    private var state: State = .working
+    private var state: PublisherState = .idle
     private var presenceData: PresenceData
     private var areRawLocationsEnabled: Bool
 
