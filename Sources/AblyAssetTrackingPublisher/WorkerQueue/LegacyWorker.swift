@@ -1,4 +1,5 @@
 import Foundation
+import AblyAssetTrackingInternal
 
 /**
  A worker than runs "legacy" code, but on the worker queue
