@@ -8,6 +8,7 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     associatedtype PropertiesType
     associatedtype WorkerSpecificationType
         
+    typealias WorkerAsyncWorkCompletionHandler = (Error?) -> Void
     /// This function is provided in order for implementors to implement synchronous work. Any asynchronous tasks
     /// should be executed inside [doAsyncWork] function. If a worker needs to delegate another task to the queue
     /// pass it to [postWork] function.
@@ -18,14 +19,13 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     /// - Returns: updated Properties modified by this worker.
     func doWork(
         properties: PropertiesType,
-        doAsyncWork: (@escaping () throws -> Void) -> Void,
+        doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void,
         postWork: @escaping (WorkerSpecificationType) -> Void
     ) throws -> PropertiesType
-    
     /// This function is provided in order for implementers to define what should happen when the worker
     /// cannot ``doWork(properties:doAsyncWork:postWork:)`` because the queue was stopped
     /// and no workers should be executed.
-    /// This should usually be a call to the worker's completion function with a failure with the ``Error``.
+    /// This should usually be a call to the worker's completion function with a failure with an Error.
     ///  - parameters:
     ///     - error: an error created by the stopped worker queue.
     func doWhenStopped(error: Error)
@@ -60,7 +60,7 @@ protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
 }
 
 extension DefaultWorker {
-    func doWork(properties: PropertiesType, doAsyncWork: (@escaping () throws -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
+    func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
         return properties
     }
     
@@ -70,7 +70,7 @@ extension DefaultWorker {
 }
 
 extension CallbackWorker {
-    func doWork(properties: PropertiesType, doAsyncWork: (@escaping () throws -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
+    func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
         return properties
     }
 
