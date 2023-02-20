@@ -31,14 +31,16 @@ EOF
 # the repo.
 temp_dir=`mktemp -d -t ably-asset-tracking-swift`
 derived_data_dir="${temp_dir}/DerivedData"
+cloned_source_packages_dir="${temp_dir}/ClonedSourcePackages"
 
 # If xcodebuild fails (e.g. due to failed tests), we want to defer the failure
 # of this script until we’ve had a chance to process and copy the logs that
 # xcodebuild created. Hence we temporarily disable the -e option.
-xcodebuild -runFirstLaunch
+xcodebuild clean -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 14'
+xcodebuild -resolvePackageDependencies
 set +e
-set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 14' -derivedDataPath "${derived_data_dir}" \
-	| xcpretty
+set -o pipefail && xcodebuild test -scheme "ably-asset-tracking-swift-Package" -destination 'platform=iOS Simulator,name=iPhone 14' -derivedDataPath "${derived_data_dir}" -clonedSourcePackagesDirPath "${cloned_source_packages_dir}" \
+| xcpretty
 xcodebuild_exit_status=$?
 set -e
 
