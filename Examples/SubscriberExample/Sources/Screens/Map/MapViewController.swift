@@ -53,13 +53,13 @@ class MapViewController: UIViewController {
         
         return handler
     }
-    private let subscriberLogger: SubscriberLogger
+    private let subscriberLogger: SwiftLogLogHandler
 
     private var location: CLLocation?
 
     // MARK: - Initialization
     init(trackingId: String) {
-        self.subscriberLogger = SubscriberLogger(logger: logger)
+        self.subscriberLogger = SwiftLogLogHandler(logger: logger)
         
         self.trackingId = trackingId
         self.locationAnimator = DefaultLocationAnimator(logHandler: subscriberLogger)

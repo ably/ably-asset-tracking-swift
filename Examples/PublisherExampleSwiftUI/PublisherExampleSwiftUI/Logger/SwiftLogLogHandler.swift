@@ -2,7 +2,8 @@ import Foundation
 import AblyAssetTrackingCore
 import Logging
 
-class SubscriberLogger: AblyAssetTrackingCore.LogHandler {
+/// An implementation of ``AblyAssetTrackingCore.LogHandler`` which writes to an instance of the `swift-log` library’s ``Logger`` type.
+class SwiftLogLogHandler: AblyAssetTrackingCore.LogHandler {
     private let logger: Logger
         
     init(logger: Logger) {
