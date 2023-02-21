@@ -89,7 +89,6 @@ class PublisherHelper {
     
     static func createPublisher(
         ablyPublisher: AblyPublisher,
-        connectionConfiguration: ConnectionConfiguration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID"),
         routingProfile: RoutingProfile = .driving,
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
         locationService: LocationService = MockLocationService(),
@@ -99,7 +98,6 @@ class PublisherHelper {
     ) -> DefaultPublisher {
         
         DefaultPublisher(
-            connectionConfiguration: connectionConfiguration,
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,

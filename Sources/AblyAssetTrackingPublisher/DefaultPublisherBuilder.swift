@@ -67,8 +67,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
             logHandler: hierarchicalLogHandler
         )
         
-        let publisher =  DefaultPublisher(connectionConfiguration: connection,
-                                          routingProfile: routingProfile,
+        let publisher =  DefaultPublisher(routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyPublisher: defaultAbly,
                                           locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: hierarchicalLogHandler, vehicleProfile: vehicleProfile),

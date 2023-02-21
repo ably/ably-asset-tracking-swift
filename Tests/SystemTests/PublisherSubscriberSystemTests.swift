@@ -82,7 +82,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         )
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: publisherConnectionConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,
@@ -173,7 +172,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         )
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: publisherConnectionConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,

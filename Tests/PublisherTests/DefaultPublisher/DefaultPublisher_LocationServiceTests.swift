@@ -41,7 +41,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         )
         
         publisher = DefaultPublisher(
-            connectionConfiguration:configuration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,
@@ -319,7 +318,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: configuration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,
@@ -355,7 +353,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: configuration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,

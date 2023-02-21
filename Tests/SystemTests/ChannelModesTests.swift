@@ -81,7 +81,6 @@ class ChannelModesTests: XCTestCase {
         )
         
         return DefaultPublisher(
-            connectionConfiguration: publisherConnectionConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: MockResolutionPolicyFactory(),
             ablyPublisher: defaultAbly,

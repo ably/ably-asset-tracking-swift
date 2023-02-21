@@ -34,8 +34,7 @@ class DefaultPublisherTests: XCTestCase {
                               destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182))
         delegate = MockPublisherDelegate()
         enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
-        publisher = DefaultPublisher(connectionConfiguration: configuration,
-                                     routingProfile: .driving,
+        publisher = DefaultPublisher(routingProfile: .driving,
                                      resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyPublisher: ablyPublisher,
                                      locationService: locationService,
@@ -994,7 +993,6 @@ class DefaultPublisherTests: XCTestCase {
         locationService.stopRecordingLocationCallback = { completion in completion(.success(nil)) }
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: configuration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,
