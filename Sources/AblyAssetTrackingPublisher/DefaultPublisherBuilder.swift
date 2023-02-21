@@ -66,12 +66,19 @@ class DefaultPublisherBuilder: PublisherBuilder {
             mode: .publish,
             logHandler: internalLogHandler
         )
+
+        let locationService = DefaultLocationService(mapboxConfiguration: mapboxConfiguration,
+                                                     historyLocation: locationSource?.locations,
+                                                     logHandler: internalLogHandler,
+                                                     vehicleProfile: vehicleProfile)
+
+        let routeProvider = DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration)
         
         let publisher =  DefaultPublisher(routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyPublisher: defaultAbly,
-                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: internalLogHandler, vehicleProfile: vehicleProfile),
-                                          routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration),
+                                          locationService: locationService,
+                                          routeProvider: routeProvider,
                                           areRawLocationsEnabled: areRawLocationsEnabled,
                                           isSendResolutionEnabled: isSendResolutionEnabled,
                                           constantLocationEngineResolution: constantLocationEngineResolution,
