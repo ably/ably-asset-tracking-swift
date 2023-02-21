@@ -57,14 +57,14 @@ class DefaultPublisherBuilder: PublisherBuilder {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }
         
-        let hierarchicalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
-                                                               subsystem: .named("publisher"))
+        let internalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
+                                                           subsystem: .named("publisher"))
         
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
             mode: .publish,
-            logHandler: hierarchicalLogHandler
+            logHandler: internalLogHandler
         )
         
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
@@ -72,12 +72,12 @@ class DefaultPublisherBuilder: PublisherBuilder {
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyPublisher: defaultAbly,
-                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: hierarchicalLogHandler, vehicleProfile: vehicleProfile),
+                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: internalLogHandler, vehicleProfile: vehicleProfile),
                                           routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration),
                                           areRawLocationsEnabled: areRawLocationsEnabled,
                                           isSendResolutionEnabled: isSendResolutionEnabled,
                                           constantLocationEngineResolution: constantLocationEngineResolution,
-                                          logHandler: hierarchicalLogHandler)
+                                          logHandler: internalLogHandler)
         publisher.delegate = delegate
         return publisher
     }

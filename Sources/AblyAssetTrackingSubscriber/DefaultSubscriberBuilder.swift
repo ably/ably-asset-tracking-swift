@@ -38,20 +38,20 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             return nil
         }
         
-        let hierarchicalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
-                                                               subsystem: .named("subscriber"))
+        let internalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
+                                                           subsystem: .named("subscriber"))
 
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
             mode: .subscribe,
-            logHandler: hierarchicalLogHandler
+            logHandler: internalLogHandler
         )
         let subscriber = DefaultSubscriber(
             ablySubscriber: defaultAbly,
             trackableId: trackingId,
             resolution: resolution,
-            logHandler: hierarchicalLogHandler
+            logHandler: internalLogHandler
         )
         subscriber.delegate = delegate
         subscriber.start(completion: completion)
