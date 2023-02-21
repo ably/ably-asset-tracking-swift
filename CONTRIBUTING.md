@@ -56,6 +56,10 @@ To open the project in the Xcode IDE, double click on the `Package.swift` file.
 
 To run tests from Xcode IDE, select the `ably-asset-tracking-swift-Package` scheme, select **_Product_** **_\-> Test_** _or use the keyboard shortcut_ **⌘U**
 
+## Enabling logging in system tests
+
+By default, the system tests disable SDK logging, to avoid leaking sensitive information (such as Ably API keys) in a CI environment. If you want to enable the logging to debug an issue on your development machine, use Xcode to set the `ABLY_ASSET_TRACKING_TESTS_ENABLE_LOGGING` environment variable to 1.
+
 ## Building Platform-Specific Documentation
 
 _This repo uses_ [_jazzy_](https://github.com/realm/jazzy) _to build documentation._
