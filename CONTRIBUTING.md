@@ -37,6 +37,10 @@ After checking out the repository you must first initialize the Git submodules:
 git submodule update --init --recursive
 ```
 
+## Running the test proxy server
+
+In order to run the test suite’s `NetworkConnectivityTests`, you will need to be running an instance of the [SDK Test Proxy](https://github.com/ably/sdk-test-proxy) on your development machine. You can do this by executing `./gradlew run` inside the `external/sdk-test-proxy` directory.
+
 ## Running tests from the command line
 
 To run tests, you have to configure the download token for the Mapbox described [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) and then set environment variables:
