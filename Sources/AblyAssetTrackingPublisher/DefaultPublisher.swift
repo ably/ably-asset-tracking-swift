@@ -4,7 +4,7 @@ import MapboxDirections
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
-class DefaultPublisher: Publisher {
+class DefaultPublisher: Publisher, PublisherInteractor {
     
     private let workerQueue: WorkerQueue<PublisherProperties, PublisherWorkSpecification>
     private let connectionConfiguration: ConnectionConfiguration
