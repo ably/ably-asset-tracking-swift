@@ -68,7 +68,6 @@ class DefaultPublisherBuilder: PublisherBuilder {
         )
         
         let publisher =  DefaultPublisher(connectionConfiguration: connection,
-                                          mapboxConfiguration: mapboxConfiguration,
                                           routingProfile: routingProfile,
                                           resolutionPolicyFactory: resolutionPolicyFactory,
                                           ablyPublisher: defaultAbly,

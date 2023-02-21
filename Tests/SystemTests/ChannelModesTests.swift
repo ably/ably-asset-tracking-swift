@@ -82,7 +82,6 @@ class ChannelModesTests: XCTestCase {
         
         return DefaultPublisher(
             connectionConfiguration: publisherConnectionConfiguration,
-            mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
             resolutionPolicyFactory: MockResolutionPolicyFactory(),
             ablyPublisher: defaultAbly,

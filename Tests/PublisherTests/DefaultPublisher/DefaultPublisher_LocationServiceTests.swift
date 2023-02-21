@@ -12,7 +12,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var locationService: MockLocationService!
     var ablyPublisher: MockAblyPublisher!
     var configuration: ConnectionConfiguration!
-    var mapboxConfiguration: MapboxConfiguration!
     var resolutionPolicyFactory: MockResolutionPolicyFactory!
     var routeProvider: MockRouteProvider!
     var trackable: Trackable!
@@ -27,7 +26,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         locationService = MockLocationService()
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
-        mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         routeProvider = MockRouteProvider()
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         delegate = MockPublisherDelegate()
@@ -44,7 +42,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         publisher = DefaultPublisher(
             connectionConfiguration:configuration,
-            mapboxConfiguration: mapboxConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,
@@ -323,7 +320,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,
-            mapboxConfiguration: mapboxConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,
@@ -360,7 +356,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         
         let publisher = DefaultPublisher(
             connectionConfiguration: configuration,
-            mapboxConfiguration: mapboxConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,

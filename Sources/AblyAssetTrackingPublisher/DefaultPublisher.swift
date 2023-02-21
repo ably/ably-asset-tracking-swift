@@ -19,7 +19,6 @@ class DefaultPublisher: Publisher {
     
     private let workingQueue: DispatchQueue
     private let connectionConfiguration: ConnectionConfiguration
-    private let mapboxConfiguration: MapboxConfiguration
     private let locationService: LocationService
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
@@ -69,7 +68,6 @@ class DefaultPublisher: Publisher {
     private(set) public var routingProfile: RoutingProfile
 
     init(connectionConfiguration: ConnectionConfiguration,
-         mapboxConfiguration: MapboxConfiguration,
          routingProfile: RoutingProfile,
          resolutionPolicyFactory: ResolutionPolicyFactory,
          ablyPublisher: AblyPublisher,
@@ -84,7 +82,6 @@ class DefaultPublisher: Publisher {
     ) {
         
         self.connectionConfiguration = connectionConfiguration
-        self.mapboxConfiguration = mapboxConfiguration
         self.routingProfile = routingProfile
         self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher", qos: .default)
         self.locationService = locationService
