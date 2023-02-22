@@ -1,3 +1,6 @@
 [submodule "external/common"]
 	path = external/common
 	url = git@github.com:ably/ably-asset-tracking-common.git
+[submodule "external/sdk-test-proxy"]
+	path = external/sdk-test-proxy
+	url = git@github.com:ably/sdk-test-proxy.git
