@@ -17,7 +17,7 @@ private enum SubscriberState {
 }
 
 class DefaultSubscriber: Subscriber {
-    private let workingQueue: DispatchQueue
+    private let workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
@@ -37,8 +37,19 @@ class DefaultSubscriber: Subscriber {
         trackableId: String,
         resolution: Resolution?,
         logHandler: InternalLogHandler?) {
-            
-        self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
+
+        self.workerQueue = WorkerQueue(
+            properties: SubscriberWorkerQueueProperties(),
+            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
+            logHandler: nil,
+            workerFactory: SubscriberWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
+            getStoppedError: { return ErrorInformation(code: 1,
+                                                       statusCode: 1,
+                                                       message: "Stopped",
+                                                       cause: nil,
+                                                       href: nil)}
+        )
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
@@ -290,7 +301,11 @@ extension DefaultSubscriber {
 
     // MARK: Utils
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
-        workingQueue.async(execute: operation)
+        workerQueue.enqueue(
+            workRequest: WorkRequest<SubscriberWorkSpecification>(
+                workerSpecification: SubscriberWorkSpecification.Legacy(callback: operation)
+            )
+        )
     }
 
     private func performOnMainThread(_ operation: @escaping () -> Void) {
