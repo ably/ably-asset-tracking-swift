@@ -2,7 +2,7 @@ import Foundation
 import AblyAssetTrackingInternal
 
 /// A worker that runs tasks that the Publisher used to run asynchronously on its
-/// own dispatcher. This worker allows us to tie up legacy work and new asynchronous
+/// own dispatch queue. This worker allows us to tie up legacy work and new asynchronous
 /// work, for simplicity and consistency during the transition.
 public class LegacyWorker : Worker
 {
