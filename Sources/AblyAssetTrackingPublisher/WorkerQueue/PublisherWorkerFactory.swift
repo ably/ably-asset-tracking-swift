@@ -3,7 +3,7 @@ import AblyAssetTrackingInternal
 
 public class PublisherWorkerFactory: WorkerFactory
 {
-    public typealias PropertiesType = PublisherProperties
+    public typealias PropertiesType = PublisherWorkerQueueProperties
     public typealias WorkerSpecificationType = PublisherWorkSpecification
     
     public init() {

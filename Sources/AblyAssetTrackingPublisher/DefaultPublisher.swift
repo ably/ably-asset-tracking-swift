@@ -6,7 +6,7 @@ import AblyAssetTrackingInternal
 
 class DefaultPublisher: Publisher, PublisherInteractor {
     
-    private let workerQueue: WorkerQueue<PublisherProperties, PublisherWorkSpecification>
+    private let workerQueue: WorkerQueue<PublisherWorkerQueueProperties, PublisherWorkSpecification>
     private let connectionConfiguration: ConnectionConfiguration
     private let mapboxConfiguration: MapboxConfiguration
     private let locationService: LocationService
@@ -76,7 +76,7 @@ class DefaultPublisher: Publisher, PublisherInteractor {
         self.mapboxConfiguration = mapboxConfiguration
         self.routingProfile = routingProfile
         self.workerQueue = WorkerQueue(
-            properties: PublisherProperties(),
+            properties: PublisherWorkerQueueProperties(),
             workingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher", qos: .default),
             logHandler: nil,
             workerFactory: PublisherWorkerFactory(),
