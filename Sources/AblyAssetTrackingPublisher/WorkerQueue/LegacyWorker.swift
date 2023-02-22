@@ -1,9 +1,9 @@
 import Foundation
 import AblyAssetTrackingInternal
 
-/**
- A worker than runs "legacy" code, but on the worker queue
- */
+/// A worker that runs tasks that the Publisher used to run asynchronously on its
+/// own dispatcher. This worker allows us to tie up legacy work and new asynchronous
+/// work, for simplicity and consistency during the transition.
 public class LegacyWorker : Worker
 {
     public typealias PropertiesType = PublisherProperties
@@ -16,7 +16,7 @@ public class LegacyWorker : Worker
     }
     
     public func doWork(properties: PropertiesType, doAsyncWork: (@escaping () throws -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
-        doAsyncWork({ [self] in
+        doAsyncWork({ [work] in
             work()
         })
         
