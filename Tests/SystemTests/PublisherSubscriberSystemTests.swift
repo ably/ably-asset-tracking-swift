@@ -85,8 +85,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         )
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: publisherConnectionConfiguration,
-            mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,
@@ -178,8 +176,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         )
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: publisherConnectionConfiguration,
-            mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,
