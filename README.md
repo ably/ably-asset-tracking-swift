@@ -60,9 +60,9 @@ These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be develo
 
 - Subscriber SDK: iOS 12.0+ / iPadOS 12.0+
 
-- Xcode 12.4+
+- Xcode 14.0+
 
-- Swift 5.3+
+- Swift 5.7+
 
 ### Swift package manager
 
