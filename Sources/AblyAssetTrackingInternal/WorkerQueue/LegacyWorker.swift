@@ -14,11 +14,8 @@ open class LegacyWorker<PropertiesType, WorkerSpecificationType> : Worker
     }
 
     public func doWork(properties: PropertiesType, doAsyncWork: (@escaping ((Error?) -> Void) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
-        logger?.debug(message: "Queueing up legacy asynchronous work", error: nil)
-        doAsyncWork({ [logger, work] _ in
-            logger?.debug(message: "Executing legacy asynchronous work", error: nil)
-            work()
-        })
+        logger?.debug(message: "Performing legacy work", error: nil)
+        work()
 
         return properties
     }
