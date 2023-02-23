@@ -14,8 +14,8 @@ public class PublisherWorkerFactory: WorkerFactory
         -> any Worker<PropertiesType, WorkerSpecificationType> {
 
             switch (workerSpecification) {
-            case .legacy(callback: let callback, logger: let logger):
-                return LegacyWorker(work: callback, logger: logger)
+            case .legacy(callback: let callback):
+                return LegacyWorker(work: callback, logger: logHandler)
             }
     }
 }

@@ -839,7 +839,7 @@ extension DefaultPublisher {
     private func performOnWorkingQueue(_ operation: @escaping () -> Void) {
         workerQueue.enqueue(
             workRequest: WorkRequest<PublisherWorkSpecification>(
-                workerSpecification: PublisherWorkSpecification.legacy(callback: operation, logger: logHandler)
+                workerSpecification: PublisherWorkSpecification.legacy(callback: operation)
             )
         )
     }
