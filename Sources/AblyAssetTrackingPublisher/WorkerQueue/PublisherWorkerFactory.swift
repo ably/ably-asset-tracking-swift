@@ -12,11 +12,10 @@ public class PublisherWorkerFactory: WorkerFactory
     
     public func createWorker(workerSpecification: PublisherWorkSpecification, logHandler: InternalLogHandler?)
         -> any Worker<PropertiesType, WorkerSpecificationType> {
-        if (workerSpecification is PublisherWorkSpecification.Legacy) {
-            let legacyWorkerSpecification = workerSpecification as! PublisherWorkSpecification.Legacy
-            return LegacyWorker(work: legacyWorkerSpecification.callback, logger: legacyWorkerSpecification.logger)
-        }
-        
-        return LegacyWorker(work: {}, logger: nil)
+
+            switch (workerSpecification) {
+            case .legacy(callback: let callback, logger: let logger):
+                return LegacyWorker(work: callback, logger: logger)
+            }
     }
 }

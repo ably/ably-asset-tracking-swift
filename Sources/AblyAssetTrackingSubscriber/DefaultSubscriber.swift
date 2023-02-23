@@ -303,7 +303,7 @@ extension DefaultSubscriber {
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
         workerQueue.enqueue(
             workRequest: WorkRequest<SubscriberWorkSpecification>(
-                workerSpecification: SubscriberWorkSpecification.Legacy(callback: operation, logger: logHandler)
+                workerSpecification: SubscriberWorkSpecification.legacy(callback: operation, logger: logHandler)
             )
         )
     }
