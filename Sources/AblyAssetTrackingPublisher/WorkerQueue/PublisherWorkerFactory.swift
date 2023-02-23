@@ -13,9 +13,10 @@ public class PublisherWorkerFactory: WorkerFactory
     public func createWorker(workerSpecification: PublisherWorkSpecification, logHandler: InternalLogHandler?)
         -> any Worker<PropertiesType, WorkerSpecificationType> {
         if (workerSpecification is PublisherWorkSpecification.Legacy) {
-            return LegacyWorker(work: (workerSpecification as! PublisherWorkSpecification.Legacy).callback)
+            let legacyWorkerSpecification = workerSpecification as! PublisherWorkSpecification.Legacy
+            return LegacyWorker(work: legacyWorkerSpecification.callback, logger: legacyWorkerSpecification.logger)
         }
         
-        return LegacyWorker(work: {})
+        return LegacyWorker(work: {}, logger: nil)
     }
 }
