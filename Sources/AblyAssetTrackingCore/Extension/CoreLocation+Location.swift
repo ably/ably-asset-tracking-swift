@@ -2,13 +2,13 @@
 import CoreLocation
 
 public extension CLLocation {
-    func toLocation() -> Location {
-        var courseAccuracy: Double = 0.0
+    func toLocation() -> Result<Location, LocationValidationError> {
+        var courseAccuracy: Double = -1
         if #available(iOS 13.4, *) {
             courseAccuracy = self.courseAccuracy
         }
         
-        var ellipsoidalAltitude: Double = 0.0
+        var ellipsoidalAltitude: Double = .zero
         if #available(iOS 15.0, *) {
             ellipsoidalAltitude = self.ellipsoidalAltitude
         }
@@ -26,5 +26,7 @@ public extension CLLocation {
             floorLevel: self.floor?.level,
             timestamp: self.timestamp.timeIntervalSince1970
         )
+        .sanitize()
+        .validate()
     }
 }

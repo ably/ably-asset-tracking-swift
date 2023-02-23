@@ -19,11 +19,10 @@ public class WorkerMock: Worker {
         return doWorkPropertiesDoAsyncWorkPostWorkCallsCount > 0
     }
     public var doWorkPropertiesDoAsyncWorkPostWorkReturnValue: PropertiesType!
-    public var doWorkPropertiesDoAsyncWorkPostWorkClosure: ((PropertiesType, (@escaping () throws -> Void) -> Void, @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType)?
+    public var doWorkPropertiesDoAsyncWorkPostWorkClosure: ((PropertiesType, (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType)?
     
-
     public func doWork(properties: PropertiesType,
-                       doAsyncWork: (@escaping () throws -> Void) -> Void,
+                       doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void,
                        postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
         if let error = doWorkPropertiesDoAsyncWorkPostWorkThrowableError {
             throw error

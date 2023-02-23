@@ -6,12 +6,12 @@ import AblyAssetTrackingSubscriber
 import AblyAssetTrackingCoreTesting
 import AblyAssetTrackingPublisherTesting
 import AblyAssetTrackingInternalTesting
+import AblyAssetTrackingTesting
 
 class ChannelModesTests: XCTestCase {
     private let defaultDelayTime: TimeInterval = 10.0
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
-    let logger = InternalLogHandlerMock.configured
-    
+
     func testShouldCreateOnlyOnePublisherAndOneSubscriberConnection() throws {
         let subscriberClientId = "Test-Subscriber_\(UUID().uuidString)"
         let publisherClientId = "Test-Publisher_\(UUID().uuidString)"
@@ -64,11 +64,13 @@ class ChannelModesTests: XCTestCase {
     
     private func createPublisher(clientId: String, ablyApiKey: String) throws -> Publisher  {
         let locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
+
+        let internalLogHandler = TestLogging.sharedInternalLogHandler.addingSubsystem(.named("publisher"))
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
             historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
-            logHandler: logger,
+            logHandler: internalLogHandler,
             vehicleProfile: VehicleProfile.car
         )
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: ablyApiKey, clientId: clientId)
@@ -77,18 +79,16 @@ class ChannelModesTests: XCTestCase {
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
-            logHandler: logger
+            logHandler: internalLogHandler
         )
         
         return DefaultPublisher(
-            connectionConfiguration: publisherConnectionConfiguration,
-            mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
             resolutionPolicyFactory: MockResolutionPolicyFactory(),
             ablyPublisher: defaultAbly,
             locationService: defaultLocationService,
             routeProvider: MockRouteProvider(),
-            logHandler: logger
+            logHandler: internalLogHandler
         )
         
     }
@@ -102,6 +102,7 @@ class ChannelModesTests: XCTestCase {
             .resolution(resolution)
             .delegate(self)
             .trackingId(trackableId)
+            .logHandler(handler: TestLogging.sharedLogHandler)
             .start(completion: { _ in })!
     }
     

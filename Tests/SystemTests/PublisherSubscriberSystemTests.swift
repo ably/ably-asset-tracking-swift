@@ -8,6 +8,7 @@ import CoreLocation
 import AblyAssetTrackingCoreTesting
 import AblyAssetTrackingPublisherTesting
 import AblyAssetTrackingInternalTesting
+import AblyAssetTrackingTesting
 
 struct Locations: Codable {
     let locations: [GeoJSONMessage]
@@ -33,7 +34,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         "Test-Publisher_\(UUID().uuidString)"
     }()
     
-    private let logger = InternalLogHandlerMock.configured
+    private let logHandler = TestLogging.sharedLogHandler
+    private let publisherInternalLogHandler = TestLogging.sharedInternalLogHandler.addingSubsystem(.named("publisher"))
     
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
@@ -61,6 +63,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .resolution(resolution)
             .delegate(self)
             .trackingId(trackableId)
+            .logHandler(handler: logHandler)
             .start(completion: { _ in })!
         
         delay(5)
@@ -68,7 +71,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
             historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
-            logHandler: logger,
+            logHandler: publisherInternalLogHandler,
             vehicleProfile: vehicleProfile
         )
         
@@ -78,12 +81,10 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
-            logHandler: logger
+            logHandler: publisherInternalLogHandler
         )
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: publisherConnectionConfiguration,
-            mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,
@@ -91,7 +92,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             routeProvider: routeProvider,
             areRawLocationsEnabled: true,
             isSendResolutionEnabled: true,
-            logHandler: logger
+            logHandler: publisherInternalLogHandler
         )
         
         
@@ -130,6 +131,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .resolution(resolution)
             .delegate(self)
             .trackingId(trackableId)
+            .logHandler(handler: logHandler)
             .start(completion: { _ in })!
         
         delay(5)
@@ -160,7 +162,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
             historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
-            logHandler: logger,
+            logHandler: publisherInternalLogHandler,
             vehicleProfile: vehicleProfile
         )
         
@@ -170,12 +172,10 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
             mode: .publish,
-            logHandler: logger
+            logHandler: publisherInternalLogHandler
         )
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: publisherConnectionConfiguration,
-            mapboxConfiguration: MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken),
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,
@@ -183,7 +183,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             routeProvider: routeProvider,
             areRawLocationsEnabled: true,
             isSendResolutionEnabled: true,
-            logHandler: logger
+            logHandler: publisherInternalLogHandler
         )
         
         let trackable = Trackable(id: trackableId)

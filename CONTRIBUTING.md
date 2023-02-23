@@ -37,6 +37,10 @@ After checking out the repository you must first initialize the Git submodules:
 git submodule update --init --recursive
 ```
 
+## Running the test proxy server
+
+In order to run the test suite’s `NetworkConnectivityTests`, you will need to be running an instance of the [SDK Test Proxy](https://github.com/ably/sdk-test-proxy) on your development machine. You can do this by executing `./gradlew run` inside the `external/sdk-test-proxy` directory.
+
 ## Running tests from the command line
 
 To run tests, you have to configure the download token for the Mapbox described [here](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) and then set environment variables:
@@ -55,6 +59,10 @@ The recommended IDE for working on this project is the [Xcode](https://developer
 To open the project in the Xcode IDE, double click on the `Package.swift` file.
 
 To run tests from Xcode IDE, select the `ably-asset-tracking-swift-Package` scheme, select **_Product_** **_\-> Test_** _or use the keyboard shortcut_ **⌘U**
+
+## Enabling logging in system tests
+
+By default, the system tests disable SDK logging, to avoid leaking sensitive information (such as Ably API keys) in a CI environment. If you want to enable the logging to debug an issue on your development machine, use Xcode to set the `ABLY_ASSET_TRACKING_TESTS_ENABLE_LOGGING` environment variable to 1.
 
 ## Building Platform-Specific Documentation
 

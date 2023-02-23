@@ -11,8 +11,8 @@ open class LegacyWorker<PropertiesType, WorkerSpecificationType> : Worker
         self.work = work
     }
 
-    public func doWork(properties: PropertiesType, doAsyncWork: (@escaping () throws -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
-        doAsyncWork({ [work] in
+    public func doWork(properties: PropertiesType, doAsyncWork: (@escaping ((Error?) -> Void) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
+        doAsyncWork({ [work] _ in
             work()
         })
 

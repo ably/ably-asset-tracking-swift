@@ -9,6 +9,7 @@ class DefaultLocationService: LocationService {
     private let replayLocationManager: ReplayLocationManager?
     private let logHandler: InternalLogHandler?
     private let workQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.workQueue")
+    private let passiveLocationManagerHandler: PassiveLocationManagerHandler
 
     weak var delegate: LocationServiceDelegate?
 
@@ -17,7 +18,8 @@ class DefaultLocationService: LocationService {
          logHandler: InternalLogHandler?,
          vehicleProfile: VehicleProfile) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
-
+        self.passiveLocationManagerHandler = PassiveLocationManagerHandler(logHandler: logHandler)
+        
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
 
         NavigationSettings.shared.initialize(directions: directions,
@@ -60,7 +62,8 @@ class DefaultLocationService: LocationService {
             self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
         }
 
-        self.locationManager.delegate = self
+        self.locationManager.delegate = passiveLocationManagerHandler
+        self.passiveLocationManagerHandler.delegate = self
     }
 
     func startUpdatingLocation() {
@@ -125,25 +128,32 @@ class DefaultLocationService: LocationService {
                     return
                 }
                 
-                let locationHistoryData: LocationHistoryData
+                var locationHistoryData: LocationHistoryData? = nil
                 do {
                     let events = try reader.compactMap { event -> GeoJSONMessage? in
                         guard let locationUpdateHistoryEvent = event as? LocationUpdateHistoryEvent else {
                             return nil
                         }
                         
-                        let location = locationUpdateHistoryEvent.location.toLocation()
+                        let location = try locationUpdateHistoryEvent.location.toLocation().get()
                         return try GeoJSONMessage(location: location)
                     }
-                    
                     locationHistoryData = LocationHistoryData(events: events)
-                } catch {
+                }
+                catch let error as LocationValidationError {
+                    self.logHandler?.verbose(message: "Swallowing invalid enhanced location from Mapbox, validation error was: \(error)", error: error)
+                }
+                catch {
                     self.logHandler?.error(message: "Failed to map location history reader events to GeoJSONMessage", error: error)
                     completion(.failure(.init(error: error)))
                     return
                 }
                 
                 let rawHistoryTemporaryFile = TemporaryFile(fileURL: historyFileURL, logHandler: self.logHandler)
+                guard let locationHistoryData = locationHistoryData else {
+                    return
+                }
+
                 completion(.success(.init(locationHistoryData: locationHistoryData, rawHistoryFile: rawHistoryTemporaryFile)))
             }
         }
@@ -159,22 +169,25 @@ class DefaultLocationService: LocationService {
     }
 }
 
-extension DefaultLocationService: PassiveLocationManagerDelegate {
-    func passiveLocationManagerDidChangeAuthorization(_ manager: PassiveLocationManager) {
-        logHandler?.debug(message: "passiveLocationManager.passiveLocationManagerDidChangeAuthorization", error: nil)
+extension DefaultLocationService: PassiveLocationManagerHandlerDelegate {
+    func passiveLocationManagerHandlerDidChangeAuthorization(handler: PassiveLocationManagerHandler) {
+        logHandler?.debug(message: "passiveLocationManagerHandler.didChangeAuthorization", error: nil)
     }
     
-    func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
-        delegate?.locationService(sender: self, didUpdateRawLocationUpdate: RawLocationUpdate(location: rawLocation.toLocation()))
-        delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location.toLocation()))
+    func passiveLocationManagerHandler(handler: PassiveLocationManagerHandler, didUpdateEnhancedLocation location: Location) {
+        delegate?.locationService(sender: self, didUpdateEnhancedLocationUpdate: EnhancedLocationUpdate(location: location))
     }
     
-    func passiveLocationManager(_ manager: PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
-        logHandler?.debug(message: "passiveLocationManager.didUpdateHeading", error: nil)
+    func passiveLocationManagerHandler(handler: PassiveLocationManagerHandler, didUpdateRawLocation location: Location) {
+        delegate?.locationService(sender: self, didUpdateRawLocationUpdate: RawLocationUpdate(location: location))
     }
     
-    func passiveLocationManager(_ manager: PassiveLocationManager, didFailWithError error: Error) {
-        logHandler?.error(message: "passiveLocationManager.didFailWithError", error: error)
+    func passiveLocationManagerHandler(handler: PassiveLocationManagerHandler, didUpdateHeading newHeading: CLHeading) {
+        logHandler?.debug(message: "passiveLocationManagerHandler.didUpdateHeading", error: nil)
+    }
+    
+    func passiveLocationManagerHandler(handler: PassiveLocationManagerHandler, didFailWithError error: Error) {
+        logHandler?.error(message: "passiveLocationManagerHandler.didFailWithError", error: error)
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: error.localizedDescription))
         delegate?.locationService(sender: self, didFailWithError: errorInformation)
     }

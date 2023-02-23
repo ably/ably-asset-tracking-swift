@@ -89,8 +89,6 @@ class PublisherHelper {
     
     static func createPublisher(
         ablyPublisher: AblyPublisher,
-        connectionConfiguration: ConnectionConfiguration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID"),
-        mapboxConfiguration: MapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN"),
         routingProfile: RoutingProfile = .driving,
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
         locationService: LocationService = MockLocationService(),
@@ -100,8 +98,6 @@ class PublisherHelper {
     ) -> DefaultPublisher {
         
         DefaultPublisher(
-            connectionConfiguration: connectionConfiguration,
-            mapboxConfiguration: mapboxConfiguration,
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,

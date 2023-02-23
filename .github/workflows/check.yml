@@ -26,6 +26,9 @@ jobs:
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
 
+      - name: Start SDK test proxy server
+        run: cd external/sdk-test-proxy && ./start-service
+
       - name: Run All Tests
         run: ./Scripts/test.sh
         env:

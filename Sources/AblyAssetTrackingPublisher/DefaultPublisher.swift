@@ -7,8 +7,6 @@ import AblyAssetTrackingInternal
 class DefaultPublisher: Publisher, PublisherInteractor {
     
     private let workerQueue: WorkerQueue<PublisherWorkerQueueProperties, PublisherWorkSpecification>
-    private let connectionConfiguration: ConnectionConfiguration
-    private let mapboxConfiguration: MapboxConfiguration
     private let locationService: LocationService
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
@@ -57,9 +55,7 @@ class DefaultPublisher: Publisher, PublisherInteractor {
     private(set) public var activeTrackable: Trackable?
     private(set) public var routingProfile: RoutingProfile
 
-    init(connectionConfiguration: ConnectionConfiguration,
-         mapboxConfiguration: MapboxConfiguration,
-         routingProfile: RoutingProfile,
+    init(routingProfile: RoutingProfile,
          resolutionPolicyFactory: ResolutionPolicyFactory,
          ablyPublisher: AblyPublisher,
          locationService: LocationService,
@@ -71,9 +67,6 @@ class DefaultPublisher: Publisher, PublisherInteractor {
          constantLocationEngineResolution: Resolution? = nil,
          logHandler: InternalLogHandler?
     ) {
-        
-        self.connectionConfiguration = connectionConfiguration
-        self.mapboxConfiguration = mapboxConfiguration
         self.routingProfile = routingProfile
         self.workerQueue = WorkerQueue(
             properties: PublisherWorkerQueueProperties(),
@@ -761,8 +754,15 @@ extension DefaultPublisher {
         else { return }
 
         let checker = ThresholdChecker()
-        let destination = activeTrackable?.destination != nil ?
-        CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude).toLocation() : nil
+        var destination: Location? = nil
+        do {
+            destination = try activeTrackable?.destination != nil ?
+            CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude).toLocation().get() : nil
+        }
+        catch {
+            logHandler?.verbose(message: "Invalid destination, validation error was: \(error)", error: error as? LocationValidationError)
+            return
+        }
         let estimatedArrivalTime = route?.expectedTravelTime == nil ? nil :
             route!.expectedTravelTime + Date().timeIntervalSince1970
 

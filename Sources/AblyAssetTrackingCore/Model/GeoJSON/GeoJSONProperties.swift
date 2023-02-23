@@ -8,7 +8,7 @@ struct GeoJSONProperties: Codable {
     /**
      Object horizontal accuracy in meters.
      */
-    let accuracyHorizontal: Double
+    let accuracyHorizontal: Double?
 
     /**
      Timestamp from a moment when measurment was done (in seconds since 1st of January 1970)
