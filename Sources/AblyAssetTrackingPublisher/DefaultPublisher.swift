@@ -68,10 +68,11 @@ class DefaultPublisher: Publisher, PublisherInteractor {
          logHandler: InternalLogHandler?
     ) {
         self.routingProfile = routingProfile
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
         self.workerQueue = WorkerQueue(
             properties: PublisherWorkerQueueProperties(),
             workingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher", qos: .default),
-            logHandler: nil,
+            logHandler: self.logHandler,
             workerFactory: PublisherWorkerFactory(),
             asyncWorkWorkingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher.async", qos: .default),
             getStoppedError: { return ErrorInformation(code: 1,
@@ -85,7 +86,6 @@ class DefaultPublisher: Publisher, PublisherInteractor {
         self.routeProvider = routeProvider
         self.enhancedLocationState = enhancedLocationState
         self.rawLocationState = rawLocationState
-        self.logHandler = logHandler?.addingSubsystem(Self.self)
 
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
         

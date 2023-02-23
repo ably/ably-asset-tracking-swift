@@ -38,10 +38,11 @@ class DefaultSubscriber: Subscriber {
         resolution: Resolution?,
         logHandler: InternalLogHandler?) {
 
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
         self.workerQueue = WorkerQueue(
             properties: SubscriberWorkerQueueProperties(),
             workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
-            logHandler: nil,
+            logHandler: self.logHandler,
             workerFactory: SubscriberWorkerFactory(),
             asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
             getStoppedError: { return ErrorInformation(code: 1,
@@ -53,7 +54,6 @@ class DefaultSubscriber: Subscriber {
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
-        self.logHandler = logHandler?.addingSubsystem(Self.self)
         
         self.ablySubscriber.subscriberDelegate = self
         
