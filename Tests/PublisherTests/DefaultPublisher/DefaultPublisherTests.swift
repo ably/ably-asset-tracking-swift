@@ -13,7 +13,6 @@ class DefaultPublisherTests: XCTestCase {
     var locationService: MockLocationService!
     var ablyPublisher: MockAblyPublisher!
     var configuration: ConnectionConfiguration!
-    var mapboxConfiguration: MapboxConfiguration!
     var routeProvider: MockRouteProvider!
     var resolutionPolicyFactory: MockResolutionPolicyFactory!
     var trackable: Trackable!
@@ -28,7 +27,6 @@ class DefaultPublisherTests: XCTestCase {
         configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
         locationService = MockLocationService()
         ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
-        mapboxConfiguration = MapboxConfiguration(mapboxKey: "MAPBOX_ACCESS_TOKEN")
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         routeProvider = MockRouteProvider()
         trackable = Trackable(id: "TrackableId",
@@ -36,9 +34,7 @@ class DefaultPublisherTests: XCTestCase {
                               destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182))
         delegate = MockPublisherDelegate()
         enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
-        publisher = DefaultPublisher(connectionConfiguration: configuration,
-                                     mapboxConfiguration: mapboxConfiguration,
-                                     routingProfile: .driving,
+        publisher = DefaultPublisher(routingProfile: .driving,
                                      resolutionPolicyFactory: resolutionPolicyFactory,
                                      ablyPublisher: ablyPublisher,
                                      locationService: locationService,
@@ -997,8 +993,6 @@ class DefaultPublisherTests: XCTestCase {
         locationService.stopRecordingLocationCallback = { completion in completion(.success(nil)) }
         
         let publisher = DefaultPublisher(
-            connectionConfiguration: configuration,
-            mapboxConfiguration: mapboxConfiguration,
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: ablyPublisher,
