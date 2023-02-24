@@ -1,6 +1,6 @@
 import Foundation
 import AblyAssetTrackingInternal
 
-public enum SubscriberWorkSpecification {
+internal enum SubscriberWorkSpecification {
     case legacy(callback: () -> Void)
 }
