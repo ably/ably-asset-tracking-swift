@@ -6,9 +6,7 @@ public class SubscriberWorkerFactory: WorkerFactory
     public typealias PropertiesType = SubscriberWorkerQueueProperties
     public typealias WorkerSpecificationType = SubscriberWorkSpecification
 
-    public init() {
-
-    }
+    public init() {}
 
     public func createWorker(workerSpecification: SubscriberWorkSpecification, logHandler: InternalLogHandler?)
         -> any Worker<PropertiesType, WorkerSpecificationType> {
