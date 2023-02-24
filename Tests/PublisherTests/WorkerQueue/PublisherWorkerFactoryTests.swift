@@ -1,7 +1,7 @@
 import XCTest
 import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
-import AblyAssetTrackingPublisher
+@testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingPublisherTesting
 
 class PublisherWorkerFactoryTests: XCTestCase
