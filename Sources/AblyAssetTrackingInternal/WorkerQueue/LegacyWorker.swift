@@ -21,14 +21,14 @@ open class LegacyWorker<PropertiesType, WorkerSpecificationType> : Worker
     }
 
     public func doWhenStopped(error: Error) {
-        //TODO
+        // No-op
     }
 
     public func onUnexpectedError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {
-        //TODO
+        // No-op
     }
 
     public func onUnexpectedAsyncError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {
-        //TODO
+        // No-op
     }
 }
