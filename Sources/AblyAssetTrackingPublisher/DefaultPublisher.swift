@@ -447,10 +447,14 @@ extension DefaultPublisher {
                     : .offline
             case .offline:
                 newTrackableState = .offline
+            case .closed:
+                newTrackableState = .offline
             case .failed:
                 newTrackableState = .failed
             }
         case .offline:
+            newTrackableState = .offline
+        case .closed:
             newTrackableState = .offline
         case .failed:
             newTrackableState = .failed

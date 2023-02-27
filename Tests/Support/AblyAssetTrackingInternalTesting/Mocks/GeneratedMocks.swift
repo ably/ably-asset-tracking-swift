@@ -95,6 +95,20 @@ public class AblySDKEventListenerMock: AblySDKEventListener {
 }
 public class AblySDKRealtimeMock: AblySDKRealtime {
 
+    // MARK: connect
+
+    public var connectCallsCount = 0
+    public var connectCalled: Bool {
+        return connectCallsCount > 0
+    }
+    public var connectClosure: (() -> Void)?
+
+    public func connect() {
+        connectCallsCount += 1
+        connectClosure?()
+    }
+
+
     public init() {}
 
     public var channels: AblySDKRealtimeChannels {

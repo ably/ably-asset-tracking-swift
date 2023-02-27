@@ -75,6 +75,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let expectationAddTrackable = XCTestExpectation()
         let expectationUpdateLocation = XCTestExpectation()
         
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisher.add(trackable: trackable) { _ in expectationAddTrackable.fulfill() }
@@ -116,6 +117,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         /**
          After tracking trackable (to trigger resolution resolve refresh)
          */
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { callback in
             callback?(.success)
             expectation.fulfill()
@@ -195,7 +197,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let trackableState = TrackableState<EnhancedLocationUpdate>()
         let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         let publisher = PublisherHelper.createPublisher(ablyPublisher: ablyPublisher)
-        
+
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisherHelper.sendLocationUpdate(
@@ -231,7 +234,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         delegate.publisherDidFailWithErrorCallback = {
             publisherDidFailExpectation.fulfill()
         }
-        
+
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisherHelper.sendLocationUpdate(
@@ -283,6 +287,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         resolutionPolicyFactory.resolutionPolicy?.resolveResolutionsReturnValue = .init(accuracy: .balanced, desiredInterval: 0, minimumDisplacement: 0)
         
         let connectCompletionHandlerExpectation = XCTestExpectation(description: "Track completion handler expectation")
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { callback in
             callback?(.success)
             connectCompletionHandlerExpectation.fulfill()
@@ -315,6 +320,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
     
     func testShouldSendRawMessageIfTheyAreEnabled() {
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         let publisher = DefaultPublisher(
@@ -350,6 +356,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
     
     func testShouldNotSendRawMessageIfTheyAreDisabled() {
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         let publisher = DefaultPublisher(
@@ -386,6 +393,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
     
     func test_addFirstTrackable_callsStartRecordingLocationOnLocationService() {
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
         
         let addTrackableExpectation = expectation(description: "Trackable added successfully")
@@ -404,6 +412,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     }
     
     func test_addSecondTrackable_doesNotCallStartRecordingLocationOnLocationService() {
+        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
         
         let addFirstTrackableExpectation = expectation(description: "First trackable added successfully")

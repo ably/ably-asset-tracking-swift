@@ -228,6 +228,8 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
             didChangeAssetConnectionStatusOnlineExpectation.fulfill()
         case .offline:
             didChangeAssetConnectionStatusOfflineExpectation.fulfill()
+        case .closed:
+            ()
         case .failed:
             ()
         }

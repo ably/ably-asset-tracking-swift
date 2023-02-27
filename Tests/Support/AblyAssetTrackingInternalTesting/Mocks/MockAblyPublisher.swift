@@ -3,7 +3,6 @@ import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
 public class MockAblyPublisher: AblyPublisher {
-    
     public var initConnectionConfiguration: ConnectionConfiguration?
     public var initMode: AblyMode?
     public required init(configuration: ConnectionConfiguration, mode: AblyMode) {
@@ -28,6 +27,13 @@ public class MockAblyPublisher: AblyPublisher {
     public func subscribeForPresenceMessages(trackable: Trackable) {
         subscribeForPresenceMessagesCalled = true
         subscribeForPresenceMessagesTrackable = trackable
+    }
+
+    public var startConnectionCalled = false
+    public var startConnectionCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    public func startConnection(completion: @escaping ResultHandler<Void>) {
+        startConnectionCalled = true
+        startConnectionCompletionHandler?(completion)
     }
     
     public var connectCalled = false
