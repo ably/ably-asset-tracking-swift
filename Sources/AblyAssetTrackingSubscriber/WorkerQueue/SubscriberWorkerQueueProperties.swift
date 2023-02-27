@@ -1,7 +1,7 @@
 import Foundation
 import AblyAssetTrackingInternal
 
-internal class SubscriberWorkerQueueProperties: WorkerQueueProperties
+class SubscriberWorkerQueueProperties: WorkerQueueProperties
 {
     public var isStopped: Bool
 

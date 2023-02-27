@@ -1,7 +1,7 @@
 import Foundation
 import AblyAssetTrackingInternal
 
-internal class PublisherWorkerFactory: WorkerFactory
+class PublisherWorkerFactory: WorkerFactory
 {
     public typealias PropertiesType = PublisherWorkerQueueProperties
     public typealias WorkerSpecificationType = PublisherWorkSpecification

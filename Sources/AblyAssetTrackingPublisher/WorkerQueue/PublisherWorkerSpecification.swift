@@ -1,7 +1,7 @@
 import Foundation
 import AblyAssetTrackingInternal
 
-internal enum PublisherWorkSpecification {
+enum PublisherWorkSpecification {
     case legacy(callback: () -> Void)
 }
 
