@@ -22,6 +22,7 @@ extension ConnectionConfiguration {
         clientOptions.logHandler = logHandler
         
         clientOptions.agents = Agents.libraryAgents.ablyCocoaAgentsDictionary
+        clientOptions.autoConnect = false
         
         if let environment = environment {
             clientOptions.environment = environment

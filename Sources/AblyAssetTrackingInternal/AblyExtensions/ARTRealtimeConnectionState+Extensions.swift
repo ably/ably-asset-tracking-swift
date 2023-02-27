@@ -9,7 +9,8 @@ extension ARTRealtimeConnectionState {
     public func toConnectionState() -> ConnectionState {
         switch self {
         case .connected: return ConnectionState.online
-        case .initialized, .connecting, .disconnected, .suspended, .closing, .closed: return ConnectionState.offline
+        case .closed:  return ConnectionState.closed
+        case .initialized, .connecting, .disconnected, .suspended, .closing: return ConnectionState.offline
         case .failed: return ConnectionState.failed
         @unknown default: fatalError("Unknown ARTRealtimeConnectionState detected: \(self)")
         }

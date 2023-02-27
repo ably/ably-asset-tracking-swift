@@ -151,28 +151,39 @@ extension DefaultSubscriber {
 
     // MARK: Start/Stop
     private func performStart(_ event: Event.StartEvent) {
-        
-        ablySubscriber.connect(
-            trackableId: trackableId,
-            presenceData: presenceData,
-            useRewind: true
-        ) { [weak self] result in
+
+        ablySubscriber.startConnection() {
+            [weak self] result in
             guard let self = self else {
                 return
             }
-            
-            switch result {
+
+            switch (result) {
             case .success:
-                self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
-                self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
-                self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
-                
-                self.callback(value: Void(), handler: event.resultHandler)
+                self.ablySubscriber.connect(
+                    trackableId: self.trackableId,
+                    presenceData: self.presenceData,
+                    useRewind: true
+                ) { [weak self] result in
+                    guard let self = self else {
+                        return
+                    }
+
+                    switch result {
+                    case .success:
+                        self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
+                        self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
+                        self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
+
+                        self.callback(value: Void(), handler: event.resultHandler)
+                    case .failure(let error):
+                        self.callback(error: error, handler: event.resultHandler)
+                    }
+                }
             case .failure(let error):
                 self.callback(error: error, handler: event.resultHandler)
             }
         }
-        
     }
     
     private func performStop(_ event: Event.StopEvent) {
@@ -235,6 +246,9 @@ extension DefaultSubscriber {
                 newConnectionState = isPublisherOnline ? .online : .offline
             case .offline:
                 newConnectionState = .offline
+                // TODO: Review this state
+            case .closed:
+                newConnectionState = .offline
             case .failed:
                 newConnectionState = .failed
             }
@@ -242,6 +256,8 @@ extension DefaultSubscriber {
             newConnectionState = .offline
         case .failed:
             newConnectionState = .failed
+        case .closed:
+            newConnectionState = .offline
         }
         
         if newConnectionState != currentTrackableConnectionState {

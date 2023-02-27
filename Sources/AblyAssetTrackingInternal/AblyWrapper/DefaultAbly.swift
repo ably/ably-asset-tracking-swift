@@ -3,7 +3,6 @@ import Ably
 import AblyAssetTrackingCore
 
 public class DefaultAbly: AblyCommon {
-    
     public weak var publisherDelegate: AblyPublisherDelegate?
     public weak var subscriberDelegate: AblySubscriberDelegate?
     
@@ -42,6 +41,33 @@ public class DefaultAbly: AblyCommon {
         
         self.mode = mode
         self.connectionConfiguration = configuration
+    }
+
+    public func startConnection(completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
+        client.connection.on { [completion] stateChange in
+            switch (stateChange.current.toConnectionState()) {
+            case .online:
+                completion(.success)
+                // TODO: Add .off call here?
+            case .failed:
+                completion(
+                    .failure(
+                        ErrorInformation(code: 0, statusCode: 0, message: "Connection failed waiting for start", cause: nil, href: nil)
+                    )
+                )
+                // TODO: Add .off call here?
+            case .closed:
+                completion(
+                    .failure(
+                        ErrorInformation(code: 0, statusCode: 0, message: "Connection closed waiting for start", cause: nil, href: nil)
+                    )
+                )
+                // TODO: Add .off call here?
+            case .offline:
+                break
+            }
+        }
+        client.connect()
     }
     
     public func connect(

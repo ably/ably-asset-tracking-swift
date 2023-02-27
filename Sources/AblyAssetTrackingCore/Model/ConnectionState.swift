@@ -18,6 +18,11 @@ public enum ConnectionState: Int {
      Connection has failed
      */
     case failed
+
+    /**
+     Connection has closed
+     */
+    case closed
 }
 
 extension ConnectionState {
@@ -30,6 +35,8 @@ extension ConnectionState {
                 return "offline"
             case .failed:
                 return "failed"
+            case .closed:
+                return "closed"
             }
         }
     }

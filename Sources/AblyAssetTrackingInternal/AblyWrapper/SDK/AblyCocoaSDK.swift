@@ -15,6 +15,10 @@ struct AblyCocoaSDKRealtime: AblySDKRealtime {
     var auth: AblySDKAuth {
         return AblyCocoaSDKAuth(auth: realtime.auth)
     }
+
+    func connect() {
+        realtime.connect()
+    }
     
     func close() {
         realtime.close()
