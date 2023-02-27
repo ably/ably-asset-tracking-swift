@@ -35,6 +35,80 @@ import Ably
 
 
 
+public class AblyPublisherDelegateMock: AblyPublisherDelegate {
+
+    public init() {}
+
+
+    //MARK: - ablyPublisher
+
+    public var ablyPublisherDidChangeConnectionStateCallsCount = 0
+    public var ablyPublisherDidChangeConnectionStateCalled: Bool {
+        return ablyPublisherDidChangeConnectionStateCallsCount > 0
+    }
+    public var ablyPublisherDidChangeConnectionStateReceivedArguments: (sender: AblyPublisher, state: ConnectionState)?
+    public var ablyPublisherDidChangeConnectionStateReceivedInvocations: [(sender: AblyPublisher, state: ConnectionState)] = []
+    public var ablyPublisherDidChangeConnectionStateClosure: ((AblyPublisher, ConnectionState) -> Void)?
+
+    public func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState) {
+        ablyPublisherDidChangeConnectionStateCallsCount += 1
+        ablyPublisherDidChangeConnectionStateReceivedArguments = (sender: sender, state: state)
+        ablyPublisherDidChangeConnectionStateReceivedInvocations.append((sender: sender, state: state))
+        ablyPublisherDidChangeConnectionStateClosure?(sender, state)
+    }
+
+    //MARK: - ablyPublisher
+
+    public var ablyPublisherDidChangeChannelConnectionStateForTrackableCallsCount = 0
+    public var ablyPublisherDidChangeChannelConnectionStateForTrackableCalled: Bool {
+        return ablyPublisherDidChangeChannelConnectionStateForTrackableCallsCount > 0
+    }
+    public var ablyPublisherDidChangeChannelConnectionStateForTrackableReceivedArguments: (sender: AblyPublisher, state: ConnectionState, trackable: Trackable)?
+    public var ablyPublisherDidChangeChannelConnectionStateForTrackableReceivedInvocations: [(sender: AblyPublisher, state: ConnectionState, trackable: Trackable)] = []
+    public var ablyPublisherDidChangeChannelConnectionStateForTrackableClosure: ((AblyPublisher, ConnectionState, Trackable) -> Void)?
+
+    public func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
+        ablyPublisherDidChangeChannelConnectionStateForTrackableCallsCount += 1
+        ablyPublisherDidChangeChannelConnectionStateForTrackableReceivedArguments = (sender: sender, state: state, trackable: trackable)
+        ablyPublisherDidChangeChannelConnectionStateForTrackableReceivedInvocations.append((sender: sender, state: state, trackable: trackable))
+        ablyPublisherDidChangeChannelConnectionStateForTrackableClosure?(sender, state, trackable)
+    }
+
+    //MARK: - ablyPublisher
+
+    public var ablyPublisherDidFailWithErrorCallsCount = 0
+    public var ablyPublisherDidFailWithErrorCalled: Bool {
+        return ablyPublisherDidFailWithErrorCallsCount > 0
+    }
+    public var ablyPublisherDidFailWithErrorReceivedArguments: (sender: AblyPublisher, error: ErrorInformation)?
+    public var ablyPublisherDidFailWithErrorReceivedInvocations: [(sender: AblyPublisher, error: ErrorInformation)] = []
+    public var ablyPublisherDidFailWithErrorClosure: ((AblyPublisher, ErrorInformation) -> Void)?
+
+    public func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation) {
+        ablyPublisherDidFailWithErrorCallsCount += 1
+        ablyPublisherDidFailWithErrorReceivedArguments = (sender: sender, error: error)
+        ablyPublisherDidFailWithErrorReceivedInvocations.append((sender: sender, error: error))
+        ablyPublisherDidFailWithErrorClosure?(sender, error)
+    }
+
+    //MARK: - ablyPublisher
+
+    public var ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdCallsCount = 0
+    public var ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdCalled: Bool {
+        return ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdCallsCount > 0
+    }
+    public var ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdReceivedArguments: (sender: AblyPublisher, presence: PresenceMessage, trackable: Trackable, presenceData: PresenceData, clientId: String)?
+    public var ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdReceivedInvocations: [(sender: AblyPublisher, presence: PresenceMessage, trackable: Trackable, presenceData: PresenceData, clientId: String)] = []
+    public var ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdClosure: ((AblyPublisher, PresenceMessage, Trackable, PresenceData, String) -> Void)?
+
+    public func ablyPublisher(_ sender: AblyPublisher, didReceivePresenceMessage presence: PresenceMessage, forTrackable trackable: Trackable, presenceData: PresenceData, clientId: String) {
+        ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdCallsCount += 1
+        ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdReceivedArguments = (sender: sender, presence: presence, trackable: trackable, presenceData: presenceData, clientId: clientId)
+        ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdReceivedInvocations.append((sender: sender, presence: presence, trackable: trackable, presenceData: presenceData, clientId: clientId))
+        ablyPublisherDidReceivePresenceMessageForTrackablePresenceDataClientIdClosure?(sender, presence, trackable, presenceData, clientId)
+    }
+
+}
 public class AblySDKAuthMock: AblySDKAuth {
 
     public init() {}
