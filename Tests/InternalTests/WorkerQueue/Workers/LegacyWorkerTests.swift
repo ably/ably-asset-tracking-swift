@@ -6,13 +6,13 @@ class LegacyWorkerTests: XCTestCase
 {
     private let logHandler = InternalLogHandlerMock.configured
     private let properties = WorkerQueuePropertiesMock()
-    private var called = false
 
     func test_doWorkShouldCallPassedInWorkCallbackAndReturnProperties()
     {
         properties.isStopped = true
-        let callback = {[weak self] in
-            self?.called = true
+        var called = false;
+        let callback = {
+            called = true
             return
         }
 
@@ -23,7 +23,7 @@ class LegacyWorkerTests: XCTestCase
             postWork: {_ in }
         )
 
-        XCTAssertTrue(self.called, "Work callback was not called")
+        XCTAssertTrue(called, "Work callback was not called")
         XCTAssertTrue(updatedProperties.isStopped)
         XCTAssertTrue(properties === updatedProperties)
     }

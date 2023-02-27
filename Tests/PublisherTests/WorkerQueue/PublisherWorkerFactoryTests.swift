@@ -7,14 +7,14 @@ import AblyAssetTrackingPublisherTesting
 class PublisherWorkerFactoryTests: XCTestCase
 {
     private let logHandler = InternalLogHandlerMock.configured
-    private var legacyWorkerCalled = false
     private let properties = PublisherWorkerQueueProperties()
     private let factory = PublisherWorkerFactory()
 
     func test_ItBuildsLegacyWork()
     {
-        let callback = {[weak self] in
-            self?.legacyWorkerCalled = true
+        var legacyWorkerCalled = false
+        let callback = {
+            legacyWorkerCalled = true
             return
         }
 
@@ -29,6 +29,6 @@ class PublisherWorkerFactoryTests: XCTestCase
             doAsyncWork: {_ in },
             postWork: {_ in }
         )
-        XCTAssertTrue(self.legacyWorkerCalled, "Legacy worker work not called")
+        XCTAssertTrue(legacyWorkerCalled, "Legacy worker work not called")
     }
 }
