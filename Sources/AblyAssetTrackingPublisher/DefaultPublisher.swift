@@ -75,11 +75,7 @@ class DefaultPublisher: Publisher, PublisherInteractor {
             logHandler: self.logHandler,
             workerFactory: PublisherWorkerFactory(),
             asyncWorkWorkingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher.async", qos: .default),
-            getStoppedError: { return ErrorInformation(code: 1,
-                                                       statusCode: 1,
-                                                       message: "Stopped",
-                                                       cause: nil,
-                                                       href: nil)}
+            getStoppedError: { return ErrorInformation(type: .publisherStoppedException)}
         )
         self.locationService = locationService
         self.ablyPublisher = ablyPublisher
