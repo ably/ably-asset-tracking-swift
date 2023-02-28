@@ -253,7 +253,6 @@ extension DefaultSubscriber {
                 newConnectionState = isPublisherOnline ? .online : .offline
             case .offline:
                 newConnectionState = .offline
-                // TODO: Review this state
             case .closed:
                 newConnectionState = .offline
             case .failed:

@@ -60,6 +60,7 @@ public class DefaultAbly: AblyCommon {
             stateGuard.wait()
 
             guard let self = self else {
+                stateGuard.signal()
                 return
             }
 
@@ -256,6 +257,7 @@ public class DefaultAbly: AblyCommon {
             self?.closeConnection(completion: completion)
         }
     }
+
     
     public func subscribeForAblyStateChange() {
         client.connection.on { [weak self] stateChange in
@@ -361,20 +363,43 @@ public class DefaultAbly: AblyCommon {
     }
     
     private func closeConnection(completion: @escaping ResultHandler<Void>) {
-        client.connection.on {[weak self] stateChange in
+        var listener: AblySDKEventListener?
+
+        /**
+         According to the ably spec, connection.on should accept some sort of object with an actual identity, allowing you to do something
+         like [connection.off(self)]. This is helpful for us here as we want to detach the listener once the connection comes online.
+
+         However, ably-cocoa does not allow this and accepts a callback function, so we have to do this workaround by maintaining an optional
+         reference to the instance returned by the SDK. To ensure that we don't hit any race conditions between the listener being returned
+         and the state coming through, a semaphore is used.
+         */
+        let stateChangeGuard = DispatchSemaphore(value: 1)
+        stateChangeGuard.wait()
+        listener = client.connection.on {[weak self] stateChange in
+            stateChangeGuard.wait()
+
+            guard let self = self else {
+                stateChangeGuard.signal()
+                return
+            }
+
             switch stateChange.current {
             case .closed:
-                self?.logHandler?.info(message: "Ably connection closed successfully.", error: nil)
+                self.logHandler?.info(message: "Ably connection closed successfully.", error: nil)
+                self.client.connection.off(listener!)
                 completion(.success)
             case .failed:
                 let errorInfo = stateChange.reason?.toErrorInformation() ?? ErrorInformation(type: .publisherError(errorMessage: "Cannot close connection"))
-                self?.logHandler?.error(message: "Error while closing connection", error: errorInfo)
+                self.logHandler?.error(message: "Error while closing connection", error: errorInfo)
+                self.client.connection.off(listener!)
                 completion(.failure(errorInfo))
             default:
-                return
+                break
             }
+            stateChangeGuard.signal()
         }
-        
+
+        stateChangeGuard.signal()
         client.close()
     }
 }
