@@ -77,6 +77,13 @@ public class MockAblySubscriber: AblySubscriber {
         startConnectionCompletion = completion
         startConnectionCompletionHandler?(completion)
     }
+
+    public var stopConnectionCalled = false
+    public var stopConnectionCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    public func stopConnection(completion: @escaping ResultHandler<Void>) {
+        stopConnectionCalled = true
+        stopConnectionCompletionHandler?(completion)
+    }
     
     public var connectCalled = false
     public var connectTrackableId: String?

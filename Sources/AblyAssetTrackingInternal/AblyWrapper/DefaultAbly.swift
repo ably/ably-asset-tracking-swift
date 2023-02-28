@@ -254,7 +254,7 @@ public class DefaultAbly: AblyCommon {
         
         closingDispatchGroup.notify(queue: .main) { [weak self] in
             self?.logHandler?.info(message: "All trackables removed.", error: nil)
-            self?.closeConnection(completion: completion)
+            self?.stopConnection(completion: completion)
         }
     }
 
@@ -362,7 +362,7 @@ public class DefaultAbly: AblyCommon {
         }
     }
     
-    private func closeConnection(completion: @escaping ResultHandler<Void>) {
+    public func stopConnection(completion: @escaping ResultHandler<Void>) {
         var listener: AblySDKEventListener?
 
         /**

@@ -74,6 +74,13 @@ public protocol AblyCommon {
      - Parameter completion:    The closure that will be called when `Ably` connection state will change to `closed` or `failed`.
      */
     func close(presenceData: PresenceData, completion: @escaping ResultHandler<Void>)
+
+    /**
+     Closes the ably connection.
+
+     - Parameter completion: The closer to be called when the `Ably` connection state changes to `closed` or `failed`
+     */
+    func stopConnection(completion: @escaping ResultHandler<Void>)
 }
 
 /**
