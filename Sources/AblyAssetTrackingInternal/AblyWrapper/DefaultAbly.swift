@@ -44,29 +44,50 @@ public class DefaultAbly: AblyCommon {
     }
 
     public func startConnection(completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
-        client.connection.on { [completion] stateChange in
+        var listener: AblySDKEventListener?
+
+        /**
+         According to the ably spec, connection.on should accept some sort of object with an actual identity, allowing you to do something
+         like [connection.off(self)]. This is helpful for us here as we want to detach the listener once the connection comes online.
+
+         However, ably-cocoa does not allow this and accepts a callback function, so we have to do this workaround by maintaining an optional
+         reference to the instance returned by the SDK. To ensure that we don't hit any race conditions between the listener being returned
+         and the state coming through, a semaphore is used.
+         */
+        let stateGuard = DispatchSemaphore(value: 1)
+        stateGuard.wait()
+        listener = client.connection.on { [weak self] stateChange in
+            stateGuard.wait()
+
+            guard let self = self else {
+                return
+            }
+
             switch (stateChange.current.toConnectionState()) {
             case .online:
+                self.client.connection.off(listener!)
                 completion(.success)
-                // TODO: Add .off call here?
             case .failed:
+                self.client.connection.off(listener!)
                 completion(
                     .failure(
                         ErrorInformation(code: 0, statusCode: 0, message: "Connection failed waiting for start", cause: nil, href: nil)
                     )
                 )
-                // TODO: Add .off call here?
             case .closed:
+                self.client.connection.off(listener!)
                 completion(
                     .failure(
                         ErrorInformation(code: 0, statusCode: 0, message: "Connection closed waiting for start", cause: nil, href: nil)
                     )
                 )
-                // TODO: Add .off call here?
             case .offline:
                 break
             }
+
+            stateGuard.signal()
         }
+        stateGuard.signal()
         client.connect()
     }
     

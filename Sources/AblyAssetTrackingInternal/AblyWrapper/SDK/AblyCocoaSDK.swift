@@ -112,6 +112,10 @@ struct AblyCocoaSDKConnection: AblySDKConnection {
     func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener {
         return AblyCocoaSDKEventListener(eventListener: connection.on(callback))
     }
+
+    func off(_ listener: AblySDKEventListener) {
+        connection.off(listener.underlyingListener())
+    }
 }
 
 struct AblyCocoaSDKAuth: AblySDKAuth {
@@ -124,6 +128,10 @@ struct AblyCocoaSDKAuth: AblySDKAuth {
 
 struct AblyCocoaSDKEventListener: AblySDKEventListener {
     fileprivate let eventListener: ARTEventListener
+
+    func underlyingListener() -> ARTEventListener {
+        return eventListener
+    }
 }
 
 public class AblyCocoaSDKRealtimeFactory: AblySDKRealtimeFactory {

@@ -46,6 +46,7 @@ public protocol AblySDKRealtimePresence {
 //sourcery: AutoMockable
 public protocol AblySDKConnection {
     @discardableResult func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener
+    func off(_ listener: AblySDKEventListener)
 }
 
 //sourcery: AutoMockable
@@ -54,4 +55,6 @@ public protocol AblySDKAuth {
 }
 
 //sourcery: AutoMockable
-public protocol AblySDKEventListener {}
+public protocol AblySDKEventListener {
+    func underlyingListener() -> ARTEventListener
+}

@@ -1,4 +1,4 @@
-// Generated using Sourcery 1.9.2 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 2.0.1 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
 // swiftlint:disable line_length
@@ -86,28 +86,49 @@ public class AblySDKConnectionMock: AblySDKConnection {
         }
     }
 
+    //MARK: - off
+
+    public var offCallsCount = 0
+    public var offCalled: Bool {
+        return offCallsCount > 0
+    }
+    public var offReceivedListener: AblySDKEventListener?
+    public var offReceivedInvocations: [AblySDKEventListener] = []
+    public var offClosure: ((AblySDKEventListener) -> Void)?
+
+    public func off(_ listener: AblySDKEventListener) {
+        offCallsCount += 1
+        offReceivedListener = listener
+        offReceivedInvocations.append(listener)
+        offClosure?(listener)
+    }
+
 }
 public class AblySDKEventListenerMock: AblySDKEventListener {
 
     public init() {}
 
 
+    //MARK: - underlyingListener
+
+    public var underlyingListenerCallsCount = 0
+    public var underlyingListenerCalled: Bool {
+        return underlyingListenerCallsCount > 0
+    }
+    public var underlyingListenerReturnValue: ARTEventListener!
+    public var underlyingListenerClosure: (() -> ARTEventListener)?
+
+    public func underlyingListener() -> ARTEventListener {
+        underlyingListenerCallsCount += 1
+        if let underlyingListenerClosure = underlyingListenerClosure {
+            return underlyingListenerClosure()
+        } else {
+            return underlyingListenerReturnValue
+        }
+    }
+
 }
 public class AblySDKRealtimeMock: AblySDKRealtime {
-
-    // MARK: connect
-
-    public var connectCallsCount = 0
-    public var connectCalled: Bool {
-        return connectCallsCount > 0
-    }
-    public var connectClosure: (() -> Void)?
-
-    public func connect() {
-        connectCallsCount += 1
-        connectClosure?()
-    }
-
 
     public init() {}
 
@@ -126,6 +147,19 @@ public class AblySDKRealtimeMock: AblySDKRealtime {
         set(value) { underlyingAuth = value }
     }
     public var underlyingAuth: AblySDKAuth!
+
+    //MARK: - connect
+
+    public var connectCallsCount = 0
+    public var connectCalled: Bool {
+        return connectCallsCount > 0
+    }
+    public var connectClosure: (() -> Void)?
+
+    public func connect() {
+        connectCallsCount += 1
+        connectClosure?()
+    }
 
     //MARK: - close
 
