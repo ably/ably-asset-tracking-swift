@@ -5,7 +5,7 @@ import AblyAssetTrackingCore
 
 class ConnectionConfigurationTests: XCTestCase {
 
-    let internalARTLogHandler = InternalARTLogHandler()
+    let internalARTLogHandler = InternalARTLogHandler(logHandler: nil)
     
     func testBasicAuthenticationConstructor() throws {
         let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
