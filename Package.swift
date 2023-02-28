@@ -24,7 +24,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/mapbox/mapbox-navigation-ios.git", from: "2.9.0"),
-        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.19"),
+        // We’re using this in order to get the fix for https://github.com/ably/ably-cocoa/issues/1380.
+        // TODO (#641) return to using a versioned ably-cocoa release once that fix is released
+        .package(url: "https://github.com/ably/ably-cocoa", revision: "ffc9efb"),
         .package(url: "https://github.com/mxcl/Version", from: "2.0.1")
     ],
     targets: [
