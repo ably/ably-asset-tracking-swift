@@ -327,17 +327,22 @@ extension DefaultPublisher {
                             presenceData: presenceData,
                             useRewind: false
                     ) { [weak self] result in
+                        guard let self = self else {
+                            return
+                        }
+
                         switch result {
                         case .success:
-                            self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, completion: completion)))
+                            self.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, completion: completion)))
                         case .failure(let error):
                             completion.handleError(error)
-                            self?.duplicateTrackableGuard.finishAddingTrackableWithId(trackable.id, result: .failure(error))
+                            self.duplicateTrackableGuard.finishAddingTrackableWithId(trackable.id, result: .failure(error))
                         }
                     }
                 case .failure(let error):
-                    completion.handleError(error)
-                    // TODO: Disconnect? Do something else?
+                    self.ablyPublisher.stopConnection(completion: { [error] _ in
+                        completion.handleError(error)
+                    })
                 }
         }
     }

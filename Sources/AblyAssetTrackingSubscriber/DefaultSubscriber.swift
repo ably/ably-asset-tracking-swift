@@ -188,7 +188,9 @@ extension DefaultSubscriber {
                     }
                 }
             case .failure(let error):
-                self.callback(error: error, handler: event.resultHandler)
+                self.ablySubscriber.stopConnection(completion: { [error] _ in
+                    self.callback(error: error, handler: event.resultHandler)
+                })
             }
         }
     }
