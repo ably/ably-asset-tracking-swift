@@ -252,8 +252,8 @@ extension DefaultPublisher {
             return
         }
 
-        ablyPublisher.subscribeForPresenceMessages(trackable: event.trackable)
-        ablyPublisher.subscribeForChannelStateChange(trackable: event.trackable)
+        ablyPublisher.subscribeForPresenceMessages(trackableID: event.trackable.id)
+        ablyPublisher.subscribeForChannelStateChange(trackableID: event.trackable.id)
         
         trackables.insert(event.trackable)
         //Start updating location only after the first trackable
@@ -556,7 +556,7 @@ extension DefaultPublisher {
 
         enhancedLocationState.markMessageAsPending(for: trackable.id)
         
-        ablyPublisher.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackable: trackable) { [weak self] result in
+        ablyPublisher.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackableID: trackable.id) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.enqueue(event: .sendEnhancedLocationFailure(.init(error: error, locationUpdate: event.locationUpdate, trackable: trackable)))
@@ -574,7 +574,7 @@ extension DefaultPublisher {
 
         rawLocationState.markMessageAsPending(for: trackable.id)
 
-        ablyPublisher.sendRawLocation(location: event.locationUpdate, trackable: trackable) { [weak self] result in
+        ablyPublisher.sendRawLocation(location: event.locationUpdate, trackableID: trackable.id) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.enqueue(event: .sendRawLocationFailure(.init(error: error, locationUpdate: event.locationUpdate, trackable: trackable)))
@@ -902,9 +902,9 @@ extension DefaultPublisher: LocationServiceDelegate {
 
 // MARK: AblyPublisherDelegate
 extension DefaultPublisher: AblyPublisherDelegate {
-    func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        logHandler?.debug(message: "ablyPublisher.didChangeChannelConnectionState. State: \(state) for trackable: \(trackable.id)", error: nil)
-        enqueue(event: .ablyChannelConnectionStateChanged(.init(trackable: trackable, connectionState: state)))
+    func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackableID trackableID: String) {
+        logHandler?.debug(message: "ablyPublisher.didChangeChannelConnectionState. State: \(state) for trackable: \(trackableID)", error: nil)
+        enqueue(event: .ablyChannelConnectionStateChanged(.init(trackableID: trackableID, connectionState: state)))
     }
 
     func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation) {
@@ -919,12 +919,12 @@ extension DefaultPublisher: AblyPublisherDelegate {
 
     func ablyPublisher(_ sender: AblyPublisher,
                           didReceivePresenceUpdate presence: Presence,
-                          forTrackable trackable: Trackable,
+                          forTrackableID trackableID: String,
                           presenceData: PresenceData,
                           clientId: String) {
 
-        logHandler?.debug(message: "publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)", error: nil)
-        enqueue(event: .presenceUpdate(.init(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId)))
+        logHandler?.debug(message: "publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackableID)", error: nil)
+        enqueue(event: .presenceUpdate(.init(trackableID: trackableID, presence: presence, presenceData: presenceData, clientId: clientId)))
     }
 }
 

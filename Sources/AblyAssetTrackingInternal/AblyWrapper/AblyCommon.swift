@@ -9,21 +9,27 @@ public protocol AblyCommon {
     /**
      Observe  for the channel state updates.
      
-     Subscription should be able  only when there's an existing channel for the `trackable.id`
+     Subscription should be able  only when there's an existing channel for the `trackableID`
      
+<<<<<<< HEAD
      - Parameter trackable: The `Trackable` object
      - Parameter listener: A listener that will recieve the new channel state each time the channel state changes.
      */
     func subscribeForChannelStateChange(trackable: Trackable, listener: (ConnectionState) -> Void)
+=======
+     - Parameter trackableID: The ID of the trackable.
+     */
+    func subscribeForChannelStateChange(trackableID: String)
+>>>>>>> 8fd0ab7 (WIP change DefaultAbly to work with trackable IDs instead of trackables)
     
     /**
      Observe  for the presence messages that are received from the channel's presence.
      
-     Subscription should be able  only when there's an existing channel for the `trackable.id`
+     Subscription should be able  only when there's an existing channel for the `trackableID`
      
-     - Parameter trackable:  The `Trackable` object
+     - Parameter trackableID:  The ID of the trackable.
      */
-    func subscribeForPresenceMessages(trackable: Trackable)
+    func subscribeForPresenceMessages(trackableID: String)
     
     /**
      Updates presence data in the `trackableID` channel's presence.

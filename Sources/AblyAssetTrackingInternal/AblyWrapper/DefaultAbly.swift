@@ -230,8 +230,8 @@ public class DefaultAbly: AblyCommon {
         }
     }
     
-    public func subscribeForPresenceMessages(trackable: Trackable) {
-        guard let channel = channels[trackable.id] else {
+    public func subscribeForPresenceMessages(trackableID: String) {
+        guard let channel = channels[trackableID] else {
             return
         }
         
@@ -241,18 +241,18 @@ public class DefaultAbly: AblyCommon {
                 return
             }
             for message in messages {
-                self.handleARTPresenceMessage(message, for: trackable)
+                self.handleARTPresenceMessage(message, for: trackableID)
             }
         }
         channel.presence.subscribe { [weak self] message in
             guard let self = self else { return }
             
             self.logHandler?.debug(message: "Received presence update from channel", error: nil)
-            self.handleARTPresenceMessage(message, for: trackable)
+            self.handleARTPresenceMessage(message, for: trackableID)
         }
     }
     
-    private func handleARTPresenceMessage(_ message: ARTPresenceMessage, for trackable: Trackable) {
+    private func handleARTPresenceMessage(_ message: ARTPresenceMessage, for trackableID: String) {
         guard
             let jsonData = message.data,
             let data: PresenceData = try? PresenceData.fromAny(jsonData),
@@ -277,14 +277,19 @@ public class DefaultAbly: AblyCommon {
         self.publisherDelegate?.ablyPublisher(
             self,
             didReceivePresenceUpdate: presence,
-            forTrackable: trackable,
+            forTrackableID: trackableID,
             presenceData: data,
             clientId: clientId
         )
     }
     
+<<<<<<< HEAD
     public func subscribeForChannelStateChange(trackable: Trackable, listener: (ConnectionState) -> Void) {
         guard let channel = channels[trackable.id] else {
+=======
+    public func subscribeForChannelStateChange(trackableID: String) {
+        guard let channel = channels[trackableID] else {
+>>>>>>> 8fd0ab7 (WIP change DefaultAbly to work with trackable IDs instead of trackables)
             return
         }
         
@@ -294,8 +299,13 @@ public class DefaultAbly: AblyCommon {
             }
             
             let receivedConnectionState = stateChange.current.toConnectionState()
+<<<<<<< HEAD
             self.logHandler?.debug(message: "Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", error: nil)
             listener(receivedConnectionState)
+=======
+            self.logHandler?.debug(message: "Channel state for trackable \(trackableID) changed. New state: \(receivedConnectionState.description)", error: nil)
+            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: receivedConnectionState, forTrackableID: trackableID)
+>>>>>>> 8fd0ab7 (WIP change DefaultAbly to work with trackable IDs instead of trackables)
         }
     }
     
@@ -403,11 +413,11 @@ extension DefaultAbly: AblySubscriber {
 extension DefaultAbly: AblyPublisher {
     public func sendEnhancedLocation(
         locationUpdate: EnhancedLocationUpdate,
-        trackable: Trackable,
+        trackableID: String,
         completion: ResultHandler<Void>?
     ) {
         
-        guard let channel = channels[trackable.id] else {
+        guard let channel = channels[trackableID] else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Attempt to send location while not tracked channel"))
             logHandler?.error(message: "Attempting to send a location while channel is not tracked", error: errorInformation)
             completion?(.failure(errorInformation))
@@ -434,23 +444,23 @@ extension DefaultAbly: AblyPublisher {
             }
             
             if let error = error {
-                self.logHandler?.error(message: "Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
+                self.logHandler?.error(message: "Cannot publish a message to channel [trackable id: \(trackableID)]", error: error)
                 self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
                 
                 return
             }
             
-            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: .online, forTrackable: trackable)
+            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: .online, forTrackableID: trackableID)
             completion?(.success)
         }
     }
     
     public func sendRawLocation(
         location: RawLocationUpdate,
-        trackable: Trackable,
+        trackableID: String,
         completion: ResultHandler<Void>?
     ) {
-        guard let channel = channels[trackable.id] else {
+        guard let channel = channels[trackableID] else {
             completion?(.success)
             
             return
@@ -466,7 +476,7 @@ extension DefaultAbly: AblyPublisher {
                 else { return }
                 
                 if let error = error {
-                    self.logHandler?.error(message: "Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
+                    self.logHandler?.error(message: "Cannot publish a message to channel [trackable id: \(trackableID)]", error: error)
                     self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
                 } else {
                     completion?(.success)

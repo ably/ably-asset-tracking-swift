@@ -56,17 +56,17 @@ public class MockAblySubscriber: AblySubscriber {
     }
     
     public var subscribeForChannelStateChangeCalled = false
-    public var subscribeForChannelStateChangeTrackable: Trackable?
-    public func subscribeForChannelStateChange(trackable: Trackable) {
+    public var subscribeForChannelStateChangeTrackableID: String?
+    public func subscribeForChannelStateChange(trackableID: String) {
         subscribeForChannelStateChangeCalled = true
-        subscribeForChannelStateChangeTrackable = trackable
+        subscribeForChannelStateChangeTrackableID = trackableID
     }
     
     public var subscribeForPresenceMessagesCalled = false
-    public var subscribeForPresenceMessagesTrackable: Trackable?
-    public func subscribeForPresenceMessages(trackable: Trackable) {
+    public var subscribeForPresenceMessagesTrackableID: String?
+    public func subscribeForPresenceMessages(trackableID: String) {
         subscribeForPresenceMessagesCalled = true
-        subscribeForPresenceMessagesTrackable = trackable
+        subscribeForPresenceMessagesTrackableID = trackableID
     }
     
     public var connectCalled = false

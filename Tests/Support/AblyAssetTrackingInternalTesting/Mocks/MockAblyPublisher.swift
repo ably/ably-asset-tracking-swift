@@ -17,17 +17,17 @@ public class MockAblyPublisher: AblyPublisher {
     }
     
     public var subscribeForChannelStateChangeCalled = false
-    public var subscribeForChannelStateChangeTrackable: Trackable?
-    public func subscribeForChannelStateChange(trackable: Trackable) {
+    public var subscribeForChannelStateChangeTrackableID: String?
+    public func subscribeForChannelStateChange(trackableID: String) {
         subscribeForChannelStateChangeCalled = true
-        subscribeForChannelStateChangeTrackable = trackable
+        subscribeForChannelStateChangeTrackableID = trackableID
     }
     
     public var subscribeForPresenceMessagesCalled = false
-    public var subscribeForPresenceMessagesTrackable: Trackable?
-    public func subscribeForPresenceMessages(trackable: Trackable) {
+    public var subscribeForPresenceMessagesTrackableID: String?
+    public func subscribeForPresenceMessages(trackableID: String) {
         subscribeForPresenceMessagesCalled = true
-        subscribeForPresenceMessagesTrackable = trackable
+        subscribeForPresenceMessagesTrackableID = trackableID
     }
     
     public var connectCalled = false
@@ -62,40 +62,40 @@ public class MockAblyPublisher: AblyPublisher {
     public var sendEnhancedAssetLocationUpdateCounter: Int = .zero
     public var sendEnhancedAssetLocationUpdateCalled: Bool = false
     public var sendEnhancedAssetLocationUpdateParamLocationUpdate: EnhancedLocationUpdate?
-    public var sendEnhancedAssetLocationUpdateParamTrackable: Trackable?
+    public var sendEnhancedAssetLocationUpdateParamTrackableID: String?
     public var sendEnhancedAssetLocationUpdateParamCompletion: ResultHandler<Void>?
     public var sendEnhancedAssetLocationUpdateParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    public func sendEnhancedLocation(locationUpdate: EnhancedLocationUpdate, trackable: Trackable, completion: ResultHandler<Void>?) {
+    public func sendEnhancedLocation(locationUpdate: EnhancedLocationUpdate, trackableID: String, completion: ResultHandler<Void>?) {
         sendEnhancedAssetLocationUpdateCounter += 1
         sendEnhancedAssetLocationUpdateCalled = true
         sendEnhancedAssetLocationUpdateParamLocationUpdate = locationUpdate
-        sendEnhancedAssetLocationUpdateParamTrackable = trackable
+        sendEnhancedAssetLocationUpdateParamTrackableID = trackableID
         sendEnhancedAssetLocationUpdateParamCompletion = completion
         sendEnhancedAssetLocationUpdateParamCompletionHandler?(completion)
     }
     
     public var sendRawLocationWasCalled = false
     public var sendRawLocationParamLocation: RawLocationUpdate?
-    public var sendRawLocationParamTrackable: Trackable?
+    public var sendRawLocationParamTrackableID: String?
     public var sendRawLocationParamCompletion: ResultHandler<Void>?
     public var sendRawLocationParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    public func sendRawLocation(location: RawLocationUpdate, trackable: Trackable, completion: ResultHandler<Void>?) {
+    public func sendRawLocation(location: RawLocationUpdate, trackableID: String, completion: ResultHandler<Void>?) {
         sendRawLocationWasCalled = true
         sendRawLocationParamLocation = location
-        sendRawLocationParamTrackable = trackable
+        sendRawLocationParamTrackableID = trackableID
         sendRawLocationParamCompletion = completion
         sendRawLocationParamCompletionHandler?(completion)
     }
     
     public var sendResolutionWasCalled = false
     public var sendResolutionParamResolution: Resolution?
-    public var sendResolutionParamTrackable: Trackable?
+    public var sendResolutionParamTrackableID: String?
     public var sendResolutionParamCompletion: ResultHandler<Void>?
     public var sendResolutionParamCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    public func sendResolution(trackable: Trackable, resolution: Resolution, completion: ResultHandler<Void>?) {
+    public func sendResolution(trackableID: String, resolution: Resolution, completion: ResultHandler<Void>?) {
         sendResolutionWasCalled = true
         sendResolutionParamResolution = resolution
-        sendResolutionParamTrackable = trackable
+        sendResolutionParamTrackableID = trackableID
         sendResolutionParamCompletion = completion
         sendResolutionParamCompletionHandler?(completion)
     }

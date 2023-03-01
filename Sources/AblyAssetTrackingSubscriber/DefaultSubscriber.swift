@@ -163,7 +163,7 @@ extension DefaultSubscriber {
             
             switch result {
             case .success:
-                self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableID))
+                self.ablySubscriber.subscribeForPresenceMessages(trackableID: self.trackableID)
                 self.ablySubscriber.subscribeForRawEvents(trackableID: self.trackableID)
                 self.ablySubscriber.subscribeForEnhancedEvents(trackableID: self.trackableID)
                 

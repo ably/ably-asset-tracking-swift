@@ -11,6 +11,18 @@ public protocol AblyPublisherDelegate: AnyObject {
     func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState)
     
     /**
+<<<<<<< HEAD
+=======
+     Tells the delegate that channel connection state changed.
+     
+     - Parameter sender:        The `AblyPublisher` object which is delegating the change.
+     - Parameter state:         The `ConnectionState` object
+     - Parameter trackableID:   The ID of the trackable affected by the change
+     */
+    func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackableID trackableID: String)
+    
+    /**
+>>>>>>> 8fd0ab7 (WIP change DefaultAbly to work with trackable IDs instead of trackables)
      Tells the delegate that an error occurred.
      
      This is a generic delegate method and can be called from any method in the `Ably` wrapper
@@ -25,14 +37,14 @@ public protocol AblyPublisherDelegate: AnyObject {
      
      - Parameter sender:        The `AblyPublisher` object which is delegating the change.
      - Parameter presence:      The `Presence` object affected by the change.
-     - Parameter trackable:     The `Trackable` object affected by the change.
+     - Parameter trackable:     The ID of the trackable affected by the change.
      - Parameter presenceData:  The `PresenceData` object that contains info related to presence change.
      - Parameter clientId:      The `Ably` client identifier.
      */
     func ablyPublisher(
         _ sender: AblyPublisher,
         didReceivePresenceUpdate presence: Presence,
-        forTrackable trackable: Trackable,
+        forTrackableID trackableID: String,
         presenceData: PresenceData,
         clientId: String
     )
@@ -49,32 +61,32 @@ public protocol AblyPublisher: AblyCommon {
     /**
      Sends an enhanced location update to the channel.
      
-     Should be called only when there's an existing channel for the `trackable.id`.
+     Should be called only when there's an existing channel for the `trackableID`.
      If a channel for the `trackable.id` doesn't exist then it just calls `completion` with success.
      
      - Parameter locationUpdate:     The location update that is sent to the channel.
-     - Parameter trackable:          The `Trackable` instance.
+     - Parameter trackableID:        The ID of the trackable.
      - Parameter completion:         The closure that will be called when sending completes. If something goes wrong it will be called with an `error` object.
      */
     func sendEnhancedLocation(
         locationUpdate: EnhancedLocationUpdate,
-        trackable: Trackable,
+        trackableID: String,
         completion: ResultHandler<Void>?
     )
     
     /**
      Sends a raw location update to the channel.
      
-     Should be called only when there's an existing channel for the `trackable.id`.
+     Should be called only when there's an existing channel for the `trackableID`.
      If a channel for the `trackable.id` doesn't exist then it just calls `completion` with success.
      
      - Parameter location              The `Location` object. This is the object containing raw location data.
-     - Parameter trackable            The `Trackable` object.
+     - Parameter trackableID         The ID of the trackable.
      - Parameter completion          The closure that will be called when sending completes. If something goes wrong it will be called with an `error` object.
      */
     func sendRawLocation(
         location: RawLocationUpdate,
-        trackable: Trackable,
+        trackableID: String,
         completion: ResultHandler<Void>?
     )
 }

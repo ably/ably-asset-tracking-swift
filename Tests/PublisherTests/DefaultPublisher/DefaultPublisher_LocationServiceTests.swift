@@ -93,7 +93,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         // It should send row location update to ablyPublisher
         XCTAssertTrue(ablyPublisher.sendEnhancedAssetLocationUpdateCalled)
         XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate?.location, location)
-        XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackable, trackable)
+        XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackableID, trackable.id)
     }
     
     func testLocationService_didUpdateEnhancedLocation_resolution() {
@@ -143,7 +143,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         XCTAssertTrue(ablyPublisher.sendEnhancedAssetLocationUpdateCalled)
         
         ablyPublisher.sendEnhancedAssetLocationUpdateCalled = false
-        ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackable = nil
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackableID = nil
         ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate = nil
         ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletion = nil
         expectation = XCTestExpectation()
@@ -165,7 +165,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         XCTAssertFalse(ablyPublisher.sendEnhancedAssetLocationUpdateCalled)
         
         ablyPublisher.sendEnhancedAssetLocationUpdateCalled = false
-        ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackable = nil
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamTrackableID = nil
         ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate = nil
         ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletion = nil
         expectation = XCTestExpectation()
