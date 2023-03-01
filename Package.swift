@@ -114,10 +114,16 @@ let package = Package(
         .target(
             name: "AblyAssetTrackingTesting",
             dependencies: [
+                "AblyAssetTrackingTestingObjC",
                 "AblyAssetTrackingCore",
                 "AblyAssetTrackingInternal"
             ],
             path: "Tests/Support/AblyAssetTrackingTesting"
+        ),
+        .target(
+            name: "AblyAssetTrackingTestingObjC",
+            dependencies:[],
+            path: "Tests/Support/AblyAssetTrackingTestingObjC"
         ),
         .target(
             name: "AblyAssetTrackingCoreTesting",
