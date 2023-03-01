@@ -283,7 +283,7 @@ public class DefaultAbly: AblyCommon {
         )
     }
     
-    public func subscribeForChannelStateChange(trackable: Trackable) {
+    public func subscribeForChannelStateChange(trackable: Trackable, listener: (ConnectionState) -> Void) {
         guard let channel = channels[trackable.id] else {
             return
         }
@@ -295,7 +295,7 @@ public class DefaultAbly: AblyCommon {
             
             let receivedConnectionState = stateChange.current.toConnectionState()
             self.logHandler?.debug(message: "Channel state for trackable \(trackable.id) changed. New state: \(receivedConnectionState.description)", error: nil)
-            self.publisherDelegate?.ablyPublisher(self, didChangeChannelConnectionState: receivedConnectionState, forTrackable: trackable)
+            listener(receivedConnectionState)
         }
     }
     

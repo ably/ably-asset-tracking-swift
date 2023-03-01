@@ -11,15 +11,6 @@ public protocol AblyPublisherDelegate: AnyObject {
     func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState)
     
     /**
-     Tells the delegate that channel connection state changed.
-     
-     - Parameter sender:        The `AblyPublisher` object which is delegating the change.
-     - Parameter state:         The `ConnectionState` object
-     - Parameter trackable:     The `Trackable` object affected by the change
-     */
-    func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable)
-    
-    /**
      Tells the delegate that an error occurred.
      
      This is a generic delegate method and can be called from any method in the `Ably` wrapper
