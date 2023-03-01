@@ -2,7 +2,7 @@ import AblyAssetTrackingCore
 import Foundation
 
 /// Provides an implementation of ``InternalLogHandler`` by wrapping another instance of ``LogHandler``. It will insert the following information into the log messages that it emits:
-/// - a string such as "[asset-tracking.publisher.DefaultPublisher]", representing its list of subsystems;
+/// - a string such as "[assetTracking.publisher.DefaultPublisher]", representing its list of subsystems;
 /// - optionally, a string such as "@(MyFile.swift:30)", representing the source code location from which the log message was emitted.
 public struct DefaultInternalLogHandler: InternalLogHandler {
     private var logHandler: LogHandler
