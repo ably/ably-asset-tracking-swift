@@ -42,4 +42,14 @@ class DefaultInternalLogHandlerTests: XCTestCase {
 
         XCTAssertEqual(taggedMessage, "[assetTracking.myComponent] Here is a message")
     }
+
+    func test_sanitizesSquareBracketsInSubsystemNames() throws {
+        let underlyingLogHandler = LogHandlerMock()
+        let logHandler = try XCTUnwrap(DefaultInternalLogHandler(logHandler: underlyingLogHandler, subsystems: [.named("[look at this] myComponent")]))
+
+        logHandler.logMessage(level: .info, message: "Here is a message", error: nil, codeLocation: nil)
+
+        let receivedArguments = try XCTUnwrap(underlyingLogHandler.logMessageLevelMessageErrorReceivedArguments)
+        XCTAssertEqual(receivedArguments.message, "[_look at this_ myComponent] Here is a message")
+    }
 }
