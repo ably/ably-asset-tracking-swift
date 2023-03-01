@@ -108,6 +108,18 @@ struct AblyCocoaSDKRealtimePresence: AblySDKRealtimePresence {
 
 struct AblyCocoaSDKConnection: AblySDKConnection {
     fileprivate let connection: ARTConnection
+
+    func errorInfo() -> ErrorInformation {
+        guard let currentErrorReason = connection.errorReason else {
+            return ErrorInformation(code: 0, statusCode: 0, message: "No error reason provided", cause: nil, href: nil)
+        }
+
+        return ErrorInformation.init(error: currentErrorReason)
+    }
+
+    func state() -> ARTRealtimeConnectionState {
+        return connection.state
+    }
     
     func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener {
         return AblyCocoaSDKEventListener(eventListener: connection.on(callback))

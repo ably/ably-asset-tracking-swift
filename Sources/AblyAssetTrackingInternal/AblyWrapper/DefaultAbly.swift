@@ -46,6 +46,16 @@ public class DefaultAbly: AblyCommon {
     public func startConnection(completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
         var listener: AblySDKEventListener?
 
+        guard client.connection.state() != ARTRealtimeConnectionState.connected else {
+            completion(.success)
+            return
+        }
+
+        guard client.connection.state() != ARTRealtimeConnectionState.failed else {
+            completion(.failure(client.connection.errorInfo()))
+            return
+        }
+
         /**
          According to the ably spec, connection.on should accept some sort of object with an actual identity, allowing you to do something
          like [connection.off(self)]. This is helpful for us here as we want to detach the listener once the connection comes online.
