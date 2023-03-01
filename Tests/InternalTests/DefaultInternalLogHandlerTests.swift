@@ -32,4 +32,14 @@ class DefaultInternalLogHandlerTests: XCTestCase {
         XCTAssertEqual(receivedArguments.message, "[assetTracking]@(MyFile.swift:130) Here is a message")
         XCTAssertNil(receivedArguments.error)
     }
+
+    func test_tagMessage_addsSubsystemInformationToMessage() throws {
+        let underlyingLogHandler = LogHandlerMock()
+        let logHandler = try XCTUnwrap(DefaultInternalLogHandler(logHandler: underlyingLogHandler, subsystems: [.assetTracking]))
+            .addingSubsystem(.named("myComponent"))
+
+        let taggedMessage = logHandler.tagMessage("Here is a message")
+
+        XCTAssertEqual(taggedMessage, "[assetTracking.myComponent] Here is a message")
+    }
 }

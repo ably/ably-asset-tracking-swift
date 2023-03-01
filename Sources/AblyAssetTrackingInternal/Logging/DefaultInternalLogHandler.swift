@@ -22,20 +22,30 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
     }
     
     public func logMessage(level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?) {
-        var messageToEmit = "[\(subsystemNames.joined(separator: "."))]"
+        let taggedMessage = tagMessage(message, codeLocation: codeLocation)
 
-        if let codeLocation = codeLocation {
-            messageToEmit.append("@(\((codeLocation.file as NSString).lastPathComponent):\(codeLocation.line))")
-        }
-        
-        messageToEmit.append(" \(message)")
-        
-        logHandler.logMessage(level: level, message: messageToEmit, error: error)
+        logHandler.logMessage(level: level, message: taggedMessage, error: error)
     }
     
     public func addingSubsystem(_ subsystem: Subsystem) -> InternalLogHandler {
         var newHandler = self
         newHandler.subsystemNames.append(subsystem.name)
         return newHandler
+    }
+
+    public func tagMessage(_ message: String) -> String {
+        return tagMessage(message, codeLocation: nil)
+    }
+
+    private func tagMessage(_ message: String, codeLocation: CodeLocation?) -> String {
+        var result = "[\(subsystemNames.joined(separator: "."))]"
+
+        if let codeLocation = codeLocation {
+            result.append("@(\((codeLocation.file as NSString).lastPathComponent):\(codeLocation.line))")
+        }
+
+        result.append(" \(message)")
+
+        return result
     }
 }
