@@ -161,10 +161,10 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
-    private func requestToken(withPublisherCapabilitiesForTrackableIds trackableIds: [String], clientId: String) -> TokenDetails? {
-        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String : [String]] in
+    private func requestToken(withPublisherCapabilitiesFortrackableIDs trackableIDs: [String], clientId: String) -> TokenDetails? {
+        let capabilities = trackableIDs.reduce([:]) { capabilities, trackableID -> [String : [String]] in
             var newCapabilities = capabilities
-            newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence"]
+            newCapabilities["tracking:\(trackableID)"] = ["publish", "subscribe", "presence"]
             return newCapabilities
         }
         
@@ -181,12 +181,12 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         let keyTokens = Secrets.ablyApiKey.split(separator: ":")
         let keyName = String(keyTokens[0])
         
-        let trackableId = UUID().uuidString
-        let otherTrackableId = UUID().uuidString
+        let trackableID = UUID().uuidString
+        let othertrackableID = UUID().uuidString
         
         // These are being done outside of the authCallback because it seems like calling requestToken inside there causes some sort of a hang. Tried to sort it out but didn’t get anywhere quickly.
-        let initialToken = try XCTUnwrap(requestToken(withPublisherCapabilitiesForTrackableIds: [otherTrackableId], clientId: keyName))
-        let updatedToken = try XCTUnwrap(requestToken(withPublisherCapabilitiesForTrackableIds: [otherTrackableId, trackableId], clientId: keyName))
+        let initialToken = try XCTUnwrap(requestToken(withPublisherCapabilitiesFortrackableIDs: [othertrackableID], clientId: keyName))
+        let updatedToken = try XCTUnwrap(requestToken(withPublisherCapabilitiesFortrackableIDs: [othertrackableID, trackableID], clientId: keyName))
         
         var hasRequestedInitialToken = false
         var hasRequestedUpdatedToken = false
@@ -203,7 +203,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         
         let publisher = createAndStartPublisher(connectionConfiguration: connectionConfiguration)
         
-        let trackable = Trackable(id: trackableId)
+        let trackable = Trackable(id: trackableID)
         let addTrackableExpectation = expectation(description: "Publisher successfully adds trackable")
         publisher.add(trackable: trackable) { result in
             switch result {

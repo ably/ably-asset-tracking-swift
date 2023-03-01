@@ -319,7 +319,7 @@ extension DefaultPublisher {
         duplicateTrackableGuard.startAddingTrackableWithId(trackable.id)
 
         ablyPublisher.connect(
-                trackableId: trackable.id,
+                trackableID: trackable.id,
                 presenceData: presenceData,
                 useRewind: false
         ) { [weak self] result in
@@ -345,13 +345,13 @@ extension DefaultPublisher {
         }
         
         self.ablyPublisher.disconnect(
-            trackableId: event.trackable.id,
+            trackableID: event.trackable.id,
             presenceData: presenceData
         ) { [weak self] result in
             
             switch result {
             case .success(let wasPresent):
-                self?.enhancedLocationState.remove(trackableId: event.trackable.id)
+                self?.enhancedLocationState.remove(trackableID: event.trackable.id)
                 
                 if wasPresent {
                     self?.enqueue(event: .clearRemovedTrackableMetadata(.init(trackable: event.trackable, completion: event.completion)))
@@ -532,16 +532,16 @@ extension DefaultPublisher {
         checkThreshold(location: event.locationUpdate.location)
     }
     
-    private func processNextWaitingEnhancedLocationUpdate(for trackableId: String) {
-        guard let enhancedLocationUpdate = enhancedLocationState.nextWaitingLocation(for: trackableId) else {
+    private func processNextWaitingEnhancedLocationUpdate(for trackableID: String) {
+        guard let enhancedLocationUpdate = enhancedLocationState.nextWaitingLocation(for: trackableID) else {
             return
         }
         
         performEnhancedLocationChanged(.init(locationUpdate: enhancedLocationUpdate))
     }
     
-    private func processNextWaitingRawLocationUpdate(for trackableId: String) {
-        guard let rawLocationUpdate = rawLocationState.nextWaitingLocation(for: trackableId) else {
+    private func processNextWaitingRawLocationUpdate(for trackableID: String) {
+        guard let rawLocationUpdate = rawLocationState.nextWaitingLocation(for: trackableID) else {
             return
         }
         
@@ -584,12 +584,12 @@ extension DefaultPublisher {
         }
     }
     
-    private func saveEnhancedLocationForFurtherSending(trackableId: String, location: EnhancedLocationUpdate) {
-        enhancedLocationState.addLocation(for: trackableId, location: location)
+    private func saveEnhancedLocationForFurtherSending(trackableID: String, location: EnhancedLocationUpdate) {
+        enhancedLocationState.addLocation(for: trackableID, location: location)
     }
     
-    private func saveRawLocationForFurtherSending(trackableId: String, location: RawLocationUpdate) {
-        rawLocationState.addLocation(for: trackableId, location: location)
+    private func saveRawLocationForFurtherSending(trackableID: String, location: RawLocationUpdate) {
+        rawLocationState.addLocation(for: trackableID, location: location)
     }
     
     private func performRawLocationChanged(_ event: Event.RawLocationChangedEvent) {
@@ -635,9 +635,9 @@ extension DefaultPublisher {
     }
     
     private func performSendRawLocationFailure(_ event: Event.SendRawLocationFailureEvent) {
-        guard rawLocationState.shouldRetry(trackableId: event.trackable.id) else {
+        guard rawLocationState.shouldRetry(trackableID: event.trackable.id) else {
             rawLocationState.unmarkMessageAsPending(for: event.trackable.id)
-            saveRawLocationForFurtherSending(trackableId: event.trackable.id, location: event.locationUpdate)
+            saveRawLocationForFurtherSending(trackableID: event.trackable.id, location: event.locationUpdate)
             sendDelegateEvent(.error(.init(error: event.error)))
             processNextWaitingRawLocationUpdate(for: event.trackable.id)
             return
@@ -657,9 +657,9 @@ extension DefaultPublisher {
     }
     
     private func performSendEnhancedLocationFailure(_ event: Event.SendEnhancedLocationFailureEvent) {
-        guard enhancedLocationState.shouldRetry(trackableId: event.trackable.id) else {
+        guard enhancedLocationState.shouldRetry(trackableID: event.trackable.id) else {
             enhancedLocationState.unmarkMessageAsPending(for: event.trackable.id)
-            saveEnhancedLocationForFurtherSending(trackableId: event.trackable.id, location: event.locationUpdate)
+            saveEnhancedLocationForFurtherSending(trackableID: event.trackable.id, location: event.locationUpdate)
             sendDelegateEvent(.error(.init(error: event.error)))
             processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
             return
@@ -726,7 +726,7 @@ extension DefaultPublisher {
         resolutions[trackable] = resolution
         enqueue(event: .changeLocationEngineResolution(.init()))
         if isSendResolutionEnabled {
-            ablyPublisher.updatePresenceData(trackableId: trackable.id, presenceData: presenceData.copy(with: resolution), completion: nil)
+            ablyPublisher.updatePresenceData(trackableID: trackable.id, presenceData: presenceData.copy(with: resolution), completion: nil)
         }
     }
 

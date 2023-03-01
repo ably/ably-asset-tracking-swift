@@ -17,34 +17,34 @@ public class MockAblySubscriber: AblySubscriber {
     }
     
     public var subscribeForEnhancedEventsCalled = false
-    public var subscribeForEnhancedEventsTrackableId: String?
-    public func subscribeForEnhancedEvents(trackableId: String) {
+    public var subscribeForEnhancedEventstrackableID: String?
+    public func subscribeForEnhancedEvents(trackableID: String) {
         subscribeForEnhancedEventsCalled = true
-        subscribeForEnhancedEventsTrackableId = trackableId
+        subscribeForEnhancedEventstrackableID = trackableID
     }
     
     public var subscribeForRawEventsWasCalled = false
-    public var subscribeForRawEventsTrackableId: String?
-    public func subscribeForRawEvents(trackableId: String) {
+    public var subscribeForRawEventstrackableID: String?
+    public func subscribeForRawEvents(trackableID: String) {
         subscribeForRawEventsWasCalled = true
-        subscribeForRawEventsTrackableId = trackableId
+        subscribeForRawEventstrackableID = trackableID
     }
     
     public var subscribeForResolutionWasCalled = false
-    public var subscribeForResolutionTrackableId: String?
-    public func subscribeForResolutionEvents(trackableId: String) {
+    public var subscribeForResolutiontrackableID: String?
+    public func subscribeForResolutionEvents(trackableID: String) {
         subscribeForResolutionWasCalled = true
-        subscribeForResolutionTrackableId = trackableId
+        subscribeForResolutiontrackableID = trackableID
     }
     
     public var updatePresenceDataWasCalled = false
-    public var updatePresenceDataTrackableId: String?
+    public var updatePresenceDatatrackableID: String?
     public var updatePresenceDataPresenceData: PresenceData?
     public var updatePresenceDataCompletion: ResultHandler<Void>?
     public var updatePresenceDataCompletionHandler: ((ResultHandler<Void>?) -> ())?
-    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
+    public func updatePresenceData(trackableID: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
         updatePresenceDataWasCalled = true
-        updatePresenceDataTrackableId = trackableId
+        updatePresenceDatatrackableID = trackableID
         updatePresenceDataPresenceData = presenceData
         updatePresenceDataCompletion = completion
         updatePresenceDataCompletionHandler?(completion)
@@ -70,14 +70,14 @@ public class MockAblySubscriber: AblySubscriber {
     }
     
     public var connectCalled = false
-    public var connectTrackableId: String?
+    public var connecttrackableID: String?
     public var connectPresenceData: PresenceData?
     public var connectUseRewind: Bool?
     public var connectCompletion: ResultHandler<Void>?
     public var connectCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    public func connect(trackableId: String, presenceData: PresenceData, useRewind: Bool, completion: @escaping ResultHandler<Void>) {
+    public func connect(trackableID: String, presenceData: PresenceData, useRewind: Bool, completion: @escaping ResultHandler<Void>) {
         connectCalled = true
-        connectTrackableId = trackableId
+        connecttrackableID = trackableID
         connectPresenceData = presenceData
         connectUseRewind = useRewind
         connectCompletion = completion
@@ -85,13 +85,13 @@ public class MockAblySubscriber: AblySubscriber {
     }
     
     public var disconnectCalled: Bool = false
-    public var disconnectParamTrackableId: String?
+    public var disconnectParamtrackableID: String?
     public var disconnectParamPresenceData: PresenceData?
     public var disconnectParamResultHandler: ResultHandler<Bool>?
     public var disconnectResultCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
-    public func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
+    public func disconnect(trackableID: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
         disconnectCalled = true
-        disconnectParamTrackableId = trackableId
+        disconnectParamtrackableID = trackableID
         disconnectParamPresenceData = presenceData
         disconnectParamResultHandler = completion
         disconnectResultCompletionHandler?(completion)

@@ -31,7 +31,7 @@ struct PublisherDetailsView: View {
                 } else {
                     ForEach(sortedTrackables, id: \.trackable.id) { info in
                         NavigationLink {
-                            MapView(trackableId: info.trackable.id, publisher: publisher)
+                            MapView(trackableID: info.trackable.id, publisher: publisher)
                                 .navigationTitle("Map")
                                 .navigationBarTitleDisplayMode(.inline)
                         } label: {

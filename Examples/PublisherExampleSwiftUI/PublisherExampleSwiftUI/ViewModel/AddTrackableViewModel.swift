@@ -4,7 +4,7 @@ import AblyAssetTrackingPublisher
 import AblyAssetTrackingCore
 
 class AddTrackableViewModel: ObservableObject {
-    @Published var trackableId = ""
+    @Published var trackableID = ""
     @Published var resolutionMinimumDisplacement: String  = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
     @Published var resolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
     @Published var setResolutionConstraints = false
@@ -20,7 +20,7 @@ class AddTrackableViewModel: ObservableObject {
     }
     
     var isValid: Bool {
-        !(trackableId.isEmpty || (setResolutionConstraints && customResolution == nil))
+        !(trackableID.isEmpty || (setResolutionConstraints && customResolution == nil))
     }
     
     private var customResolution: Resolution? {
@@ -61,6 +61,6 @@ class AddTrackableViewModel: ObservableObject {
             constraints = nil
         }
         
-        return Trackable(id: trackableId, destination: destination, constraints: constraints)
+        return Trackable(id: trackableID, destination: destination, constraints: constraints)
     }
 }

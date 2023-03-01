@@ -81,18 +81,18 @@ public protocol AblySubscriber: AblyCommon {
     /**
      Observe  for the enhanced location change.
      
-     Subscription should be able  only when there's an existing channel for the `trackableId`
+     Subscription should be able  only when there's an existing channel for the `trackableID`
      
-     - Parameter trackableId: The identifier of the channel.
+     - Parameter trackableID: The identifier of the channel.
      */
-    func subscribeForEnhancedEvents(trackableId: String)
+    func subscribeForEnhancedEvents(trackableID: String)
     
     /**
      Observe  for the raw location change.
      
-     Subscription should be able  only when there's an existing channel for the `trackableId`
+     Subscription should be able  only when there's an existing channel for the `trackableID`
      
-     - Parameter trackableId: The identifier of the channel.
+     - Parameter trackableID: The identifier of the channel.
      */
-    func subscribeForRawEvents(trackableId: String)
+    func subscribeForRawEvents(trackableID: String)
 }

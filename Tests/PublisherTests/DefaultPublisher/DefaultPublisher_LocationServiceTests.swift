@@ -35,7 +35,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         logger = InternalLogHandlerMock.configured
         
         trackable = Trackable(
-            id: "TrackableId",
+            id: "trackableID",
             metadata: "TrackableMetadata",
             destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182)
         )
@@ -186,7 +186,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     func testPublisherWillRetryOnFailureOnSendEnhancedLocationUpdate() {
         /**
          Test that publisher will try to re-send enhanced location update on failure.
-         Re-sending is limited to `PublisherTrackableState.Constants.maxRetryCount` per `trackableId`
+         Re-sending is limited to `PublisherTrackableState.Constants.maxRetryCount` per `trackableID`
          Retry counter is reset on `success`
          */
         let location = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))

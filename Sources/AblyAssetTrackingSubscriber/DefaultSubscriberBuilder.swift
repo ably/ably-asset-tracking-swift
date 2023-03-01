@@ -49,7 +49,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
         )
         let subscriber = DefaultSubscriber(
             ablySubscriber: defaultAbly,
-            trackableId: trackingId,
+            trackableID: trackingId,
             resolution: resolution,
             logHandler: internalLogHandler
         )

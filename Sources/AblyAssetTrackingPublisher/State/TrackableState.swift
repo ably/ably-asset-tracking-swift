@@ -19,68 +19,68 @@ class TrackableState<T: LocationUpdate> {
 
 // MARK: - StateRetryable
 extension TrackableState: StateRetryable {
-    func shouldRetry(trackableId: String) -> Bool {
-        addIfNeeded(trackableId: trackableId)
+    func shouldRetry(trackableID: String) -> Bool {
+        addIfNeeded(trackableID: trackableID)
         
-        return getRetryCounter(for: trackableId) < maxRetryCount
+        return getRetryCounter(for: trackableID) < maxRetryCount
     }
     
-    func resetRetryCounter(for trackableId: String) {
-        guard retryCounter[trackableId] != nil else {
+    func resetRetryCounter(for trackableID: String) {
+        guard retryCounter[trackableID] != nil else {
             return
         }
         
-        retryCounter[trackableId] = .zero
+        retryCounter[trackableID] = .zero
     }
     
-    func incrementRetryCounter(for trackableId: String) {
-        retryCounter[trackableId] = getRetryCounter(for: trackableId) + 1
+    func incrementRetryCounter(for trackableID: String) {
+        retryCounter[trackableID] = getRetryCounter(for: trackableID) + 1
     }
     
-    func getRetryCounter(for trackableId: String) -> Int {
-        retryCounter[trackableId] ?? .zero
+    func getRetryCounter(for trackableID: String) -> Int {
+        retryCounter[trackableID] ?? .zero
     }
     
-    private func addIfNeeded(trackableId: String) {
-        guard retryCounter[trackableId] == nil else {
+    private func addIfNeeded(trackableID: String) {
+        guard retryCounter[trackableID] == nil else {
             return
         }
         
-        retryCounter[trackableId] = .zero
+        retryCounter[trackableID] = .zero
     }
 }
 
 // MARK: - StatePendable
 extension TrackableState: StatePendable {
-    func markMessageAsPending(for trackableId: String) {
-        pendingMessages.insert(trackableId)
+    func markMessageAsPending(for trackableID: String) {
+        pendingMessages.insert(trackableID)
     }
     
-    func unmarkMessageAsPending(for trackableId: String) {
-        pendingMessages.remove(trackableId)
-        retryCounter.removeValue(forKey: trackableId)
+    func unmarkMessageAsPending(for trackableID: String) {
+        pendingMessages.remove(trackableID)
+        retryCounter.removeValue(forKey: trackableID)
     }
     
-    func hasPendingMessage(for trackableId: String) -> Bool {
-        pendingMessages.contains(trackableId)
+    func hasPendingMessage(for trackableID: String) -> Bool {
+        pendingMessages.contains(trackableID)
     }
 }
 
 // MARK: - StateWaitable
 extension TrackableState: StateWaitable {
-    func addToWaiting(locationUpdate: T, for trackableId: String) {
-        var locations = waitingLocationUpdates[trackableId] ?? []
+    func addToWaiting(locationUpdate: T, for trackableID: String) {
+        var locations = waitingLocationUpdates[trackableID] ?? []
         locations.append(locationUpdate)
-        waitingLocationUpdates[trackableId] = locations
+        waitingLocationUpdates[trackableID] = locations
     }
     
-    func nextWaitingLocation(for trackableId: String) -> T? {
-        guard var enhancedLocationUpdates = waitingLocationUpdates[trackableId], !enhancedLocationUpdates.isEmpty else {
+    func nextWaitingLocation(for trackableID: String) -> T? {
+        guard var enhancedLocationUpdates = waitingLocationUpdates[trackableID], !enhancedLocationUpdates.isEmpty else {
             return nil
         }
         
         let location = enhancedLocationUpdates.removeFirst()
-        waitingLocationUpdates[trackableId] = enhancedLocationUpdates
+        waitingLocationUpdates[trackableID] = enhancedLocationUpdates
         
         return location
     }
@@ -88,31 +88,31 @@ extension TrackableState: StateWaitable {
 
 // MARK: - StateSkippable
 extension TrackableState: StateSkippable {
-    func addLocation(for trackableId: String, location: T) {
-        var locations = skippedLocations[trackableId] ?? []
+    func addLocation(for trackableID: String, location: T) {
+        var locations = skippedLocations[trackableID] ?? []
         locations.append(location)
         locations.sort { $0.location.timestamp < $1.location.timestamp }
         if locations.count > maxSkippedLocationsSize {
             locations.remove(at: .zero)
         }
-        skippedLocations[trackableId] = locations
+        skippedLocations[trackableID] = locations
     }
     
-    func clearLocation(for trackableId: String) {
-        skippedLocations[trackableId]?.removeAll()
+    func clearLocation(for trackableID: String) {
+        skippedLocations[trackableID]?.removeAll()
     }
     
-    func locationsList(for trackableId: String) -> [T] {
-        skippedLocations[trackableId] ?? []
+    func locationsList(for trackableID: String) -> [T] {
+        skippedLocations[trackableID] ?? []
     }
 }
 
 // MARK: - StateRemovable
 extension TrackableState: StateRemovable {
-    func remove(trackableId: String) {
-        retryCounter.removeValue(forKey: trackableId)
-        pendingMessages.remove(trackableId)
-        waitingLocationUpdates.removeValue(forKey: trackableId)
+    func remove(trackableID: String) {
+        retryCounter.removeValue(forKey: trackableID)
+        pendingMessages.remove(trackableID)
+        waitingLocationUpdates.removeValue(forKey: trackableID)
     }
     
     func removeAll() {

@@ -25,40 +25,40 @@ public protocol AblyCommon {
     func subscribeForPresenceMessages(trackable: Trackable)
     
     /**
-     Updates presence data in the `trackableId` channel's presence.
+     Updates presence data in the `trackableID` channel's presence.
      
-     Should be called only when there's an existing channel for the `trackableId`.
-     If a channel for the `trackableId` doesn't exist then nothing happens.
+     Should be called only when there's an existing channel for the `trackableID`.
+     If a channel for the `trackableID` doesn't exist then nothing happens.
      
-     - Parameter trackableId:    The ID of the trackable channel.
+     - Parameter trackableID:    The ID of the trackable channel.
      - Parameter presenceData:   The data that will be send via the presence channel.
      - Parameter callback:       The closure that will be called when updating presence data completes. If something goes wrong it will be called with an `error`object.
      */
-    func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?)
+    func updatePresenceData(trackableID: String, presenceData: PresenceData, completion: ResultHandler<Void>?)
     
     /**
-     Joins the presence of the channel for the given `trackableId` and add it to the connected channels.
+     Joins the presence of the channel for the given `trackableID` and add it to the connected channels.
      
      If successfully joined the presence then the channel is added to the connected channels.
-     If a channel for the given `trackableId` exists then it just calls `completion` with success.
+     If a channel for the given `trackableID` exists then it just calls `completion` with success.
      
-     - Parameter trackableId:   The ID of the trackable channel.
+     - Parameter trackableID:   The ID of the trackable channel.
      - Parameter presenceData:  The data that will be send via the presence channel.
      - Parameter useRewind:     If set to true then after connecting the channel will replay the last event that was sent in it.
      - Parameter completion:    The closure that will be called when connecting completes. If something goes wrong it will be called with `error` object.
      */
-    func connect(trackableId: String, presenceData: PresenceData, useRewind: Bool, completion: @escaping ResultHandler<Void>)
+    func connect(trackableID: String, presenceData: PresenceData, useRewind: Bool, completion: @escaping ResultHandler<Void>)
     
     /**
-     Removes the `trackableId` channel from the connected channels and leaves the presence of that channel.
+     Removes the `trackableID` channel from the connected channels and leaves the presence of that channel.
      
-     If a channel for the given `trackableId` doesn't exist then it just calls `completion` with success.
+     If a channel for the given `trackableID` doesn't exist then it just calls `completion` with success.
      
-     - Parameter trackableId:   The ID of the trackable channel.
+     - Parameter trackableID:   The ID of the trackable channel.
      - Parameter presenceData:  The data that will be send via the presence channel.
      - Parameter completion:    The closure that will be called when disconnecting completes. If something goes wrong it will be called with `error` object.
      */
-    func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>)
+    func disconnect(trackableID: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>)
     
     /**
      Cleanups and closes all the connected channels and their presence. In the end closes Ably connection.

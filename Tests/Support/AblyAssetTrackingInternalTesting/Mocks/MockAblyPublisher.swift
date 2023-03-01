@@ -31,25 +31,25 @@ public class MockAblyPublisher: AblyPublisher {
     }
     
     public var connectCalled = false
-    public var connectTrackableId: String?
+    public var connecttrackableID: String?
     public var connectPresenceData: PresenceData?
     public var connectUseRewind: Bool?
     public var connectCompletionHandler: ((ResultHandler<Void>?) -> Void)?
-    public func connect(trackableId: String, presenceData: PresenceData, useRewind: Bool, completion: @escaping ResultHandler<Void>) {
+    public func connect(trackableID: String, presenceData: PresenceData, useRewind: Bool, completion: @escaping ResultHandler<Void>) {
         connectCalled = true
-        connectTrackableId = trackableId
+        connecttrackableID = trackableID
         connectPresenceData = presenceData
         connectUseRewind = useRewind
         connectCompletionHandler?(completion)
     }
     
     public var disconnectCalled: Bool = false
-    public var disconnectParamTrackableId: String?
+    public var disconnectParamtrackableID: String?
     public var disconnectParamResultHandler: ResultHandler<Bool>?
     public var disconnectResultCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
-    public func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
+    public func disconnect(trackableID: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
         disconnectCalled = true
-        disconnectParamTrackableId = trackableId
+        disconnectParamtrackableID = trackableID
         disconnectParamResultHandler = completion
         disconnectResultCompletionHandler?(completion)
     }
@@ -112,13 +112,13 @@ public class MockAblyPublisher: AblyPublisher {
     }
     
     public var updatePresenceDataWasCalled = false
-    public var updatePresenceDataTrackableId: String?
+    public var updatePresenceDatatrackableID: String?
     public var updatePresenceDataPresenceData: PresenceData?
     public var updatePresenceDataCompletion: ResultHandler<Void>?
     public var updatePresenceDataCompletionHandler: ((ResultHandler<Void>?) -> ())?
-    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
+    public func updatePresenceData(trackableID: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
         updatePresenceDataWasCalled = true
-        updatePresenceDataTrackableId = trackableId
+        updatePresenceDatatrackableID = trackableID
         updatePresenceDataPresenceData = presenceData
         updatePresenceDataCompletion = completion
         updatePresenceDataCompletionHandler?(completion)

@@ -18,7 +18,7 @@ private enum SubscriberState {
 
 class DefaultSubscriber: Subscriber {
     private let workingQueue: DispatchQueue
-    private let trackableId: String
+    private let trackableID: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
     
@@ -34,13 +34,13 @@ class DefaultSubscriber: Subscriber {
 
     init(
         ablySubscriber: AblySubscriber,
-        trackableId: String,
+        trackableID: String,
         resolution: Resolution?,
         logHandler: InternalLogHandler?) {
             
         self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
         self.ablySubscriber = ablySubscriber
-        self.trackableId = trackableId
+        self.trackableID = trackableID
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
         self.logHandler = logHandler?.addingSubsystem(Self.self)
         
@@ -153,7 +153,7 @@ extension DefaultSubscriber {
     private func performStart(_ event: Event.StartEvent) {
         
         ablySubscriber.connect(
-            trackableId: trackableId,
+            trackableID: trackableID,
             presenceData: presenceData,
             useRewind: true
         ) { [weak self] result in
@@ -163,9 +163,9 @@ extension DefaultSubscriber {
             
             switch result {
             case .success:
-                self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
-                self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
-                self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
+                self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableID))
+                self.ablySubscriber.subscribeForRawEvents(trackableID: self.trackableID)
+                self.ablySubscriber.subscribeForEnhancedEvents(trackableID: self.trackableID)
                 
                 self.callback(value: Void(), handler: event.resultHandler)
             case .failure(let error):
@@ -259,7 +259,7 @@ extension DefaultSubscriber {
         
         let presenceDataUpdate = PresenceData(type: presenceData.type, resolution: resolution)
         ablySubscriber.updatePresenceData(
-            trackableId: trackableId,
+            trackableID: trackableID,
             presenceData: presenceDataUpdate
         ) { [weak self] result in
             
@@ -280,9 +280,9 @@ extension DefaultSubscriber {
             currentTrackableConnectionState = .failed
             callback(event: .delegateConnectionStatusChanged(.init(status: .failed)))
 
-            ablySubscriber.disconnect(trackableId: trackableId, presenceData: nil) { [weak self, trackableId] error in
+            ablySubscriber.disconnect(trackableID: trackableID, presenceData: nil) { [weak self, trackableID] error in
                 if case .failure(let error) = error {
-                    self?.logHandler?.error(message: "Failed to disconnect trackable (\(trackableId)) after receiving invalid message.", error: error)
+                    self?.logHandler?.error(message: "Failed to disconnect trackable (\(trackableID)) after receiving invalid message.", error: error)
                 }
             }
         }

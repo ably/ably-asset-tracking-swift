@@ -45,12 +45,12 @@ public class DefaultAbly: AblyCommon {
     }
     
     public func connect(
-        trackableId: String,
+        trackableID: String,
         presenceData: PresenceData,
         useRewind: Bool,
         completion: @escaping ResultHandler<Void>
     ) {
-        guard channels[trackableId] == nil else {
+        guard channels[trackableID] == nil else {
             completion(.success)
             
             return
@@ -71,26 +71,26 @@ public class DefaultAbly: AblyCommon {
             options.modes.insert(.publish)
         }
         
-        let channel = client.channels.getChannelFor(trackingId: trackableId, options: options)
+        let channel = client.channels.getChannelFor(trackingId: trackableID, options: options)
         
         if [.detached, .failed].contains(channel.state) {
-            logHandler?.debug(message: "Channel for trackable \(trackableId) is in state \(channel.state); attaching", error: nil)
+            logHandler?.debug(message: "Channel for trackable \(trackableID) is in state \(channel.state); attaching", error: nil)
             channel.attach { [weak self] error in
                 guard let self = self else { return }
                 if let error = error {
-                    self.logHandler?.error(message: "Failed to attach to channel for trackable \(trackableId)", error: error)
+                    self.logHandler?.error(message: "Failed to attach to channel for trackable \(trackableID)", error: error)
                     completion(.failure(error.toErrorInformation()))
                     return
                 }
-                self.enterPresence(trackableId: trackableId, presenceData: presenceData, channel: channel, completion: completion)
+                self.enterPresence(trackableID: trackableID, presenceData: presenceData, channel: channel, completion: completion)
             }
         } else {
-            enterPresence(trackableId: trackableId, presenceData: presenceData, channel: channel, completion: completion)
+            enterPresence(trackableID: trackableID, presenceData: presenceData, channel: channel, completion: completion)
         }
     }
     
     private func enterPresence(
-        trackableId: String,
+        trackableID: String,
         presenceData: PresenceData,
         channel: AblySDKRealtimeChannel,
         completion: @escaping ResultHandler<Void>
@@ -99,15 +99,15 @@ public class DefaultAbly: AblyCommon {
                 
         channel.presence.enter(presenceDataJSON) { [weak self] error in
             guard let self = self else { return }
-            self.logHandler?.debug(message: "Entered a channel [id: \(trackableId)] presence successfully", error: nil)
+            self.logHandler?.debug(message: "Entered a channel [id: \(trackableID)] presence successfully", error: nil)
             
             let presenceEnterSuccess = { [weak self] in
-                self?.channels[trackableId] = channel
+                self?.channels[trackableID] = channel
                 completion(.success)
             }
             
             let presenceEnterTerminalFailure = { [weak self] (error: ARTErrorInfo) in
-                self?.logHandler?.error(message: "Error while joining a channel [id: \(trackableId)] presence", error: error)
+                self?.logHandler?.error(message: "Error while joining a channel [id: \(trackableID)] presence", error: error)
                 completion(.failure(error.toErrorInformation()))
             }
             
@@ -117,7 +117,7 @@ public class DefaultAbly: AblyCommon {
             }
             
             if error.code == ARTErrorCode.operationNotPermittedWithProvidedCapability.rawValue && self.connectionConfiguration.usesTokenAuth {
-                self.logHandler?.debug(message: "Failed to enter presence on channel [id: \(trackableId)], requesting Ably SDK to re-authorize", error: error)
+                self.logHandler?.debug(message: "Failed to enter presence on channel [id: \(trackableID)], requesting Ably SDK to re-authorize", error: error)
                 self.client.auth.authorize { [weak self] _, error in
                     guard let self = self
                     else { return }
@@ -130,7 +130,7 @@ public class DefaultAbly: AblyCommon {
 
                         channel.attach { error in
                             if let error = error {
-                                self.logHandler?.error(message: "Error attaching to channel [id: \(trackableId)]: \(String(describing: error))", error: error)
+                                self.logHandler?.error(message: "Error attaching to channel [id: \(trackableID)]: \(String(describing: error))", error: error)
                                 completion(.failure(ErrorInformation(error: error)))
                             } else {
                                 self.logHandler?.debug(message: "Channel attach succeeded, retrying presence enter", error: nil)
@@ -151,8 +151,8 @@ public class DefaultAbly: AblyCommon {
         }
     }
     
-    public func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
-        guard let channelToRemove = channels[trackableId] else {
+    public func disconnect(trackableID: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>) {
+        guard let channelToRemove = channels[trackableID] else {
             completion(.success(false))
             return
         }
@@ -166,24 +166,24 @@ public class DefaultAbly: AblyCommon {
         
         channelToRemove.presence.leave(presenceDataJSON) { [weak self] error in
             guard let error = error else {
-                self?.logHandler?.debug(message: "Left channel [id: \(trackableId)] presence successfully", error: nil)
+                self?.logHandler?.debug(message: "Left channel [id: \(trackableID)] presence successfully", error: nil)
                 channelToRemove.presence.unsubscribe()
                 channelToRemove.unsubscribe()
                 
                 channelToRemove.detach { [weak self] detachError in
                     guard let error = detachError else {
-                        self?.channels.removeValue(forKey: trackableId)
+                        self?.channels.removeValue(forKey: trackableID)
                         completion(.success(true))
                         
                         return
                     }
-                    self?.logHandler?.error(message: "Error during detach channel [id: \(trackableId)] presence", error: error)
+                    self?.logHandler?.error(message: "Error during detach channel [id: \(trackableID)] presence", error: error)
                     completion(.failure(error.toErrorInformation()))
                 }
                 
                 return
             }
-            self?.logHandler?.error(message: "Error while leaving the channel [id: \(trackableId)] presence", error: error)
+            self?.logHandler?.error(message: "Error while leaving the channel [id: \(trackableID)] presence", error: error)
             completion(.failure(error.toErrorInformation()))
         }
     }
@@ -191,14 +191,14 @@ public class DefaultAbly: AblyCommon {
     public func close(presenceData: PresenceData, completion: @escaping ResultHandler<Void>) {
         let closingDispatchGroup = DispatchGroup()
         
-        for (trackableId, _) in self.channels {
+        for (trackableID, _) in self.channels {
             closingDispatchGroup.enter()
-            self.disconnect(trackableId: trackableId, presenceData: presenceData) {[weak self] result in
+            self.disconnect(trackableID: trackableID, presenceData: presenceData) {[weak self] result in
                 switch result {
                 case .success(let wasPresent):
-                    self?.logHandler?.info(message: "Trackable \(trackableId) removed successfully. Was present \(wasPresent)", error: nil)
+                    self?.logHandler?.info(message: "Trackable \(trackableID) removed successfully. Was present \(wasPresent)", error: nil)
                 case .failure(let error):
-                    self?.logHandler?.error(message: "Removing trackable \(trackableId) failed", error: error)
+                    self?.logHandler?.error(message: "Removing trackable \(trackableID) failed", error: error)
                 }
                 closingDispatchGroup.leave()
             }
@@ -299,8 +299,8 @@ public class DefaultAbly: AblyCommon {
         }
     }
     
-    public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
-        guard let channel = channels[trackableId] else {
+    public func updatePresenceData(trackableID: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
+        guard let channel = channels[trackableID] else {
             return
         }
         
@@ -333,8 +333,8 @@ public class DefaultAbly: AblyCommon {
 }
 
 extension DefaultAbly: AblySubscriber {
-    public func subscribeForRawEvents(trackableId: String) {
-        guard let channel = channels[trackableId] else {
+    public func subscribeForRawEvents(trackableID: String) {
+        guard let channel = channels[trackableID] else {
             return
         }
         
@@ -344,8 +344,8 @@ extension DefaultAbly: AblySubscriber {
         }
     }
     
-    public func subscribeForEnhancedEvents(trackableId: String) {
-        guard let channel = channels[trackableId] else {
+    public func subscribeForEnhancedEvents(trackableID: String) {
+        guard let channel = channels[trackableID] else {
             return
         }
         

@@ -3,7 +3,7 @@ import MapKit
 import AblyAssetTrackingPublisher
 
 struct MapView: View {
-    var trackableId: String
+    var trackableID: String
     @ObservedObject var publisher: ObservablePublisher
     @Environment(\.presentationMode) private var presentationMode
     
@@ -16,7 +16,7 @@ struct MapView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            StackedText(texts: MapViewModel.createViewModel(forConnectionState: publisher.trackables.first { key, _ in key.id == trackableId }?.value.connectionState))
+            StackedText(texts: MapViewModel.createViewModel(forConnectionState: publisher.trackables.first { key, _ in key.id == trackableID }?.value.connectionState))
                 .padding(.leading, 10)
             // This padding is very bad - for some reason, I wasn't able to tap on the "Remove trackable" button without it. I'm probably doing something very very wrong but don't have time to look into it now. See https://github.com/ably/ably-asset-tracking-swift/issues/422
                 .padding(.bottom, 25)
@@ -25,7 +25,7 @@ struct MapView: View {
                 Spacer()
                 Button {
                     isRemoving = true
-                    let trackable = publisher.trackables.first { key, _ in key.id == trackableId }?.key
+                    let trackable = publisher.trackables.first { key, _ in key.id == trackableID }?.key
                     guard let trackable = trackable else { return }
                     publisher.remove(trackable: trackable) { result in
                         isRemoving = false
@@ -84,6 +84,6 @@ struct MapView: View {
 struct MapView_Preview: PreviewProvider {
     static var previews: some View {
         let publisher = ObservablePublisher(publisher: DummyPublisher(), configInfo: .init(areRawLocationsEnabled: false))
-        MapView(trackableId: "", publisher: publisher)
+        MapView(trackableID: "", publisher: publisher)
     }
 }

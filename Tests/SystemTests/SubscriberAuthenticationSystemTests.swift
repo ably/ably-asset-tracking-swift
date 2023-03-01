@@ -149,10 +149,10 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         waitForExpectations(timeout: 10.0)
     }
     
-    private func requestToken(withSubscriberCapabilitiesForTrackableIds trackableIds: [String], clientId: String) -> TokenDetails? {
-        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String : [String]] in
+    private func requestToken(withSubscriberCapabilitiesFortrackableIDs trackableIDs: [String], clientId: String) -> TokenDetails? {
+        let capabilities = trackableIDs.reduce([:]) { capabilities, trackableID -> [String : [String]] in
             var newCapabilities = capabilities
-            newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence", "history"]
+            newCapabilities["tracking:\(trackableID)"] = ["publish", "subscribe", "presence", "history"]
             return newCapabilities
         }
         
@@ -169,12 +169,12 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         let keyTokens = Secrets.ablyApiKey.split(separator: ":")
         let keyName = String(keyTokens[0])
         
-        let trackableId = UUID().uuidString
-        let otherTrackableId = UUID().uuidString
+        let trackableID = UUID().uuidString
+        let othertrackableID = UUID().uuidString
         
         // These are being done outside of the authCallback because it seems like calling requestToken inside there causes some sort of a hang. Tried to sort it out but didn’t get anywhere quickly.
-        let initialToken = try XCTUnwrap(requestToken(withSubscriberCapabilitiesForTrackableIds: [otherTrackableId], clientId: keyName))
-        let updatedToken = try XCTUnwrap(requestToken(withSubscriberCapabilitiesForTrackableIds: [otherTrackableId, trackableId], clientId: keyName))
+        let initialToken = try XCTUnwrap(requestToken(withSubscriberCapabilitiesFortrackableIDs: [othertrackableID], clientId: keyName))
+        let updatedToken = try XCTUnwrap(requestToken(withSubscriberCapabilitiesFortrackableIDs: [othertrackableID, trackableID], clientId: keyName))
         
         var hasRequestedInitialToken = false
         var hasRequestedUpdatedToken = false
@@ -190,7 +190,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         })
         
         let subscriberStartExpectation = expectation(description: "Wait for subscriber to start")
-        let subscriber = createSubscriberBuilder(connectionConfiguration: connectionConfiguration, trackingId: trackableId)
+        let subscriber = createSubscriberBuilder(connectionConfiguration: connectionConfiguration, trackingId: trackableID)
             .start { result in
                 switch result {
                 case .success:

@@ -26,7 +26,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private let didUpdateResolutionExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Resolution")
     private let routeProvider = MockRouteProvider()
     private let resolutionPolicyFactory = MockResolutionPolicyFactory()
-    private let trackableId = "Trackable ID 1 - \(UUID().uuidString)"
+    private let trackableID = "Trackable ID 1 - \(UUID().uuidString)"
     private let subscriberClientId: String = {
         "Test-Subscriber_\(UUID().uuidString)"
     }()
@@ -62,7 +62,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
-            .trackingId(trackableId)
+            .trackingId(trackableID)
             .logHandler(handler: logHandler)
             .start(completion: { _ in })!
         
@@ -96,7 +96,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         )
         
         
-        let trackable = Trackable(id: trackableId)
+        let trackable = Trackable(id: trackableID)
         didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))
         publisher.add(trackable: trackable) { _  in }
         
@@ -130,7 +130,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
-            .trackingId(trackableId)
+            .trackingId(trackableID)
             .logHandler(handler: logHandler)
             .start(completion: { _ in })!
         
@@ -186,7 +186,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             logHandler: publisherInternalLogHandler
         )
         
-        let trackable = Trackable(id: trackableId)
+        let trackable = Trackable(id: trackableID)
         publisher.add(trackable: trackable) { _  in }
         
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
@@ -196,7 +196,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
-            .trackingId(trackableId)
+            .trackingId(trackableID)
             .start(completion: { _ in })!
         
         wait(for: [didChangeAssetConnectionStatusOnlineExpectation], timeout: 5.0)

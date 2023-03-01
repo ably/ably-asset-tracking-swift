@@ -17,7 +17,7 @@ struct AddTrackableView: View {
         VStack(alignment: .leading, spacing: 20) {
             Form {
                 Section(header: Text("Trackable ID")) {
-                    TextField("Trackable ID", text: $viewModel.trackableId)
+                    TextField("Trackable ID", text: $viewModel.trackableID)
                         .disabled(locationManager.isLocationAuthorizationDenied)
                 }
                 Section(header: Text("Destination")) {

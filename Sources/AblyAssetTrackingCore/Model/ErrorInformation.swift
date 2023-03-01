@@ -51,7 +51,7 @@ public enum ErrorInformationType {
         case .subscriberError(let errorMessage): return "SubscriberError || ErrorMessage: \(errorMessage)"
         case .JSONCodingError(let object): return "Error while parsing: \(object)"
         case .incompleteConfiguration(let missingProperty, let builderOption): return "Missing mandatory property: \(missingProperty). Did you forgot to call `\(builderOption)` on builder object?"
-        case .trackableAlreadyExist(let trackableId): return "Trackable with id: \(trackableId) already exist."
+        case .trackableAlreadyExist(let trackableID): return "Trackable with id: \(trackableID) already exist."
         case .publisherStoppedException: return "Cannot perform this action when publisher is stopped."
         case .subscriberStoppedException: return "Cannot perform this action when subscriber is stopped."
         }

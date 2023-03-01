@@ -38,7 +38,7 @@ class DefaultAblyTests: XCTestCase {
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
-        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+        ably.connect(trackableID: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
             switch result {
             case .success:
                 XCTFail("Unexpected success in ably.connect")
@@ -78,7 +78,7 @@ class DefaultAblyTests: XCTestCase {
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly successfully connects")
-        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+        ably.connect(trackableID: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
             switch result {
             case .success:
                 expectation.fulfill()
@@ -118,7 +118,7 @@ class DefaultAblyTests: XCTestCase {
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
-        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+        ably.connect(trackableID: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
             switch result {
             case .success:
                 XCTFail("Unexpected success in ably.connect")
@@ -168,7 +168,7 @@ class DefaultAblyTests: XCTestCase {
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
-        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+        ably.connect(trackableID: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
             switch result {
             case .success:
                 XCTFail("Unexpected success in ably.connect")
@@ -226,7 +226,7 @@ class DefaultAblyTests: XCTestCase {
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly successfully connects")
-        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+        ably.connect(trackableID: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
             switch result {
             case .success:
                 expectation.fulfill()
@@ -278,7 +278,7 @@ class DefaultAblyTests: XCTestCase {
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
-        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+        ably.connect(trackableID: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
             switch result {
             case .success:
                 XCTFail("Unexpected success in ably.connect")
@@ -326,7 +326,7 @@ class DefaultAblyTests: XCTestCase {
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
-        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+        ably.connect(trackableID: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
             switch result {
             case .success:
                 XCTFail("Unexpected success in ably.connect")
@@ -381,7 +381,7 @@ class DefaultAblyTests: XCTestCase {
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         
         let connectSuccessExpectation = expectation(description: "DefaultAbly connects successfully")
-        ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
+        ably.connect(trackableID: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
             switch result {
             case .success:
                 connectSuccessExpectation.fulfill()
@@ -433,9 +433,9 @@ class DefaultAblyTests: XCTestCase {
             callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
         }
         
-        let trackableId = "abc"
+        let trackableID = "abc"
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
-        ably.connect(trackableId: trackableId, presenceData: .init(type: .subscriber), useRewind: false) { _ in }
+        ably.connect(trackableID: trackableID, presenceData: .init(type: .subscriber), useRewind: false) { _ in }
         
         let subscriberDelegate = AblySubscriberDelegateMock()
         ably.subscriberDelegate = subscriberDelegate
@@ -446,7 +446,7 @@ class DefaultAblyTests: XCTestCase {
             expectation.fulfill()
         }
         
-        ably.subscribeForRawEvents(trackableId: trackableId)
+        ably.subscribeForRawEvents(trackableID: trackableID)
         
         waitForExpectations(timeout: 10)
     }

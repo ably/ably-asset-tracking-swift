@@ -15,20 +15,20 @@ class ChannelModesTests: XCTestCase {
     func testShouldCreateOnlyOnePublisherAndOneSubscriberConnection() throws {
         let subscriberClientId = "Test-Subscriber_\(UUID().uuidString)"
         let publisherClientId = "Test-Publisher_\(UUID().uuidString)"
-        let trackableId = "Trackable-\(UUID().uuidString)"
+        let trackableID = "Trackable-\(UUID().uuidString)"
         let ablyApiKey = Secrets.ablyApiKey
         
         /**
          Create `Subscriber` and wait.
          */
-        let subscriber = createSubscriber(trackableId: trackableId, clientId: subscriberClientId, ablyApiKey: ablyApiKey)
+        let subscriber = createSubscriber(trackableID: trackableID, clientId: subscriberClientId, ablyApiKey: ablyApiKey)
         delay(5.0)
         
         /**
          Create `Publisher`
          */
         let publisher = try createPublisher(clientId: publisherClientId, ablyApiKey: ablyApiKey)
-        let trackable = Trackable(id: trackableId)
+        let trackable = Trackable(id: trackableID)
         
         /**
          Add `Trackable` and wait for `Subscriber` delegate method calling
@@ -36,7 +36,7 @@ class ChannelModesTests: XCTestCase {
         publisher.add(trackable: trackable) { _ in }
         wait(for: [didUpdateEnhancedLocationExpectation], timeout: defaultDelayTime)
         
-        let metricsData = try XCTUnwrap(getChannelMetrics(trackableId: trackableId, ablyApiKey: ablyApiKey))
+        let metricsData = try XCTUnwrap(getChannelMetrics(trackableID: trackableID, ablyApiKey: ablyApiKey))
         
         /**
          Only `1` registered `Publisher`
@@ -93,7 +93,7 @@ class ChannelModesTests: XCTestCase {
         
     }
     
-    private func createSubscriber(trackableId: String, clientId: String, ablyApiKey: String) -> AblyAssetTrackingSubscriber.Subscriber {
+    private func createSubscriber(trackableID: String, clientId: String, ablyApiKey: String) -> AblyAssetTrackingSubscriber.Subscriber {
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: ablyApiKey, clientId: clientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
         
@@ -101,12 +101,12 @@ class ChannelModesTests: XCTestCase {
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
-            .trackingId(trackableId)
+            .trackingId(trackableID)
             .logHandler(handler: TestLogging.sharedLogHandler)
             .start(completion: { _ in })!
     }
     
-    private func getChannelMetrics(trackableId: String, ablyApiKey: String) throws -> ChannelMetrics? {
+    private func getChannelMetrics(trackableID: String, ablyApiKey: String) throws -> ChannelMetrics? {
         let apiKeyParts = ablyApiKey.split(separator: ":")
         
         guard apiKeyParts.count == 2 else {
@@ -116,7 +116,7 @@ class ChannelModesTests: XCTestCase {
         
         let auth = try XCTUnwrap((apiKeyParts[0] + ":" + apiKeyParts[1]).data(using: .utf8)?.base64EncodedString())
         let credentials = "Basic \(auth)"
-        let url = try XCTUnwrap(URL(string: "https://rest.ably.io/channels/tracking:\(trackableId)"))
+        let url = try XCTUnwrap(URL(string: "https://rest.ably.io/channels/tracking:\(trackableID)"))
         
         var request = URLRequest(url: url)
         request.addValue(credentials, forHTTPHeaderField: "Authorization")

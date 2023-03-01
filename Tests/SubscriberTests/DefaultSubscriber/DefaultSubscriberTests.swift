@@ -9,18 +9,18 @@ import AblyAssetTrackingSubscriberTesting
 class DefaultSubscriberTests: XCTestCase {
     private var ablySubscriber: MockAblySubscriber!
     private var subscriber: DefaultSubscriber!
-    private var trackableId: String!
+    private var trackableID: String!
     
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
     private let logger = InternalLogHandlerMock.configured
     
     override func setUpWithError() throws {
-        trackableId = "Trackable-\(UUID().uuidString)"
+        trackableID = "Trackable-\(UUID().uuidString)"
         ablySubscriber = MockAblySubscriber(configuration: configuration, mode: .subscribe)
         
         subscriber = DefaultSubscriber(
             ablySubscriber: ablySubscriber,
-            trackableId: trackableId,
+            trackableID: trackableID,
             resolution: nil,
             logHandler: logger
         )
@@ -174,7 +174,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         // Then
         XCTAssertTrue(ablySubscriber.updatePresenceDataWasCalled)
-        XCTAssertNotNil(ablySubscriber.updatePresenceDataTrackableId)
+        XCTAssertNotNil(ablySubscriber.updatePresenceDatatrackableID)
         XCTAssertNotNil(ablySubscriber.updatePresenceDataPresenceData)
         XCTAssertNotNil(ablySubscriber.updatePresenceDataCompletion)
     }
@@ -339,7 +339,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         waitForExpectations(timeout: 10)
         
-        XCTAssertEqual(ablySubscriber.disconnectParamTrackableId, trackableId)
+        XCTAssertEqual(ablySubscriber.disconnectParamtrackableID, trackableID)
         XCTAssertNil(ablySubscriber.disconnectParamPresenceData)
     }
     
