@@ -1,7 +1,9 @@
 import AblyAssetTrackingCore
 
-/// A description of some component of the SDK which wishes to identify itself in a log message.
+/// A description of some software component which wishes to identify itself in a log message.
 public enum Subsystem {
+    // One of the Ably Asset Tracking SDKs.
+    case assetTracking
     /// An arbitrary component with a name.
     case named(String)
     /// A component that is a Swift type.
@@ -10,6 +12,8 @@ public enum Subsystem {
     /// The text that will be used to identify this component in a log message.
     var name: String {
         switch self {
+        case .assetTracking:
+            return "assetTracking"
         case .named(let name):
             return name
         case .typed(let type):
