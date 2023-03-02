@@ -14,7 +14,6 @@ extension ConnectionConfiguration {
         
         if let authCallback = authCallback {
             clientOptions.authCallback = createAuthCallback(authCallback)
-            return clientOptions
         } else {
             clientOptions.key = apiKey
         }
