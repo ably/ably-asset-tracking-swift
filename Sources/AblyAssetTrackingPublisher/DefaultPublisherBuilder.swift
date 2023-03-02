@@ -58,7 +58,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
         }
         
         let internalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
-                                                           subsystem: .named("publisher"))
+                                                           subsystems: [.assetTracking, .named("publisher")])
         
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),

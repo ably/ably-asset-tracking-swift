@@ -65,7 +65,9 @@ class ChannelModesTests: XCTestCase {
     private func createPublisher(clientId: String, ablyApiKey: String) throws -> Publisher  {
         let locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
 
-        let internalLogHandler = TestLogging.sharedInternalLogHandler.addingSubsystem(.named("publisher"))
+        let internalLogHandler = TestLogging.sharedInternalLogHandler
+            .addingSubsystem(.assetTracking)
+            .addingSubsystem(.named("publisher"))
         
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),

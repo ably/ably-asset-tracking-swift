@@ -9,7 +9,7 @@ class DefaultInternalLogHandlerTests: XCTestCase {
     
     func test_addSubsystem_causesLoggedMessagesToIncludeSubsystemName() throws {
         let underlyingLogHandler = LogHandlerMock()
-        let logHandler = try XCTUnwrap(DefaultInternalLogHandler(logHandler: underlyingLogHandler))
+        let logHandler = try XCTUnwrap(DefaultInternalLogHandler(logHandler: underlyingLogHandler, subsystems: [.assetTracking]))
             .addingSubsystem(.named("myComponent"))
 
         logHandler.logMessage(level: .info, message: "Here is a message", error: nil, codeLocation: nil)
@@ -22,7 +22,7 @@ class DefaultInternalLogHandlerTests: XCTestCase {
     
     func test_logMessage_withNonNilCodeLocation_includesLastPathComponentOfFileAndIncludesLineNumber() throws {
         let underlyingLogHandler = LogHandlerMock()
-        let logHandler = try XCTUnwrap(DefaultInternalLogHandler(logHandler: underlyingLogHandler))
+        let logHandler = try XCTUnwrap(DefaultInternalLogHandler(logHandler: underlyingLogHandler, subsystems: [.assetTracking]))
         
         let codeLocation = CodeLocation(file: "/path/to/the/MyFile.swift", line: 130)
         logHandler.logMessage(level: .info, message: "Here is a message", error: nil, codeLocation: codeLocation)

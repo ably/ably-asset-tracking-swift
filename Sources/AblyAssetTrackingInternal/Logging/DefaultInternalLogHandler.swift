@@ -8,20 +8,17 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
     private var logHandler: LogHandler
     private var subsystemNames: [String] // Lowest granularity first
     
-    /// Creates an instance of ``DefaultInternalLogHandler`` that writes messages to a given ``LogHandler``. The lowest-granularity subsystem of the returned log handler will always be "assetTracking".
+    /// Creates an instance of ``DefaultInternalLogHandler`` that writes messages to a given ``LogHandler``.
     /// - Parameters:
     ///   - logHandler: A log handler to write messages to. If this is nil, the initializer will return nil.
-    ///   - subsystem: A subsystem to add to the list
-    public init?(logHandler: LogHandler?, subsystem: Subsystem? = nil) {
+    ///   - subsystems: The log handler’s initial list of subsystems, in order of increasing granularity.
+    public init?(logHandler: LogHandler?, subsystems: [Subsystem] = []) {
         guard let logHandler = logHandler else {
             return nil
         }
         self.logHandler = logHandler
-        
-        self.subsystemNames = ["assetTracking"]
-        if let subsystem = subsystem {
-            self.subsystemNames.append(subsystem.name)
-        }
+
+        self.subsystemNames = subsystems.map(\.name)
     }
     
     public func logMessage(level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?) {
