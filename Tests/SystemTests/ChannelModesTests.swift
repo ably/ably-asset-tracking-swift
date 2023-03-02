@@ -80,6 +80,7 @@ class ChannelModesTests: XCTestCase {
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
+            host: nil,
             mode: .publish,
             logHandler: internalLogHandler
         )

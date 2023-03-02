@@ -14,11 +14,11 @@ public class DefaultAbly: AblyCommon {
     
     private var channels: [String: AblySDKRealtimeChannel] = [:]
 
-    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, mode: AblyMode, logHandler: InternalLogHandler?) {
+    public required init(factory: AblySDKRealtimeFactory, configuration: ConnectionConfiguration, host: Host?, mode: AblyMode, logHandler: InternalLogHandler?) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
         
         let internalARTLogHandler = InternalARTLogHandler(logHandler: self.logHandler)
-        self.client = factory.create(withConfiguration: configuration, logHandler: internalARTLogHandler)
+        self.client = factory.create(withConfiguration: configuration, logHandler: internalARTLogHandler, host: host)
         
         self.mode = mode
         self.connectionConfiguration = configuration
