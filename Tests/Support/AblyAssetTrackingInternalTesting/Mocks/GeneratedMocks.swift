@@ -588,4 +588,26 @@ public class InternalLogHandlerMock: InternalLogHandler {
         }
     }
 
+    //MARK: - tagMessage
+
+    public var tagMessageCallsCount = 0
+    public var tagMessageCalled: Bool {
+        return tagMessageCallsCount > 0
+    }
+    public var tagMessageReceivedMessage: String?
+    public var tagMessageReceivedInvocations: [String] = []
+    public var tagMessageReturnValue: String!
+    public var tagMessageClosure: ((String) -> String)?
+
+    public func tagMessage(_ message: String) -> String {
+        tagMessageCallsCount += 1
+        tagMessageReceivedMessage = message
+        tagMessageReceivedInvocations.append(message)
+        if let tagMessageClosure = tagMessageClosure {
+            return tagMessageClosure(message)
+        } else {
+            return tagMessageReturnValue
+        }
+    }
+
 }

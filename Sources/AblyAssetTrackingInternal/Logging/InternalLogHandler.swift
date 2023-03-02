@@ -52,6 +52,13 @@ public protocol InternalLogHandler {
     /// - Parameter subsystem: The subsystem to add. This will be added at a higher level of granularity then the subsystems currently in the log handler’s list.
     /// - Returns: A new log handler.
     func addingSubsystem(_ subsystem: Subsystem) -> InternalLogHandler
+
+    /// Augments the given message with information about the log handler’s list of subsystems.
+    ///
+    /// You might wish to use this to add originating subsystem information to the message of an error that you throw.
+    ///
+    /// For example, given a log handler with subsystems `["assetTracking", "publisher", "DefaultPublisher"]`, and a `message` of `"Here is an error message"`, it might return a string like `"[assetTracking.publisher.DefaultPublisher] Here is an error message"`.
+    func tagMessage(_ message: String) -> String
 }
 
 extension InternalLogHandler {
