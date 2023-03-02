@@ -1,37 +1,43 @@
 import XCTest
+import AblyAssetTrackingTesting
 
-final class NetworkConnectivityTests: XCTestCase {
+struct NetworkConnectivityTestsParam: ParameterizedTestCaseParam {
+    var faultName: String
+
+    var methodNameComponent: String {
+        return faultName
+    }
+}
+
+final class NetworkConnectivityTests: ParameterizedTestCase<NetworkConnectivityTestsParam> {
     private let faultProxyExpectationTimeout: TimeInterval = 10
 
-    // This test is just a temporary one to demonstrate that the SDK test proxy client is working.
-    func testSDKTestProxyClient() {
-        let client = SDKTestProxyClient()
+    static let client = SDKTestProxyClient()
 
+    override class func fetchParams(_ completion: @escaping (Result<[NetworkConnectivityTestsParam], Error>) -> Void) {
         // Get names of all faults
-
-        let getAllFaultsExpectation = expectation(description: "get all faults")
-        var faultNames: [String]!
-
         client.getAllFaults { result in
-            do {
-                faultNames = try result.get()
-            } catch {
-                XCTFail("Failed to getAllFaults (\(error))")
+            let paramsResult = result.map { faultNames in
+                faultNames.map(NetworkConnectivityTestsParam.init(faultName:))
             }
-
-            getAllFaultsExpectation.fulfill()
+            completion(paramsResult)
         }
+    }
 
-        wait(for: [getAllFaultsExpectation], timeout: faultProxyExpectationTimeout)
+    override func setUp() {
+        NSLog("In setUp, fault name is \(currentParam.faultName)")
+    }
+
+    // This test is just a temporary one to demonstrate that the SDK test proxy client is working.
+    func parameterizedTest_SDKTestProxyClient() {
+        let client = NetworkConnectivityTests.client
 
         // Create a fault simulation
-
-        let faultName = faultNames[0]
 
         let createFaultSimulationExpectation = expectation(description: "create fault simulation")
         var faultSimulationDto: FaultSimulationDTO!
 
-        client.createFaultSimulation(withName: faultName) { result in
+        client.createFaultSimulation(withName: currentParam.faultName) { result in
             do {
                 faultSimulationDto = try result.get()
             } catch {
