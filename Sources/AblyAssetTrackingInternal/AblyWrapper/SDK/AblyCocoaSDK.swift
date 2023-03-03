@@ -109,7 +109,7 @@ struct AblyCocoaSDKRealtimePresence: AblySDKRealtimePresence {
 struct AblyCocoaSDKConnection: AblySDKConnection {
     fileprivate let connection: ARTConnection
 
-    func errorInfo() -> ErrorInformation? {
+    func errorReason() -> ErrorInformation? {
         guard let currentErrorReason = connection.errorReason else {
             return nil
         }

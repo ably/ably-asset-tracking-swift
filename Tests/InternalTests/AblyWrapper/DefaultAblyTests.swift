@@ -45,7 +45,7 @@ class DefaultAblyTests: XCTestCase {
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         connection.stateReturnValue = ARTRealtimeConnectionState.failed
-        connection.errorInfoReturnValue = ErrorInformation(code: 1, statusCode: 2, message: "Test Failure Msg", cause: nil, href: nil)
+        connection.errorReasonReturnValue = ErrorInformation(code: 1, statusCode: 2, message: "Test Failure Msg", cause: nil, href: nil)
 
 
         let expectation = expectation(description: "DefaultAbly startConnection when failed")
@@ -54,7 +54,7 @@ class DefaultAblyTests: XCTestCase {
             case .success:
                 XCTFail("Received success result")
             case .failure(let error):
-                XCTAssertEqual(connection.errorInfoReturnValue!.message, error.message)
+                XCTAssertEqual(connection.errorReasonReturnValue!.message, error.message)
                 expectation.fulfill()
             }
 
@@ -74,7 +74,7 @@ class DefaultAblyTests: XCTestCase {
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
         connection.stateReturnValue = ARTRealtimeConnectionState.failed
-        connection.errorInfoReturnValue = nil
+        connection.errorReasonReturnValue = nil
 
 
         let expectation = expectation(description: "DefaultAbly startConnection when failed")

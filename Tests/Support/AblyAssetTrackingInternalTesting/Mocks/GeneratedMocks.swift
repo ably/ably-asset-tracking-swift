@@ -81,21 +81,21 @@ public class AblySDKConnectionMock: AblySDKConnection {
         }
     }
 
-    //MARK: - errorInfo
+    //MARK: - errorReason
 
-    public var errorInfoCallsCount = 0
-    public var errorInfoCalled: Bool {
-        return errorInfoCallsCount > 0
+    public var errorReasonCallsCount = 0
+    public var errorReasonCalled: Bool {
+        return errorReasonCallsCount > 0
     }
-    public var errorInfoReturnValue: ErrorInformation?
-    public var errorInfoClosure: (() -> ErrorInformation?)?
+    public var errorReasonReturnValue: ErrorInformation?
+    public var errorReasonClosure: (() -> ErrorInformation?)?
 
-    public func errorInfo() -> ErrorInformation? {
-        errorInfoCallsCount += 1
-        if let errorInfoClosure = errorInfoClosure {
-            return errorInfoClosure()
+    public func errorReason() -> ErrorInformation? {
+        errorReasonCallsCount += 1
+        if let errorReasonClosure = errorReasonClosure {
+            return errorReasonClosure()
         } else {
-            return errorInfoReturnValue
+            return errorReasonReturnValue
         }
     }
 
