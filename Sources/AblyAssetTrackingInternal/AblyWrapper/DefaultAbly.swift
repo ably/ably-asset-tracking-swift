@@ -69,8 +69,11 @@ public class DefaultAbly: AblyCommon {
         listener = client.connection.on { [weak self] stateChange in
             stateGuard.wait()
 
-            guard let self = self else {
+            defer {
                 stateGuard.signal()
+            }
+
+            guard let self = self else {
                 return
             }
 
@@ -95,9 +98,8 @@ public class DefaultAbly: AblyCommon {
             case .offline:
                 break
             }
-
-            stateGuard.signal()
         }
+
         stateGuard.signal()
         client.connect()
     }
@@ -388,8 +390,11 @@ public class DefaultAbly: AblyCommon {
         listener = client.connection.on {[weak self] stateChange in
             stateChangeGuard.wait()
 
-            guard let self = self else {
+            defer {
                 stateChangeGuard.signal()
+            }
+
+            guard let self = self else {
                 return
             }
 
@@ -406,7 +411,6 @@ public class DefaultAbly: AblyCommon {
             default:
                 break
             }
-            stateChangeGuard.signal()
         }
 
         stateChangeGuard.signal()
