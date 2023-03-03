@@ -54,7 +54,36 @@ class DefaultAblyTests: XCTestCase {
             case .success:
                 XCTFail("Received success result")
             case .failure(let error):
-                XCTAssertEqual(connection.errorInfoReturnValue.message, error.message)
+                XCTAssertEqual(connection.errorInfoReturnValue!.message, error.message)
+                expectation.fulfill()
+            }
+
+        }
+
+        waitForExpectations(timeout: 5)
+    }
+
+    func test_startConnection_callsCallbackWithFailureWhenAlreadyFailedNoErrorInfo() {
+        let connection = AblySDKConnectionMock()
+        let realtime = AblySDKRealtimeMock()
+        realtime.connection = connection
+
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
+
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        connection.stateReturnValue = ARTRealtimeConnectionState.failed
+        connection.errorInfoReturnValue = nil
+
+
+        let expectation = expectation(description: "DefaultAbly startConnection when failed")
+        ably.startConnection() { result in
+            switch result {
+            case .success:
+                XCTFail("Received success result")
+            case .failure(let error):
+                XCTAssertEqual("No error reason provided", error.message)
                 expectation.fulfill()
             }
 

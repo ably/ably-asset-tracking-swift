@@ -52,7 +52,9 @@ public class DefaultAbly: AblyCommon {
         }
 
         guard client.connection.state() != ARTRealtimeConnectionState.failed else {
-            completion(.failure(client.connection.errorInfo()))
+            let errorInfo = client.connection.errorInfo() ?? ErrorInformation(code: 0, statusCode: 0, message: "No error reason provided", cause: nil, href: nil)
+
+            completion(.failure(errorInfo))
             return
         }
 

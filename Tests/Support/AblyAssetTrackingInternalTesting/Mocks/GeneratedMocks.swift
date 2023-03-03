@@ -87,10 +87,10 @@ public class AblySDKConnectionMock: AblySDKConnection {
     public var errorInfoCalled: Bool {
         return errorInfoCallsCount > 0
     }
-    public var errorInfoReturnValue: ErrorInformation!
-    public var errorInfoClosure: (() -> ErrorInformation)?
+    public var errorInfoReturnValue: ErrorInformation?
+    public var errorInfoClosure: (() -> ErrorInformation?)?
 
-    public func errorInfo() -> ErrorInformation {
+    public func errorInfo() -> ErrorInformation? {
         errorInfoCallsCount += 1
         if let errorInfoClosure = errorInfoClosure {
             return errorInfoClosure()
