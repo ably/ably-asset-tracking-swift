@@ -18,7 +18,7 @@ class DefaultAblyTests: XCTestCase {
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
-        connection.stateReturnValue = ARTRealtimeConnectionState.connected
+        connection.state = ARTRealtimeConnectionState.connected
 
         let expectation = expectation(description: "DefaultAbly startConnection when connected")
         ably.startConnection() { result in
@@ -44,9 +44,8 @@ class DefaultAblyTests: XCTestCase {
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
-        connection.stateReturnValue = ARTRealtimeConnectionState.failed
-        connection.errorReasonReturnValue = ErrorInformation(code: 1, statusCode: 2, message: "Test Failure Msg", cause: nil, href: nil)
-
+        connection.state = ARTRealtimeConnectionState.failed
+        connection.errorReason = ARTErrorInfo.create(withCode: 40400, message: "Test Failure Msg")
 
         let expectation = expectation(description: "DefaultAbly startConnection when failed")
         ably.startConnection() { result in
@@ -54,7 +53,8 @@ class DefaultAblyTests: XCTestCase {
             case .success:
                 XCTFail("Received success result")
             case .failure(let error):
-                XCTAssertEqual(connection.errorReasonReturnValue!.message, error.message)
+                XCTAssertEqual("Test Failure Msg", error.message)
+                XCTAssertEqual(40400, error.code)
                 expectation.fulfill()
             }
 
@@ -73,8 +73,8 @@ class DefaultAblyTests: XCTestCase {
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
-        connection.stateReturnValue = ARTRealtimeConnectionState.failed
-        connection.errorReasonReturnValue = nil
+        connection.state = ARTRealtimeConnectionState.failed
+        connection.errorReason = nil
 
 
         let expectation = expectation(description: "DefaultAbly startConnection when failed")
@@ -103,7 +103,7 @@ class DefaultAblyTests: XCTestCase {
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
-        connection.stateReturnValue = ARTRealtimeConnectionState.disconnected
+        connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
         let expectation = expectation(description: "DefaultAbly startConnection changes state to connected")
@@ -137,7 +137,7 @@ class DefaultAblyTests: XCTestCase {
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
-        connection.stateReturnValue = ARTRealtimeConnectionState.disconnected
+        connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
         let expectation = expectation(description: "DefaultAbly startConnection changes state to failed")
@@ -172,7 +172,7 @@ class DefaultAblyTests: XCTestCase {
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
-        connection.stateReturnValue = ARTRealtimeConnectionState.disconnected
+        connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
         let expectation = expectation(description: "DefaultAbly startConnection changes state to closed")
@@ -207,7 +207,7 @@ class DefaultAblyTests: XCTestCase {
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
         let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
-        connection.stateReturnValue = ARTRealtimeConnectionState.disconnected
+        connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
         ably.startConnection() { result in

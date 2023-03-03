@@ -46,13 +46,16 @@ public class DefaultAbly: AblyCommon {
     public func startConnection(completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
         var listener: AblySDKEventListener?
 
-        guard client.connection.state() != ARTRealtimeConnectionState.connected else {
+        guard client.connection.state != ARTRealtimeConnectionState.connected else {
             completion(.success)
             return
         }
 
-        guard client.connection.state() != ARTRealtimeConnectionState.failed else {
-            let errorInfo = client.connection.errorReason() ?? ErrorInformation(code: 0, statusCode: 0, message: "No error reason provided", cause: nil, href: nil)
+        guard client.connection.state != ARTRealtimeConnectionState.failed else {
+
+            let errorInfo = client.connection.errorReason != nil
+                ? ErrorInformation.init(error: client.connection.errorReason!)
+                : ErrorInformation(code: 0, statusCode: 0, message: "No error reason provided", cause: nil, href: nil)
 
             completion(.failure(errorInfo))
             return

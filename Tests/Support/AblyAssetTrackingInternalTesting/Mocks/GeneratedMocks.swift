@@ -62,42 +62,12 @@ public class AblySDKConnectionMock: AblySDKConnection {
 
     public init() {}
 
-
-    //MARK: - state
-
-    public var stateCallsCount = 0
-    public var stateCalled: Bool {
-        return stateCallsCount > 0
+    public var state: ARTRealtimeConnectionState {
+        get { return underlyingState }
+        set(value) { underlyingState = value }
     }
-    public var stateReturnValue: ARTRealtimeConnectionState!
-    public var stateClosure: (() -> ARTRealtimeConnectionState)?
-
-    public func state() -> ARTRealtimeConnectionState {
-        stateCallsCount += 1
-        if let stateClosure = stateClosure {
-            return stateClosure()
-        } else {
-            return stateReturnValue
-        }
-    }
-
-    //MARK: - errorReason
-
-    public var errorReasonCallsCount = 0
-    public var errorReasonCalled: Bool {
-        return errorReasonCallsCount > 0
-    }
-    public var errorReasonReturnValue: ErrorInformation?
-    public var errorReasonClosure: (() -> ErrorInformation?)?
-
-    public func errorReason() -> ErrorInformation? {
-        errorReasonCallsCount += 1
-        if let errorReasonClosure = errorReasonClosure {
-            return errorReasonClosure()
-        } else {
-            return errorReasonReturnValue
-        }
-    }
+    public var underlyingState: ARTRealtimeConnectionState!
+    public var errorReason: ARTErrorInfo?
 
     //MARK: - on
 
