@@ -57,33 +57,10 @@ class DefaultSubscriber: Subscriber {
         
         enqueue(event: .changeResolution(.init(resolution: resolution, resultHandler: completion)))
     }
-    
-    func resolutionPreference(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        resolutionPreference(resolution: resolution) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
 
     func start(completion: @escaping ResultHandler<Void>) {
         enqueue(event: .start(.init(resultHandler: completion)))
     }
-    
-    func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        start { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-    
     func stop(completion: @escaping ResultHandler<Void>) {
         guard !subscriberState.isStoppingOrStopped else {
             callback(value: Void(), handler: completion)
@@ -91,17 +68,6 @@ class DefaultSubscriber: Subscriber {
         }
         
         enqueue(event: .stop(.init(resultHandler: completion)))
-    }
-
-    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        stop { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
     }
 }
 
