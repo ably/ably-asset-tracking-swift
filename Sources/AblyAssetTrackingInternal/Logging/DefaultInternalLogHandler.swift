@@ -2,7 +2,7 @@ import AblyAssetTrackingCore
 import Foundation
 
 /// Provides an implementation of ``InternalLogHandler`` by wrapping another instance of ``LogHandler``. It will insert the following information into the log messages that it emits:
-/// - a string such as "[assetTracking.publisher.DefaultPublisher]", representing its list of subsystems;
+/// - a string such as "[assetTracking.publisher.DefaultPublisher]", representing its list of subsystems (any '[' or ']' characters in the subsystems’ names will be replaced by underscores);
 /// - optionally, a string such as "@(MyFile.swift:30)", representing the source code location from which the log message was emitted.
 public struct DefaultInternalLogHandler: InternalLogHandler {
     private var logHandler: LogHandler
@@ -38,7 +38,8 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
     }
 
     private func tagMessage(_ message: String, codeLocation: CodeLocation?) -> String {
-        var result = "[\(subsystemNames.joined(separator: "."))]"
+        let sanitizedSubsystemNames = subsystemNames.map(DefaultInternalLogHandler.sanitizeSubsystemName)
+        var result = "[\(sanitizedSubsystemNames.joined(separator: "."))]"
 
         if let codeLocation = codeLocation {
             result.append("@(\((codeLocation.file as NSString).lastPathComponent):\(codeLocation.line))")
@@ -47,5 +48,11 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
         result.append(" \(message)")
 
         return result
+    }
+
+    private static func sanitizeSubsystemName(_ name: String) -> String {
+        return (name as NSString)
+            .replacingOccurrences(of: "[", with: "_")
+            .replacingOccurrences(of: "]", with: "_")
     }
 }
