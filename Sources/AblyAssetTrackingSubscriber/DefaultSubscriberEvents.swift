@@ -15,16 +15,16 @@ extension DefaultSubscriber {
         case ablyError(AblyErrorEvent)
         
         struct StartEvent {
-            let resultHandler: Callback<Void>
+            let completion: Callback<Void>
         }
         
         struct StopEvent {
-            let resultHandler: Callback<Void>
+            let completion: Callback<Void>
         }
         
         struct ChangeResolutionEvent {
             let resolution: Resolution?
-            let resultHandler: Callback<Void>
+            let completion: Callback<Void>
         }
         
         struct PresenceUpdateEvent {
@@ -32,7 +32,7 @@ extension DefaultSubscriber {
         }
         
         struct AblyConnectionClosedEvent {
-            let resultHandler: Callback<Void>
+            let completion: Callback<Void>
         }
         
         struct AblyClientConnectionStateChangedEvent {

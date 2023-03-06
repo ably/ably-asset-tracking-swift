@@ -57,12 +57,12 @@ class DefaultSubscriber: Subscriber {
             return
         }
         
-        enqueue(event: .changeResolution(.init(resolution: resolution, resultHandler: completion)))
+        enqueue(event: .changeResolution(.init(resolution: resolution, completion: completion)))
     }
 
     func start(completion publicCompletion: @escaping ResultHandler<Void>) {
         let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
-        enqueue(event: .start(.init(resultHandler: completion)))
+        enqueue(event: .start(.init(completion: completion)))
     }
 
     func stop(completion publicCompletion: @escaping ResultHandler<Void>) {
@@ -73,7 +73,7 @@ class DefaultSubscriber: Subscriber {
             return
         }
         
-        enqueue(event: .stop(.init(resultHandler: completion)))
+        enqueue(event: .stop(.init(completion: completion)))
     }
 }
 
@@ -149,9 +149,9 @@ extension DefaultSubscriber {
                 self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
                 self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
 
-                event.resultHandler.handleSuccess()
+                event.completion.handleSuccess()
             case .failure(let error):
-                event.resultHandler.handleError(error)
+                event.completion.handleError(error)
             }
         }
         
@@ -163,9 +163,9 @@ extension DefaultSubscriber {
         ablySubscriber.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
-                self?.enqueue(event: .ablyConnectionClosed(.init(resultHandler: event.resultHandler)))
+                self?.enqueue(event: .ablyConnectionClosed(.init(completion: event.completion)))
             case .failure(let error):
-                event.resultHandler.handleError(ErrorInformation(error: error))
+                event.completion.handleError(ErrorInformation(error: error))
             }
         }
     }
@@ -189,7 +189,7 @@ extension DefaultSubscriber {
     
     private func performStopped(_ event: Event.AblyConnectionClosedEvent) {
         subscriberState = .stopped
-        event.resultHandler.handleSuccess()
+        event.completion.handleSuccess()
     }
     
     private func performClientConnectionChanged(_ event: Event.AblyClientConnectionStateChangedEvent) {
@@ -234,7 +234,7 @@ extension DefaultSubscriber {
 
     private func performChangeResolution(_ event: Event.ChangeResolutionEvent) {
         guard let resolution = event.resolution else {
-            event.resultHandler.handleSuccess()
+            event.completion.handleSuccess()
 
             return
         }
@@ -247,9 +247,9 @@ extension DefaultSubscriber {
             
             switch result {
             case .success:
-                event.resultHandler.handleSuccess()
+                event.completion.handleSuccess()
             case .failure(let error):
-                event.resultHandler.handleError(ErrorInformation(error: error))
+                event.completion.handleError(ErrorInformation(error: error))
             }
         }
     }
