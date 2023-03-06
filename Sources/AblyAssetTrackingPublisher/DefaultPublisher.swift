@@ -846,24 +846,15 @@ extension DefaultPublisher {
 
     // MARK: Delegate
     private func notifyDelegateDidFailWithError(_ error: ErrorInformation) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didFailWithError: error)
-        }
+        sendDelegateEvent(.error(.init(error: error)))
     }
 
     private func notifyDelegateEnhancedLocationChanged(_ event: Event.DelegateEnhancedLocationChangedEvent) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
-        }
+        sendDelegateEvent(.enhancedLocationChanged(.init(locationUpdate: event.locationUpdate)))
     }
 
     private func notifyDelegateConnectionStateChanged(_ event: Event.DelegateTrackableConnectionStateChangedEvent) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
-        }
+        sendDelegateEvent(.trackableConnectionStateChanged(.init(trackable: event.trackable, connectionState: event.connectionState)))
     }
 
     private func notifyDelegateResolutionUpdate(_ event: Event.DelegateResolutionUpdateEvent) {
