@@ -28,7 +28,7 @@ class DuplicateTrackableGuardTests: XCTestCase {
         }
         
         func createCompletionHandler(index: Int) -> Callback<Void> {
-            return .init(source: .publicAPI) { result in
+            return .init(source: .publicAPI(label: ""), logHandler: nil) { result in
                 switch result {
                 case .success:
                     expectations[index].fulfill()
@@ -54,7 +54,7 @@ class DuplicateTrackableGuardTests: XCTestCase {
         var calledFirstTime = false
         let secondTimeExpectation = expectation(description: "Completion handler called again")
         secondTimeExpectation.isInverted = true
-        let completionHandler = Callback<Void>(source: .publicAPI) { result in
+        let completionHandler = Callback<Void>(source: .publicAPI(label: ""), logHandler: nil) { result in
             if !calledFirstTime {
                 calledFirstTime = true
                 firstTimeExpectation.fulfill()

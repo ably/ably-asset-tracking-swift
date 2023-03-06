@@ -4,12 +4,13 @@ import AblyAssetTrackingCore
 /// Represents a callback to be executed by ``DefaultPublisher`` or ``DefaultSubscriber``. Provides an opaque wrapper that allows these classes to treat all callbacks the same regardless of where they came from, whilst respecting any specific threading requirements (such as the requirement that callbacks passed to the public API of these classes must be called on the main thread).
 public struct Callback<T> {
     private var resultHandler: ResultHandler<T>
+    private var logHandler: InternalLogHandler?
     private var source: Source
 
     /// Describes where the result handler passed to ``init(source:resultHandler:)`` came from.
     public enum Source {
-        /// The result handler is an argument of a public method of ``DefaultPublisher`` or ``DefaultSubscriber``, and hence must be called on the main thread.
-        case publicAPI
+        /// The result handler is an argument of a public method of ``DefaultPublisher`` or ``DefaultSubscriber``, and hence must be called on the main thread. The label will be used for logging.
+        case publicAPI(label: String)
         /// The result handler was created for use as an internal callback in ``DefaultPublisher`` or ``DefaultSubscriber``, and does not carry any threading requirements.
         case internallyCreated
     }
@@ -17,17 +18,23 @@ public struct Callback<T> {
     /// Creates a ``Callback`` instance.
     /// - Parameters:
     ///   - source: A description of where ``resultHandler`` came from.
+    ///   - logHandler: A log handler for logging execution of public API callbacks.
     ///   - resultHandler: The action to be stored for later execution.
-    public init(source: Source, resultHandler: @escaping ResultHandler<T>) {
+    public init(source: Source, logHandler: InternalLogHandler?, resultHandler: @escaping ResultHandler<T>) {
         self.source = source
         self.resultHandler = resultHandler
+        self.logHandler = logHandler
     }
 
     /// Calls the result handler with the given result, respecting the source’s threading requirements.
     public func handle(_ result: Result<T, ErrorInformation>) {
         switch source {
-        case .publicAPI:
-            DispatchQueue.main.async { resultHandler(result) }
+        case .publicAPI(let label):
+            logHandler?.verbose(message: "(\(label)): Dispatching callback to main thread", error: nil)
+            DispatchQueue.main.async {
+                logHandler?.verbose(message: "(Public API, out) (\(label)): Calling callback", error: nil)
+                resultHandler(result)
+            }
         case .internallyCreated:
             resultHandler(result)
         }

@@ -50,7 +50,7 @@ class DefaultSubscriber: Subscriber {
     }
 
     func resolutionPreference(resolution: Resolution?, completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
 
         guard !subscriberState.isStoppingOrStopped else {
             completion.handleSubscriberStopped()
@@ -61,12 +61,12 @@ class DefaultSubscriber: Subscriber {
     }
 
     func start(completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .start(.init(completion: completion)))
     }
 
     func stop(completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
 
         guard !subscriberState.isStoppingOrStopped else {
             completion.handleSuccess()

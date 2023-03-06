@@ -123,27 +123,27 @@ class DefaultPublisher: Publisher {
     }
 
     func track(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .trackTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func add(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .addTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func remove(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Bool>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .removeTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func changeRoutingProfile(profile: RoutingProfile, completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .changeRoutingProfile(.init(profile: profile, completion: completion)))
     }
 
     func stop(completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .stop(.init(completion: completion)))
     }
 }
@@ -224,7 +224,7 @@ extension DefaultPublisher {
 
     // MARK: Track
     private func performTrackTrackableEvent(_ event: Event.TrackTrackableEvent) {
-        let completion = Callback<Void>(source: .internallyCreated) { [weak self] result in
+        let completion = Callback<Void>(source: .internallyCreated, logHandler: logHandler) { [weak self] result in
             switch result {
             case .success:
                 self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, completion: event.completion)))
