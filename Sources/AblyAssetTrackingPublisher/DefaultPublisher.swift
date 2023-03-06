@@ -224,7 +224,7 @@ extension DefaultPublisher {
 
     // MARK: Track
     private func performTrackTrackableEvent(_ event: Event.TrackTrackableEvent) {
-        let completion = Callback<Void>(source: .publisherInternal) { [weak self] result in
+        let completion = Callback<Void>(source: .internallyCreated) { [weak self] result in
             switch result {
             case .success:
                 self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, completion: event.completion)))

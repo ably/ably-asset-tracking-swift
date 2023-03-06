@@ -1,3 +1,5 @@
+import AblyAssetTrackingInternal
+
 extension DefaultPublisher {
     /// Used by ``DefaultPublisher`` to keep track of which trackables it is currently in the process of adding, to ensure that for a given trackable ID the process of entering Ably presence is only performed once.
     struct DuplicateTrackableGuard {

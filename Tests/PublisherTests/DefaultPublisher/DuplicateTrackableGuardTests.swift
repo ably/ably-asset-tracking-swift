@@ -1,5 +1,6 @@
 import XCTest
 @testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingInternal
 
 class DuplicateTrackableGuardTests: XCTestCase {
     func test_isCurrentlyAddingTrackableWithId_when_startAddingTrackableHasBeenCalled_returnsTrue() {
@@ -26,7 +27,7 @@ class DuplicateTrackableGuardTests: XCTestCase {
             expectation(description: "Duplicate completion handler \(index) called")
         }
         
-        func createCompletionHandler(index: Int) -> DefaultPublisher.Callback<Void> {
+        func createCompletionHandler(index: Int) -> Callback<Void> {
             return .init(source: .publicAPI) { result in
                 switch result {
                 case .success:
@@ -53,7 +54,7 @@ class DuplicateTrackableGuardTests: XCTestCase {
         var calledFirstTime = false
         let secondTimeExpectation = expectation(description: "Completion handler called again")
         secondTimeExpectation.isInverted = true
-        let completionHandler = DefaultPublisher.Callback<Void>(source: .publicAPI) { result in
+        let completionHandler = Callback<Void>(source: .publicAPI) { result in
             if !calledFirstTime {
                 calledFirstTime = true
                 firstTimeExpectation.fulfill()
