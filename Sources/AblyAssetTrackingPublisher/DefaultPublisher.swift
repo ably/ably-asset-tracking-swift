@@ -202,6 +202,10 @@ extension DefaultPublisher {
                 self.delegate?.publisher(sender: self, didFinishRecordingLocationHistoryData: event.locationHistoryData)
             case .finishedRecordingRawMapboxData(let event):
                 self.delegate?.publisher(sender: self, didFinishRecordingRawMapboxDataToTemporaryFile: event.temporaryFile)
+            case .didUpdateResolution(let event):
+                self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
+            case .didChangeTrackables(let event):
+                self.delegate?.publisher(sender: self, didChangeTrackables: event.trackables)
             }
         }
     }
@@ -858,17 +862,11 @@ extension DefaultPublisher {
     }
 
     private func notifyDelegateResolutionUpdate(_ event: Event.DelegateResolutionUpdateEvent) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
-        }
+        sendDelegateEvent(.didUpdateResolution(.init(resolution: event.resolution)))
     }
     
     private func notifyTrackablesChanged(trackables: Set<Trackable>) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didChangeTrackables: trackables)
-        }
+        sendDelegateEvent(.didChangeTrackables(.init(trackables: trackables)))
     }
 }
 
