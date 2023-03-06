@@ -38,7 +38,7 @@ public enum Blocking {
             expectation.fulfill()
         }
 
-        logHandler.debug(message: "Blocking.run waiting for 10s for operation to complete (\(label))", error: nil)
+        logHandler.debug(message: "Blocking.run waiting for \(timeout)s for operation to complete (\(label))", error: nil)
         let expectationWaitResult = waiter.wait(for: [expectation], timeout: timeout)
 
         switch expectationWaitResult {
@@ -47,7 +47,7 @@ public enum Blocking {
             return try result.get()
         case .timedOut:
             logHandler.debug(message: "Blocking.run timed out (\(label))", error: nil)
-            throw Error.timedOut(duration: 10, label: logHandler.tagMessage(label))
+            throw Error.timedOut(duration: timeout, label: logHandler.tagMessage(label))
         case .interrupted:
             logHandler.debug(message: "Blocking.run was interrupted (\(label))", error: nil)
             throw Error.interrupted(label: logHandler.tagMessage(label))
