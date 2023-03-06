@@ -12,7 +12,7 @@ struct NetworkConnectivityTestsParam: ParameterizedTestCaseParam {
 final class NetworkConnectivityTests: ParameterizedTestCase<NetworkConnectivityTestsParam> {
     private let faultProxyExpectationTimeout: TimeInterval = 10
 
-    static let client = SDKTestProxyClient()
+    static let client = SDKTestProxyClient(logHandler: TestLogging.sharedInternalLogHandler)
 
     override class func fetchParams(_ completion: @escaping (Result<[NetworkConnectivityTestsParam], Error>) -> Void) {
         // Get names of all faults
