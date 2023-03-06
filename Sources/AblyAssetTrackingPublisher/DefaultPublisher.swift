@@ -123,26 +123,31 @@ class DefaultPublisher: Publisher {
     }
 
     func track(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Void>) {
+        logHandler?.logPublicAPICall(label: "track(trackable: \(trackable))")
         let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .trackTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func add(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Void>) {
+        logHandler?.logPublicAPICall(label: "add(trackable: \(trackable))")
         let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .addTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func remove(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Bool>) {
+        logHandler?.logPublicAPICall(label: "remove(trackable: \(trackable))")
         let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .removeTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func changeRoutingProfile(profile: RoutingProfile, completion publicCompletion: @escaping ResultHandler<Void>) {
+        logHandler?.logPublicAPICall(label: "changeRoutingProfile(profile: \(profile))")
         let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .changeRoutingProfile(.init(profile: profile, completion: completion)))
     }
 
     func stop(completion publicCompletion: @escaping ResultHandler<Void>) {
+        logHandler?.logPublicAPICall(label: "stop()")
         let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .stop(.init(completion: completion)))
     }
