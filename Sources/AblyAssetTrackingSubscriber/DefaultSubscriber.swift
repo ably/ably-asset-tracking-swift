@@ -49,21 +49,27 @@ class DefaultSubscriber: Subscriber {
         self.ablySubscriber.subscribeForAblyStateChange()
     }
 
-    func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+    func resolutionPreference(resolution: Resolution?, completion publicCompletion: @escaping ResultHandler<Void>) {
+        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+
         guard !subscriberState.isStoppingOrStopped else {
-            callback(error: ErrorInformation(type: .subscriberStoppedException), handler: completion)
+            completion.handleSubscriberStopped()
             return
         }
         
         enqueue(event: .changeResolution(.init(resolution: resolution, resultHandler: completion)))
     }
 
-    func start(completion: @escaping ResultHandler<Void>) {
+    func start(completion publicCompletion: @escaping ResultHandler<Void>) {
+        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
         enqueue(event: .start(.init(resultHandler: completion)))
     }
-    func stop(completion: @escaping ResultHandler<Void>) {
+
+    func stop(completion publicCompletion: @escaping ResultHandler<Void>) {
+        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+
         guard !subscriberState.isStoppingOrStopped else {
-            callback(value: Void(), handler: completion)
+            completion.handleSuccess()
             return
         }
         
@@ -86,14 +92,6 @@ extension DefaultSubscriber {
             case .ablyError(let event): self?.performAblyError(event)
             }
         }
-    }
-
-    private func callback<T: Any>(value: T, handler: @escaping ResultHandler<T>) {
-        performOnMainThread { handler(.success(value)) }
-    }
-
-    private func callback<T: Any>(error: ErrorInformation, handler: @escaping ResultHandler<T>) {
-        performOnMainThread { handler(.failure(error)) }
     }
 
     private func callback(event: DelegateEvent) {
@@ -150,10 +148,10 @@ extension DefaultSubscriber {
                 self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
                 self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
                 self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
-                
-                self.callback(value: Void(), handler: event.resultHandler)
+
+                event.resultHandler.handleSuccess()
             case .failure(let error):
-                self.callback(error: error, handler: event.resultHandler)
+                event.resultHandler.handleError(error)
             }
         }
         
@@ -167,7 +165,7 @@ extension DefaultSubscriber {
             case .success:
                 self?.enqueue(event: .ablyConnectionClosed(.init(resultHandler: event.resultHandler)))
             case .failure(let error):
-                self?.callback(error: ErrorInformation(error: error), handler: event.resultHandler)
+                event.resultHandler.handleError(ErrorInformation(error: error))
             }
         }
     }
@@ -191,7 +189,7 @@ extension DefaultSubscriber {
     
     private func performStopped(_ event: Event.AblyConnectionClosedEvent) {
         subscriberState = .stopped
-        callback(value: Void(), handler: event.resultHandler)
+        event.resultHandler.handleSuccess()
     }
     
     private func performClientConnectionChanged(_ event: Event.AblyClientConnectionStateChangedEvent) {
@@ -236,8 +234,8 @@ extension DefaultSubscriber {
 
     private func performChangeResolution(_ event: Event.ChangeResolutionEvent) {
         guard let resolution = event.resolution else {
-            callback(value: Void(), handler: event.resultHandler)
-            
+            event.resultHandler.handleSuccess()
+
             return
         }
         
@@ -245,13 +243,13 @@ extension DefaultSubscriber {
         ablySubscriber.updatePresenceData(
             trackableId: trackableId,
             presenceData: presenceDataUpdate
-        ) { [weak self] result in
+        ) { result in
             
             switch result {
             case .success:
-                self?.callback(value: Void(), handler: event.resultHandler)
+                event.resultHandler.handleSuccess()
             case .failure(let error):
-                self?.callback(error: ErrorInformation(error: error), handler: event.resultHandler)
+                event.resultHandler.handleError(ErrorInformation(error: error))
             }
         }
     }

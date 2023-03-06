@@ -82,7 +82,7 @@ extension InternalLogHandler {
 }
 
 extension InternalLogHandler {
-    /// A convenience method for logging an output (callback call, delegate method invocation) via the public API of the Asset Tracking SDKs.
+    /// A convenience method for logging an output (completion handler call, delegate method invocation) via the public API of the Asset Tracking SDKs.
     ///
     /// Prepends "(Public API, out) " to the given label, and logs a message at the `verbose` level.
     public func logPublicAPIOutput(label: String, file: String? = #file, line: Int? = #line) {

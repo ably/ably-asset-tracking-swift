@@ -57,4 +57,10 @@ public extension Callback {
         let error = ErrorInformation(type: .publisherStoppedException)
         handle(.failure(error))
     }
+
+    /// Calls the result handler with a ``ErrorInformationType.subscriberStopped`` error, respecting the source’s threading requirements.
+    func handleSubscriberStopped() {
+        let error = ErrorInformation(type: .subscriberStoppedException)
+        handle(.failure(error))
+    }
 }
