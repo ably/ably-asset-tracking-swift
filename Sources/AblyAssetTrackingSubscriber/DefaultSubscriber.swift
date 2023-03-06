@@ -131,20 +131,38 @@ extension DefaultSubscriber {
     }
 
     private func callback(event: DelegateEvent) {
-        logHandler?.verbose(message: "Received delegate event: \(event)", error: nil)
+        logHandler?.verbose(message: "Received event to send to delegate, dispatching call to main thread: \(event)", error: nil)
         performOnMainThread { [weak self] in
             guard let self = self,
                   let delegate = self.delegate
             else { return }
 
+            let log = { (description: String) in
+                self.logHandler?.logPublicAPIOutput(label: "Calling delegate \(description)")
+            }
+
             switch event {
-            case .delegateError(let event): delegate.subscriber(sender: self, didFailWithError: event.error)
-            case .delegateConnectionStatusChanged(let event): delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
-            case .delegateEnhancedLocationReceived(let event): delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
-            case .delegateRawLocationReceived(let event): delegate.subscriber(sender: self, didUpdateRawLocation: event.locationUpdate)
-            case .delegateResolutionReceived(let event): delegate.subscriber(sender: self, didUpdateResolution: event.resolution)
-            case .delegateDesiredIntervalReceived(let event): delegate.subscriber(sender: self, didUpdateDesiredInterval: event.desiredInterval)
-            case .delegateUpdatedPublisherPresence(let event): delegate.subscriber(sender: self, didUpdatePublisherPresence: event.isPresent)
+            case .delegateError(let event):
+                log("didFailWithError: \(event.error)")
+                delegate.subscriber(sender: self, didFailWithError: event.error)
+            case .delegateConnectionStatusChanged(let event):
+                log("didChangeAssetConnectionStatus: \(event.status)")
+                delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
+            case .delegateEnhancedLocationReceived(let event):
+                log("didUpdateEnhancedLocation: \(event.locationUpdate)")
+                delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
+            case .delegateRawLocationReceived(let event):
+                log("didUpdateRawLocation: \(event.locationUpdate)")
+                delegate.subscriber(sender: self, didUpdateRawLocation: event.locationUpdate)
+            case .delegateResolutionReceived(let event):
+                log("didUpdateResolution: \(event.resolution)")
+                delegate.subscriber(sender: self, didUpdateResolution: event.resolution)
+            case .delegateDesiredIntervalReceived(let event):
+                log("didUpdateDesiredInterval: \(event.desiredInterval)")
+                delegate.subscriber(sender: self, didUpdateDesiredInterval: event.desiredInterval)
+            case .delegateUpdatedPublisherPresence(let event):
+                log("didUpdatePublisherPresence: \(event.isPresent)")
+                delegate.subscriber(sender: self, didUpdatePublisherPresence: event.isPresent)
             }
         }
     }

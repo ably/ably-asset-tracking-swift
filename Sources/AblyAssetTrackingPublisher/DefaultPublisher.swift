@@ -185,26 +185,38 @@ extension DefaultPublisher {
     }
 
     private func sendDelegateEvent(_ event: DelegateEvent) {
-        logHandler?.verbose(message: "Received delegate event: \(event)", error: nil)
+        logHandler?.verbose(message: "Received event to send to delegate, dispatching call to main thread: \(event)", error: nil)
 
         Self.performOnMainThread { [weak self] in
             guard let self = self
             else { return }
 
+            let log = { (description: String) in
+                self.logHandler?.logPublicAPIOutput(label: "Calling delegate \(description)")
+            }
+
             switch event {
             case .error(let event):
+                log("didFailWithError: \(event.error)")
                 self.delegate?.publisher(sender: self, didFailWithError: event.error)
             case .trackableConnectionStateChanged(let event):
+                log("didChangeConnectionState: \(event.connectionState), forTrackable: \(event.trackable)")
                 self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
             case .enhancedLocationChanged(let event):
+                log("didUpdateEnhancedLocation: \(event.locationUpdate)")
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
             case .finishedRecordingLocationHistoryData(let event):
+                // Omitting this because it could be huge and log messages are currently always evaluated regardless of configured level
+                log("didFinishRecordingLocationHistoryData: (omitted)")
                 self.delegate?.publisher(sender: self, didFinishRecordingLocationHistoryData: event.locationHistoryData)
             case .finishedRecordingRawMapboxData(let event):
+                log("didFinishRecordingRawMapboxDataToTemporaryFile: \(event.temporaryFile)")
                 self.delegate?.publisher(sender: self, didFinishRecordingRawMapboxDataToTemporaryFile: event.temporaryFile)
             case .didUpdateResolution(let event):
+                log("didUpdateResolution: \(event.resolution)")
                 self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
             case .didChangeTrackables(let event):
+                log("didChangeTrackables: \(event.trackables)")
                 self.delegate?.publisher(sender: self, didChangeTrackables: event.trackables)
             }
         }

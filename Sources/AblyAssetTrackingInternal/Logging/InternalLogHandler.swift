@@ -80,3 +80,13 @@ extension InternalLogHandler {
         logMessage(level: level, message: message, error: error, codeLocation: codeLocation)
     }
 }
+
+extension InternalLogHandler {
+    /// A convenience method for logging an output (callback call, delegate method invocation) via the public API of the Asset Tracking SDKs.
+    ///
+    /// Prepends "(Public API, out) " to the given label, and logs a message at the `verbose` level.
+    public func logPublicAPIOutput(label: String, file: String? = #file, line: Int? = #line) {
+        let message = "(Public API, out) \(label)"
+        logMessage(level: .verbose, message: message, error: nil, file: file, line: line)
+    }
+}
