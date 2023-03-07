@@ -39,11 +39,12 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
         }
         
         let internalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
-                                                           subsystem: .named("subscriber"))
+                                                           subsystems: [.assetTracking, .named("subscriber")])
 
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
+            host: nil,
             mode: .subscribe,
             logHandler: internalLogHandler
         )

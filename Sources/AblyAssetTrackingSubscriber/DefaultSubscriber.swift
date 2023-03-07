@@ -56,59 +56,37 @@ class DefaultSubscriber: Subscriber {
         self.ablySubscriber.subscribeForAblyStateChange()
     }
 
-    func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+    func resolutionPreference(resolution: Resolution?, completion publicCompletion: @escaping ResultHandler<Void>) {
+        logHandler?.logPublicAPICall(label: "resolutionPreference(\(String(describing: resolution)))")
+
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
+
         guard !subscriberState.isStoppingOrStopped else {
-            callback(error: ErrorInformation(type: .subscriberStoppedException), handler: completion)
+            completion.handleSubscriberStopped()
             return
         }
         
-        enqueue(event: .changeResolution(.init(resolution: resolution, resultHandler: completion)))
-    }
-    
-    func resolutionPreference(resolution: Resolution?, onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        resolutionPreference(resolution: resolution) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
+        enqueue(event: .changeResolution(.init(resolution: resolution, completion: completion)))
     }
 
-    func start(completion: @escaping ResultHandler<Void>) {
-        enqueue(event: .start(.init(resultHandler: completion)))
+    func start(completion publicCompletion: @escaping ResultHandler<Void>) {
+        logHandler?.logPublicAPICall(label: "start()")
+
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
+        enqueue(event: .start(.init(completion: completion)))
     }
-    
-    func start(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        start { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
-    }
-    
-    func stop(completion: @escaping ResultHandler<Void>) {
+
+    func stop(completion publicCompletion: @escaping ResultHandler<Void>) {
+        logHandler?.logPublicAPICall(label: "stop()")
+
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
+
         guard !subscriberState.isStoppingOrStopped else {
-            callback(value: Void(), handler: completion)
+            completion.handleSuccess()
             return
         }
         
-        enqueue(event: .stop(.init(resultHandler: completion)))
-    }
-
-    func stop(onSuccess: @escaping (() -> Void), onError: @escaping ((ErrorInformation) -> Void)) {
-        stop { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
-                onError(error)
-            }
-        }
+        enqueue(event: .stop(.init(completion: completion)))
     }
 }
 
@@ -129,29 +107,39 @@ extension DefaultSubscriber {
         }
     }
 
-    private func callback<T: Any>(value: T, handler: @escaping ResultHandler<T>) {
-        performOnMainThread { handler(.success(value)) }
-    }
-
-    private func callback<T: Any>(error: ErrorInformation, handler: @escaping ResultHandler<T>) {
-        performOnMainThread { handler(.failure(error)) }
-    }
-
     private func callback(event: DelegateEvent) {
-        logHandler?.verbose(message: "Received delegate event: \(event)", error: nil)
+        logHandler?.verbose(message: "Received event to send to delegate, dispatching call to main thread: \(event)", error: nil)
         performOnMainThread { [weak self] in
             guard let self = self,
                   let delegate = self.delegate
             else { return }
 
+            let log = { (description: String) in
+                self.logHandler?.logPublicAPIOutput(label: "Calling delegate \(description)")
+            }
+
             switch event {
-            case .delegateError(let event): delegate.subscriber(sender: self, didFailWithError: event.error)
-            case .delegateConnectionStatusChanged(let event): delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
-            case .delegateEnhancedLocationReceived(let event): delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
-            case .delegateRawLocationReceived(let event): delegate.subscriber(sender: self, didUpdateRawLocation: event.locationUpdate)
-            case .delegateResolutionReceived(let event): delegate.subscriber(sender: self, didUpdateResolution: event.resolution)
-            case .delegateDesiredIntervalReceived(let event): delegate.subscriber(sender: self, didUpdateDesiredInterval: event.desiredInterval)
-            case .delegateUpdatedPublisherPresence(let event): delegate.subscriber(sender: self, didUpdatePublisherPresence: event.isPresent)
+            case .delegateError(let event):
+                log("didFailWithError: \(event.error)")
+                delegate.subscriber(sender: self, didFailWithError: event.error)
+            case .delegateConnectionStatusChanged(let event):
+                log("didChangeAssetConnectionStatus: \(event.status)")
+                delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
+            case .delegateEnhancedLocationReceived(let event):
+                log("didUpdateEnhancedLocation: \(event.locationUpdate)")
+                delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
+            case .delegateRawLocationReceived(let event):
+                log("didUpdateRawLocation: \(event.locationUpdate)")
+                delegate.subscriber(sender: self, didUpdateRawLocation: event.locationUpdate)
+            case .delegateResolutionReceived(let event):
+                log("didUpdateResolution: \(event.resolution)")
+                delegate.subscriber(sender: self, didUpdateResolution: event.resolution)
+            case .delegateDesiredIntervalReceived(let event):
+                log("didUpdateDesiredInterval: \(event.desiredInterval)")
+                delegate.subscriber(sender: self, didUpdateDesiredInterval: event.desiredInterval)
+            case .delegateUpdatedPublisherPresence(let event):
+                log("didUpdatePublisherPresence: \(event.isPresent)")
+                delegate.subscriber(sender: self, didUpdatePublisherPresence: event.isPresent)
             }
         }
     }
@@ -173,10 +161,10 @@ extension DefaultSubscriber {
                 self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
                 self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
                 self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
-                
-                self.callback(value: Void(), handler: event.resultHandler)
+
+                event.completion.handleSuccess()
             case .failure(let error):
-                self.callback(error: error, handler: event.resultHandler)
+                event.completion.handleError(error)
             }
         }
         
@@ -188,9 +176,9 @@ extension DefaultSubscriber {
         ablySubscriber.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
-                self?.enqueue(event: .ablyConnectionClosed(.init(resultHandler: event.resultHandler)))
+                self?.enqueue(event: .ablyConnectionClosed(.init(completion: event.completion)))
             case .failure(let error):
-                self?.callback(error: ErrorInformation(error: error), handler: event.resultHandler)
+                event.completion.handleError(ErrorInformation(error: error))
             }
         }
     }
@@ -214,7 +202,7 @@ extension DefaultSubscriber {
     
     private func performStopped(_ event: Event.AblyConnectionClosedEvent) {
         subscriberState = .stopped
-        callback(value: Void(), handler: event.resultHandler)
+        event.completion.handleSuccess()
     }
     
     private func performClientConnectionChanged(_ event: Event.AblyClientConnectionStateChangedEvent) {
@@ -259,8 +247,8 @@ extension DefaultSubscriber {
 
     private func performChangeResolution(_ event: Event.ChangeResolutionEvent) {
         guard let resolution = event.resolution else {
-            callback(value: Void(), handler: event.resultHandler)
-            
+            event.completion.handleSuccess()
+
             return
         }
         
@@ -268,13 +256,13 @@ extension DefaultSubscriber {
         ablySubscriber.updatePresenceData(
             trackableId: trackableId,
             presenceData: presenceDataUpdate
-        ) { [weak self] result in
+        ) { result in
             
             switch result {
             case .success:
-                self?.callback(value: Void(), handler: event.resultHandler)
+                event.completion.handleSuccess()
             case .failure(let error):
-                self?.callback(error: ErrorInformation(error: error), handler: event.resultHandler)
+                event.completion.handleError(ErrorInformation(error: error))
             }
         }
     }
