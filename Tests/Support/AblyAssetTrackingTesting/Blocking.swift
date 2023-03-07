@@ -29,7 +29,7 @@ public enum Blocking {
         let waiter = XCTWaiter()
         let expectation = XCTestExpectation(description: label)
 
-        var result: Result<Success, Failure>!
+        var result: Result<Success, Failure>?
 
         logHandler.debug(message: "Perform Blocking.run’s operation (\(label))", error: nil)
         operation { asyncResult in
@@ -43,8 +43,14 @@ public enum Blocking {
 
         switch expectationWaitResult {
         case .completed:
-            logHandler.debug(message: "Blocking.run completed successfully (\(label))", error: nil)
-            return try result.get()
+            switch result! {
+            case .success(let value):
+                logHandler.debug(message: "Blocking.run’s operation completed successfully (\(label))", error: nil)
+                return value
+            case .failure(let error):
+                logHandler.error(message: "Blocking.run’s operation failed (\(label))", error: error)
+                throw error
+            }
         case .timedOut:
             logHandler.debug(message: "Blocking.run timed out (\(label))", error: nil)
             throw Error.timedOut(duration: timeout, label: logHandler.tagMessage(label))
