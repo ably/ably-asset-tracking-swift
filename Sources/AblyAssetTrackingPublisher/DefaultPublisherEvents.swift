@@ -160,6 +160,8 @@ extension DefaultPublisher {
         case trackableConnectionStateChanged(TrackableConnectionStateChangedEvent)
         case finishedRecordingLocationHistoryData(FinishedRecordingLocationHistoryDataEvent)
         case finishedRecordingRawMapboxData(FinishedRecordingRawMapboxDataEvent)
+        case didUpdateResolution(DidUpdateResolutionEvent)
+        case didChangeTrackables(DidChangeTrackablesEvent)
 
         
         struct ErrorEvent {
@@ -181,6 +183,14 @@ extension DefaultPublisher {
         
         struct FinishedRecordingRawMapboxDataEvent {
             let temporaryFile: TemporaryFile
+        }
+
+        struct DidUpdateResolutionEvent {
+            let resolution: Resolution
+        }
+
+        struct DidChangeTrackablesEvent {
+            let trackables: Set<Trackable>
         }
     }
 }

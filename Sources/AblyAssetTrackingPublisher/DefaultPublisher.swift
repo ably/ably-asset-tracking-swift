@@ -123,27 +123,32 @@ class DefaultPublisher: Publisher {
     }
 
     func track(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        logHandler?.logPublicAPICall(label: "track(trackable: \(trackable))")
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .trackTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func add(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        logHandler?.logPublicAPICall(label: "add(trackable: \(trackable))")
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .addTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func remove(trackable: Trackable, completion publicCompletion: @escaping ResultHandler<Bool>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        logHandler?.logPublicAPICall(label: "remove(trackable: \(trackable))")
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .removeTrackable(.init(trackable: trackable, completion: completion)))
     }
 
     func changeRoutingProfile(profile: RoutingProfile, completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        logHandler?.logPublicAPICall(label: "changeRoutingProfile(profile: \(profile))")
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .changeRoutingProfile(.init(profile: profile, completion: completion)))
     }
 
     func stop(completion publicCompletion: @escaping ResultHandler<Void>) {
-        let completion = Callback(source: .publicAPI, resultHandler: publicCompletion)
+        logHandler?.logPublicAPICall(label: "stop()")
+        let completion = Callback(source: .publicAPI(label: #function), logHandler: logHandler, resultHandler: publicCompletion)
         enqueue(event: .stop(.init(completion: completion)))
     }
 }
@@ -185,30 +190,46 @@ extension DefaultPublisher {
     }
 
     private func sendDelegateEvent(_ event: DelegateEvent) {
-        logHandler?.verbose(message: "Received delegate event: \(event)", error: nil)
+        logHandler?.verbose(message: "Received event to send to delegate, dispatching call to main thread: \(event)", error: nil)
 
         Self.performOnMainThread { [weak self] in
             guard let self = self
             else { return }
 
+            let log = { (description: String) in
+                self.logHandler?.logPublicAPIOutput(label: "Calling delegate \(description)")
+            }
+
             switch event {
             case .error(let event):
+                log("didFailWithError: \(event.error)")
                 self.delegate?.publisher(sender: self, didFailWithError: event.error)
             case .trackableConnectionStateChanged(let event):
+                log("didChangeConnectionState: \(event.connectionState), forTrackable: \(event.trackable)")
                 self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
             case .enhancedLocationChanged(let event):
+                log("didUpdateEnhancedLocation: \(event.locationUpdate)")
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
             case .finishedRecordingLocationHistoryData(let event):
+                // Omitting this because it could be huge and log messages are currently always evaluated regardless of configured level
+                log("didFinishRecordingLocationHistoryData: (omitted)")
                 self.delegate?.publisher(sender: self, didFinishRecordingLocationHistoryData: event.locationHistoryData)
             case .finishedRecordingRawMapboxData(let event):
+                log("didFinishRecordingRawMapboxDataToTemporaryFile: \(event.temporaryFile)")
                 self.delegate?.publisher(sender: self, didFinishRecordingRawMapboxDataToTemporaryFile: event.temporaryFile)
+            case .didUpdateResolution(let event):
+                log("didUpdateResolution: \(event.resolution)")
+                self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
+            case .didChangeTrackables(let event):
+                log("didChangeTrackables: \(event.trackables)")
+                self.delegate?.publisher(sender: self, didChangeTrackables: event.trackables)
             }
         }
     }
 
     // MARK: Track
     private func performTrackTrackableEvent(_ event: Event.TrackTrackableEvent) {
-        let completion = Callback<Void>(source: .publisherInternal) { [weak self] result in
+        let completion = Callback<Void>(source: .internallyCreated, logHandler: logHandler) { [weak self] result in
             switch result {
             case .success:
                 self?.enqueue(event: .trackableReadyToTrack(.init(trackable: event.trackable, completion: event.completion)))
@@ -846,38 +867,23 @@ extension DefaultPublisher {
 
     // MARK: Delegate
     private func notifyDelegateDidFailWithError(_ error: ErrorInformation) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didFailWithError: error)
-        }
+        sendDelegateEvent(.error(.init(error: error)))
     }
 
     private func notifyDelegateEnhancedLocationChanged(_ event: Event.DelegateEnhancedLocationChangedEvent) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
-        }
+        sendDelegateEvent(.enhancedLocationChanged(.init(locationUpdate: event.locationUpdate)))
     }
 
     private func notifyDelegateConnectionStateChanged(_ event: Event.DelegateTrackableConnectionStateChangedEvent) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
-        }
+        sendDelegateEvent(.trackableConnectionStateChanged(.init(trackable: event.trackable, connectionState: event.connectionState)))
     }
 
     private func notifyDelegateResolutionUpdate(_ event: Event.DelegateResolutionUpdateEvent) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didUpdateResolution: event.resolution)
-        }
+        sendDelegateEvent(.didUpdateResolution(.init(resolution: event.resolution)))
     }
     
     private func notifyTrackablesChanged(trackables: Set<Trackable>) {
-        Self.performOnMainThread { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.publisher(sender: self, didChangeTrackables: trackables)
-        }
+        sendDelegateEvent(.didChangeTrackables(.init(trackables: trackables)))
     }
 }
 
