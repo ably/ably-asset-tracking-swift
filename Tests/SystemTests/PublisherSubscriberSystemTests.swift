@@ -82,6 +82,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
+            host: nil,
             mode: .publish,
             logHandler: publisherInternalLogHandler
         )
@@ -173,6 +174,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
+            host: nil,
             mode: .publish,
             logHandler: publisherInternalLogHandler
         )

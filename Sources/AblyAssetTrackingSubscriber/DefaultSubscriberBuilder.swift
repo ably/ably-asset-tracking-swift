@@ -44,6 +44,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: connection,
+            host: nil,
             mode: .subscribe,
             logHandler: internalLogHandler
         )
