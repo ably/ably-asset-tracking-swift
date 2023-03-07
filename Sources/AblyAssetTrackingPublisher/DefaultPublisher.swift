@@ -4,20 +4,9 @@ import MapboxDirections
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
-class DefaultPublisher: Publisher {
+class DefaultPublisher: Publisher, PublisherInteractor {
     
-    // Publisher state
-    private enum State {
-        case working
-        case stopping
-        case stopped
-
-        var isStoppingOrStopped: Bool {
-            self == .stopping || self == .stopped
-        }
-    }
-    
-    private let workingQueue: DispatchQueue
+    private let workerQueue: WorkerQueue<PublisherWorkerQueueProperties, PublisherWorkSpecification>
     private let locationService: LocationService
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
@@ -27,7 +16,7 @@ class DefaultPublisher: Publisher {
     private var ablyPublisher: AblyPublisher
     private var enhancedLocationState: TrackableState<EnhancedLocationUpdate>
     private var rawLocationState: TrackableState<RawLocationUpdate>
-    private var state: State = .working
+    private var state: PublisherState = .idle
     private var presenceData: PresenceData
     private var areRawLocationsEnabled: Bool
 
@@ -79,13 +68,20 @@ class DefaultPublisher: Publisher {
          logHandler: InternalLogHandler?
     ) {
         self.routingProfile = routingProfile
-        self.workingQueue = DispatchQueue(label: "io.ably.asset-tracking.Publisher.DefaultPublisher", qos: .default)
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
+        self.workerQueue = WorkerQueue(
+            properties: PublisherWorkerQueueProperties(),
+            workingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher", qos: .default),
+            logHandler: self.logHandler,
+            workerFactory: PublisherWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher.async", qos: .default),
+            getStoppedError: { return ErrorInformation(type: .publisherStoppedException)}
+        )
         self.locationService = locationService
         self.ablyPublisher = ablyPublisher
         self.routeProvider = routeProvider
         self.enhancedLocationState = enhancedLocationState
         self.rawLocationState = rawLocationState
-        self.logHandler = logHandler?.addingSubsystem(Self.self)
 
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
         
@@ -858,7 +854,11 @@ extension DefaultPublisher {
 
     // MARK: Utils
     private func performOnWorkingQueue(_ operation: @escaping () -> Void) {
-        workingQueue.async(execute: operation)
+        workerQueue.enqueue(
+            workRequest: WorkRequest<PublisherWorkSpecification>(
+                workerSpecification: PublisherWorkSpecification.legacy(callback: operation)
+            )
+        )
     }
 
     static private func performOnMainThread(_ operation: @escaping () -> Void) {

@@ -17,7 +17,7 @@ private enum SubscriberState {
 }
 
 class DefaultSubscriber: Subscriber {
-    private let workingQueue: DispatchQueue
+    private let workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
@@ -37,12 +37,19 @@ class DefaultSubscriber: Subscriber {
         trackableId: String,
         resolution: Resolution?,
         logHandler: InternalLogHandler?) {
-            
-        self.workingQueue = DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default)
+
+        self.logHandler = logHandler?.addingSubsystem(Self.self)
+        self.workerQueue = WorkerQueue(
+            properties: SubscriberWorkerQueueProperties(),
+            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
+            logHandler: self.logHandler,
+            workerFactory: SubscriberWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
+            getStoppedError: { return ErrorInformation(type: .subscriberStoppedException)}
+        )
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
-        self.logHandler = logHandler?.addingSubsystem(Self.self)
         
         self.ablySubscriber.subscriberDelegate = self
         
@@ -278,7 +285,11 @@ extension DefaultSubscriber {
 
     // MARK: Utils
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
-        workingQueue.async(execute: operation)
+        workerQueue.enqueue(
+            workRequest: WorkRequest<SubscriberWorkSpecification>(
+                workerSpecification: SubscriberWorkSpecification.legacy(callback: operation)
+            )
+        )
     }
 
     private func performOnMainThread(_ operation: @escaping () -> Void) {
