@@ -2,9 +2,8 @@ import AblyAssetTrackingCore
 import Foundation
 import UIKit
 
-/**
- Main `Subscriber` interface implemented in SDK by `DefaultSubscriber`
- */
+// sourcery: AutoMockable
+/// Main `Subscriber` interface implemented in SDK by `DefaultSubscriber`
 public protocol Subscriber {
     /**
      Delegate object to receive events from `Subscriber`.
