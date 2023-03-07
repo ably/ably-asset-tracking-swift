@@ -1,5 +1,6 @@
 sources:
   - Sources/AblyAssetTrackingSubscriber/SubscriberDelegate.swift
+  - Sources/AblyAssetTrackingSubscriber/Subscriber.swift
 templates:
   - Sourcery/templates/AutoMockable.stencil
 output:
