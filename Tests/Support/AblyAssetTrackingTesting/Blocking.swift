@@ -33,7 +33,7 @@ public enum Blocking {
 
         logHandler.debug(message: "Perform Blocking.run’s operation (\(label))", error: nil)
         operation { asyncResult in
-            logHandler.debug(message: "Blocking.run’s operation called its result handler (\(label))", error: nil)
+            logHandler.debug(message: "Blocking.run’s operation called its result handler (\(label)) with result \(asyncResult)", error: nil)
             result = asyncResult
             expectation.fulfill()
         }
