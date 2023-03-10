@@ -14,7 +14,7 @@ import AblyAssetTrackingCore
 ///     semantics
 ///     - WorkerSpecificationType - the type of specification used to post worker back to the queue
 public class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType: WorkerQueueProperties {
-    var properties: PropertiesType
+    public var properties: PropertiesType
     let workingQueue: DispatchQueue
     let logHandler: InternalLogHandler?
     let workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>

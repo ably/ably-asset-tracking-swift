@@ -17,5 +17,11 @@ public enum PresenceType {
  */
 public struct Presence {
     public let action: PresenceAction
-    public let type: PresenceType
+    public let data: PresenceData
+    
+    /**
+     Combination of Ably `clientId` and `connectionId`.
+     See: https://sdk.ably.com/builds/ably/specification/main/features/#TP3h
+     */
+    public let memberKey: String
 }

@@ -4,8 +4,6 @@ import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
-// Default logger used in Subscriber SDK
-
 private enum SubscriberState {
     case working
     case stopping
@@ -17,7 +15,7 @@ private enum SubscriberState {
 }
 
 class DefaultSubscriber: Subscriber {
-    private let workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>
+    private var workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>?
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
@@ -39,21 +37,20 @@ class DefaultSubscriber: Subscriber {
         logHandler: InternalLogHandler?) {
 
         self.logHandler = logHandler?.addingSubsystem(Self.self)
-        self.workerQueue = WorkerQueue(
-            properties: SubscriberWorkerQueueProperties(),
-            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
-            logHandler: self.logHandler,
-            workerFactory: SubscriberWorkerFactory(),
-            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
-            getStoppedError: { return ErrorInformation(type: .subscriberStoppedException)}
-        )
+
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
         
-        self.ablySubscriber.subscriberDelegate = self
-        
         self.ablySubscriber.subscribeForAblyStateChange()
+        self.ablySubscriber.subscriberDelegate = self
+
+    }
+    
+    /// This method needs to be called before attempting to execute any work using Workers. It's called automatically if DefaultSubscriber is instantiated using the
+    /// ``DefaultSubscriberBuilder``.
+    func configureWorkerQueue(workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>) {
+        self.workerQueue = workerQueue
     }
 
     func resolutionPreference(resolution: Resolution?, completion publicCompletion: @escaping ResultHandler<Void>) {
@@ -184,7 +181,7 @@ extension DefaultSubscriber {
     }
     
     private func performPresenceUpdated(_ event: Event.PresenceUpdateEvent) {
-        guard event.presence.type == .publisher else {
+        guard event.presence.data.type == .publisher else {
             return
         }
         
@@ -232,11 +229,15 @@ extension DefaultSubscriber {
                 newConnectionState = .offline
             case .failed:
                 newConnectionState = .failed
+            case .publishing:
+                newConnectionState = .publishing
             }
         case .offline:
             newConnectionState = .offline
         case .failed:
             newConnectionState = .failed
+        case .publishing:
+            newConnectionState = .publishing
         }
         
         if newConnectionState != currentTrackableConnectionState {
@@ -285,6 +286,10 @@ extension DefaultSubscriber {
 
     // MARK: Utils
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
+        guard let workerQueue = workerQueue
+        else {
+            fatalError("workerQueue has to be configured using the DefaultSubscriber.configureWorkerQueue before attempting to enqueue work on it.")
+        }
         workerQueue.enqueue(
             workRequest: WorkRequest<SubscriberWorkSpecification>(
                 workerSpecification: SubscriberWorkSpecification.legacy(callback: operation)

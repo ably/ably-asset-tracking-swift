@@ -27,7 +27,7 @@ class PublisherHelper {
         locationUpdate: EnhancedLocationUpdate,
         trackable: Trackable,
         locationService: LocationService = MockLocationService(),
-        enhancedLocationState: TrackableState<EnhancedLocationUpdate>,
+        enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate>,
         resultPolicy: SendLocationResultPolicy = .success,
         error: ErrorInformation = ErrorInformation(type: .commonError(errorMessage: "Failure"))
     ) {
@@ -93,7 +93,7 @@ class PublisherHelper {
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
-        enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>(),
+        enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate> = LocationsPublishingState<EnhancedLocationUpdate>(),
         logHandler: InternalLogHandlerMock = InternalLogHandlerMock.configured
     ) -> DefaultPublisher {
         

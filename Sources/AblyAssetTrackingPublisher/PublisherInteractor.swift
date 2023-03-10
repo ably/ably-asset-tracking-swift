@@ -28,7 +28,7 @@ protocol PublisherInteractor
 
     /// Given publisher properties, a trackable id and state, give the trackable the given state as a "final" state,
     /// unless one has already been set.
-    // func setFinalTrackableState(properties: PublisherWorkerQueueProperties, trackableId: String, finalState: ConnectionState)
+    // func setFinalTrackableState(properties: PublisherWorkerQueueProperties, trackableId: String, finalState: TrackableState)
 
     /// Given a trackable, use the resolution policies hooks to let the policy know that a trackable was removed
     // func notifyResolutionPolicyThatTrackableWasRemoved(trackable: Trackable)

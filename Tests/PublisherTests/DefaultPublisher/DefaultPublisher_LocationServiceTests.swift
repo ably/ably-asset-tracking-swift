@@ -18,8 +18,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
     var waitAsync: WaitAsync!
-    var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
-    var rawLocationState: TrackableState<RawLocationUpdate>!
+    var enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate>!
+    var rawLocationState: LocationsPublishingState<RawLocationUpdate>!
     var logger: InternalLogHandlerMock!
     
     override func setUpWithError() throws {
@@ -30,8 +30,8 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         delegate = MockPublisherDelegate()
         waitAsync = WaitAsync()
-        enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
-        rawLocationState = TrackableState<RawLocationUpdate>()
+        enhancedLocationState = LocationsPublishingState<EnhancedLocationUpdate>()
+        rawLocationState = LocationsPublishingState<RawLocationUpdate>()
         logger = InternalLogHandlerMock.configured
         
         trackable = Trackable(
@@ -192,7 +192,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let location = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let trackable = Trackable(id: "Trackable_1")
-        let trackableState = TrackableState<EnhancedLocationUpdate>()
+        let trackableState = LocationsPublishingState<EnhancedLocationUpdate>()
         let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         let publisher = PublisherHelper.createPublisher(ablyPublisher: ablyPublisher)
         
@@ -218,7 +218,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let initialLocation = Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1))
         var locationUpdate = EnhancedLocationUpdate(location: initialLocation)
         let trackable = Trackable(id: "Trackable_2")
-        let enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
+        let enhancedLocationState = LocationsPublishingState<EnhancedLocationUpdate>()
         let ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         let delegate = MockPublisherDelegate()
         let publisher = PublisherHelper.createPublisher(

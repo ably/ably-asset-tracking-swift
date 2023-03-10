@@ -55,6 +55,15 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             logHandler: internalLogHandler
         )
         subscriber.delegate = delegate
+        let workerQueue = WorkerQueue(
+            properties: SubscriberWorkerQueueProperties(initialResolution: resolution, ablySubscriber: subscriber),
+            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
+            logHandler: internalLogHandler,
+            workerFactory: SubscriberWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
+            getStoppedError: { return ErrorInformation(type: .subscriberStoppedException)}
+        )
+        subscriber.configureWorkerQueue(workerQueue: workerQueue)
         subscriber.start(completion: completion)
         return subscriber
     }

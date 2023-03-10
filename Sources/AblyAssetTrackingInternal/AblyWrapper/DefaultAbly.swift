@@ -241,7 +241,8 @@ public class DefaultAbly: AblyCommon {
         
         let presence = Presence(
             action: message.action.toPresenceAction(),
-            type: data.type.toPresenceType()
+            data: data,
+            memberKey: message.memberKey()
         )
         
         // AblySubscriber delegate

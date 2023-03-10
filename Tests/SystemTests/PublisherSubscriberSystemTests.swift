@@ -234,6 +234,8 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
             didChangeAssetConnectionStatusOfflineExpectation.fulfill()
         case .failed:
             ()
+        case .publishing:
+            ()
         }
     }
     

@@ -8,7 +8,14 @@ public enum ConnectionState: Int {
      Asset is connected to tracking system and we're receiving their position
      */
     case online
-
+    
+    /**
+     Trackable state is publishing when its locations are being published but it is not able to detect subscribers or receive data from them.
+     This state allows the trackable to be actively tracked, however, its features are limited compared to the [Online] state.
+     This state can change to either online, offline or failed.
+     */
+    case publishing
+    
     /**
      Asset is not connected
      */
@@ -26,6 +33,8 @@ extension ConnectionState {
             switch self {
             case .online:
                 return "online"
+            case .publishing:
+                return "publishing"
             case .offline:
                 return "offline"
             case .failed:
@@ -36,4 +45,17 @@ extension ConnectionState {
     public var description: String {
         "ConnectionState.\(string)"
     }
+}
+
+/**
+ * A change in state of a connection to the Ably service.
+ */
+public struct ConnectionStateChange {
+    public init(state: ConnectionState, errorInformation: ErrorInformation?) {
+        self.state = state
+        self.errorInformation = errorInformation
+    }
+    
+    public let state: ConnectionState
+    public let errorInformation: ErrorInformation?
 }

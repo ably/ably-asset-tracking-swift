@@ -24,6 +24,15 @@ class DefaultSubscriberTests: XCTestCase {
             resolution: nil,
             logHandler: logger
         )
+        let workerQueue = WorkerQueue(
+            properties: SubscriberWorkerQueueProperties(initialResolution: nil, ablySubscriber: subscriber),
+            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
+            logHandler: logger,
+            workerFactory: SubscriberWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
+            getStoppedError: { return ErrorInformation(type: .subscriberStoppedException)}
+        )
+        subscriber.configureWorkerQueue(workerQueue: workerQueue)
     }
     
     func test_subscriberStop_called() {
@@ -393,7 +402,7 @@ class DefaultSubscriberTests: XCTestCase {
             delegateDidFailWithErrorCalledExpectation.fulfill()
         }
         
-        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceUpdate: .init(action: presenceAction, type: .publisher))
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceUpdate: Presence(action: presenceAction, data: PresenceData(type: .publisher, resolution: nil), memberKey: ""))
         
         waitForExpectations(timeout: 10)
     }
