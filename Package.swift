@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -23,7 +23,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "MapboxNavigation", url: "https://github.com/mapbox/mapbox-navigation-ios.git", from: "2.9.0"),
+        .package(url: "https://github.com/mapbox/mapbox-navigation-ios.git", from: "2.9.0"),
         .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.19"),
         .package(url: "https://github.com/mxcl/Version", from: "2.0.1")
     ],
@@ -41,7 +41,7 @@ let package = Package(
                 "AblyAssetTrackingCore",
                 "AblyAssetTrackingInternal",
                 .product(name: "Ably", package: "ably-cocoa"),
-                .product(name: "MapboxNavigation", package: "MapboxNavigation"),
+                .product(name: "MapboxNavigation", package: "mapbox-navigation-ios"),
                 .product(name: "Version", package: "Version")
             ]),
         .target(
