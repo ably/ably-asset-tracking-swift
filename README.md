@@ -56,9 +56,9 @@ Visit the [Ably Asset Tracking](https://ably.com/docs/asset-tracking) documentat
 
 These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be developed in the future, depending on interest/ demand.
 
-- Publisher SDK: iOS 12.0+ / iPadOS 12.0+
+- Publisher SDK: iOS 13.0+ / iPadOS 13.0+
 
-- Subscriber SDK: iOS 12.0+ / iPadOS 12.0+
+- Subscriber SDK: iOS 13.0+ / iPadOS 13.0+
 
 - Xcode 14.0+
 
