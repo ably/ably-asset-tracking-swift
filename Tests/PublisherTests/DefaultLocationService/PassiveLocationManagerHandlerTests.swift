@@ -6,7 +6,7 @@ import AblyAssetTrackingPublisherTesting
 
 @available(iOS 13.4, *)
 class PassiveLocationManagerHandlerTests: XCTestCase {
-    var logger: InternalLogHandlerMock!
+    var logger: InternalLogHandlerMockThreadSafe!
     var passiveLocationManagerHandler: PassiveLocationManagerHandler!
     var validCLLocation: CLLocation!
     var repairableCLLocation: CLLocation!
@@ -17,7 +17,7 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
     var date: Date!
     
     override func setUpWithError() throws {
-        logger = InternalLogHandlerMock.configured
+        logger = InternalLogHandlerMockThreadSafe()
         passiveLocationManagerHandler = PassiveLocationManagerHandler(logHandler: logger)
         date = Date()
         
