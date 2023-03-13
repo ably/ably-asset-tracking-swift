@@ -6,7 +6,7 @@ import AblyAssetTrackingSubscriberTesting
 
 class SubscriberWorkerFactoryTests: XCTestCase
 {
-    private let logHandler = InternalLogHandlerMock.configured
+    private let logHandler = InternalLogHandlerMockThreadSafe()
     private let properties = SubscriberWorkerQueueProperties()
     private let factory = SubscriberWorkerFactory()
 

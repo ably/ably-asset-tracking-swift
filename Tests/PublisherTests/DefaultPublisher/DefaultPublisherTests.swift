@@ -20,7 +20,7 @@ class DefaultPublisherTests: XCTestCase {
     var delegate: MockPublisherDelegate!
     var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
     
-    let logger = InternalLogHandlerMock.configured
+    let logger = InternalLogHandlerMockThreadSafe()
     let waitAsync = WaitAsync()
     
     override func setUpWithError() throws {
