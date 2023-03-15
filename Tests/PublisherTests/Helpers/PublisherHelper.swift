@@ -94,7 +94,7 @@ class PublisherHelper {
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
         enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate> = LocationsPublishingState<EnhancedLocationUpdate>(),
-        logHandler: InternalLogHandlerMock = InternalLogHandlerMock.configured
+        logHandler: InternalLogHandlerMockThreadSafe = InternalLogHandlerMockThreadSafe()
     ) -> DefaultPublisher {
         
         DefaultPublisher(

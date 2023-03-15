@@ -12,7 +12,7 @@ class DefaultSubscriberTests: XCTestCase {
     private var trackableId: String!
     
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
-    private let logger = InternalLogHandlerMock.configured
+    private let logger = InternalLogHandlerMockThreadSafe()
     
     override func setUpWithError() throws {
         trackableId = "Trackable-\(UUID().uuidString)"

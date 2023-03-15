@@ -6,7 +6,7 @@ import AblyAssetTrackingSubscriberTesting
 
 class SubscriberWorkerFactoryTests: XCTestCase
 {
-    private let logHandler = InternalLogHandlerMock.configured
+    private let logHandler = InternalLogHandlerMockThreadSafe()
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
     private var ablySubscriber: MockAblySubscriber!
     private let logger = InternalLogHandlerMock.configured
