@@ -55,6 +55,8 @@ class DescriptionsHelper {
                         return ("online", .systemGreen)
                     case .offline:
                         return ("offline", .systemRed)
+                    case .publishing:
+                        return ("publishing", .systemGreen)
                     case .failed:
                         return ("failed", .systemRed)
                     }

@@ -10,8 +10,8 @@ public enum ConnectionState: Int {
     case online
     
     /**
-     Trackable state is publishing when its locations are being published but it is not able to detect subscribers or receive data from them.
-     This state allows the trackable to be actively tracked, however, its features are limited compared to the [Online] state.
+     Asset state is publishing when its locations are being published but it is not able to detect subscribers or receive data from them.
+     This state allows the asset to be actively tracked, however, its features are limited compared to the online state.
      This state can change to either online, offline or failed.
      */
     case publishing
