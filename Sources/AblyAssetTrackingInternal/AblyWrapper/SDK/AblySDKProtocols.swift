@@ -24,10 +24,10 @@ public protocol AblySDKRealtimeChannels {
 //sourcery: AutoMockable
 public protocol AblySDKRealtimeChannel {
     var presence: AblySDKRealtimePresence { get }
-    @discardableResult func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> AblySDKEventListener?
+    @discardableResult func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> ARTEventListener?
     func unsubscribe()
     func detach(_ callback: ARTCallback?)
-    @discardableResult func on(_ callback: @escaping (ARTChannelStateChange) -> ()) -> AblySDKEventListener
+    @discardableResult func on(_ callback: @escaping (ARTChannelStateChange) -> ()) -> ARTEventListener
     func publish(_ messages: [ARTMessage], callback: ARTCallback?)
     func attach(_ callback: ARTCallback?)
     var state: ARTRealtimeChannelState { get }
@@ -39,7 +39,7 @@ public protocol AblySDKRealtimePresence {
     func enter(_ data: Any?, callback: ARTCallback?)
     func update(_ data: Any?, callback: ARTCallback?)
     func leave(_ data: Any?, callback: ARTCallback?)
-    @discardableResult func subscribe(_ callback: @escaping ARTPresenceMessageCallback) -> AblySDKEventListener?
+    @discardableResult func subscribe(_ callback: @escaping ARTPresenceMessageCallback) -> ARTEventListener?
     func unsubscribe()
 }
 
@@ -48,16 +48,11 @@ public protocol AblySDKConnection {
     var state: ARTRealtimeConnectionState {get}
     var errorReason: ARTErrorInfo? {get}
 
-    @discardableResult func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener
-    func off(_ listener: AblySDKEventListener)
+    @discardableResult func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> ARTEventListener
+    func off(_ listener: ARTEventListener)
 }
 
 //sourcery: AutoMockable
 public protocol AblySDKAuth {
     func authorize(_ callback: @escaping ARTTokenDetailsCallback)
-}
-
-//sourcery: AutoMockable
-public protocol AblySDKEventListener {
-    func underlyingListener() -> ARTEventListener
 }

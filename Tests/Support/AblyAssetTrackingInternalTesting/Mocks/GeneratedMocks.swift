@@ -77,11 +77,11 @@ public class AblySDKConnectionMock: AblySDKConnection {
     }
     public var onReceivedCallback: ((ARTConnectionStateChange) -> Void)?
     public var onReceivedInvocations: [((ARTConnectionStateChange) -> Void)] = []
-    public var onReturnValue: AblySDKEventListener!
-    public var onClosure: ((@escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener)?
+    public var onReturnValue: ARTEventListener!
+    public var onClosure: ((@escaping (ARTConnectionStateChange) -> Void) -> ARTEventListener)?
 
     @discardableResult
-    public func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener {
+    public func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> ARTEventListener {
         onCallsCount += 1
         onReceivedCallback = callback
         onReceivedInvocations.append(callback)
@@ -98,39 +98,15 @@ public class AblySDKConnectionMock: AblySDKConnection {
     public var offCalled: Bool {
         return offCallsCount > 0
     }
-    public var offReceivedListener: AblySDKEventListener?
-    public var offReceivedInvocations: [AblySDKEventListener] = []
-    public var offClosure: ((AblySDKEventListener) -> Void)?
+    public var offReceivedListener: ARTEventListener?
+    public var offReceivedInvocations: [ARTEventListener] = []
+    public var offClosure: ((ARTEventListener) -> Void)?
 
-    public func off(_ listener: AblySDKEventListener) {
+    public func off(_ listener: ARTEventListener) {
         offCallsCount += 1
         offReceivedListener = listener
         offReceivedInvocations.append(listener)
         offClosure?(listener)
-    }
-
-}
-public class AblySDKEventListenerMock: AblySDKEventListener {
-
-    public init() {}
-
-
-    //MARK: - underlyingListener
-
-    public var underlyingListenerCallsCount = 0
-    public var underlyingListenerCalled: Bool {
-        return underlyingListenerCallsCount > 0
-    }
-    public var underlyingListenerReturnValue: ARTEventListener!
-    public var underlyingListenerClosure: (() -> ARTEventListener)?
-
-    public func underlyingListener() -> ARTEventListener {
-        underlyingListenerCallsCount += 1
-        if let underlyingListenerClosure = underlyingListenerClosure {
-            return underlyingListenerClosure()
-        } else {
-            return underlyingListenerReturnValue
-        }
     }
 
 }
@@ -204,11 +180,11 @@ public class AblySDKRealtimeChannelMock: AblySDKRealtimeChannel {
     }
     public var subscribeCallbackReceivedArguments: (name: String, callback: ARTMessageCallback)?
     public var subscribeCallbackReceivedInvocations: [(name: String, callback: ARTMessageCallback)] = []
-    public var subscribeCallbackReturnValue: AblySDKEventListener?
-    public var subscribeCallbackClosure: ((String, @escaping ARTMessageCallback) -> AblySDKEventListener?)?
+    public var subscribeCallbackReturnValue: ARTEventListener?
+    public var subscribeCallbackClosure: ((String, @escaping ARTMessageCallback) -> ARTEventListener?)?
 
     @discardableResult
-    public func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> AblySDKEventListener? {
+    public func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> ARTEventListener? {
         subscribeCallbackCallsCount += 1
         subscribeCallbackReceivedArguments = (name: name, callback: callback)
         subscribeCallbackReceivedInvocations.append((name: name, callback: callback))
@@ -257,11 +233,11 @@ public class AblySDKRealtimeChannelMock: AblySDKRealtimeChannel {
     }
     public var onReceivedCallback: ((ARTChannelStateChange) -> ())?
     public var onReceivedInvocations: [((ARTChannelStateChange) -> ())] = []
-    public var onReturnValue: AblySDKEventListener!
-    public var onClosure: ((@escaping (ARTChannelStateChange) -> ()) -> AblySDKEventListener)?
+    public var onReturnValue: ARTEventListener!
+    public var onClosure: ((@escaping (ARTChannelStateChange) -> ()) -> ARTEventListener)?
 
     @discardableResult
-    public func on(_ callback: @escaping (ARTChannelStateChange) -> ()) -> AblySDKEventListener {
+    public func on(_ callback: @escaping (ARTChannelStateChange) -> ()) -> ARTEventListener {
         onCallsCount += 1
         onReceivedCallback = callback
         onReceivedInvocations.append(callback)
@@ -444,11 +420,11 @@ public class AblySDKRealtimePresenceMock: AblySDKRealtimePresence {
     }
     public var subscribeReceivedCallback: ARTPresenceMessageCallback?
     public var subscribeReceivedInvocations: [ARTPresenceMessageCallback] = []
-    public var subscribeReturnValue: AblySDKEventListener?
-    public var subscribeClosure: ((@escaping ARTPresenceMessageCallback) -> AblySDKEventListener?)?
+    public var subscribeReturnValue: ARTEventListener?
+    public var subscribeClosure: ((@escaping ARTPresenceMessageCallback) -> ARTEventListener?)?
 
     @discardableResult
-    public func subscribe(_ callback: @escaping ARTPresenceMessageCallback) -> AblySDKEventListener? {
+    public func subscribe(_ callback: @escaping ARTPresenceMessageCallback) -> ARTEventListener? {
         subscribeCallsCount += 1
         subscribeReceivedCallback = callback
         subscribeReceivedInvocations.append(callback)

@@ -95,7 +95,7 @@ class DefaultAblyTests: XCTestCase {
     func test_startConnection_callsCallbackWithSuccessWhenStateChangesToOnline() {
         let connection = AblySDKConnectionMock()
         let realtime = AblySDKRealtimeMock()
-        let onReturnedListener = AblySDKEventListenerMock()
+        let onReturnedListener = ARTEventListener()
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
@@ -129,7 +129,7 @@ class DefaultAblyTests: XCTestCase {
     func test_startConnection_callsCallbackWithFailureWhenStateChangesToFailed() {
         let connection = AblySDKConnectionMock()
         let realtime = AblySDKRealtimeMock()
-        let onReturnedListener = AblySDKEventListenerMock()
+        let onReturnedListener = ARTEventListener()
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
@@ -164,7 +164,7 @@ class DefaultAblyTests: XCTestCase {
     func test_startConnection_callsCallbackWithFailureWhenStateChangesToClosed() {
         let connection = AblySDKConnectionMock()
         let realtime = AblySDKRealtimeMock()
-        let onReturnedListener = AblySDKEventListenerMock()
+        let onReturnedListener = ARTEventListener()
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
@@ -199,7 +199,7 @@ class DefaultAblyTests: XCTestCase {
     func test_startConnection_doesNotCallCallbackOnOtherStateChanges() {
         let connection = AblySDKConnectionMock()
         let realtime = AblySDKRealtimeMock()
-        let onReturnedListener = AblySDKEventListenerMock()
+        let onReturnedListener = ARTEventListener()
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
@@ -633,7 +633,7 @@ class DefaultAblyTests: XCTestCase {
             let message = ARTMessage(name: nil, data: data)
             callback(message)
             
-            return AblySDKEventListenerMock()
+            return ARTEventListener()
         }
         
         channel.presence = presence

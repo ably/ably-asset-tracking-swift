@@ -44,7 +44,7 @@ public class DefaultAbly: AblyCommon {
     }
 
     public func startConnection(completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
-        var listener: AblySDKEventListener?
+        var listener: ARTEventListener?
 
         guard client.connection.state != ARTRealtimeConnectionState.connected else {
             completion(.success)
@@ -380,7 +380,7 @@ public class DefaultAbly: AblyCommon {
     }
     
     public func stopConnection(completion: @escaping ResultHandler<Void>) {
-        var listener: AblySDKEventListener?
+        var listener: ARTEventListener?
 
         /**
          According to the ably spec, connection.on should accept some sort of object with an actual identity, allowing you to do something
