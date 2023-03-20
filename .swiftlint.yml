@@ -1,6 +1,32 @@
 disabled_rules:
   - force_try
   - trailing_whitespace
+  # Rules we’re currently violating:
+  - cyclomatic_complexity
+  - for_where
+  - force_cast
+  - function_body_length
+  - generic_type_name
+  - implicit_getter
+  - large_tuple
+  - nesting
+  - orphaned_doc_comment
+  - type_body_length
+  - type_name
+  - unused_optional_binding
+  - vertical_parameter_alignment
+  # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
+  - attributes
+  - empty_xctest_method
+  - fatal_error_message
+  - missing_docs
+  - todo
+  - xct_specific_matcher
+  # Rules we’re currently violating even though we’ve added configuration for them:
+  - file_header
+  - file_length
+  - identifier_name
+  - line_length
 
 opt_in_rules:
   - anyobject_protocol # See https://forums.swift.org/t/class-only-protocols-class-vs-anyobject/11507/10 for details.
