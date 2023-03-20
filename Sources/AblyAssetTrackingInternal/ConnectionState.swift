@@ -1,3 +1,4 @@
+import AblyAssetTrackingCore
 import Foundation
 
 /**
