@@ -37,12 +37,12 @@ class WorkerQueueTests: XCTestCase {
     }
     
     func test_queueShouldCallWorkersDoWorkMethod() {
-        //given
+        // given
         properties.isStopped = false
         let outputProperties = WorkerQueuePropertiesMock()
         let expectation = expectation(description: "doWorkPropertiesDoAsyncWorkPostWorkClosure invokes")
         
-        //when
+        // when
         workRequest.workerSpecification.doWorkPropertiesDoAsyncWorkPostWorkClosure = { _, _, _ in
             expectation.fulfill()
             return outputProperties
@@ -50,13 +50,13 @@ class WorkerQueueTests: XCTestCase {
         workerQueue.enqueue(workRequest: workRequest)
         wait(for: [expectation], timeout: 5.0)
 
-        //then
+        // then
         XCTAssertEqual(workRequest.workerSpecification.doWorkPropertiesDoAsyncWorkPostWorkCallsCount, 1)
         XCTAssertEqual(workRequest.workerSpecification.doWhenStoppedErrorCallsCount, 0)
     }
     
     func test_stoppedQueueShouldCallWorkersOnStoppedMethod() {
-        //given
+        // given
         properties.isStopped = true
         let expectation = expectation(description: "doWhenStoppedErrorClosure invokes")
         
@@ -66,36 +66,36 @@ class WorkerQueueTests: XCTestCase {
                                                                                 workerFactory: workerFactory,
                                                                                 asyncWorkWorkingQueue: asyncWorkWorkingQueue,
                                                                                 getStoppedError: getStoppedError)
-        //when
+        // when
         workRequest.workerSpecification.doWhenStoppedErrorClosure = { _ in
             expectation.fulfill()
         }
         workerQueue.enqueue(workRequest: workRequest)
         wait(for: [expectation], timeout: 5.0)
 
-        //then
+        // then
         XCTAssertEqual(workRequest.workerSpecification.doWhenStoppedErrorCallsCount, 1)
     }
     
     func test_queueCallsWorkersUnexpectedErrorMethodWhenAnErrorIsThrownByWorkersDoWorkMethod() {
-        //given
+        // given
         properties.isStopped = false
         let expectation = expectation(description: "onUnexpectedErrorErrorPostWorkClosure invokes")
         workRequest.workerSpecification.doWorkPropertiesDoAsyncWorkPostWorkThrowableError = WorkerQueueThrowableError()
         
-        //when
+        // when
         workRequest.workerSpecification.onUnexpectedErrorErrorPostWorkClosure = { _, _ in
             expectation.fulfill()
         }
         workerQueue.enqueue(workRequest: workRequest)
         wait(for: [expectation], timeout: 5.0)
         
-        //then
+        // then
         XCTAssertEqual(workRequest.workerSpecification.onUnexpectedErrorErrorPostWorkCallsCount, 1)
     }
     
     func test_queueCallsWorkersUnexpectedAsyncErrorMethodWhenAnErrorIsThrownByWorkersAsyncWork() {
-        //given
+        // given
         let outputProperties = WorkerQueuePropertiesMock()
         let expectation = expectation(description: "doWorkPropertiesDoAsyncWorkPostWorkClosure invokes")
         
@@ -108,14 +108,13 @@ class WorkerQueueTests: XCTestCase {
         }
         properties.isStopped = false
         
-        //when
+        // when
         workerQueue.enqueue(workRequest: workRequest)
         _ = XCTWaiter.wait(for: [expectation], timeout: 2.0)
         
-        //then
+        // then
         XCTAssertEqual(workRequest.workerSpecification.onUnexpectedAsyncErrorErrorPostWorkCallsCount, 1)
     }
 }
 
 class WorkerQueueThrowableError: Error {}
-

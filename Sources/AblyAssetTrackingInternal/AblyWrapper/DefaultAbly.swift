@@ -215,7 +215,7 @@ public class DefaultAbly: AblyCommon {
             return
         }
         
-        channel.presence.get { [weak self] messages, error in
+        channel.presence.get { [weak self] messages, _ in
             self?.logHandler?.debug(message: "Get presence update from channel", error: nil)
             guard let self = self, let messages = messages else {
                 return

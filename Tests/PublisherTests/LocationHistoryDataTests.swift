@@ -28,7 +28,7 @@ final class LocationHistoryDataTests: XCTestCase {
         let jsonData = try Data(contentsOf: jsonFileUrl)
         
         let decoder = JSONDecoder()
-        let _ = try decoder.decode(LocationHistoryData.self, from: jsonData)
+        _ = try decoder.decode(LocationHistoryData.self, from: jsonData)
     }
     
     func testDecodable_decodesTestResource_version2_valid2_0_0() throws {

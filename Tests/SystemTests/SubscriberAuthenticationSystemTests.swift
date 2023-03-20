@@ -62,7 +62,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: clientId)
         )
         
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             guard let tokenDetails = fetchedTokenDetails else {
                 XCTFail("TokenDetails doesn't exist")
                 return
@@ -83,7 +83,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
                 
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             guard let tokenString = fetchedTokenString else {
                 XCTFail("TokenDetails doesn't exist")
                 return
@@ -101,7 +101,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             return
         }
         
-        let connectionConfiguration = ConnectionConfiguration() { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             resultHandler(.success(.jwt(jwtToken)))
         }
         
@@ -143,14 +143,14 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         waitForExpectations(timeout: 10.0)
         
         let subscriberStopExpectation = self.expectation(description: "Subscriber stop expectation")
-        subscriber?.stop(completion: { result in
+        subscriber?.stop(completion: { _ in
             subscriberStopExpectation.fulfill()
         })
         waitForExpectations(timeout: 10.0)
     }
     
     private func requestToken(withSubscriberCapabilitiesForTrackableIds trackableIds: [String], clientId: String) -> TokenDetails? {
-        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String : [String]] in
+        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String: [String]] in
             var newCapabilities = capabilities
             newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence", "history"]
             return newCapabilities
@@ -179,7 +179,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         var hasRequestedInitialToken = false
         var hasRequestedUpdatedToken = false
         
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             if !hasRequestedInitialToken {
                 hasRequestedInitialToken = true
                 resultHandler(.success(.tokenDetails(initialToken)))

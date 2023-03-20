@@ -32,7 +32,7 @@ class ExampleAppLogFileTests: XCTestCase {
                        message: .init(subsystems: ["assetTracking", "someComponent"],
                                       codeLocation: nil,
                                       message: "Here is a message with an attached error"),
-                       errorMessage: "Here is an error message")),
+                       errorMessage: "Here is an error message"))
         ]
         
         XCTAssertEqual(exampleAppLogFile.lines, expectedLines)

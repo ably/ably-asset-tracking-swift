@@ -211,7 +211,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
          It means that failed request (counter 1) was retried (counter 2)
          */
         XCTAssertEqual(ablyPublisher.sendEnhancedAssetLocationUpdateCounter, 2)
-        
     }
     
     func testPublisherWillAttachSkippedLocationsToNextRequest() {
@@ -289,7 +288,6 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         }
         publisher.track(trackable: trackable) { _ in }
         wait(for: [connectCompletionHandlerExpectation], timeout: 5.0)
-        
         
         let sendLocationCompleteExpectation = XCTestExpectation(description: "Send Location Complete Expectation")
         ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in

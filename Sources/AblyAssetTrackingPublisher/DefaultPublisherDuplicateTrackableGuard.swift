@@ -4,7 +4,7 @@ extension DefaultPublisher {
     /// Used by ``DefaultPublisher`` to keep track of which trackables it is currently in the process of adding, to ensure that for a given trackable ID the process of entering Ably presence is only performed once.
     struct DuplicateTrackableGuard {
         private var trackableIdsCurrentlyBeingAdded: Set<String> = []
-        private var duplicateAddTrackableCompletionHandlersById: [String : [Callback<Void>]] = [:]
+        private var duplicateAddTrackableCompletionHandlersById: [String: [Callback<Void>]] = [:]
         
         /// Records that the process of adding a trackable with the given ID has begun.
         /// - Parameter id: The ID of the trackable that is being added.

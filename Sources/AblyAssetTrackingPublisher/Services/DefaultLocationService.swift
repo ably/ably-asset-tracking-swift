@@ -25,7 +25,7 @@ class DefaultLocationService: LocationService {
         NavigationSettings.shared.initialize(directions: directions,
                                              tileStoreConfiguration: .default,
                                              navigatorPredictionInterval: 0,
-                                             statusUpdatingSettings: .init(updatingPatience: .greatestFiniteMagnitude ,
+                                             statusUpdatingSettings: .init(updatingPatience: .greatestFiniteMagnitude,
                                                                                                                         updatingInterval: nil))
         if vehicleProfile == .bicycle {
             let cyclingConfig = [
@@ -55,9 +55,9 @@ class DefaultLocationService: LocationService {
         } else {
             replayLocationManager = nil
         }
-        //set location manager with profile identifier only if .Bicycle is provided by clients
+        // set location manager with profile identifier only if .Bicycle is provided by clients
         if vehicleProfile == .bicycle {
-            self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager ,datasetProfileIdentifier: .cycling)
+            self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager, datasetProfileIdentifier: .cycling)
         } else {
             self.locationManager = PassiveLocationManager(systemLocationManager: replayLocationManager)
         }
@@ -128,7 +128,7 @@ class DefaultLocationService: LocationService {
                     return
                 }
                 
-                var locationHistoryData: LocationHistoryData? = nil
+                var locationHistoryData: LocationHistoryData?
                 do {
                     let events = try reader.compactMap { event -> GeoJSONMessage? in
                         guard let locationUpdateHistoryEvent = event as? LocationUpdateHistoryEvent else {
@@ -139,11 +139,9 @@ class DefaultLocationService: LocationService {
                         return try GeoJSONMessage(location: location)
                     }
                     locationHistoryData = LocationHistoryData(events: events)
-                }
-                catch let error as LocationValidationError {
+                } catch let error as LocationValidationError {
                     self.logHandler?.verbose(message: "Swallowing invalid enhanced location from Mapbox, validation error was: \(error)", error: error)
-                }
-                catch {
+                } catch {
                     self.logHandler?.error(message: "Failed to map location history reader events to GeoJSONMessage", error: error)
                     completion(.failure(.init(error: error)))
                     return

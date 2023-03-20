@@ -43,7 +43,7 @@ class GeoJSONGeometryCLLocationTests: XCTestCase {
 
     func testGeoJsonGeometryFromLocation_Longitude_OutOfRange_Above() throws {
         let location = Location(
-            coordinate:  LocationCoordinate(
+            coordinate: LocationCoordinate(
                 latitude: 10.0,
                 longitude: 181.0
             )
