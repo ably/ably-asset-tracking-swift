@@ -4,7 +4,7 @@ import AblyAssetTrackingInternal
 
 class LegacyWorkerTests: XCTestCase
 {
-    private let logHandler = InternalLogHandlerMock.configured
+    private let logHandler = InternalLogHandlerMockThreadSafe()
     private let properties = WorkerQueuePropertiesMock()
 
     func test_doWorkShouldCallPassedInWorkCallbackAndReturnProperties()

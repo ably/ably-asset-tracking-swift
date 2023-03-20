@@ -35,7 +35,9 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     }()
     
     private let logHandler = TestLogging.sharedLogHandler
-    private let publisherInternalLogHandler = TestLogging.sharedInternalLogHandler.addingSubsystem(.named("publisher"))
+    private let publisherInternalLogHandler = TestLogging.sharedInternalLogHandler
+        .addingSubsystem(.assetTracking)
+        .addingSubsystem(.named("publisher"))
     
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
@@ -80,6 +82,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
+            host: nil,
             mode: .publish,
             logHandler: publisherInternalLogHandler
         )
@@ -171,6 +174,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
+            host: nil,
             mode: .publish,
             logHandler: publisherInternalLogHandler
         )

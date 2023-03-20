@@ -318,23 +318,23 @@ public class AblySDKRealtimeFactoryMock: AblySDKRealtimeFactory {
 
     //MARK: - create
 
-    public var createWithConfigurationLogHandlerCallsCount = 0
-    public var createWithConfigurationLogHandlerCalled: Bool {
-        return createWithConfigurationLogHandlerCallsCount > 0
+    public var createWithConfigurationLogHandlerHostCallsCount = 0
+    public var createWithConfigurationLogHandlerHostCalled: Bool {
+        return createWithConfigurationLogHandlerHostCallsCount > 0
     }
-    public var createWithConfigurationLogHandlerReceivedArguments: (configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler)?
-    public var createWithConfigurationLogHandlerReceivedInvocations: [(configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler)] = []
-    public var createWithConfigurationLogHandlerReturnValue: AblySDKRealtime!
-    public var createWithConfigurationLogHandlerClosure: ((ConnectionConfiguration, InternalARTLogHandler) -> AblySDKRealtime)?
+    public var createWithConfigurationLogHandlerHostReceivedArguments: (configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler, host: Host?)?
+    public var createWithConfigurationLogHandlerHostReceivedInvocations: [(configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler, host: Host?)] = []
+    public var createWithConfigurationLogHandlerHostReturnValue: AblySDKRealtime!
+    public var createWithConfigurationLogHandlerHostClosure: ((ConnectionConfiguration, InternalARTLogHandler, Host?) -> AblySDKRealtime)?
 
-    public func create(withConfiguration configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler) -> AblySDKRealtime {
-        createWithConfigurationLogHandlerCallsCount += 1
-        createWithConfigurationLogHandlerReceivedArguments = (configuration: configuration, logHandler: logHandler)
-        createWithConfigurationLogHandlerReceivedInvocations.append((configuration: configuration, logHandler: logHandler))
-        if let createWithConfigurationLogHandlerClosure = createWithConfigurationLogHandlerClosure {
-            return createWithConfigurationLogHandlerClosure(configuration, logHandler)
+    public func create(withConfiguration configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler, host: Host?) -> AblySDKRealtime {
+        createWithConfigurationLogHandlerHostCallsCount += 1
+        createWithConfigurationLogHandlerHostReceivedArguments = (configuration: configuration, logHandler: logHandler, host: host)
+        createWithConfigurationLogHandlerHostReceivedInvocations.append((configuration: configuration, logHandler: logHandler, host: host))
+        if let createWithConfigurationLogHandlerHostClosure = createWithConfigurationLogHandlerHostClosure {
+            return createWithConfigurationLogHandlerHostClosure(configuration, logHandler, host)
         } else {
-            return createWithConfigurationLogHandlerReturnValue
+            return createWithConfigurationLogHandlerHostReturnValue
         }
     }
 
@@ -615,6 +615,28 @@ public class InternalLogHandlerMock: InternalLogHandler {
             return addingSubsystemClosure(subsystem)
         } else {
             return addingSubsystemReturnValue
+        }
+    }
+
+    //MARK: - tagMessage
+
+    public var tagMessageCallsCount = 0
+    public var tagMessageCalled: Bool {
+        return tagMessageCallsCount > 0
+    }
+    public var tagMessageReceivedMessage: String?
+    public var tagMessageReceivedInvocations: [String] = []
+    public var tagMessageReturnValue: String!
+    public var tagMessageClosure: ((String) -> String)?
+
+    public func tagMessage(_ message: String) -> String {
+        tagMessageCallsCount += 1
+        tagMessageReceivedMessage = message
+        tagMessageReceivedInvocations.append(message)
+        if let tagMessageClosure = tagMessageClosure {
+            return tagMessageClosure(message)
+        } else {
+            return tagMessageReturnValue
         }
     }
 

@@ -5,18 +5,18 @@ import AblyAssetTrackingCore
 
 class ConnectionConfigurationTests: XCTestCase {
 
-    let internalARTLogHandler = InternalARTLogHandler()
+    let internalARTLogHandler = InternalARTLogHandler(logHandler: nil)
     
     func testBasicAuthenticationConstructor() throws {
         let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil, host: nil)
         XCTAssertEqual(clientOptions.clientId, "A client ID")
         XCTAssertNil(clientOptions.authCallback)
     }
 
     func test_getClientOptions_makesAutoconnectFalse() throws {
         let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil, host: nil)
 
         XCTAssertFalse(clientOptions.autoConnect)
     }
@@ -26,7 +26,7 @@ class ConnectionConfigurationTests: XCTestCase {
         let clientId = "My client id"
         let configuration = ConnectionConfiguration(clientId: clientId, authCallback: { _, _ in })
         
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil, host: nil)
         
         XCTAssertEqual(clientOptions.clientId, clientId)
     }
@@ -46,7 +46,7 @@ class ConnectionConfigurationTests: XCTestCase {
         })
         
         // Checking the clientOptions provided is structured correctly for Ably-cocoa
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil, host: nil)
         
         let clientId = "My client id"
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
@@ -77,7 +77,7 @@ class ConnectionConfigurationTests: XCTestCase {
             })
             
             // Checking the clientOptions provided is structured correctly for Ably-cocoa
-            let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
+            let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil, host: nil)
             
             let clientId = "My client id"
             let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
@@ -106,7 +106,7 @@ class ConnectionConfigurationTests: XCTestCase {
         })
         
         // Checking the clientOptions provided is structured correctly for Ably-cocoa
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil, host: nil)
         
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: "My client id", timestamp: timestamp, nonce: nonce).toARTTokenParams()
         XCTAssertNotNil(clientOptions.authCallback)
@@ -124,8 +124,19 @@ class ConnectionConfigurationTests: XCTestCase {
     func testRemainPresentForMillisecondsPassesToAblySDK() {
         let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
 
-        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: 100)
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: 100, host: nil)
         
         XCTAssertEqual(clientOptions.transportParams?["remainPresentFor"]?.stringValue, "100")
+    }
+
+    func testHostSetsCorrespondingPropertiesOnClientOptions() {
+        let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
+        let host = Host(realtimeHost: "something.example", port: 5678, tls: false)
+
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil, host: host)
+
+        XCTAssertEqual(clientOptions.realtimeHost, "something.example")
+        XCTAssertEqual(clientOptions.port, 5678)
+        XCTAssertEqual(clientOptions.tls, false)
     }
 }

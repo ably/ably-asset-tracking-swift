@@ -42,7 +42,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     }
     
     public init(logHandler: LogHandler? = nil) {
-        self.logHandler = DefaultInternalLogHandler(logHandler: logHandler, subsystem: .typed(Self.self))
+        self.logHandler = DefaultInternalLogHandler(logHandler: logHandler, subsystems: [.assetTracking, .typed(Self.self)])
         super.init()
         
         displayLinkTarget.locationAnimator = self

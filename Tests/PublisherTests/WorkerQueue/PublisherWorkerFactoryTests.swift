@@ -6,7 +6,7 @@ import AblyAssetTrackingPublisherTesting
 
 class PublisherWorkerFactoryTests: XCTestCase
 {
-    private let logHandler = InternalLogHandlerMock.configured
+    private let logHandler = InternalLogHandlerMockThreadSafe()
     private let properties = PublisherWorkerQueueProperties()
     private let factory = PublisherWorkerFactory()
 

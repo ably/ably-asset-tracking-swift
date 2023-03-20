@@ -1,7 +1,9 @@
 import AblyAssetTrackingCore
 
-/// A description of some component of the SDK which wishes to identify itself in a log message.
+/// A description of some software component which wishes to identify itself in a log message.
 public enum Subsystem {
+    // One of the Ably Asset Tracking SDKs.
+    case assetTracking
     /// An arbitrary component with a name.
     case named(String)
     /// A component that is a Swift type.
@@ -10,6 +12,8 @@ public enum Subsystem {
     /// The text that will be used to identify this component in a log message.
     var name: String {
         switch self {
+        case .assetTracking:
+            return "assetTracking"
         case .named(let name):
             return name
         case .typed(let type):
@@ -48,6 +52,13 @@ public protocol InternalLogHandler {
     /// - Parameter subsystem: The subsystem to add. This will be added at a higher level of granularity then the subsystems currently in the log handler’s list.
     /// - Returns: A new log handler.
     func addingSubsystem(_ subsystem: Subsystem) -> InternalLogHandler
+
+    /// Augments the given message with information about the log handler’s list of subsystems.
+    ///
+    /// You might wish to use this to add originating subsystem information to the message of an error that you throw.
+    ///
+    /// For example, given a log handler with subsystems `["assetTracking", "publisher", "DefaultPublisher"]`, and a `message` of `"Here is an error message"`, it might return a string like `"[assetTracking.publisher.DefaultPublisher] Here is an error message"`.
+    func tagMessage(_ message: String) -> String
 }
 
 extension InternalLogHandler {
@@ -67,5 +78,23 @@ extension InternalLogHandler {
             codeLocation = nil
         }
         logMessage(level: level, message: message, error: error, codeLocation: codeLocation)
+    }
+}
+
+extension InternalLogHandler {
+    /// A convenience method for logging a call to a method in the public API of the Asset Tracking SDKs.
+    ///
+    /// Prepends "(Public API, in) " to the given label, and logs a message at the `verbose` level.
+    public func logPublicAPICall(label: String, file: String? = #file, line: Int? = #line) {
+        let message = "(Public API, in) \(label)"
+        logMessage(level: .verbose, message: message, error: nil, file: file, line: line)
+    }
+
+    /// A convenience method for logging an output (completion handler call, delegate method invocation) via the public API of the Asset Tracking SDKs.
+    ///
+    /// Prepends "(Public API, out) " to the given label, and logs a message at the `verbose` level.
+    public func logPublicAPIOutput(label: String, file: String? = #file, line: Int? = #line) {
+        let message = "(Public API, out) \(label)"
+        logMessage(level: .verbose, message: message, error: nil, file: file, line: line)
     }
 }

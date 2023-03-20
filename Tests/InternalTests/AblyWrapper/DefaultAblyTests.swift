@@ -6,7 +6,7 @@ import AblyAssetTrackingCoreTesting
 import AblyAssetTrackingInternalTesting
 
 class DefaultAblyTests: XCTestCase {
-    let logger = InternalLogHandlerMock.configured
+    let logger = InternalLogHandlerMockThreadSafe()
 
     func test_startConnection_callsCallbackWIthSuccessWhenAlreadyConnected() {
         let connection = AblySDKConnectionMock()
@@ -14,10 +14,10 @@ class DefaultAblyTests: XCTestCase {
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         connection.state = ARTRealtimeConnectionState.connected
 
         let expectation = expectation(description: "DefaultAbly startConnection when connected")
@@ -40,10 +40,10 @@ class DefaultAblyTests: XCTestCase {
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         connection.state = ARTRealtimeConnectionState.failed
         connection.errorReason = ARTErrorInfo.create(withCode: 40400, message: "Test Failure Msg")
 
@@ -69,10 +69,10 @@ class DefaultAblyTests: XCTestCase {
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         connection.state = ARTRealtimeConnectionState.failed
         connection.errorReason = nil
 
@@ -99,10 +99,10 @@ class DefaultAblyTests: XCTestCase {
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
@@ -133,10 +133,10 @@ class DefaultAblyTests: XCTestCase {
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
@@ -168,10 +168,10 @@ class DefaultAblyTests: XCTestCase {
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
@@ -203,10 +203,10 @@ class DefaultAblyTests: XCTestCase {
         realtime.connection = connection
 
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
 
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
@@ -249,11 +249,11 @@ class DefaultAblyTests: XCTestCase {
         realtime.auth = auth
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
         
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
         ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
@@ -287,13 +287,13 @@ class DefaultAblyTests: XCTestCase {
         realtime.channels = channels
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration { _, callback in
             callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
         }
         
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly successfully connects")
         ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
@@ -327,13 +327,13 @@ class DefaultAblyTests: XCTestCase {
         realtime.channels = channels
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration { _, callback in
             callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
         }
         
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
         ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
@@ -377,13 +377,13 @@ class DefaultAblyTests: XCTestCase {
         realtime.auth = auth
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration { _, callback in
             callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
         }
         
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
         ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
@@ -435,13 +435,13 @@ class DefaultAblyTests: XCTestCase {
         realtime.auth = auth
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration { _, callback in
             callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
         }
         
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly successfully connects")
         ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
@@ -487,13 +487,13 @@ class DefaultAblyTests: XCTestCase {
         realtime.auth = auth
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration { _, callback in
             callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
         }
         
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
         ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
@@ -535,13 +535,13 @@ class DefaultAblyTests: XCTestCase {
         realtime.auth = auth
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration { _, callback in
             callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
         }
         
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         
         let expectation = expectation(description: "DefaultAbly fails to connect")
         ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
@@ -592,11 +592,11 @@ class DefaultAblyTests: XCTestCase {
         realtime.channels = channels
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration(apiKey: "")
         
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         
         let connectSuccessExpectation = expectation(description: "DefaultAbly connects successfully")
         ably.connect(trackableId: "abc", presenceData: PresenceData(type: .subscriber), useRewind: false) { result in
@@ -645,14 +645,14 @@ class DefaultAblyTests: XCTestCase {
         realtime.channels = channels
         
         let factory = AblySDKRealtimeFactoryMock()
-        factory.createWithConfigurationLogHandlerReturnValue = realtime
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
         
         let connectionConfiguration = ConnectionConfiguration { _, callback in
             callback(.success(.tokenDetails(.init(token: "", expires: Date(), issued: Date(), capability: "", clientId: ""))))
         }
         
         let trackableId = "abc"
-        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, mode: [], logHandler: logger)
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
         ably.connect(trackableId: trackableId, presenceData: .init(type: .subscriber), useRewind: false) { _ in }
         
         let subscriberDelegate = AblySubscriberDelegateMock()
