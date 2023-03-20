@@ -79,7 +79,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Tracking \(trackingId)"
-        assetStatusLabel.text = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .connectionState(nil)).desc
+        assetStatusLabel.text = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .trackableState(nil)).desc
         publisherPresenceLabel.text = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .subscriberPresence(isPresent: nil)).desc
         setupSubscriber()
         setupMapView()
@@ -326,8 +326,8 @@ extension MapViewController: SubscriberDelegate {
         updateHorizontalAccuracyAnnotation(position: position, type: .raw)
     }
 
-    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
-        let statusDescAndColor = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .connectionState(status))
+    func subscriber(sender: Subscriber, didChangeTrackableState state: TrackableState) {
+        let statusDescAndColor = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .trackableState(state))
         assetStatusLabel.textColor = statusDescAndColor.color
         assetStatusLabel.text = statusDescAndColor.desc
     }

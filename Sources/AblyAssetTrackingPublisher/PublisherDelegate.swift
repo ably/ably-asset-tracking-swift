@@ -25,10 +25,10 @@ public protocol PublisherDelegate: AnyObject {
      
      - Parameters:
         - sender:`Publisher` instance.
-        - state: Most recent trackable's connection state
-        - trackable: Trackable which connection state relates to.
+        - state: Most recent state of the trackable
+        - trackable: Trackable which trackable state relates to.
      */
-    func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable)
+    func publisher(sender: Publisher, didChangeState state: TrackableState, forTrackable trackable: Trackable)
 
     /**
      Called when there is a resolution update directly in AblySDK.

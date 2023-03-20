@@ -15,9 +15,9 @@ class CombineSubscriberDelegateTests: XCTestCase {
         let subscriber = SubscriberMock()
 
         // Given...
-        // ...that the object under test has received an invocation of `subscriber(sender:,didChangeAssetConnectionStatus:)`
+        // ...that the object under test has received an invocation of `subscriber(sender:,didChangeTrackableState:)`
 
-        combineSubscriberDelegate.subscriber(sender: subscriber, didChangeAssetConnectionStatus: .online)
+        combineSubscriberDelegate.subscriber(sender: subscriber, didChangeTrackableState: .online)
 
         // When...
 

@@ -36,7 +36,7 @@ extension SubscriberNetworkConnectivityTests {
             publisherDisconnected: Bool = false,
             subscriberResolution: Resolution? = nil
         ) -> SubscriberMonitor {
-            let expectedState: ConnectionState
+            let expectedState: TrackableState
             switch faultType {
             case .fatal:
                 expectedState = .failed
@@ -48,7 +48,7 @@ extension SubscriberNetworkConnectivityTests {
                 expectedState = .offline
             }
 
-            let failureStates: Set<ConnectionState>
+            let failureStates: Set<TrackableState>
             switch faultType {
             case .fatal:
                 failureStates = [.offline]
@@ -116,7 +116,7 @@ extension SubscriberNetworkConnectivityTests {
             publisherDisconnected: Bool = false,
             subscriberResolution: Resolution? = nil
         ) -> SubscriberMonitor {
-            let expectedState: ConnectionState
+            let expectedState: TrackableState
             switch faultType {
             case .fatal:
                 expectedState = .failed
@@ -124,7 +124,7 @@ extension SubscriberNetworkConnectivityTests {
                 expectedState = .offline
             }
 
-            let failureStates: Set<ConnectionState>
+            let failureStates: Set<TrackableState>
             switch faultType {
             case .fatal:
                 failureStates = [.online, .offline]
@@ -188,7 +188,7 @@ extension SubscriberNetworkConnectivityTests {
             expectedPublisherPresence: Bool = true,
             subscriberResolution: Resolution? = nil
         ) -> SubscriberMonitor {
-            let expectedState: ConnectionState
+            let expectedState: TrackableState
             if !expectedPublisherPresence {
                 expectedState = .offline
             } else {
@@ -200,7 +200,7 @@ extension SubscriberNetworkConnectivityTests {
                 }
             }
 
-            let failureStates: Set<ConnectionState>
+            let failureStates: Set<TrackableState>
             switch faultType {
             case .fatal:
                 failureStates = [.offline, .online]

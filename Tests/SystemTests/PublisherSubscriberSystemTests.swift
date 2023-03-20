@@ -18,8 +18,8 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private var locationChangeTimer: Timer!
     private var locationsData: Locations!
 
-    private let didChangeAssetConnectionStatusOnlineExpectation = XCTestExpectation(description: "Asset Connection Status Did Change To Online")
-    private let didChangeAssetConnectionStatusOfflineExpectation = XCTestExpectation(description: "Asset Connection Status Did Change To Offline")
+    private let didChangeTrackableStateOnlineExpectation = XCTestExpectation(description: "Trackable State Did Change To Online")
+    private let didChangeTrackableStateOfflineExpectation = XCTestExpectation(description: "Trackable State Did Change To Offline")
     private let didUpdateEnhancedLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Enhanced Locations")
     private let didUpdateRawLocationExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Raw Locations")
     private let didUpdateResolutionExpectation = XCTestExpectation(description: "Subscriber Did Finish Updating Resolution")
@@ -133,10 +133,10 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .start { _ in }!
 
         delay(5)
-        didChangeAssetConnectionStatusOnlineExpectation.isInverted = true
-        didChangeAssetConnectionStatusOfflineExpectation.isInverted = true
+        didChangeTrackableStateOnlineExpectation.isInverted = true
+        didChangeTrackableStateOfflineExpectation.isInverted = true
         wait(for: [
-            didChangeAssetConnectionStatusOnlineExpectation, didChangeAssetConnectionStatusOfflineExpectation
+            didChangeTrackableStateOnlineExpectation, didChangeTrackableStateOfflineExpectation
         ], timeout: 0.0)
 
         subscriber.stop { _ in }
@@ -198,7 +198,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .trackingId(trackableId)
             .start { _ in }!
 
-        wait(for: [didChangeAssetConnectionStatusOnlineExpectation], timeout: 5.0)
+        wait(for: [didChangeTrackableStateOnlineExpectation], timeout: 5.0)
 
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         publisher.stop { _ in
@@ -206,7 +206,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         }
         wait(for: [stopPublisherExpectation], timeout: 5)
 
-        wait(for: [didChangeAssetConnectionStatusOfflineExpectation], timeout: 5.0)
+        wait(for: [didChangeTrackableStateOfflineExpectation], timeout: 5.0)
 
         subscriber.stop { _ in }
     }
@@ -221,14 +221,12 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
 extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didFailWithError error: ErrorInformation) {}
 
-    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
-        switch status {
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeTrackableState state: TrackableState) {
+        switch state {
         case .online:
-            didChangeAssetConnectionStatusOnlineExpectation.fulfill()
+            didChangeTrackableStateOnlineExpectation.fulfill()
         case .offline:
-            didChangeAssetConnectionStatusOfflineExpectation.fulfill()
-        case .closed:
-            ()
+            didChangeTrackableStateOfflineExpectation.fulfill()
         case .failed:
             ()
         }

@@ -46,13 +46,13 @@ public protocol SubscriberDelegate: AnyObject {
     func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double)
 
     /**
-     Called when `Subscriber` change connection status
+     Called when `Subscriber` change trackable status
      
      -  Parameters:
         - sender: `Subscriber` instance.
-        - status: Updated connection status.
+        - status: Updated trackable status.
      */
-    func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState)
+    func subscriber(sender: Subscriber, didChangeTrackableState state: TrackableState)
 
     /**
      Called when the `Subscriber` receives updated information about whether the publisher is present.

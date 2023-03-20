@@ -46,7 +46,7 @@ class DefaultPublisher: Publisher, PublisherInteractor {
 
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
-    private var currentTrackablesConnectionStates: [Trackable: ConnectionState] = [:]
+    private var currentTrackablesStates: [Trackable: TrackableState] = [:]
 
     private var duplicateTrackableGuard = DuplicateTrackableGuard()
 
@@ -195,7 +195,7 @@ extension DefaultPublisher {
             case .delegateError(let event):
                 self?.notifyDelegateDidFailWithError(event.error)
             case .delegateTrackableConnectionStateChanged(let event):
-                self?.notifyDelegateConnectionStateChanged(event)
+                self?.notifyDelegateTrackableStateChanged(event)
             case .delegateEnhancedLocationChanged(let event):
                 self?.notifyDelegateEnhancedLocationChanged(event)
             case .changeRoutingProfile(let event):
@@ -227,9 +227,9 @@ extension DefaultPublisher {
             case .error(let event):
                 log("didFailWithError: \(event.error)")
                 self.delegate?.publisher(sender: self, didFailWithError: event.error)
-            case .trackableConnectionStateChanged(let event):
-                log("didChangeConnectionState: \(event.connectionState), forTrackable: \(event.trackable)")
-                self.delegate?.publisher(sender: self, didChangeConnectionState: event.connectionState, forTrackable: event.trackable)
+            case .trackableStateChanged(let event):
+                log("didChangeState: \(event.state), forTrackable: \(event.trackable)")
+                self.delegate?.publisher(sender: self, didChangeState: event.state, forTrackable: event.trackable)
             case .enhancedLocationChanged(let event):
                 log("didUpdateEnhancedLocation: \(event.locationUpdate)")
                 self.delegate?.publisher(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
@@ -484,7 +484,7 @@ extension DefaultPublisher {
     }
 
     private func handleConnectionStateChange(forTrackable trackable: Trackable) {
-        var newTrackableState: ConnectionState = .offline
+        var newTrackableState: TrackableState = .offline
         let channelConnectionState = receivedAblyChannelsConnectionStates[trackable] ?? .offline
 
         switch receivedAblyClientConnectionState {
@@ -509,9 +509,9 @@ extension DefaultPublisher {
             newTrackableState = .failed
         }
 
-        if newTrackableState != currentTrackablesConnectionStates[trackable] {
-            currentTrackablesConnectionStates[trackable] = newTrackableState
-            sendDelegateEvent(.trackableConnectionStateChanged(.init(trackable: trackable, connectionState: newTrackableState)))
+        if newTrackableState != currentTrackablesStates[trackable] {
+            currentTrackablesStates[trackable] = newTrackableState
+            sendDelegateEvent(.trackableStateChanged(.init(trackable: trackable, state: newTrackableState)))
         }
     }
 
@@ -929,8 +929,8 @@ extension DefaultPublisher {
         sendDelegateEvent(.enhancedLocationChanged(.init(locationUpdate: event.locationUpdate)))
     }
 
-    private func notifyDelegateConnectionStateChanged(_ event: Event.DelegateTrackableConnectionStateChangedEvent) {
-        sendDelegateEvent(.trackableConnectionStateChanged(.init(trackable: event.trackable, connectionState: event.connectionState)))
+    private func notifyDelegateTrackableStateChanged(_ event: Event.DelegateTrackableStateChangedEvent) {
+        sendDelegateEvent(.trackableStateChanged(.init(trackable: event.trackable, state: event.state)))
     }
 
     private func notifyDelegateResolutionUpdate(_ event: Event.DelegateResolutionUpdateEvent) {

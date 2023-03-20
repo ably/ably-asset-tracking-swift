@@ -30,7 +30,7 @@ extension DefaultPublisher {
         case ablyChannelConnectionStateChanged(AblyChannelConnectionStateChangedEvent)
         case delegateError(DelegateErrorEvent)
         case delegateEnhancedLocationChanged(DelegateEnhancedLocationChangedEvent)
-        case delegateTrackableConnectionStateChanged(DelegateTrackableConnectionStateChangedEvent)
+        case delegateTrackableConnectionStateChanged(DelegateTrackableStateChangedEvent)
         case delegateResolutionUpdate(DelegateResolutionUpdateEvent)
 
         struct TrackTrackableEvent {
@@ -143,9 +143,9 @@ extension DefaultPublisher {
             let locationUpdate: EnhancedLocationUpdate
         }
 
-        struct DelegateTrackableConnectionStateChangedEvent {
+        struct DelegateTrackableStateChangedEvent {
             let trackable: Trackable
-            let connectionState: ConnectionState
+            let state: TrackableState
         }
 
         struct DelegateResolutionUpdateEvent {
@@ -157,7 +157,7 @@ extension DefaultPublisher {
     enum DelegateEvent {
         case error(ErrorEvent)
         case enhancedLocationChanged(EnhancedLocationChangedEvent)
-        case trackableConnectionStateChanged(TrackableConnectionStateChangedEvent)
+        case trackableStateChanged(TrackableStateChangedEvent)
         case finishedRecordingLocationHistoryData(FinishedRecordingLocationHistoryDataEvent)
         case finishedRecordingRawMapboxData(FinishedRecordingRawMapboxDataEvent)
         case didUpdateResolution(DidUpdateResolutionEvent)
@@ -171,9 +171,9 @@ extension DefaultPublisher {
             let locationUpdate: EnhancedLocationUpdate
         }
 
-        struct TrackableConnectionStateChangedEvent {
+        struct TrackableStateChangedEvent {
             let trackable: Trackable
-            let connectionState: ConnectionState
+            let state: TrackableState
         }
 
         struct FinishedRecordingLocationHistoryDataEvent {

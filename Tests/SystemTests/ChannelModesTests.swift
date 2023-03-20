@@ -165,7 +165,7 @@ class ChannelModesTests: XCTestCase {
 extension ChannelModesTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didFailWithError error: ErrorInformation) {}
 
-    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {}
+    func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeTrackableState state: TrackableState) {}
 
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         didUpdateEnhancedLocationExpectation.fulfill()

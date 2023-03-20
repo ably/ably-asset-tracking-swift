@@ -15,7 +15,7 @@ struct PublisherDetailsView: View {
 
     @ObservedObject var publisher: ObservablePublisher
 
-    var sortedTrackables: [(trackable: Trackable, state: ObservablePublisher.TrackableState)] {
+    var sortedTrackables: [(trackable: Trackable, state: ObservablePublisher.ObservablePublisherTrackableState)] {
         publisher.trackables
             .sorted { pair1, pair2 in
                 pair1.key.id < pair2.key.id
@@ -40,7 +40,7 @@ struct PublisherDetailsView: View {
                             HStack {
                                 Text(info.trackable.id)
                                 Spacer()
-                                Text(info.state.connectionState?.asInfo() ?? "Connection state unknown")
+                                Text(info.state.trackableState?.asInfo() ?? "Trackable state unknown")
                             }
                         }
                     }

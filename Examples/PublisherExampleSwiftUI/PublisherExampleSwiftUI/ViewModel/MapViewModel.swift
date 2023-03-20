@@ -6,7 +6,7 @@ class MapViewModel: ObservableObject {
         SettingsModel.shared.useMapboxMap
     }
 
-    static func createViewModel(forConnectionState connectionState: ConnectionState?) -> [StackedTextModel] {
-        [.init(label: "Connection status:", value: " \(connectionState?.asInfo() ?? "-")")]
+    static func createViewModel(forTrackableState trackableState: TrackableState?) -> [StackedTextModel] {
+        [.init(label: "Trackable state:", value: " \(trackableState?.asInfo() ?? "-")")]
     }
 }

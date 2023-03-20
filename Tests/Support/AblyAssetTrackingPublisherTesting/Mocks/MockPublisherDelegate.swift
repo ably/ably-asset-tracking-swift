@@ -28,17 +28,17 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidUpdateEnhancedLocationCallback?()
     }
 
-    public var publisherDidChangeTrackableConnectionStateCalled = false
-    public var publisherDidChangeTrackableConnectionStateParamSender: Publisher?
-    public var publisherDidChangeTrackableConnectionStateParamState: ConnectionState?
-    public var publisherDidChangeTrackableConnectionStateParamTrackable: Trackable?
-    public var publisherDidChangeTrackableConnectionStateCallback: (() -> Void)?
-    public func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable) {
-        publisherDidChangeTrackableConnectionStateCalled = true
-        publisherDidChangeTrackableConnectionStateParamSender = sender
-        publisherDidChangeTrackableConnectionStateParamState = state
-        publisherDidChangeTrackableConnectionStateParamTrackable = trackable
-        publisherDidChangeTrackableConnectionStateCallback?()
+    public var publisherDidChangeTrackableStateCalled = false
+    public var publisherDidChangeTrackableStateParamSender: Publisher?
+    public var publisherDidChangeTrackableStateParamState: TrackableState?
+    public var publisherDidChangeTrackableStateParamTrackable: Trackable?
+    public var publisherDidChangeTrackableStateCallback: (() -> Void)?
+    public func publisher(sender: Publisher, didChangeState state: TrackableState, forTrackable trackable: Trackable) {
+        publisherDidChangeTrackableStateCalled = true
+        publisherDidChangeTrackableStateParamSender = sender
+        publisherDidChangeTrackableStateParamState = state
+        publisherDidChangeTrackableStateParamTrackable = trackable
+        publisherDidChangeTrackableStateCallback?()
     }
 
     public var publisherDidUpdateResolutionCalled = false

@@ -13,13 +13,13 @@ extension SubscriberNetworkConnectivityTests {
     class CombineSubscriberDelegate: SubscriberDelegate {
         private let logHandler: InternalLogHandler
 
-        /// Publishes the connection status values received by ``SubscriberDelegate.subscriber(sender:,didChangeAssetConnectionStatus:)``.
+        /// Publishes the connection status values received by ``SubscriberDelegate.subscriber(sender:,didChangeTrackableState:)``.
         ///
         /// This is meant to mimic Android’s `_trackableStates = MutableStateFlow(TrackableState.Offline())`.
         ///
         /// This publisher sends the latest received value to each new subscriber, to mimic the behaviour of a Kotlin `StateFlow`. Unlike a `StateFlow`, however, this publisher does not publish an initial value.
-        let trackableStates: AnyPublisher<ConnectionState, Never>
-        private let trackableStatesSubject = CurrentValueSubject<ConnectionState?, Never>(nil)
+        let trackableStates: AnyPublisher<TrackableState, Never>
+        private let trackableStatesSubject = CurrentValueSubject<TrackableState?, Never>(nil)
 
         /// Publishes the resolution values received by ``SubscriberDelegate.subscriber(sender:,didUpdateResolution:)``.
         ///
@@ -56,10 +56,10 @@ extension SubscriberNetworkConnectivityTests {
 
         // MARK: SubscriberDelegate
 
-        func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
-            logHandler.debug(message: "Delegate received subscriber(sender:,didChangeAssetConnectionStatus:) - status \(status)", error: nil)
-            trackableStatesSubject.value = status
-            logHandler.debug(message: "Sent status \(status) to _trackableStates", error: nil)
+        func subscriber(sender: Subscriber, didChangeTrackableState state: TrackableState) {
+            logHandler.debug(message: "Delegate received subscriber(sender:,didChangeTrackableState:) - status \(state)", error: nil)
+            trackableStatesSubject.value = state
+            logHandler.debug(message: "Sent state \(state) to _trackableStates", error: nil)
         }
 
         func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {
