@@ -1,7 +1,7 @@
 import AblyAssetTrackingCore
 import Foundation
 
-class TrackableState<T: LocationUpdate> {
+class LocationsPublishingState<T: LocationUpdate> {
     let maxRetryCount: Int
     let maxSkippedLocationsSize: Int
 
@@ -17,7 +17,7 @@ class TrackableState<T: LocationUpdate> {
 }
 
 // MARK: - StateRetryable
-extension TrackableState: StateRetryable {
+extension LocationsPublishingState: StateRetryable {
     func shouldRetry(trackableId: String) -> Bool {
         addIfNeeded(trackableId: trackableId)
 
@@ -50,7 +50,7 @@ extension TrackableState: StateRetryable {
 }
 
 // MARK: - StatePendable
-extension TrackableState: StatePendable {
+extension LocationsPublishingState: StatePendable {
     func markMessageAsPending(for trackableId: String) {
         pendingMessages.insert(trackableId)
     }
@@ -66,7 +66,7 @@ extension TrackableState: StatePendable {
 }
 
 // MARK: - StateWaitable
-extension TrackableState: StateWaitable {
+extension LocationsPublishingState: StateWaitable {
     func addToWaiting(locationUpdate: T, for trackableId: String) {
         var locations = waitingLocationUpdates[trackableId] ?? []
         locations.append(locationUpdate)
@@ -86,7 +86,7 @@ extension TrackableState: StateWaitable {
 }
 
 // MARK: - StateSkippable
-extension TrackableState: StateSkippable {
+extension LocationsPublishingState: StateSkippable {
     func addLocation(for trackableId: String, location: T) {
         var locations = skippedLocations[trackableId] ?? []
         locations.append(location)
@@ -107,7 +107,7 @@ extension TrackableState: StateSkippable {
 }
 
 // MARK: - StateRemovable
-extension TrackableState: StateRemovable {
+extension LocationsPublishingState: StateRemovable {
     func remove(trackableId: String) {
         retryCounter.removeValue(forKey: trackableId)
         pendingMessages.remove(trackableId)

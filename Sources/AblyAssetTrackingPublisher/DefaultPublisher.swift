@@ -13,8 +13,8 @@ class DefaultPublisher: Publisher, PublisherInteractor {
     private let isSendResolutionEnabled: Bool
 
     private var ablyPublisher: AblyPublisher
-    private var enhancedLocationState: TrackableState<EnhancedLocationUpdate>
-    private var rawLocationState: TrackableState<RawLocationUpdate>
+    private var enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate>
+    private var rawLocationState: LocationsPublishingState<RawLocationUpdate>
     private var state: PublisherState = .idle
     private var presenceData: PresenceData
     private var areRawLocationsEnabled: Bool
@@ -60,8 +60,8 @@ class DefaultPublisher: Publisher, PublisherInteractor {
         ablyPublisher: AblyPublisher,
         locationService: LocationService,
         routeProvider: RouteProvider,
-        enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
-        rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
+        enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate> = LocationsPublishingState(),
+        rawLocationState: LocationsPublishingState<RawLocationUpdate> = LocationsPublishingState(),
         areRawLocationsEnabled: Bool = false,
         isSendResolutionEnabled: Bool = true,
         constantLocationEngineResolution: Resolution? = nil,
