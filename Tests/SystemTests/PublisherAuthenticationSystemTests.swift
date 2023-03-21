@@ -160,10 +160,8 @@ class PublisherAuthenticationSystemTests: XCTestCase {
     }
 
     private func requestToken(withPublisherCapabilitiesForTrackableIds trackableIds: [String], clientId: String) throws -> TokenDetails? {
-        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String: [String]] in
-            var newCapabilities = capabilities
-            newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence"]
-            return newCapabilities
+        let capabilities = trackableIds.reduce(into: [:]) { capabilities, trackableId in
+            capabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence"]
         }
 
         let tokenParams = ARTTokenParams(clientId: clientId)

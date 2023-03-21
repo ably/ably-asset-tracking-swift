@@ -151,10 +151,8 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
     }
 
     private func requestToken(withSubscriberCapabilitiesForTrackableIds trackableIds: [String], clientId: String) throws -> TokenDetails? {
-        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String: [String]] in
-            var newCapabilities = capabilities
-            newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence", "history"]
-            return newCapabilities
+        let capabilities = trackableIds.reduce(into: [:]) { capabilities, trackableId in
+            capabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence", "history"]
         }
 
         let tokenParams = ARTTokenParams(clientId: clientId)

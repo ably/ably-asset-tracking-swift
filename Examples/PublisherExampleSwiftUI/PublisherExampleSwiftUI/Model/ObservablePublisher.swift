@@ -53,10 +53,8 @@ class ObservablePublisher: ObservableObject {
     }
 
     private func updateTrackables(latestReceived: Set<Trackable>) {
-        trackables = latestReceived.reduce([:]) { accum, trackable in
-            var newAccum = accum
-            newAccum[trackable] = trackables[trackable] ?? .init()
-            return newAccum
+        trackables = latestReceived.reduce(into: [:]) { accum, trackable in
+            accum[trackable] = trackables[trackable] ?? .init()
         }
     }
 
