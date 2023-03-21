@@ -91,11 +91,11 @@ struct GeoJSONProperties: Codable {
 
 private extension Optional where Wrapped == Double {
     func isLessThanZeroThenNil() -> Double? {
-        guard let value = self else {
+        guard let self else {
             return nil
         }
 
-        return value.isLessThanZeroThenNil()
+        return self.isLessThanZeroThenNil()
     }
 }
 

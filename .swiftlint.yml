@@ -56,6 +56,7 @@ opt_in_rules:
   - operator_usage_whitespace
   - trailing_closure
   - conditional_returns_on_newline
+  - self_binding
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count
   - contains_over_filter_is_empty
