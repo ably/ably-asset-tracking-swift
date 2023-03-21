@@ -21,7 +21,6 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
-
         if isCalculating(resultHandler: completion) {
             return
         }

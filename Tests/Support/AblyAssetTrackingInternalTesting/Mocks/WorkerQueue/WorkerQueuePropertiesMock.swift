@@ -5,7 +5,6 @@ import AblyAssetTrackingInternal
 // protocols and it's output doesn't compile without some manual tweaks in the generated code, so all the Worker Queue related
 // mocks are not included in the `.sourcery-InternalMocks.yml` file.
 public class WorkerQueuePropertiesMock: WorkerQueueProperties {
-
     public init() {}
 
     public var isStopped: Bool {

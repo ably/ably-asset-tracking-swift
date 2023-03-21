@@ -3,7 +3,6 @@
  All properties match properties from `CLLocation`.
  */
 struct GeoJSONProperties: Codable {
-
     /**
      Object horizontal accuracy in meters.
      */

@@ -2,7 +2,6 @@ import XCTest
 @testable import AblyAssetTrackingCore
 
 class GeoJSONGeometryCLLocationTests: XCTestCase {
-
     func testGeoJsonGeometryFromLocation_CheckValues() throws {
         let latitude = 1.0
         let longitude = 2.0

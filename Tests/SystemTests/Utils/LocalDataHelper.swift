@@ -3,7 +3,6 @@ import AblyAssetTrackingCore
 import XCTest
 
 enum LocalDataHelper {
-
     enum ErrorInfo: Error {
         case fileNotFound(String)
     }

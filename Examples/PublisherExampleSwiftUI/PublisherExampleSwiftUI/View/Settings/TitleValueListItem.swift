@@ -3,7 +3,6 @@
 import SwiftUI
 
 struct TitleValueListItem: View {
-
     private let title: String
     private let value: String
 

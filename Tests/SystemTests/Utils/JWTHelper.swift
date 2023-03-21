@@ -10,7 +10,6 @@ class JWTHelper {
         jwtType: String = "",
         encrypted: Int = 0
     ) -> String? {
-
         let keyTokens = Secrets.ablyApiKey.split(separator: ":")
         let keyName = String(keyTokens[0])
         var keySecret = String(keyTokens[1])

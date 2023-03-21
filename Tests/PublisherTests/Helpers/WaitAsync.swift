@@ -2,7 +2,6 @@ import Foundation
 import XCTest
 
 class WaitAsync {
-
     enum ResultError: Error {
         case timeout
     }

@@ -3,7 +3,6 @@ import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
 public class MockAblyPublisher: AblyPublisher {
-
     public var initConnectionConfiguration: ConnectionConfiguration?
     public var initMode: AblyMode?
     public required init(configuration: ConnectionConfiguration, mode: AblyMode) {

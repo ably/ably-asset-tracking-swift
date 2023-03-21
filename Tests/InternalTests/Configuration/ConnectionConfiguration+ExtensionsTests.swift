@@ -4,7 +4,6 @@ import AblyAssetTrackingCore
 @testable import AblyAssetTrackingInternal
 
 class ConnectionConfigurationTests: XCTestCase {
-
     let internalARTLogHandler = InternalARTLogHandler(logHandler: nil)
 
     func testBasicAuthenticationConstructor() throws {

@@ -2,7 +2,6 @@ import XCTest
 import AblyAssetTrackingPublisher
 
 final class PublisherSystemTests: XCTestCase {
-
     func test_addTrackable_thenRemoveIt_thenAddAnotherTrackableWithSameId() throws {
         let connectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: UUID().uuidString)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)

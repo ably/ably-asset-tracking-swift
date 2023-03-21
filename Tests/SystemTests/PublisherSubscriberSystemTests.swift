@@ -15,7 +15,6 @@ struct Locations: Codable {
 }
 
 class PublisherAndSubscriberSystemTests: XCTestCase {
-
     private var locationChangeTimer: Timer!
     private var locationsData: Locations!
 

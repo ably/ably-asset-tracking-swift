@@ -96,7 +96,6 @@ class PublisherHelper {
         enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>(),
         logHandler: InternalLogHandlerMockThreadSafe = InternalLogHandlerMockThreadSafe()
     ) -> DefaultPublisher {
-
         DefaultPublisher(
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,

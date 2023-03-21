@@ -2,7 +2,6 @@ import Ably
 import AblyAssetTrackingCore
 
 extension ConnectionConfiguration {
-
     /**
      Create ClientOptions for Ably SDK, to be passed to Ably Client
      */

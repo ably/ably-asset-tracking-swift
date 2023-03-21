@@ -5,7 +5,6 @@ import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
 class DefaultPublisher: Publisher, PublisherInteractor {
-
     private let workerQueue: WorkerQueue<PublisherWorkerQueueProperties, PublisherWorkSpecification>
     private let locationService: LocationService
     private let resolutionPolicy: ResolutionPolicy
@@ -366,7 +365,6 @@ extension DefaultPublisher {
             trackableId: event.trackable.id,
             presenceData: presenceData
         ) { [weak self] result in
-
             switch result {
             case .success(let wasPresent):
                 self?.enhancedLocationState.remove(trackableId: event.trackable.id)
@@ -934,7 +932,6 @@ extension DefaultPublisher: AblyPublisherDelegate {
         presenceData: PresenceData,
         clientId: String
     ) {
-
         logHandler?.debug(message: "publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)", error: nil)
         enqueue(event: .presenceUpdate(.init(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId)))
     }

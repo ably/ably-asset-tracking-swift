@@ -1,7 +1,6 @@
 import AblyAssetTrackingPublisher
 
 extension RoutingProfile {
-
     func description() -> String {
         switch self {
         case .driving:

@@ -1,7 +1,6 @@
 import Foundation
 
 public struct Location: Equatable {
-
     /**
      The latitude and longitude associated with a location, specified using the WGS 84 reference frame.
      */
@@ -78,7 +77,6 @@ public struct Location: Equatable {
         floorLevel: Int?,
         timestamp: Double
     ) {
-
         self.coordinate = coordinate
         self.altitude = altitude
         self.ellipsoidalAltitude = ellipsoidalAltitude

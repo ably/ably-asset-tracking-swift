@@ -37,7 +37,6 @@ class DefaultSubscriber: Subscriber {
         resolution: Resolution?,
         logHandler: InternalLogHandler?
     ) {
-
         self.logHandler = logHandler?.addingSubsystem(Self.self)
         self.workerQueue = WorkerQueue(
             properties: SubscriberWorkerQueueProperties(),
@@ -146,7 +145,6 @@ extension DefaultSubscriber {
 
     // MARK: Start/Stop
     private func performStart(_ event: Event.StartEvent) {
-
         ablySubscriber.connect(
             trackableId: trackableId,
             presenceData: presenceData,
@@ -256,7 +254,6 @@ extension DefaultSubscriber {
             trackableId: trackableId,
             presenceData: presenceDataUpdate
         ) { result in
-
             switch result {
             case .success:
                 event.completion.handleSuccess()

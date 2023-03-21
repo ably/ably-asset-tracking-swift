@@ -3,7 +3,6 @@ import Ably
 import AblyAssetTrackingCore
 
 public class DefaultAbly: AblyCommon {
-
     public weak var publisherDelegate: AblyPublisherDelegate?
     public weak var subscriberDelegate: AblySubscriberDelegate?
 
@@ -386,7 +385,6 @@ extension DefaultAbly: AblyPublisher {
         trackable: Trackable,
         completion: ResultHandler<Void>?
     ) {
-
         guard let channel = channels[trackable.id] else {
             let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Attempt to send location while not tracked channel"))
             logHandler?.error(message: "Attempting to send a location while channel is not tracked", error: errorInformation)

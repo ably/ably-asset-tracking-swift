@@ -265,10 +265,8 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? TruckAnnotation {
-
             return createTruckAnnotationView(for: annotation)
         } else if let annotation = annotation as? HorizontalAccuracyAnnotation {
-
             return createHorizontalAccuracyView(for: annotation)
         }
 

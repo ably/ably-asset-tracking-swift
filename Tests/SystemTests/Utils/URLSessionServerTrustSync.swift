@@ -5,7 +5,6 @@ import XCTest
  Helper class for synchronous URL requests.
  */
 class URLSessionServerTrustSync: NSObject, URLSessionDelegate, URLSessionTaskDelegate {
-
     /**
      This method makes synchronous requests to the URL
      */

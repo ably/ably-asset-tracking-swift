@@ -173,11 +173,8 @@ extension ChannelModesTests: SubscriberDelegate {
 }
 
 private struct ChannelMetrics: Codable {
-
     struct Status: Codable {
-
         struct Occupancy: Codable {
-
             struct Metrics: Codable {
                 let publishers: Int
                 let subscribers: Int

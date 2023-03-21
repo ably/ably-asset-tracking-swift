@@ -6,7 +6,6 @@ import AblyAssetTrackingPublisher
 import Logging
 
 class CreatePublisherViewModel: ObservableObject {
-
     private let s3Helper: S3Helper?
     private let logger: Logger
     private let locationHistoryDataHandler: LocationHistoryDataHandlerProtocol?

@@ -3,7 +3,6 @@ import CoreLocation
 import MapboxCoreNavigation
 
 public class MockPassiveLocationManagerHandlerDelegate: PassiveLocationManagerHandlerDelegate {
-
     public init() {}
 
     public var passiveLocationManagerHandlerDidChangeAuthorizationCalled = false

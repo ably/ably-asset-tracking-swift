@@ -2,7 +2,6 @@ import SwiftUI
 import MapKit
 
 struct Map: View {
-
     @Binding private var center: CLLocationCoordinate2D
     @State private var span: MKCoordinateSpan?
 
@@ -35,7 +34,6 @@ struct Map: View {
 }
 
 struct Map_Previews: PreviewProvider {
-
     static var previews: some View {
         Map(center: .constant(CLLocationCoordinate2D(latitude: 0, longitude: 0)))
     }

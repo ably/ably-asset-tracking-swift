@@ -6,7 +6,6 @@ import CoreLocation
 import Ably
 
 class PublisherAuthenticationSystemTests: XCTestCase {
-
     private let clientId: String = {
         "Test-Publisher_\(UUID().uuidString)"
     }()

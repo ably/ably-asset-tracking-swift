@@ -2,7 +2,6 @@ import Foundation
 import AblyAssetTrackingCore
 
 class TrackableState<T: LocationUpdate> {
-
     let maxRetryCount: Int
     let maxSkippedLocationsSize: Int
 

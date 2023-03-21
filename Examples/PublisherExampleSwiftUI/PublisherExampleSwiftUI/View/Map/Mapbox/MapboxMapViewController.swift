@@ -42,7 +42,6 @@ class MapboxMapViewController: UIViewController {
 }
 
 extension MapboxMapViewController: GestureManagerDelegate {
-
     func gestureManager(_ gestureManager: MapboxMaps.GestureManager, didBegin gestureType: MapboxMaps.GestureType) {
     }
 

@@ -3,7 +3,6 @@ import AblyAssetTrackingInternal
 import QuartzCore
 
 public class DefaultLocationAnimator: NSObject, LocationAnimator {
-
     /**
      *  Defines how many animation steps have to complete before an event is passed to
        `subscribeForCameraPositionUpdatesClosure`.
