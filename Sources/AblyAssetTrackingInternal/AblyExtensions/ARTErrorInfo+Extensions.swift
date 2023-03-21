@@ -11,6 +11,7 @@ extension ARTErrorInfo {
             statusCode: self.statusCode,
             message: self.message,
             cause: nil,
-            href: self.href)
+            href: self.href
+        )
     }
 }

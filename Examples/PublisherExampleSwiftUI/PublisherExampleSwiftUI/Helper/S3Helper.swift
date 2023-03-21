@@ -39,9 +39,11 @@ class S3Helper {
 
         try Amplify.add(plugin: AWSCognitoAuthPlugin())
         try Amplify.add(plugin: AWSS3StoragePlugin())
-        guard let url = Bundle.main.url(forResource: "amplifyconfiguration",
-                                        withExtension: "json",
-                                        subdirectory: "Optional Resources") else {
+        guard let url = Bundle.main.url(
+            forResource: "amplifyconfiguration",
+            withExtension: "json",
+            subdirectory: "Optional Resources"
+        ) else {
             throw Error.couldNotFindConfiguration
         }
         let config = try AmplifyConfiguration(configurationFile: url)

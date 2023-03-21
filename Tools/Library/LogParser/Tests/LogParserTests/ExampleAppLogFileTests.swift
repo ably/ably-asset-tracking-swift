@@ -14,25 +14,43 @@ class ExampleAppLogFileTests: XCTestCase {
         let exampleAppLogFile = try ExampleAppLogFile(data: data)
 
         let expectedLines: [ExampleAppLogFile.Line] = [
-            .sdk(.init(timestamp: Date(timeIntervalSince1970: 1670933166.341),
-                       logLevel: "debug",
-                       message: .init(subsystems: ["assetTracking", "someComponent"],
-                                      codeLocation: nil,
-                                      message: "Here is a message"),
-                       errorMessage: nil)),
+            .sdk(
+                .init(
+                    timestamp: Date(timeIntervalSince1970: 1670933166.341),
+                    logLevel: "debug",
+                    message: .init(
+                        subsystems: ["assetTracking", "someComponent"],
+                        codeLocation: nil,
+                        message: "Here is a message"
+                    ),
+                    errorMessage: nil
+                )
+            ),
             .other("Some other line"),
-            .sdk(.init(timestamp: Date(timeIntervalSince1970: 1670933170.729),
-                       logLevel: "info",
-                       message: .init(subsystems: ["assetTracking", "someOtherComponent"],
-                                      codeLocation: .init(file: "MyFile.swift", line: 130),
-                                      message: "Here is another message"),
-                       errorMessage: nil)),
-            .sdk(.init(timestamp: Date(timeIntervalSince1970: 1670933192.282),
-                       logLevel: "error",
-                       message: .init(subsystems: ["assetTracking", "someComponent"],
-                                      codeLocation: nil,
-                                      message: "Here is a message with an attached error"),
-                       errorMessage: "Here is an error message"))
+            .sdk(
+                .init(
+                    timestamp: Date(timeIntervalSince1970: 1670933170.729),
+                    logLevel: "info",
+                    message: .init(
+                        subsystems: ["assetTracking", "someOtherComponent"],
+                        codeLocation: .init(file: "MyFile.swift", line: 130),
+                        message: "Here is another message"
+                    ),
+                    errorMessage: nil
+                )
+            ),
+            .sdk(
+                .init(
+                    timestamp: Date(timeIntervalSince1970: 1670933192.282),
+                    logLevel: "error",
+                    message: .init(
+                        subsystems: ["assetTracking", "someComponent"],
+                        codeLocation: nil,
+                        message: "Here is a message with an attached error"
+                    ),
+                    errorMessage: "Here is an error message"
+                )
+            )
         ]
 
         XCTAssertEqual(exampleAppLogFile.lines, expectedLines)

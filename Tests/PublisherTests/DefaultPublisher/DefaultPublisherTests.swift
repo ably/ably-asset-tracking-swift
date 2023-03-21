@@ -29,18 +29,22 @@ class DefaultPublisherTests: XCTestCase {
         ablyPublisher = MockAblyPublisher(configuration: configuration, mode: .publish)
         resolutionPolicyFactory = MockResolutionPolicyFactory()
         routeProvider = MockRouteProvider()
-        trackable = Trackable(id: "TrackableId",
-                              metadata: "TrackableMetadata",
-                              destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182))
+        trackable = Trackable(
+            id: "TrackableId",
+            metadata: "TrackableMetadata",
+            destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182)
+        )
         delegate = MockPublisherDelegate()
         enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
-        publisher = DefaultPublisher(routingProfile: .driving,
-                                     resolutionPolicyFactory: resolutionPolicyFactory,
-                                     ablyPublisher: ablyPublisher,
-                                     locationService: locationService,
-                                     routeProvider: routeProvider,
-                                     enhancedLocationState: enhancedLocationState,
-                                     logHandler: logger)
+        publisher = DefaultPublisher(
+            routingProfile: .driving,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            ablyPublisher: ablyPublisher,
+            locationService: locationService,
+            routeProvider: routeProvider,
+            enhancedLocationState: enhancedLocationState,
+            logHandler: logger
+        )
         publisher.delegate = delegate
     }
 
@@ -365,9 +369,11 @@ class DefaultPublisherTests: XCTestCase {
             connectCalledExpectation.fulfill()
         }
 
-        let anotherTrackableWithSameId = Trackable(id: trackable.id,
-                                                   metadata: "SomeOtherTrackableMetadata",
-                                                   destination: LocationCoordinate(latitude: 10.42, longitude: 7.82))
+        let anotherTrackableWithSameId = Trackable(
+            id: trackable.id,
+            metadata: "SomeOtherTrackableMetadata",
+            destination: LocationCoordinate(latitude: 10.42, longitude: 7.82)
+        )
 
         let trackableAddExpectation = expectation(description: "Add of trackable completes successfully")
         publisher.add(trackable: trackable) { result in
@@ -412,9 +418,11 @@ class DefaultPublisherTests: XCTestCase {
             connectCalledExpectation.fulfill()
         }
 
-        let anotherTrackableWithSameId = Trackable(id: trackable.id,
-                                                   metadata: "SomeOtherTrackableMetadata",
-                                                   destination: LocationCoordinate(latitude: 10.42, longitude: 7.82))
+        let anotherTrackableWithSameId = Trackable(
+            id: trackable.id,
+            metadata: "SomeOtherTrackableMetadata",
+            destination: LocationCoordinate(latitude: 10.42, longitude: 7.82)
+        )
 
         let trackableAddExpectation = expectation(description: "Add of trackable completes successfully")
         publisher.add(trackable: trackable) { result in

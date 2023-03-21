@@ -20,8 +20,10 @@ enum DefaultLocationAnimatorCalculator {
 
             let shouldEmitCameraPositionUpdate = input.state.numberOfLocationsPoppedSinceLastCameraUpdate == nil
 
-            let subscriberUpdates = CalculationResult.SubscriberUpdates(positionToEmit: location.toPosition(),
-                                                                        shouldEmitCameraPositionUpdate: shouldEmitCameraPositionUpdate)
+            let subscriberUpdates = CalculationResult.SubscriberUpdates(
+                positionToEmit: location.toPosition(),
+                shouldEmitCameraPositionUpdate: shouldEmitCameraPositionUpdate
+            )
 
             return .init(newState: newState, subscriberUpdates: subscriberUpdates)
         case let .multipleLocations(multipleLocations):

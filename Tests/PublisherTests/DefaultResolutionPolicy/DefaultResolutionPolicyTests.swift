@@ -16,10 +16,12 @@ class DefaultResolutionPolicyTests: XCTestCase {
         methods = MockResolutionPolicyMethods()
         defaultResolution = Resolution(accuracy: .balanced, desiredInterval: 100, minimumDisplacement: 100)
         batteryLevelProvider = MockBatteryLevelProvider()
-        resolutionPolicy = DefaultResolutionPolicy(hooks: hooks,
-                                                   methods: methods,
-                                                   defaultResolution: defaultResolution,
-                                                   batteryLevelProvider: batteryLevelProvider)
+        resolutionPolicy = DefaultResolutionPolicy(
+            hooks: hooks,
+            methods: methods,
+            defaultResolution: defaultResolution,
+            batteryLevelProvider: batteryLevelProvider
+        )
     }
 
     func testResolutionPolicy_resolveRequest_noRemoteRequests() {
@@ -35,10 +37,12 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 10, minimumDisplacement: 11)
         let resolutions = DefaultResolutionSet(resolution: resolution)
         let proximity = DefaultProximity(spatial: 500)
-        let constraints = DefaultResolutionConstraints(resolutions: resolutions,
-                                                       proximityThreshold: proximity,
-                                                       batteryLevelThreshold: 50,
-                                                       lowBatteryMultiplier: 3)
+        let constraints = DefaultResolutionConstraints(
+            resolutions: resolutions,
+            proximityThreshold: proximity,
+            batteryLevelThreshold: 50,
+            lowBatteryMultiplier: 3
+        )
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
         let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: [])
 
@@ -53,10 +57,12 @@ class DefaultResolutionPolicyTests: XCTestCase {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 10, minimumDisplacement: 10)
         let resolutions = DefaultResolutionSet(resolution: resolution)
         let proximity = DefaultProximity(spatial: 500)
-        let constraints = DefaultResolutionConstraints(resolutions: resolutions,
-                                                       proximityThreshold: proximity,
-                                                       batteryLevelThreshold: 30,
-                                                       lowBatteryMultiplier: 3)
+        let constraints = DefaultResolutionConstraints(
+            resolutions: resolutions,
+            proximityThreshold: proximity,
+            batteryLevelThreshold: 30,
+            lowBatteryMultiplier: 3
+        )
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
         let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: [])
 
@@ -108,14 +114,19 @@ class DefaultResolutionPolicyTests: XCTestCase {
             Resolution(accuracy: .maximum, desiredInterval: 10, minimumDisplacement: 11)
         ]
 
-        let resolutionSet = DefaultResolutionSet(resolution: Resolution(accuracy: .balanced,
-                                                                        desiredInterval: 2,
-                                                                        minimumDisplacement: 5))
+        let resolutionSet = DefaultResolutionSet(
+            resolution: Resolution(
+                accuracy: .balanced,
+                desiredInterval: 2,
+                minimumDisplacement: 5
+            )
+        )
         let constraints = DefaultResolutionConstraints(
             resolutions: resolutionSet,
             proximityThreshold: DefaultProximity(spatial: 500),
             batteryLevelThreshold: 30,
-            lowBatteryMultiplier: 3)
+            lowBatteryMultiplier: 3
+        )
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
         let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutions)
 
@@ -135,14 +146,19 @@ class DefaultResolutionPolicyTests: XCTestCase {
             Resolution(accuracy: .maximum, desiredInterval: 10, minimumDisplacement: 11)
         ]
 
-        let resolutionSet = DefaultResolutionSet(resolution: Resolution(accuracy: .balanced,
-                                                                        desiredInterval: 2,
-                                                                        minimumDisplacement: 5))
+        let resolutionSet = DefaultResolutionSet(
+            resolution: Resolution(
+                accuracy: .balanced,
+                desiredInterval: 2,
+                minimumDisplacement: 5
+            )
+        )
         let constraints = DefaultResolutionConstraints(
             resolutions: resolutionSet,
             proximityThreshold: DefaultProximity(spatial: 500),
             batteryLevelThreshold: 30,
-            lowBatteryMultiplier: 20)
+            lowBatteryMultiplier: 20
+        )
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
         let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutions)
 

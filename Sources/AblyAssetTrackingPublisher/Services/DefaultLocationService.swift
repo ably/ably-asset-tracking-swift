@@ -24,11 +24,15 @@ class DefaultLocationService: LocationService {
 
         let directions = Directions(credentials: mapboxConfiguration.getCredentials())
 
-        NavigationSettings.shared.initialize(directions: directions,
-                                             tileStoreConfiguration: .default,
-                                             navigatorPredictionInterval: 0,
-                                             statusUpdatingSettings: .init(updatingPatience: .greatestFiniteMagnitude,
-                                                                           updatingInterval: nil))
+        NavigationSettings.shared.initialize(
+            directions: directions,
+            tileStoreConfiguration: .default,
+            navigatorPredictionInterval: 0,
+            statusUpdatingSettings: .init(
+                updatingPatience: .greatestFiniteMagnitude,
+                updatingInterval: nil
+            )
+        )
         if vehicleProfile == .bicycle {
             let cyclingConfig = [
                         "cache": [

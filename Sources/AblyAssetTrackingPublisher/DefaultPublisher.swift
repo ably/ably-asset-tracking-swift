@@ -785,11 +785,13 @@ extension DefaultPublisher {
         let estimatedArrivalTime = route?.expectedTravelTime == nil ? nil :
             route!.expectedTravelTime + Date().timeIntervalSince1970
 
-        let isReached: Bool = checker.isThresholdReached(threshold: threshold,
-                                                         currentLocation: location,
-                                                         currentTime: Date().timeIntervalSince1970,
-                                                         destination: destination,
-                                                         estimatedArrivalTime: estimatedArrivalTime)
+        let isReached: Bool = checker.isThresholdReached(
+            threshold: threshold,
+            currentLocation: location,
+            currentTime: Date().timeIntervalSince1970,
+            destination: destination,
+            estimatedArrivalTime: estimatedArrivalTime
+        )
         if isReached {
             handler.onProximityReached(threshold: threshold)
         }

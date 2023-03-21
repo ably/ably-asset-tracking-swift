@@ -110,17 +110,19 @@ public struct Location: Equatable {
      Utility function that coerces NaN values to sensible defaults or negative values.
      */
     func sanitize() -> Location {
-        return Location(coordinate: coordinate,
-                        altitude: altitude,
-                        ellipsoidalAltitude: ellipsoidalAltitude.isFinite ? ellipsoidalAltitude : .zero,
-                        horizontalAccuracy: horizontalAccuracy.isFinite ? horizontalAccuracy : -1.0,
-                        verticalAccuracy: verticalAccuracy.isFinite ? verticalAccuracy : -1.0,
-                        course: course.isFinite ? course : -1.0,
-                        courseAccuracy: courseAccuracy.isFinite ? courseAccuracy : -1.0,
-                        speed: speed.isFinite ? speed : -1.0,
-                        speedAccuracy: speedAccuracy.isFinite ? speedAccuracy : -1.0,
-                        floorLevel: floorLevel,
-                        timestamp: timestamp)
+        return Location(
+            coordinate: coordinate,
+            altitude: altitude,
+            ellipsoidalAltitude: ellipsoidalAltitude.isFinite ? ellipsoidalAltitude : .zero,
+            horizontalAccuracy: horizontalAccuracy.isFinite ? horizontalAccuracy : -1.0,
+            verticalAccuracy: verticalAccuracy.isFinite ? verticalAccuracy : -1.0,
+            course: course.isFinite ? course : -1.0,
+            courseAccuracy: courseAccuracy.isFinite ? courseAccuracy : -1.0,
+            speed: speed.isFinite ? speed : -1.0,
+            speedAccuracy: speedAccuracy.isFinite ? speedAccuracy : -1.0,
+            floorLevel: floorLevel,
+            timestamp: timestamp
+        )
     }
 
     /**

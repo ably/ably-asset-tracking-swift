@@ -91,8 +91,10 @@ struct PublisherDetailsView: View {
                     )
                 }
                 .alert(isPresented: $showChangeRoutingProfileErrorAlert) {
-                    Alert(title: "Failed to change routing profile",
-                          errorInformation: changeRoutingProfileError)
+                    Alert(
+                        title: "Failed to change routing profile",
+                        errorInformation: changeRoutingProfileError
+                    )
                 }
 
                 HStack {
@@ -115,8 +117,10 @@ struct PublisherDetailsView: View {
                     .accentColor(.red)
                     .disabled(isStoppingPublisher || hasStoppedPublisher)
                     .alert(isPresented: $showStopPublisherErrorAlert) {
-                        Alert(title: "Failed to stop publisher",
-                              errorInformation: stopPublisherError)
+                        Alert(
+                            title: "Failed to stop publisher",
+                            errorInformation: stopPublisherError
+                        )
                     }
                     Spacer()
                     ProgressView()

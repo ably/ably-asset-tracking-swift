@@ -28,6 +28,7 @@ struct CreatePublisherView: View {
     var body: some View {
         VStack {
             // https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-programmatic-navigation-in-swiftui
+            // swiftlint:disable:next multiline_arguments
             NavigationLink(isActive: $isShowingPublisherDetailsView) {
                 // This seems a bit dodgy, not really sure of the right way to pass data to the destination of a NavigationLink
                 if let publisher {

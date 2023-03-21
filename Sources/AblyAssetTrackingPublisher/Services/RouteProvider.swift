@@ -37,8 +37,10 @@ class DefaultRouteProvider: NSObject, RouteProvider {
         guard let destination,
               let routingProfile else { return }
 
-        let options = RouteOptions(coordinates: [destination, location.coordinate],
-                                   profileIdentifier: routingProfile.toMapboxProfileIdentifier())
+        let options = RouteOptions(
+            coordinates: [destination, location.coordinate],
+            profileIdentifier: routingProfile.toMapboxProfileIdentifier()
+        )
         directions.calculate(options) { [weak self] (_, result) in
             guard let self else { return }
             switch result {

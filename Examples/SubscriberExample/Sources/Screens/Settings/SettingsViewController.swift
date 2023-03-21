@@ -29,9 +29,11 @@ class SettingsViewController: UIViewController {
         guard let trackingId = trackingIdTextField.text,
               !trackingId.isEmpty
         else {
-            let alert = UIAlertController(title: "No tracking ID",
-                                          message: "Please enter tracking ID to continue.",
-                                          preferredStyle: .alert)
+            let alert = UIAlertController(
+                title: "No tracking ID",
+                message: "Please enter tracking ID to continue.",
+                preferredStyle: .alert
+            )
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
             return

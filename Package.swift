@@ -34,7 +34,8 @@ let package = Package(
                 "AblyAssetTrackingInternal",
                 "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa")
-            ]),
+            ]
+        ),
         .target(
             name: "AblyAssetTrackingPublisher",
             dependencies: [
@@ -43,22 +44,26 @@ let package = Package(
                 .product(name: "Ably", package: "ably-cocoa"),
                 .product(name: "MapboxNavigation", package: "mapbox-navigation-ios"),
                 .product(name: "Version", package: "Version")
-            ]),
+            ]
+        ),
         .target(
             name: "AblyAssetTrackingInternal",
             dependencies: [
                 "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa")
-            ]),
+            ]
+        ),
         .target(
             name: "AblyAssetTrackingCore",
-            dependencies: []),
+            dependencies: []
+        ),
         .target(
             name: "AblyAssetTrackingUI",
             dependencies: [
                 "AblyAssetTrackingCore",
                 "AblyAssetTrackingInternal"
-            ]),
+            ]
+        ),
         .testTarget(
             name: "SystemTests",
             dependencies: [
@@ -72,7 +77,8 @@ let package = Package(
                 "AblyAssetTrackingInternal",
                 "AblyAssetTrackingCore"
             ],
-            resources: [.copy("Resources/test-locations.json")]),
+            resources: [.copy("Resources/test-locations.json")]
+        ),
         .testTarget(
             name: "SubscriberTests",
             dependencies: [
@@ -80,7 +86,8 @@ let package = Package(
                 "AblyAssetTrackingInternalTesting",
                 "AblyAssetTrackingSubscriberTesting",
                 "AblyAssetTrackingSubscriber"
-            ]),
+            ]
+        ),
         .testTarget(
             name: "PublisherTests",
             dependencies: [
@@ -89,7 +96,8 @@ let package = Package(
                 "AblyAssetTrackingPublisherTesting",
                 "AblyAssetTrackingPublisher"
             ],
-            resources: [.copy("common")]),
+            resources: [.copy("common")]
+        ),
         .testTarget(
             name: "InternalTests",
             dependencies: [
@@ -98,19 +106,22 @@ let package = Package(
                 "AblyAssetTrackingInternal",
                 "AblyAssetTrackingCore",
                 .product(name: "Ably", package: "ably-cocoa")
-            ]),
+            ]
+        ),
         .testTarget(
             name: "CoreTests",
             dependencies: [
                 "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingPublisher"
-            ]),
+            ]
+        ),
         .testTarget(
             name: "UITests",
             dependencies: [
                 "AblyAssetTrackingCoreTesting",
                 "AblyAssetTrackingUI"
-            ]),
+            ]
+        ),
         .target(
             name: "AblyAssetTrackingTesting",
             dependencies: [

@@ -178,12 +178,14 @@ extension DefaultLocationAnimatorCalculator {
                             Double(numberOfLocationsToPop)
 
                         if locations.count > 1 {
-                            return .multipleLocations(.init(
-                                first: locations[0],
-                                second: locations[1],
-                                proportionOfFirstToSecondAlreadyAnimated: firstToSecondAlreadyAnimatedAfterProgressing,
-                                remaining: Array(locations.dropFirst(2))
-                            ))
+                            return .multipleLocations(
+                                .init(
+                                    first: locations[0],
+                                    second: locations[1],
+                                    proportionOfFirstToSecondAlreadyAnimated: firstToSecondAlreadyAnimatedAfterProgressing,
+                                    remaining: Array(locations.dropFirst(2))
+                                )
+                            )
                         } else { // locations.count == 1, confirmed by the “sense check” precondition above
                             return .singleLocation(locations[0])
                         }
@@ -276,11 +278,14 @@ extension DefaultLocationAnimatorCalculator {
                     case .noLocations, .singleLocation:
                         self = .init(locations: newLocations)
                     case let .multipleLocations(multipleLocations):
-                        self = .multipleLocations(.init(first: newLocations[0],
-                                                        second: newLocations[1],
-                                                        proportionOfFirstToSecondAlreadyAnimated: multipleLocations
-                                                            .proportionOfFirstToSecondAlreadyAnimated,
-                                                        remaining: Array(newLocations.dropFirst(2))))
+                        self = .multipleLocations(
+                            .init(
+                                first: newLocations[0],
+                                second: newLocations[1],
+                                proportionOfFirstToSecondAlreadyAnimated: multipleLocations.proportionOfFirstToSecondAlreadyAnimated,
+                                remaining: Array(newLocations.dropFirst(2))
+                            )
+                        )
                     }
                 }
 

@@ -57,9 +57,11 @@ extension Resolution: Hashable, Equatable {
 
 public extension Resolution {
     static var `default`: Resolution {
-        return Resolution(accuracy: .balanced,
-                          desiredInterval: 500,
-                          minimumDisplacement: 500)
+        return Resolution(
+            accuracy: .balanced,
+            desiredInterval: 500,
+            minimumDisplacement: 500
+        )
     }
 }
 

@@ -109,9 +109,11 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         var expectation = XCTestExpectation()
         publisher.add(trackable: trackable) { _ in }
         delegate.publisherDidUpdateEnhancedLocationCallback = { expectation.fulfill() }
-        resolutionPolicyFactory.resolutionPolicy?.resolveRequestReturnValue = Resolution(accuracy: .balanced,
-                                                                                         desiredInterval: 500,
-                                                                                         minimumDisplacement: 500)
+        resolutionPolicyFactory.resolutionPolicy?.resolveRequestReturnValue = Resolution(
+            accuracy: .balanced,
+            desiredInterval: 500,
+            minimumDisplacement: 500
+        )
 
         /**
          After tracking trackable (to trigger resolution resolve refresh)

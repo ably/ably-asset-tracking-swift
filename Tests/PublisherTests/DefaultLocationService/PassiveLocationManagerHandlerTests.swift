@@ -21,65 +21,77 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
         passiveLocationManagerHandler = PassiveLocationManagerHandler(logHandler: logger)
         date = Date()
 
-        validCLLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 5.67),
-                                     altitude: 100,
-                                     horizontalAccuracy: 10,
-                                     verticalAccuracy: 10,
-                                     course: 10,
-                                     courseAccuracy: 10,
-                                     speed: 10,
-                                     speedAccuracy: 10,
-                                     timestamp: date)
+        validCLLocation = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 5.67),
+            altitude: 100,
+            horizontalAccuracy: 10,
+            verticalAccuracy: 10,
+            course: 10,
+            courseAccuracy: 10,
+            speed: 10,
+            speedAccuracy: 10,
+            timestamp: date
+        )
 
-        repairableCLLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 5.67),
-                                          altitude: 100,
-                                          horizontalAccuracy: 100/0,
-                                          verticalAccuracy: 100/0,
-                                          course: 100/0,
-                                          courseAccuracy: 100/0,
-                                          speed: 100/0,
-                                          speedAccuracy: 100/0,
-                                          timestamp: date)
+        repairableCLLocation = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 5.67),
+            altitude: 100,
+            horizontalAccuracy: 100/0,
+            verticalAccuracy: 100/0,
+            course: 100/0,
+            courseAccuracy: 100/0,
+            speed: 100/0,
+            speedAccuracy: 100/0,
+            timestamp: date
+        )
 
-        unrepairableTimestampCLLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 3.45),
-                                                     altitude: 100/0,
-                                                     horizontalAccuracy: 10,
-                                                     verticalAccuracy: 10,
-                                                     course: 10,
-                                                     courseAccuracy: 10,
-                                                     speed: 10,
-                                                     speedAccuracy: 10,
-                                                     timestamp: Date(timeIntervalSince1970: 0))
+        unrepairableTimestampCLLocation = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 3.45),
+            altitude: 100/0,
+            horizontalAccuracy: 10,
+            verticalAccuracy: 10,
+            course: 10,
+            courseAccuracy: 10,
+            speed: 10,
+            speedAccuracy: 10,
+            timestamp: Date(timeIntervalSince1970: 0)
+        )
 
-        unrepairableAltitudeCLLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 3.45),
-                                                    altitude: 100/0,
-                                                    horizontalAccuracy: 10,
-                                                    verticalAccuracy: 10,
-                                                    course: 10,
-                                                    courseAccuracy: 10,
-                                                    speed: 10,
-                                                    speedAccuracy: 10,
-                                                    timestamp: date)
+        unrepairableAltitudeCLLocation = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 3.45),
+            altitude: 100/0,
+            horizontalAccuracy: 10,
+            verticalAccuracy: 10,
+            course: 10,
+            courseAccuracy: 10,
+            speed: 10,
+            speedAccuracy: 10,
+            timestamp: date
+        )
 
-        unrepairableLongitudeCLLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 100/0),
-                                                     altitude: 100,
-                                                     horizontalAccuracy: 10,
-                                                     verticalAccuracy: 10,
-                                                     course: 10,
-                                                     courseAccuracy: 10,
-                                                     speed: 10,
-                                                     speedAccuracy: 10,
-                                                     timestamp: date)
+        unrepairableLongitudeCLLocation = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 100/0),
+            altitude: 100,
+            horizontalAccuracy: 10,
+            verticalAccuracy: 10,
+            course: 10,
+            courseAccuracy: 10,
+            speed: 10,
+            speedAccuracy: 10,
+            timestamp: date
+        )
 
-        unrepairableLatitudeCLLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 100/0, longitude: 5.67),
-                                                    altitude: 100,
-                                                    horizontalAccuracy: 10,
-                                                    verticalAccuracy: 10,
-                                                    course: 10,
-                                                    courseAccuracy: 10,
-                                                    speed: 10,
-                                                    speedAccuracy: 10,
-                                                    timestamp: date)
+        unrepairableLatitudeCLLocation = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 100/0, longitude: 5.67),
+            altitude: 100,
+            horizontalAccuracy: 10,
+            verticalAccuracy: 10,
+            course: 10,
+            courseAccuracy: 10,
+            speed: 10,
+            speedAccuracy: 10,
+            timestamp: date
+        )
     }
 
     func test_passiveLocationManagerHandler_handleEnhancedLocationUpdate_forwardsValidLocation() {

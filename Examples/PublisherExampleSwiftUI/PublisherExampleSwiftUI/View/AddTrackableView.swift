@@ -89,8 +89,10 @@ struct AddTrackableView: View {
                               isAdding ||
                               hasAdded)
                     .alert(isPresented: $showAlert) {
-                        Alert(title: "Failed to add trackable",
-                              errorInformation: error)
+                        Alert(
+                            title: "Failed to add trackable",
+                            errorInformation: error
+                        )
                     }
                 }
 

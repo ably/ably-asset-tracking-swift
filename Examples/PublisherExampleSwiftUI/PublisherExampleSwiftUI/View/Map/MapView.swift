@@ -44,8 +44,10 @@ struct MapView: View {
                 }
                 .disabled(isRemoving || hasRemoved)
                 .alert(isPresented: $showAlert) {
-                    Alert(title: "Failed to stop publisher",
-                          errorInformation: error)
+                    Alert(
+                        title: "Failed to stop publisher",
+                        errorInformation: error
+                    )
                 }
                 .padding(.trailing)
                 ProgressView()

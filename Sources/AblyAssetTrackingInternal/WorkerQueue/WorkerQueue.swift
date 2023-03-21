@@ -56,6 +56,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
                 } else {
                     workerLogHandler?.verbose(message: "Worker Queue's properties before invoking doWork on \(type(of: worker)): \(self.properties)", error: nil)
                     workerLogHandler?.debug(message: "Worker Queue invoking doWork on \(type(of: worker))", error: nil)
+                    // swiftlint:disable:next multiline_arguments
                     try self.properties = worker.doWork(properties: self.properties) { asyncWork in
                         self.asyncWorkQueue.async {
                             workerLogHandler?.debug(message: "Performing async work posted by worker \(type(of: worker))", error: nil)

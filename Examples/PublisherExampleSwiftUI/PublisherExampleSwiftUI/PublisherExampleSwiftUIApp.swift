@@ -19,8 +19,10 @@ struct PublisherExampleSwiftUIApp: App {
             dateFormatter.locale = .init(identifier: "en_US_POSIX")
             let formatter = BasicFormatter(BasicFormatter.apple.format, timestampFormatter: dateFormatter)
 
-            var handler = LoggingFormatAndPipe.Handler(formatter: formatter,
-                                                       pipe: LoggerTextOutputStreamPipe.standardError)
+            var handler = LoggingFormatAndPipe.Handler(
+                formatter: formatter,
+                pipe: LoggerTextOutputStreamPipe.standardError
+            )
 
             handler.logLevel = .info
 

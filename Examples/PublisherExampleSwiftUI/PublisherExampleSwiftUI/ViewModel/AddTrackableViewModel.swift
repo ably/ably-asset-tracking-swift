@@ -54,10 +54,12 @@ class AddTrackableViewModel: ObservableObject {
         if setResolutionConstraints, let customResolution {
             // Taken from
             // https://github.com/ably/ably-asset-tracking-android/blob/3506aadeaec81f220bf044639dbb000db2d8f96f/publishing-example-app/src/main/java/com/ably/tracking/example/publisher/AddTrackableActivity.kt#L160-L163
-            constraints = DefaultResolutionConstraints(resolutions: DefaultResolutionSet(resolution: customResolution),
-                                                       proximityThreshold: DefaultProximity(spatial: 1),
-                                                       batteryLevelThreshold: 10,
-                                                       lowBatteryMultiplier: 2)
+            constraints = DefaultResolutionConstraints(
+                resolutions: DefaultResolutionSet(resolution: customResolution),
+                proximityThreshold: DefaultProximity(spatial: 1),
+                batteryLevelThreshold: 10,
+                lowBatteryMultiplier: 2
+            )
         } else {
             constraints = nil
         }

@@ -9,6 +9,7 @@ public extension GeoJSONMessage {
             verticalAccuracy: properties.accuracyVertical ?? -1,
             course: properties.bearing ?? -1,
             speed: properties.speed ?? -1,
-            timestamp: Date(timeIntervalSince1970: properties.time))
+            timestamp: Date(timeIntervalSince1970: properties.time)
+        )
     }
 }

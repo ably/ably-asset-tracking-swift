@@ -10,11 +10,13 @@ class WorkerQueueTests: XCTestCase {
     private let workingQueue = DispatchQueue(label: "com.ably.AssetTracking.WorkerQueue.workingQueue")
     private let workQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.workQueue")
     private let asyncWorkWorkingQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.asyncWorkWorkingQueue")
-    let getStoppedError = { return ErrorInformation(code: 1,
-                                                    statusCode: 1,
-                                                    message: "Stopped",
-                                                    cause: nil,
-                                                    href: nil)}
+    let getStoppedError = { return ErrorInformation(
+        code: 1,
+        statusCode: 1,
+        message: "Stopped",
+        cause: nil,
+        href: nil
+    )}
     let properties = WorkerQueuePropertiesMock()
     let workerFactory = WorkerFactoryMock()
     let worker = WorkerMock()
@@ -28,12 +30,14 @@ class WorkerQueueTests: XCTestCase {
         workRequest = WorkRequest(workerSpecification: worker)
         workerFactory.createWorkerWorkerSpecificationLogHandlerReturnValue = worker
 
-        workerQueue = WorkerQueue<WorkerFactoryMock.PropertiesType, WorkerMock>(properties: properties,
-                                                                                workingQueue: workingQueue,
-                                                                                logHandler: logHandler,
-                                                                                workerFactory: workerFactory,
-                                                                                asyncWorkWorkingQueue: asyncWorkWorkingQueue,
-                                                                                getStoppedError: getStoppedError)
+        workerQueue = WorkerQueue<WorkerFactoryMock.PropertiesType, WorkerMock>(
+            properties: properties,
+            workingQueue: workingQueue,
+            logHandler: logHandler,
+            workerFactory: workerFactory,
+            asyncWorkWorkingQueue: asyncWorkWorkingQueue,
+            getStoppedError: getStoppedError
+        )
     }
 
     func test_queueShouldCallWorkersDoWorkMethod() {
@@ -60,12 +64,14 @@ class WorkerQueueTests: XCTestCase {
         properties.isStopped = true
         let expectation = expectation(description: "doWhenStoppedErrorClosure invokes")
 
-        workerQueue = WorkerQueue<WorkerFactoryMock.PropertiesType, WorkerMock>(properties: properties,
-                                                                                workingQueue: workingQueue,
-                                                                                logHandler: logHandler,
-                                                                                workerFactory: workerFactory,
-                                                                                asyncWorkWorkingQueue: asyncWorkWorkingQueue,
-                                                                                getStoppedError: getStoppedError)
+        workerQueue = WorkerQueue<WorkerFactoryMock.PropertiesType, WorkerMock>(
+            properties: properties,
+            workingQueue: workingQueue,
+            logHandler: logHandler,
+            workerFactory: workerFactory,
+            asyncWorkWorkingQueue: asyncWorkWorkingQueue,
+            getStoppedError: getStoppedError
+        )
         // when
         workRequest.workerSpecification.doWhenStoppedErrorClosure = { _ in
             expectation.fulfill()

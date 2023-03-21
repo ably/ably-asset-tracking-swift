@@ -66,8 +66,10 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
 
-            self.nextLocationUpdatePrediction = .init(receivedAt: CACurrentMediaTime(),
-                                                      nextUpdateExpectedIn: sanitisedExpectedIntervalBetweenLocationUpdatesInMilliseconds / 1000)
+            self.nextLocationUpdatePrediction = .init(
+                receivedAt: CACurrentMediaTime(),
+                nextUpdateExpectedIn: sanitisedExpectedIntervalBetweenLocationUpdatesInMilliseconds / 1000
+            )
             self.state.locationsAwaitingAnimation.add(location.skippedLocations + [location.location])
         }
     }

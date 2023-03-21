@@ -33,9 +33,11 @@ class SettingsViewModel: ObservableObject {
         if let defaultAccuracy = Accuracy(rawValue: defaultResolutionAccuracy),
         let defaultDisplacement = Double(defaultResolutionMinimumDisplacement),
         let defaultDesiredInterval = Double(defaultResolutionDesiredInterval) {
-            SettingsModel.shared.defaultResolution = .init(accuracy: defaultAccuracy,
-                                                           desiredInterval: defaultDesiredInterval,
-                                                           minimumDisplacement: defaultDisplacement)
+            SettingsModel.shared.defaultResolution = .init(
+                accuracy: defaultAccuracy,
+                desiredInterval: defaultDesiredInterval,
+                minimumDisplacement: defaultDisplacement
+            )
         }
     }
 }

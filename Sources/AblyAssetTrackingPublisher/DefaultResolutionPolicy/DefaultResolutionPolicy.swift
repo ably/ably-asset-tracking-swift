@@ -84,9 +84,11 @@ class DefaultResolutionPolicy: ResolutionPolicy {
         if let currentBatteryLevel = batteryLevelProvider.currentBatteryPercentage,
            currentBatteryLevel < constraints.batteryLevelThreshold {
             let newInterval = resolution.desiredInterval * Double(constraints.lowBatteryMultiplier)
-            return Resolution(accuracy: resolution.accuracy,
-                              desiredInterval: newInterval,
-                              minimumDisplacement: resolution.minimumDisplacement)
+            return Resolution(
+                accuracy: resolution.accuracy,
+                desiredInterval: newInterval,
+                minimumDisplacement: resolution.minimumDisplacement
+            )
         } else {
             return resolution
         }

@@ -97,9 +97,11 @@ class CreatePublisherViewModel: ObservableObject {
     func save() {
         if let constantAccuracy = Accuracy(rawValue: constantResolutionAccuracy),
            let constantDisplacement = Double(constantResolutionMinimumDisplacement) {
-            SettingsModel.shared.constantResolution = .init(accuracy: constantAccuracy,
-                                                            desiredInterval: .zero,
-                                                            minimumDisplacement: constantDisplacement)
+            SettingsModel.shared.constantResolution = .init(
+                accuracy: constantAccuracy,
+                desiredInterval: .zero,
+                minimumDisplacement: constantDisplacement
+            )
         }
     }
 

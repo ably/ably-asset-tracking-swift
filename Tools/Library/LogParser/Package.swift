@@ -11,7 +11,8 @@ let package = Package(
     products: [
         .library(
             name: "LogParser",
-            targets: ["LogParser"])
+            targets: ["LogParser"]
+        )
     ],
     targets: [
         .target(

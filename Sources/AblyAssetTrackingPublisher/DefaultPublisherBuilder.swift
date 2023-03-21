@@ -59,8 +59,10 @@ class DefaultPublisherBuilder: PublisherBuilder {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }
 
-        let internalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
-                                                           subsystems: [.assetTracking, .named("publisher")])
+        let internalLogHandler = DefaultInternalLogHandler(
+            logHandler: logHandler,
+            subsystems: [.assetTracking, .named("publisher")]
+        )
 
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
@@ -70,160 +72,184 @@ class DefaultPublisherBuilder: PublisherBuilder {
             logHandler: internalLogHandler
         )
 
-        let publisher =  DefaultPublisher(routingProfile: routingProfile,
-                                          resolutionPolicyFactory: resolutionPolicyFactory,
-                                          ablyPublisher: defaultAbly,
-                                          locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: internalLogHandler, vehicleProfile: vehicleProfile),
-                                          routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration),
-                                          areRawLocationsEnabled: areRawLocationsEnabled,
-                                          isSendResolutionEnabled: isSendResolutionEnabled,
-                                          constantLocationEngineResolution: constantLocationEngineResolution,
-                                          logHandler: internalLogHandler)
+        let publisher =  DefaultPublisher(
+            routingProfile: routingProfile,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            ablyPublisher: defaultAbly,
+            locationService: DefaultLocationService(mapboxConfiguration: mapboxConfiguration, historyLocation: locationSource?.locations, logHandler: internalLogHandler, vehicleProfile: vehicleProfile),
+            routeProvider: DefaultRouteProvider(mapboxConfiguration: mapboxConfiguration),
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: internalLogHandler
+        )
         publisher.delegate = delegate
         return publisher
     }
 
     func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: configuration,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: configuration,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler
+        )
     }
 
     func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler
+        )
     }
 
     func locationSource(_ source: LocationSource?) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: source,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: source,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler
+        )
     }
 
     func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: profile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: profile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler
+        )
     }
 
     func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler
+        )
     }
 
     func resolutionPolicyFactory(_ resolutionPolicyFactory: ResolutionPolicyFactory) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler
+        )
     }
 
     func rawLocations(enabled: Bool) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: enabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: enabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler
+        )
     }
 
     func constantLocationEngineResolution(resolution: Resolution?) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: resolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: resolution,
+            logHandler: logHandler
+        )
     }
 
     func logHandler(handler: LogHandler?) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: handler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: handler
+        )
     }
 
     func sendResolution(enabled: Bool) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: enabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: enabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler
+        )
     }
 
     func vehicleProfile(_ vehicleProfile: VehicleProfile) -> PublisherBuilder {
-        return DefaultPublisherBuilder(connection: connection,
-                                       mapboxConfiguration: mapboxConfiguration,
-                                       locationSource: locationSource,
-                                       routingProfile: routingProfile,
-                                       delegate: delegate,
-                                       resolutionPolicyFactory: resolutionPolicyFactory,
-                                       areRawLocationsEnabled: areRawLocationsEnabled,
-                                       isSendResolutionEnabled: isSendResolutionEnabled,
-                                       constantLocationEngineResolution: constantLocationEngineResolution,
-                                       logHandler: logHandler,
-                                       vehicleProfile: vehicleProfile)
+        return DefaultPublisherBuilder(
+            connection: connection,
+            mapboxConfiguration: mapboxConfiguration,
+            locationSource: locationSource,
+            routingProfile: routingProfile,
+            delegate: delegate,
+            resolutionPolicyFactory: resolutionPolicyFactory,
+            areRawLocationsEnabled: areRawLocationsEnabled,
+            isSendResolutionEnabled: isSendResolutionEnabled,
+            constantLocationEngineResolution: constantLocationEngineResolution,
+            logHandler: logHandler,
+            vehicleProfile: vehicleProfile
+        )
     }
 }

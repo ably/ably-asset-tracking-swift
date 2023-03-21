@@ -13,6 +13,7 @@ public extension GeoJSONMessage {
             speed: properties.speed ?? -1,
             speedAccuracy: properties.accuracySpeed ?? .zero,
             floorLevel: properties.floor,
-            timestamp: properties.time)
+            timestamp: properties.time
+        )
     }
 }

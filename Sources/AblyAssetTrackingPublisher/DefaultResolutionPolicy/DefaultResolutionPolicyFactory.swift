@@ -9,9 +9,11 @@ public class DefaultResolutionPolicyFactory: ResolutionPolicyFactory {
     }
 
     public func createResolutionPolicy(hooks: ResolutionPolicyHooks, methods: ResolutionPolicyMethods) -> ResolutionPolicy {
-        return DefaultResolutionPolicy(hooks: hooks,
-                                       methods: methods,
-                                       defaultResolution: defaultResolution,
-                                       batteryLevelProvider: DefaultBatteryLevelProvider())
+        return DefaultResolutionPolicy(
+            hooks: hooks,
+            methods: methods,
+            defaultResolution: defaultResolution,
+            batteryLevelProvider: DefaultBatteryLevelProvider()
+        )
     }
 }

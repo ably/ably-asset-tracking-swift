@@ -63,20 +63,24 @@ public class ConnectionConfiguration {
         authCallback: @escaping AuthCallback,
         remainPresentForMilliseconds: Int? = nil
     ) {
-        self.init(apiKey: nil,
-                  clientId: clientId,
-                  authCallback: authCallback,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds)
+        self.init(
+            apiKey: nil,
+            clientId: clientId,
+            authCallback: authCallback,
+            remainPresentForMilliseconds: remainPresentForMilliseconds
+        )
     }
 
     public convenience init(
         authCallback: @escaping AuthCallback,
         remainPresentForMilliseconds: Int? = nil
     ) {
-        self.init(apiKey: nil,
-                  clientId: nil,
-                  authCallback: authCallback,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds)
+        self.init(
+            apiKey: nil,
+            clientId: nil,
+            authCallback: authCallback,
+            remainPresentForMilliseconds: remainPresentForMilliseconds
+        )
     }
 
     public convenience init(
@@ -84,9 +88,11 @@ public class ConnectionConfiguration {
         clientId: String? = nil,
         remainPresentForMilliseconds: Int? = nil
     ) {
-        self.init(apiKey: apiKey,
-                  clientId: clientId,
-                  authCallback: nil,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds)
+        self.init(
+            apiKey: apiKey,
+            clientId: clientId,
+            authCallback: nil,
+            remainPresentForMilliseconds: remainPresentForMilliseconds
+        )
     }
 }
