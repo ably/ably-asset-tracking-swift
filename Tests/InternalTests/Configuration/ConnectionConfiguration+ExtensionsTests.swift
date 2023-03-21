@@ -129,6 +129,6 @@ class ConnectionConfigurationTests: XCTestCase {
 
         XCTAssertEqual(clientOptions.realtimeHost, "something.example")
         XCTAssertEqual(clientOptions.port, 5678)
-        XCTAssertEqual(clientOptions.tls, false)
+        XCTAssertFalse(clientOptions.tls)
     }
 }

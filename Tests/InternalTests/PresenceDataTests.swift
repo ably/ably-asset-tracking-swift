@@ -26,12 +26,12 @@ class PresenceDataTests: XCTestCase {
         jsonString = "{\"type\":\"PUBLISHER\",\"rawLocations\":true}"
         data = try PresenceData.fromJSONString(jsonString)
         XCTAssertEqual(data.type, .publisher)
-        XCTAssertEqual(data.rawLocations, true)
+        XCTAssertTrue(try XCTUnwrap(data.rawLocations))
 
         jsonString = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}"
         data = try PresenceData.fromJSONString(jsonString)
         XCTAssertEqual(data.type, .publisher)
-        XCTAssertEqual(data.rawLocations, false)
+        XCTAssertFalse(try XCTUnwrap(data.rawLocations))
     }
 
     func testDeserializationFailure() {

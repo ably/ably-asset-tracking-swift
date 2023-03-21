@@ -310,7 +310,7 @@ class DefaultPublisherTests: XCTestCase {
 
                 // It should not notify the delegate that the trackables changed
                 XCTAssertFalse(self.delegate.publisherDidChangeTrackablesCalled)
-                XCTAssertEqual(self.delegate.publisherDidChangeTrackablesParamTrackables, nil)
+                XCTAssertNil(self.delegate.publisherDidChangeTrackablesParamTrackables)
                 expectation.fulfill()
             }
         }
