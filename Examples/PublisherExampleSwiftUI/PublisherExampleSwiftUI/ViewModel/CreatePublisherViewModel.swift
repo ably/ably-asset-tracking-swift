@@ -103,7 +103,7 @@ class CreatePublisherViewModel: ObservableObject {
     }
 
     @MainActor func createPublisher() async throws -> ObservablePublisher {
-        let connectionConfiguration = ConnectionConfiguration(apiKey: EnvironmentHelper.ABLY_API_KEY, clientId: "Asset Tracking Publisher Example")
+        let connectionConfiguration = ConnectionConfiguration(apiKey: EnvironmentHelper.ablyAPIKey, clientId: "Asset Tracking Publisher Example")
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
 
         let constantResolution: Resolution? = SettingsModel.shared.isConstantResolutionEnabled ? SettingsModel.shared.constantResolution : nil
@@ -128,7 +128,7 @@ class CreatePublisherViewModel: ObservableObject {
 
         var publisher = try PublisherFactory.publishers()
             .connection(connectionConfiguration)
-            .mapboxConfiguration(MapboxConfiguration(mapboxKey: EnvironmentHelper.MAPBOX_ACCESS_TOKEN))
+            .mapboxConfiguration(MapboxConfiguration(mapboxKey: EnvironmentHelper.mapboxAccessToken))
             .locationSource(locationSource)
             .routingProfile(routingProfile)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))

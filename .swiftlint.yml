@@ -15,8 +15,6 @@ disabled_rules:
   - missing_docs
   - todo
   - xct_specific_matcher
-  # Rules we’re currently violating even though we’ve added configuration for them:
-  - identifier_name
 
 opt_in_rules:
   - anonymous_argument_in_multiline_closure
@@ -84,4 +82,8 @@ file_header:
   forbidden_pattern: //(?! (swift-tools-version:|The swift-tools-version declares the minimum version of Swift required to build this package\.))
 
 identifier_name:
-  excluded: 'id'
+  # We disable the length checks, for the same reason we disable the rules of type "metrics".
+  min_length:
+    warning: 1
+  max_length:
+    warning: 10000

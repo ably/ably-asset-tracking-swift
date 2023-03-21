@@ -23,14 +23,14 @@ public protocol ParameterizedTestCaseParam {
 /// In order to use the Xcode GUI to run an individual test, you must first run the whole test file so that Xcode can become aware of the test’s existence. You can then re-run the test using Xcode’s Test navigator.
 open class ParameterizedTestCase<Param: ParameterizedTestCaseParam>: AATParameterizedTestCaseObjC {
     // Constant for the lifetime of the test case instance
-    private var _currentParam: Param?
+    private var underlyingCurrentParam: Param?
 
     /// The parameter value that the currently-executing test case should use.
     public var currentParam: Param {
-        guard let _currentParam else {
+        guard let underlyingCurrentParam else {
             fatalError("Attempted to fetch currentParam before it was populated. Did you try to fetch it before setUp?")
         }
-        return _currentParam
+        return underlyingCurrentParam
     }
 
     /// Asynchronously fetch the parameters that this test case will use. Subclasses must implement this method.
@@ -58,7 +58,7 @@ open class ParameterizedTestCase<Param: ParameterizedTestCaseParam>: AATParamete
         guard let fetchedParam = ParameterizedTestCaseParamStorage.shared.param(forTestMethodNamed: aat_invocationSelector, inClass: Self.self) else {
             fatalError("Could not find stored param for method \(aat_invocationSelector) in \(Self.self)")
         }
-        _currentParam = fetchedParam
+        underlyingCurrentParam = fetchedParam
 
         super.invokeTest()
     }
