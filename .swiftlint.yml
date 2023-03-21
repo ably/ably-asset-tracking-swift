@@ -16,7 +16,6 @@ disabled_rules:
   - todo
   - xct_specific_matcher
   # Rules we’re currently violating even though we’ve added configuration for them:
-  - file_header
   - identifier_name
 
 opt_in_rules:
@@ -81,7 +80,8 @@ excluded:
   - "**/GeneratedMocks.swift"
 
 file_header:
-  forbidden_string: //
+  # Comments, except for the required and standard ones at the top of a Package.swift file
+  forbidden_pattern: //(?! (swift-tools-version:|The swift-tools-version declares the minimum version of Swift required to build this package\.))
 
 identifier_name:
   excluded: 'id'

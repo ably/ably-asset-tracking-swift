@@ -1,5 +1,3 @@
-//
-
 import AblyAssetTrackingPublisher
 import Logging
 import SwiftUI

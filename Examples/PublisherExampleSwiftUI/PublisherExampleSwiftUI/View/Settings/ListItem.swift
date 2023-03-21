@@ -1,5 +1,3 @@
-//
-
 import SwiftUI
 
 struct ListItem<Content: View>: View {
