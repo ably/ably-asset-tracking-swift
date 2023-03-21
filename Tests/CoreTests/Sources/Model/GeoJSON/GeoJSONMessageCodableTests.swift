@@ -29,13 +29,13 @@ class GeoJSONMessageCodableTests: XCTestCase {
     func testEncodedJSON() throws {
         let json = jsonMessage(isValid: true)
         let data = json.data(using: .utf8)!
-        let message = try! JSONDecoder().decode(GeoJSONMessage.self, from: data)
+        let message = try JSONDecoder().decode(GeoJSONMessage.self, from: data)
 
-        let encodedData = try! JSONEncoder().encode(message)
+        let encodedData = try JSONEncoder().encode(message)
         let encodedString = String(data: encodedData, encoding: .utf8)!
 
         let decodedData = encodedString.data(using: .utf8)!
-        let decodedMessage =  try! JSONDecoder().decode(GeoJSONMessage.self, from: decodedData)
+        let decodedMessage =  try JSONDecoder().decode(GeoJSONMessage.self, from: decodedData)
 
         XCTAssertEqual(message.type, decodedMessage.type)
 

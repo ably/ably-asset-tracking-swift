@@ -15,7 +15,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         // When a user connects using basic authentication/ API key
         let connectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: clientId)
 
-        testPublisherTrack(configuration: connectionConfiguration)
+        try testPublisherTrack(configuration: connectionConfiguration)
     }
 
     func testPublisherConnectsWithTokenRequest() throws {
@@ -55,7 +55,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             authResultHandler(.success(.tokenRequest(tokenRequest)))
         })
 
-        testPublisherTrack(configuration: connectionConfiguration)
+        try testPublisherTrack(configuration: connectionConfiguration)
     }
 
     func testPublisherConnectsWithTokenDetails() throws {
@@ -76,7 +76,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             resultHandler(.success(.tokenDetails(tokenDetails)))
         })
 
-        testPublisherTrack(configuration: connectionConfiguration)
+        try testPublisherTrack(configuration: connectionConfiguration)
     }
 
     func testPublisherConnectsWithTokenString() throws {
@@ -97,7 +97,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             resultHandler(.success(.jwt(tokenString)))
         })
 
-        testPublisherTrack(configuration: connectionConfiguration)
+        try testPublisherTrack(configuration: connectionConfiguration)
     }
 
     func testPublisherConnectsWithJWT() throws {
@@ -110,12 +110,12 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             resultHandler(.success(.jwt(jwtToken)))
         }
 
-        testPublisherTrack(configuration: connectionConfiguration)
+        try testPublisherTrack(configuration: connectionConfiguration)
     }
 
-    private func createAndStartPublisher(connectionConfiguration: ConnectionConfiguration) -> Publisher {
+    private func createAndStartPublisher(connectionConfiguration: ConnectionConfiguration) throws -> Publisher {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
-        let publisher = try! PublisherFactory.publishers()
+        let publisher = try PublisherFactory.publishers()
             .connection(connectionConfiguration)
             .mapboxConfiguration(MapboxConfiguration(mapboxKey: Secrets.mapboxAccessToken))
             .locationSource(.init(locations: [CLLocation(latitude: 0.0, longitude: 0.0), CLLocation(latitude: 1.0, longitude: 1.0)]))
@@ -127,8 +127,8 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         return publisher
     }
 
-    private func testPublisherTrack(configuration: ConnectionConfiguration) {
-        let publisher = createAndStartPublisher(connectionConfiguration: configuration)
+    private func testPublisherTrack(configuration: ConnectionConfiguration) throws {
+        let publisher = try createAndStartPublisher(connectionConfiguration: configuration)
 
         // TODO check that connection is made/ Await successfully connection callback with an expectation
         // Here, I am creating a trackable instead of just checking the connection, because there doesn't
@@ -159,7 +159,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
 
-    private func requestToken(withPublisherCapabilitiesForTrackableIds trackableIds: [String], clientId: String) -> TokenDetails? {
+    private func requestToken(withPublisherCapabilitiesForTrackableIds trackableIds: [String], clientId: String) throws -> TokenDetails? {
         let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String: [String]] in
             var newCapabilities = capabilities
             newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence"]
@@ -167,7 +167,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         }
 
         let tokenParams = ARTTokenParams(clientId: clientId)
-        tokenParams.capability = try! capabilities.toJSONString()
+        tokenParams.capability = try capabilities.toJSONString()
 
         return AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
@@ -199,7 +199,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             }
         })
 
-        let publisher = createAndStartPublisher(connectionConfiguration: connectionConfiguration)
+        let publisher = try createAndStartPublisher(connectionConfiguration: connectionConfiguration)
 
         let trackable = Trackable(id: trackableId)
         let addTrackableExpectation = expectation(description: "Publisher successfully adds trackable")

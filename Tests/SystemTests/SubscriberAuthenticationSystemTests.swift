@@ -150,7 +150,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         waitForExpectations(timeout: 10.0)
     }
 
-    private func requestToken(withSubscriberCapabilitiesForTrackableIds trackableIds: [String], clientId: String) -> TokenDetails? {
+    private func requestToken(withSubscriberCapabilitiesForTrackableIds trackableIds: [String], clientId: String) throws -> TokenDetails? {
         let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String: [String]] in
             var newCapabilities = capabilities
             newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence", "history"]
@@ -158,7 +158,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         }
 
         let tokenParams = ARTTokenParams(clientId: clientId)
-        tokenParams.capability = try! capabilities.toJSONString()
+        tokenParams.capability = try capabilities.toJSONString()
 
         return AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),

@@ -9,7 +9,7 @@ class SubscriberWorkerFactoryTests: XCTestCase {
     private let properties = SubscriberWorkerQueueProperties()
     private let factory = SubscriberWorkerFactory()
 
-    func test_ItBuildsLegacyWork() {
+    func test_ItBuildsLegacyWork() throws {
         var legacyWorkerCalled = false
         let callback = {
             legacyWorkerCalled = true
@@ -22,7 +22,7 @@ class SubscriberWorkerFactoryTests: XCTestCase {
         )
 
         XCTAssertTrue(worker is LegacyWorker<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>)
-        _ = try! worker.doWork(
+        _ = try worker.doWork(
             properties: properties,
             doAsyncWork: { _ in },
             postWork: { _ in }

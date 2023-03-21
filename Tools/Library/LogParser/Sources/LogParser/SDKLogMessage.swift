@@ -29,6 +29,7 @@ public struct SDKLogMessage: Equatable {
 
     private static let regex = {
         let pattern = "^\\[([^\\]]*)\\](?:@(?:\\(([^:]+):(\\d+)\\)))? (.*)$"
+        // swiftlint:disable:next force_try
         return try! NSRegularExpression(pattern: pattern)
     }()
 

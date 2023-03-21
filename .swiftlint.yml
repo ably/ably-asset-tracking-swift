@@ -1,5 +1,4 @@
 disabled_rules:
-  - force_try
   # Rules we’re currently violating:
   - cyclomatic_complexity
   - function_body_length
