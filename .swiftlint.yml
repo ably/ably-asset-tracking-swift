@@ -52,6 +52,7 @@ opt_in_rules:
   - implicit_return
   - comma_inheritance
   - sorted_imports
+  - literal_expression_end_indentation
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count
   - contains_over_filter_is_empty

@@ -43,7 +43,7 @@ class DefaultLocationService: LocationService {
                                 "policy": 1
                             ]
                         ]
-                    ]
+            ]
             UserDefaults.standard.set(cyclingConfig, forKey: MapboxCoreNavigation.customConfigKey)
         }
 
