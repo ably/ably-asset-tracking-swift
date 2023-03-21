@@ -41,7 +41,7 @@ class DefaultRouteProvider: NSObject, RouteProvider {
             coordinates: [destination, location.coordinate],
             profileIdentifier: routingProfile.toMapboxProfileIdentifier()
         )
-        directions.calculate(options) { [weak self] (_, result) in
+        directions.calculate(options) { [weak self] _, result in
             guard let self else { return }
             switch result {
             case .failure(let error):
