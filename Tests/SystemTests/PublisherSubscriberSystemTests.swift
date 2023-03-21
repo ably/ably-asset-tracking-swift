@@ -95,7 +95,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         )
 
         let trackable = Trackable(id: trackableId)
-        didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))
+        didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count) / 2.0))
         publisher.add(trackable: trackable) { _  in }
 
         wait(for: [didUpdateEnhancedLocationExpectation, didUpdateRawLocationExpectation, didUpdateResolutionExpectation], timeout: 20.0)

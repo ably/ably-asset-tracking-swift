@@ -55,7 +55,7 @@ open class ParameterizedTestCase<Param: ParameterizedTestCaseParam>: AATParamete
 
     /// `xctest` calls this method before calling any of the `setUp...` methods, so we can use it to set ``currentParam`` such that it’s accessible by those methods.
     open override func invokeTest() {
-        guard let fetchedParam =  ParameterizedTestCaseParamStorage.shared.param(forTestMethodNamed: aat_invocationSelector, inClass: Self.self) else {
+        guard let fetchedParam = ParameterizedTestCaseParamStorage.shared.param(forTestMethodNamed: aat_invocationSelector, inClass: Self.self) else {
             fatalError("Could not find stored param for method \(aat_invocationSelector) in \(Self.self)")
         }
         _currentParam = fetchedParam

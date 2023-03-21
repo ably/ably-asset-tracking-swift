@@ -11,7 +11,7 @@ public extension Encodable {
      */
     func toJSONString() throws -> String {
         let data = try JSONEncoder().encode(self)
-        if let result =  String(data: data, encoding: .utf8) {
+        if let result = String(data: data, encoding: .utf8) {
             return result
         }
         throw ErrorInformation(type: .JSONCodingError(for: "\(data.self)"))

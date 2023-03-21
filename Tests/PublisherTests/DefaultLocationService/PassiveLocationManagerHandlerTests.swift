@@ -36,18 +36,18 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
         repairableCLLocation = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 5.67),
             altitude: 100,
-            horizontalAccuracy: 100/0,
-            verticalAccuracy: 100/0,
-            course: 100/0,
-            courseAccuracy: 100/0,
-            speed: 100/0,
-            speedAccuracy: 100/0,
+            horizontalAccuracy: 100 / 0,
+            verticalAccuracy: 100 / 0,
+            course: 100 / 0,
+            courseAccuracy: 100 / 0,
+            speed: 100 / 0,
+            speedAccuracy: 100 / 0,
             timestamp: date
         )
 
         unrepairableTimestampCLLocation = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 3.45),
-            altitude: 100/0,
+            altitude: 100 / 0,
             horizontalAccuracy: 10,
             verticalAccuracy: 10,
             course: 10,
@@ -59,7 +59,7 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
 
         unrepairableAltitudeCLLocation = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 3.45),
-            altitude: 100/0,
+            altitude: 100 / 0,
             horizontalAccuracy: 10,
             verticalAccuracy: 10,
             course: 10,
@@ -70,7 +70,7 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
         )
 
         unrepairableLongitudeCLLocation = CLLocation(
-            coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 100/0),
+            coordinate: CLLocationCoordinate2D(latitude: 1.234, longitude: 100 / 0),
             altitude: 100,
             horizontalAccuracy: 10,
             verticalAccuracy: 10,
@@ -82,7 +82,7 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
         )
 
         unrepairableLatitudeCLLocation = CLLocation(
-            coordinate: CLLocationCoordinate2D(latitude: 100/0, longitude: 5.67),
+            coordinate: CLLocationCoordinate2D(latitude: 100 / 0, longitude: 5.67),
             altitude: 100,
             horizontalAccuracy: 10,
             verticalAccuracy: 10,

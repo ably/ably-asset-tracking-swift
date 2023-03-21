@@ -72,7 +72,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
             logHandler: internalLogHandler
         )
 
-        let publisher =  DefaultPublisher(
+        let publisher = DefaultPublisher(
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,
             ablyPublisher: defaultAbly,

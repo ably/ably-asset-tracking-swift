@@ -53,6 +53,7 @@ opt_in_rules:
   - comma_inheritance
   - sorted_imports
   - literal_expression_end_indentation
+  - operator_usage_whitespace
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count
   - contains_over_filter_is_empty

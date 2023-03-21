@@ -357,7 +357,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_whenTrackableWithSameIdIsCurrentlyBeingAdded_itWaitsForTheFirstAddToComplete_andWhenTheFirstAddSucceeds_theSecondAddSucceedsToo() {
-        var numberOfTimesConnectCalled  = 0
+        var numberOfTimesConnectCalled = 0
         let synchronizationQueue = DispatchQueue(label: #function)
         var connectCompletion: ResultHandler<Void>?
         let connectCalledExpectation = expectation(description: "ablyPublisher’s connect method is called")

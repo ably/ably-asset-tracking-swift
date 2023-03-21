@@ -260,7 +260,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
             resultPolicy: .success
         )
 
-        if let sentLocationUpdate =  ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate {
+        if let sentLocationUpdate = ablyPublisher.sendEnhancedAssetLocationUpdateParamLocationUpdate {
             XCTAssertTrue(sentLocationUpdate.skippedLocations.contains(initialLocation))
         } else {
             XCTFail("sendEnhancedAssetLocationUpdateParamLocationUpdate is nil")

@@ -5,8 +5,8 @@ import SwiftUI
 
 class AddTrackableViewModel: ObservableObject {
     @Published var trackableId = ""
-    @Published var resolutionMinimumDisplacement: String  = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
-    @Published var resolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
+    @Published var resolutionMinimumDisplacement: String = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
+    @Published var resolutionDesiredInterval: String = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
     @Published var setResolutionConstraints = false
     @Published var destination: LocationCoordinate?
 

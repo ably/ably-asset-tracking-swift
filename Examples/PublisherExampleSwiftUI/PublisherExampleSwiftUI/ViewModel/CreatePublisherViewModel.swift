@@ -56,7 +56,7 @@ class CreatePublisherViewModel: ObservableObject {
         }
     }
 
-    @Published var constantResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.constantResolution.minimumDisplacement)"
+    @Published var constantResolutionMinimumDisplacement: String = "\(SettingsModel.shared.constantResolution.minimumDisplacement)"
 
     var constantResolutionAccuracy: String = SettingsModel.shared.constantResolution.accuracy.rawValue
     var accuracies: [String] {

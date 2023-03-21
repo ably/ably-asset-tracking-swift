@@ -15,8 +15,8 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var defaultResolutionMinimumDisplacement: String  = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
-    @Published var defaultResolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
+    @Published var defaultResolutionMinimumDisplacement: String = "\(SettingsModel.shared.defaultResolution.minimumDisplacement)"
+    @Published var defaultResolutionDesiredInterval: String = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
 
     var defaultResolutionAccuracy: String = SettingsModel.shared.defaultResolution.accuracy.rawValue
     var accuracies: [String] {
