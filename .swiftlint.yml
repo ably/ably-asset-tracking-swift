@@ -60,6 +60,7 @@ opt_in_rules:
   - modifier_order
   - switch_case_on_newline
   - single_test_class
+  - prefer_self_type_over_type_of_self
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count
   - contains_over_filter_is_empty
