@@ -95,14 +95,22 @@ extension DefaultSubscriber {
         logHandler?.verbose(message: "Enqueuing event: \(event)", error: nil)
         performOnWorkingThread { [weak self] in
             switch event {
-            case .start(let event): self?.performStart(event)
-            case .stop(let event): self?.performStop(event)
-            case .changeResolution(let event): self?.performChangeResolution(event)
-            case .ablyConnectionClosed(let event): self?.performStopped(event)
-            case .ablyClientConnectionStateChanged(let event): self?.performClientConnectionChanged(event)
-            case .ablyChannelConnectionStateChanged(let event): self?.performChannelConnectionChanged(event)
-            case .presenceUpdate(let event): self?.performPresenceUpdated(event)
-            case .ablyError(let event): self?.performAblyError(event)
+            case .start(let event):
+                self?.performStart(event)
+            case .stop(let event):
+                self?.performStop(event)
+            case .changeResolution(let event):
+                self?.performChangeResolution(event)
+            case .ablyConnectionClosed(let event):
+                self?.performStopped(event)
+            case .ablyClientConnectionStateChanged(let event):
+                self?.performClientConnectionChanged(event)
+            case .ablyChannelConnectionStateChanged(let event):
+                self?.performChannelConnectionChanged(event)
+            case .presenceUpdate(let event):
+                self?.performPresenceUpdated(event)
+            case .ablyError(let event):
+                self?.performAblyError(event)
             }
         }
     }

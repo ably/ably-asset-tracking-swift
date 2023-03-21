@@ -29,7 +29,8 @@ class WaitAsync {
         switch result {
         case .timedOut:
             XCTFail("\(description) - Timeout!")
-        default: ()
+        default:
+            ()
         }
 
         loopBreak = true

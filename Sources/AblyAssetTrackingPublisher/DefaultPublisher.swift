@@ -156,32 +156,58 @@ extension DefaultPublisher {
         logHandler?.verbose(message: "Received event: \(event)", error: nil)
         performOnWorkingQueue { [weak self] in
             switch event {
-            case .trackTrackable(let event): self?.performTrackTrackableEvent(event)
-            case .presenceJoinedSuccessfully(let event): self?.performPresenceJoinedSuccessfullyEvent(event)
-            case .trackableReadyToTrack(let event): self?.performTrackableReadyToTrack(event)
-            case .enhancedLocationChanged(let event): self?.performEnhancedLocationChanged(event)
-            case .sendEnhancedLocationSuccess(let event): self?.performSendEnhancedLocationSuccess(event)
-            case .sendEnhancedLocationFailure(let event): self?.performSendEnhancedLocationFailure(event)
-            case .rawLocationChanged(let event): self?.performRawLocationChanged(event)
-            case .sendRawLocationSuccess(let event): self?.performSendRawLocationSuccess(event)
-            case .sendRawLocationFailure(let event): self?.performSendRawLocationFailure(event)
-            case .addTrackable(let event): self?.performAddTrackableEvent(event)
-            case .removeTrackable(let event): self?.performRemoveTrackableEvent(event)
-            case .clearActiveTrackable(let event): self?.performClearActiveTrackableEvent(event)
-            case .refreshResolutionPolicy(let event): self?.performRefreshResolutionPolicyEvent(event)
-            case .changeLocationEngineResolution(let event): self?.performChangeLocationEngineResolutionEvent(event)
-            case .presenceUpdate(let event): self?.performPresenceUpdateEvent(event)
-            case .clearRemovedTrackableMetadata(let event): self?.performClearRemovedTrackableMetadataEvent(event)
-            case .setDestinationSuccess(let event): self?.performSetDestinationSuccessEvent(event)
-            case .delegateResolutionUpdate(let event): self?.notifyDelegateResolutionUpdate(event)
-            case .delegateError(let event): self?.notifyDelegateDidFailWithError(event.error)
-            case .delegateTrackableConnectionStateChanged(let event): self?.notifyDelegateConnectionStateChanged(event)
-            case .delegateEnhancedLocationChanged(let event): self?.notifyDelegateEnhancedLocationChanged(event)
-            case .changeRoutingProfile(let event): self?.performChangeRoutingProfileEvent(event)
-            case .stop(let event): self?.performStopPublisherEvent(event)
-            case .ablyConnectionClosed(let event): self?.performAblyConnectionClosedEvent(event)
-            case .ablyClientConnectionStateChanged(let event): self?.performAblyClientConnectionChangedEvent(event)
-            case .ablyChannelConnectionStateChanged(let event): self?.performAblyChannelConnectionStateChangedEvent(event)
+            case .trackTrackable(let event):
+                self?.performTrackTrackableEvent(event)
+            case .presenceJoinedSuccessfully(let event):
+                self?.performPresenceJoinedSuccessfullyEvent(event)
+            case .trackableReadyToTrack(let event):
+                self?.performTrackableReadyToTrack(event)
+            case .enhancedLocationChanged(let event):
+                self?.performEnhancedLocationChanged(event)
+            case .sendEnhancedLocationSuccess(let event):
+                self?.performSendEnhancedLocationSuccess(event)
+            case .sendEnhancedLocationFailure(let event):
+                self?.performSendEnhancedLocationFailure(event)
+            case .rawLocationChanged(let event):
+                self?.performRawLocationChanged(event)
+            case .sendRawLocationSuccess(let event):
+                self?.performSendRawLocationSuccess(event)
+            case .sendRawLocationFailure(let event):
+                self?.performSendRawLocationFailure(event)
+            case .addTrackable(let event):
+                self?.performAddTrackableEvent(event)
+            case .removeTrackable(let event):
+                self?.performRemoveTrackableEvent(event)
+            case .clearActiveTrackable(let event):
+                self?.performClearActiveTrackableEvent(event)
+            case .refreshResolutionPolicy(let event):
+                self?.performRefreshResolutionPolicyEvent(event)
+            case .changeLocationEngineResolution(let event):
+                self?.performChangeLocationEngineResolutionEvent(event)
+            case .presenceUpdate(let event):
+                self?.performPresenceUpdateEvent(event)
+            case .clearRemovedTrackableMetadata(let event):
+                self?.performClearRemovedTrackableMetadataEvent(event)
+            case .setDestinationSuccess(let event):
+                self?.performSetDestinationSuccessEvent(event)
+            case .delegateResolutionUpdate(let event):
+                self?.notifyDelegateResolutionUpdate(event)
+            case .delegateError(let event):
+                self?.notifyDelegateDidFailWithError(event.error)
+            case .delegateTrackableConnectionStateChanged(let event):
+                self?.notifyDelegateConnectionStateChanged(event)
+            case .delegateEnhancedLocationChanged(let event):
+                self?.notifyDelegateEnhancedLocationChanged(event)
+            case .changeRoutingProfile(let event):
+                self?.performChangeRoutingProfileEvent(event)
+            case .stop(let event):
+                self?.performStopPublisherEvent(event)
+            case .ablyConnectionClosed(let event):
+                self?.performAblyConnectionClosedEvent(event)
+            case .ablyClientConnectionStateChanged(let event):
+                self?.performAblyClientConnectionChangedEvent(event)
+            case .ablyChannelConnectionStateChanged(let event):
+                self?.performAblyChannelConnectionStateChangedEvent(event)
             }
         }
     }

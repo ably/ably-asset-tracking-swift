@@ -50,7 +50,8 @@ class PublisherHelper {
             switch XCTWaiter.wait(for: [connectCompletionHandlerExpectation], timeout: defaultTimeout) {
             case .timedOut:
                 XCTFail("Timeout \(connectCompletionHandlerExpectation.description)")
-            default: ()
+            default:
+                ()
             }
         }
 
@@ -83,7 +84,8 @@ class PublisherHelper {
         switch XCTWaiter.wait(for: [expectationDidSendEnhancedLocation], timeout: defaultTimeout) {
         case .timedOut:
             XCTFail("Timeout \(expectationDidSendEnhancedLocation.description)")
-        default: ()
+        default:
+            ()
         }
     }
 

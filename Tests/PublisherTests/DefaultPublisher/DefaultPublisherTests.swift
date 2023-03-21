@@ -1015,7 +1015,8 @@ class DefaultPublisherTests: XCTestCase {
         let publisherStopExpectation = self.expectation(description: "Publisher stop expectation")
         publisher.stop { result in
             switch result {
-            case .success: ()
+            case .success:
+                ()
             case .failure(let error):
                 XCTFail("Publisher stop failed with error: \(error)")
             }
@@ -1029,7 +1030,8 @@ class DefaultPublisherTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Track success shouldn't occur when publisher is stopped")
-            case .failure: ()
+            case .failure:
+                ()
             }
 
             trackAfterStopCompletionExpectation.fulfill()

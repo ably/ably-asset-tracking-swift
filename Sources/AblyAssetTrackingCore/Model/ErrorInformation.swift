@@ -46,14 +46,22 @@ public enum ErrorInformationType {
 
     var message: String {
         switch self {
-        case .commonError(let errorMessage): return "Error: \(errorMessage)"
-        case .publisherError(let errorMessage): return "PublisherError || ErrorMessage: \(errorMessage)"
-        case .subscriberError(let errorMessage): return "SubscriberError || ErrorMessage: \(errorMessage)"
-        case .JSONCodingError(let object): return "Error while parsing: \(object)"
-        case let .incompleteConfiguration(missingProperty, builderOption): return "Missing mandatory property: \(missingProperty). Did you forgot to call `\(builderOption)` on builder object?"
-        case .trackableAlreadyExist(let trackableId): return "Trackable with id: \(trackableId) already exist."
-        case .publisherStoppedException: return "Cannot perform this action when publisher is stopped."
-        case .subscriberStoppedException: return "Cannot perform this action when subscriber is stopped."
+        case .commonError(let errorMessage):
+            return "Error: \(errorMessage)"
+        case .publisherError(let errorMessage):
+            return "PublisherError || ErrorMessage: \(errorMessage)"
+        case .subscriberError(let errorMessage):
+            return "SubscriberError || ErrorMessage: \(errorMessage)"
+        case .JSONCodingError(let object):
+            return "Error while parsing: \(object)"
+        case let .incompleteConfiguration(missingProperty, builderOption):
+            return "Missing mandatory property: \(missingProperty). Did you forgot to call `\(builderOption)` on builder object?"
+        case .trackableAlreadyExist(let trackableId):
+            return "Trackable with id: \(trackableId) already exist."
+        case .publisherStoppedException:
+            return "Cannot perform this action when publisher is stopped."
+        case .subscriberStoppedException:
+            return "Cannot perform this action when subscriber is stopped."
         }
     }
 }

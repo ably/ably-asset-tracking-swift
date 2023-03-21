@@ -11,9 +11,12 @@ struct Upload: Identifiable, Codable {
 
         var description: String {
             switch self {
-            case .uploading: return "Uploading"
-            case .uploaded: return "Uploaded"
-            case .failed(let errorDescription): return "Failed: \(errorDescription)"
+            case .uploading:
+                return "Uploading"
+            case .uploaded:
+                return "Uploaded"
+            case .failed(let errorDescription):
+                return "Failed: \(errorDescription)"
             }
         }
     }

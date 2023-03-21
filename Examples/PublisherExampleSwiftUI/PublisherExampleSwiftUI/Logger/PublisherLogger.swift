@@ -27,11 +27,16 @@ class PublisherLogger: AblyAssetTrackingCore.LogHandler {
 private extension LogLevel {
     var swiftLogLevel: Logger.Level {
         switch self {
-        case .verbose: return .trace
-        case .info: return .info
-        case .debug: return .debug
-        case .warn: return .warning
-        case .error: return .error
+        case .verbose:
+            return .trace
+        case .info:
+            return .info
+        case .debug:
+            return .debug
+        case .warn:
+            return .warning
+        case .error:
+            return .error
         }
     }
 }

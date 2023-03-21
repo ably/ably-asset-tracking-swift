@@ -4,11 +4,16 @@ import UIKit
 extension Accuracy {
     var description: String {
         switch self {
-        case .minimum: return "Minimum"
-        case .low: return "Low"
-        case .balanced: return "Balanced"
-        case .high: return "High"
-        case .maximum: return "Maximum"
+        case .minimum:
+            return "Minimum"
+        case .low:
+            return "Low"
+        case .balanced:
+            return "Balanced"
+        case .high:
+            return "High"
+        case .maximum:
+            return "Maximum"
         }
     }
 }

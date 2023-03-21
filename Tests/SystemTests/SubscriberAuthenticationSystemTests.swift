@@ -122,7 +122,8 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         let subscriber = createSubscriberBuilder(connectionConfiguration: configuration, trackingId: "Trackable ID")
             .start { result in
                 switch result {
-                case .success: ()
+                case .success:
+                    ()
                 case .failure(let error):
                     XCTFail("Subscriber start failed with error: \(error)")
                 }
@@ -134,7 +135,8 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
         subscriber?.resolutionPreference(resolution: resolution) { result in
             switch result {
-            case .success: ()
+            case .success:
+                ()
             case .failure(let error):
                 XCTFail("Resolution completion failed with error: \(error)")
             }

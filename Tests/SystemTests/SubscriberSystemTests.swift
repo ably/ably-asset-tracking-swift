@@ -16,8 +16,10 @@ class SubscriberSystemTests: XCTestCase {
             .delegate(delegate)
             .start { result in
                 switch result {
-                case .success: subscriberStartExpectation.fulfill()
-                case let .failure(error): XCTFail("Subscriber failed to start: \(error)")
+                case .success:
+                    subscriberStartExpectation.fulfill()
+                case let .failure(error):
+                    XCTFail("Subscriber failed to start: \(error)")
                 }
             }
 
