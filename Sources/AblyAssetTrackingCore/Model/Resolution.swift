@@ -56,6 +56,7 @@ extension Resolution: Hashable, Equatable {
 }
 
 public extension Resolution {
+    // swiftlint:disable:next missing_docs
     static var `default`: Resolution {
         Resolution(
             accuracy: .balanced,
@@ -66,6 +67,7 @@ public extension Resolution {
 }
 
 extension Resolution {
+    // swiftlint:disable:next missing_docs
     public var debugDescription: String {
         "Publisher.Resolution accuracy: \(accuracy), desiredInterval: \(desiredInterval), minimumDisplacement: \(minimumDisplacement)"
     }

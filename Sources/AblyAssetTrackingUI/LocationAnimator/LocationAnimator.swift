@@ -2,6 +2,7 @@ import AblyAssetTrackingCore
 import Combine
 import Foundation
 
+// swiftlint:disable:next missing_docs
 public protocol LocationAnimator {
     /**
      Defines how many animation steps need to be completed to publish `subscribeForCameraPositionUpdates`

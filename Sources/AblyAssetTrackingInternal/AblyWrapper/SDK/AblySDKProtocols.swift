@@ -1,6 +1,8 @@
 import Ably
 import AblyAssetTrackingCore
 
+// swiftlint:disable missing_docs
+
 // sourcery: AutoMockable
 public protocol AblySDKRealtimeFactory {
     func create(withConfiguration configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler, host: Host?) -> AblySDKRealtime

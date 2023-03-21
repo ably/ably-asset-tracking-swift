@@ -2,7 +2,7 @@ import AblyAssetTrackingCore
 
 /// A description of some software component which wishes to identify itself in a log message.
 public enum Subsystem {
-    // One of the Ably Asset Tracking SDKs.
+    /// One of the Ably Asset Tracking SDKs.
     case assetTracking
     /// An arbitrary component with a name.
     case named(String)

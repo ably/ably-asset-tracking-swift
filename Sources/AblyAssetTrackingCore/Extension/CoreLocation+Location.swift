@@ -1,6 +1,7 @@
 import CoreLocation
 
 public extension CLLocation {
+    // swiftlint:disable:next missing_docs
     func toLocation() -> Result<Location, LocationValidationError> {
         var courseAccuracy: Double = -1
         if #available(iOS 13.4, *) {

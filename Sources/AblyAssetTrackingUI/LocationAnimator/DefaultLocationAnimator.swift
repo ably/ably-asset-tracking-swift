@@ -133,6 +133,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
 
 // Models
 public extension Location {
+    // swiftlint:disable:next missing_docs
     func toPosition() -> Position {
         Position(
             latitude: coordinate.latitude,

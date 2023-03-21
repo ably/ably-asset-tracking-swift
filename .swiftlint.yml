@@ -12,9 +12,6 @@ disabled_rules:
   # Rules of type "lint" that we’ve decided we don’t want:
   - todo # We frequently use TODOs accompanied by a GitHub issue reference
 
-  # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
-  - missing_docs
-
 opt_in_rules:
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count

@@ -4,6 +4,7 @@ import Foundation
 
 /// A reference to a temporary file which will be deleted once there are no remaining strong references to this object.
 public final class TemporaryFile {
+    // swiftlint:disable:next missing_docs
     public let fileURL: URL
     private let logHandler: InternalLogHandler?
     // For testing this class.

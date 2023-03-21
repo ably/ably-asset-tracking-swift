@@ -19,6 +19,7 @@ public class Trackable {
      */
     public let constraints: ResolutionConstraints?
 
+    // swiftlint:disable:next missing_docs
     public init(
         id: String,
         destination: LocationCoordinate? = nil,
@@ -29,6 +30,7 @@ public class Trackable {
         self.constraints = constraints
     }
 
+    // swiftlint:disable:next missing_docs
     public init(
         id: String,
         metadata: String? = nil,

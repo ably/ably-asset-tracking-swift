@@ -21,6 +21,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
     let getStoppedError: () -> Error
     let asyncWorkQueue: DispatchQueue
 
+    // swiftlint:disable:next missing_docs
     public init(
         properties: PropertiesType,
         workingQueue: DispatchQueue,

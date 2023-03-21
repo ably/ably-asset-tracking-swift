@@ -2,6 +2,7 @@ import Ably
 import AblyAssetTrackingCore
 
 public extension ARTPresenceAction {
+    // swiftlint:disable:next missing_docs
     func toPresenceAction() -> PresenceAction {
         switch self {
         case .absent:

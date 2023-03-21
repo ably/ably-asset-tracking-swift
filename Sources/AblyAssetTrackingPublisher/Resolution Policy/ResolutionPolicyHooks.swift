@@ -89,10 +89,12 @@ public protocol SubscriberSetListener {
     func onSubscriberRemoved(subscriber: Subscriber)
  }
 
+// swiftlint:disable:next missing_docs
 public class Subscriber {
     let id: String
     let trackable: Trackable
 
+    // swiftlint:disable:next missing_docs
     public init(id: String, trackable: Trackable) {
         self.id = id
         self.trackable = trackable

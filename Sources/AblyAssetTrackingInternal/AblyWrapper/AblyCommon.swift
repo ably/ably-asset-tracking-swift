@@ -1,5 +1,6 @@
 import AblyAssetTrackingCore
 
+// swiftlint:disable:next missing_docs
 public protocol AblyCommon {
     /**
      Observe for the `ARTRealtime` state updates.

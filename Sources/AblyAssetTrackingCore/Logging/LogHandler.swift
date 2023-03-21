@@ -18,9 +18,11 @@ public protocol LogHandler {
  * Defines importance levels for log messages.
  */
 public enum LogLevel {
+    // swiftlint:disable missing_docs
     case verbose
     case info
     case debug
     case warn
     case error
+    // swiftlint:enable missing_docs
 }

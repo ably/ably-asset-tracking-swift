@@ -1,6 +1,8 @@
 import AblyAssetTrackingCore
 import UIKit
 
+// swiftlint:disable missing_docs
+
 public struct PresenceData: Codable {
     public let type: ClientType
     public let resolution: Resolution?

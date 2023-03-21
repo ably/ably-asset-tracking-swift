@@ -1,6 +1,7 @@
 import CoreLocation
 
 public extension GeoJSONMessage {
+    // swiftlint:disable:next missing_docs
     func toCoreLocation() -> CLLocation {
         CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: geometry.latitude, longitude: geometry.longitude),

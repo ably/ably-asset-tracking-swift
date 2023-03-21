@@ -1,6 +1,6 @@
 import Foundation
 
-public enum EnvironmentHelper {
+enum EnvironmentHelper {
     private static let infoDictionary: [String: Any] = {
         guard let dict = Bundle.main.infoDictionary else {
             fatalError("Plist file not found")

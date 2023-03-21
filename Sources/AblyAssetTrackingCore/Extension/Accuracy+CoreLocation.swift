@@ -1,6 +1,7 @@
 import CoreLocation
 
 public extension Accuracy {
+    // swiftlint:disable:next missing_docs
     func toCoreLocationAccuracy() -> CLLocationAccuracy {
         switch self {
         case .minimum:

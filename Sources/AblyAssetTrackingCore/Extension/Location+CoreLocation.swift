@@ -1,6 +1,7 @@
 import CoreLocation
 
 public extension Location {
+    // swiftlint:disable:next missing_docs
     func toCoreLocation() -> CLLocation {
         let date = Date(timeIntervalSince1970: self.timestamp)
 
@@ -41,6 +42,7 @@ public extension Location {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     func distance(from: Location) -> Double {
         self.toCoreLocation().distance(from: from.toCoreLocation())
     }

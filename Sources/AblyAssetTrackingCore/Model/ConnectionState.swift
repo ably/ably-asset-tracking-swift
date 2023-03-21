@@ -31,6 +31,8 @@ extension ConnectionState {
             return "failed"
         }
     }
+
+    // swiftlint:disable:next missing_docs
     public var description: String {
         "ConnectionState.\(string)"
     }

@@ -35,6 +35,7 @@ public struct ExampleAppLogFile {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public init(lines: [Line]) {
         self.lines = lines
     }

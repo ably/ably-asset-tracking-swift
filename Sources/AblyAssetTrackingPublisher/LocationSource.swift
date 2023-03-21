@@ -1,5 +1,7 @@
 import CoreLocation
 
+// swiftlint:disable missing_docs
+
 @available(*, deprecated, message: "No longer used.")
 public enum LocationSourceType: Int {
     case `default`

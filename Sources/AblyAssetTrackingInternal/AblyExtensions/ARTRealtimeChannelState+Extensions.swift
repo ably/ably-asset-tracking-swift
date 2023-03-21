@@ -6,6 +6,7 @@ Wrapper for ARTRealtimeChannelState, as we don't want to pass it to our clients
  */
 
 extension ARTRealtimeChannelState {
+    // swiftlint:disable:next missing_docs
     public func toConnectionState() -> ConnectionState {
         switch self {
         case .attached:

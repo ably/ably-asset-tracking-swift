@@ -1,6 +1,8 @@
 import AblyAssetTrackingCore
 import Foundation
 
+// swiftlint:disable missing_docs
+
 public extension InternalLogHandler {
     func verbose(message: String, error: Error?, file: String? = #file, line: Int? = #line) {
         logMessage(level: .verbose, message: message, error: error, file: file, line: line)

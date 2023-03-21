@@ -10,14 +10,20 @@ public enum AuthResult {
     case tokenDetails(TokenDetails)
 }
 
+// swiftlint:disable:next missing_docs
 public typealias Token = String
+// swiftlint:disable:next missing_docs
 public typealias AuthCallback = (TokenParams, @escaping (Result<AuthResult, Error>) -> Void) -> Void
 
 /// A container for connection configuration data used when connecting to Ably
 public class ConnectionConfiguration {
+    // swiftlint:disable:next missing_docs
     public let apiKey: String?
+    // swiftlint:disable:next missing_docs
     public let clientId: String?
+    // swiftlint:disable:next missing_docs
     public let remainPresentForMilliseconds: Int?
+    // swiftlint:disable:next missing_docs
     public let authCallback: AuthCallback?
     /**
      * For development or non-default production environments.
@@ -71,6 +77,7 @@ public class ConnectionConfiguration {
         )
     }
 
+    // swiftlint:disable:next missing_docs
     public convenience init(
         authCallback: @escaping AuthCallback,
         remainPresentForMilliseconds: Int? = nil
@@ -83,6 +90,7 @@ public class ConnectionConfiguration {
         )
     }
 
+    // swiftlint:disable:next missing_docs
     public convenience init(
         apiKey: String,
         clientId: String? = nil,
