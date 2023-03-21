@@ -17,12 +17,6 @@ disabled_rules:
   - xct_specific_matcher
 
 opt_in_rules:
-  - array_init
-  - empty_xctest_method
-  - missing_docs
-  - override_in_extension
-  - yoda_condition
-
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count
   - contains_over_filter_is_empty
@@ -78,6 +72,13 @@ opt_in_rules:
   - static_operator
   - toggle_bool
   - xct_specific_matcher
+
+  # Opt-in rules of type "lint" that we’ve decided we want:
+  - array_init
+  - empty_xctest_method
+  - missing_docs
+  - override_in_extension
+  - yoda_condition
 
 excluded:
   - "**/.build"
