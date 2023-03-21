@@ -37,7 +37,9 @@ class SDKTestProxyClient {
                 return
             }
 
-            let httpResponse = response as! HTTPURLResponse
+            guard let httpResponse = response as? HTTPURLResponse else {
+                fatalError("Expected an HTTPURLResponse but got \(type(of: response))")
+            }
 
             guard httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
                 completionHandler(.failure(RequestError.unexpectedStatus(httpResponse.statusCode)))
