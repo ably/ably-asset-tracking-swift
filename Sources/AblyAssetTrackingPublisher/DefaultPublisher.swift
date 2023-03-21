@@ -51,8 +51,8 @@ class DefaultPublisher: Publisher, PublisherInteractor {
     private var duplicateTrackableGuard = DuplicateTrackableGuard()
 
     public weak var delegate: PublisherDelegate?
-    private(set) public var activeTrackable: Trackable?
-    private(set) public var routingProfile: RoutingProfile
+    public private(set) var activeTrackable: Trackable?
+    public private(set) var routingProfile: RoutingProfile
 
     init(
         routingProfile: RoutingProfile,
@@ -868,7 +868,7 @@ extension DefaultPublisher {
         )
     }
 
-    static private func performOnMainThread(_ operation: @escaping () -> Void) {
+    private static func performOnMainThread(_ operation: @escaping () -> Void) {
         DispatchQueue.main.async(execute: operation)
     }
 

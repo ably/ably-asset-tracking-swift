@@ -15,7 +15,7 @@ class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     private var didUpdateRegion = false
 
-    private override init() {
+    override private init() {
         super.init()
 
         locationManager.delegate = self

@@ -47,14 +47,14 @@ open class ParameterizedTestCase<Param: ParameterizedTestCaseParam>: AATParamete
     ///
     /// When `xctest` runs a test for a single test method (e.g. when triggered via the gutter play button in Xcode), it does not call `defaultTestSuite` on the test class but rather calls
     /// `instancesRespondToSelector:`. So, our usual strategy of relying on `defaultTestSuite` to create the test methods will not work in this situation, and we instead use `instancesRespondToSelector:` as our opportunity to do so.
-    open override class func instancesRespond(to aSelector: Selector!) -> Bool {
+    override open class func instancesRespond(to aSelector: Selector!) -> Bool {
         self.aat_createTestMethods()
 
         return super.instancesRespond(to: aSelector)
     }
 
     /// `xctest` calls this method before calling any of the `setUp...` methods, so we can use it to set ``currentParam`` such that it’s accessible by those methods.
-    open override func invokeTest() {
+    override open func invokeTest() {
         guard let fetchedParam = ParameterizedTestCaseParamStorage.shared.param(forTestMethodNamed: aat_invocationSelector, inClass: Self.self) else {
             fatalError("Could not find stored param for method \(aat_invocationSelector) in \(Self.self)")
         }
@@ -65,7 +65,7 @@ open class ParameterizedTestCase<Param: ParameterizedTestCaseParam>: AATParamete
 
     /// This implementation is required by our superclass `AATParameterizedTestCaseObjC`.
     @discardableResult
-    open override class func aat_createTestMethods() -> [String] {
+    override open class func aat_createTestMethods() -> [String] {
         let logHandler = TestLogging.sharedInternalLogHandler.addingSubsystem(.typed(self))
 
         let params: [Param]

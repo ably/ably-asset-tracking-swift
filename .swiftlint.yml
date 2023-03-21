@@ -57,6 +57,7 @@ opt_in_rules:
   - trailing_closure
   - conditional_returns_on_newline
   - self_binding
+  - modifier_order
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count
   - contains_over_filter_is_empty
