@@ -48,7 +48,7 @@ struct DestinationMapView: UIViewRepresentable {
     func changeDestination(coordinate: CLLocationCoordinate2D) {
         removeDestinationAnnotation()
         
-        if let _ = destination {
+        if destination != nil {
             destination = nil
             return
         }

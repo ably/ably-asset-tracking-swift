@@ -13,7 +13,6 @@ disabled_rules:
   - orphaned_doc_comment
   - type_body_length
   - type_name
-  - unused_optional_binding
   - vertical_parameter_alignment
   # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
   - missing_docs
