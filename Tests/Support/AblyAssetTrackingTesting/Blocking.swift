@@ -213,7 +213,8 @@ public enum Blocking {
         }
 
         /// Executed on the run loop of `waiterThread`.
-        @objc func checkForExpectations() {
+        @objc
+        func checkForExpectations() {
             logHandler.debug(message: "Thread checking for pending expectations in run loop", error: nil)
             queueLock.lock()
             let expectation = queue.dequeue()

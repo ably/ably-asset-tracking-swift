@@ -16,7 +16,6 @@ disabled_rules:
   - unused_optional_binding
   - vertical_parameter_alignment
   # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
-  - attributes
   - fatal_error_message
   - missing_docs
   - todo

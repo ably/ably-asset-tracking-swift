@@ -2,7 +2,8 @@ import ArgumentParser
 import LogParser
 import Foundation
 
-@main struct ParseLogFile: ParsableCommand {
+@main
+struct ParseLogFile: ParsableCommand {
     @Argument(help: "The path to the example app log file.")
     var input: String
     

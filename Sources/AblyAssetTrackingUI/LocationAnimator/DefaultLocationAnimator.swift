@@ -121,7 +121,8 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     private class DisplayLinkTarget {
         weak var locationAnimator: DefaultLocationAnimator?
         
-        @objc func displayLinkDidFire(_ displayLink: CADisplayLink) {
+        @objc
+        func displayLinkDidFire(_ displayLink: CADisplayLink) {
             locationAnimator?.animationLoop(link: displayLink)
         }
     }

@@ -82,7 +82,8 @@ struct DestinationMapView: UIViewRepresentable {
             self.parent.mapView.addGestureRecognizer(gRecognizer)            
         }
 
-        @objc func tapHandler(_ gesture: UITapGestureRecognizer) {
+        @objc
+        func tapHandler(_ gesture: UITapGestureRecognizer) {
             // position on the screen, CGPoint
             let location = gRecognizer.location(in: self.parent.mapView)
             // position on the map, CLLocationCoordinate2D
