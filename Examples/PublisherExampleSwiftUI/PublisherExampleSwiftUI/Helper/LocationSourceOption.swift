@@ -22,7 +22,7 @@ extension LocationSourceOption {
         case "S3 file":
             return .s3File
         default:
-            fatalError()
+            fatalError("Unknown \(Self.self) for description \(description)")
         }
     }
 }
