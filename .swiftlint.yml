@@ -17,7 +17,6 @@ disabled_rules:
   - vertical_parameter_alignment
   # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
   - attributes
-  - empty_xctest_method
   - fatal_error_message
   - missing_docs
   - todo

@@ -38,9 +38,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private let publisherInternalLogHandler = TestLogging.sharedInternalLogHandler
         .addingSubsystem(.assetTracking)
         .addingSubsystem(.named("publisher"))
-    
-    override func setUpWithError() throws { }
-    override func tearDownWithError() throws { }
 
     func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws {
         try subscriberReceivesPublisherMessage(vehicleProfile: .bicycle)

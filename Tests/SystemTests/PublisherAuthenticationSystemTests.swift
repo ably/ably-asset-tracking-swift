@@ -11,9 +11,6 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         "Test-Publisher_\(UUID().uuidString)"
     }()
     
-    override func setUpWithError() throws {}
-    override func tearDownWithError() throws {}
-    
     func testPublisherConnectsWithApiKey() throws {
         // When a user connects using basic authentication/ API key
         let connectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: clientId)
