@@ -31,12 +31,13 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             let keySecret = String(keyTokens[1])
             let currentTimestamp = tokenParams.timestamp ?? Date()
             let timestampEpochInMilliseconds = Int(currentTimestamp.timeIntervalSince1970 * 1000)
-            var hmacComponents = [keyName,
-                        tokenParams.ttl != nil ? String(tokenParams.ttl!) : "",
-                        tokenParams.capability ?? "",
-                        clientId,
-                        String(timestampEpochInMilliseconds),
-                        "Random nonce"
+            var hmacComponents = [
+                keyName,
+                tokenParams.ttl != nil ? String(tokenParams.ttl!) : "",
+                tokenParams.capability ?? "",
+                clientId,
+                String(timestampEpochInMilliseconds),
+                "Random nonce"
             ].joined(separator: "\n")
             hmacComponents.append("\n")
 
