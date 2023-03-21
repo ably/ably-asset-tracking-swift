@@ -1,5 +1,5 @@
-import AblyAssetTrackingCore
 import Ably
+import AblyAssetTrackingCore
 
 public struct Agents {
     private struct Agent {

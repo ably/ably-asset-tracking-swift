@@ -1,6 +1,6 @@
-import Foundation
 import Ably
 import AblyAssetTrackingInternal
+import Foundation
 import struct Version.Version
 
 public struct LocationHistoryData: Codable {

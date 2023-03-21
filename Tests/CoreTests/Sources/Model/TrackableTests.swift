@@ -1,6 +1,6 @@
-import XCTest
-import CoreLocation
 @testable import AblyAssetTrackingCore
+import CoreLocation
+import XCTest
 
 class TrackableTests: XCTestCase {
     private var trackables: Set<Trackable> = []

@@ -1,7 +1,7 @@
+import Ably
+import AblyAssetTrackingInternal
 import Foundation
 import XCTest
-import AblyAssetTrackingInternal
-import Ably
 
 class UtilsTests: XCTestCase {
     func testARTErrorInfoHrefIsMappedProperlyToErrorInformationHref() {

@@ -1,5 +1,5 @@
-import UIKit
 import MapboxMaps
+import UIKit
 
 class MapboxMapViewController: UIViewController {
     internal var mapView: MapboxMaps.MapView?

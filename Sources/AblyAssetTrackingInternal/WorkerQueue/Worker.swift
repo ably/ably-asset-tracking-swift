@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /// A [Worker] interface represents workers which execute work inside [WorkerQueue].
 /// PropertiesType: - the type of properties used by this worker as both input and output.

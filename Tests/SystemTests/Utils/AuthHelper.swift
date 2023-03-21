@@ -1,6 +1,6 @@
-import Foundation
-import AblyAssetTrackingCore
 import Ably
+import AblyAssetTrackingCore
+import Foundation
 import XCTest
 
 class AuthHelper {

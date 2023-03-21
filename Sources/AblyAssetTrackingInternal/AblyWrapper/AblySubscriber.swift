@@ -1,6 +1,6 @@
-import Foundation
 import AblyAssetTrackingCore
 import CoreLocation
+import Foundation
 
 // sourcery: AutoMockable
 public protocol AblySubscriberDelegate: AnyObject {

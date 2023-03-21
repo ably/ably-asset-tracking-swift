@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /**
  Default and preferred way to create the `Publisher`.

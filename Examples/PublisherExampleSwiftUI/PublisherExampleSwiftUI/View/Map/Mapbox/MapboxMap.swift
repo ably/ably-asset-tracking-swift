@@ -1,5 +1,5 @@
-import SwiftUI
 import MapboxMaps
+import SwiftUI
 
 struct MapboxMap: UIViewControllerRepresentable {
     @Binding var center: CLLocationCoordinate2D

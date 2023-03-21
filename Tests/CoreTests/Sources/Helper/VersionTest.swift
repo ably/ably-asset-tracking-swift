@@ -1,5 +1,5 @@
-import XCTest
 @testable import AblyAssetTrackingCore
+import XCTest
 
 class VersionTest: XCTestCase {
     private let libraryVersion = "1.0.0-rc.1"

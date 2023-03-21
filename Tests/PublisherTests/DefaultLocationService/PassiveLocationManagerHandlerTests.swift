@@ -1,8 +1,8 @@
-import XCTest
-@testable import AblyAssetTrackingPublisher
-import CoreLocation
 import AblyAssetTrackingInternalTesting
+@testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingPublisherTesting
+import CoreLocation
+import XCTest
 
 @available(iOS 13.4, *)
 class PassiveLocationManagerHandlerTests: XCTestCase {

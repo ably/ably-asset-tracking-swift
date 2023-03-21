@@ -1,6 +1,6 @@
-import SwiftUI
 import CoreLocation
 import MapKit
+import SwiftUI
 
 class LocationManager: NSObject, ObservableObject {
     static let shared = LocationManager()

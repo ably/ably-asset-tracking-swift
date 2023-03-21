@@ -1,6 +1,6 @@
+import AblyAssetTrackingInternal
 import Foundation
 import XCTest
-import AblyAssetTrackingInternal
 
 /// Provides convenience methods for blocking the current thread until an asynchronous piece of work completes.
 public enum Blocking {

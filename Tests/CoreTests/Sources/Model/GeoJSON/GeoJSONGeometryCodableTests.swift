@@ -1,5 +1,5 @@
-import XCTest
 @testable import AblyAssetTrackingCore
+import XCTest
 
 class GeoJSONGeometryCodableTests: XCTestCase {
     private func geometryJsonForCoordinates(_ coordinates: String) -> String {

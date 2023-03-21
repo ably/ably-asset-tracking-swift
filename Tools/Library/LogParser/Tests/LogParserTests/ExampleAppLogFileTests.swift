@@ -1,5 +1,5 @@
-import XCTest
 import LogParser
+import XCTest
 
 class ExampleAppLogFileTests: XCTestCase {
     func test_init_parsesExampleAppLogOutputData() throws {

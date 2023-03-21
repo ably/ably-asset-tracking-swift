@@ -1,7 +1,7 @@
-import CoreLocation
-import MapboxDirections
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import CoreLocation
+import MapboxDirections
 
 // These types are only used internally by DefaultPublisher.
 extension DefaultPublisher {

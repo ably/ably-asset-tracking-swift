@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /**
  Defines the methods to be implemented by resolution policy factories, whose responsibility it is to create

@@ -1,6 +1,6 @@
-import SwiftUI
-import MapKit
 import AblyAssetTrackingPublisher
+import MapKit
+import SwiftUI
 
 struct MapView: View {
     var trackableId: String

@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 public class DefaultResolutionPolicyFactory: ResolutionPolicyFactory {
     private let defaultResolution: Resolution

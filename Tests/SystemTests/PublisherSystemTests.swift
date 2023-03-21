@@ -1,5 +1,5 @@
-import XCTest
 import AblyAssetTrackingPublisher
+import XCTest
 
 final class PublisherSystemTests: XCTestCase {
     func test_addTrackable_thenRemoveIt_thenAddAnotherTrackableWithSameId() throws {

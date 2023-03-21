@@ -1,6 +1,6 @@
-import Foundation
 import Ably
 import AblyAssetTrackingCore
+import Foundation
 
 extension TokenDetails {
     public func toARTTokenDetails() -> ARTTokenDetails {

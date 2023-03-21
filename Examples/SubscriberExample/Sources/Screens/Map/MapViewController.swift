@@ -1,9 +1,9 @@
-import UIKit
-import MapKit
-import Logging
-import LoggingFormatAndPipe
 import AblyAssetTrackingSubscriber
 import AblyAssetTrackingUI
+import Logging
+import LoggingFormatAndPipe
+import MapKit
+import UIKit
 
 private enum MapConstraints {
     static let regionLatitude: CLLocationDistance = 400

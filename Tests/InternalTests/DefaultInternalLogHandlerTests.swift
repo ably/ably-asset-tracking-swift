@@ -1,6 +1,6 @@
-import XCTest
-import AblyAssetTrackingInternal
 import AblyAssetTrackingCoreTesting
+import AblyAssetTrackingInternal
+import XCTest
 
 class DefaultInternalLogHandlerTests: XCTestCase {
     func test_init_withNilLogHandler_returnsNil() {

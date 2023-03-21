@@ -1,8 +1,8 @@
-import XCTest
-import CoreLocation
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingPublisherTesting
+import CoreLocation
+import XCTest
 
 class DefaultResolutionPolicyTests: XCTestCase {
     var hooks: DefaultResolutionPolicyHooks!

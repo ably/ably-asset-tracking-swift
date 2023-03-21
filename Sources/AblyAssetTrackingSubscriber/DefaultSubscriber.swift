@@ -1,7 +1,7 @@
-import Foundation
-import CoreLocation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import CoreLocation
+import Foundation
 
 // Default logger used in Subscriber SDK
 

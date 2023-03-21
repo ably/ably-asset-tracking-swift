@@ -1,5 +1,5 @@
-import SwiftUI
 import AblyAssetTrackingPublisher
+import SwiftUI
 
 struct PublisherDetailsView: View {
     @StateObject private var locationManager = LocationManager.shared

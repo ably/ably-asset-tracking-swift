@@ -1,9 +1,9 @@
-import XCTest
-import AblyAssetTrackingCore
-import AblyAssetTrackingPublisher
-import AblyAssetTrackingInternal
-import CoreLocation
 import Ably
+import AblyAssetTrackingCore
+import AblyAssetTrackingInternal
+import AblyAssetTrackingPublisher
+import CoreLocation
+import XCTest
 
 class PublisherAuthenticationSystemTests: XCTestCase {
     private let clientId: String = {

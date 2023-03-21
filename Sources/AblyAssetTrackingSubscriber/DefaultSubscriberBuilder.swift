@@ -1,6 +1,6 @@
-import UIKit
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import UIKit
 
 class DefaultSubscriberBuilder: SubscriberBuilder {
     private var connection: ConnectionConfiguration?

@@ -1,6 +1,6 @@
-import SwiftUI
-import MapKit
 import AblyAssetTrackingCore
+import MapKit
+import SwiftUI
 
 // Since SwiftUI's MapView has problems with capturing tap events (more specifically - getting the tap's latitude
 // and longitude) I couldn't find a way to use it here. Instead I used the UIKit's MKMapView implementation.

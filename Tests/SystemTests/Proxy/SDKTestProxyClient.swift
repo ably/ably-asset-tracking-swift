@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingInternal
+import Foundation
 
 /// A client for communicating with an instance of the SDK test proxy server. Provides methods for creating and managing proxies which are able to simulate connectivity faults that might occur during use of the Ably Asset Tracking SDKs.
 class SDKTestProxyClient {

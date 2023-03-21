@@ -1,5 +1,5 @@
-import UIKit
 import AblyAssetTrackingCore
+import UIKit
 
 public struct PresenceData: Codable {
     public let type: ClientType

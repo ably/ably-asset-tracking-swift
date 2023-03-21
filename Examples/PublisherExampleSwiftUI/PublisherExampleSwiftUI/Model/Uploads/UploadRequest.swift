@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingPublisher
+import Foundation
 
 struct UploadRequest: Codable {
     enum UploadType: CustomStringConvertible, Codable {

@@ -1,5 +1,5 @@
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct Map: View {
     @Binding private var center: CLLocationCoordinate2D

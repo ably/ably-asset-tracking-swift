@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingPublisher
+import Foundation
 
 class MapViewModel: ObservableObject {
     var useMapboxMap: Bool {

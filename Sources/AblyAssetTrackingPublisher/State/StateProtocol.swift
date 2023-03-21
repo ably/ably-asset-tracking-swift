@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 protocol StateRetryable {
     var maxRetryCount: Int { get }

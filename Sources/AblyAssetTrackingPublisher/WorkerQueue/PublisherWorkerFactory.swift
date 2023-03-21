@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingInternal
+import Foundation
 
 class PublisherWorkerFactory: WorkerFactory {
     public init() {}

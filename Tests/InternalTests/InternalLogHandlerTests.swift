@@ -1,6 +1,6 @@
-import XCTest
 import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
+import XCTest
 
 class InternalLogHandlerTests: XCTestCase {
     func test_protocolExtension_logMessage_defaultArguments_populatesFileAndLine() throws {

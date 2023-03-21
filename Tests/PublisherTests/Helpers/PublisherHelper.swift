@@ -1,11 +1,11 @@
-import XCTest
-import CoreLocation
 import AblyAssetTrackingCore
-import AblyAssetTrackingInternal
-@testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingCoreTesting
+import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
+@testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingPublisherTesting
+import CoreLocation
+import XCTest
 
 class PublisherHelper {
     enum SendLocationResultPolicy {

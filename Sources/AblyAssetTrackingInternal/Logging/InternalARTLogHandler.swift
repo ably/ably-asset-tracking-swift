@@ -1,6 +1,6 @@
-import Foundation
 import Ably
 import AblyAssetTrackingCore
+import Foundation
 
 /**
  * This log handler provides an subclass of the ably-cocoa SDK’s ``ARTLog`` class.

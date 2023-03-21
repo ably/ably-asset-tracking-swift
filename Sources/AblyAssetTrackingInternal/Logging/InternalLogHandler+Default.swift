@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 public extension InternalLogHandler {
     func verbose(message: String, error: Error?, file: String? = #file, line: Int? = #line) {

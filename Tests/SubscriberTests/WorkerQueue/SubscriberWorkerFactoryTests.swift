@@ -1,8 +1,8 @@
-import XCTest
 import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
 @testable import AblyAssetTrackingSubscriber
 import AblyAssetTrackingSubscriberTesting
+import XCTest
 
 class SubscriberWorkerFactoryTests: XCTestCase {
     private let logHandler = InternalLogHandlerMockThreadSafe()

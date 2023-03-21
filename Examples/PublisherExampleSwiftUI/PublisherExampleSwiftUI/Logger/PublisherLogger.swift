@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 import Logging
 
 class PublisherLogger: AblyAssetTrackingCore.LogHandler {

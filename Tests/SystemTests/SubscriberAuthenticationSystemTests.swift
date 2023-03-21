@@ -1,9 +1,9 @@
-import Foundation
-import XCTest
+import Ably
 import AblyAssetTrackingCore
 import AblyAssetTrackingSubscriber
 import CoreLocation
-import Ably
+import Foundation
+import XCTest
 
 class SubscriberAuthenticationSystemTests: XCTestCase {
     private let clientId: String = {

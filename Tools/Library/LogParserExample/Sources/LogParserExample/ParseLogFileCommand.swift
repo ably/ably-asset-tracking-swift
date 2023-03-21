@@ -1,6 +1,6 @@
 import ArgumentParser
-import LogParser
 import Foundation
+import LogParser
 
 @main
 struct ParseLogFile: ParsableCommand {

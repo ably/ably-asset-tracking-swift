@@ -1,6 +1,6 @@
-import SwiftUI
 import Logging
 import LoggingFormatAndPipe
+import SwiftUI
 
 @main
 struct PublisherExampleSwiftUIApp: App {

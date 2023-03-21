@@ -1,5 +1,5 @@
-import XCTest
 import LogParser
+import XCTest
 
 final class SDKLogMessageTests: XCTestCase {
     // MARK: subsystems

@@ -1,6 +1,6 @@
-import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import Foundation
 
 public class MockAblyPublisher: AblyPublisher {
     public var initConnectionConfiguration: ConnectionConfiguration?

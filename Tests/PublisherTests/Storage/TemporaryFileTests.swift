@@ -1,5 +1,5 @@
-import XCTest
 @testable import AblyAssetTrackingPublisher
+import XCTest
 
 class TemporaryFileTests: XCTestCase {
     func testDeinit_removesFile() throws {

@@ -1,5 +1,5 @@
-import XCTest
 import LogParser
+import XCTest
 
 class ExampleAppSDKLogLineTests: XCTestCase {
     func test_init_withLogLineEmittedBySDK_parsesTimestamp() throws {

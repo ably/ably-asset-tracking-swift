@@ -1,6 +1,6 @@
-import XCTest
-@testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingInternal
+@testable import AblyAssetTrackingPublisher
+import XCTest
 
 class DuplicateTrackableGuardTests: XCTestCase {
     func test_isCurrentlyAddingTrackableWithId_when_startAddingTrackableHasBeenCalled_returnsTrue() {

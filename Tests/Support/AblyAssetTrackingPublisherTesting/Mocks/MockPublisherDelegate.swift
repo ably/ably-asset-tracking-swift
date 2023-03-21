@@ -1,7 +1,7 @@
-import CoreLocation
-import Foundation
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
+import CoreLocation
+import Foundation
 
 public class MockPublisherDelegate: PublisherDelegate {
     public init() {}

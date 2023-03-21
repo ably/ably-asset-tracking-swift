@@ -1,5 +1,5 @@
-import XCTest
 @testable import AblyAssetTrackingCore
+import XCTest
 
 class GeoJSONGeometryCLLocationTests: XCTestCase {
     func testGeoJsonGeometryFromLocation_CheckValues() throws {

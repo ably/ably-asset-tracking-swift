@@ -1,6 +1,6 @@
-import Foundation
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
+import Foundation
 
 public class MockLocationService: LocationService {
     public init() {}

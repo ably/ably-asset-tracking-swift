@@ -1,6 +1,6 @@
-import XCTest
-import AblyAssetTrackingInternalTesting
 import AblyAssetTrackingInternal
+import AblyAssetTrackingInternalTesting
+import XCTest
 
 class LegacyWorkerTests: XCTestCase {
     private let logHandler = InternalLogHandlerMockThreadSafe()

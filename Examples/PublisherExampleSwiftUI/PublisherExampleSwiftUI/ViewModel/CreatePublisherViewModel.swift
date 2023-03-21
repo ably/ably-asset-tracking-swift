@@ -1,9 +1,9 @@
 //
 
-import Foundation
-import SwiftUI
 import AblyAssetTrackingPublisher
+import Foundation
 import Logging
+import SwiftUI
 
 class CreatePublisherViewModel: ObservableObject {
     private let s3Helper: S3Helper?

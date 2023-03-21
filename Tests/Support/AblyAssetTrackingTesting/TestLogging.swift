@@ -1,6 +1,6 @@
-import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import Foundation
 
 /// Provides shared logger instances for use by tests.
 public enum TestLogging {

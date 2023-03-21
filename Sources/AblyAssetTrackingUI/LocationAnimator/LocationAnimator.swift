@@ -1,6 +1,6 @@
-import Foundation
 import AblyAssetTrackingCore
 import Combine
+import Foundation
 
 public protocol LocationAnimator {
     /**

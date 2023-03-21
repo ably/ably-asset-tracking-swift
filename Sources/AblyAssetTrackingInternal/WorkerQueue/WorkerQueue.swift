@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /// The WorkerQueue is responsible for enqueueing ``Worker``s and executing them.
 /// It internally manages a ``PropertiesType`` variable, starting from the value passed to the initializer, and then based on the work of the subsequent workers.

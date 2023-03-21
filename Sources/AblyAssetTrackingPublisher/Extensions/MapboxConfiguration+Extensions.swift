@@ -1,5 +1,5 @@
-import MapboxDirections
 import AblyAssetTrackingCore
+import MapboxDirections
 
 extension MapboxConfiguration {
     func getCredentials() -> Credentials {

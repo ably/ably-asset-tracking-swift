@@ -1,7 +1,7 @@
-import XCTest
-import AblyAssetTrackingSubscriber
 import Ably
+import AblyAssetTrackingSubscriber
 import AblyAssetTrackingSubscriberTesting
+import XCTest
 
 class SubscriberSystemTests: XCTestCase {
     func test_whenSubscriberReceivesMalformedMessageDataFromAbly_itEmitsAFailedConnectionStatus() {

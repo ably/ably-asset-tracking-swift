@@ -1,6 +1,6 @@
+import AblyAssetTrackingPublisher
 import Foundation
 import SwiftUI
-import AblyAssetTrackingPublisher
 
 class SettingsViewModel: ObservableObject {
     @Published var useMapboxMap: Bool = SettingsModel.shared.useMapboxMap {

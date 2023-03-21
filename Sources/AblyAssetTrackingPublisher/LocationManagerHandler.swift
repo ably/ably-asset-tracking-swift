@@ -1,7 +1,7 @@
-import Foundation
 import AblyAssetTrackingInternal
-import MapboxCoreNavigation
 import CoreLocation
+import Foundation
+import MapboxCoreNavigation
 
 protocol PassiveLocationManagerHandlerDelegate: AnyObject {
     @available(iOS 14.0, *)

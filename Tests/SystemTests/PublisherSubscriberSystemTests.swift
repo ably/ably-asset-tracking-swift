@@ -1,14 +1,14 @@
-import XCTest
-import AblyAssetTrackingCore
-import AblyAssetTrackingInternal
-import AblyAssetTrackingSubscriber
 import Ably
-import CoreLocation
-@testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingCore
 import AblyAssetTrackingCoreTesting
-import AblyAssetTrackingPublisherTesting
+import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
+@testable import AblyAssetTrackingPublisher
+import AblyAssetTrackingPublisherTesting
+import AblyAssetTrackingSubscriber
 import AblyAssetTrackingTesting
+import CoreLocation
+import XCTest
 
 struct Locations: Codable {
     let locations: [GeoJSONMessage]

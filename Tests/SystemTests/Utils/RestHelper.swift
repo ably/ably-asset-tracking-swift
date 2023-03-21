@@ -1,5 +1,5 @@
-import Foundation
 import Ably
+import Foundation
 
 enum RestHelper {
     static func clientOptions(_ debug: Bool = false, key: String? = nil) -> ARTClientOptions {

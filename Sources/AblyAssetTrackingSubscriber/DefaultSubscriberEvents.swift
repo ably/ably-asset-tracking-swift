@@ -1,6 +1,6 @@
-import CoreLocation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import CoreLocation
 
 // These types are only used internally by DefaultSubscriber.
 extension DefaultSubscriber {

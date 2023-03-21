@@ -1,5 +1,5 @@
-import CoreLocation
 import AblyAssetTrackingCore
+import CoreLocation
 
 public protocol PublisherDelegate: AnyObject {
     /**

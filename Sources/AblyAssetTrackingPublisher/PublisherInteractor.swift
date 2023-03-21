@@ -1,6 +1,6 @@
-import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import Foundation
 
 // swiftlint:disable orphaned_doc_comment
 

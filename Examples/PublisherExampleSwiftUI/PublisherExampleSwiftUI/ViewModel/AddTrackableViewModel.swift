@@ -1,7 +1,7 @@
+import AblyAssetTrackingCore
+import AblyAssetTrackingPublisher
 import Foundation
 import SwiftUI
-import AblyAssetTrackingPublisher
-import AblyAssetTrackingCore
 
 class AddTrackableViewModel: ObservableObject {
     @Published var trackableId = ""

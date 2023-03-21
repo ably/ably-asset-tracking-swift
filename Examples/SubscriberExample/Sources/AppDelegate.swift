@@ -1,6 +1,6 @@
-import UIKit
-import Logging
 import Firebase
+import Logging
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

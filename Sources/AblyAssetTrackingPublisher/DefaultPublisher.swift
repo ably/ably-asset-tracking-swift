@@ -1,8 +1,8 @@
-import UIKit
-import CoreLocation
-import MapboxDirections
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import CoreLocation
+import MapboxDirections
+import UIKit
 
 class DefaultPublisher: Publisher, PublisherInteractor {
     private let workerQueue: WorkerQueue<PublisherWorkerQueueProperties, PublisherWorkSpecification>

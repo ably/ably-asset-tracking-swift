@@ -1,6 +1,6 @@
-import XCTest
 import AblyAssetTrackingPublisher
 import Foundation
+import XCTest
 
 final class LocationHistoryDataTests: XCTestCase {
     @available(*, deprecated, message: "Testing deprecated LocationHistoryData.version property")

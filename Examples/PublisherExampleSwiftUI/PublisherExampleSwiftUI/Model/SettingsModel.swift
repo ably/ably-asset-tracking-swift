@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingPublisher
+import Foundation
 
 class SettingsModel {
     static let shared = SettingsModel()

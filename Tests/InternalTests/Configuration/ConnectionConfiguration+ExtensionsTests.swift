@@ -1,7 +1,7 @@
-import XCTest
 import Ably
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingInternal
+import XCTest
 
 class ConnectionConfigurationTests: XCTestCase {
     let internalARTLogHandler = InternalARTLogHandler(logHandler: nil)

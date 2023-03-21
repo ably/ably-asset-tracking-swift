@@ -1,7 +1,7 @@
-import Foundation
 import AblyAssetTrackingCore
-import AblyAssetTrackingInternal
 import AblyAssetTrackingCoreTesting
+import AblyAssetTrackingInternal
+import Foundation
 
 public class MockAblySubscriber: AblySubscriber {
     public var wasDelegateSet: Bool = false

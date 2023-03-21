@@ -1,7 +1,7 @@
 import XCTest
 // import Ably
-import UIKit
 @testable import AblyAssetTrackingInternal
+import UIKit
 
 class PresenceDataTests: XCTestCase {
     func testSerializationPublisher() throws {

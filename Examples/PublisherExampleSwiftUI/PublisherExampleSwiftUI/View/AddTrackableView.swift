@@ -1,5 +1,5 @@
-import SwiftUI
 import AblyAssetTrackingCore
+import SwiftUI
 
 struct AddTrackableView: View {
     @ObservedObject var publisher: ObservablePublisher

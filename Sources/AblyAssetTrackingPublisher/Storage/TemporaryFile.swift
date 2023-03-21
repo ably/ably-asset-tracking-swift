@@ -1,6 +1,6 @@
-import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import Foundation
 
 /// A reference to a temporary file which will be deleted once there are no remaining strong references to this object.
 public final class TemporaryFile {

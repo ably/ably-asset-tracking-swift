@@ -1,9 +1,9 @@
-import XCTest
-import AblyAssetTrackingInternalTesting
-import AblyAssetTrackingInternal
+import Ably
 import AblyAssetTrackingCore
 import AblyAssetTrackingCoreTesting
-import Ably
+import AblyAssetTrackingInternal
+import AblyAssetTrackingInternalTesting
+import XCTest
 
 class WorkerQueueTests: XCTestCase {
     private let logHandler = InternalLogHandlerMockThreadSafe()

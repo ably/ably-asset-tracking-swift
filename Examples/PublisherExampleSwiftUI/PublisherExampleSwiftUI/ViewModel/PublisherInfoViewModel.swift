@@ -1,6 +1,6 @@
-import Foundation
-import AblyAssetTrackingPublisher
 import AblyAssetTrackingCore
+import AblyAssetTrackingPublisher
+import Foundation
 
 struct PublisherInfoViewModel {
     var rawLocationsInfo: [StackedTextModel]

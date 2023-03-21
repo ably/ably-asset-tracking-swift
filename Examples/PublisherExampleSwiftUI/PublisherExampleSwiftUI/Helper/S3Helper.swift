@@ -1,8 +1,8 @@
-import Foundation
 import AblyAssetTrackingPublisher
 import Amplify
 import AWSCognitoAuthPlugin
 import AWSS3StoragePlugin
+import Foundation
 
 class S3Helper {
     struct File {

@@ -1,7 +1,7 @@
-import MapboxDirections
-import CoreLocation
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
+import CoreLocation
+import MapboxDirections
 
 public class MockRouteProvider: RouteProvider {
     public init() {}

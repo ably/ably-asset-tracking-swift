@@ -1,6 +1,6 @@
-import CoreLocation
 import Ably
 import AblyAssetTrackingCore
+import CoreLocation
 
 public class DefaultAbly: AblyCommon {
     public weak var publisherDelegate: AblyPublisherDelegate?
