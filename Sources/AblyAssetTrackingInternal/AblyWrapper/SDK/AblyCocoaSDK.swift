@@ -119,7 +119,6 @@ struct AblyCocoaSDKConnection: AblySDKConnection {
             return self.connection.errorReason
         }
     }
-
     
     func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> ARTEventListener {
         return connection.on(callback)

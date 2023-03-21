@@ -146,13 +146,12 @@ extension DefaultSubscriber {
     // MARK: Start/Stop
     private func performStart(_ event: Event.StartEvent) {
 
-        ablySubscriber.startConnection() {
-            [weak self] result in
+        ablySubscriber.startConnection { [weak self] result in
             guard let self = self else {
                 return
             }
 
-            switch (result) {
+            switch result {
             case .success:
                 self.ablySubscriber.connect(
                     trackableId: self.trackableId,

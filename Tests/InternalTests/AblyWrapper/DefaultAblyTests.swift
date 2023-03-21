@@ -21,14 +21,13 @@ class DefaultAblyTests: XCTestCase {
         connection.state = ARTRealtimeConnectionState.connected
 
         let expectation = expectation(description: "DefaultAbly startConnection when connected")
-        ably.startConnection() { result in
+        ably.startConnection { result in
             switch result {
             case .success:
                 expectation.fulfill()
             case .failure:
                 XCTFail("Received failure result")
             }
-
         }
 
         waitForExpectations(timeout: 5)
@@ -48,7 +47,7 @@ class DefaultAblyTests: XCTestCase {
         connection.errorReason = ARTErrorInfo.create(withCode: 40400, message: "Test Failure Msg")
 
         let expectation = expectation(description: "DefaultAbly startConnection when failed")
-        ably.startConnection() { result in
+        ably.startConnection { result in
             switch result {
             case .success:
                 XCTFail("Received success result")
@@ -57,7 +56,6 @@ class DefaultAblyTests: XCTestCase {
                 XCTAssertEqual(40400, error.code)
                 expectation.fulfill()
             }
-
         }
 
         waitForExpectations(timeout: 5)
@@ -76,9 +74,8 @@ class DefaultAblyTests: XCTestCase {
         connection.state = ARTRealtimeConnectionState.failed
         connection.errorReason = nil
 
-
         let expectation = expectation(description: "DefaultAbly startConnection when failed")
-        ably.startConnection() { result in
+        ably.startConnection { result in
             switch result {
             case .success:
                 XCTFail("Received success result")
@@ -86,7 +83,6 @@ class DefaultAblyTests: XCTestCase {
                 XCTAssertEqual("No error reason provided", error.message)
                 expectation.fulfill()
             }
-
         }
 
         waitForExpectations(timeout: 5)
@@ -107,14 +103,13 @@ class DefaultAblyTests: XCTestCase {
         connection.onReturnValue = onReturnedListener
 
         let expectation = expectation(description: "DefaultAbly startConnection changes state to connected")
-        ably.startConnection() { result in
+        ably.startConnection { result in
             switch result {
             case .success:
                 expectation.fulfill()
             case .failure:
                 XCTFail("Received failure result")
             }
-
         }
 
         XCTAssertEqual(1, connection.onCallsCount)
@@ -141,7 +136,7 @@ class DefaultAblyTests: XCTestCase {
         connection.onReturnValue = onReturnedListener
 
         let expectation = expectation(description: "DefaultAbly startConnection changes state to failed")
-        ably.startConnection() { result in
+        ably.startConnection { result in
             switch result {
             case .success:
                 XCTFail("Received success result")
@@ -149,7 +144,6 @@ class DefaultAblyTests: XCTestCase {
                 XCTAssertEqual("Connection failed waiting for start", error.message)
                 expectation.fulfill()
             }
-
         }
 
         XCTAssertEqual(1, connection.onCallsCount)
@@ -176,7 +170,7 @@ class DefaultAblyTests: XCTestCase {
         connection.onReturnValue = onReturnedListener
 
         let expectation = expectation(description: "DefaultAbly startConnection changes state to closed")
-        ably.startConnection() { result in
+        ably.startConnection { result in
             switch result {
             case .success:
                 XCTFail("Received success result")
@@ -184,7 +178,6 @@ class DefaultAblyTests: XCTestCase {
                 XCTAssertEqual("Connection closed waiting for start", error.message)
                 expectation.fulfill()
             }
-
         }
 
         XCTAssertEqual(1, connection.onCallsCount)
@@ -210,14 +203,13 @@ class DefaultAblyTests: XCTestCase {
         connection.state = ARTRealtimeConnectionState.disconnected
         connection.onReturnValue = onReturnedListener
 
-        ably.startConnection() { result in
+        ably.startConnection { result in
             switch result {
             case .success:
                 XCTFail("Received success result")
             case .failure:
                 XCTFail("Received failure result")
             }
-
         }
 
         XCTAssertEqual(1, connection.onCallsCount)

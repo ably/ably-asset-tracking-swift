@@ -232,7 +232,7 @@ class DefaultPublisherTests: XCTestCase {
         ablyPublisher.stopConnectionCompletionHandler = { completion in  completion?(.success) }
         let expectation = XCTestExpectation()
 
-        //onError callback should be called on the main thread
+        // onError callback should be called on the main thread
         publisher.track(trackable: trackable) { result in
             switch result {
             case .success:
@@ -607,7 +607,7 @@ class DefaultPublisherTests: XCTestCase {
     
     func testRemove_activeTrackable() {
         ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
-        ablyPublisher.connectCompletionHandler = { completion in completion?(.success)}
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.success(true)) }
         
         var expectation = XCTestExpectation(description: "Handler for `track` call")

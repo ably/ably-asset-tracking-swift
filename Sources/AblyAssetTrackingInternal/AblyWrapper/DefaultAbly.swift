@@ -62,7 +62,7 @@ public class DefaultAbly: AblyCommon {
                 return
             }
 
-            switch (stateChange.current.toConnectionState()) {
+            switch stateChange.current.toConnectionState() {
             case .online:
                 self.client.connection.off(listener!)
                 completion(.success)
@@ -254,7 +254,6 @@ public class DefaultAbly: AblyCommon {
             self?.stopConnection(completion: completion)
         }
     }
-
     
     public func subscribeForAblyStateChange() {
         client.connection.on { [weak self] stateChange in

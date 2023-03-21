@@ -295,8 +295,8 @@ class DefaultSubscriberTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation()
         let stopError = ErrorInformation(type: .subscriberError(errorMessage: "test_start_error"))
-        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.failure(stopError))}
-        ablySubscriber.stopConnectionCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.failure(stopError)) }
+        ablySubscriber.stopConnectionCompletionHandler = { completion in completion?(.success) }
         var isFailure = false
         var receivedError: ErrorInformation?
 

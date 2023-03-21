@@ -53,7 +53,7 @@ let package = Package(
         .target(
             name: "AblyAssetTrackingCore",
             dependencies: [
-                .product(name: "Ably", package: "ably-cocoa"),
+                .product(name: "Ably", package: "ably-cocoa")
             ]),
         .target(
             name: "AblyAssetTrackingUI",
