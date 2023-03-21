@@ -55,7 +55,9 @@ public class DefaultAbly: AblyCommon {
         if [.detached, .failed].contains(channel.state) {
             logHandler?.debug(message: "Channel for trackable \(trackableId) is in state \(channel.state); attaching", error: nil)
             channel.attach { [weak self] error in
-                guard let self else { return }
+                guard let self else {
+                    return
+                }
                 if let error {
                     self.logHandler?.error(message: "Failed to attach to channel for trackable \(trackableId)", error: error)
                     completion(.failure(error.toErrorInformation()))
@@ -77,7 +79,9 @@ public class DefaultAbly: AblyCommon {
         let presenceDataJSON = self.presenceDataJSON(data: presenceData)
 
         channel.presence.enter(presenceDataJSON) { [weak self] error in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
             self.logHandler?.debug(message: "Entered a channel [id: \(trackableId)] presence successfully", error: nil)
 
             let presenceEnterSuccess = { [weak self] in
@@ -224,7 +228,9 @@ public class DefaultAbly: AblyCommon {
             }
         }
         channel.presence.subscribe { [weak self] message in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
 
             self.logHandler?.debug(message: "Received presence update from channel", error: nil)
             self.handleARTPresenceMessage(message, for: trackable)

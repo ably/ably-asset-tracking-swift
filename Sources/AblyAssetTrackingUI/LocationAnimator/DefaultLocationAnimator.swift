@@ -63,7 +63,9 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         }
 
         DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
 
             self.nextLocationUpdatePrediction = .init(
                 receivedAt: CACurrentMediaTime(),

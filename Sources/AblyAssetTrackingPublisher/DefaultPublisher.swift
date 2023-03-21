@@ -299,7 +299,9 @@ extension DefaultPublisher {
         }
 
         routeProvider.getRoute(to: destination.toCoreLocationCoordinate2d(), withRoutingProfile: event.profile) { [weak self] result in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
             switch result {
             case .success(let route):
                 self.routingProfile = event.profile
@@ -803,7 +805,9 @@ extension DefaultPublisher {
             return
         }
 
-        guard event.presenceData.type == .subscriber else { return }
+        guard event.presenceData.type == .subscriber else {
+            return
+        }
 
         if event.presence.action == .enter {
             addSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)

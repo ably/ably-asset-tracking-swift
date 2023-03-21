@@ -55,6 +55,7 @@ opt_in_rules:
   - literal_expression_end_indentation
   - operator_usage_whitespace
   - trailing_closure
+  - conditional_returns_on_newline
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count
   - contains_over_filter_is_empty

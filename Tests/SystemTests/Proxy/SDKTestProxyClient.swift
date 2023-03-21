@@ -56,7 +56,9 @@ class SDKTestProxyClient {
         logHandler.info(message: "Performing operation: \(loggingLabel)", error: nil)
 
         makeRequest(for: url, method: .post) { [weak self] result in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
 
             switch result {
             case .success:
@@ -75,7 +77,9 @@ class SDKTestProxyClient {
         let url = url(forPathComponents: "faults")
 
         makeRequest(for: url, method: .get) { [weak self] result in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
 
             do {
                 let decoder = JSONDecoder()
@@ -98,7 +102,9 @@ class SDKTestProxyClient {
         let url = url(forPathComponents: "faults", name, "simulation")
 
         makeRequest(for: url, method: .post) { [weak self] result in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
 
             do {
                 let decoder = JSONDecoder()
