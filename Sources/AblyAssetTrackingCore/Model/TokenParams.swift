@@ -18,10 +18,10 @@ public struct TokenParams: Codable {
     ///   - timestamp: The timestamp (in milliseconds since the epoch) of this request. timestamp, in conjunction with the ``nonce``, is used to prevent requests for Ably Token from being replayed.
     ///   - nonce: An optional opaque nonce string of at least 16 characters to ensure uniqueness of this request. Any subsequent request using the same nonce will be rejected.
     public init(ttl: Int?,
-         capability: String?,
-         clientId: String?,
-         timestamp: Date?,
-         nonce: String?) {
+                capability: String?,
+                clientId: String?,
+                timestamp: Date?,
+                nonce: String?) {
         self.ttl = ttl
         self.capability = capability
         self.clientId = clientId

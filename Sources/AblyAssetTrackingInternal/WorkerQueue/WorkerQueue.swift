@@ -21,8 +21,12 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
     let getStoppedError: () -> Error
     let asyncWorkQueue: DispatchQueue
     
-    public init(properties: PropertiesType, workingQueue: DispatchQueue, logHandler: InternalLogHandler?, workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>, asyncWorkWorkingQueue: DispatchQueue,
- getStoppedError: @escaping () -> Error) {
+    public init(properties: PropertiesType,
+                workingQueue: DispatchQueue,
+                logHandler: InternalLogHandler?,
+                workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>,
+                asyncWorkWorkingQueue: DispatchQueue,
+                getStoppedError: @escaping () -> Error) {
         self.properties = properties
         self.workingQueue = workingQueue
         self.logHandler = logHandler?.addingSubsystem(Self.self)

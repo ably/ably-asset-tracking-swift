@@ -923,10 +923,10 @@ extension DefaultPublisher: AblyPublisherDelegate {
     }
 
     func ablyPublisher(_ sender: AblyPublisher,
-                          didReceivePresenceUpdate presence: Presence,
-                          forTrackable trackable: Trackable,
-                          presenceData: PresenceData,
-                          clientId: String) {
+                       didReceivePresenceUpdate presence: Presence,
+                       forTrackable trackable: Trackable,
+                       presenceData: PresenceData,
+                       clientId: String) {
 
         logHandler?.debug(message: "publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)", error: nil)
         enqueue(event: .presenceUpdate(.init(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId)))
