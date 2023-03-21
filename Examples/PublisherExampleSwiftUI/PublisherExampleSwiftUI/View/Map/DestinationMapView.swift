@@ -62,10 +62,8 @@ struct DestinationMapView: UIViewRepresentable {
     }
     
     private func removeDestinationAnnotation() {
-        for annotation in mapView.annotations {
-            if annotation.title == destinationAnnotationTitle {
-                mapView.removeAnnotation(annotation)
-            }
+        for annotation in mapView.annotations where annotation.title == destinationAnnotationTitle {
+            mapView.removeAnnotation(annotation)
         }
     }
 
