@@ -46,6 +46,7 @@ opt_in_rules:
   - multiline_parameters_brackets
   - multiline_arguments
   - multiline_arguments_brackets
+  - trailing_newline
 
 excluded:
   - "**/.build"
