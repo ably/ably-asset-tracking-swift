@@ -427,8 +427,8 @@ extension DefaultPublisher {
 
     private func performAblyClientConnectionChangedEvent(_ event: Event.AblyClientConnectionStateChangedEvent) {
         receivedAblyClientConnectionState = event.connectionState
-        trackables.forEach {
-            handleConnectionStateChange(forTrackable: $0)
+        trackables.forEach { trackable in
+            handleConnectionStateChange(forTrackable: trackable)
         }
     }
 
@@ -509,8 +509,8 @@ extension DefaultPublisher {
         guard let trackableSubscribers = subscribers[trackable],
               !trackableSubscribers.isEmpty
         else { return }
-        trackableSubscribers.forEach {
-            hooks.subscribers?.onSubscriberRemoved(subscriber: $0)
+        trackableSubscribers.forEach { subscriber in
+            hooks.subscribers?.onSubscriberRemoved(subscriber: subscriber)
         }
         subscribers[trackable] = []
     }
@@ -730,8 +730,8 @@ extension DefaultPublisher {
             return
         }
 
-        trackables.forEach {
-            resolveResolution(trackable: $0)
+        trackables.forEach { trackable in
+            resolveResolution(trackable: trackable)
         }
     }
 

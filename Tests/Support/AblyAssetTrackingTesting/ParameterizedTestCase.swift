@@ -92,8 +92,8 @@ open class ParameterizedTestCase<Param: ParameterizedTestCaseParam>: AATParamete
         var count: UInt32 = 0
         let list = class_copyMethodList(self, &count)!
 
-        let allInstanceMethodSelectors = (0..<Int32(count)).map {
-            let method = list[Int($0)]
+        let allInstanceMethodSelectors = (0..<Int32(count)).map { i in
+            let method = list[Int(i)]
             return method_getName(method)
         }
 

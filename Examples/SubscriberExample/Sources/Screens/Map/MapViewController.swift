@@ -170,8 +170,8 @@ class MapViewController: UIViewController {
     }
     
     private func createAnnotationIfNeeded<T: MKPointAnnotation & Annotatable>(type: AnnotationType) -> T {
-        if let annotation = mapView.annotations.first(where: {
-            if let object = $0 as? T {
+        if let annotation = mapView.annotations.first(where: { annotation in
+            if let object = annotation as? T {
                 return object.type == type
             }
             return false

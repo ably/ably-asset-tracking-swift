@@ -65,10 +65,10 @@ class DefaultResolutionPolicy: ResolutionPolicy {
         var accuracy = Accuracy.minimum
         var desiredInterval = Double.greatestFiniteMagnitude
         var minimumDisplacement = Double.greatestFiniteMagnitude
-        resolutions.forEach {
-            accuracy = higher(accuracy, $0.accuracy)
-            desiredInterval = min(desiredInterval, $0.desiredInterval)
-            minimumDisplacement = min(minimumDisplacement, $0.minimumDisplacement)
+        resolutions.forEach { resolution in
+            accuracy = higher(accuracy, resolution.accuracy)
+            desiredInterval = min(desiredInterval, resolution.desiredInterval)
+            minimumDisplacement = min(minimumDisplacement, resolution.minimumDisplacement)
         }
 
         return Resolution(accuracy: accuracy, desiredInterval: desiredInterval, minimumDisplacement: minimumDisplacement)
