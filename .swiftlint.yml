@@ -53,6 +53,7 @@ opt_in_rules:
   - unneeded_parentheses_in_closure_argument
   - multiline_function_chains
   - implicit_return
+  - comma_inheritance
 
 excluded:
   - "**/.build"
