@@ -8,9 +8,12 @@ disabled_rules:
   - line_length
   - nesting
   - type_body_length
+
+  # Rules of type "lint" that we’ve decided we don’t want:
+  - todo # We frequently use TODOs accompanied by a GitHub issue reference
+
   # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
   - missing_docs
-  - todo
   - xct_specific_matcher
 
 opt_in_rules:
@@ -31,7 +34,6 @@ opt_in_rules:
   - vertical_whitespace_closing_braces
   - xct_specific_matcher
   - yoda_condition
-  - todo
   - shorthand_optional_binding
   - pattern_matching_keywords
   - multiline_literal_brackets
