@@ -110,7 +110,7 @@ class CreatePublisherViewModel: ObservableObject {
         
         let locationSource: AblyAssetTrackingPublisher.LocationSource?
         if let s3FileName = SettingsModel.shared.s3FileName, locationSourceOption == .s3File {
-            guard let s3Helper = s3Helper else {
+            guard let s3Helper else {
                 // This ignores the case where we used to have S3 configured on a previous run of the app and still have something hanging around in user defaults, but will ignore that edge case for now.
                 fatalError("Trying to use S3 when it has not been configured. This should not have been allowed by the UI.")
             }

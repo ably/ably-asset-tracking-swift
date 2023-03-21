@@ -34,13 +34,13 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     private func handleLocationUpdate(location: CLLocation) {
-        guard let destination = destination,
-              let routingProfile = routingProfile else { return }
+        guard let destination,
+              let routingProfile else { return }
 
         let options = RouteOptions(coordinates: [destination, location.coordinate],
                                    profileIdentifier: routingProfile.toMapboxProfileIdentifier())
         directions.calculate(options) { [weak self] (_, result) in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case .failure(let error):
                 self.handleErrorCallback(error: ErrorInformation(error: error))

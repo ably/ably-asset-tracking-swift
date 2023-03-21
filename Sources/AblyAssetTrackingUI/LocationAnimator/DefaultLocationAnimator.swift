@@ -64,7 +64,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
         }
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.nextLocationUpdatePrediction = .init(receivedAt: CACurrentMediaTime(),
                                                       nextUpdateExpectedIn: sanitisedExpectedIntervalBetweenLocationUpdatesInMilliseconds / 1000)
@@ -88,7 +88,7 @@ public class DefaultLocationAnimator: NSObject, LocationAnimator {
     }
     
     private func stopAnimationLoop() {
-        guard let displayLink = displayLink else {
+        guard let displayLink else {
             return
         }
         

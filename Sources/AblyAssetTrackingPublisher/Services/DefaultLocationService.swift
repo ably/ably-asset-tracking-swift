@@ -50,7 +50,7 @@ class DefaultLocationService: LocationService {
             self.logHandler?.error(message: "Failed to configure Mapbox history storage location", error: error)
         }
 
-        if let historyLocation = historyLocation {
+        if let historyLocation {
             replayLocationManager = ReplayLocationManager(locations: historyLocation)
         } else {
             replayLocationManager = nil
@@ -110,11 +110,11 @@ class DefaultLocationService: LocationService {
     func stopRecordingLocation(completion: @escaping ResultHandler<LocationRecordingResult?>) {
         PassiveLocationManager.stopRecordingHistory { [weak self] historyFileURL in
             self?.workQueue.async { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
                 
-                guard let historyFileURL = historyFileURL else {
+                guard let historyFileURL else {
                     let error = ErrorInformation(type: .commonError(errorMessage: "PassiveLocationManager.stopRecordingHistory did not return a file URL"))
                     self.logHandler?.info(message: "PassiveLocationManager.stopRecordingHistory returned a nil historyFileURL – not treating as an error since it might be that we never started recording history", error: error)
                     completion(.success(nil))
@@ -148,7 +148,7 @@ class DefaultLocationService: LocationService {
                 }
                 
                 let rawHistoryTemporaryFile = TemporaryFile(fileURL: historyFileURL, logHandler: self.logHandler)
-                guard let locationHistoryData = locationHistoryData else {
+                guard let locationHistoryData else {
                     return
                 }
 

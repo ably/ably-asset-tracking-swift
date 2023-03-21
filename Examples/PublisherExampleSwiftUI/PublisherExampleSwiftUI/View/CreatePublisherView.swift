@@ -30,7 +30,7 @@ struct CreatePublisherView: View {
             // https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-programmatic-navigation-in-swiftui
             NavigationLink(isActive: $isShowingPublisherDetailsView) {
                 // This seems a bit dodgy, not really sure of the right way to pass data to the destination of a NavigationLink
-                if let publisher = publisher {
+                if let publisher {
                     PublisherDetailsView(publisher: publisher)
                 } else {
                     EmptyView()

@@ -10,7 +10,7 @@ extension TokenDetails {
 
 extension ARTTokenDetails {
     public func asTokenDetails() -> TokenDetails? {
-        guard let expires = expires, let issued = issued, let clientId = clientId, let capability = capability else {
+        guard let expires, let issued, let clientId, let capability else {
             return nil
         }
         

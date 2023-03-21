@@ -72,7 +72,7 @@ extension InternalLogHandler {
     /// A convenience logging method that uses the call site’s #file and #line values.
     public func logMessage(level: LogLevel, message: String, error: Error?, file: String? = #file, line: Int? = #line) {
         let codeLocation: CodeLocation?
-        if let file = file, let line = line {
+        if let file, let line {
             codeLocation = CodeLocation(file: file, line: line)
         } else {
             codeLocation = nil

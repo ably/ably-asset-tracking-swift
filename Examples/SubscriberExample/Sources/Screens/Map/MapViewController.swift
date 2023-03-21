@@ -241,7 +241,7 @@ class MapViewController: UIViewController {
     }
     
     private func updatePublisherResolutionLabels(resolution: Resolution?) {
-        guard let resolution = resolution else {
+        guard let resolution else {
             publisherResolutionAccuracyLabel.text = "-"
             publisherResolutionIntervalLabel.text = "-"
             publisherResolutionMinDisplacementlabel.text = "-"

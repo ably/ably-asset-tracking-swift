@@ -24,7 +24,7 @@ struct DestinationMapView: UIViewRepresentable {
         let startRegion = MKCoordinateRegion(center: center, span: startSpan)
         mapView.region = startRegion
         
-        if let destination = destination {
+        if let destination {
             let destinationAnnotation = MKPointAnnotation()
             destinationAnnotation.coordinate = CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude)
             destinationAnnotation.title = destinationAnnotationTitle

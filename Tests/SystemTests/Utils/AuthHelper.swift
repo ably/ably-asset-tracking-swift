@@ -10,7 +10,7 @@ class AuthHelper {
         let client = ARTRest(options: options)
         
         client.auth.requestToken(tokenParams, with: nil) { tokenDetails, error in
-            if let error = error {
+            if let error {
                 XCTFail("TokenDetails request failed with error: \(error)")
             } else {
                 fetchedTokenDetails = tokenDetails?.asTokenDetails()

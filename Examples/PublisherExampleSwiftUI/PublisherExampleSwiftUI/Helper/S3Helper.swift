@@ -10,7 +10,7 @@ class S3Helper {
         let size: Int?
         
         var readableSize: String? {
-            guard let size = size else {
+            guard let size else {
                 return nil
             }
             

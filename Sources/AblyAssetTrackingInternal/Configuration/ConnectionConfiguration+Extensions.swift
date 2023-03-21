@@ -8,11 +8,11 @@ extension ConnectionConfiguration {
      */
     public func getClientOptions(logHandler: InternalARTLogHandler, remainPresentForMilliseconds: Int?, host: Host?) -> ARTClientOptions {
         let clientOptions = ARTClientOptions()
-        if let clientId = clientId {
+        if let clientId {
             clientOptions.clientId = clientId
         }
         
-        if let authCallback = authCallback {
+        if let authCallback {
             clientOptions.authCallback = createAuthCallback(authCallback)
         } else {
             clientOptions.key = apiKey
@@ -22,11 +22,11 @@ extension ConnectionConfiguration {
         
         clientOptions.agents = Agents.libraryAgents.ablyCocoaAgentsDictionary
         
-        if let environment = environment {
+        if let environment {
             clientOptions.environment = environment
         }
         
-        if let remainPresentForMilliseconds = remainPresentForMilliseconds {
+        if let remainPresentForMilliseconds {
             let remainPresentForStringifiable = ARTStringifiable.withNumber(remainPresentForMilliseconds as NSNumber)
             clientOptions.transportParams = ["remainPresentFor": remainPresentForStringifiable]
         }

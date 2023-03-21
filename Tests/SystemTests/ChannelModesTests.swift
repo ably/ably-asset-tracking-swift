@@ -127,13 +127,13 @@ class ChannelModesTests: XCTestCase {
         var channelMetricsObject: ChannelMetrics?
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
+            if let error {
                 XCTFail("Get Channel Metrics Request Failed with error: \(error)")
                 didFinishDataTaskExpectation.fulfill()
                 return
             }
             
-            guard let data = data else {
+            guard let data else {
                 XCTFail("Get Channel Metrics Request `data` is `nil`")
                 didFinishDataTaskExpectation.fulfill()
                 return

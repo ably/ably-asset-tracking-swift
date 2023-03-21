@@ -49,7 +49,7 @@ enum DescriptionsHelper {
         static func getDescriptionAndColor(for state: AssetState) -> (desc: String, color: UIColor) {
             switch state {
             case .connectionState(let connectionState):
-                if let connectionState = connectionState {
+                if let connectionState {
                     switch connectionState {
                     case .online:
                         return ("online", .systemGreen)
@@ -62,7 +62,7 @@ enum DescriptionsHelper {
                     return ("The asset connection status is not determined", .black)
                 }
             case .subscriberPresence(let isPresent):
-                if let isPresent = isPresent {
+                if let isPresent {
                     if isPresent {
                         return ("present", .systemGreen)
                     } else {

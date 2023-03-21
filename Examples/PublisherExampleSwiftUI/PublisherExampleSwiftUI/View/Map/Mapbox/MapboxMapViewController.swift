@@ -34,7 +34,7 @@ class MapboxMapViewController: UIViewController {
     }
     
     func reload() {
-        guard let mapView = mapView else {
+        guard let mapView else {
             return
         }
         mapView.mapboxMap.setCamera(to: CameraOptions(center: center))

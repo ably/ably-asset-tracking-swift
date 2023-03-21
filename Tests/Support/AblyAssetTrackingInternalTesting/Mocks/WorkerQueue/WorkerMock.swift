@@ -26,7 +26,7 @@ public class WorkerMock: Worker {
             throw error
         }
         doWorkPropertiesDoAsyncWorkPostWorkCallsCount += 1
-        if let doWorkPropertiesDoAsyncWorkPostWorkClosure = doWorkPropertiesDoAsyncWorkPostWorkClosure {
+        if let doWorkPropertiesDoAsyncWorkPostWorkClosure {
             return try doWorkPropertiesDoAsyncWorkPostWorkClosure(properties, doAsyncWork, postWork)
         } else {
             return doWorkPropertiesDoAsyncWorkPostWorkReturnValue

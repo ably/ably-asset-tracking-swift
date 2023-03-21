@@ -40,7 +40,7 @@ class SubscriberSystemTests: XCTestCase {
         
         let publishExpectation = expectation(description: "Message published to channel")
         channel.publish("enhanced", data: "{\"something\": \"anotherThing\"}") { error in
-            if let error = error {
+            if let error {
                 XCTFail("Failed to publish message: \(error)")
             } else {
                 publishExpectation.fulfill()

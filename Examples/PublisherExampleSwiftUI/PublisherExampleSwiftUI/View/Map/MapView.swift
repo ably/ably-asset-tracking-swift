@@ -26,7 +26,7 @@ struct MapView: View {
                 Button {
                     isRemoving = true
                     let trackable = publisher.trackables.first { key, _ in key.id == trackableId }?.key
-                    guard let trackable = trackable else { return }
+                    guard let trackable else { return }
                     publisher.remove(trackable: trackable) { result in
                         isRemoving = false
                         switch result {

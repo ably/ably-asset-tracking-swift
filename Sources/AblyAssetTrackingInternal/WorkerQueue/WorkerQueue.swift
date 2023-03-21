@@ -45,7 +45,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
 
         workerLogHandler?.debug(message: "Worker Queue enqueued worker: \(type(of: worker))", error: nil)
         workingQueue.async { [weak self] in
-            guard let self = self
+            guard let self
             else { return }
             
             do {
@@ -58,7 +58,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
                         self.asyncWorkQueue.async {
                             workerLogHandler?.debug(message: "Performing async work posted by worker \(type(of: worker))", error: nil)
                             asyncWork({ error in
-                                if let error = error {
+                                if let error {
                                     workerLogHandler?.error(message: "Unexpected error in completion handler of the asynchronous work of \(type(of: worker)). Worker Queue invoking onUnexpectedAsyncError", error: error)
                                     worker.onUnexpectedAsyncError(error: error) { asyncErrorWorker in
                                         self.enqueue(workRequest: WorkRequest(workerSpecification: asyncErrorWorker))

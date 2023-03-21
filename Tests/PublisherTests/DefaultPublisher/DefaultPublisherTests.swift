@@ -292,7 +292,7 @@ class DefaultPublisherTests: XCTestCase {
         
         // When adding a trackable and receive error response from ablyPublisher
         publisher.add(trackable: trackable) { [weak self] result in
-            guard let self = self
+            guard let self
             else {
                 XCTFail("self shouldn't be nil")
                 return

@@ -46,7 +46,7 @@ class ObservablePublisher: ObservableObject {
     
     func changeRoutingProfile(profile: RoutingProfile, completion: @escaping ResultHandler<Void>) {
         publisher.changeRoutingProfile(profile: profile) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             self.routingProfile = self.publisher.routingProfile
             completion(result)
         }

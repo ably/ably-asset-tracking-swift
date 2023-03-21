@@ -56,8 +56,8 @@ public class DefaultAbly: AblyCommon {
         if [.detached, .failed].contains(channel.state) {
             logHandler?.debug(message: "Channel for trackable \(trackableId) is in state \(channel.state); attaching", error: nil)
             channel.attach { [weak self] error in
-                guard let self = self else { return }
-                if let error = error {
+                guard let self else { return }
+                if let error {
                     self.logHandler?.error(message: "Failed to attach to channel for trackable \(trackableId)", error: error)
                     completion(.failure(error.toErrorInformation()))
                     return
@@ -78,7 +78,7 @@ public class DefaultAbly: AblyCommon {
         let presenceDataJSON = self.presenceDataJSON(data: presenceData)
                 
         channel.presence.enter(presenceDataJSON) { [weak self] error in
-            guard let self = self else { return }
+            guard let self else { return }
             self.logHandler?.debug(message: "Entered a channel [id: \(trackableId)] presence successfully", error: nil)
             
             let presenceEnterSuccess = { [weak self] in
@@ -91,7 +91,7 @@ public class DefaultAbly: AblyCommon {
                 completion(.failure(error.toErrorInformation()))
             }
             
-            guard let error = error else {
+            guard let error else {
                 presenceEnterSuccess()
                 return
             }
@@ -99,9 +99,9 @@ public class DefaultAbly: AblyCommon {
             if error.code == ARTErrorCode.operationNotPermittedWithProvidedCapability.rawValue && self.connectionConfiguration.usesTokenAuth {
                 self.logHandler?.debug(message: "Failed to enter presence on channel [id: \(trackableId)], requesting Ably SDK to re-authorize", error: error)
                 self.client.auth.authorize { [weak self] _, error in
-                    guard let self = self
+                    guard let self
                     else { return }
-                    if let error = error {
+                    if let error {
                         self.logHandler?.error(message: "Error calling authorize: \(String(describing: error))", error: error)
                         completion(.failure(ErrorInformation(error: error)))
                     } else {
@@ -109,13 +109,13 @@ public class DefaultAbly: AblyCommon {
                         self.logHandler?.debug(message: "Authorize succeeded, attaching to channel so that we can retry presence enter", error: nil)
 
                         channel.attach { error in
-                            if let error = error {
+                            if let error {
                                 self.logHandler?.error(message: "Error attaching to channel [id: \(trackableId)]: \(String(describing: error))", error: error)
                                 completion(.failure(ErrorInformation(error: error)))
                             } else {
                                 self.logHandler?.debug(message: "Channel attach succeeded, retrying presence enter", error: nil)
                                 channel.presence.enter(presenceDataJSON) { error in
-                                    guard let error = error else {
+                                    guard let error else {
                                         presenceEnterSuccess()
                                         return
                                     }
@@ -138,14 +138,14 @@ public class DefaultAbly: AblyCommon {
         }
         
         let presenceDataJSON: Any?
-        if let presenceData = presenceData {
+        if let presenceData {
             presenceDataJSON = self.presenceDataJSON(data: presenceData)
         } else {
             presenceDataJSON = nil
         }
         
         channelToRemove.presence.leave(presenceDataJSON) { [weak self] error in
-            guard let error = error else {
+            guard let error else {
                 self?.logHandler?.debug(message: "Left channel [id: \(trackableId)] presence successfully", error: nil)
                 channelToRemove.presence.unsubscribe()
                 channelToRemove.unsubscribe()
@@ -192,7 +192,7 @@ public class DefaultAbly: AblyCommon {
     
     public func subscribeForAblyStateChange() {
         client.connection.on { [weak self] stateChange in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             
@@ -217,7 +217,7 @@ public class DefaultAbly: AblyCommon {
         
         channel.presence.get { [weak self] messages, _ in
             self?.logHandler?.debug(message: "Get presence update from channel", error: nil)
-            guard let self = self, let messages = messages else {
+            guard let self, let messages else {
                 return
             }
             for message in messages {
@@ -225,7 +225,7 @@ public class DefaultAbly: AblyCommon {
             }
         }
         channel.presence.subscribe { [weak self] message in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.logHandler?.debug(message: "Received presence update from channel", error: nil)
             self.handleARTPresenceMessage(message, for: trackable)
@@ -269,7 +269,7 @@ public class DefaultAbly: AblyCommon {
         }
         
         channel.on { [weak self] stateChange in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             
@@ -285,7 +285,7 @@ public class DefaultAbly: AblyCommon {
         }
         
         channel.presence.update(presenceDataJSON(data: presenceData)) { error in
-            if let error = error {
+            if let error {
                 completion?(.failure(error.toErrorInformation()))
             } else {
                 completion?(.success)
@@ -409,11 +409,11 @@ extension DefaultAbly: AblyPublisher {
         }
         
         channel.publish([message]) { [weak self] error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             
-            if let error = error {
+            if let error {
                 self.logHandler?.error(message: "Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
                 self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
                 
@@ -442,10 +442,10 @@ extension DefaultAbly: AblyPublisher {
             let message = ARTMessage(name: EventName.raw.rawValue, data: data)
             
             channel.publish([message]) {[weak self] error in
-                guard let self = self
+                guard let self
                 else { return }
                 
-                if let error = error {
+                if let error {
                     self.logHandler?.error(message: "Cannot publish a message to channel [trackable id: \(trackable.id)]", error: error)
                     self.publisherDelegate?.ablyPublisher(self, didFailWithError: error.toErrorInformation())
                 } else {

@@ -19,7 +19,7 @@ class ThresholdChecker {
                                            currentLocation: Location,
                                            destination: Location?) -> Bool {
         guard let spatial = threshold.spatial,
-              let destination = destination
+              let destination
         else { return false }
         return currentLocation.distance(from: destination) < spatial
     }
@@ -28,7 +28,7 @@ class ThresholdChecker {
                                             currentTime: TimeInterval,
                                             estimatedArrivalTime: TimeInterval?) -> Bool {
         guard let temporal = threshold.temporal,
-              let estimatedArrivalTime = estimatedArrivalTime
+              let estimatedArrivalTime
         else { return false }
         return estimatedArrivalTime - currentTime < temporal
     }

@@ -24,7 +24,7 @@ class URLSessionServerTrustSync: NSObject, URLSessionDelegate, URLSessionTaskDel
                 responseData = data
                 responseError = error as NSError?
                 httpResponse = response
-            } else if let error = error {
+            } else if let error {
                 responseError = error as NSError?
             }
             requestCompleted = true

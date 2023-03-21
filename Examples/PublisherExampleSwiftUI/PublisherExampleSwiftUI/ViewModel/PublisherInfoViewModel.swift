@@ -25,7 +25,7 @@ extension PublisherInfoViewModel {
         
         var resolutionInfo: [StackedTextModel] = []
         resolutionInfo.append(.init(label: "Resolution policy", value: "", isHeader: true))
-        if let resolution = resolution {
+        if let resolution {
             resolutionInfo.append(StackedTextModel(label: "Accurancy:", value: " \(resolution.accuracy.asInfo())"))
             resolutionInfo.append(StackedTextModel(label: "Min. displacement:", value: " \(resolution.minimumDisplacement)m"))
             resolutionInfo.append(StackedTextModel(label: "Desired interval:", value: " \(resolution.desiredInterval)ms"))
@@ -39,7 +39,7 @@ extension PublisherInfoViewModel {
         
         let errorInfo: String?
         
-        if let lastError = lastError {
+        if let lastError {
             errorInfo = """
         Code: \(lastError.code)
         Status code: \(lastError.statusCode)

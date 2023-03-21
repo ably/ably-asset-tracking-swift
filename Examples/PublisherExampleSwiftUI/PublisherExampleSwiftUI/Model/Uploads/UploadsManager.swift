@@ -139,7 +139,7 @@ class UploadsManager: ObservableObject {
     }
     
     @MainActor func performUpload(_ upload: Upload) {
-        guard let s3Helper = s3Helper else {
+        guard let s3Helper else {
             logger.info("Skipping upload \(upload.id) since S3 is not configured")
             return
         }

@@ -24,7 +24,7 @@ public class WorkerFactoryMock: WorkerFactory {
         createWorkerWorkerSpecificationLogHandlerCallsCount += 1
         createWorkerWorkerSpecificationReceivedArguments = (workerSpecification: workerSpecification, logHandler: logHandler)
         createWorkerWorkerSpecificationLogHandlerReceivedInvocations.append((workerSpecification: workerSpecification, logHandler: logHandler))
-        if let createWorkerWorkerSpecificationLogHandlerClosure = createWorkerWorkerSpecificationLogHandlerClosure {
+        if let createWorkerWorkerSpecificationLogHandlerClosure {
             return createWorkerWorkerSpecificationLogHandlerClosure(workerSpecification, logHandler)
         } else {
             return createWorkerWorkerSpecificationLogHandlerReturnValue

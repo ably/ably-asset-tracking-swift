@@ -13,7 +13,7 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
     ///   - logHandler: A log handler to write messages to. If this is nil, the initializer will return nil.
     ///   - subsystems: The log handler’s initial list of subsystems, in order of increasing granularity.
     public init?(logHandler: LogHandler?, subsystems: [Subsystem] = []) {
-        guard let logHandler = logHandler else {
+        guard let logHandler else {
             return nil
         }
         self.logHandler = logHandler
@@ -41,7 +41,7 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
         let sanitizedSubsystemNames = subsystemNames.map(DefaultInternalLogHandler.sanitizeSubsystemName)
         var result = "[\(sanitizedSubsystemNames.joined(separator: "."))]"
 
-        if let codeLocation = codeLocation {
+        if let codeLocation {
             result.append("@(\((codeLocation.file as NSString).lastPathComponent):\(codeLocation.line))")
         }
 

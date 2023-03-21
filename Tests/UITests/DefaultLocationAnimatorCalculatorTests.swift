@@ -145,7 +145,7 @@ private func assertEqualSubscriberUpdates(
         )
     }
 
-    if let subscriberUpdates1 = subscriberUpdates1, let subscriberUpdates2 = subscriberUpdates2 {
+    if let subscriberUpdates1, let subscriberUpdates2 {
         assertEqualPositions(
             subscriberUpdates1.positionToEmit,
             subscriberUpdates2.positionToEmit,

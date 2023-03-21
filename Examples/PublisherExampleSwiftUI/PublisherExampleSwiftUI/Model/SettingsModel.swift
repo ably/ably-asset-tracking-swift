@@ -122,7 +122,7 @@ class SettingsModel {
             return UserDefaults.standard.get("s3FileName")
         }
         set {
-            if let newValue = newValue {
+            if let newValue {
                 UserDefaults.standard.save(newValue, forKey: "s3FileName")
             } else {
                 UserDefaults.standard.removeObject(forKey: "s3FileName")

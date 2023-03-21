@@ -42,17 +42,17 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
     
     func start() throws -> Publisher {
-        guard let connection = connection
+        guard let connection
         else {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
         }
         
-        guard let mapboxConfiguration = mapboxConfiguration
+        guard let mapboxConfiguration
         else {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "MapboxConfiguration", forBuilderOption: "mapboxConfiguration"))
         }
         
-        guard let resolutionPolicyFactory = resolutionPolicyFactory
+        guard let resolutionPolicyFactory
         else {
             throw ErrorInformation(type: .incompleteConfiguration(missingProperty: "ResolutionPolicyFactory", forBuilderOption: "resolutionPolicyFactory"))
         }

@@ -109,7 +109,7 @@ extension DefaultSubscriber {
     private func callback(event: DelegateEvent) {
         logHandler?.verbose(message: "Received event to send to delegate, dispatching call to main thread: \(event)", error: nil)
         performOnMainThread { [weak self] in
-            guard let self = self,
+            guard let self,
                   let delegate = self.delegate
             else { return }
 
@@ -151,7 +151,7 @@ extension DefaultSubscriber {
             presenceData: presenceData,
             useRewind: true
         ) { [weak self] result in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             

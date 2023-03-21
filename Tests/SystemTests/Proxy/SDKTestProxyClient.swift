@@ -32,7 +32,7 @@ class SDKTestProxyClient {
         request.httpMethod = method.rawValue
 
         let task = urlSession.dataTask(with: request) { data, response, error in
-            if let error = error {
+            if let error {
                 completionHandler(.failure(error))
                 return
             }

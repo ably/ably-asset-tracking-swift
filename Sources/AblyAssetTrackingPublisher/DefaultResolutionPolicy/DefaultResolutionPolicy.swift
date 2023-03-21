@@ -106,7 +106,7 @@ extension DefaultResolutionPolicy: DefaultTrackableSetListenerDelegate {
 
     func trackableSetListener(sender: DefaultTrackableSetListener, onActiveTrackableChanged trackable: Trackable?) {
         activeTrackable = trackable
-        if let trackable = trackable,
+        if let trackable,
            let constraints = trackable.constraints as? DefaultResolutionConstraints {
             methods.setProximityThreshold(threshold: constraints.proximityThreshold, handler: proximityHandler)
         } else {

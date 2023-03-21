@@ -31,7 +31,7 @@ private class TestLogHandler: AblyAssetTrackingCore.LogHandler {
         }
 
         let suffix: String
-        if let error = error {
+        if let error {
             suffix = " (error: \(error.localizedDescription))"
         } else {
             suffix = ""

@@ -12,7 +12,7 @@ class SubscriberLogger: AblyAssetTrackingCore.LogHandler {
     func logMessage(level: LogLevel, message: String, error: Error?) {
         let prefix: String
 
-        if let error = error {
+        if let error {
             // The LogParser library needs to be able to extract the error description from the log message; for this reason we emit its length
             let errorDescription = error.localizedDescription
             prefix = "[error(len:\(errorDescription.count)): \(errorDescription)] "

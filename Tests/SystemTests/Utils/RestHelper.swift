@@ -10,7 +10,7 @@ enum RestHelper {
             options.logLevel = .debug
         }
         
-        if let key = key {
+        if let key {
             options.key = key
         }
         

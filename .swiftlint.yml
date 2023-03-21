@@ -40,6 +40,7 @@ opt_in_rules:
   - xct_specific_matcher
   - yoda_condition
   - todo
+  - shorthand_optional_binding
 
 excluded:
   - "**/.build"

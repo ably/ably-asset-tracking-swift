@@ -24,14 +24,14 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     }
 
     func start(completion: @escaping ResultHandler<Void>) -> Subscriber? {
-        guard let connection = connection
+        guard let connection
         else {
             let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
             completion(.failure(error))
             return nil
         }
 
-        guard let trackingId = trackingId
+        guard let trackingId
         else {
             let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
             completion(.failure(error))

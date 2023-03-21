@@ -189,7 +189,7 @@ extension DefaultPublisher {
         logHandler?.verbose(message: "Received event to send to delegate, dispatching call to main thread: \(event)", error: nil)
 
         Self.performOnMainThread { [weak self] in
-            guard let self = self
+            guard let self
             else { return }
 
             let log = { (description: String) in
@@ -298,7 +298,7 @@ extension DefaultPublisher {
         }
         
         routeProvider.getRoute(to: destination.toCoreLocationCoordinate2d(), withRoutingProfile: event.profile) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case .success(let route):
                 self.routingProfile = event.profile
@@ -393,7 +393,7 @@ extension DefaultPublisher {
         self.locationService.stopUpdatingLocation()
         
         locationService.stopRecordingLocation { [weak self] result in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             
@@ -401,7 +401,7 @@ extension DefaultPublisher {
             case .failure(let error):
                 self.logHandler?.error(message: "Failed to stop recording location", error: error)
             case .success(let locationRecordingResult):
-                if let locationRecordingResult = locationRecordingResult {
+                if let locationRecordingResult {
                     self.sendDelegateEvent(.finishedRecordingLocationHistoryData(.init(locationHistoryData: locationRecordingResult.locationHistoryData)))
                     self.sendDelegateEvent(.finishedRecordingRawMapboxData(.init(temporaryFile: locationRecordingResult.rawHistoryFile)))
                 }
@@ -710,9 +710,9 @@ extension DefaultPublisher {
                                     lastLocation: Location?,
                                     lastTimestamp: Double?,
                                     resolution: Resolution?) -> Bool {
-        guard let resolution = resolution,
-              let lastLocation = lastLocation,
-              let lastTimestamp = lastTimestamp
+        guard let resolution,
+              let lastLocation,
+              let lastTimestamp
         else { return true }
 
         let distance = location.distance(from: lastLocation)
