@@ -62,13 +62,13 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .delegate(self)
             .trackingId(trackableId)
             .logHandler(handler: logHandler)
-            .start(completion: { _ in })!
+            .start { _ in }!
 
         delay(5)
 
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
+            historyLocation: locationsData.locations.map { $0.toCoreLocation() },
             logHandler: publisherInternalLogHandler,
             vehicleProfile: vehicleProfile
         )
@@ -103,13 +103,13 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop completion closure")
 
-        subscriber.stop(completion: { _ in
+        subscriber.stop { _ in
             stopSubscriberExpectation.fulfill()
-        })
+        }
 
-        publisher.stop(completion: { _ in
+        publisher.stop { _ in
             stopPublisherExpectation.fulfill()
-        })
+        }
 
         wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: 5)
     }
@@ -130,7 +130,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .delegate(self)
             .trackingId(trackableId)
             .logHandler(handler: logHandler)
-            .start(completion: { _ in })!
+            .start { _ in }!
 
         delay(5)
         didChangeAssetConnectionStatusOnlineExpectation.isInverted = true
@@ -139,7 +139,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             didChangeAssetConnectionStatusOnlineExpectation, didChangeAssetConnectionStatusOfflineExpectation
         ], timeout: 0.0)
 
-        subscriber.stop(completion: { _ in })
+        subscriber.stop { _ in }
     }
 
     func testSubscriberReceivesAssetConnectionStatusWithBicycleProfile() throws {
@@ -159,7 +159,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
 
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
+            historyLocation: locationsData.locations.map { $0.toCoreLocation() },
             logHandler: publisherInternalLogHandler,
             vehicleProfile: vehicleProfile
         )
@@ -196,19 +196,19 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .resolution(resolution)
             .delegate(self)
             .trackingId(trackableId)
-            .start(completion: { _ in })!
+            .start { _ in }!
 
         wait(for: [didChangeAssetConnectionStatusOnlineExpectation], timeout: 5.0)
 
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
-        publisher.stop(completion: { _ in
+        publisher.stop { _ in
             stopPublisherExpectation.fulfill()
-        })
+        }
         wait(for: [stopPublisherExpectation], timeout: 5)
 
         wait(for: [didChangeAssetConnectionStatusOfflineExpectation], timeout: 5.0)
 
-        subscriber.stop(completion: { _ in })
+        subscriber.stop { _ in }
     }
 
     private func delay(_ timeout: TimeInterval) {

@@ -51,13 +51,13 @@ class ChannelModesTests: XCTestCase {
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop completion closure")
 
-        subscriber.stop(completion: { _ in
+        subscriber.stop { _ in
             stopSubscriberExpectation.fulfill()
-        })
+        }
 
-        publisher.stop(completion: { _ in
+        publisher.stop { _ in
             stopPublisherExpectation.fulfill()
-        })
+        }
 
         wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: defaultDelayTime)
     }
@@ -71,7 +71,7 @@ class ChannelModesTests: XCTestCase {
 
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
-            historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
+            historyLocation: locationsData.locations.map { $0.toCoreLocation() },
             logHandler: internalLogHandler,
             vehicleProfile: VehicleProfile.car
         )
@@ -105,7 +105,7 @@ class ChannelModesTests: XCTestCase {
             .delegate(self)
             .trackingId(trackableId)
             .logHandler(handler: TestLogging.sharedLogHandler)
-            .start(completion: { _ in })!
+            .start { _ in }!
     }
 
     private func getChannelMetrics(trackableId: String, ablyApiKey: String) throws -> ChannelMetrics? {

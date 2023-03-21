@@ -106,9 +106,9 @@ class WorkerQueueTests: XCTestCase {
         let expectation = expectation(description: "doWorkPropertiesDoAsyncWorkPostWorkClosure invokes")
 
         workRequest.workerSpecification.doWorkPropertiesDoAsyncWorkPostWorkClosure = { _, asyncWorkClosure, _  in
-            asyncWorkClosure({ completion in
+            asyncWorkClosure { completion in
                 completion(WorkerQueueThrowableError())
-            })
+            }
             expectation.fulfill()
             return outputProperties
         }

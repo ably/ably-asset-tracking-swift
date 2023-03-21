@@ -60,14 +60,14 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
                     try self.properties = worker.doWork(properties: self.properties) { asyncWork in
                         self.asyncWorkQueue.async {
                             workerLogHandler?.debug(message: "Performing async work posted by worker \(type(of: worker))", error: nil)
-                            asyncWork({ error in
+                            asyncWork { error in
                                 if let error {
                                     workerLogHandler?.error(message: "Unexpected error in completion handler of the asynchronous work of \(type(of: worker)). Worker Queue invoking onUnexpectedAsyncError", error: error)
                                     worker.onUnexpectedAsyncError(error: error) { asyncErrorWorker in
                                         self.enqueue(workRequest: WorkRequest(workerSpecification: asyncErrorWorker))
                                     }
                                 }
-                            })
+                            }
                         }
                         workerLogHandler?.debug(message: "Worker \(type(of: worker)) finished doWork", error: nil)
                         workerLogHandler?.verbose(message: "Worker Queue's properties after executing doWork on \(type(of: worker)): \(self.properties)", error: nil)

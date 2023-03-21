@@ -47,7 +47,7 @@ extension ConnectionConfiguration {
     private func createAuthCallback(_ authCallback: @escaping AuthCallback) -> (ARTTokenParams, @escaping (ARTTokenDetailsCompatible?, NSError?) -> Void?) -> Void {
         func authCallbackWrapper(artTokenParams: ARTTokenParams, callback: @escaping (ARTTokenDetailsCompatible?, NSError?) -> Void?) {
             let tokenParams = artTokenParams.toTokenParams()
-            authCallback(tokenParams, { result in
+            authCallback(tokenParams) { result in
                 switch result {
                 case .success(.jwt(let jwt)):
                     callback(NSString(utf8String: jwt), nil)
@@ -61,7 +61,7 @@ extension ConnectionConfiguration {
                     callback(nil, error)
                     return
                 }
-            })
+            }
         }
 
         return authCallbackWrapper

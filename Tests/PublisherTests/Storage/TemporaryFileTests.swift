@@ -10,6 +10,7 @@ class TemporaryFileTests: XCTestCase {
         try Data().write(to: fileURL)
 
         let expectation = expectation(description: "File is deleted")
+        // swiftlint:disable:next trailing_closure
         var temporaryFile: TemporaryFile? = TemporaryFile(fileURL: fileURL, logHandler: nil, didDeleteCallback: {
             XCTAssertFalse(fileManager.fileExists(atPath: fileURL.path))
             expectation.fulfill()

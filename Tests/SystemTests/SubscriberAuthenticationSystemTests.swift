@@ -20,7 +20,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         let clientId = self.clientId
         let authCallbackCalledExpectation = self.expectation(description: "Auth Callback complete")
         // When a user configures an AuthCallback
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, authResultHandler in
+        let connectionConfiguration = ConnectionConfiguration { tokenParams, authResultHandler in
             XCTAssertNil(tokenParams.clientId)
 
             // Here, users should make a network request to their auth servers, where their servers create the tokenRequest.
@@ -52,7 +52,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             )
             authCallbackCalledExpectation.fulfill()
             authResultHandler(.success(.tokenRequest(tokenRequest)))
-        })
+        }
 
         testSubscriberConnection(configuration: connectionConfiguration)
     }
@@ -63,14 +63,14 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: clientId)
         )
 
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             guard let tokenDetails = fetchedTokenDetails else {
                 XCTFail("TokenDetails doesn't exist")
                 return
             }
 
             resultHandler(.success(.tokenDetails(tokenDetails)))
-        })
+        }
 
         testSubscriberConnection(configuration: connectionConfiguration)
     }
@@ -84,14 +84,14 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
 
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             guard let tokenString = fetchedTokenString else {
                 XCTFail("TokenDetails doesn't exist")
                 return
             }
 
             resultHandler(.success(.jwt(tokenString)))
-        })
+        }
 
         testSubscriberConnection(configuration: connectionConfiguration)
     }
@@ -132,21 +132,21 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
 
         let resolutionCompletionExpectation = self.expectation(description: "Resolution completion expectation")
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 1000, minimumDisplacement: 100)
-        subscriber?.resolutionPreference(resolution: resolution, completion: { result in
+        subscriber?.resolutionPreference(resolution: resolution) { result in
             switch result {
             case .success: ()
             case .failure(let error):
                 XCTFail("Resolution completion failed with error: \(error)")
             }
             resolutionCompletionExpectation.fulfill()
-        })
+        }
 
         waitForExpectations(timeout: 10.0)
 
         let subscriberStopExpectation = self.expectation(description: "Subscriber stop expectation")
-        subscriber?.stop(completion: { _ in
+        subscriber?.stop { _ in
             subscriberStopExpectation.fulfill()
-        })
+        }
         waitForExpectations(timeout: 10.0)
     }
 
@@ -178,7 +178,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         var hasRequestedInitialToken = false
         var hasRequestedUpdatedToken = false
 
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             if !hasRequestedInitialToken {
                 hasRequestedInitialToken = true
                 resultHandler(.success(.tokenDetails(initialToken)))
@@ -186,7 +186,7 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
                 hasRequestedUpdatedToken = true
                 resultHandler(.success(.tokenDetails(updatedToken)))
             }
-        })
+        }
 
         let subscriberStartExpectation = expectation(description: "Wait for subscriber to start")
         let subscriber = createSubscriberBuilder(connectionConfiguration: connectionConfiguration, trackingId: trackableId)
@@ -204,14 +204,14 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
         XCTAssertTrue(hasRequestedUpdatedToken)
 
         let subscriberStopExpectation = expectation(description: "Wait for subscriber to stop")
-        subscriber?.stop(completion: { result in
+        subscriber?.stop { result in
             switch result {
             case .success:
                 subscriberStopExpectation.fulfill()
             case let .failure(errorInfo):
                 XCTFail("Failed to stop subscriber, with error \(errorInfo)")
             }
-        })
+        }
         waitForExpectations(timeout: 10)
     }
 }

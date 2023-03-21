@@ -50,14 +50,14 @@ class SubscriberSystemTests: XCTestCase {
         waitForExpectations(timeout: 10)
 
         let subscriberStopExpectation = expectation(description: "Wait for subscriber to stop")
-        subscriber?.stop(completion: { result in
+        subscriber?.stop { result in
             switch result {
             case .success:
                 subscriberStopExpectation.fulfill()
             case let .failure(errorInfo):
                 XCTFail("Failed to stop subscriber, with error \(errorInfo)")
             }
-        })
+        }
         waitForExpectations(timeout: 10)
     }
 }

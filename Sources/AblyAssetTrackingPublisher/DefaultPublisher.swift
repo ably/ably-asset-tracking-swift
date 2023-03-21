@@ -69,6 +69,7 @@ class DefaultPublisher: Publisher, PublisherInteractor {
     ) {
         self.routingProfile = routingProfile
         self.logHandler = logHandler?.addingSubsystem(Self.self)
+        // swiftlint:disable:next trailing_closure
         self.workerQueue = WorkerQueue(
             properties: PublisherWorkerQueueProperties(),
             workingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher", qos: .default),

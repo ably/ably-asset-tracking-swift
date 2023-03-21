@@ -21,7 +21,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         let clientId = self.clientId
         let authCallbackCalledExpectation = self.expectation(description: "Auth Callback complete")
         // When a user configures an AuthCallback
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, authResultHandler in
+        let connectionConfiguration = ConnectionConfiguration { tokenParams, authResultHandler in
             XCTAssertNil(tokenParams.clientId)
 
             // Here, users should make a network request to their auth servers, where their servers create the tokenRequest.
@@ -53,7 +53,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             )
             authCallbackCalledExpectation.fulfill()
             authResultHandler(.success(.tokenRequest(tokenRequest)))
-        })
+        }
 
         try testPublisherTrack(configuration: connectionConfiguration)
     }
@@ -67,14 +67,14 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: keyName)
         )
 
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             guard let tokenDetails = fetchedTokenDetails else {
                 XCTFail("TokenDetails doesn't exist")
                 return
             }
 
             resultHandler(.success(.tokenDetails(tokenDetails)))
-        })
+        }
 
         try testPublisherTrack(configuration: connectionConfiguration)
     }
@@ -88,14 +88,14 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
 
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             guard let tokenString = fetchedTokenString else {
                 XCTFail("TokenDetails doesn't exist")
                 return
             }
 
             resultHandler(.success(.jwt(tokenString)))
-        })
+        }
 
         try testPublisherTrack(configuration: connectionConfiguration)
     }
@@ -187,7 +187,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         var hasRequestedInitialToken = false
         var hasRequestedUpdatedToken = false
 
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             if !hasRequestedInitialToken {
                 hasRequestedInitialToken = true
                 resultHandler(.success(.tokenDetails(initialToken)))
@@ -195,7 +195,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
                 hasRequestedUpdatedToken = true
                 resultHandler(.success(.tokenDetails(updatedToken)))
             }
-        })
+        }
 
         let publisher = try createAndStartPublisher(connectionConfiguration: connectionConfiguration)
 

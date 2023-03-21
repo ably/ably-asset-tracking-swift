@@ -204,9 +204,9 @@ class MapViewController: UIViewController {
     // MARK: Request new resolution based on zoom
     private func scheduleResolutionUpdate() {
         resolutionDebounceTimer?.invalidate()
-        resolutionDebounceTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
+        resolutionDebounceTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] _ in
             self?.performResolutionUpdate()
-        })
+        }
     }
 
     private func performResolutionUpdate() {

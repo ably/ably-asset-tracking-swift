@@ -38,6 +38,7 @@ struct SettingsView: View {
                 }
 
                 NavigationLink("Uploads") {
+                    // swiftlint:disable:next trailing_closure
                     UploadsView(uploads: uploads, retry: { upload in
                         retry(upload)
                     })

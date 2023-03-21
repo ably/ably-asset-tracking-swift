@@ -5,7 +5,8 @@ struct UploadsView: View {
     var retry: (Upload) -> Void
 
     var body: some View {
-        List(uploads.sorted(by: { $0.request.generatedAt > $1.request.generatedAt })) { upload in
+        List(uploads.sorted { $0.request.generatedAt > $1.request.generatedAt }) { upload in
+            // swiftlint:disable:next trailing_closure
             UploadView(upload: upload, retry: {
                 retry(upload)
             })

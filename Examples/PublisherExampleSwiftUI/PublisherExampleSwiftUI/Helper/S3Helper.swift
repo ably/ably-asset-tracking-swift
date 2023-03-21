@@ -52,7 +52,7 @@ class S3Helper {
 
     func fetchLocationHistoryFilenames() async throws -> [File] {
         let listResult = try await Amplify.Storage.list()
-        return listResult.items.map({ File(name: $0.key, size: $0.size) })
+        return listResult.items.map { File(name: $0.key, size: $0.size) }
     }
 
     func downloadHistoryData(fileName: String) async throws -> LocationHistoryData {

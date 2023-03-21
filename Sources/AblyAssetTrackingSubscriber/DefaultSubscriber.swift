@@ -38,6 +38,7 @@ class DefaultSubscriber: Subscriber {
         logHandler: InternalLogHandler?
     ) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
+        // swiftlint:disable:next trailing_closure
         self.workerQueue = WorkerQueue(
             properties: SubscriberWorkerQueueProperties(),
             workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),

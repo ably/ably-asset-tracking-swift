@@ -332,7 +332,7 @@ class DefaultSubscriberTests: XCTestCase {
         }
 
         // Expectation that disconnect is called
-        expectation(for: .init(block: { [weak self] _, _ in self?.ablySubscriber.disconnectCalled == true }), evaluatedWith: nil)
+        expectation(for: .init { [weak self] _, _ in self?.ablySubscriber.disconnectCalled == true }, evaluatedWith: nil)
 
         let invalidMessageError = ErrorInformation(code: ErrorCode.invalidMessage.rawValue, statusCode: 0, message: "", cause: nil, href: nil)
         ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didFailWithError: invalidMessageError)

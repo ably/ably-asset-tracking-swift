@@ -58,6 +58,7 @@ struct PublisherExampleSwiftUIApp: App {
                 */
                 .navigationViewStyle(.stack)
                 NavigationView {
+                    // swiftlint:disable:next trailing_closure
                     SettingsView(uploads: uploadsManager.uploads, retry: { upload in
                         uploadsManager.retry(upload)
                     })
