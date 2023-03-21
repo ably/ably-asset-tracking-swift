@@ -1,11 +1,15 @@
 disabled_rules:
-  # Rules we’re currently violating:
+  # All of the default rules of type "metrics". We have no reason to believe that the arbitrary defaults picked by SwiftLint are helpful.
   - cyclomatic_complexity
+  - file_length
   - function_body_length
-  - generic_type_name
+  - function_parameter_count
   - large_tuple
+  - line_length
   - nesting
   - type_body_length
+  # Rules we’re currently violating:
+  - generic_type_name
   - type_name
   # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
   - missing_docs
@@ -13,9 +17,7 @@ disabled_rules:
   - xct_specific_matcher
   # Rules we’re currently violating even though we’ve added configuration for them:
   - file_header
-  - file_length
   - identifier_name
-  - line_length
 
 opt_in_rules:
   - anonymous_argument_in_multiline_closure
@@ -59,14 +61,6 @@ excluded:
 
 file_header:
   forbidden_string: //
-
-line_length:
-  warning: 250
-  ignores_comments: true
-
-file_length:
-  warning: 700
-  error: 1200
 
 identifier_name:
   excluded: 'id'
