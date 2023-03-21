@@ -10,11 +10,11 @@ class PublisherAuthenticationSystemTests: XCTestCase {
     private let clientId: String = {
         "Test-Publisher_\(UUID().uuidString)"
     }()
-    
+
     func testPublisherConnectsWithApiKey() throws {
         // When a user connects using basic authentication/ API key
         let connectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: clientId)
-        
+
         testPublisherTrack(configuration: connectionConfiguration)
     }
 
@@ -24,7 +24,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         // When a user configures an AuthCallback
         let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, authResultHandler in
             XCTAssertNil(tokenParams.clientId)
-            
+
             // Here, users should make a network request to their auth servers, where their servers create the tokenRequest.
             // To emulate this, we use the api key to create a tokenRequest on the client side.
             let keyTokens = Secrets.ablyApiKey.split(separator: ":")
@@ -57,62 +57,62 @@ class PublisherAuthenticationSystemTests: XCTestCase {
 
         testPublisherTrack(configuration: connectionConfiguration)
     }
-    
+
     func testPublisherConnectsWithTokenDetails() throws {
         let keyTokens = Secrets.ablyApiKey.split(separator: ":")
         let keyName = String(keyTokens[0])
-        
+
         let fetchedTokenDetails = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
             tokenParams: ARTTokenParams(clientId: keyName)
         )
-        
+
         let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             guard let tokenDetails = fetchedTokenDetails else {
                 XCTFail("TokenDetails doesn't exist")
                 return
             }
-            
+
             resultHandler(.success(.tokenDetails(tokenDetails)))
         })
-        
+
         testPublisherTrack(configuration: connectionConfiguration)
     }
-    
+
     func testPublisherConnectsWithTokenString() throws {
         let keyTokens = Secrets.ablyApiKey.split(separator: ":")
         let keyName = String(keyTokens[0])
-        
+
         let fetchedTokenString = AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
             tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
-                
+
         let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             guard let tokenString = fetchedTokenString else {
                 XCTFail("TokenDetails doesn't exist")
                 return
             }
-            
+
             resultHandler(.success(.jwt(tokenString)))
         })
-        
+
         testPublisherTrack(configuration: connectionConfiguration)
     }
-    
+
     func testPublisherConnectsWithJWT() throws {
         guard let jwtToken = JWTHelper().getToken() else {
             XCTFail("Create JWT failed")
             return
         }
-        
+
         let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             resultHandler(.success(.jwt(jwtToken)))
         }
-        
+
         testPublisherTrack(configuration: connectionConfiguration)
     }
-    
+
     private func createAndStartPublisher(connectionConfiguration: ConnectionConfiguration) -> Publisher {
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 5000, minimumDisplacement: 100)
         let publisher = try! PublisherFactory.publishers()
@@ -123,10 +123,10 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             .vehicleProfile(.bicycle)
             .resolutionPolicyFactory(DefaultResolutionPolicyFactory(defaultResolution: resolution))
             .start() // Doesn't start publishing, its just a `build()` publisher call.
-        
+
         return publisher
     }
-    
+
     private func testPublisherTrack(configuration: ConnectionConfiguration) {
         let publisher = createAndStartPublisher(connectionConfiguration: configuration)
 
@@ -158,37 +158,37 @@ class PublisherAuthenticationSystemTests: XCTestCase {
 
         waitForExpectations(timeout: 10)
     }
-    
+
     private func requestToken(withPublisherCapabilitiesForTrackableIds trackableIds: [String], clientId: String) -> TokenDetails? {
         let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String: [String]] in
             var newCapabilities = capabilities
             newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence"]
             return newCapabilities
         }
-        
+
         let tokenParams = ARTTokenParams(clientId: clientId)
         tokenParams.capability = try! capabilities.toJSONString()
-        
+
         return AuthHelper().requestToken(
             options: RestHelper.clientOptions(true, key: Secrets.ablyApiKey),
             tokenParams: tokenParams
         )
     }
-    
+
     func testPublisher_usingTokenAuth_addTrackable_whenEnterPresenceGivesCapabilityError_reauthorizesAblyAndEntersPresenceWithNewToken() throws {
         let keyTokens = Secrets.ablyApiKey.split(separator: ":")
         let keyName = String(keyTokens[0])
-        
+
         let trackableId = UUID().uuidString
         let otherTrackableId = UUID().uuidString
-        
+
         // These are being done outside of the authCallback because it seems like calling requestToken inside there causes some sort of a hang. Tried to sort it out but didn’t get anywhere quickly.
         let initialToken = try XCTUnwrap(requestToken(withPublisherCapabilitiesForTrackableIds: [otherTrackableId], clientId: keyName))
         let updatedToken = try XCTUnwrap(requestToken(withPublisherCapabilitiesForTrackableIds: [otherTrackableId, trackableId], clientId: keyName))
-        
+
         var hasRequestedInitialToken = false
         var hasRequestedUpdatedToken = false
-        
+
         let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             if !hasRequestedInitialToken {
                 hasRequestedInitialToken = true
@@ -198,9 +198,9 @@ class PublisherAuthenticationSystemTests: XCTestCase {
                 resultHandler(.success(.tokenDetails(updatedToken)))
             }
         })
-        
+
         let publisher = createAndStartPublisher(connectionConfiguration: connectionConfiguration)
-        
+
         let trackable = Trackable(id: trackableId)
         let addTrackableExpectation = expectation(description: "Publisher successfully adds trackable")
         publisher.add(trackable: trackable) { result in
@@ -211,9 +211,9 @@ class PublisherAuthenticationSystemTests: XCTestCase {
                 XCTFail("Failed to add trackable with error \(errorInformation)")
             }
         }
-        
+
         waitForExpectations(timeout: 10)
-        
+
         XCTAssertTrue(hasRequestedInitialToken)
         XCTAssertTrue(hasRequestedUpdatedToken)
     }

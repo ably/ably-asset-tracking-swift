@@ -10,7 +10,7 @@ public enum Environment {
         }
         return dict
     }()
-        
+
     static let ablyApiKey: String = {
         guard let ablyApiKey = Environment.infoDictionary["ABLY_API_KEY"] as? String else {
             fatalError("ABLY_API_KEY not set in plist for this environment")

@@ -10,9 +10,9 @@ class ExampleAppLogFileTests: XCTestCase {
         2022-12-13T09:06:32.282000-03:00 error: [error(len:24): Here is an error message] [assetTracking.someComponent] Here is a message with an attached error
         """
         let data = try XCTUnwrap(text.data(using: .utf8))
-        
+
         let exampleAppLogFile = try ExampleAppLogFile(data: data)
-        
+
         let expectedLines: [ExampleAppLogFile.Line] = [
             .sdk(.init(timestamp: Date(timeIntervalSince1970: 1670933166.341),
                        logLevel: "debug",
@@ -34,7 +34,7 @@ class ExampleAppLogFileTests: XCTestCase {
                                       message: "Here is a message with an attached error"),
                        errorMessage: "Here is an error message"))
         ]
-        
+
         XCTAssertEqual(exampleAppLogFile.lines, expectedLines)
     }
 }

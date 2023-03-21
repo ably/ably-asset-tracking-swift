@@ -3,7 +3,7 @@ import CoreLocation
 public extension Location {
     func toCoreLocation() -> CLLocation {
         let date = Date(timeIntervalSince1970: self.timestamp)
-        
+
         if #available(iOS 15.0, *) {
             return CLLocation(
                 coordinate: self.coordinate.toCoreLocationCoordinate2d(),
@@ -40,7 +40,7 @@ public extension Location {
             )
         }
     }
-    
+
     func distance(from: Location) -> Double {
         self.toCoreLocation().distance(from: from.toCoreLocation())
     }

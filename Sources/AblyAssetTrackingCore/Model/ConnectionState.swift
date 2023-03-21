@@ -13,7 +13,7 @@ public enum ConnectionState: Int {
      Asset is not connected
      */
     case offline
-    
+
     /**
      Connection has failed
      */

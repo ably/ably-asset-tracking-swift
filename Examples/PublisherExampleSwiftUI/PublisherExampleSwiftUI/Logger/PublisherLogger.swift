@@ -4,11 +4,11 @@ import Logging
 
 class PublisherLogger: AblyAssetTrackingCore.LogHandler {
     private let logger: Logger
-        
+
     init(logger: Logger) {
         self.logger = logger
     }
-    
+
     func logMessage(level: LogLevel, message: String, error: Error?) {
         let prefix: String
 
@@ -19,7 +19,7 @@ class PublisherLogger: AblyAssetTrackingCore.LogHandler {
         } else {
             prefix = "[noError] "
         }
-        
+
         logger.log(level: level.swiftLogLevel, "\(prefix)\(message)")
     }
 }

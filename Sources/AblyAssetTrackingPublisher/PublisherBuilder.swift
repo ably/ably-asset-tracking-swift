@@ -18,12 +18,12 @@ public protocol PublisherBuilder {
      Sets the mandatory `ConnectionConfiguration` property
      */
     func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder
-    
+
     /**
      Sets the mandatory `MapboxConfiguration` property
     */
     func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilder
-    
+
     /**
      Sets the optional `LocationSource` property
      */
@@ -45,29 +45,29 @@ public protocol PublisherBuilder {
      It's optional to pass it via builder, as it can be set directly on `Publisher`.  Maintains weak reference.
      */
     func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder
-    
+
     /**
      Sets publishing `raw locations` enabled or not
      It's disabled by default
      */
     func rawLocations(enabled: Bool) -> PublisherBuilder
-    
+
     /**
      Set constant resolution for location engine
      */
     func constantLocationEngineResolution(resolution: Resolution?) -> PublisherBuilder
-    
+
     /**
      Sets publishing `publisher resolution` enabled or not
      It's enabled by default
      */
     func sendResolution(enabled: Bool) -> PublisherBuilder
-    
+
     /**
      Sets an optional `logHandler` that can capture logs from all across the sdk
      */
     func logHandler(handler: LogHandler?) -> PublisherBuilder
-    
+
     /**
      Sets an optional `vehicleProfile` for the publisher, Currently there are two vehicle profiles : bicycle and car
      */

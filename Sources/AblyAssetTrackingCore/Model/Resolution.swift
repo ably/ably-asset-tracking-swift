@@ -47,7 +47,7 @@ extension Resolution: Hashable, Equatable {
         hasher.combine(desiredInterval)
         hasher.combine(minimumDisplacement)
     }
-    
+
     public static func == (lhs: Resolution, rhs: Resolution) -> Bool {
         return lhs.accuracy == rhs.accuracy &&
             lhs.desiredInterval == rhs.desiredInterval &&

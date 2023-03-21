@@ -26,12 +26,12 @@ public class MockLocationService: LocationService {
     public func stopUpdatingLocation() {
         stopUpdatingLocationCalled = true
     }
-    
+
     public var startRecordingLocationCalled = false
     public func startRecordingLocation() {
         startRecordingLocationCalled = true
     }
-    
+
     public var stopRecordingLocationCalled = false
     public var stopRecordingLocationParamCompletion: ResultHandler<LocationRecordingResult?>?
     public var stopRecordingLocationCallback: ((@escaping ResultHandler<LocationRecordingResult?>) -> Void)?

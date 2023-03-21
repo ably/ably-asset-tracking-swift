@@ -3,7 +3,7 @@ import MapboxMaps
 
 class MapboxMapViewController: UIViewController {
     internal var mapView: MapboxMaps.MapView?
-    
+
     var center: CLLocationCoordinate2D? {
         get {
             return _center
@@ -16,9 +16,9 @@ class MapboxMapViewController: UIViewController {
         }
     }
     var _center: CLLocationCoordinate2D?
-    
+
     var onCameraChange: ((CLLocationCoordinate2D) -> Void)?
-    
+
     override public func viewDidLoad() {
         super.viewDidLoad()
         let resourceOptions = ResourceOptions(accessToken: EnvironmentHelper.MAPBOX_ACCESS_TOKEN)
@@ -32,7 +32,7 @@ class MapboxMapViewController: UIViewController {
         self.view.addSubview(mapView)
         self.mapView = mapView
     }
-    
+
     func reload() {
         guard let mapView else {
             return
@@ -42,17 +42,17 @@ class MapboxMapViewController: UIViewController {
 }
 
 extension MapboxMapViewController: GestureManagerDelegate {
-    
+
     func gestureManager(_ gestureManager: MapboxMaps.GestureManager, didBegin gestureType: MapboxMaps.GestureType) {
     }
-    
+
     func gestureManager(_ gestureManager: MapboxMaps.GestureManager, didEnd gestureType: MapboxMaps.GestureType, willAnimate: Bool) {
         if let cameraCenter = mapView?.cameraState.center, center != cameraCenter {
             _center = cameraCenter
             onCameraChange?(cameraCenter)
         }
     }
-    
+
     func gestureManager(_ gestureManager: MapboxMaps.GestureManager, didEndAnimatingFor gestureType: MapboxMaps.GestureType) {
     }
 }

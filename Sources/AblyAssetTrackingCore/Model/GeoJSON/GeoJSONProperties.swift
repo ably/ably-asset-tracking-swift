@@ -56,10 +56,10 @@ struct GeoJSONProperties: Codable {
         if let accuracyValidationError = LocationValidator.isAccuracyValid(horizontalAccuracy) {
             throw accuracyValidationError
         }
-        
+
         accuracyHorizontal = horizontalAccuracy
         time = try container.decode(Double.self, forKey: .time)
-        
+
         floor = try? container.decode(Int.self, forKey: .floor)
         speed = try? container.decode(Double.self, forKey: .speed).isLessThanZeroThenNil()
         accuracySpeed = try? container.decode(Double.self, forKey: .accuracySpeed).isLessThanZeroThenNil()
@@ -72,16 +72,16 @@ struct GeoJSONProperties: Codable {
         if let accuracyValidationError = LocationValidator.isAccuracyValid(location.horizontalAccuracy) {
             throw accuracyValidationError
         }
-        
+
         accuracyHorizontal = location.horizontalAccuracy
         time = location.timestamp
-        
+
         floor = location.floorLevel
         speed = location.speed.isLessThanZeroThenNil()
         accuracySpeed = location.speedAccuracy.isLessThanZeroThenNil()
         accuracyVertical = location.verticalAccuracy.isLessThanZeroThenNil()
         bearing = location.course.isLessThanZeroThenNil()
-        
+
         if #available(iOS 13.4, *) {
             accuracyBearing = location.courseAccuracy.isLessThanZeroThenNil()
         } else {
@@ -95,7 +95,7 @@ private extension Optional where Wrapped == Double {
         guard let value = self else {
             return nil
         }
-        
+
         return value.isLessThanZeroThenNil()
     }
 }

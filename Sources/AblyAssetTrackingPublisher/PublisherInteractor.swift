@@ -93,7 +93,7 @@ protocol PublisherInteractor {
     //     properties: PublisherWorkerQueueProperties,
     //     trackableId: String
     // )
-    
+
     /// Given publisher properties, a trackable id and an enhanced location update, increment
     /// the retry count for this location update and try to send it again.
     // func retrySendingEnhancedLocation(

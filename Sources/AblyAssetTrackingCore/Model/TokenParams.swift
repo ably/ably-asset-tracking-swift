@@ -9,7 +9,7 @@ public struct TokenParams: Codable {
     public let clientId: String?
     public let timestamp: Date?
     public let nonce: String?
-    
+
     /// Create a ``TokenParams``. This is called by the Ably Client to generate and passed in ``AuthCallback``, but users can also create a new ``TokenParams`` and send this to their token authentication server if desired.
     /// - Parameters:
     ///   - ttl: Requested time to live for the [Ably Token](https://ably.com/documentation/core-features/authentication#ably-tokens) being created in milliseconds

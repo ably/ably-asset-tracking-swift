@@ -35,7 +35,7 @@ public extension Decodable {
         }
         return try JSONDecoder().decode(T.self, from: data)
     }
-    
+
     /**
      Utility function to construct given `Decodable` object from  Dictionary object.
      - Parameters:
@@ -44,10 +44,10 @@ public extension Decodable {
      */
     static func fromDictionary<T: Decodable>(_ dictionary: [AnyHashable: Any]) throws -> T {
         let data = try JSONSerialization.data(withJSONObject: dictionary, options: .fragmentsAllowed)
-        
+
         return try JSONDecoder().decode(T.self, from: data)
     }
-    
+
     /**
      Helper function to construct given `Decodable` from `JSON string` or `Dictionary object`.
      - Parameters:

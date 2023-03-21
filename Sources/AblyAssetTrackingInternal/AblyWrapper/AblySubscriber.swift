@@ -11,7 +11,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter state:     The `ConnectionState` object
      */
     func ablySubscriber(_ sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState)
-    
+
     /**
      Tells the delegate that channel connection state changed.
      
@@ -19,7 +19,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter state:         The `ConnectionState` object
      */
     func ablySubscriber(_ sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState)
-    
+
     /**
      Tells the delegate that channel presence was changed.
      
@@ -27,7 +27,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter presence:      The `Presence` object affected by the change.
      */
     func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence)
-    
+
     /**
      Tells the delegate that an error occurred.
      
@@ -37,7 +37,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter error:         The `ErrorInformation` object that contains info about error.
      */
     func ablySubscriber(_ sender: AblySubscriber, didFailWithError error: ErrorInformation)
-    
+
     /**
      Tells the delegate that published location was changed.
      
@@ -47,7 +47,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter locationUpdate:      The `LocationUpdate` object that contains info about publisher `Enhanced` location.
      */
     func ablySubscriber(_ sender: AblySubscriber, didReceiveEnhancedLocation locationUpdate: LocationUpdate)
-    
+
     /**
      Tells the delegate that published location was changed.
      
@@ -57,7 +57,7 @@ public protocol AblySubscriberDelegate: AnyObject {
      - Parameter locationUpdate:      The `LocationUpdate` object that contains info about publisher `Raw` location.
      */
     func ablySubscriber(_ sender: AblySubscriber, didReceiveRawLocation locationUpdate: LocationUpdate)
-    
+
     /**
      Tells the delegate that resolution was changed.
      
@@ -77,7 +77,7 @@ public protocol AblySubscriber: AblyCommon {
      The methods declared by the `AblySubscriberDelegate` protocol allow the adopting delegate to respond to messages from the `Ably` wrapper class..
      */
     var subscriberDelegate: AblySubscriberDelegate? { get set }
-    
+
     /**
      Observe  for the enhanced location change.
      
@@ -86,7 +86,7 @@ public protocol AblySubscriber: AblyCommon {
      - Parameter trackableId: The identifier of the channel.
      */
     func subscribeForEnhancedEvents(trackableId: String)
-    
+
     /**
      Observe  for the raw location change.
      

@@ -7,20 +7,20 @@ import AblyAssetTrackingCoreTesting
 import AblyAssetTrackingInternalTesting
 import AblyAssetTrackingPublisherTesting
 
-class PublisherHelper {    
+class PublisherHelper {
     enum SendLocationResultPolicy {
         case success
         case retry
         case fail
     }
-    
+
     private let defaultTimeout: TimeInterval
     private var addedTrackables: [String] = []
-    
+
     init(defaultTimeout: TimeInterval = 5.0) {
         self.defaultTimeout = defaultTimeout
     }
-        
+
     func sendLocationUpdate(
         ablyPublisher: MockAblyPublisher,
         publisher: DefaultPublisher,
@@ -44,21 +44,21 @@ class PublisherHelper {
                 self.addedTrackables.append(trackable.id)
                 connectCompletionHandlerExpectation.fulfill()
             }
-            
+
             publisher.track(trackable: trackable) { _ in }
-            
+
             switch XCTWaiter.wait(for: [connectCompletionHandlerExpectation], timeout: defaultTimeout) {
             case .timedOut:
                 XCTFail("Timeout \(connectCompletionHandlerExpectation.description)")
             default: ()
             }
         }
-        
+
         ablyPublisher.sendEnhancedAssetLocationUpdateCounter = .zero
-                
+
         let expectationDidSendEnhancedLocation = XCTestExpectation(description: "Publisher did send enhanced location")
-        
-        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in            
+
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in
             switch resultPolicy {
             case .success:
                 completion?(.success)
@@ -77,7 +77,7 @@ class PublisherHelper {
                 }
             }
         }
-        
+
         publisher.locationService(sender: locationService, didUpdateEnhancedLocationUpdate: locationUpdate)
 
         switch XCTWaiter.wait(for: [expectationDidSendEnhancedLocation], timeout: defaultTimeout) {
@@ -86,7 +86,7 @@ class PublisherHelper {
         default: ()
         }
     }
-    
+
     static func createPublisher(
         ablyPublisher: AblyPublisher,
         routingProfile: RoutingProfile = .driving,
@@ -96,7 +96,7 @@ class PublisherHelper {
         enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>(),
         logHandler: InternalLogHandlerMockThreadSafe = InternalLogHandlerMockThreadSafe()
     ) -> DefaultPublisher {
-        
+
         DefaultPublisher(
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,

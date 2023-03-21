@@ -5,7 +5,7 @@ extension InternalLogHandlerMock {
         handler.addingSubsystemClosure = { _ in
             return InternalLogHandlerMock.configured
         }
-        
+
         return handler
     }
 }

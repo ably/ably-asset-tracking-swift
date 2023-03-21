@@ -37,7 +37,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
             completion(.failure(error))
             return nil
         }
-        
+
         let internalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
                                                            subsystems: [.assetTracking, .named("subscriber")])
 
@@ -90,7 +90,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
                                         logHandler: logHandler,
                                         delegate: delegate)
     }
-    
+
     func logHandler(handler: LogHandler?) -> SubscriberBuilder {
         return DefaultSubscriberBuilder(connection: connection,
                                         trackingId: trackingId,

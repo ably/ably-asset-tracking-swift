@@ -5,7 +5,7 @@ struct UploadRequest: Codable {
     enum UploadType: CustomStringConvertible, Codable {
         case locationHistoryData(archiveVersion: String)
         case rawMapboxHistory(originalFilename: String)
-        
+
         var description: String {
             switch self {
             case .locationHistoryData:
@@ -15,10 +15,10 @@ struct UploadRequest: Codable {
             }
         }
     }
-    
+
     var type: UploadType
     var generatedAt: Date
-    
+
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
@@ -26,7 +26,7 @@ struct UploadRequest: Codable {
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter
     }()
-    
+
     var filename: String {
         let formattedDate = Self.dateFormatter.string(from: generatedAt)
 

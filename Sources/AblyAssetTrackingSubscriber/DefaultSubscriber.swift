@@ -9,7 +9,7 @@ private enum SubscriberState {
     case working
     case stopping
     case stopped
-    
+
     var isStoppingOrStopped: Bool {
         self == .stopping || self == .stopped
     }
@@ -20,7 +20,7 @@ class DefaultSubscriber: Subscriber {
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
-    
+
     private var ablySubscriber: AblySubscriber
     private var subscriberState: SubscriberState = .working
     private var receivedAblyClientConnectionState: ConnectionState = .offline
@@ -28,7 +28,7 @@ class DefaultSubscriber: Subscriber {
     private var currentTrackableConnectionState: ConnectionState = .offline
     private var isPublisherOnline: Bool = false
     private var lastEmittedIsPublisherOnline: Bool?
-    
+
     weak var delegate: SubscriberDelegate?
 
     init(
@@ -49,9 +49,9 @@ class DefaultSubscriber: Subscriber {
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
-        
+
         self.ablySubscriber.subscriberDelegate = self
-        
+
         self.ablySubscriber.subscribeForAblyStateChange()
     }
 
@@ -64,7 +64,7 @@ class DefaultSubscriber: Subscriber {
             completion.handleSubscriberStopped()
             return
         }
-        
+
         enqueue(event: .changeResolution(.init(resolution: resolution, completion: completion)))
     }
 
@@ -84,7 +84,7 @@ class DefaultSubscriber: Subscriber {
             completion.handleSuccess()
             return
         }
-        
+
         enqueue(event: .stop(.init(completion: completion)))
     }
 }
@@ -145,7 +145,7 @@ extension DefaultSubscriber {
 
     // MARK: Start/Stop
     private func performStart(_ event: Event.StartEvent) {
-        
+
         ablySubscriber.connect(
             trackableId: trackableId,
             presenceData: presenceData,
@@ -154,7 +154,7 @@ extension DefaultSubscriber {
             guard let self else {
                 return
             }
-            
+
             switch result {
             case .success:
                 self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
@@ -167,10 +167,10 @@ extension DefaultSubscriber {
             }
         }
     }
-    
+
     private func performStop(_ event: Event.StopEvent) {
         subscriberState = .stopping
-        
+
         ablySubscriber.close(presenceData: presenceData) { [weak self] result in
             switch result {
             case .success:
@@ -180,47 +180,47 @@ extension DefaultSubscriber {
             }
         }
     }
-    
+
     private func performPresenceUpdated(_ event: Event.PresenceUpdateEvent) {
         guard event.presence.type == .publisher else {
             return
         }
-        
+
         if event.presence.action.isPresentOrEnter {
             isPublisherOnline = true
         } else if event.presence.action.isLeaveOrAbsent {
             isPublisherOnline = false
         }
-        
+
         if isPublisherOnline != lastEmittedIsPublisherOnline {
             lastEmittedIsPublisherOnline = isPublisherOnline
             callback(event: .delegateUpdatedPublisherPresence(.init(isPresent: isPublisherOnline)))
         }
     }
-    
+
     private func performStopped(_ event: Event.AblyConnectionClosedEvent) {
         subscriberState = .stopped
         event.completion.handleSuccess()
     }
-    
+
     private func performClientConnectionChanged(_ event: Event.AblyClientConnectionStateChangedEvent) {
         receivedAblyClientConnectionState = event.connectionState
         handleConnectionStateChange()
     }
-    
+
     private func performChannelConnectionChanged(_ event: Event.AblyChannelConnectionStateChangedEvent) {
         receivedAblyChannelConnectionState = event.connectionState
         handleConnectionStateChange()
     }
-    
+
     private func handleConnectionStateChange() {
         if currentTrackableConnectionState == .failed {
             logHandler?.debug(message: "Ignoring state change since state is already .failed", error: nil)
             return
         }
-        
+
         var newConnectionState: ConnectionState = .offline
-        
+
         switch receivedAblyClientConnectionState {
         case .online:
             switch receivedAblyChannelConnectionState {
@@ -236,7 +236,7 @@ extension DefaultSubscriber {
         case .failed:
             newConnectionState = .failed
         }
-        
+
         if newConnectionState != currentTrackableConnectionState {
             currentTrackableConnectionState = newConnectionState
             callback(event: .delegateConnectionStatusChanged(.init(status: newConnectionState)))
@@ -249,13 +249,13 @@ extension DefaultSubscriber {
 
             return
         }
-        
+
         let presenceDataUpdate = PresenceData(type: presenceData.type, resolution: resolution)
         ablySubscriber.updatePresenceData(
             trackableId: trackableId,
             presenceData: presenceDataUpdate
         ) { result in
-            
+
             switch result {
             case .success:
                 event.completion.handleSuccess()
@@ -264,10 +264,10 @@ extension DefaultSubscriber {
             }
         }
     }
-    
+
     private func performAblyError(_ event: Event.AblyErrorEvent) {
         callback(event: .delegateError(.init(error: event.error)))
-        
+
         if event.error.code == ErrorCode.invalidMessage.rawValue {
             logHandler?.error(message: "invalidMessage error received, emitting failed connection status", error: event.error)
             currentTrackableConnectionState = .failed
@@ -300,12 +300,12 @@ extension DefaultSubscriber: AblySubscriberDelegate {
         logHandler?.debug(message: "ablySubscriber.didReceivePresenceUpdate. Presence: \(presence)", error: nil)
         enqueue(event: .presenceUpdate(.init(presence: presence)))
     }
-    
+
     func ablySubscriber(_ sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState) {
         logHandler?.debug(message: "ablySubscriber.didChangeClientConnectionState. Status: \(state)", error: nil)
         enqueue(event: .ablyClientConnectionStateChanged(.init(connectionState: state)))
     }
-    
+
     func ablySubscriber(_ sender: AblySubscriber, didChangeChannelConnectionState state: ConnectionState) {
         logHandler?.debug(message: "ablySubscriber.didChangeChannelConnectionState. Status: \(state)", error: nil)
             enqueue(event: .ablyChannelConnectionStateChanged(.init(connectionState: state)))
@@ -320,12 +320,12 @@ extension DefaultSubscriber: AblySubscriberDelegate {
         logHandler?.debug(message: "ablySubscriber.didReceiveRawLocation", error: nil)
         callback(event: .delegateRawLocationReceived(.init(locationUpdate: location)))
     }
-    
+
     func ablySubscriber(_ sender: AblySubscriber, didReceiveEnhancedLocation location: LocationUpdate) {
         logHandler?.debug(message: "ablySubscriber.didReceiveEnhancedLocation", error: nil)
         callback(event: .delegateEnhancedLocationReceived(.init(locationUpdate: location)))
     }
-    
+
     func ablySubscriber(_ sender: AblySubscriber, didReceiveResolution resolution: Resolution) {
         logHandler?.debug(message: "ablySubscriber.didReceiveResolution", error: nil)
         callback(event: .delegateResolutionReceived(.init(resolution: resolution)))

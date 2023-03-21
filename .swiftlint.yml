@@ -1,6 +1,5 @@
 disabled_rules:
   - force_try
-  - trailing_whitespace
   # Rules we’re currently violating:
   - cyclomatic_complexity
   - function_body_length

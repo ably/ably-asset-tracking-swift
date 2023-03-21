@@ -11,7 +11,7 @@ class GeoJSONPropertiesCLLocationTests: XCTestCase {
                              accuracySpeed: Double? = nil,
                              timestamp: Double? = nil) -> Location {
         let coordinate = LocationCoordinate(latitude: 1.0, longitude: 1.0)
-        
+
         return Location(
             coordinate: coordinate,
             altitude: 1.0,
@@ -26,108 +26,108 @@ class GeoJSONPropertiesCLLocationTests: XCTestCase {
             timestamp: timestamp ?? .zero
         )
     }
-    
+
     // MARK: Horizontal accuracy
-    
+
     func testGeoJsonPropertiesFromCLLocation_InvalidHorizontalAccuracy_LessThanZero() throws {
         let location = getLocation(horizontalAccuracy: -1.0)
         XCTAssertThrowsError(try GeoJSONProperties(location: location))
     }
-    
+
     func testGeoJsonPropertiesFromCLLocation_ValidHorizontalAccuracy_EqualZero() throws {
         let location = getLocation(horizontalAccuracy: 0.0)
         XCTAssertNoThrow(try GeoJSONProperties(location: location))
     }
-    
+
     func testGeoJsonPropertiesFromCLLocation_ValidHorizontalAccuracy() throws {
         let location = getLocation(horizontalAccuracy: 10.0)
         XCTAssertNoThrow(try GeoJSONProperties(location: location))
     }
-    
+
     func testGeoJsonPropertiesFromCLLocation_ValidHorizontalAccuracy_CheckValue() throws {
         let horizontalAccuracy = 10.0
         let location = getLocation(horizontalAccuracy: horizontalAccuracy)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertEqual(properties.accuracyHorizontal, horizontalAccuracy)
     }
-    
+
     // MARK: Vertical accuracy
-    
+
     func testGeoJsonPropertiesFromCLLocation_InvalidVerticalAccuracy() throws {
         let location = getLocation(accuracyVertical: -1.0)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertNil(properties.accuracyVertical)
     }
-    
+
     func testGeoJsonPropertiesFromCLLocation_ValidVerticalAccuracy() throws {
         let accuracyVertical = 10.0
         let location = getLocation(accuracyVertical: accuracyVertical)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertEqual(properties.accuracyVertical, accuracyVertical)
     }
-    
+
     // MARK: Bearing accuracy
-    
+
     func testGeoJsonPropertiesFromCLLocation_InvalidBearingAccuracy() throws {
         let location = getLocation(accuracyBearing: -1.0)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertNil(properties.accuracyBearing)
     }
-    
+
     func testGeoJsonPropertiesFromCLLocation_ValidBearingAccuracy() throws {
         let accuracyBearing = 10.0
         let location = getLocation(accuracyBearing: accuracyBearing)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertEqual(properties.accuracyBearing, accuracyBearing)
     }
-    
+
     // MARK: Speed accuracy
-    
+
     func testGeoJsonPropertiesFromCLLocation_InvalidSpeedAccuracy() throws {
         let location = getLocation(accuracySpeed: -1.0)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertNil(properties.accuracySpeed)
     }
-    
+
     func testGeoJsonPropertiesFromCLLocation_ValidSpeedAccuracy() throws {
         let accuracySpeed = 10.0
         let location = getLocation(accuracySpeed: accuracySpeed)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertEqual(properties.accuracySpeed, accuracySpeed)
     }
-    
+
     // MARK: Bearing
-    
+
     func testGeoJsonPropertiesFromCLLocation_InvalidBearing() throws {
         let location = getLocation(bearing: -1.0)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertNil(properties.bearing)
     }
-    
+
     func testGeoJsonPropertiesFromCLLocation_ValidBearing() throws {
         let bearing = 10.0
         let location = getLocation(bearing: bearing)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertEqual(properties.bearing, bearing)
     }
-    
+
     // MARK: Speed
-    
+
     func testGeoJsonPropertiesFromCLLocation_InvalidSpeed() throws {
         let location = getLocation(speed: -1.0)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertNil(properties.speed)
     }
-    
+
     func testGeoJsonPropertiesFromCLLocation_ValidSpeed() throws {
         let speed = 10.0
         let location = getLocation(speed: speed)
         let properties = try GeoJSONProperties(location: location)
         XCTAssertEqual(properties.speed, speed)
     }
-    
+
     // MARK: Timestamp
-    
+
     func testGeoJsonPropertiesFromCLLocation_Timestamp() throws {
         let timestamp = Date()
         let location = getLocation(timestamp: timestamp.timeIntervalSince1970)

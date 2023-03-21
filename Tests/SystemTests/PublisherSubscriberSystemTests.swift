@@ -33,7 +33,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     private let publisherClientId: String = {
         "Test-Publisher_\(UUID().uuidString)"
     }()
-    
+
     private let logHandler = TestLogging.sharedLogHandler
     private let publisherInternalLogHandler = TestLogging.sharedInternalLogHandler
         .addingSubsystem(.assetTracking)
@@ -42,21 +42,21 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws {
         try subscriberReceivesPublisherMessage(vehicleProfile: .bicycle)
     }
-    
+
     func testSubscriberReceivesPublisherMessageWithCarProfile() throws {
         try subscriberReceivesPublisherMessage(vehicleProfile: .car)
     }
-    
+
     func subscriberReceivesPublisherMessage(vehicleProfile: VehicleProfile) throws {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
         } catch {
             XCTFail("Can't find the source of locations `test-locations.json`")
         }
-                
+
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
-        
+
         let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
@@ -64,18 +64,18 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .trackingId(trackableId)
             .logHandler(handler: logHandler)
             .start(completion: { _ in })!
-        
+
         delay(5)
-        
+
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
             historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
             logHandler: publisherInternalLogHandler,
             vehicleProfile: vehicleProfile
         )
-        
+
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
-        
+
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
@@ -83,7 +83,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             mode: .publish,
             logHandler: publisherInternalLogHandler
         )
-        
+
         let publisher = DefaultPublisher(
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
@@ -94,37 +94,37 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             isSendResolutionEnabled: true,
             logHandler: publisherInternalLogHandler
         )
-        
+
         let trackable = Trackable(id: trackableId)
         didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))
         publisher.add(trackable: trackable) { _  in }
-        
+
         wait(for: [didUpdateEnhancedLocationExpectation, didUpdateRawLocationExpectation, didUpdateResolutionExpectation], timeout: 20.0)
-                
+
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         let stopSubscriberExpectation = self.expectation(description: "Subscriber did call stop completion closure")
-        
+
         subscriber.stop(completion: { _ in
             stopSubscriberExpectation.fulfill()
         })
-        
+
         publisher.stop(completion: { _ in
             stopPublisherExpectation.fulfill()
         })
-        
+
         wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: 5)
     }
-    
+
     func testSubscriberNotReceivesAssetConnectionStatus() throws {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
         } catch {
             XCTFail("Can't find the source of locations `test-locations.json`")
         }
-        
+
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
-        
+
         let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
@@ -132,41 +132,41 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             .trackingId(trackableId)
             .logHandler(handler: logHandler)
             .start(completion: { _ in })!
-        
+
         delay(5)
         didChangeAssetConnectionStatusOnlineExpectation.isInverted = true
         didChangeAssetConnectionStatusOfflineExpectation.isInverted = true
         wait(for: [
             didChangeAssetConnectionStatusOnlineExpectation, didChangeAssetConnectionStatusOfflineExpectation
         ], timeout: 0.0)
-        
+
         subscriber.stop(completion: { _ in })
     }
-    
+
     func testSubscriberReceivesAssetConnectionStatusWithBicycleProfile() throws {
         try subscriberReceivesAssetConnectionStatus(vehicleProfile: .bicycle)
     }
-    
+
     func testSubscriberReceivesAssetConnectionStatusWithCarProfile() throws {
         try subscriberReceivesAssetConnectionStatus(vehicleProfile: .car)
     }
-    
+
     func subscriberReceivesAssetConnectionStatus(vehicleProfile: VehicleProfile) throws {
         do {
             locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
         } catch {
             XCTFail("Can't find the source of locations `test-locations.json`")
         }
-        
+
         let defaultLocationService = DefaultLocationService(
             mapboxConfiguration: .init(mapboxKey: Secrets.mapboxAccessToken),
             historyLocation: locationsData.locations.map({ $0.toCoreLocation() }),
             logHandler: publisherInternalLogHandler,
             vehicleProfile: vehicleProfile
         )
-        
+
         let publisherConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: publisherClientId)
-        
+
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
             configuration: publisherConnectionConfiguration,
@@ -174,7 +174,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             mode: .publish,
             logHandler: publisherInternalLogHandler
         )
-        
+
         let publisher = DefaultPublisher(
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
@@ -185,22 +185,22 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             isSendResolutionEnabled: true,
             logHandler: publisherInternalLogHandler
         )
-        
+
         let trackable = Trackable(id: trackableId)
         publisher.add(trackable: trackable) { _  in }
-        
+
         let subscriberConnectionConfiguration = ConnectionConfiguration(apiKey: Secrets.ablyApiKey, clientId: subscriberClientId)
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 500, minimumDisplacement: 100)
-        
+
         let subscriber = SubscriberFactory.subscribers()
             .connection(subscriberConnectionConfiguration)
             .resolution(resolution)
             .delegate(self)
             .trackingId(trackableId)
             .start(completion: { _ in })!
-        
+
         wait(for: [didChangeAssetConnectionStatusOnlineExpectation], timeout: 5.0)
-        
+
         let stopPublisherExpectation = self.expectation(description: "Publisher did call stop completion closure")
         publisher.stop(completion: { _ in
             stopPublisherExpectation.fulfill()
@@ -211,7 +211,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
 
         subscriber.stop(completion: { _ in })
     }
-    
+
     private func delay(_ timeout: TimeInterval) {
         let delayExpectation = XCTestExpectation()
         delayExpectation.isInverted = true
@@ -221,7 +221,7 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
 
 extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didFailWithError error: ErrorInformation) {}
-    
+
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
         switch status {
         case .online:
@@ -232,15 +232,15 @@ extension PublisherAndSubscriberSystemTests: SubscriberDelegate {
             ()
         }
     }
-    
+
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate) {
         didUpdateEnhancedLocationExpectation.fulfill()
     }
-    
+
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate) {
         didUpdateRawLocationExpectation.fulfill()
     }
-    
+
     func subscriber(sender: AblyAssetTrackingSubscriber.Subscriber, didUpdateResolution resolution: Resolution) {
         didUpdateResolutionExpectation.fulfill()
     }

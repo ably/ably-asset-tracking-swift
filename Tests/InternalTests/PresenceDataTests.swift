@@ -8,11 +8,11 @@ class PresenceDataTests: XCTestCase {
         var data = PresenceData(type: .publisher, rawLocations: true)
         var jsonString = try data.toJSONString()
         XCTAssertEqual(jsonString, "{\"type\":\"PUBLISHER\",\"rawLocations\":true}")
-        
+
         data = PresenceData(type: .publisher, rawLocations: false)
         jsonString = try data.toJSONString()
         XCTAssertEqual(jsonString, "{\"type\":\"PUBLISHER\",\"rawLocations\":false}")
-        
+
         data = PresenceData(type: .publisher, rawLocations: nil)
         jsonString = try data.toJSONString()
         XCTAssertEqual(jsonString, "{\"type\":\"PUBLISHER\"}")
@@ -22,12 +22,12 @@ class PresenceDataTests: XCTestCase {
         var jsonString = "{\"type\":\"PUBLISHER\"}"
         var data: PresenceData = try PresenceData.fromJSONString(jsonString)
         XCTAssertEqual(data.type, .publisher)
-        
+
         jsonString = "{\"type\":\"PUBLISHER\",\"rawLocations\":true}"
         data = try PresenceData.fromJSONString(jsonString)
         XCTAssertEqual(data.type, .publisher)
         XCTAssertEqual(data.rawLocations, true)
-        
+
         jsonString = "{\"type\":\"PUBLISHER\",\"rawLocations\":false}"
         data = try PresenceData.fromJSONString(jsonString)
         XCTAssertEqual(data.type, .publisher)

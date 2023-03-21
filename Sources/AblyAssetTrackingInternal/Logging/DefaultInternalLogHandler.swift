@@ -7,7 +7,7 @@ import Foundation
 public struct DefaultInternalLogHandler: InternalLogHandler {
     private var logHandler: LogHandler
     private var subsystemNames: [String] // Lowest granularity first
-    
+
     /// Creates an instance of ``DefaultInternalLogHandler`` that writes messages to a given ``LogHandler``.
     /// - Parameters:
     ///   - logHandler: A log handler to write messages to. If this is nil, the initializer will return nil.
@@ -20,13 +20,13 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
 
         self.subsystemNames = subsystems.map(\.name)
     }
-    
+
     public func logMessage(level: LogLevel, message: String, error: Error?, codeLocation: CodeLocation?) {
         let taggedMessage = tagMessage(message, codeLocation: codeLocation)
 
         logHandler.logMessage(level: level, message: taggedMessage, error: error)
     }
-    
+
     public func addingSubsystem(_ subsystem: Subsystem) -> InternalLogHandler {
         var newHandler = self
         newHandler.subsystemNames.append(subsystem.name)

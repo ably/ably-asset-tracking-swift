@@ -104,7 +104,7 @@ extension Subscriber: Hashable, Equatable {
         hasher.combine(id)
         hasher.combine(trackable)
     }
-    
+
     public static func == (lhs: Subscriber, rhs: Subscriber) -> Bool {
         lhs.id == rhs.id && lhs.trackable == rhs.trackable
     }

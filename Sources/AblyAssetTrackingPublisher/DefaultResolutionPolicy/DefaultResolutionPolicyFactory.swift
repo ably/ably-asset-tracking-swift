@@ -3,7 +3,7 @@ import AblyAssetTrackingCore
 
 public class DefaultResolutionPolicyFactory: ResolutionPolicyFactory {
     private let defaultResolution: Resolution
-    
+
     public init(defaultResolution: Resolution) {
         self.defaultResolution = defaultResolution
     }

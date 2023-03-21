@@ -2,7 +2,7 @@ import Ably
 import AblyAssetTrackingCore
 
 extension ConnectionConfiguration {
-    
+
     /**
      Create ClientOptions for Ably SDK, to be passed to Ably Client
      */
@@ -11,7 +11,7 @@ extension ConnectionConfiguration {
         if let clientId {
             clientOptions.clientId = clientId
         }
-        
+
         if let authCallback {
             clientOptions.authCallback = createAuthCallback(authCallback)
         } else {
@@ -19,13 +19,13 @@ extension ConnectionConfiguration {
         }
         clientOptions.logLevel = .verbose
         clientOptions.logHandler = logHandler
-        
+
         clientOptions.agents = Agents.libraryAgents.ablyCocoaAgentsDictionary
-        
+
         if let environment {
             clientOptions.environment = environment
         }
-        
+
         if let remainPresentForMilliseconds {
             let remainPresentForStringifiable = ARTStringifiable.withNumber(remainPresentForMilliseconds as NSNumber)
             clientOptions.transportParams = ["remainPresentFor": remainPresentForStringifiable]
@@ -39,7 +39,7 @@ extension ConnectionConfiguration {
 
         return clientOptions
     }
-    
+
     /**
      Wraps the ARTAuthCallback into a AuthCallback without dependency on Ably-cocoa, by
      receiving Ably types and converting it into Ably Asset Tracking Types,
@@ -64,7 +64,7 @@ extension ConnectionConfiguration {
                 }
             })
         }
-        
+
         return authCallbackWrapper
     }
 }

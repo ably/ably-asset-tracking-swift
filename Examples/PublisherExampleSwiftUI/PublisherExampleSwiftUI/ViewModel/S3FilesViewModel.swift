@@ -4,7 +4,7 @@ class S3FilesViewModel: ObservableObject {
     @Published var files: [S3Helper.File] = []
     @Published var errorMessage: String?
     @Published var isLoading = false
-        
+
     init(s3Helper: S3Helper?) {
         guard let s3Helper else {
             self.errorMessage = "S3 is not configured."
@@ -21,7 +21,7 @@ class S3FilesViewModel: ObservableObject {
             } catch {
                 self.errorMessage = error.localizedDescription
             }
-            
+
             isLoading = false
         }
     }

@@ -39,7 +39,7 @@ public protocol SubscriberBuilder {
      It's optional to pass it via builder, as it can be set directly on `Subscriber`.  Maintains weak reference.
      */
     func delegate(_ delegate: SubscriberDelegate) -> SubscriberBuilder
-    
+
     /**
      Sets an optional `logHandler` that can capture logs from all across the sdk
      */

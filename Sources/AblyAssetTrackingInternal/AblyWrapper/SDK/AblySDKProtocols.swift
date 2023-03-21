@@ -11,7 +11,7 @@ public protocol AblySDKRealtime {
     var channels: AblySDKRealtimeChannels { get }
     var connection: AblySDKConnection { get }
     var auth: AblySDKAuth { get }
-    
+
     func close()
 }
 

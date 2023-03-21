@@ -3,12 +3,12 @@ import Foundation
 struct Upload: Identifiable, Codable {
     var id: UUID
     var request: UploadRequest
-    
+
     enum Status: CustomStringConvertible, Codable {
         case uploading
         case uploaded
         case failed(String)
-        
+
         var description: String {
             switch self {
             case .uploading: return "Uploading"
@@ -17,6 +17,6 @@ struct Upload: Identifiable, Codable {
             }
         }
     }
-    
+
     var status: Status
 }

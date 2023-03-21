@@ -5,14 +5,14 @@ import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
 class DefaultPublisher: Publisher, PublisherInteractor {
-    
+
     private let workerQueue: WorkerQueue<PublisherWorkerQueueProperties, PublisherWorkSpecification>
     private let locationService: LocationService
     private let resolutionPolicy: ResolutionPolicy
     private let routeProvider: RouteProvider
     private let batteryLevelProvider: BatteryLevelProvider
     private let isSendResolutionEnabled: Bool
-    
+
     private var ablyPublisher: AblyPublisher
     private var enhancedLocationState: TrackableState<EnhancedLocationUpdate>
     private var rawLocationState: TrackableState<RawLocationUpdate>
@@ -34,21 +34,21 @@ class DefaultPublisher: Publisher, PublisherInteractor {
             notifyTrackablesChanged(trackables: trackables)
         }
     }
-    
+
     private var constantLocationEngineResolution: Resolution?
-    
+
     private var lastEnhancedLocations: [Trackable: Location]
     private var lastEnhancedTimestamps: [Trackable: Double]
     private var lastRawLocations: [Trackable: Location]
     private var lastRawTimestamps: [Trackable: Double]
     private var route: Route?
-    
+
     private var logHandler: InternalLogHandler?
 
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelsConnectionStates: [Trackable: ConnectionState] = [:]
     private var currentTrackablesConnectionStates: [Trackable: ConnectionState] = [:]
-    
+
     private var duplicateTrackableGuard = DuplicateTrackableGuard()
 
     public weak var delegate: PublisherDelegate?
@@ -84,7 +84,7 @@ class DefaultPublisher: Publisher, PublisherInteractor {
         self.rawLocationState = rawLocationState
 
         self.batteryLevelProvider = DefaultBatteryLevelProvider()
-        
+
         self.isSendResolutionEnabled = isSendResolutionEnabled
         self.areRawLocationsEnabled = areRawLocationsEnabled
         self.constantLocationEngineResolution = constantLocationEngineResolution
@@ -106,9 +106,9 @@ class DefaultPublisher: Publisher, PublisherInteractor {
         self.ablyPublisher.publisherDelegate = self
         self.locationService.delegate = self
         self.methods.delegate = self
-        
+
         self.ablyPublisher.subscribeForAblyStateChange()
-        
+
         /**
          If available, set `constantLocationEngineResolution` for the `LocationService`.
          In this case all further resolution calculations are disabled.
@@ -271,7 +271,7 @@ extension DefaultPublisher {
 
         ablyPublisher.subscribeForPresenceMessages(trackable: event.trackable)
         ablyPublisher.subscribeForChannelStateChange(trackable: event.trackable)
-        
+
         trackables.insert(event.trackable)
         // Start updating location only after the first trackable
         if trackables.count == 1 {
@@ -290,13 +290,13 @@ extension DefaultPublisher {
             event.completion.handlePublisherStopped()
             return
         }
-        
+
         guard let destination = activeTrackable?.destination else {
             self.routingProfile = event.profile
             event.completion.handleSuccess()
             return
         }
-        
+
         routeProvider.getRoute(to: destination.toCoreLocationCoordinate2d(), withRoutingProfile: event.profile) { [weak self] result in
             guard let self else { return }
             switch result {
@@ -322,7 +322,7 @@ extension DefaultPublisher {
             duplicateTrackableGuard.saveDuplicateAddCompletionHandler(completion, forTrackableWithId: trackable.id)
             return
         }
-        
+
         guard !state.isStoppingOrStopped else {
             completion.handlePublisherStopped()
             return
@@ -332,7 +332,7 @@ extension DefaultPublisher {
             completion.handleSuccess()
             return
         }
-        
+
         duplicateTrackableGuard.startAddingTrackableWithId(trackable.id)
 
         ablyPublisher.connect(
@@ -360,16 +360,16 @@ extension DefaultPublisher {
             event.completion.handlePublisherStopped()
             return
         }
-        
+
         self.ablyPublisher.disconnect(
             trackableId: event.trackable.id,
             presenceData: presenceData
         ) { [weak self] result in
-            
+
             switch result {
             case .success(let wasPresent):
                 self?.enhancedLocationState.remove(trackableId: event.trackable.id)
-                
+
                 if wasPresent {
                     self?.enqueue(event: .clearRemovedTrackableMetadata(.init(trackable: event.trackable, completion: event.completion)))
                 } else {
@@ -389,14 +389,14 @@ extension DefaultPublisher {
         }
 
         state = .stopping
-        
+
         self.locationService.stopUpdatingLocation()
-        
+
         locationService.stopRecordingLocation { [weak self] result in
             guard let self else {
                 return
             }
-            
+
             switch result {
             case .failure(let error):
                 self.logHandler?.error(message: "Failed to stop recording location", error: error)
@@ -406,7 +406,7 @@ extension DefaultPublisher {
                     self.sendDelegateEvent(.finishedRecordingRawMapboxData(.init(temporaryFile: locationRecordingResult.rawHistoryFile)))
                 }
             }
-                        
+
             self.ablyPublisher.close(presenceData: self.presenceData) { [weak self] result in
                 switch result {
                 case .success:
@@ -527,18 +527,18 @@ extension DefaultPublisher {
                 enhancedLocationState.addToWaiting(locationUpdate: event.locationUpdate, for: trackable.id)
                 return false
             }
-            
+
             let shouldSend = shouldSendLocation(
                 location: event.locationUpdate.location,
                 lastLocation: lastEnhancedLocations[trackable],
                 lastTimestamp: lastEnhancedTimestamps[trackable],
                 resolution: resolutions[trackable]
             )
-            
+
             if !shouldSend {
                 enhancedLocationState.addLocation(for: trackable.id, location: event.locationUpdate)
             }
-            
+
             return shouldSend
         }
 
@@ -548,31 +548,31 @@ extension DefaultPublisher {
 
         checkThreshold(location: event.locationUpdate.location)
     }
-    
+
     private func processNextWaitingEnhancedLocationUpdate(for trackableId: String) {
         guard let enhancedLocationUpdate = enhancedLocationState.nextWaitingLocation(for: trackableId) else {
             return
         }
-        
+
         performEnhancedLocationChanged(.init(locationUpdate: enhancedLocationUpdate))
     }
-    
+
     private func processNextWaitingRawLocationUpdate(for trackableId: String) {
         guard let rawLocationUpdate = rawLocationState.nextWaitingLocation(for: trackableId) else {
             return
         }
-        
+
         performRawLocationChanged(.init(locationUpdate: rawLocationUpdate))
     }
-    
+
     private func sendEnhancedLocationUpdate(event: Event.EnhancedLocationChangedEvent, trackable: Trackable) {
         lastEnhancedLocations[trackable] = event.locationUpdate.location
         lastEnhancedTimestamps[trackable] = event.locationUpdate.location.timestamp
-        
+
         event.locationUpdate.skippedLocations = enhancedLocationState.locationsList(for: trackable.id).map { $0.location }
 
         enhancedLocationState.markMessageAsPending(for: trackable.id)
-        
+
         ablyPublisher.sendEnhancedLocation(locationUpdate: event.locationUpdate, trackable: trackable) { [weak self] result in
             switch result {
             case .failure(let error):
@@ -582,7 +582,7 @@ extension DefaultPublisher {
             }
         }
     }
-    
+
     private func sendRawLocationUpdate(event: Event.RawLocationChangedEvent, trackable: Trackable) {
         lastRawLocations[trackable] = event.locationUpdate.location
         lastRawTimestamps[trackable] = event.locationUpdate.location.timestamp
@@ -600,21 +600,21 @@ extension DefaultPublisher {
             }
         }
     }
-    
+
     private func saveEnhancedLocationForFurtherSending(trackableId: String, location: EnhancedLocationUpdate) {
         enhancedLocationState.addLocation(for: trackableId, location: location)
     }
-    
+
     private func saveRawLocationForFurtherSending(trackableId: String, location: RawLocationUpdate) {
         rawLocationState.addLocation(for: trackableId, location: location)
     }
-    
+
     private func performRawLocationChanged(_ event: Event.RawLocationChangedEvent) {
         guard !state.isStoppingOrStopped else {
             logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "Cannot perform RawLocationChanged. Publisher is either stopped or stopping.")))
             return
         }
-        
+
         guard areRawLocationsEnabled == true else {
             return
         }
@@ -624,18 +624,18 @@ extension DefaultPublisher {
                 rawLocationState.addToWaiting(locationUpdate: event.locationUpdate, for: trackable.id)
                 return false
             }
-            
+
             let shouldSend = shouldSendLocation(
                 location: event.locationUpdate.location,
                 lastLocation: lastRawLocations[trackable],
                 lastTimestamp: lastRawTimestamps[trackable],
                 resolution: resolutions[trackable]
             )
-            
+
             if !shouldSend {
                 rawLocationState.addLocation(for: trackable.id, location: event.locationUpdate)
             }
-            
+
             return shouldSend
         }
 
@@ -643,14 +643,14 @@ extension DefaultPublisher {
             sendRawLocationUpdate(event: event, trackable: trackable)
         }
     }
-    
+
     private func performSendRawLocationSuccess(_ event: Event.SendRawLocationSuccessEvent) {
         rawLocationState.unmarkMessageAsPending(for: event.trackable.id)
         rawLocationState.clearLocation(for: event.trackable.id)
         rawLocationState.resetRetryCounter(for: event.trackable.id)
         processNextWaitingRawLocationUpdate(for: event.trackable.id)
     }
-    
+
     private func performSendRawLocationFailure(_ event: Event.SendRawLocationFailureEvent) {
         guard rawLocationState.shouldRetry(trackableId: event.trackable.id) else {
             rawLocationState.unmarkMessageAsPending(for: event.trackable.id)
@@ -659,20 +659,20 @@ extension DefaultPublisher {
             processNextWaitingRawLocationUpdate(for: event.trackable.id)
             return
         }
-        
+
         retrySendingRawLocation(
             trackable: event.trackable,
             locationUpdate: event.locationUpdate
         )
     }
-    
+
     private func performSendEnhancedLocationSuccess(_ event: Event.SendEnhancedLocationSuccessEvent) {
         enhancedLocationState.unmarkMessageAsPending(for: event.trackable.id)
         enhancedLocationState.clearLocation(for: event.trackable.id)
         enhancedLocationState.resetRetryCounter(for: event.trackable.id)
         processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
     }
-    
+
     private func performSendEnhancedLocationFailure(_ event: Event.SendEnhancedLocationFailureEvent) {
         guard enhancedLocationState.shouldRetry(trackableId: event.trackable.id) else {
             enhancedLocationState.unmarkMessageAsPending(for: event.trackable.id)
@@ -681,25 +681,25 @@ extension DefaultPublisher {
             processNextWaitingEnhancedLocationUpdate(for: event.trackable.id)
             return
         }
-        
+
         retrySendingEnhancedLocation(
             trackable: event.trackable,
             locationUpdate: event.locationUpdate
         )
     }
-    
+
     private func retrySendingEnhancedLocation(trackable: Trackable, locationUpdate: EnhancedLocationUpdate) {
         enhancedLocationState.incrementRetryCounter(for: trackable.id)
-        
+
         sendEnhancedLocationUpdate(
             event: .init(locationUpdate: locationUpdate),
             trackable: trackable
         )
     }
-    
+
     private func retrySendingRawLocation(trackable: Trackable, locationUpdate: RawLocationUpdate) {
         rawLocationState.incrementRetryCounter(for: trackable.id)
-        
+
         sendRawLocationUpdate(
             event: .init(locationUpdate: locationUpdate),
             trackable: trackable
@@ -757,11 +757,11 @@ extension DefaultPublisher {
             logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "Cannot perform ChangeLocationEngineResolution. Publisher is either stopped or stopping.")))
             return
         }
-        
+
         if constantLocationEngineResolution == nil {
             locationService.changeLocationEngineResolution(resolution: resolution)
         }
-        
+
         enqueue(event: .delegateResolutionUpdate(.init(resolution: resolution)))
     }
 
@@ -800,7 +800,7 @@ extension DefaultPublisher {
         }
 
         guard event.presenceData.type == .subscriber else { return }
-        
+
         if event.presence.action == .enter {
             addSubscriber(clientId: event.clientId, trackable: event.trackable, data: event.presenceData)
         } else if event.presence.action == .leave {
@@ -880,7 +880,7 @@ extension DefaultPublisher {
     private func notifyDelegateResolutionUpdate(_ event: Event.DelegateResolutionUpdateEvent) {
         sendDelegateEvent(.didUpdateResolution(.init(resolution: event.resolution)))
     }
-    
+
     private func notifyTrackablesChanged(trackables: Set<Trackable>) {
         sendDelegateEvent(.didChangeTrackables(.init(trackables: trackables)))
     }
@@ -897,7 +897,7 @@ extension DefaultPublisher: LocationServiceDelegate {
         logHandler?.debug(message: "locationService.didUpdateRawLocation.", error: nil)
         enqueue(event: .rawLocationChanged(.init(locationUpdate: locationUpdate)))
     }
-    
+
     func locationService(sender: LocationService, didUpdateEnhancedLocationUpdate locationUpdate: EnhancedLocationUpdate) {
         logHandler?.debug(message: "locationService.didUpdateEnhancedLocation.", error: nil)
         enqueue(event: .enhancedLocationChanged(.init(locationUpdate: locationUpdate)))

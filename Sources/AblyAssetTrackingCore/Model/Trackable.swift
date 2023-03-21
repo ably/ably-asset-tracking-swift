@@ -26,7 +26,7 @@ public class Trackable {
         self.destination = destination
         self.constraints = constraints
     }
-    
+
     public init(id: String,
                 metadata: String? = nil,
                 destination: LocationCoordinate,
@@ -41,7 +41,7 @@ extension Trackable: Hashable, Equatable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
+
     public static func == (lhs: Trackable, rhs: Trackable) -> Bool {
         lhs.id == rhs.id
     }

@@ -37,7 +37,7 @@ class TruckAnnotationView: MKAnnotationView, Identifiable {
         case 315-step..<315+step: imageView.image = UIImage(named: "truckNW")
         default: break
         }
-        
+
         if let annotation = annotation as? Annotatable, annotation.type == .raw {
             imageView.image = imageView.image?.withTintColor(.red)
             alpha = 0.3

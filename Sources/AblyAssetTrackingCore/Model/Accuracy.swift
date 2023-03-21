@@ -94,15 +94,15 @@ extension Accuracy: Comparable, Equatable {
         case .maximum: return 5
         }
     }
-    
+
     public static func < (lhs: Accuracy, rhs: Accuracy) -> Bool {
         return lhs.index < rhs.index
     }
-    
+
     public static func > (lhs: Accuracy, rhs: Accuracy) -> Bool {
         return lhs.index > rhs.index
     }
-    
+
     public static func == (lhs: Accuracy, rhs: Accuracy) -> Bool {
         return lhs.index == rhs.index
     }

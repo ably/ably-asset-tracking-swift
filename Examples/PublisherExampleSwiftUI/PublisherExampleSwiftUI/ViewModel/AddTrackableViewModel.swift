@@ -9,7 +9,7 @@ class AddTrackableViewModel: ObservableObject {
     @Published var resolutionDesiredInterval: String  = "\(SettingsModel.shared.defaultResolution.desiredInterval)"
     @Published var setResolutionConstraints = false
     @Published var destination: LocationCoordinate?
-    
+
     var resolutionAccuracy: String = SettingsModel.shared.defaultResolution.accuracy.rawValue
     var accuracies: [String] {
         [
@@ -20,35 +20,35 @@ class AddTrackableViewModel: ObservableObject {
             Accuracy.minimum
         ].sorted().map(\.rawValue)
     }
-    
+
     var isValid: Bool {
         !(trackableId.isEmpty || (setResolutionConstraints && customResolution == nil))
     }
-    
+
     private var customResolution: Resolution? {
         guard let accuracy = Accuracy(rawValue: resolutionAccuracy),
               let minimumDisplacement = Double(resolutionMinimumDisplacement),
               let desiredInterval = Double(resolutionDesiredInterval) else {
             return nil
         }
-        
+
         return .init(accuracy: accuracy, desiredInterval: desiredInterval, minimumDisplacement: minimumDisplacement)
     }
-    
+
     func getLatitudeString() -> String {
         guard let latitude = destination?.latitude else {
             return ""
         }
         return String(latitude)
     }
-    
+
     func getLongitudeString() -> String {
         guard let longitude = destination?.longitude else {
             return ""
         }
         return String(longitude)
     }
-    
+
     func createTrackable() -> Trackable {
         let constraints: ResolutionConstraints?
         if setResolutionConstraints, let customResolution {
@@ -61,7 +61,7 @@ class AddTrackableViewModel: ObservableObject {
         } else {
             constraints = nil
         }
-        
+
         return Trackable(id: trackableId, destination: destination, constraints: constraints)
     }
 }

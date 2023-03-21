@@ -2,7 +2,7 @@
 public protocol WorkerFactory<PropertiesType, WorkerSpecificationType> {
     associatedtype PropertiesType
     associatedtype WorkerSpecificationType
-    
+
     /// Creates an appropriate ``Worker`` using a passed ``WorkerSpecificationType``.
     ///
     /// - parameters:

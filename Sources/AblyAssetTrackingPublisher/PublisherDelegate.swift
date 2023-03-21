@@ -29,7 +29,7 @@ public protocol PublisherDelegate: AnyObject {
         - trackable: Trackable which connection state relates to.
      */
     func publisher(sender: Publisher, didChangeConnectionState state: ConnectionState, forTrackable trackable: Trackable)
-    
+
     /**
      Called when there is a resolution update directly in AblySDK.
      
@@ -38,7 +38,7 @@ public protocol PublisherDelegate: AnyObject {
         - resolution: Most recent resolution.
     */
     func publisher(sender: Publisher, didUpdateResolution resolution: Resolution)
-    
+
     /**
      Called whenever the trackables list of a `Publisher` instance changes
      
@@ -47,12 +47,12 @@ public protocol PublisherDelegate: AnyObject {
         - trackables: a set of trackables that are currently present on the `sender`'s instance
     */
     func publisher(sender: Publisher, didChangeTrackables trackables: Set<Trackable>)
-    
+
     /**
      Called when the publisher has finished recording location history data, to expose the data that it recorded. The publisher will call this method after it receives the ``Publisher/stop(completion:)`` method call and before that method’s completion handler is called. It will only do so if at least one trackable was added to the publisher during its lifetime.
      */
     func publisher(sender: Publisher, didFinishRecordingLocationHistoryData locationHistoryData: LocationHistoryData)
-    
+
     /**
      Called when the publisher has finished recording location history data, to expose the raw history data emitted by the Mapbox SDK. The publisher will call this method if and only if it calls the ``publisher(sender:didFinishRecordingLocationHistoryData:)`` method; see the documentation for that method for more information on the circumstances in which it is called.
      

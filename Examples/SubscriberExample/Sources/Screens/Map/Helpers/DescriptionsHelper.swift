@@ -20,7 +20,7 @@ enum DescriptionsHelper {
         case notEmpty(_: Resolution)
         case changeError(_: ErrorInformation)
     }
-    
+
     enum ResolutionStateHelper {
         static func getDescription(for state: ResolutionState) -> String {
             switch state {
@@ -38,12 +38,12 @@ enum DescriptionsHelper {
             }
         }
     }
-    
+
     enum AssetState {
         case connectionState(_: ConnectionState?)
         case subscriberPresence(isPresent: Bool?)
     }
-    
+
     // MARK: - AssetConnectionState
     enum AssetStateHelper {
         static func getDescriptionAndColor(for state: AssetState) -> (desc: String, color: UIColor) {

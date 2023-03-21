@@ -14,7 +14,7 @@ extension LocationSourceOption {
             return "S3 file"
         }
     }
-    
+
     static func fromDescription(description: String) -> LocationSourceOption {
         switch description {
         case "phone":

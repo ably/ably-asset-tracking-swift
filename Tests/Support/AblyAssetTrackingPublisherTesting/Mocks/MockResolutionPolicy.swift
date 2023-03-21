@@ -8,7 +8,7 @@ public class MockResolutionPolicy: ResolutionPolicy {
     public init(hooks: ResolutionPolicyHooks, methods: ResolutionPolicyMethods) {
         trackablesSetListener = MockTrackableSetListener()
         subscribersSetListener = MockSubscriberSetListener()
-        
+
         hooks.trackables(listener: trackablesSetListener)
         hooks.subscribers(listener: subscribersSetListener)
     }

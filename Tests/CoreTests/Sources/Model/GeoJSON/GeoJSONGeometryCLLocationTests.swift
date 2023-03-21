@@ -2,12 +2,12 @@ import XCTest
 @testable import AblyAssetTrackingCore
 
 class GeoJSONGeometryCLLocationTests: XCTestCase {
-    
+
     func testGeoJsonGeometryFromLocation_CheckValues() throws {
         let latitude = 1.0
         let longitude = 2.0
         let altitude = 3.0
-        
+
         let coordinate = LocationCoordinate(latitude: latitude, longitude: longitude)
         let location = Location(
             coordinate: coordinate,
@@ -22,14 +22,14 @@ class GeoJSONGeometryCLLocationTests: XCTestCase {
             floorLevel: nil,
             timestamp: Date().timeIntervalSince1970
         )
-        
+
         let geometry = try GeoJSONGeometry(location: location)
-        
+
         XCTAssertEqual(geometry.latitude, latitude)
         XCTAssertEqual(geometry.longitude, longitude)
         XCTAssertEqual(geometry.altitude, altitude)
     }
-    
+
     // MARK: Longitude
     func testGeoJsonGeometryFromLocation_Longitude_OutOfRange_Below() throws {
         let location = Location(

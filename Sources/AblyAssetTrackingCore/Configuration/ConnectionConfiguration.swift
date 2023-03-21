@@ -24,7 +24,7 @@ public class ConnectionConfiguration {
      * Allows a non-default Ably environment to be used such as 'sandbox'.
      */
     public var environment: String?
-    
+
     /**
      Connect to Ably using basic authentication (API Key)
      
@@ -43,7 +43,7 @@ public class ConnectionConfiguration {
         self.authCallback = authCallback
         self.remainPresentForMilliseconds = remainPresentForMilliseconds
     }
-    
+
     // TODO make clientId optional [RSA7b2], and use the clientId provided in the auth callback. Pending ably-cocoa: https://github.com/ably/ably-cocoa/issues/1126
     /**
      Connect to Ably with authCallback authentication, where the authCallback is passed a [TokenRequest]
@@ -64,7 +64,7 @@ public class ConnectionConfiguration {
                   authCallback: authCallback,
                   remainPresentForMilliseconds: remainPresentForMilliseconds)
     }
-    
+
     public convenience init(
                             authCallback: @escaping AuthCallback,
                             remainPresentForMilliseconds: Int? = nil) {
@@ -73,7 +73,7 @@ public class ConnectionConfiguration {
                   authCallback: authCallback,
                   remainPresentForMilliseconds: remainPresentForMilliseconds)
     }
-    
+
     public convenience init(apiKey: String,
                             clientId: String? = nil,
                             remainPresentForMilliseconds: Int? = nil) {

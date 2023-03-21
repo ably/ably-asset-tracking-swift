@@ -24,7 +24,7 @@ enum ResolutionHelper {
             return Resolution(accuracy: .maximum, desiredInterval: 5 * 1000, minimumDisplacement: 1)
         }
     }
-    
+
     private static func getResolutionType(for zoom: Double) -> ResolutionType {
         switch zoom {
         case 0..<10:

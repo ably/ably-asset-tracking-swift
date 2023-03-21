@@ -7,14 +7,14 @@ public enum EnvironmentHelper {
         }
         return dict
     }()
-    
+
     static let ABLY_API_KEY: String = {
         guard let key = EnvironmentHelper.infoDictionary["ABLY_API_KEY"] as? String else {
             fatalError("ABLY_API_KEY not set in plist for this environment")
         }
         return key
     }()
-    
+
     static let MAPBOX_ACCESS_TOKEN: String = {
         guard let token = EnvironmentHelper.infoDictionary["MAPBOX_ACCESS_TOKEN"] as? String else {
             fatalError("MAPBOX_ACCESS_TOKEN not set in plist for this environment")

@@ -6,7 +6,7 @@ import AblyAssetTrackingCore
 /// Favour using this type over ``InternalLogHandlerMock`` if you need a mock instance of ``InternalLogHandler`` and don't need to make any assertions about logged messages.
 public struct InternalLogHandlerMockThreadSafe: InternalLogHandler {
     public init() {}
-    
+
     public func logMessage(level: AblyAssetTrackingCore.LogLevel, message: String, error: Error?, codeLocation: AblyAssetTrackingInternal.CodeLocation?) {
         // no-op
     }

@@ -9,7 +9,7 @@ struct DestinationMapView: UIViewRepresentable {
     var center: CLLocationCoordinate2D
     var span: MKCoordinateSpan?
     @Binding var destination: LocationCoordinate?
-        
+
     fileprivate let centerAnnotationTitle = "Current Location"
     fileprivate let destinationAnnotationTitle = "Destination"
 
@@ -20,17 +20,17 @@ struct DestinationMapView: UIViewRepresentable {
             latitudeDelta: 0.1,
             longitudeDelta: 0.1
         )
-        
+
         let startRegion = MKCoordinateRegion(center: center, span: startSpan)
         mapView.region = startRegion
-        
+
         if let destination {
             let destinationAnnotation = MKPointAnnotation()
             destinationAnnotation.coordinate = CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude)
             destinationAnnotation.title = destinationAnnotationTitle
             mapView.addAnnotation(destinationAnnotation)
         }
-        
+
         let centerAnnotation = MKPointAnnotation()
         centerAnnotation.coordinate = center
         centerAnnotation.title = centerAnnotationTitle
@@ -44,23 +44,23 @@ struct DestinationMapView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
     }
-    
+
     func changeDestination(coordinate: CLLocationCoordinate2D) {
         removeDestinationAnnotation()
-        
+
         if destination != nil {
             destination = nil
             return
         }
-            
+
         let destinationAnnotation = MKPointAnnotation()
         destinationAnnotation.coordinate = coordinate
         destinationAnnotation.title = destinationAnnotationTitle
         mapView.addAnnotation(destinationAnnotation)
-        
+
         destination = LocationCoordinate(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
-    
+
     private func removeDestinationAnnotation() {
         for annotation in mapView.annotations where annotation.title == destinationAnnotationTitle {
             mapView.removeAnnotation(annotation)
@@ -77,7 +77,7 @@ struct DestinationMapView: UIViewRepresentable {
             super.init()
             self.gRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
             self.gRecognizer.delegate = self
-            self.parent.mapView.addGestureRecognizer(gRecognizer)            
+            self.parent.mapView.addGestureRecognizer(gRecognizer)
         }
 
         @objc
@@ -86,10 +86,10 @@ struct DestinationMapView: UIViewRepresentable {
             let location = gRecognizer.location(in: self.parent.mapView)
             // position on the map, CLLocationCoordinate2D
             let selectedCoordinate = self.parent.mapView.convert(location, toCoordinateFrom: self.parent.mapView)
-            
+
             parent.changeDestination(coordinate: selectedCoordinate)
         }
-        
+
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "centerAnnotation")
             if annotation.title == parent.centerAnnotationTitle {

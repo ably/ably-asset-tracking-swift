@@ -5,7 +5,7 @@ import MapKit
 struct SelectDestinationView: View {
     @Binding var destination: LocationCoordinate?
     @StateObject private var locationManager = LocationManager.shared
-    
+
     var body: some View {
         DestinationMapView(center: locationManager.currentRegionCenter, destination: $destination)
                 .navigationTitle("Select Destination")

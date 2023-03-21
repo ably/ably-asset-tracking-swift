@@ -7,7 +7,7 @@ import AblyAssetTrackingCore
 public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     associatedtype PropertiesType
     associatedtype WorkerSpecificationType
-        
+
     typealias WorkerAsyncWorkCompletionHandler = (Error?) -> Void
     /// This function is provided in order for implementors to implement synchronous work. Any asynchronous tasks
     /// should be executed inside [doAsyncWork] function. If a worker needs to delegate another task to the queue
@@ -29,7 +29,7 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     ///  - parameters:
     ///     - error: an error created by the stopped worker queue.
     func doWhenStopped(error: Error)
-    
+
     /// This function is used to to define what should happen when the worker breaks due to an unexpected error while
     /// ``doWork`` or ``doWhenStopped`` is being executed.
     /// This should usually be a rollback operation and/or a call to the worker's ``completion`` function
@@ -38,7 +38,7 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
     ///     - error: an unexpected error that broke the worker.
     ///     - postWork: a function that allows a worker to add othe workers to a queue.
     func onUnexpectedError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void)
-    
+
     /// This function is used to define what should happen when the worker breaks due to an unexpected error while the
     /// async work from ``doWork`` is being executed.
     /// This should usually be a rollback operation and/or a call to the worker's ``completion`` function with a failure
@@ -63,7 +63,7 @@ extension DefaultWorker {
     func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
         return properties
     }
-    
+
     func doWhenStopped(error: Error) {}
     func onUnexpectedError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {}
     func onUnexpectedAsyncError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {}

@@ -7,7 +7,7 @@ import AblyAssetTrackingInternal
 public class WorkerFactoryMock: WorkerFactory {
     public typealias PropertiesType = WorkerQueuePropertiesMock
     public typealias WorkerSpecificationType = WorkerMock
-    
+
     public init() {}
 
     // MARK: - createWorker

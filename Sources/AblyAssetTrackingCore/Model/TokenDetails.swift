@@ -9,7 +9,7 @@ public struct TokenDetails: Codable {
     public let issued: Date
     public let capability: String
     public let clientId: String
-    
+
     public init(token: String, expires: Date, issued: Date, capability: String, clientId: String) {
         self.token = token
         self.expires = expires

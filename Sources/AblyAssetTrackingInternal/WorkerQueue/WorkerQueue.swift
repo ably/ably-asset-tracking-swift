@@ -20,7 +20,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
     let workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>
     let getStoppedError: () -> Error
     let asyncWorkQueue: DispatchQueue
-    
+
     public init(properties: PropertiesType,
                 workingQueue: DispatchQueue,
                 logHandler: InternalLogHandler?,
@@ -34,7 +34,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
         self.getStoppedError = getStoppedError
         self.asyncWorkQueue = asyncWorkWorkingQueue
     }
-    
+
     /// Enqueue worker created from passed specification for execution.
     /// - parameters:
     ///    - workRequest: an identifiable wrapper for the  ``WorkRequest.workerSpecification`` that contains the specification
@@ -47,7 +47,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
         workingQueue.async { [weak self] in
             guard let self
             else { return }
-            
+
             do {
                 if self.properties.isStopped {
                     worker.doWhenStopped(error: self.getStoppedError())

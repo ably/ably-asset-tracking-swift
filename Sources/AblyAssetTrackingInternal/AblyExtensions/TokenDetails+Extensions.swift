@@ -13,7 +13,7 @@ extension ARTTokenDetails {
         guard let expires, let issued, let clientId, let capability else {
             return nil
         }
-        
+
         return TokenDetails(token: token, expires: expires, issued: issued, capability: capability, clientId: clientId)
     }
 }

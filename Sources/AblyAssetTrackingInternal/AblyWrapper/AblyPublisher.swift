@@ -9,7 +9,7 @@ public protocol AblyPublisherDelegate: AnyObject {
      - Parameter state:     The `ConnectionState` object
      */
     func ablyPublisher(_ sender: AblyPublisher, didChangeConnectionState state: ConnectionState)
-    
+
     /**
      Tells the delegate that channel connection state changed.
      
@@ -18,7 +18,7 @@ public protocol AblyPublisherDelegate: AnyObject {
      - Parameter trackable:     The `Trackable` object affected by the change
      */
     func ablyPublisher(_ sender: AblyPublisher, didChangeChannelConnectionState state: ConnectionState, forTrackable trackable: Trackable)
-    
+
     /**
      Tells the delegate that an error occurred.
      
@@ -28,7 +28,7 @@ public protocol AblyPublisherDelegate: AnyObject {
      - Parameter error:         The `ErrorInformation` object that contains info about error.
      */
     func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation)
-    
+
     /**
      Tells the delegate that channel presence data was changed.
      
@@ -54,7 +54,7 @@ public protocol AblyPublisher: AblyCommon {
      The methods declared by the `AblyPublisherDelegate` protocol allow the adopting delegate to respond to messages from the `Ably` wrapper class..
      */
     var publisherDelegate: AblyPublisherDelegate? { get set }
-    
+
     /**
      Sends an enhanced location update to the channel.
      
@@ -70,7 +70,7 @@ public protocol AblyPublisher: AblyCommon {
         trackable: Trackable,
         completion: ResultHandler<Void>?
     )
-    
+
     /**
      Sends a raw location update to the channel.
      

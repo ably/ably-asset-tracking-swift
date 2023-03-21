@@ -18,11 +18,11 @@ class WorkerQueueTests: XCTestCase {
     let properties = WorkerQueuePropertiesMock()
     let workerFactory = WorkerFactoryMock()
     let worker = WorkerMock()
-    
+
     var workRequest: WorkRequest<WorkerMock>!
-    
+
     var workerQueue: WorkerQueue<WorkerFactoryMock.PropertiesType, WorkerFactoryMock.WorkerSpecificationType>!
-    
+
     override func setUp() async throws {
         worker.doWorkPropertiesDoAsyncWorkPostWorkReturnValue = properties
         workRequest = WorkRequest(workerSpecification: worker)
@@ -35,13 +35,13 @@ class WorkerQueueTests: XCTestCase {
                                   asyncWorkWorkingQueue: asyncWorkWorkingQueue,
                                   getStoppedError: getStoppedError)
     }
-    
+
     func test_queueShouldCallWorkersDoWorkMethod() {
         // given
         properties.isStopped = false
         let outputProperties = WorkerQueuePropertiesMock()
         let expectation = expectation(description: "doWorkPropertiesDoAsyncWorkPostWorkClosure invokes")
-        
+
         // when
         workRequest.workerSpecification.doWorkPropertiesDoAsyncWorkPostWorkClosure = { _, _, _ in
             expectation.fulfill()
@@ -54,12 +54,12 @@ class WorkerQueueTests: XCTestCase {
         XCTAssertEqual(workRequest.workerSpecification.doWorkPropertiesDoAsyncWorkPostWorkCallsCount, 1)
         XCTAssertEqual(workRequest.workerSpecification.doWhenStoppedErrorCallsCount, 0)
     }
-    
+
     func test_stoppedQueueShouldCallWorkersOnStoppedMethod() {
         // given
         properties.isStopped = true
         let expectation = expectation(description: "doWhenStoppedErrorClosure invokes")
-        
+
         workerQueue = WorkerQueue<WorkerFactoryMock.PropertiesType, WorkerMock>(properties: properties,
                                                                                 workingQueue: workingQueue,
                                                                                 logHandler: logHandler,
@@ -76,29 +76,29 @@ class WorkerQueueTests: XCTestCase {
         // then
         XCTAssertEqual(workRequest.workerSpecification.doWhenStoppedErrorCallsCount, 1)
     }
-    
+
     func test_queueCallsWorkersUnexpectedErrorMethodWhenAnErrorIsThrownByWorkersDoWorkMethod() {
         // given
         properties.isStopped = false
         let expectation = expectation(description: "onUnexpectedErrorErrorPostWorkClosure invokes")
         workRequest.workerSpecification.doWorkPropertiesDoAsyncWorkPostWorkThrowableError = WorkerQueueThrowableError()
-        
+
         // when
         workRequest.workerSpecification.onUnexpectedErrorErrorPostWorkClosure = { _, _ in
             expectation.fulfill()
         }
         workerQueue.enqueue(workRequest: workRequest)
         wait(for: [expectation], timeout: 5.0)
-        
+
         // then
         XCTAssertEqual(workRequest.workerSpecification.onUnexpectedErrorErrorPostWorkCallsCount, 1)
     }
-    
+
     func test_queueCallsWorkersUnexpectedAsyncErrorMethodWhenAnErrorIsThrownByWorkersAsyncWork() {
         // given
         let outputProperties = WorkerQueuePropertiesMock()
         let expectation = expectation(description: "doWorkPropertiesDoAsyncWorkPostWorkClosure invokes")
-        
+
         workRequest.workerSpecification.doWorkPropertiesDoAsyncWorkPostWorkClosure = { _, asyncWorkClosure, _  in
             asyncWorkClosure({ completion in
                 completion(WorkerQueueThrowableError())
@@ -107,11 +107,11 @@ class WorkerQueueTests: XCTestCase {
             return outputProperties
         }
         properties.isStopped = false
-        
+
         // when
         workerQueue.enqueue(workRequest: workRequest)
         _ = XCTWaiter.wait(for: [expectation], timeout: 2.0)
-        
+
         // then
         XCTAssertEqual(workRequest.workerSpecification.onUnexpectedAsyncErrorErrorPostWorkCallsCount, 1)
     }

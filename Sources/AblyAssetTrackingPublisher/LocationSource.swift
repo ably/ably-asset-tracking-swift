@@ -8,16 +8,16 @@ public enum LocationSourceType: Int {
 
 public class LocationSource {
     let locations: [CLLocation]?
-    
+
     @available(*, deprecated, message: "To create a location source which overrides the device’s location, use init(locations:) instead.")
     public init(locationSource: [CLLocation]?) {
         self.locations = locationSource
     }
-    
+
     public init(locations: [CLLocation]) {
         self.locations = locations
     }
-    
+
     public init(locationHistoryData: LocationHistoryData) {
         self.locations = locationHistoryData.events.map({ $0.toCoreLocation() })
     }

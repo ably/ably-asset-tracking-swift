@@ -40,7 +40,7 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidChangeTrackableConnectionStateParamTrackable = trackable
         publisherDidChangeTrackableConnectionStateCallback?()
     }
-    
+
     public var publisherDidUpdateResolutionCalled: Bool = false
     public var publisherDidUpdateResolutionParamSender: Publisher?
     public var publisherDidUpdateResolutionParamResolution: Resolution?
@@ -51,7 +51,7 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidUpdateResolutionParamResolution = resolution
         publisherDidUpdateResolutionCallback?()
     }
-    
+
     public var publisherDidChangeTrackablesCalled: Bool = false
     public var publisherDidChangeTrackablesParamSender: Publisher?
     public var publisherDidChangeTrackablesParamTrackables: Set<Trackable>?
@@ -62,7 +62,7 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidChangeTrackablesParamTrackables = trackables
         publisherDidChangeTrackablesCallback?()
     }
-    
+
     public var publisherDidFinishRecordingLocationHistoryDataCalled: Bool = false
     public var publisherDidFinishRecordingLocationHistoryDataParamSender: Publisher?
     public var publisherDidFinishRecordingLocationHistoryDataParamLocationHistoryData: LocationHistoryData?
@@ -73,7 +73,7 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidFinishRecordingLocationHistoryDataParamLocationHistoryData = locationHistoryData
         publisherDidFinishRecordingLocationHistoryDataCallback?()
     }
-    
+
     public var publisherDidFinishRecordingRawMapboxDataToTemporaryFileCalled: Bool = false
     public var publisherDidFinishRecordingRawMapboxDataToTemporaryFileParamSender: Publisher?
     public var publisherDidFinishRecordingRawMapboxDataToTemporaryFileParamTemporaryFile: TemporaryFile?

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct StackedText: View {
     var texts: [StackedTextModel]
-    
+
     var body: some View {
         Group {
             ForEach(0..<texts.count, id: \.self) { i in
