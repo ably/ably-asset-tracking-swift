@@ -55,15 +55,15 @@ class UploadsManager: ObservableObject {
         }
 
         static func storageDirectoryURL(forUploadId uploadId: String) throws -> URL {
-            return try uploadsDirectoryURL.appendingPathComponent(uploadId)
+            try uploadsDirectoryURL.appendingPathComponent(uploadId)
         }
 
         static func metadataURL(forStorageDirectoryURL storageDirectoryURL: URL) -> URL {
-            return storageDirectoryURL.appendingPathComponent("upload")
+            storageDirectoryURL.appendingPathComponent("upload")
         }
 
         static func dataURL(forStorageDirectoryURL storageDirectoryURL: URL) -> URL {
-            return storageDirectoryURL.appendingPathComponent("data")
+            storageDirectoryURL.appendingPathComponent("data")
         }
     }
 

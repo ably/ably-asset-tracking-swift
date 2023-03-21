@@ -6,7 +6,7 @@ import AblyAssetTrackingCore
  */
 extension ARTErrorInfo {
     public func toErrorInformation() -> ErrorInformation {
-        return ErrorInformation(
+        ErrorInformation(
             code: self.code,
             statusCode: self.statusCode,
             message: self.message,

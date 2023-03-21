@@ -21,6 +21,6 @@ public struct PresenceData: Codable {
 
 public extension PresenceData {
     func copy(with newResolution: Resolution) -> PresenceData {
-        return .init(type: type, resolution: newResolution, rawLocations: rawLocations)
+        .init(type: type, resolution: newResolution, rawLocations: rawLocations)
     }
 }

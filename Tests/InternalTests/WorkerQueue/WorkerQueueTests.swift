@@ -10,7 +10,7 @@ class WorkerQueueTests: XCTestCase {
     private let workingQueue = DispatchQueue(label: "com.ably.AssetTracking.WorkerQueue.workingQueue")
     private let workQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.workQueue")
     private let asyncWorkWorkingQueue = DispatchQueue(label: "com.ably.AssetTracking.DefaultLocationService.asyncWorkWorkingQueue")
-    let getStoppedError = { return ErrorInformation(
+    let getStoppedError = { ErrorInformation(
         code: 1,
         statusCode: 1,
         message: "Stopped",

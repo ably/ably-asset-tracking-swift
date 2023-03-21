@@ -61,7 +61,7 @@ protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
 
 extension DefaultWorker {
     func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
-        return properties
+        properties
     }
 
     func doWhenStopped(error: Error) {}
@@ -71,7 +71,7 @@ extension DefaultWorker {
 
 extension CallbackWorker {
     func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
-        return properties
+        properties
     }
 
     func doWhenStopped(error: Error) {

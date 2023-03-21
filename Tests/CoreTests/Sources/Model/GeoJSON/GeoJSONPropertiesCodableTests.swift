@@ -12,7 +12,7 @@ class GeoJSONPropertiesCodableTests: XCTestCase {
         accuracySpeed: Double? = nil,
         timestamp: Date? = nil
     ) -> String {
-        return """
+        """
             {
                 "accuracyHorizontal": \(horizontalAccuracy ?? 1.0),
                 "accuracyVertical": \(accuracyVertical ?? 2.0),

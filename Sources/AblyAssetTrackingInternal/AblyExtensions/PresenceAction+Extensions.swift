@@ -11,10 +11,10 @@ public extension PresenceAction {
     }
 
     var isLeaveOrAbsent: Bool {
-        return self == .leave || self == .absent
+        self == .leave || self == .absent
     }
 
     var isPresentOrEnter: Bool {
-        return self == .present || self == .enter
+        self == .present || self == .enter
     }
 }

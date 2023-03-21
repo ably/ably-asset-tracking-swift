@@ -16,9 +16,9 @@ struct PublisherDetailsView: View {
     @ObservedObject var publisher: ObservablePublisher
 
     var sortedTrackables: [(trackable: Trackable, state: ObservablePublisher.TrackableState)] {
-        return publisher.trackables
+        publisher.trackables
             .sorted { pair1, pair2 in
-                return pair1.key.id < pair2.key.id
+                pair1.key.id < pair2.key.id
             }
             .map { pair in
                 (trackable: pair.key, state: pair.value)

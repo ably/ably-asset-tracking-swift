@@ -34,7 +34,7 @@ extension DefaultPublisher {
 
         /// Returns whether a trackable with the given ID is currently being added – that is, whether there has been a call to ``startAddingTrackableWithId(_:)`` without a subsequent call to ``finishAddingTrackableWithId(_:,result:)``.
         func isCurrentlyAddingTrackableWithId(_ id: String) -> Bool {
-            return trackableIdsCurrentlyBeingAdded.contains(id)
+            trackableIdsCurrentlyBeingAdded.contains(id)
         }
     }
 }

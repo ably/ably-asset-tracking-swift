@@ -469,6 +469,6 @@ extension DefaultAbly: AblyPublisher {
 
 fileprivate extension ConnectionConfiguration {
     var usesTokenAuth: Bool {
-        return authCallback != nil
+        authCallback != nil
     }
 }

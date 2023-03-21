@@ -42,7 +42,7 @@ struct DestinationMapView: UIViewRepresentable {
     func updateUIView(_ view: MKMapView, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
+        Coordinator(self)
     }
 
     func changeDestination(coordinate: CLLocationCoordinate2D) {

@@ -64,7 +64,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     }
 
     func connection(_ configuration: ConnectionConfiguration) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(
+        DefaultSubscriberBuilder(
             connection: configuration,
             trackingId: trackingId,
             resolution: resolution,
@@ -74,7 +74,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     }
 
     func trackingId(_ trackingId: String) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(
+        DefaultSubscriberBuilder(
             connection: connection,
             trackingId: trackingId,
             resolution: resolution,
@@ -84,7 +84,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     }
 
     func resolution(_ resolution: Resolution) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(
+        DefaultSubscriberBuilder(
             connection: connection,
             trackingId: trackingId,
             resolution: resolution,
@@ -94,7 +94,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     }
 
     func delegate(_ delegate: SubscriberDelegate) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(
+        DefaultSubscriberBuilder(
             connection: connection,
             trackingId: trackingId,
             resolution: resolution,
@@ -104,7 +104,7 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     }
 
     func logHandler(handler: LogHandler?) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(
+        DefaultSubscriberBuilder(
             connection: connection,
             trackingId: trackingId,
             resolution: resolution,

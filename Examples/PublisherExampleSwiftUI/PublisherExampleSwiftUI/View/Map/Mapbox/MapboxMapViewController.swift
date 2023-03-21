@@ -6,7 +6,7 @@ class MapboxMapViewController: UIViewController {
 
     var center: CLLocationCoordinate2D? {
         get {
-            return _center
+            _center
         }
         set {
             if newValue != _center {

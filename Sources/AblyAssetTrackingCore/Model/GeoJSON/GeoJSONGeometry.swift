@@ -72,6 +72,6 @@ struct GeoJSONGeometry: Codable {
 
 private extension Collection {
     func element(at index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
+        indices.contains(index) ? self[index] : nil
     }
 }

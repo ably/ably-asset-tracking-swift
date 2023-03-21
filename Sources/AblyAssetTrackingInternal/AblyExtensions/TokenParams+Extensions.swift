@@ -14,7 +14,7 @@ extension TokenParams {
 
 extension ARTTokenParams {
     internal func toTokenParams() -> TokenParams {
-        return TokenParams(
+        TokenParams(
             ttl: ttl != nil ? Int(exactly: ttl!) : nil,
             capability: capability,
             clientId: clientId,

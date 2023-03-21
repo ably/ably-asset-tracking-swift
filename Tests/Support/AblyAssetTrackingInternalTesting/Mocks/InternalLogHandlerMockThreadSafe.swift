@@ -12,10 +12,10 @@ public struct InternalLogHandlerMockThreadSafe: InternalLogHandler {
     }
 
     public func tagMessage(_ message: String) -> String {
-        return message
+        message
     }
 
     public func addingSubsystem(_ subsystem: AblyAssetTrackingInternal.Subsystem) -> AblyAssetTrackingInternal.InternalLogHandler {
-        return InternalLogHandlerMockThreadSafe()
+        InternalLogHandlerMockThreadSafe()
     }
 }

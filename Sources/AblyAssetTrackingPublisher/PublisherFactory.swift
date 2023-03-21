@@ -10,6 +10,6 @@ public enum PublisherFactory {
      instances until it has been configured fully.
      */
     static public func publishers() -> PublisherBuilder {
-        return DefaultPublisherBuilder()
+        DefaultPublisherBuilder()
     }
 }

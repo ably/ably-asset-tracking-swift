@@ -2,7 +2,7 @@ import CoreLocation
 
 public extension GeoJSONMessage {
     func toCoreLocation() -> CLLocation {
-        return CLLocation(
+        CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: geometry.latitude, longitude: geometry.longitude),
             altitude: geometry.altitude,
             horizontalAccuracy: properties.accuracyHorizontal ?? -1,

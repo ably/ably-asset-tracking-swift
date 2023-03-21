@@ -89,7 +89,7 @@ public struct ErrorInformation: Error, CustomNSError, CustomStringConvertible {
     public let href: String?
 
     public var description: String {
-        return message.isEmpty
+        message.isEmpty
         ? localizedDescription
         : message
     }

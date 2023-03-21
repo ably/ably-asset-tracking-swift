@@ -3,7 +3,7 @@ extension InternalLogHandlerMock {
     public static var configured: InternalLogHandlerMock {
         let handler = InternalLogHandlerMock()
         handler.addingSubsystemClosure = { _ in
-            return InternalLogHandlerMock.configured
+            InternalLogHandlerMock.configured
         }
 
         return handler

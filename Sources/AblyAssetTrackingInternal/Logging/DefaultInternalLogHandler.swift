@@ -34,7 +34,7 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
     }
 
     public func tagMessage(_ message: String) -> String {
-        return tagMessage(message, codeLocation: nil)
+        tagMessage(message, codeLocation: nil)
     }
 
     private func tagMessage(_ message: String, codeLocation: CodeLocation?) -> String {
@@ -51,7 +51,7 @@ public struct DefaultInternalLogHandler: InternalLogHandler {
     }
 
     private static func sanitizeSubsystemName(_ name: String) -> String {
-        return (name as NSString)
+        (name as NSString)
             .replacingOccurrences(of: "[", with: "_")
             .replacingOccurrences(of: "]", with: "_")
     }

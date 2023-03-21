@@ -23,6 +23,6 @@ struct ResignKeyboardOnTapGesture: ViewModifier {
 
 extension View {
     func resignKeyboardOnTapGesture() -> some View {
-        return modifier(ResignKeyboardOnTapGesture())
+        modifier(ResignKeyboardOnTapGesture())
     }
 }

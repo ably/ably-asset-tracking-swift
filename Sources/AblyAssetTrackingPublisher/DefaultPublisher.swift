@@ -75,7 +75,7 @@ class DefaultPublisher: Publisher, PublisherInteractor {
             logHandler: self.logHandler,
             workerFactory: PublisherWorkerFactory(),
             asyncWorkWorkingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher.async", qos: .default),
-            getStoppedError: { return ErrorInformation(type: .publisherStoppedException) }
+            getStoppedError: { ErrorInformation(type: .publisherStoppedException) }
         )
         self.locationService = locationService
         self.ablyPublisher = ablyPublisher
@@ -465,7 +465,7 @@ extension DefaultPublisher {
     }
 
     private func hasSentAtLeastOneLocation(forTrackable trackable: Trackable) -> Bool {
-        return lastEnhancedLocations[trackable] != nil
+        lastEnhancedLocations[trackable] != nil
     }
 
     private func performClearRemovedTrackableMetadataEvent(_ event: Event.ClearRemovedTrackableMetadataEvent) {

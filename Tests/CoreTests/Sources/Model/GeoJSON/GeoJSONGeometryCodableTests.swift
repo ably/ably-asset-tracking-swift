@@ -3,7 +3,7 @@ import XCTest
 
 class GeoJSONGeometryCodableTests: XCTestCase {
     private func geometryJsonForCoordinates(_ coordinates: String) -> String {
-        return """
+        """
             {
                 "type": "Point",
                 "coordinates": \(coordinates)

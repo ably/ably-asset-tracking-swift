@@ -96,14 +96,14 @@ extension Accuracy: Comparable, Equatable {
     }
 
     public static func < (lhs: Accuracy, rhs: Accuracy) -> Bool {
-        return lhs.index < rhs.index
+        lhs.index < rhs.index
     }
 
     public static func > (lhs: Accuracy, rhs: Accuracy) -> Bool {
-        return lhs.index > rhs.index
+        lhs.index > rhs.index
     }
 
     public static func == (lhs: Accuracy, rhs: Accuracy) -> Bool {
-        return lhs.index == rhs.index
+        lhs.index == rhs.index
     }
 }

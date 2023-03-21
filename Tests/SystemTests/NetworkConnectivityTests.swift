@@ -5,7 +5,7 @@ struct NetworkConnectivityTestsParam: ParameterizedTestCaseParam {
     var faultName: String
 
     var methodNameComponent: String {
-        return faultName
+        faultName
     }
 }
 

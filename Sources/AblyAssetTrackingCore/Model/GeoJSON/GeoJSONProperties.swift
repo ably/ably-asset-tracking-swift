@@ -101,6 +101,6 @@ private extension Optional where Wrapped == Double {
 
 private extension Double {
     func isLessThanZeroThenNil() -> Double? {
-        return self.isLess(than: 0) ? nil : self
+        self.isLess(than: 0) ? nil : self
     }
 }

@@ -49,7 +49,7 @@ extension Resolution: Hashable, Equatable {
     }
 
     public static func == (lhs: Resolution, rhs: Resolution) -> Bool {
-        return lhs.accuracy == rhs.accuracy &&
+        lhs.accuracy == rhs.accuracy &&
             lhs.desiredInterval == rhs.desiredInterval &&
             lhs.minimumDisplacement == rhs.minimumDisplacement
     }
@@ -57,7 +57,7 @@ extension Resolution: Hashable, Equatable {
 
 public extension Resolution {
     static var `default`: Resolution {
-        return Resolution(
+        Resolution(
             accuracy: .balanced,
             desiredInterval: 500,
             minimumDisplacement: 500
@@ -67,6 +67,6 @@ public extension Resolution {
 
 extension Resolution {
     public var debugDescription: String {
-        return "Publisher.Resolution accuracy: \(accuracy), desiredInterval: \(desiredInterval), minimumDisplacement: \(minimumDisplacement)"
+        "Publisher.Resolution accuracy: \(accuracy), desiredInterval: \(desiredInterval), minimumDisplacement: \(minimumDisplacement)"
     }
 }

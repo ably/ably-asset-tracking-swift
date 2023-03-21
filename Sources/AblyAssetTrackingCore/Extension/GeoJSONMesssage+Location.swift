@@ -2,7 +2,7 @@ import Foundation
 
 public extension GeoJSONMessage {
     func toLocation() -> Location {
-        return Location(
+        Location(
             coordinate: LocationCoordinate(latitude: geometry.latitude, longitude: geometry.longitude),
             altitude: geometry.altitude,
             ellipsoidalAltitude: .zero,

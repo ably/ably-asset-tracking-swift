@@ -119,7 +119,7 @@ class SettingsModel {
 
     var s3FileName: String? {
         get {
-            return UserDefaults.standard.get("s3FileName")
+            UserDefaults.standard.get("s3FileName")
         }
         set {
             if let newValue {

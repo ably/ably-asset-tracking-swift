@@ -44,7 +44,7 @@ class DefaultSubscriber: Subscriber {
             logHandler: self.logHandler,
             workerFactory: SubscriberWorkerFactory(),
             asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
-            getStoppedError: { return ErrorInformation(type: .subscriberStoppedException) }
+            getStoppedError: { ErrorInformation(type: .subscriberStoppedException) }
         )
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId

@@ -55,12 +55,12 @@ class DefaultResolutionPolicy: ResolutionPolicy {
     }
 
     func resolve(resolutions: Set<Resolution>) -> Resolution {
-        return resolveFromRequests(requests: resolutions)
+        resolveFromRequests(requests: resolutions)
     }
 
     // MARK: Utils
     private func resolveFromRequests(requests: Set<Resolution>) -> Resolution {
-        return requests.isEmpty ? defaultResolution : createFinalResolution(resolutions: requests)
+        requests.isEmpty ? defaultResolution : createFinalResolution(resolutions: requests)
     }
 
     private func createFinalResolution(resolutions: Set<Resolution>) -> Resolution {
@@ -77,7 +77,7 @@ class DefaultResolutionPolicy: ResolutionPolicy {
     }
 
     private func higher(_ lhs: Accuracy, _ rhs: Accuracy) -> Accuracy {
-        return lhs > rhs ? lhs : rhs
+        lhs > rhs ? lhs : rhs
     }
 
     private func adjustToBatteryLevel(resolution: Resolution, constraints: DefaultResolutionConstraints) -> Resolution {
@@ -95,7 +95,7 @@ class DefaultResolutionPolicy: ResolutionPolicy {
     }
 
     private func hasSubscribers(forTrackable trackable: Trackable) -> Bool {
-        return trackedSubscribers.contains { $0.trackable == trackable }
+        trackedSubscribers.contains { $0.trackable == trackable }
     }
 }
 

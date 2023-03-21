@@ -14,7 +14,7 @@ public class WorkerMock: Worker {
     public var doWorkPropertiesDoAsyncWorkPostWorkThrowableError: Error?
     public var doWorkPropertiesDoAsyncWorkPostWorkCallsCount = 0
     public var doWorkPropertiesDoAsyncWorkPostWorkCalled: Bool {
-        return doWorkPropertiesDoAsyncWorkPostWorkCallsCount > 0
+        doWorkPropertiesDoAsyncWorkPostWorkCallsCount > 0
     }
     public var doWorkPropertiesDoAsyncWorkPostWorkReturnValue: PropertiesType!
     public var doWorkPropertiesDoAsyncWorkPostWorkClosure: ((PropertiesType, (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType)?
@@ -38,7 +38,7 @@ public class WorkerMock: Worker {
     // MARK: - doWhenStopped
     public var doWhenStoppedErrorCallsCount = 0
     public var doWhenStoppedErrorCalled: Bool {
-        return doWhenStoppedErrorCallsCount > 0
+        doWhenStoppedErrorCallsCount > 0
     }
     public var doWhenStoppedErrorReceivedError: Error?
     public var doWhenStoppedErrorReceivedInvocations: [Error] = []
@@ -54,7 +54,7 @@ public class WorkerMock: Worker {
     // MARK: - onUnexpectedError
     public var onUnexpectedErrorErrorPostWorkCallsCount = 0
     public var onUnexpectedErrorErrorPostWorkCalled: Bool {
-        return onUnexpectedErrorErrorPostWorkCallsCount > 0
+        onUnexpectedErrorErrorPostWorkCallsCount > 0
     }
     public var onUnexpectedErrorErrorPostWorkReceivedArguments: (error: Error, postWork: (WorkerSpecificationType) -> Void)?
     public var onUnexpectedErrorErrorPostWorkReceivedInvocations: [(error: Error, postWork: (WorkerSpecificationType) -> Void)] = []
@@ -70,7 +70,7 @@ public class WorkerMock: Worker {
     // MARK: - onUnexpectedAsyncError
     public var onUnexpectedAsyncErrorErrorPostWorkCallsCount = 0
     public var onUnexpectedAsyncErrorErrorPostWorkCalled: Bool {
-        return onUnexpectedAsyncErrorErrorPostWorkCallsCount > 0
+        onUnexpectedAsyncErrorErrorPostWorkCallsCount > 0
     }
     public var onUnexpectedAsyncErrorErrorPostWorkReceivedArguments: (error: Error, postWork: (WorkerSpecificationType) -> Void)?
     public var onUnexpectedAsyncErrorErrorPostWorkReceivedInvocations: [(error: Error, postWork: (WorkerSpecificationType) -> Void)] = []

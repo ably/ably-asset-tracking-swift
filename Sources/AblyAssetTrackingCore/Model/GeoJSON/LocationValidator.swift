@@ -23,10 +23,10 @@ enum LocationValidator {
     }
 
     private static func isLatitudeInRange(_ value: Double) -> Bool {
-        return latitudeRange ~= value
+        latitudeRange ~= value
     }
 
     private static func isLongitudeInRange(_ value: Double) -> Bool {
-        return longitudeRange ~= value
+        longitudeRange ~= value
     }
 }

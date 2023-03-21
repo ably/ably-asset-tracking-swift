@@ -5,7 +5,7 @@ import CoreLocation
 // GeoJSONMessage test also GeoJSONGeometry and GeoJSONProperties
 class GeoJSONMessageCodableTests: XCTestCase {
     private func jsonMessage(isValid: Bool? = true, type: GeoJSONType? = nil) -> String {
-        return """
+        """
         {
             "type": "\(type?.rawValue ?? GeoJSONType.feature.rawValue)",
             "geometry": {

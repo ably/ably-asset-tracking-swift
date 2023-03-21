@@ -13,7 +13,7 @@ public class WorkerFactoryMock: WorkerFactory {
     // MARK: - createWorker
     public var createWorkerWorkerSpecificationLogHandlerCallsCount = 0
     public var createWorkerWorkerSpecificationLogHandlerCalled: Bool {
-        return createWorkerWorkerSpecificationLogHandlerCallsCount > 0
+        createWorkerWorkerSpecificationLogHandlerCallsCount > 0
     }
     public var createWorkerWorkerSpecificationReceivedArguments: (workerSpecification: WorkerSpecificationType, logHandler: InternalLogHandler?)?
     public var createWorkerWorkerSpecificationLogHandlerReceivedInvocations: [(workerSpecification: WorkerSpecificationType, logHandler: InternalLogHandler?)] = []

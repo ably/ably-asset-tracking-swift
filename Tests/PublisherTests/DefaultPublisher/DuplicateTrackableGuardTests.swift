@@ -28,7 +28,7 @@ class DuplicateTrackableGuardTests: XCTestCase {
         }
 
         func createCompletionHandler(index: Int) -> Callback<Void> {
-            return .init(source: .publicAPI(label: ""), logHandler: nil) { result in
+            .init(source: .publicAPI(label: ""), logHandler: nil) { result in
                 switch result {
                 case .success:
                     expectations[index].fulfill()

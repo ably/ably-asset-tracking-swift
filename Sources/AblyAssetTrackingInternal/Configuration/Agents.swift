@@ -21,7 +21,7 @@ public struct Agents {
 
 extension Agents {
     public var ablyCocoaAgentsDictionary: [String: String] {
-        return agents.reduce([:]) { dict, agent in
+        agents.reduce([:]) { dict, agent in
             var newDict = dict
             newDict[agent.name] = agent.version ?? ARTClientInformationAgentNotVersioned
             return newDict

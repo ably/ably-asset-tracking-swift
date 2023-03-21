@@ -50,6 +50,7 @@ opt_in_rules:
   - trailing_newline
   - unneeded_parentheses_in_closure_argument
   - multiline_function_chains
+  - implicit_return
 
 excluded:
   - "**/.build"

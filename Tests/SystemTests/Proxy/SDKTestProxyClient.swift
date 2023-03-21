@@ -13,7 +13,7 @@ class SDKTestProxyClient {
     }
 
     private func url(forPathComponents pathComponents: String...) -> URL {
-        return pathComponents.reduce(baseURL) { url, pathComponent in
+        pathComponents.reduce(baseURL) { url, pathComponent in
             url.appendingPathComponent(pathComponent)
         }
     }

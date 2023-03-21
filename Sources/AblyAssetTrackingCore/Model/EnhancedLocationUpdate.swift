@@ -14,7 +14,7 @@ public class EnhancedLocationUpdate: LocationUpdate {
     public var skippedLocations: [Location] = []
 
     public var type: LocationUpdateType {
-        return .actual
+        .actual
     }
 
     public init(location: Location) {

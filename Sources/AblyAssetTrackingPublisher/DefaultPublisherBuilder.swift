@@ -88,7 +88,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func connection(_ configuration: ConnectionConfiguration) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: configuration,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -103,7 +103,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func mapboxConfiguration(_ mapboxConfiguration: MapboxConfiguration) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -118,7 +118,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func locationSource(_ source: LocationSource?) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: source,
@@ -133,7 +133,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func routingProfile(_ profile: RoutingProfile) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -148,7 +148,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func delegate(_ delegate: PublisherDelegate) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -163,7 +163,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func resolutionPolicyFactory(_ resolutionPolicyFactory: ResolutionPolicyFactory) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -178,7 +178,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func rawLocations(enabled: Bool) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -193,7 +193,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func constantLocationEngineResolution(resolution: Resolution?) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -208,7 +208,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func logHandler(handler: LogHandler?) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -223,7 +223,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func sendResolution(enabled: Bool) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,
@@ -238,7 +238,7 @@ class DefaultPublisherBuilder: PublisherBuilder {
     }
 
     func vehicleProfile(_ vehicleProfile: VehicleProfile) -> PublisherBuilder {
-        return DefaultPublisherBuilder(
+        DefaultPublisherBuilder(
             connection: connection,
             mapboxConfiguration: mapboxConfiguration,
             locationSource: locationSource,

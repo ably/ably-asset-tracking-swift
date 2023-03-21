@@ -7,6 +7,6 @@ class MapViewModel: ObservableObject {
     }
 
     static func createViewModel(forConnectionState connectionState: ConnectionState?) -> [StackedTextModel] {
-        return [.init(label: "Connection status:", value: " \(connectionState?.asInfo() ?? "-")")]
+        [.init(label: "Connection status:", value: " \(connectionState?.asInfo() ?? "-")")]
     }
 }

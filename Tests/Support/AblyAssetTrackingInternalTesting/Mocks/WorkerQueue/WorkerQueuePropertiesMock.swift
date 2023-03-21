@@ -8,7 +8,7 @@ public class WorkerQueuePropertiesMock: WorkerQueueProperties {
     public init() {}
 
     public var isStopped: Bool {
-        get { return underlyingIsStopped }
+        get { underlyingIsStopped }
         set(value) { underlyingIsStopped = value }
     }
     public var underlyingIsStopped: Bool!

@@ -5,15 +5,15 @@ struct AblyCocoaSDKRealtime: AblySDKRealtime {
     fileprivate let realtime: ARTRealtime
 
     var channels: AblySDKRealtimeChannels {
-        return AblyCocoaSDKRealtimeChannels(channels: realtime.channels)
+        AblyCocoaSDKRealtimeChannels(channels: realtime.channels)
     }
 
     var connection: AblySDKConnection {
-        return AblyCocoaSDKConnection(connection: realtime.connection)
+        AblyCocoaSDKConnection(connection: realtime.connection)
     }
 
     var auth: AblySDKAuth {
-        return AblyCocoaSDKAuth(auth: realtime.auth)
+        AblyCocoaSDKAuth(auth: realtime.auth)
     }
 
     func close() {
@@ -34,7 +34,7 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
     fileprivate let channel: ARTRealtimeChannel
 
     var presence: AblySDKRealtimePresence {
-        return AblyCocoaSDKRealtimePresence(presence: channel.presence)
+        AblyCocoaSDKRealtimePresence(presence: channel.presence)
     }
 
     func subscribe(_ name: String, callback: @escaping (ARTMessage) -> Void) -> AblySDKEventListener? {
@@ -54,7 +54,7 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
     }
 
     func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> AblySDKEventListener {
-        return AblyCocoaSDKEventListener(eventListener: channel.on(callback))
+        AblyCocoaSDKEventListener(eventListener: channel.on(callback))
     }
 
     func publish(_ messages: [ARTMessage], callback: ARTCallback?) {
@@ -66,7 +66,7 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
     }
 
     var state: ARTRealtimeChannelState {
-        return channel.state
+        channel.state
     }
 }
 
@@ -106,7 +106,7 @@ struct AblyCocoaSDKConnection: AblySDKConnection {
     fileprivate let connection: ARTConnection
 
     func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener {
-        return AblyCocoaSDKEventListener(eventListener: connection.on(callback))
+        AblyCocoaSDKEventListener(eventListener: connection.on(callback))
     }
 }
 

@@ -10,6 +10,6 @@ public enum SubscriberFactory {
      instances until it has been configured fully.
      */
     public static func subscribers() -> SubscriberBuilder {
-        return DefaultSubscriberBuilder()
+        DefaultSubscriberBuilder()
     }
 }

@@ -66,7 +66,7 @@ extension InternalLogHandler {
     /// - Parameter type: The Swift type to add, for example `DefaultPublisher.self`.
     /// - Returns: A new log handler.
     public func addingSubsystem(_ type: Any.Type) -> InternalLogHandler {
-        return addingSubsystem(.typed(type))
+        addingSubsystem(.typed(type))
     }
 
     /// A convenience logging method that uses the call site’s #file and #line values.
