@@ -41,6 +41,7 @@ opt_in_rules:
   - yoda_condition
   - todo
   - shorthand_optional_binding
+  - pattern_matching_keywords
 
 excluded:
   - "**/.build"
