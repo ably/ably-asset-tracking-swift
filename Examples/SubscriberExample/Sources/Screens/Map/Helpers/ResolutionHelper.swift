@@ -8,7 +8,7 @@ enum ResolutionType {
     case maximum
 }
 
-class ResolutionHelper {
+enum ResolutionHelper {
     static func createResolution(forZoom zoom: Double) -> Resolution {
         let resolutionType = getResolutionType(for: zoom)
         switch resolutionType {

@@ -2,9 +2,9 @@ import Foundation
 import AblyAssetTrackingCore
 
 /**
- Factory class used only to get `PublisherBuilder`
+ Factory used only to get `PublisherBuilder`
  */
-public class PublisherFactory {
+public enum PublisherFactory {
     /**
      Returns the default state of the publisher `PublisherBuilder`, which is incapable of starting of  `Publisher`
      instances until it has been configured fully.

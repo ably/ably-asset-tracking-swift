@@ -1,8 +1,8 @@
 import Foundation
 import Ably
 
-class RestHelper {
-    class func clientOptions(_ debug: Bool = false, key: String? = nil) -> ARTClientOptions {
+enum RestHelper {
+    static func clientOptions(_ debug: Bool = false, key: String? = nil) -> ARTClientOptions {
         let options = ARTClientOptions()
         options.logExceptionReportingUrl = nil
         

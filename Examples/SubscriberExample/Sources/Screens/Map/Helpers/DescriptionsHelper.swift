@@ -13,7 +13,7 @@ extension Accuracy {
     }
 }
 
-class DescriptionsHelper {
+enum DescriptionsHelper {
     // MARK: - ResolutionState
     enum ResolutionState {
         case none
@@ -21,7 +21,7 @@ class DescriptionsHelper {
         case changeError(_: ErrorInformation)
     }
     
-    class ResolutionStateHelper {
+    enum ResolutionStateHelper {
         static func getDescription(for state: ResolutionState) -> String {
             switch state {
             case .none:
@@ -45,7 +45,7 @@ class DescriptionsHelper {
     }
     
     // MARK: - AssetConnectionState
-    class AssetStateHelper {
+    enum AssetStateHelper {
         static func getDescriptionAndColor(for state: AssetState) -> (desc: String, color: UIColor) {
             switch state {
             case .connectionState(let connectionState):

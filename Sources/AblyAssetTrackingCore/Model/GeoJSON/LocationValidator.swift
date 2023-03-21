@@ -1,4 +1,4 @@
-class LocationValidator {
+enum LocationValidator {
     private static let latitudeRange = -90.0...90.0
     private static let longitudeRange = -180.0...180.0
     

@@ -35,6 +35,7 @@ opt_in_rules:
   - attributes
   - closure_end_indentation
   - closure_spacing
+  - convenience_type
   - empty_collection_literal
   - empty_count
   - empty_string

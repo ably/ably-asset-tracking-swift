@@ -5,7 +5,7 @@ import LoggingFormatAndPipe
 import AblyAssetTrackingSubscriber
 import AblyAssetTrackingUI
 
-private struct MapConstraints {
+private enum MapConstraints {
     static let regionLatitude: CLLocationDistance = 400
     static let regionLongitude: CLLocationDistance = 400
     static let minimumDistanceToCenter: CLLocationDistance = 100
