@@ -18,10 +18,10 @@ struct ParameterizedTestCaseParamStorage {
         }
     }
 
-    private var perTypeStorages: [TypeID : MethodNameKeyedParamStorage] = [:]
+    private var perTypeStorages: [TypeID: MethodNameKeyedParamStorage] = [:]
 
     private struct MethodNameKeyedParamStorage {
-        private var paramsByTestMethodName: [Selector : Any] = [:]
+        private var paramsByTestMethodName: [Selector: Any] = [:]
 
         mutating func setParam(_ param: Any, forTestMethodNamed name: Selector) {
             paramsByTestMethodName[name] = param

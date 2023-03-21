@@ -1,7 +1,6 @@
 import Foundation
 import AblyAssetTrackingInternal
 
-struct PublisherWorkerQueueProperties: WorkerQueueProperties
-{
+struct PublisherWorkerQueueProperties: WorkerQueueProperties {
     public var isStopped = false
 }

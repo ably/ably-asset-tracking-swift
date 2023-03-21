@@ -12,20 +12,19 @@ class URLSessionServerTrustSync: NSObject, URLSessionDelegate, URLSessionTaskDel
     func get(_ request: NSMutableURLRequest) -> (Data?, NSError?, HTTPURLResponse?) {
         var responseError: NSError?
         var responseData: Data?
-        var httpResponse: HTTPURLResponse?;
+        var httpResponse: HTTPURLResponse?
         var requestCompleted = false
 
         let configuration = URLSessionConfiguration.default
         let queue = OperationQueue()
-        let session = Foundation.URLSession(configuration:configuration, delegate:self, delegateQueue:queue)
+        let session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: queue)
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
             if let response = response as? HTTPURLResponse {
                 responseData = data
                 responseError = error as NSError?
                 httpResponse = response
-            }
-            else if let error = error {
+            } else if let error = error {
                 responseError = error as NSError?
             }
             requestCompleted = true

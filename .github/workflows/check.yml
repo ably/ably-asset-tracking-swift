@@ -7,6 +7,9 @@ on:
 jobs:
   check:
     runs-on: macos-latest
+    env:
+      MINT_PATH: .mint/lib
+      MINT_LINK_PATH: .mint/bin
     steps:
       - uses: actions/checkout@v2
         with:
@@ -17,6 +20,20 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_14.2.app
           echo "Selected Xcode version:"
           xcodebuild -version
+
+      - name: Use cache for Mintfile dependencies
+        uses: actions/cache@v3
+        with:
+          path: .mint
+          key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
+          restore-keys: |
+            ${{ runner.os }}-mint-
+
+      - name: Install Mint
+        run: brew install mint
+
+      - name: Run SwiftLint
+        run: ./Scripts/lint.sh check
           
       - name: Configure MapBox Secret Token for Download
         run: |

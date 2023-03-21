@@ -160,8 +160,7 @@ extension DefaultLocationAnimatorCalculator {
                     ///
                     /// - Returns: A new list of locations awaiting animation, with any locations that are no longer needed removed, and with an updated animation progress.
                     func progressing(byNumberOfLocationTransitions numberOfLocationTransitionsToProgress: Double)
-                        -> OneOrMoreLocationsAwaitingAnimation
-                    {
+                        -> OneOrMoreLocationsAwaitingAnimation {
                         precondition((0 ... locationTransitionsCount).contains(numberOfLocationTransitionsToProgress))
 
                         // This may be greater than 1 (i.e. we have now progressed beyond the second location).

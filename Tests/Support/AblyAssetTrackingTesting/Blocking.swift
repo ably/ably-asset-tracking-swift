@@ -89,7 +89,7 @@ public enum Blocking {
             var completionQueue: DispatchQueue
 
             /// Calls `expectation.wait()` and then passes the result to `completion` on `completionQueue`.
-            func wait() -> Void {
+            func wait() {
                 let result = expectation.wait()
                 completionQueue.async {
                     completion(result)

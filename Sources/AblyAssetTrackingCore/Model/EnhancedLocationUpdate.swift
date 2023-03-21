@@ -1,4 +1,3 @@
-
 /**
  Enumeration used to determine enhanced location type.
  */
@@ -21,7 +20,6 @@ public class EnhancedLocationUpdate: LocationUpdate {
     public init(location: Location) {
         self.location = location
     }
-    
 }
 
 extension EnhancedLocationUpdate: Equatable {

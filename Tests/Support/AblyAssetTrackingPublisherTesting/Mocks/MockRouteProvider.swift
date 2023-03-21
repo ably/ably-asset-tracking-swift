@@ -3,7 +3,7 @@ import CoreLocation
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
 
-public class MockRouteProvider: RouteProvider{
+public class MockRouteProvider: RouteProvider {
     public init() {}
 
     public var getRouteCalled: Bool = false

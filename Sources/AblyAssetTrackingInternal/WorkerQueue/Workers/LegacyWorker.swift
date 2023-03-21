@@ -3,8 +3,7 @@ import Foundation
 /// A worker that runs tasks that the Publisher and Subscriber used to run asynchronously on their
 /// own dispatch queues. This worker allows us to tie up legacy work and new asynchronous
 /// work, for simplicity and consistency during the transition.
-public class LegacyWorker<PropertiesType, WorkerSpecificationType> : Worker
-{
+public class LegacyWorker<PropertiesType, WorkerSpecificationType>: Worker {
     let work: () -> Void
     let logger: InternalLogHandler?
 

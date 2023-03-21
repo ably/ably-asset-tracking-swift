@@ -56,8 +56,7 @@ struct MapView: View {
             ZStack(alignment: .bottomTrailing) {
                 if viewModel.useMapboxMap {
                     MapboxMap(center: $locationManager.currentRegionCenter)
-                }
-                else {
+                } else {
                     Map(center: $locationManager.currentRegionCenter)
                 }
                 

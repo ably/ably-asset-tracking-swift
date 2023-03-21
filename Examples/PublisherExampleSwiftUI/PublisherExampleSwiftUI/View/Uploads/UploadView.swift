@@ -19,7 +19,7 @@ struct UploadView: View {
             HStack {
                 Text(String(describing: upload.status))
                 if case .failed = upload.status {
-                    Button() {
+                    Button {
                         retry()
                     } label: {
                         Text("Retry")

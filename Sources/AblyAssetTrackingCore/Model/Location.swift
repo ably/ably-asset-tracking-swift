@@ -1,4 +1,3 @@
-
 import Foundation
 
 public struct Location: Equatable {
@@ -129,41 +128,41 @@ public struct Location: Equatable {
      If it is invalid, the result is failed with a list of validation errors.
      */
     func validate() -> Result<Location, LocationValidationError> {
-        var locationValidationErrors: Array<ErrorInformation> = []
-        if (!coordinate.latitude.isFinite) {
+        var locationValidationErrors: [ErrorInformation] = []
+        if !coordinate.latitude.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "latitude must be finite, got \(coordinate.latitude)")))
         }
-        if (!coordinate.longitude.isFinite) {
+        if !coordinate.longitude.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "longitude must be finite, got \(coordinate.longitude)")))
         }
-        if (!altitude.isFinite) {
+        if !altitude.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "altitude must be finite, got \(altitude)")))
         }
-        if (!ellipsoidalAltitude.isFinite) {
+        if !ellipsoidalAltitude.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "ellipsoidalAltitude must be finite, got \(ellipsoidalAltitude)")))
         }
-        if (!horizontalAccuracy.isFinite) {
+        if !horizontalAccuracy.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "horizontalAccuracy must be finite, got \(horizontalAccuracy)")))
         }
-        if (!verticalAccuracy.isFinite) {
+        if !verticalAccuracy.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "verticalAccuracy must be finite, got \(verticalAccuracy)")))
         }
-        if (!course.isFinite) {
+        if !course.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "course must be finite, got \(course)")))
         }
-        if (!courseAccuracy.isFinite) {
+        if !courseAccuracy.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "courseAccuracy must be finite, got \(courseAccuracy)")))
         }
-        if (!speed.isFinite) {
+        if !speed.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "speed must be finite, got \(speed)")))
         }
-        if (!speedAccuracy.isFinite) {
+        if !speedAccuracy.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "speedAccuracy must be finite, got \(speedAccuracy)")))
         }
-        if (timestamp == 0 || !timestamp.isFinite) {
+        if timestamp == 0 || !timestamp.isFinite {
             locationValidationErrors.append(ErrorInformation(type: .commonError(errorMessage: "timestamp must be non-zero and finite, got \(timestamp)")))
         }
-        if (!locationValidationErrors.isEmpty) {
+        if !locationValidationErrors.isEmpty {
             return Result.failure(LocationValidationError(errors: locationValidationErrors))
         }
         return Result.success(self)

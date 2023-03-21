@@ -53,7 +53,7 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
         channel.detach(callback)
     }
     
-    func on(_ callback: @escaping (ARTChannelStateChange) -> ()) -> AblySDKEventListener {
+    func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> AblySDKEventListener {
         return AblyCocoaSDKEventListener(eventListener: channel.on(callback))
     }
     

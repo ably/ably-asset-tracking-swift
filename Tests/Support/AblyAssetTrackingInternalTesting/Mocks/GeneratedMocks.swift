@@ -201,13 +201,13 @@ public class AblySDKRealtimeChannelMock: AblySDKRealtimeChannel {
     public var onCalled: Bool {
         return onCallsCount > 0
     }
-    public var onReceivedCallback: ((ARTChannelStateChange) -> ())?
-    public var onReceivedInvocations: [((ARTChannelStateChange) -> ())] = []
+    public var onReceivedCallback: ((ARTChannelStateChange) -> Void)?
+    public var onReceivedInvocations: [((ARTChannelStateChange) -> Void)] = []
     public var onReturnValue: AblySDKEventListener!
-    public var onClosure: ((@escaping (ARTChannelStateChange) -> ()) -> AblySDKEventListener)?
+    public var onClosure: ((@escaping (ARTChannelStateChange) -> Void) -> AblySDKEventListener)?
 
     @discardableResult
-    public func on(_ callback: @escaping (ARTChannelStateChange) -> ()) -> AblySDKEventListener {
+    public func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> AblySDKEventListener {
         onCallsCount += 1
         onReceivedCallback = callback
         onReceivedInvocations.append(callback)

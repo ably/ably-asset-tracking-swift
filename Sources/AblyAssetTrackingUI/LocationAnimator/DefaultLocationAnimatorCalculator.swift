@@ -62,11 +62,9 @@ struct DefaultLocationAnimatorCalculator {
             let numberOfLocationsPoppedSinceLastCameraUpdate: Int
             let shouldEmitCameraPositionUpdate: Bool
             if let inputNumberOfLocationsPoppedSinceLastCameraUpdate = input.state
-                .numberOfLocationsPoppedSinceLastCameraUpdate
-            {
+                .numberOfLocationsPoppedSinceLastCameraUpdate {
                 if inputNumberOfLocationsPoppedSinceLastCameraUpdate + numberOfLocationsPoppped >= input.config
-                    .locationTransitionsBetweenCameraUpdates
-                {
+                    .locationTransitionsBetweenCameraUpdates {
                     numberOfLocationsPoppedSinceLastCameraUpdate = 0
                     shouldEmitCameraPositionUpdate = true
                 } else {

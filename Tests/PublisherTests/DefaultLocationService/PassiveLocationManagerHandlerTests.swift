@@ -98,7 +98,7 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateEnhancedLocationParamLocation?.speed, validCLLocation.speed)
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateEnhancedLocationParamLocation?.speedAccuracy, validCLLocation.speedAccuracy)
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateEnhancedLocationParamLocation?.timestamp, date.timeIntervalSince1970)
-        print();
+        print()
     }
     
     func test_passiveLocationManagerHandler_handleRawLocationUpdate_forwardsValidLocation() {
@@ -117,7 +117,7 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateRawLocationParamLocation?.speed, validCLLocation.speed)
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateRawLocationParamLocation?.speedAccuracy, validCLLocation.speedAccuracy)
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateRawLocationParamLocation?.timestamp, date.timeIntervalSince1970)
-        print();
+        print()
     }
     
     func test_passiveLocationManagerHandler_handleEnhancedLocationUpdate_sanitizesRepairableLocation() {
@@ -136,7 +136,7 @@ class PassiveLocationManagerHandlerTests: XCTestCase {
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateEnhancedLocationParamLocation?.speed, -1)
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateEnhancedLocationParamLocation?.speedAccuracy, -1)
         XCTAssertEqual(mockDelegate.passiveLocationManagerHandlerDidUpdateEnhancedLocationParamLocation?.timestamp, date.timeIntervalSince1970)
-        print();
+        print()
     }
     
     func test_passiveLocationManagerHandler_handleRawLocationUpdate_sanitizesRepairableLocation() {

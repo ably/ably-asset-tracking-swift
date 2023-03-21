@@ -62,7 +62,7 @@ class ChannelModesTests: XCTestCase {
         wait(for: [stopPublisherExpectation, stopSubscriberExpectation], timeout: defaultDelayTime)
     }
     
-    private func createPublisher(clientId: String, ablyApiKey: String) throws -> Publisher  {
+    private func createPublisher(clientId: String, ablyApiKey: String) throws -> Publisher {
         let locationsData = try LocalDataHelper.parseJsonFromResources("test-locations", type: Locations.self)
 
         let internalLogHandler = TestLogging.sharedInternalLogHandler
@@ -93,7 +93,6 @@ class ChannelModesTests: XCTestCase {
             routeProvider: MockRouteProvider(),
             logHandler: internalLogHandler
         )
-        
     }
     
     private func createSubscriber(trackableId: String, clientId: String, ablyApiKey: String) -> AblyAssetTrackingSubscriber.Subscriber {
@@ -173,7 +172,7 @@ extension ChannelModesTests: SubscriberDelegate {
     }
 }
 
-fileprivate struct ChannelMetrics: Codable {
+private struct ChannelMetrics: Codable {
     
     struct Status: Codable {
         
