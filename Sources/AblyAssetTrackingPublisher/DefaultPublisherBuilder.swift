@@ -8,10 +8,10 @@ class DefaultPublisherBuilder: PublisherBuilder {
     private var locationSource: LocationSource?
     private var routingProfile: RoutingProfile = .driving
     private var resolutionPolicyFactory: ResolutionPolicyFactory?
-    private var areRawLocationsEnabled: Bool = false
-    private var isSendResolutionEnabled: Bool = true
+    private var areRawLocationsEnabled = false
+    private var isSendResolutionEnabled = true
     private var constantLocationEngineResolution: Resolution?
-    private var vehicleProfile: VehicleProfile = VehicleProfile.car
+    private var vehicleProfile = VehicleProfile.car
     private var logHandler: LogHandler?
     private weak var delegate: PublisherDelegate?
 

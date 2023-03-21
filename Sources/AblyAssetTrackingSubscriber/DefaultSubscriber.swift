@@ -26,7 +26,7 @@ class DefaultSubscriber: Subscriber {
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelConnectionState: ConnectionState = .offline
     private var currentTrackableConnectionState: ConnectionState = .offline
-    private var isPublisherOnline: Bool = false
+    private var isPublisherOnline = false
     private var lastEmittedIsPublisherOnline: Bool?
 
     weak var delegate: SubscriberDelegate?

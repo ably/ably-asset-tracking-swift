@@ -13,7 +13,7 @@ public class MockResolutionPolicy: ResolutionPolicy {
         hooks.subscribers(listener: subscribersSetListener)
     }
 
-    public var resolveRequestCalled: Bool = false
+    public var resolveRequestCalled = false
     public var resolveRequestParamRequest: TrackableResolutionRequest?
     public var resolveRequestReturnValue: Resolution = .default
     public func resolve(request: TrackableResolutionRequest) -> Resolution {
@@ -22,7 +22,7 @@ public class MockResolutionPolicy: ResolutionPolicy {
         return resolveRequestReturnValue
     }
 
-    public var resolveResolutionsCalled: Bool = false
+    public var resolveResolutionsCalled = false
     public var resolveResolutionsParamResolutions: Set<Resolution>?
     public var resolveResolutionsReturnValue: Resolution = .default
     public func resolve(resolutions: Set<Resolution>) -> Resolution {

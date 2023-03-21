@@ -6,7 +6,7 @@ class LocationManager: NSObject, ObservableObject {
     static let shared = LocationManager()
 
     @Published var statusTitle: String = "-"
-    @Published var isLocationAuthorizationDenied: Bool = false
+    @Published var isLocationAuthorizationDenied = false
     @Published var currentLocation: CLLocation = .init(latitude: 0, longitude: 0)
     @Published var currentRegionCenter = CLLocationCoordinate2D(
         latitude: 0,

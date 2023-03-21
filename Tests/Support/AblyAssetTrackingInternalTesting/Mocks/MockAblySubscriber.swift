@@ -4,7 +4,7 @@ import AblyAssetTrackingInternal
 import Foundation
 
 public class MockAblySubscriber: AblySubscriber {
-    public var wasDelegateSet: Bool = false
+    public var wasDelegateSet = false
     public var subscriberDelegate: AblySubscriberDelegate? {
         didSet { wasDelegateSet = true }
     }
@@ -84,7 +84,7 @@ public class MockAblySubscriber: AblySubscriber {
         connectCompletionHandler?(completion)
     }
 
-    public var disconnectCalled: Bool = false
+    public var disconnectCalled = false
     public var disconnectParamTrackableId: String?
     public var disconnectParamPresenceData: PresenceData?
     public var disconnectParamResultHandler: ResultHandler<Bool>?
@@ -97,7 +97,7 @@ public class MockAblySubscriber: AblySubscriber {
         disconnectResultCompletionHandler?(completion)
     }
 
-    public var closeCalled: Bool = false
+    public var closeCalled = false
     public var closePresenceData: PresenceData?
     public var closeCompletion: ResultHandler<Void>?
     public var closeResultCompletionHandler: ((ResultHandler<Void>?) -> Void)?

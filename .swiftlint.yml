@@ -75,6 +75,7 @@ opt_in_rules:
   - vertical_whitespace_opening_braces
 
   # Opt-in rules of type "idiomatic":
+  - redundant_type_annotation
   - toggle_bool
 
 excluded:

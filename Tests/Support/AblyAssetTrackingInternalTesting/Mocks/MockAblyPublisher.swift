@@ -42,7 +42,7 @@ public class MockAblyPublisher: AblyPublisher {
         connectCompletionHandler?(completion)
     }
 
-    public var disconnectCalled: Bool = false
+    public var disconnectCalled = false
     public var disconnectParamTrackableId: String?
     public var disconnectParamResultHandler: ResultHandler<Bool>?
     public var disconnectResultCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
@@ -53,13 +53,13 @@ public class MockAblyPublisher: AblyPublisher {
         disconnectResultCompletionHandler?(completion)
     }
 
-    public var wasDelegateSet: Bool = false
+    public var wasDelegateSet = false
     public var publisherDelegate: AblyPublisherDelegate? {
         didSet { wasDelegateSet = true }
     }
 
     public var sendEnhancedAssetLocationUpdateCounter: Int = .zero
-    public var sendEnhancedAssetLocationUpdateCalled: Bool = false
+    public var sendEnhancedAssetLocationUpdateCalled = false
     public var sendEnhancedAssetLocationUpdateParamLocationUpdate: EnhancedLocationUpdate?
     public var sendEnhancedAssetLocationUpdateParamTrackable: Trackable?
     public var sendEnhancedAssetLocationUpdateParamCompletion: ResultHandler<Void>?
@@ -99,7 +99,7 @@ public class MockAblyPublisher: AblyPublisher {
         sendResolutionParamCompletionHandler?(completion)
     }
 
-    public var closeCalled: Bool = false
+    public var closeCalled = false
     public var closePresenceData: PresenceData?
     public var closeCompletion: ResultHandler<Void>?
     public var closeResultCompletionHandler: ((ResultHandler<Void>?) -> Void)?
