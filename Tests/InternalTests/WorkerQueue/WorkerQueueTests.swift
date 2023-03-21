@@ -29,11 +29,11 @@ class WorkerQueueTests: XCTestCase {
         workerFactory.createWorkerWorkerSpecificationLogHandlerReturnValue = worker
 
         workerQueue = WorkerQueue<WorkerFactoryMock.PropertiesType, WorkerMock>(properties: properties,
-                                  workingQueue: workingQueue,
-                                  logHandler: logHandler,
-                                  workerFactory: workerFactory,
-                                  asyncWorkWorkingQueue: asyncWorkWorkingQueue,
-                                  getStoppedError: getStoppedError)
+                                                                                workingQueue: workingQueue,
+                                                                                logHandler: logHandler,
+                                                                                workerFactory: workerFactory,
+                                                                                asyncWorkWorkingQueue: asyncWorkWorkingQueue,
+                                                                                getStoppedError: getStoppedError)
     }
 
     func test_queueShouldCallWorkersDoWorkMethod() {

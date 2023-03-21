@@ -41,6 +41,7 @@ opt_in_rules:
   - shorthand_optional_binding
   - pattern_matching_keywords
   - multiline_literal_brackets
+  - vertical_parameter_alignment_on_call
 
 excluded:
   - "**/.build"

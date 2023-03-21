@@ -15,10 +15,10 @@ extension TokenParams {
 extension ARTTokenParams {
     internal func toTokenParams() -> TokenParams {
         return TokenParams(ttl: ttl != nil ? Int(exactly: ttl!) : nil,
-                capability: capability,
-                clientId: clientId,
-                timestamp: timestamp,
-                nonce: nonce
+                           capability: capability,
+                           clientId: clientId,
+                           timestamp: timestamp,
+                           nonce: nonce
         )
     }
 }

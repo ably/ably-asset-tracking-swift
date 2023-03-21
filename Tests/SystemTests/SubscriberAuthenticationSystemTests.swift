@@ -44,11 +44,11 @@ class SubscriberAuthenticationSystemTests: XCTestCase {
             let hmac = hmacComponents.hmac(key: keySecret)
 
             let tokenRequest = TokenRequest(keyName: keyName,
-                         clientId: clientId,
-                         capability: tokenParams.capability,
-                         timestamp: timestampEpochInMilliseconds,
-                         nonce: "Random nonce",
-                         mac: hmac
+                                            clientId: clientId,
+                                            capability: tokenParams.capability,
+                                            timestamp: timestampEpochInMilliseconds,
+                                            nonce: "Random nonce",
+                                            mac: hmac
             )
             authCallbackCalledExpectation.fulfill()
             authResultHandler(.success(.tokenRequest(tokenRequest)))

@@ -26,7 +26,7 @@ class DefaultLocationService: LocationService {
                                              tileStoreConfiguration: .default,
                                              navigatorPredictionInterval: 0,
                                              statusUpdatingSettings: .init(updatingPatience: .greatestFiniteMagnitude,
-                                                                                                                        updatingInterval: nil))
+                                                                           updatingInterval: nil))
         if vehicleProfile == .bicycle {
             let cyclingConfig = [
                         "cache": [
