@@ -9,7 +9,6 @@ disabled_rules:
   - generic_type_name
   - large_tuple
   - nesting
-  - orphaned_doc_comment
   - type_body_length
   - type_name
   - vertical_parameter_alignment

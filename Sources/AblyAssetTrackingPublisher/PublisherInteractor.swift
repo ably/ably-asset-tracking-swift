@@ -2,6 +2,8 @@ import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
 
+// swiftlint:disable orphaned_doc_comment
+
 /// A protocol that the publisher implements which allows
 /// other internal classes (such as workers) to interact with it.
 /// These methods will be implemented on the publisher as the workers require it.

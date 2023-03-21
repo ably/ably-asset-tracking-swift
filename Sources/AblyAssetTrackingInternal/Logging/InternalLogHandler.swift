@@ -35,10 +35,10 @@ public struct CodeLocation: Equatable {
     }
 }
 
+// sourcery: AutoMockable
 /// A log handler to be used by components of the Asset Tracking SDKs. It provides SDK components with functionality for augmenting the log output.
 ///
 /// It stores a hierarchy of subsystems of increasing granularity, for example ["asset-tracking", "publisher", "DefaultPublisher"]. It is expected that it will use this information to output some sort of information about these subsystems in the log messages that it outputs, for example by adding a string "[asset-tracking.publisher.DefaultPublisher]".
-// sourcery: AutoMockable
 public protocol InternalLogHandler {
     /// Logs a message.
     /// - Parameters:
