@@ -17,18 +17,11 @@ disabled_rules:
   - xct_specific_matcher
 
 opt_in_rules:
-  - anonymous_argument_in_multiline_closure
   - array_init
-  - convenience_type
   - empty_xctest_method
-  - fallthrough
-  - fatal_error_message
   - missing_docs
   - override_in_extension
-  - xct_specific_matcher
   - yoda_condition
-  - shorthand_optional_binding
-  - pattern_matching_keywords
 
   # All of the opt-in rules of type "performance":
   - contains_over_filter_count
@@ -74,9 +67,17 @@ opt_in_rules:
   - vertical_whitespace_closing_braces
   - vertical_whitespace_opening_braces
 
-  # Opt-in rules of type "idiomatic":
+  # Opt-in rules of type "idiomatic" that we’ve decided we want:
+  - anonymous_argument_in_multiline_closure
+  - convenience_type
+  - fallthrough
+  - fatal_error_message
+  - pattern_matching_keywords
   - redundant_type_annotation
+  - shorthand_optional_binding
+  - static_operator
   - toggle_bool
+  - xct_specific_matcher
 
 excluded:
   - "**/.build"
