@@ -2,7 +2,7 @@
 
 set -e
 
-# We’re using Mint to make sure that everyone runs the same version of Sourcery.
+# We’re using Mint to make sure that everyone runs the same version of Sourcery. The exact version of Sourcery is specified in the repo's Mintfile.
 
 if ! which mint > /dev/null
 then
@@ -11,7 +11,7 @@ then
 fi
 
 run_sourcery () {
-  mint run krzysztofzablocki/Sourcery@1.9.2 --config ".sourcery-${1}.yml"
+  mint run krzysztofzablocki/Sourcery --config ".sourcery-${1}.yml"
 }
 
 run_sourcery "CoreMocks"

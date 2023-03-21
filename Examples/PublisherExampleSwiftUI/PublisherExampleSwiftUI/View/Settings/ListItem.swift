@@ -19,7 +19,6 @@ struct ListItem<Content: View>: View {
 struct ListItem_Previews: PreviewProvider {
     static var previews: some View {
         ListItem {
-            
         }
     }
 }

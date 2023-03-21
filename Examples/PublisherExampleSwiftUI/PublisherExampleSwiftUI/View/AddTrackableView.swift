@@ -92,7 +92,6 @@ struct AddTrackableView: View {
                         Alert(title: "Failed to add trackable",
                               errorInformation: error)
                     }
-                    
                 }
                 
                 Section {
@@ -115,11 +114,10 @@ struct AddTrackableView: View {
                         }
                         .font(.system(size: 10))
                     }
-                    
                 }
             }
         }
-        .onAppear() {
+        .onAppear {
             locationManager.requestAuthorization()
         }
         .navigationTitle("Add trackable")

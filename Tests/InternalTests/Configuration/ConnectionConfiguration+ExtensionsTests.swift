@@ -51,7 +51,7 @@ class ConnectionConfigurationTests: XCTestCase {
         let clientId = "My client id"
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
         XCTAssertNotNil(clientOptions.authCallback)
-        (clientOptions.authCallback!)(tokenParams) { result, error in
+        (clientOptions.authCallback!)(tokenParams) { result, _ in
             guard let tokenRequest = result as? ARTTokenRequest else {
                 XCTFail("TokenRequest was not returned")
                 return
@@ -82,7 +82,7 @@ class ConnectionConfigurationTests: XCTestCase {
             let clientId = "My client id"
             let tokenParams = TokenParams(ttl: 0, capability: "", clientId: clientId, timestamp: timestamp, nonce: nonce).toARTTokenParams()
             XCTAssertNotNil(clientOptions.authCallback)
-            (clientOptions.authCallback!)(tokenParams) { result, error in
+            (clientOptions.authCallback!)(tokenParams) { result, _ in
                 guard let tokenDetails = result as? ARTTokenDetails else {
                     XCTFail("TokenDetails was not returned")
                     return
@@ -100,7 +100,7 @@ class ConnectionConfigurationTests: XCTestCase {
         let tokenString = "Token string or JWT"
         let nonce = "12331"
         
-        let configuration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
+        let configuration = ConnectionConfiguration(authCallback: { _, resultHandler in
             authCallbackCalled = true
             resultHandler(.success(.jwt(tokenString)))
         })
@@ -110,7 +110,7 @@ class ConnectionConfigurationTests: XCTestCase {
         
         let tokenParams = TokenParams(ttl: 0, capability: "", clientId: "My client id", timestamp: timestamp, nonce: nonce).toARTTokenParams()
         XCTAssertNotNil(clientOptions.authCallback)
-        (clientOptions.authCallback!)(tokenParams) { result, error in
+        (clientOptions.authCallback!)(tokenParams) { result, _ in
             guard let actualTokenString = result as? String else {
                 XCTFail("String (JWT or Token) was not returned")
                 return

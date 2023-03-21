@@ -1,4 +1,3 @@
-
 import CoreLocation
 
 public extension Location {
@@ -17,7 +16,6 @@ public extension Location {
                 speedAccuracy: self.speedAccuracy,
                 timestamp: date
             )
-            
         } else if #available(iOS 13.4, *) {
             return CLLocation(
                 coordinate: self.coordinate.toCoreLocationCoordinate2d(),
@@ -30,7 +28,6 @@ public extension Location {
                 speedAccuracy: self.speedAccuracy,
                 timestamp: date
             )
-            
         } else {
             return CLLocation(
                 coordinate: self.coordinate.toCoreLocationCoordinate2d(),

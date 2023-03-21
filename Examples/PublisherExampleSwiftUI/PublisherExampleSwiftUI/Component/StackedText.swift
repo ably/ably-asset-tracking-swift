@@ -23,6 +23,5 @@ struct StackedText: View {
                 }
             }
         }
-        
     }
 }

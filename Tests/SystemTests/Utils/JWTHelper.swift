@@ -14,7 +14,7 @@ class JWTHelper {
         let keyTokens = Secrets.ablyApiKey.split(separator: ":")
         let keyName = String(keyTokens[0])
         var keySecret = String(keyTokens[1])
-        if (invalid) {
+        if invalid {
             keySecret = "invalid"
         }
 

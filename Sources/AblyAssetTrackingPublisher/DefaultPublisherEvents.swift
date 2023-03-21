@@ -162,7 +162,6 @@ extension DefaultPublisher {
         case finishedRecordingRawMapboxData(FinishedRecordingRawMapboxDataEvent)
         case didUpdateResolution(DidUpdateResolutionEvent)
         case didChangeTrackables(DidChangeTrackablesEvent)
-
         
         struct ErrorEvent {
             let error: ErrorInformation

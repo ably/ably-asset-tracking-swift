@@ -75,7 +75,7 @@ class DefaultPublisher: Publisher, PublisherInteractor {
             logHandler: self.logHandler,
             workerFactory: PublisherWorkerFactory(),
             asyncWorkWorkingQueue: DispatchQueue(label: "io.ably.asset-tracking.Publisher.async", qos: .default),
-            getStoppedError: { return ErrorInformation(type: .publisherStoppedException)}
+            getStoppedError: { return ErrorInformation(type: .publisherStoppedException) }
         )
         self.locationService = locationService
         self.ablyPublisher = ablyPublisher
@@ -273,8 +273,8 @@ extension DefaultPublisher {
         ablyPublisher.subscribeForChannelStateChange(trackable: event.trackable)
         
         trackables.insert(event.trackable)
-        //Start updating location only after the first trackable
-        if (trackables.count == 1){
+        // Start updating location only after the first trackable
+        if trackables.count == 1 {
             locationService.startRecordingLocation()
             locationService.startUpdatingLocation()
         }
@@ -316,7 +316,7 @@ extension DefaultPublisher {
         self.route = event.route
     }
 
-    private func performAddOrTrack(_ trackable: Trackable, completion: Callback<Void>){
+    private func performAddOrTrack(_ trackable: Trackable, completion: Callback<Void>) {
         guard !duplicateTrackableGuard.isCurrentlyAddingTrackableWithId(trackable.id) else {
             self.logHandler?.debug(message: "\(Self.self): Trackable with ID \(trackable.id) is already being added; saving completion handler.", error: nil)
             duplicateTrackableGuard.saveDuplicateAddCompletionHandler(completion, forTrackableWithId: trackable.id)
@@ -411,7 +411,7 @@ extension DefaultPublisher {
         
         self.locationService.stopUpdatingLocation()
         
-        locationService.stopRecordingLocation() { [weak self] result in
+        locationService.stopRecordingLocation { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -794,12 +794,11 @@ extension DefaultPublisher {
         else { return }
 
         let checker = ThresholdChecker()
-        var destination: Location? = nil
+        var destination: Location?
         do {
             destination = try activeTrackable?.destination != nil ?
             CLLocation(latitude: activeTrackable!.destination!.latitude, longitude: activeTrackable!.destination!.longitude).toLocation().get() : nil
-        }
-        catch {
+        } catch {
             logHandler?.verbose(message: "Invalid destination, validation error was: \(error)", error: error as? LocationValidationError)
             return
         }

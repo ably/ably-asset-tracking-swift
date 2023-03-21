@@ -83,7 +83,6 @@ public protocol Publisher {
             - `failure` when an error occurs.
     */
     func stop(completion: @escaping ResultHandler<Void>)
-
 }
 
 public enum VehicleProfile: Codable {

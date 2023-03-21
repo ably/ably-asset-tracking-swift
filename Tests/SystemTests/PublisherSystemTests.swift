@@ -51,5 +51,4 @@ final class PublisherSystemTests: XCTestCase {
         
         waitForExpectations(timeout: 10)
     }
-    
 }

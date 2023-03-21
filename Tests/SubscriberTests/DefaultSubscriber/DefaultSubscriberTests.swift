@@ -29,7 +29,7 @@ class DefaultSubscriberTests: XCTestCase {
     func test_subscriberStop_called() {
         // Given
         let expectation = XCTestExpectation()
-        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.success) }
         
         // When
         subscriber.stop { _ in
@@ -46,7 +46,7 @@ class DefaultSubscriberTests: XCTestCase {
     func test_subscriberStop_success() {
         // Given
         let expectation = XCTestExpectation()
-        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.success) }
         var isSuccess = false
         
         // When
@@ -70,7 +70,7 @@ class DefaultSubscriberTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation()
         let stopError = ErrorInformation(type: .subscriberError(errorMessage: "test_stop_error"))
-        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.failure(stopError))}
+        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.failure(stopError)) }
         var isFailure = false
         var receivedError: ErrorInformation?
         
@@ -97,7 +97,7 @@ class DefaultSubscriberTests: XCTestCase {
     func test_subscriberStop_afterStopped() {
         // Given
         var expectation = XCTestExpectation()
-        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.success) }
         var isSuccess = false
         
         // When
@@ -127,7 +127,7 @@ class DefaultSubscriberTests: XCTestCase {
     func test_subscriberReturnsError_afterStopped() {
         // Given
         var expectation = XCTestExpectation()
-        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.closeResultCompletionHandler = { completion in completion?(.success) }
         var receivedError: ErrorInformation?
         let expectedError = ErrorInformation(type: .subscriberStoppedException)
         var isFailure = false
@@ -163,7 +163,7 @@ class DefaultSubscriberTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation()
         let resolution = Resolution(accuracy: .high, desiredInterval: 1.0, minimumDisplacement: 1.0)
-        ablySubscriber.updatePresenceDataCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.updatePresenceDataCompletionHandler = { completion in completion?(.success) }
         
         // When
         subscriber.resolutionPreference(resolution: resolution) { _ in
@@ -182,7 +182,7 @@ class DefaultSubscriberTests: XCTestCase {
     func test_subscriberResolutionPreference_paramsCheck_resolutionIsNil() {
         // Given
         let expectation = XCTestExpectation()
-        ablySubscriber.updatePresenceDataCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.updatePresenceDataCompletionHandler = { completion in completion?(.success) }
         
         // When
         subscriber.resolutionPreference(resolution: nil) { _ in
@@ -200,7 +200,7 @@ class DefaultSubscriberTests: XCTestCase {
         let expectation = XCTestExpectation()
         let resolution = Resolution(accuracy: .high, desiredInterval: 1.0, minimumDisplacement: 1.0)
         var isSuccess = false
-        ablySubscriber.updatePresenceDataCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.updatePresenceDataCompletionHandler = { completion in completion?(.success) }
         
         // When
         subscriber.resolutionPreference(resolution: resolution) { result in
@@ -226,7 +226,7 @@ class DefaultSubscriberTests: XCTestCase {
         var isFailure = false
         let expectedError = ErrorInformation(type: .subscriberError(errorMessage: "SendResolutionPreferenceTestError"))
         var receivedError: ErrorInformation?
-        ablySubscriber.updatePresenceDataCompletionHandler = { completion in completion?(.failure(expectedError))}
+        ablySubscriber.updatePresenceDataCompletionHandler = { completion in completion?(.failure(expectedError)) }
         
         // When
         subscriber.resolutionPreference(resolution: resolution) { result in
@@ -250,8 +250,8 @@ class DefaultSubscriberTests: XCTestCase {
     func test_subscriberStart_called() {
         // Given
         let expectation = XCTestExpectation()
-        ablySubscriber.connectCompletionHandler = { completion in completion?(.success)}
-        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.connectCompletionHandler = { completion in completion?(.success) }
+        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success) }
         
         // When
         subscriber.start { _ in
@@ -270,8 +270,8 @@ class DefaultSubscriberTests: XCTestCase {
     func test_subscriberStart_success() {
         // Given
         let expectation = XCTestExpectation()
-        ablySubscriber.connectCompletionHandler = { completion in completion?(.success)}
-        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success)}
+        ablySubscriber.connectCompletionHandler = { completion in completion?(.success) }
+        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success) }
         var isSuccess = false
         
         // When
@@ -326,8 +326,8 @@ class DefaultSubscriberTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation()
         let stopError = ErrorInformation(type: .subscriberError(errorMessage: "test_start_error"))
-        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success)}
-        ablySubscriber.connectCompletionHandler = { completion in completion?(.failure(stopError))}
+        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablySubscriber.connectCompletionHandler = { completion in completion?(.failure(stopError)) }
         var isFailure = false
         var receivedError: ErrorInformation?
         
@@ -393,7 +393,7 @@ class DefaultSubscriberTests: XCTestCase {
         
         waitForExpectations(timeout: 10)
         
-        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, _ in
             XCTFail("Subscriber’s delegate received a connection status update")
         }
         

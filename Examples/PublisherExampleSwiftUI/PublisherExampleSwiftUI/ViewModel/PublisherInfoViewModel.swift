@@ -20,7 +20,7 @@ extension PublisherInfoViewModel {
             constantResolutionInfo.append(.init(label: "Desired accuracy: ", value: "\(constantResolution.accuracy)"))
             constantResolutionInfo.append(.init(label: "Min displacement: ", value: "\(constantResolution.minimumDisplacement)m"))
         } else {
-            constantResolutionInfo.append(.init(label: "Constant resolution: ", value:  "disabled"))
+            constantResolutionInfo.append(.init(label: "Constant resolution: ", value: "disabled"))
         }
         
         var resolutionInfo: [StackedTextModel] = []

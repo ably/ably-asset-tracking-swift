@@ -21,7 +21,7 @@ public protocol ParameterizedTestCaseParam {
 /// Before running a test method corresponding to a given parameter value, it sets the test case’s ``currentParam`` value. The ``currentParam`` value is also available within the test case’s ``setUp...`` methods.
 ///
 /// In order to use the Xcode GUI to run an individual test, you must first run the whole test file so that Xcode can become aware of the test’s existence. You can then re-run the test using Xcode’s Test navigator.
-open class ParameterizedTestCase<Param: ParameterizedTestCaseParam> : AATParameterizedTestCaseObjC {
+open class ParameterizedTestCase<Param: ParameterizedTestCaseParam>: AATParameterizedTestCaseObjC {
     // Constant for the lifetime of the test case instance
     private var _currentParam: Param?
 
@@ -182,7 +182,7 @@ private extension String {
             .controlCharacters,
             .punctuationCharacters,
             .nonBaseCharacters,
-            .symbols,
+            .symbols
         ]
 
         for invalidSet in invalidCharacterSets {

@@ -5,7 +5,7 @@ import AblyAssetTrackingCoreTesting
 import AblyAssetTrackingInternalTesting
 import AblyAssetTrackingPublisherTesting
 
-enum ClientConfigError : Error {
+enum ClientConfigError: Error {
     case cannotRedefineConnectionConfiguration
 }
 
@@ -133,7 +133,7 @@ class DefaultPublisherTests: XCTestCase {
             case .success:
                 XCTAssertEqual(self.publisher.activeTrackable, self.trackable)
                 expectation.fulfill()
-            case .failure(_):
+            case .failure:
                 XCTFail("Failure callback shouldn't be called")
             }
         }
@@ -253,7 +253,7 @@ class DefaultPublisherTests: XCTestCase {
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
         
-        //onError callback should be called on the main thread
+        // onError callback should be called on the main thread
         publisher.track(trackable: trackable) { result in
             switch result {
             case .success:
@@ -462,7 +462,7 @@ class DefaultPublisherTests: XCTestCase {
     func testAdd_whenTrackableWithSameIdIsCurrentlyBeingAdded_itWaitsForTheFirstAddToComplete_andWhenTheFirstAddSucceeds_theSecondAddSucceedsToo() {
         var numberOfTimesConnectCalled  = 0
         let synchronizationQueue = DispatchQueue(label: #function)
-        var connectCompletion: ResultHandler<Void>? = nil
+        var connectCompletion: ResultHandler<Void>?
         let connectCalledExpectation = expectation(description: "ablyPublisher’s connect method is called")
         ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in
@@ -510,7 +510,7 @@ class DefaultPublisherTests: XCTestCase {
     func testAdd_whenTrackableWithSameIdIsCurrentlyBeingAdded_itWaitsForTheFirstAddToComplete_andWhenTheFirstAddFails_theSecondAddFailsWithTheSameError() {
         var numberOfTimesConnectCalled = 0
         let synchronizationQueue = DispatchQueue(label: #function)
-        var connectCompletion: ResultHandler<Void>? = nil
+        var connectCompletion: ResultHandler<Void>?
         let connectCalledExpectation = expectation(description: "ablyPublisher’s connect method is called")
         ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in
@@ -562,8 +562,8 @@ class DefaultPublisherTests: XCTestCase {
         let wasPresent = true
         var receivedWasPresent: Bool?
         
-        ablyPublisher.disconnectResultCompletionHandler = { completion in completion?(.success(wasPresent))}
-        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.disconnectResultCompletionHandler = { completion in completion?(.success(wasPresent)) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
         
         publisher.add(trackable: Trackable(id: "Trackable1")) { _ in }
@@ -606,7 +606,7 @@ class DefaultPublisherTests: XCTestCase {
     }
     
     func testRemove_activeTrackable() {
-        ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in completion?(.success)}
         ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.success(true)) }
         
@@ -697,7 +697,7 @@ class DefaultPublisherTests: XCTestCase {
     
     func testRemove_error() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
-        ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
+        ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
         
         // When removing trackable and receive error from ablyPublisher
@@ -714,9 +714,8 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
     
-    
     func testRemove_success_thread() {
-        ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.success(true))}
+        ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.success(true)) }
         let expectation = XCTestExpectation()
         
         // When removing trackable `onSuccess` callback should be called on main thread
@@ -736,7 +735,7 @@ class DefaultPublisherTests: XCTestCase {
     
     func testRemove_error_thread() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
-        ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.failure(errorInformation))}
+        ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.failure(errorInformation)) }
         
         let expectation = XCTestExpectation()
         
@@ -917,7 +916,6 @@ class DefaultPublisherTests: XCTestCase {
         
         XCTAssertEqual(state.getRetryCounter(for: otherTrackableId), 2)
         XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
-        
     }
     
     func testDefaultTrackableStateWaiting() {
@@ -1001,7 +999,6 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertFalse(state.hasPendingMessage(for: trackableId2))
         XCTAssertNil(state.nextWaitingLocation(for: trackableId2))
         XCTAssertEqual(state.getRetryCounter(for: trackableId2), 0)
-        
     }
     
     func testDefaultSkippedLocationsStateAddAndRemove() {
@@ -1104,7 +1101,7 @@ class DefaultPublisherTests: XCTestCase {
     func testStopEventCauseImpossibilityOfEnqueueOtherEvents() {
         ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
-        ablyPublisher.closeResultCompletionHandler = { completion in completion?(.success)}
+        ablyPublisher.closeResultCompletionHandler = { completion in completion?(.success) }
         locationService.stopRecordingLocationCallback = { completion in completion(.success(nil)) }
         
         let publisher = DefaultPublisher(

@@ -124,8 +124,7 @@ class SettingsModel {
         set {
             if let newValue = newValue {
                 UserDefaults.standard.save(newValue, forKey: "s3FileName")
-            }
-            else {
+            } else {
                 UserDefaults.standard.removeObject(forKey: "s3FileName")
             }
         }
@@ -133,4 +132,3 @@ class SettingsModel {
     
     private init() {}
 }
-

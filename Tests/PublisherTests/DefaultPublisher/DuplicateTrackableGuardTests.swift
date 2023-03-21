@@ -54,7 +54,7 @@ class DuplicateTrackableGuardTests: XCTestCase {
         var calledFirstTime = false
         let secondTimeExpectation = expectation(description: "Completion handler called again")
         secondTimeExpectation.isInverted = true
-        let completionHandler = Callback<Void>(source: .publicAPI(label: ""), logHandler: nil) { result in
+        let completionHandler = Callback<Void>(source: .publicAPI(label: ""), logHandler: nil) { _ in
             if !calledFirstTime {
                 calledFirstTime = true
                 firstTimeExpectation.fulfill()

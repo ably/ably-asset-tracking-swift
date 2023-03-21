@@ -228,7 +228,7 @@ class DefaultAblyTests: XCTestCase {
 
     func test_connect_whenNotConfiguredToUseToken_whenPresenceEnterFails_withAnErrorRelatedToCapabilities_itFails() {
         let presence = AblySDKRealtimePresenceMock()
-        presence.enterCallbackClosure = { data, callback in
+        presence.enterCallbackClosure = { _, callback in
             callback?(ARTErrorInfo.create(withCode: 40160, message: ""))
         }
         
@@ -272,7 +272,7 @@ class DefaultAblyTests: XCTestCase {
     
     func test_connect_whenConfiguredToUseToken_whenPresenceEnterSucceeds_itSucceeds() {
         let presence = AblySDKRealtimePresenceMock()
-        presence.enterCallbackClosure = { data, callback in
+        presence.enterCallbackClosure = { _, callback in
             callback?(nil)
         }
         
@@ -312,7 +312,7 @@ class DefaultAblyTests: XCTestCase {
     
     func test_connect_whenConfiguredToUseToken_whenPresenceEnterFails_withAnErrorUnrelatedToCapabilities_itFails() {
         let presence = AblySDKRealtimePresenceMock()
-        presence.enterCallbackClosure = { data, callback in
+        presence.enterCallbackClosure = { _, callback in
             callback?(ARTErrorInfo.createUnknownError())
         }
         
@@ -352,7 +352,7 @@ class DefaultAblyTests: XCTestCase {
     
     func test_connect_whenConfiguredToUseToken_whenPresenceEnterFails_withAnErrorRelatedToCapabilities_itCallsAuthorize_andWhenAuthorizeSucceeds_itAttachesToTheChannel_andWhenAttachFails_itFails() {
         let presence = AblySDKRealtimePresenceMock()
-        presence.enterCallbackClosure = { data, callback in
+        presence.enterCallbackClosure = { _, callback in
             callback?(ARTErrorInfo.create(withCode: 40160, message: ""))
         }
         
@@ -405,7 +405,7 @@ class DefaultAblyTests: XCTestCase {
     func test_connect_whenConfiguredToUseToken_whenPresenceEnterFails_withAnErrorRelatedToCapabilities_itCallsAuthorize_andWhenAuthorizeSucceeds_itAttachesToTheChannel_andWhenAttachSucceeds_itRetriesPresenceEnter_andWhenTheSecondCallToPresenceEnterSucceeds_itSucceeds() {
         let presence = AblySDKRealtimePresenceMock()
         var hasEnterFailed = false
-        presence.enterCallbackClosure = { data, callback in
+        presence.enterCallbackClosure = { _, callback in
             if hasEnterFailed {
                 callback?(nil)
             } else {
@@ -462,7 +462,7 @@ class DefaultAblyTests: XCTestCase {
     
     func test_connect_whenConfiguredToUseToken_whenPresenceEnterFails_withAnErrorRelatedToCapabilities_itCallsAuthorize_andWhenAuthorizeSucceeds_itAttachesToTheChannel_andWhenAttachSucceeds_itRetriesPresenceEnter_andWhenTheSecondCallToPresenceEnterFails_itFails() {
         let presence = AblySDKRealtimePresenceMock()
-        presence.enterCallbackClosure = { data, callback in
+        presence.enterCallbackClosure = { _, callback in
             callback?(ARTErrorInfo.create(withCode: 40160, message: ""))
         }
         
@@ -514,7 +514,7 @@ class DefaultAblyTests: XCTestCase {
     
     func test_connect_whenConfiguredToUseToken_whenPresenceEnterFails_withAnErrorRelatedToCapabilities_itCallsAuthorize_andWhenAuthorizeFails_itFails() {
         let presence = AblySDKRealtimePresenceMock()
-        presence.enterCallbackClosure = { data, callback in
+        presence.enterCallbackClosure = { _, callback in
             callback?(ARTErrorInfo.create(withCode: 40160, message: ""))
         }
         
@@ -578,7 +578,7 @@ class DefaultAblyTests: XCTestCase {
         
         let presence = AblySDKRealtimePresenceMock()
         let presenceEnterExpectation = expectation(description: "Presence enter called")
-        presence.enterCallbackClosure = { data, callback in
+        presence.enterCallbackClosure = { _, callback in
             XCTAssertTrue(attachCompleted, "Expected channel.attach to have completed before presence enter called")
             presenceEnterExpectation.fulfill()
             callback?(nil)
@@ -617,7 +617,7 @@ class DefaultAblyTests: XCTestCase {
     }
     
     func test_subscribeForRawEvents_whenItReceivesNonStringLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError() {
-        let data = ["something":"somethingElse"]
+        let data = ["something": "somethingElse"]
         test_subscribeForRawEvents_whenItReceivesThisLocationMessageData_itCallsDidFailOnSubscriberDelegate_withInvalidMessageError(data: data)
     }
     

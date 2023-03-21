@@ -117,7 +117,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
             batteryLevelThreshold: 30,
             lowBatteryMultiplier: 3)
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
-        let request = TrackableResolutionRequest(trackable:trackable, remoteRequests: resolutions)
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutions)
 
         // Resolving a constrained request with multiple remote requests
         let result = resolutionPolicy.resolve(request: request)
@@ -144,7 +144,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
             batteryLevelThreshold: 30,
             lowBatteryMultiplier: 20)
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
-        let request = TrackableResolutionRequest(trackable:trackable, remoteRequests: resolutions)
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: resolutions)
 
         batteryLevelProvider.currentBatteryPercentageReturnValue = 10
         // Resolving a constrained request with multiple remote requests and battery below threshold
@@ -168,7 +168,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
             lowBatteryMultiplier: 20
         )
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
-        let request = TrackableResolutionRequest(trackable:trackable, remoteRequests: [])
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: [])
 
         // Resolving a constrained request when above threshold and no subscriber
         let result = resolutionPolicy.resolve(request: request)
@@ -191,7 +191,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
             lowBatteryMultiplier: 20
         )
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
-        let request = TrackableResolutionRequest(trackable:trackable, remoteRequests: [])
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: [])
 
         // Resolving a constrained request when above threshold and added subscriber
         hooks.subscribers?.onSubscriberAdded(subscriber: Subscriber(id: "SubscriberId", trackable: trackable))
@@ -215,7 +215,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
             lowBatteryMultiplier: 20
         )
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
-        let request = TrackableResolutionRequest(trackable:trackable, remoteRequests: [])
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: [])
 
         // Resolving a constrained request when below threshold and no subscriber
         resolutionPolicy.trackableSetListener(sender: DefaultTrackableSetListener(), onActiveTrackableChanged: trackable)
@@ -242,7 +242,7 @@ class DefaultResolutionPolicyTests: XCTestCase {
             lowBatteryMultiplier: 20
         )
         let trackable = Trackable(id: "TestTrackableId", constraints: constraints)
-        let request = TrackableResolutionRequest(trackable:trackable, remoteRequests: [])
+        let request = TrackableResolutionRequest(trackable: trackable, remoteRequests: [])
 
         // Resolving a constrained request when below threshold and no subscriber
         hooks.subscribers?.onSubscriberAdded(subscriber: Subscriber(id: "SubscriberId", trackable: trackable))
