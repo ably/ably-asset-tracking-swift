@@ -10,7 +10,6 @@ disabled_rules:
   - type_body_length
   # Rules we’re currently violating:
   - generic_type_name
-  - type_name
   # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
   - missing_docs
   - todo
@@ -81,9 +80,12 @@ file_header:
   # Comments, except for the required and standard ones at the top of a Package.swift file
   forbidden_pattern: //(?! (swift-tools-version:|The swift-tools-version declares the minimum version of Swift required to build this package\.))
 
-identifier_name:
+identifier_name: &no_length_checks
   # We disable the length checks, for the same reason we disable the rules of type "metrics".
   min_length:
     warning: 1
   max_length:
     warning: 10000
+
+type_name:
+  *no_length_checks

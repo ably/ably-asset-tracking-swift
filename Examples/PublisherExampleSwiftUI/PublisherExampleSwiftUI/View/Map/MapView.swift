@@ -84,7 +84,7 @@ struct MapView: View {
     }
 }
 
-struct MapView_Preview: PreviewProvider {
+struct MapView_Previews: PreviewProvider {
     static var previews: some View {
         let publisher = ObservablePublisher(publisher: DummyPublisher(), configInfo: .init(areRawLocationsEnabled: false))
         MapView(trackableId: "", publisher: publisher)

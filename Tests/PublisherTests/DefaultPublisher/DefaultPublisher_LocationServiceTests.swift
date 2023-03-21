@@ -6,6 +6,7 @@ import AblyAssetTrackingInternalTesting
 import AblyAssetTrackingPublisherTesting
 import XCTest
 
+// swiftlint:disable:next type_name
 class DefaultPublisher_LocationServiceTests: XCTestCase {
     let publisherHelper = PublisherHelper()
 
