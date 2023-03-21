@@ -13,10 +13,12 @@ class DefaultLocationService: LocationService {
 
     weak var delegate: LocationServiceDelegate?
 
-    init(mapboxConfiguration: MapboxConfiguration,
-         historyLocation: [CLLocation]?,
-         logHandler: InternalLogHandler?,
-         vehicleProfile: VehicleProfile) {
+    init(
+        mapboxConfiguration: MapboxConfiguration,
+        historyLocation: [CLLocation]?,
+        logHandler: InternalLogHandler?,
+        vehicleProfile: VehicleProfile
+    ) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
         self.passiveLocationManagerHandler = PassiveLocationManagerHandler(logHandler: logHandler)
 

@@ -17,17 +17,19 @@ class DefaultPublisherBuilder: PublisherBuilder {
 
     init() { }
 
-    private init(connection: ConnectionConfiguration?,
-                 mapboxConfiguration: MapboxConfiguration?,
-                 locationSource: LocationSource?,
-                 routingProfile: RoutingProfile,
-                 delegate: PublisherDelegate?,
-                 resolutionPolicyFactory: ResolutionPolicyFactory?,
-                 areRawLocationsEnabled: Bool = false,
-                 isSendResolutionEnabled: Bool = true,
-                 constantLocationEngineResolution: Resolution?,
-                 logHandler: LogHandler?,
-                 vehicleProfile: VehicleProfile = VehicleProfile.car) {
+    private init(
+        connection: ConnectionConfiguration?,
+        mapboxConfiguration: MapboxConfiguration?,
+        locationSource: LocationSource?,
+        routingProfile: RoutingProfile,
+        delegate: PublisherDelegate?,
+        resolutionPolicyFactory: ResolutionPolicyFactory?,
+        areRawLocationsEnabled: Bool = false,
+        isSendResolutionEnabled: Bool = true,
+        constantLocationEngineResolution: Resolution?,
+        logHandler: LogHandler?,
+        vehicleProfile: VehicleProfile = VehicleProfile.car
+    ) {
         self.connection = connection
         self.mapboxConfiguration = mapboxConfiguration
         self.locationSource = locationSource

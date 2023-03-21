@@ -35,7 +35,8 @@ class DefaultSubscriber: Subscriber {
         ablySubscriber: AblySubscriber,
         trackableId: String,
         resolution: Resolution?,
-        logHandler: InternalLogHandler?) {
+        logHandler: InternalLogHandler?
+    ) {
 
         self.logHandler = logHandler?.addingSubsystem(Self.self)
         self.workerQueue = WorkerQueue(

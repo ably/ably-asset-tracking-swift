@@ -16,6 +16,8 @@ public protocol ResolutionPolicyFactory {
         - methods: Methods which may be called after this method has returned.
      - Returns: A resolution policy to be used for the lifespan of the associated `Publisher`.
      */
-    func createResolutionPolicy(hooks: ResolutionPolicyHooks,
-                                methods: ResolutionPolicyMethods) -> ResolutionPolicy
+    func createResolutionPolicy(
+        hooks: ResolutionPolicyHooks,
+        methods: ResolutionPolicyMethods
+    ) -> ResolutionPolicy
 }

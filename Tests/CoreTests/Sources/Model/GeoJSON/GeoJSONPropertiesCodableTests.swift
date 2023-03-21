@@ -3,13 +3,15 @@ import XCTest
 @testable import AblyAssetTrackingCore
 
 class GeoJSONPropertiesCodableTests: XCTestCase {
-    private func propertiesJson(horizontalAccuracy: Double? = nil,
-                                accuracyVertical: Double? = nil,
-                                bearing: Double? = nil,
-                                accuracyBearing: Double? = nil,
-                                speed: Double? = nil,
-                                accuracySpeed: Double? = nil,
-                                timestamp: Date? = nil) -> String {
+    private func propertiesJson(
+        horizontalAccuracy: Double? = nil,
+        accuracyVertical: Double? = nil,
+        bearing: Double? = nil,
+        accuracyBearing: Double? = nil,
+        speed: Double? = nil,
+        accuracySpeed: Double? = nil,
+        timestamp: Date? = nil
+    ) -> String {
         return """
             {
                 "accuracyHorizontal": \(horizontalAccuracy ?? 1.0),

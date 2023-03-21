@@ -55,17 +55,18 @@ class DefaultPublisher: Publisher, PublisherInteractor {
     private(set) public var activeTrackable: Trackable?
     private(set) public var routingProfile: RoutingProfile
 
-    init(routingProfile: RoutingProfile,
-         resolutionPolicyFactory: ResolutionPolicyFactory,
-         ablyPublisher: AblyPublisher,
-         locationService: LocationService,
-         routeProvider: RouteProvider,
-         enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
-         rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
-         areRawLocationsEnabled: Bool = false,
-         isSendResolutionEnabled: Bool = true,
-         constantLocationEngineResolution: Resolution? = nil,
-         logHandler: InternalLogHandler?
+    init(
+        routingProfile: RoutingProfile,
+        resolutionPolicyFactory: ResolutionPolicyFactory,
+        ablyPublisher: AblyPublisher,
+        locationService: LocationService,
+        routeProvider: RouteProvider,
+        enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState(),
+        rawLocationState: TrackableState<RawLocationUpdate> = TrackableState(),
+        areRawLocationsEnabled: Bool = false,
+        isSendResolutionEnabled: Bool = true,
+        constantLocationEngineResolution: Resolution? = nil,
+        logHandler: InternalLogHandler?
     ) {
         self.routingProfile = routingProfile
         self.logHandler = logHandler?.addingSubsystem(Self.self)
@@ -706,10 +707,12 @@ extension DefaultPublisher {
         )
     }
 
-    private func shouldSendLocation(location: Location,
-                                    lastLocation: Location?,
-                                    lastTimestamp: Double?,
-                                    resolution: Resolution?) -> Bool {
+    private func shouldSendLocation(
+        location: Location,
+        lastLocation: Location?,
+        lastTimestamp: Double?,
+        resolution: Resolution?
+    ) -> Bool {
         guard let resolution,
               let lastLocation,
               let lastTimestamp
@@ -922,11 +925,13 @@ extension DefaultPublisher: AblyPublisherDelegate {
         enqueue(event: .ablyClientConnectionStateChanged(.init(connectionState: state)))
     }
 
-    func ablyPublisher(_ sender: AblyPublisher,
-                       didReceivePresenceUpdate presence: Presence,
-                       forTrackable trackable: Trackable,
-                       presenceData: PresenceData,
-                       clientId: String) {
+    func ablyPublisher(
+        _ sender: AblyPublisher,
+        didReceivePresenceUpdate presence: Presence,
+        forTrackable trackable: Trackable,
+        presenceData: PresenceData,
+        clientId: String
+    ) {
 
         logHandler?.debug(message: "publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)", error: nil)
         enqueue(event: .presenceUpdate(.init(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId)))
@@ -943,9 +948,11 @@ extension DefaultPublisher: DefaultResolutionPolicyMethodsDelegate {
         proximityHandler?.onProximityCancelled()
     }
 
-    func resolutionPolicyMethods(sender: DefaultResolutionPolicyMethods,
-                                 setProximityThreshold threshold: Proximity,
-                                 withHandler handler: ProximityHandler) {
+    func resolutionPolicyMethods(
+        sender: DefaultResolutionPolicyMethods,
+        setProximityThreshold threshold: Proximity,
+        withHandler handler: ProximityHandler
+    ) {
         self.proximityHandler = handler
         self.proximityThreshold = threshold
     }

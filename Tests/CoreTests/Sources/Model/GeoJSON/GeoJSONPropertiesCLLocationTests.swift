@@ -3,13 +3,15 @@ import XCTest
 @testable import AblyAssetTrackingCore
 
 class GeoJSONPropertiesCLLocationTests: XCTestCase {
-    private func getLocation(horizontalAccuracy: Double? = nil,
-                             accuracyVertical: Double? = nil,
-                             bearing: Double? = nil,
-                             accuracyBearing: Double? = nil,
-                             speed: Double? = nil,
-                             accuracySpeed: Double? = nil,
-                             timestamp: Double? = nil) -> Location {
+    private func getLocation(
+        horizontalAccuracy: Double? = nil,
+        accuracyVertical: Double? = nil,
+        bearing: Double? = nil,
+        accuracyBearing: Double? = nil,
+        speed: Double? = nil,
+        accuracySpeed: Double? = nil,
+        timestamp: Double? = nil
+    ) -> Location {
         let coordinate = LocationCoordinate(latitude: 1.0, longitude: 1.0)
 
         return Location(

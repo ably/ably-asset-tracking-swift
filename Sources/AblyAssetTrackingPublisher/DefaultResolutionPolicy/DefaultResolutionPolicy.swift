@@ -14,10 +14,12 @@ class DefaultResolutionPolicy: ResolutionPolicy {
     private var trackedTrackables: Set<Trackable>
     private var activeTrackable: Trackable?
 
-    init(hooks: ResolutionPolicyHooks,
-         methods: ResolutionPolicyMethods,
-         defaultResolution: Resolution,
-         batteryLevelProvider: BatteryLevelProvider) {
+    init(
+        hooks: ResolutionPolicyHooks,
+        methods: ResolutionPolicyMethods,
+        defaultResolution: Resolution,
+        batteryLevelProvider: BatteryLevelProvider
+    ) {
         self.hooks = hooks
         self.methods = methods
         self.defaultResolution = defaultResolution

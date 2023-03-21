@@ -11,11 +11,13 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
 
     init() { }
 
-    private init(connection: ConnectionConfiguration?,
-                 trackingId: String?,
-                 resolution: Resolution?,
-                 logHandler: LogHandler?,
-                 delegate: SubscriberDelegate?) {
+    private init(
+        connection: ConnectionConfiguration?,
+        trackingId: String?,
+        resolution: Resolution?,
+        logHandler: LogHandler?,
+        delegate: SubscriberDelegate?
+    ) {
         self.connection = connection
         self.trackingId = trackingId
         self.resolution = resolution
