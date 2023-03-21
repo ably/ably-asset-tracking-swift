@@ -8,8 +8,6 @@ disabled_rules:
   - line_length
   - nesting
   - type_body_length
-  # Rules we’re currently violating:
-  - generic_type_name
   # Rules we’re currently violating even though we’ve opted in to them in opt_in_rules:
   - missing_docs
   - todo
@@ -88,4 +86,7 @@ identifier_name: &no_length_checks
     warning: 10000
 
 type_name:
+  *no_length_checks
+
+generic_type_name:
   *no_length_checks
