@@ -42,6 +42,7 @@ opt_in_rules:
   - todo
   - shorthand_optional_binding
   - pattern_matching_keywords
+  - multiline_literal_brackets
 
 excluded:
   - "**/.build"

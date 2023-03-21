@@ -12,11 +12,13 @@ class AddTrackableViewModel: ObservableObject {
     
     var resolutionAccuracy: String = SettingsModel.shared.defaultResolution.accuracy.rawValue
     var accuracies: [String] {
-        [Accuracy.low,
-         Accuracy.high,
-         Accuracy.balanced,
-         Accuracy.maximum,
-         Accuracy.minimum].sorted().map(\.rawValue)
+        [
+            Accuracy.low,
+            Accuracy.high,
+            Accuracy.balanced,
+            Accuracy.maximum,
+            Accuracy.minimum
+        ].sorted().map(\.rawValue)
     }
     
     var isValid: Bool {

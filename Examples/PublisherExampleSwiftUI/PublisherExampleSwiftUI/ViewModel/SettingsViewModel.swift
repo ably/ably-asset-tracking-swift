@@ -20,11 +20,13 @@ class SettingsViewModel: ObservableObject {
     
     var defaultResolutionAccuracy: String = SettingsModel.shared.defaultResolution.accuracy.rawValue
     var accuracies: [String] {
-        [Accuracy.low,
-         Accuracy.high,
-         Accuracy.balanced,
-         Accuracy.maximum,
-         Accuracy.minimum].sorted().map(\.rawValue)
+        [
+            Accuracy.low,
+            Accuracy.high,
+            Accuracy.balanced,
+            Accuracy.maximum,
+            Accuracy.minimum
+        ].sorted().map(\.rawValue)
     }
     
     func save() {

@@ -61,23 +61,29 @@ class CreatePublisherViewModel: ObservableObject {
     
     var constantResolutionAccuracy: String = SettingsModel.shared.constantResolution.accuracy.rawValue
     var accuracies: [String] {
-        [Accuracy.low,
-         Accuracy.high,
-         Accuracy.balanced,
-         Accuracy.maximum,
-         Accuracy.minimum].sorted().map(\.rawValue)
+        [
+            Accuracy.low,
+            Accuracy.high,
+            Accuracy.balanced,
+            Accuracy.maximum,
+            Accuracy.minimum
+        ].sorted().map(\.rawValue)
     }
     
     var vehicleProfiles: [String] {
-        [VehicleProfile.bicycle,
-         VehicleProfile.car].map { $0.description() }
+        [
+            VehicleProfile.bicycle,
+            VehicleProfile.car
+        ].map { $0.description() }
     }
     
     var routingProfiles: [String] {
-        [RoutingProfile.cycling,
-         RoutingProfile.driving,
-         RoutingProfile.drivingTraffic,
-         RoutingProfile.walking].map { $0.description() }
+        [
+            RoutingProfile.cycling,
+            RoutingProfile.driving,
+            RoutingProfile.drivingTraffic,
+            RoutingProfile.walking
+        ].map { $0.description() }
     }
     
     var locationSources: [String] {
