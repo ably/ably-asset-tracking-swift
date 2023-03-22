@@ -61,7 +61,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         delegateStateEventsIfRequired()
     }
     
-    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [Presence]) {
+    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [PresenceMessage]) {
         for presenceMessage in presenceMessages {
             if (presenceMessage.data.type == .publisher) {
                 

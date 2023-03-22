@@ -51,15 +51,15 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
 
 /// A protocol used to avoid duplication of default ``doWork``, ``doWhenStopped``,  ``onUnexpectedError`` and
 /// ``onUnexpectedAsyncError`` implementation for workers without callbacks
-protocol DefaultWorker<PropertiesType, WorkerSpecificationType>: Worker {}
+public protocol DefaultWorker<PropertiesType, WorkerSpecificationType>: Worker {}
 
 /// A protocol used to avoid duplication of default ``doWork``, ``doWhenStopped``,  ``onUnexpectedError`` and
 /// ``onUnexpectedAsyncError`` implementation for workers with a callback
-protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
+public protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
     var callbackFunction: ResultHandler<Void> { get set }
 }
 
-extension DefaultWorker {
+public extension DefaultWorker {
     func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
         properties
     }
@@ -69,7 +69,7 @@ extension DefaultWorker {
     func onUnexpectedAsyncError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {}
 }
 
-extension CallbackWorker {
+public extension CallbackWorker {
     func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
         properties
     }

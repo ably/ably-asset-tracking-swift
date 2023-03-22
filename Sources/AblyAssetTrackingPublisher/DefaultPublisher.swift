@@ -958,7 +958,7 @@ extension DefaultPublisher: AblyPublisherDelegate {
 
     func ablyPublisher(
         _ sender: AblyPublisher,
-        didReceivePresenceUpdate presence: Presence,
+        didReceivePresenceUpdate presence: PresenceMessage,
         forTrackable trackable: Trackable,
         presenceData: PresenceData,
         clientId: String

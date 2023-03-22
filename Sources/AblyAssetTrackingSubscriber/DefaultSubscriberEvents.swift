@@ -28,7 +28,7 @@ extension DefaultSubscriber {
         }
 
         struct PresenceUpdateEvent {
-            let presence: Presence
+            let presence: PresenceMessage
         }
 
         struct AblyConnectionClosedEvent {

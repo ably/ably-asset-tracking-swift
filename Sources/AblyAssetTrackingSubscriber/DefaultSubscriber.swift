@@ -303,7 +303,7 @@ extension DefaultSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberDelegate {
-    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence) {
+    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: PresenceMessage) {
         logHandler?.debug(message: "ablySubscriber.didReceivePresenceUpdate. Presence: \(presence)", error: nil)
         enqueue(event: .presenceUpdate(.init(presence: presence)))
     }
