@@ -153,8 +153,7 @@ struct CreatePublisherView: View {
                             do {
                                 publisher = try await viewModel.createPublisher()
                                 isShowingPublisherDetailsView = true
-                            }
-                            catch {
+                            } catch {
                                 self.error = .init(error: error)
                                 showAlert = true
                             }
@@ -176,7 +175,7 @@ struct CreatePublisherView: View {
                 
                 Section {
                 } header: {
-                    HStack{
+                    HStack {
                         Spacer()
                         Image("ably-logo", bundle: nil)
                             .resizable()

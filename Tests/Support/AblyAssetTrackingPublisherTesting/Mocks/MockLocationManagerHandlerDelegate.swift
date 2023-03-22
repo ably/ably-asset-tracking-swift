@@ -38,5 +38,4 @@ public class MockPassiveLocationManagerHandlerDelegate: PassiveLocationManagerHa
         passiveLocationManagerHandlerErrorDidFailWithErrorCalled = true
         passiveLocationManagerHandlerErrorDidFailWithErrorParamError = error
     }
-    
 }

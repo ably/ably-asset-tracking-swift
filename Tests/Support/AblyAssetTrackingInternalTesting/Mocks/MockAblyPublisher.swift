@@ -115,7 +115,7 @@ public class MockAblyPublisher: AblyPublisher {
     public var updatePresenceDataTrackableId: String?
     public var updatePresenceDataPresenceData: PresenceData?
     public var updatePresenceDataCompletion: ResultHandler<Void>?
-    public var updatePresenceDataCompletionHandler: ((ResultHandler<Void>?) -> ())?
+    public var updatePresenceDataCompletionHandler: ((ResultHandler<Void>?) -> Void)?
     public func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?) {
         updatePresenceDataWasCalled = true
         updatePresenceDataTrackableId = trackableId

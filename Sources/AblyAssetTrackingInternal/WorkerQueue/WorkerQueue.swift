@@ -31,7 +31,6 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
         self.asyncWorkQueue = asyncWorkWorkingQueue
     }
     
-    
     /// Enqueue worker created from passed specification for execution.
     /// - parameters:
     ///    - workRequest: an identifiable wrapper for the  ``WorkRequest.workerSpecification`` that contains the specification
@@ -48,8 +47,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
             do {
                 if self.properties.isStopped {
                     worker.doWhenStopped(error: self.getStoppedError())
-                }
-                else {
+                } else {
                     workerLogHandler?.verbose(message: "Worker Queue's properties before invoking doWork on \(type(of: worker)): \(self.properties)", error: nil)
                     workerLogHandler?.debug(message: "Worker Queue invoking doWork on \(type(of: worker))", error: nil)
                     try self.properties = worker.doWork(properties: self.properties) { asyncWork in
@@ -72,8 +70,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
                         self.enqueue(workRequest: WorkRequest(workerSpecification: postWorker))
                     }
                 }
-            }
-            catch {
+            } catch {
                 workerLogHandler?.error(message: "Unexpected error thrown from the synchronous work of \(type(of: worker)). Worker Queue invoking onUnexpectedError", error: error)
                 worker.onUnexpectedError(error: error) { postWorker in
                     self.enqueue(workRequest: WorkRequest(workerSpecification: postWorker))

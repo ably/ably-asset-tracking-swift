@@ -46,7 +46,6 @@ class AddTrackableViewModel: ObservableObject {
         }
         return String(longitude)
     }
-
     
     func createTrackable() -> Trackable {
         let constraints: ResolutionConstraints?

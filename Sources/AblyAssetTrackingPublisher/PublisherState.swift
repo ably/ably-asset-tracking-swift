@@ -1,6 +1,5 @@
 import Foundation
 
-
 enum PublisherState {
     /// This state is when the publisher has not been stopped, but has no trackables added
     /// and ideally, not connected to Ably.

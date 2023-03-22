@@ -42,11 +42,11 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
     override func setUpWithError() throws { }
     override func tearDownWithError() throws { }
 
-    func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws{
+    func testSubscriberReceivesPublisherMessageWithBicycleProfile() throws {
         try subscriberReceivesPublisherMessage(vehicleProfile: .bicycle)
     }
     
-    func testSubscriberReceivesPublisherMessageWithCarProfile() throws{
+    func testSubscriberReceivesPublisherMessageWithCarProfile() throws {
         try subscriberReceivesPublisherMessage(vehicleProfile: .car)
     }
     
@@ -97,7 +97,6 @@ class PublisherAndSubscriberSystemTests: XCTestCase {
             isSendResolutionEnabled: true,
             logHandler: publisherInternalLogHandler
         )
-        
         
         let trackable = Trackable(id: trackableId)
         didUpdateEnhancedLocationExpectation.expectedFulfillmentCount = Int(floor(Double(locationsData.locations.count)/2.0))

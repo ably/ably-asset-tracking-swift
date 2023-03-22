@@ -19,7 +19,7 @@ class TrackableTests: XCTestCase {
     
     func test_TrackableComparision_ShouldBeEqual() {
         let givenTrackable = Trackable(id: "1")
-        let trackableToCompare = trackables.first(where: { $0.id == "1"})
+        let trackableToCompare = trackables.first(where: { $0.id == "1" })
         
         XCTAssertNil(givenTrackable.destination)
         XCTAssertNotNil(trackableToCompare?.destination)

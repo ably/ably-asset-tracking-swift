@@ -70,7 +70,7 @@ class CreatePublisherViewModel: ObservableObject {
     
     var vehicleProfiles: [String] {
         [VehicleProfile.bicycle,
-         VehicleProfile.car].map{ $0.description() }
+         VehicleProfile.car].map { $0.description() }
     }
     
     var routingProfiles: [String] {
@@ -132,7 +132,6 @@ class CreatePublisherViewModel: ObservableObject {
             .logHandler(handler: PublisherLogger(logger: logger))
             .vehicleProfile(vehicleProfile)
             .start()
-        
         
         let configInfo = ObservablePublisher.PublisherConfigInfo(areRawLocationsEnabled: areRawLocationsEnabled, constantResolution: constantResolution)
         

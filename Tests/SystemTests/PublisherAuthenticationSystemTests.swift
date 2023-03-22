@@ -69,7 +69,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: keyName)
         )
         
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             guard let tokenDetails = fetchedTokenDetails else {
                 XCTFail("TokenDetails doesn't exist")
                 return
@@ -90,7 +90,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             tokenParams: ARTTokenParams(clientId: keyName)
         )?.token
                 
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             guard let tokenString = fetchedTokenString else {
                 XCTFail("TokenDetails doesn't exist")
                 return
@@ -108,7 +108,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
             return
         }
         
-        let connectionConfiguration = ConnectionConfiguration { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration { _, resultHandler in
             resultHandler(.success(.jwt(jwtToken)))
         }
         
@@ -162,7 +162,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
     }
     
     private func requestToken(withPublisherCapabilitiesForTrackableIds trackableIds: [String], clientId: String) -> TokenDetails? {
-        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String : [String]] in
+        let capabilities = trackableIds.reduce([:]) { capabilities, trackableId -> [String: [String]] in
             var newCapabilities = capabilities
             newCapabilities["tracking:\(trackableId)"] = ["publish", "subscribe", "presence"]
             return newCapabilities
@@ -191,7 +191,7 @@ class PublisherAuthenticationSystemTests: XCTestCase {
         var hasRequestedInitialToken = false
         var hasRequestedUpdatedToken = false
         
-        let connectionConfiguration = ConnectionConfiguration(authCallback: { tokenParams, resultHandler in
+        let connectionConfiguration = ConnectionConfiguration(authCallback: { _, resultHandler in
             if !hasRequestedInitialToken {
                 hasRequestedInitialToken = true
                 resultHandler(.success(.tokenDetails(initialToken)))

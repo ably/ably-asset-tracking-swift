@@ -137,7 +137,6 @@ class UploadsManager: ObservableObject {
         
         performUpload(upload)
     }
-
     
     @MainActor func performUpload(_ upload: Upload) {
         guard let s3Helper = s3Helper else {

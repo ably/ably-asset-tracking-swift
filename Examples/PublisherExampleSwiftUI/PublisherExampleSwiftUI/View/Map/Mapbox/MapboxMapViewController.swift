@@ -17,7 +17,7 @@ class MapboxMapViewController: UIViewController {
     }
     var _center: CLLocationCoordinate2D?
     
-    var onCameraChange: ((CLLocationCoordinate2D) -> ())?
+    var onCameraChange: ((CLLocationCoordinate2D) -> Void)?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
