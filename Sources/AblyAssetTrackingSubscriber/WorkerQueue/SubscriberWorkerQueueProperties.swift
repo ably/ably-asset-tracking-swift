@@ -51,17 +51,17 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         }
     }
     
-    mutating func updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange) {
+    mutating func updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?) {
         lastConnectionStateChange = stateChange
-        delegateStateEventsIfRequired()
+        delegateStateEventsIfRequired(logHandler: logHandler)
     }
     
-    mutating func updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange) {
+    mutating func updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?) {
         lastChannelConnectionStateChange = stateChange
-        delegateStateEventsIfRequired()
+        delegateStateEventsIfRequired(logHandler: logHandler)
     }
     
-    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [PresenceMessage]) {
+    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [PresenceMessage], logHandler: InternalLogHandler?) {
         for presenceMessage in presenceMessages {
             if (presenceMessage.data.type == .publisher) {
                 
@@ -77,10 +77,10 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
                 }
             }
         }
-        delegateStateEventsIfRequired()
+        delegateStateEventsIfRequired(logHandler: logHandler)
     }
     
-    mutating func delegateStateEventsIfRequired() {
+    mutating func delegateStateEventsIfRequired(logHandler: InternalLogHandler?) {
         let isAPublisherPresent = !presentPublisherMemberKeys.isEmpty
         
         var trackableState: ConnectionState?
@@ -103,7 +103,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         
         if let trackableState = trackableState, trackableState != lastEmittedTrackableState {
             lastEmittedTrackableState = trackableState
-            notifyTrackableStateUpdated(trackableState: trackableState)
+            notifyTrackableStateUpdated(trackableState: trackableState, logHandler: logHandler)
         }
         // It is possible for presentPublisherMemberKeys to not be empty, even when there's no connectivity from our side,
         // because it's possible to have presence entry events without subsequent leave events.
@@ -118,10 +118,10 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         
         if lastEmittedValueOfIsPublisherVisible != isPublisherVisible {
             lastEmittedValueOfIsPublisherVisible = isPublisherVisible
-            notifyPublisherPresenceUpdated(isPublisherPresent: isPublisherVisible)
+            notifyPublisherPresenceUpdated(isPublisherPresent: isPublisherVisible, logHandler: logHandler)
         }
         
-        notifyResolutionsChanged(resolutions: pendingPublisherResolutions.drain())
+        notifyResolutionsChanged(resolutions: pendingPublisherResolutions.drain(), logHandler: logHandler)
     }
     
     mutating func notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate) {
@@ -131,34 +131,34 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         delegate?.subscriber(sender: subscriber, didUpdateEnhancedLocation: locationUpdate)
     }
     
-    mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate) {
+    mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?) {
         rawLocation = locationUpdate
         guard let subscriber = subscriber
         else { return }
         delegate?.subscriber(sender: subscriber, didUpdateRawLocation: locationUpdate)
     }
     
-    mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool) {
+    mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool, logHandler: InternalLogHandler?) {
         publisherPresence = isPublisherPresent
         guard let subscriber = subscriber
         else { return }
         delegate?.subscriber(sender: subscriber, didUpdatePublisherPresence: publisherPresence)
     }
     
-    mutating func notifyTrackableStateUpdated(trackableState: ConnectionState) {
+    mutating func notifyTrackableStateUpdated(trackableState: ConnectionState, logHandler: InternalLogHandler?) {
         self.trackableState = trackableState
         guard let subscriber = subscriber
         else { return }
         delegate?.subscriber(sender: subscriber, didChangeAssetConnectionStatus: trackableState)
     }
     
-    mutating func notifyDidFailWithError(error: ErrorInformation) {
+    mutating func notifyDidFailWithError(error: ErrorInformation, logHandler: InternalLogHandler?) {
         guard let subscriber = subscriber
         else { return }
         delegate?.subscriber(sender: subscriber, didFailWithError: error)
     }
     
-    mutating func notifyResolutionsChanged(resolutions: [Resolution]) {
+    mutating func notifyResolutionsChanged(resolutions: [Resolution], logHandler: InternalLogHandler?) {
         if !resolutions.isEmpty {
             for resolution in resolutions {
                 self.resolution = resolution
