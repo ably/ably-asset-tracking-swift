@@ -4,7 +4,7 @@ import AblyAssetTrackingInternal
 struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     public var isStopped = false
     var presenceData: PresenceData
-    let ablySubscriber: Subscriber
+    weak var subscriber: Subscriber?
     
     private var updatingResolutions: [String: [Resolution?]] = [:]
     private var presentPublisherMemberKeys: Set<String> = []
@@ -23,9 +23,8 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     
     weak var delegate: SubscriberDelegate?
     
-    public init(initialResolution: Resolution?, ablySubscriber: Subscriber) {
+    public init(initialResolution: Resolution?) {
         self.presenceData = PresenceData(type: .subscriber, resolution: initialResolution)
-        self.ablySubscriber = ablySubscriber
     }
     
     mutating func addUpdatingResolution(trackableId: String, resolution: Resolution?) {
@@ -131,26 +130,36 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     
     mutating func notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate) {
         enhancedLocation = locationUpdate
-        delegate?.subscriber(sender: ablySubscriber, didUpdateEnhancedLocation: locationUpdate)
+        guard let subscriber = subscriber
+        else { return }
+        delegate?.subscriber(sender: subscriber, didUpdateEnhancedLocation: locationUpdate)
     }
     
     mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate) {
         rawLocation = locationUpdate
-        delegate?.subscriber(sender: ablySubscriber, didUpdateRawLocation: locationUpdate)
+        guard let subscriber = subscriber
+        else { return }
+        delegate?.subscriber(sender: subscriber, didUpdateRawLocation: locationUpdate)
     }
     
     mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool) {
         publisherPresence = isPublisherPresent
-        delegate?.subscriber(sender: ablySubscriber, didUpdatePublisherPresence: publisherPresence)
+        guard let subscriber = subscriber
+        else { return }
+        delegate?.subscriber(sender: subscriber, didUpdatePublisherPresence: publisherPresence)
     }
     
     mutating func notifyTrackableStateUpdated(trackableState: ConnectionState) {
         self.trackableState = trackableState
-        delegate?.subscriber(sender: ablySubscriber, didChangeAssetConnectionStatus: trackableState)
+        guard let subscriber = subscriber
+        else { return }
+        delegate?.subscriber(sender: subscriber, didChangeAssetConnectionStatus: trackableState)
     }
     
     mutating func notifyDidFailWithError(error: ErrorInformation) {
-        delegate?.subscriber(sender: ablySubscriber, didFailWithError: error)
+        guard let subscriber = subscriber
+        else { return }
+        delegate?.subscriber(sender: subscriber, didFailWithError: error)
     }
     
     mutating func notifyResolutionsChanged(resolutions: [Resolution]) {
@@ -158,9 +167,10 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
             for resolution in resolutions {
                 self.resolution = resolution
                 self.nextLocationUpdateInterval = resolution.desiredInterval
-
-                delegate?.subscriber(sender: ablySubscriber, didUpdateResolution: resolution)
-                delegate?.subscriber(sender: ablySubscriber, didUpdateDesiredInterval: resolution.desiredInterval)
+                guard let subscriber = subscriber
+                else { return }
+                delegate?.subscriber(sender: subscriber, didUpdateResolution: resolution)
+                delegate?.subscriber(sender: subscriber, didUpdateDesiredInterval: resolution.desiredInterval)
             }
         }
     }

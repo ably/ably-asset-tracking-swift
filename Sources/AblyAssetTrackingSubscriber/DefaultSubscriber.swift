@@ -15,7 +15,7 @@ private enum SubscriberState {
 }
 
 class DefaultSubscriber: Subscriber {
-    private var workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>?
+    private var workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
@@ -43,15 +43,22 @@ class DefaultSubscriber: Subscriber {
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
         
         self.ablySubscriber.subscribeForAblyStateChange()
+            
+        self.workerQueue = WorkerQueue(
+            properties: SubscriberWorkerQueueProperties(initialResolution: resolution),
+            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
+            logHandler: self.logHandler,
+            workerFactory: SubscriberWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
+            getStoppedError: { return ErrorInformation(type: .subscriberStoppedException)}
+        )
         self.ablySubscriber.subscriberDelegate = self
 
+        self.workerQueue.properties.subscriber = self
     }
     
     /// This method needs to be called before attempting to execute any work using Workers. It's called automatically if DefaultSubscriber is instantiated using the
     /// ``DefaultSubscriberBuilder``.
-    func configureWorkerQueue(workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>) {
-        self.workerQueue = workerQueue
-    }
 
     func resolutionPreference(resolution: Resolution?, completion publicCompletion: @escaping ResultHandler<Void>) {
         logHandler?.logPublicAPICall(label: "resolutionPreference(\(String(describing: resolution)))")
@@ -286,10 +293,6 @@ extension DefaultSubscriber {
 
     // MARK: Utils
     private func performOnWorkingThread(_ operation: @escaping () -> Void) {
-        guard let workerQueue = workerQueue
-        else {
-            fatalError("workerQueue has to be configured using the DefaultSubscriber.configureWorkerQueue before attempting to enqueue work on it.")
-        }
         workerQueue.enqueue(
             workRequest: WorkRequest<SubscriberWorkSpecification>(
                 workerSpecification: SubscriberWorkSpecification.legacy(callback: operation)

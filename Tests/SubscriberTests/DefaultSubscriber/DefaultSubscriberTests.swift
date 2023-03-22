@@ -24,15 +24,6 @@ class DefaultSubscriberTests: XCTestCase {
             resolution: nil,
             logHandler: logger
         )
-        let workerQueue = WorkerQueue(
-            properties: SubscriberWorkerQueueProperties(initialResolution: nil, ablySubscriber: subscriber),
-            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
-            logHandler: logger,
-            workerFactory: SubscriberWorkerFactory(),
-            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
-            getStoppedError: { return ErrorInformation(type: .subscriberStoppedException)}
-        )
-        subscriber.configureWorkerQueue(workerQueue: workerQueue)
     }
     
     func test_subscriberStop_called() {

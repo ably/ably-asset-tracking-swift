@@ -5,7 +5,7 @@ import AblyAssetTrackingCore
 /**
  Main `Subscriber` interface implemented in SDK by `DefaultSubscriber`
  */
-public protocol Subscriber {
+public protocol Subscriber: AnyObject {
     /**
      Delegate object to receive events from `Subscriber`.
      It maintains a weak reference to your delegate, so ensure to maintain your own strong reference as well.

@@ -25,18 +25,17 @@ class SubscriberWorkerFactoryTests: XCTestCase
             logHandler: logger
         )
         
-        properties = SubscriberWorkerQueueProperties(initialResolution: Resolution(accuracy: .balanced, desiredInterval: 1.0, minimumDisplacement: 1.0), ablySubscriber: subscriber!)
+        properties = SubscriberWorkerQueueProperties(initialResolution: Resolution(accuracy: .balanced, desiredInterval: 1.0, minimumDisplacement: 1.0))
         
         let workerQueue = WorkerQueue(
-            properties: SubscriberWorkerQueueProperties(initialResolution: nil, ablySubscriber: subscriber!),
+            properties: SubscriberWorkerQueueProperties(initialResolution: nil),
             workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
             logHandler: logger,
             workerFactory: SubscriberWorkerFactory(),
             asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
             getStoppedError: { return ErrorInformation(type: .subscriberStoppedException)}
         )
-        subscriber?.configureWorkerQueue(workerQueue: workerQueue)
-
+        workerQueue.properties.subscriber = subscriber
     }
     
     func test_ItBuildsLegacyWork()
