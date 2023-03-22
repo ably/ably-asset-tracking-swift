@@ -429,7 +429,7 @@ class DefaultSubscriberTests: XCTestCase {
             delegateDidFailWithErrorCalledExpectation.fulfill()
         }
 
-        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceUpdate: .init(action: presenceAction, type: .publisher))
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceMessage: .init(action: presenceAction, type: .publisher))
 
         waitForExpectations(timeout: 10)
     }

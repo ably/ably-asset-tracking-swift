@@ -30,7 +30,7 @@ public protocol AblyPublisherDelegate: AnyObject {
     func ablyPublisher(_ sender: AblyPublisher, didFailWithError error: ErrorInformation)
 
     /**
-     Tells the delegate that channel presence data was changed.
+     Tells the delegate that a presence message was received on a channel.
      
      - Parameter sender:        The `AblyPublisher` object which is delegating the change.
      - Parameter presence:      The `PresenceMessage` object affected by the change.
@@ -40,7 +40,7 @@ public protocol AblyPublisherDelegate: AnyObject {
      */
     func ablyPublisher(
         _ sender: AblyPublisher,
-        didReceivePresenceUpdate presence: PresenceMessage,
+        didReceivePresenceMessage presence: PresenceMessage,
         forTrackable trackable: Trackable,
         presenceData: PresenceData,
         clientId: String

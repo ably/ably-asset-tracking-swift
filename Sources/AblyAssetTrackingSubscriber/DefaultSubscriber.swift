@@ -107,8 +107,8 @@ extension DefaultSubscriber {
                 self?.performClientConnectionChanged(event)
             case .ablyChannelConnectionStateChanged(let event):
                 self?.performChannelConnectionChanged(event)
-            case .presenceUpdate(let event):
-                self?.performPresenceUpdated(event)
+            case .presenceMessageReceived(let event):
+                self?.performPresenceMessageReceived(event)
             case .ablyError(let event):
                 self?.performAblyError(event)
             }
@@ -202,7 +202,7 @@ extension DefaultSubscriber {
         }
     }
 
-    private func performPresenceUpdated(_ event: Event.PresenceUpdateEvent) {
+    private func performPresenceMessageReceived(_ event: Event.PresenceMessageReceivedEvent) {
         guard event.presence.type == .publisher else {
             return
         }
@@ -320,9 +320,9 @@ extension DefaultSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberDelegate {
-    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: PresenceMessage) {
-        logHandler?.debug(message: "ablySubscriber.didReceivePresenceUpdate. Presence: \(presence)", error: nil)
-        enqueue(event: .presenceUpdate(.init(presence: presence)))
+    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceMessage presence: PresenceMessage) {
+        logHandler?.debug(message: "ablySubscriber.didReceivePresenceMessage. Presence: \(presence)", error: nil)
+        enqueue(event: .presenceMessageReceived(.init(presence: presence)))
     }
 
     func ablySubscriber(_ sender: AblySubscriber, didChangeClientConnectionState state: ConnectionState) {
