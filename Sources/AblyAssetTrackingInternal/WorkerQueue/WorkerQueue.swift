@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /// The WorkerQueue is responsible for enqueueing ``Worker``s and executing them.
 /// It internally manages a ``PropertiesType`` variable, starting from the value passed to the initializer, and then based on the work of the subsequent workers.
@@ -20,9 +20,16 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
     let workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>
     let getStoppedError: () -> Error
     let asyncWorkQueue: DispatchQueue
-    
-    public init(properties: PropertiesType, workingQueue: DispatchQueue, logHandler: InternalLogHandler?, workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>, asyncWorkWorkingQueue: DispatchQueue,
- getStoppedError: @escaping () -> Error) {
+
+    // swiftlint:disable:next missing_docs
+    public init(
+        properties: PropertiesType,
+        workingQueue: DispatchQueue,
+        logHandler: InternalLogHandler?,
+        workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>,
+        asyncWorkWorkingQueue: DispatchQueue,
+        getStoppedError: @escaping () -> Error
+    ) {
         self.properties = properties
         self.workingQueue = workingQueue
         self.logHandler = logHandler?.addingSubsystem(Self.self)
@@ -30,7 +37,7 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
         self.getStoppedError = getStoppedError
         self.asyncWorkQueue = asyncWorkWorkingQueue
     }
-    
+
     /// Enqueue worker created from passed specification for execution.
     /// - parameters:
     ///    - workRequest: an identifiable wrapper for the  ``WorkRequest.workerSpecification`` that contains the specification
@@ -41,26 +48,27 @@ public class WorkerQueue<PropertiesType, WorkerSpecificationType> where Properti
 
         workerLogHandler?.debug(message: "Worker Queue enqueued worker: \(type(of: worker))", error: nil)
         workingQueue.async { [weak self] in
-            guard let self = self
+            guard let self
             else { return }
-            
+
             do {
                 if self.properties.isStopped {
                     worker.doWhenStopped(error: self.getStoppedError())
                 } else {
                     workerLogHandler?.verbose(message: "Worker Queue's properties before invoking doWork on \(type(of: worker)): \(self.properties)", error: nil)
                     workerLogHandler?.debug(message: "Worker Queue invoking doWork on \(type(of: worker))", error: nil)
+                    // swiftlint:disable:next multiline_arguments
                     try self.properties = worker.doWork(properties: self.properties) { asyncWork in
                         self.asyncWorkQueue.async {
                             workerLogHandler?.debug(message: "Performing async work posted by worker \(type(of: worker))", error: nil)
-                            asyncWork({ error in
-                                if let error = error {
+                            asyncWork { error in
+                                if let error {
                                     workerLogHandler?.error(message: "Unexpected error in completion handler of the asynchronous work of \(type(of: worker)). Worker Queue invoking onUnexpectedAsyncError", error: error)
                                     worker.onUnexpectedAsyncError(error: error) { asyncErrorWorker in
                                         self.enqueue(workRequest: WorkRequest(workerSpecification: asyncErrorWorker))
                                     }
                                 }
-                            })
+                            }
                         }
                         workerLogHandler?.debug(message: "Worker \(type(of: worker)) finished doWork", error: nil)
                         workerLogHandler?.verbose(message: "Worker Queue's properties after executing doWork on \(type(of: worker)): \(self.properties)", error: nil)

@@ -1,3 +1,4 @@
+// swiftlint:disable missing_docs
 public enum PresenceAction {
     case absent
     case present

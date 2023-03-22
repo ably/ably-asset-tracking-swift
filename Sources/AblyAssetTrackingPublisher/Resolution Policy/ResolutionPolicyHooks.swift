@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /**
  Defines the methods which can be called by a resolution policy when it is created.
@@ -89,10 +89,12 @@ public protocol SubscriberSetListener {
     func onSubscriberRemoved(subscriber: Subscriber)
  }
 
+// swiftlint:disable:next missing_docs
 public class Subscriber {
     let id: String
     let trackable: Trackable
 
+    // swiftlint:disable:next missing_docs
     public init(id: String, trackable: Trackable) {
         self.id = id
         self.trackable = trackable
@@ -104,7 +106,7 @@ extension Subscriber: Hashable, Equatable {
         hasher.combine(id)
         hasher.combine(trackable)
     }
-    
+
     public static func == (lhs: Subscriber, rhs: Subscriber) -> Bool {
         lhs.id == rhs.id && lhs.trackable == rhs.trackable
     }

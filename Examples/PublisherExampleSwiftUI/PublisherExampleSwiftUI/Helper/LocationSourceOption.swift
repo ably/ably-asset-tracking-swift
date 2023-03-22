@@ -14,7 +14,7 @@ extension LocationSourceOption {
             return "S3 file"
         }
     }
-    
+
     static func fromDescription(description: String) -> LocationSourceOption {
         switch description {
         case "phone":
@@ -22,7 +22,7 @@ extension LocationSourceOption {
         case "S3 file":
             return .s3File
         default:
-            fatalError()
+            fatalError("Unknown \(Self.self) for description \(description)")
         }
     }
 }

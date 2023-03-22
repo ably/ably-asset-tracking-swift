@@ -10,7 +10,6 @@ class JWTHelper {
         jwtType: String = "",
         encrypted: Int = 0
     ) -> String? {
-        
         let keyTokens = Secrets.ablyApiKey.split(separator: ":")
         let keyName = String(keyTokens[0])
         var keySecret = String(keyTokens[1])
@@ -29,7 +28,7 @@ class JWTHelper {
             URLQueryItem(name: "encrypted", value: String(encrypted)),
             URLQueryItem(name: "environment", value: "sandbox")
         ]
-        
+
         let request = NSMutableURLRequest(url: urlComponents!.url!)
         let (responseData, responseError, _) = URLSessionServerTrustSync().get(request)
         if let error = responseError {

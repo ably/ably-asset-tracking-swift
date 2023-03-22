@@ -1,27 +1,32 @@
-import UIKit
 import AblyAssetTrackingSubscriber
+import UIKit
 
 extension Accuracy {
     var description: String {
         switch self {
-        case .minimum: return "Minimum"
-        case .low: return "Low"
-        case .balanced: return "Balanced"
-        case .high: return "High"
-        case .maximum: return "Maximum"
+        case .minimum:
+            return "Minimum"
+        case .low:
+            return "Low"
+        case .balanced:
+            return "Balanced"
+        case .high:
+            return "High"
+        case .maximum:
+            return "Maximum"
         }
     }
 }
 
-class DescriptionsHelper {
+enum DescriptionsHelper {
     // MARK: - ResolutionState
     enum ResolutionState {
         case none
         case notEmpty(_: Resolution)
         case changeError(_: ErrorInformation)
     }
-    
-    class ResolutionStateHelper {
+
+    enum ResolutionStateHelper {
         static func getDescription(for state: ResolutionState) -> String {
             switch state {
             case .none:
@@ -38,18 +43,18 @@ class DescriptionsHelper {
             }
         }
     }
-    
+
     enum AssetState {
         case connectionState(_: ConnectionState?)
         case subscriberPresence(isPresent: Bool?)
     }
-    
+
     // MARK: - AssetConnectionState
-    class AssetStateHelper {
+    enum AssetStateHelper {
         static func getDescriptionAndColor(for state: AssetState) -> (desc: String, color: UIColor) {
             switch state {
             case .connectionState(let connectionState):
-                if let connectionState = connectionState {
+                if let connectionState {
                     switch connectionState {
                     case .online:
                         return ("online", .systemGreen)
@@ -62,7 +67,7 @@ class DescriptionsHelper {
                     return ("The asset connection status is not determined", .black)
                 }
             case .subscriberPresence(let isPresent):
-                if let isPresent = isPresent {
+                if let isPresent {
                     if isPresent {
                         return ("present", .systemGreen)
                     } else {

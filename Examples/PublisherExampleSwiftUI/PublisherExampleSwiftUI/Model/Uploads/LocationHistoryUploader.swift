@@ -8,17 +8,17 @@ protocol LocationHistoryDataHandlerProtocol {
 
 class LocationHistoryDataUploader: LocationHistoryDataHandlerProtocol {
     private let uploadsManager: UploadsManager
-    
+
     init(uploadsManager: UploadsManager) {
         self.uploadsManager = uploadsManager
     }
-    
+
     func handleLocationHistoryData(_ locationHistoryData: LocationHistoryData) {
         Task { @MainActor in
             uploadsManager.upload(locationHistoryData: locationHistoryData)
         }
     }
-    
+
     func handleRawMapboxData(inTemporaryFile temporaryFile: TemporaryFile) {
         Task { @MainActor in
             uploadsManager.uploadRawMapboxData(inTemporaryFile: temporaryFile)

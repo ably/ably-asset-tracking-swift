@@ -1,6 +1,7 @@
 import AblyAssetTrackingCore
 
 public extension PresenceAction {
+    // swiftlint:disable:next missing_docs
     func toConnectionState() -> ConnectionState {
         switch self {
         case .enter, .present, .update:
@@ -9,12 +10,14 @@ public extension PresenceAction {
             return .offline
         }
     }
-    
+
+    // swiftlint:disable:next missing_docs
     var isLeaveOrAbsent: Bool {
-        return self == .leave || self == .absent
+        self == .leave || self == .absent
     }
-    
+
+    // swiftlint:disable:next missing_docs
     var isPresentOrEnter: Bool {
-        return self == .present || self == .enter
+        self == .present || self == .enter
     }
 }

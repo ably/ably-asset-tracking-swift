@@ -3,7 +3,6 @@
  All properties match properties from `CLLocation`.
  */
 struct GeoJSONProperties: Codable {
-
     /**
      Object horizontal accuracy in meters.
      */
@@ -56,10 +55,10 @@ struct GeoJSONProperties: Codable {
         if let accuracyValidationError = LocationValidator.isAccuracyValid(horizontalAccuracy) {
             throw accuracyValidationError
         }
-        
+
         accuracyHorizontal = horizontalAccuracy
         time = try container.decode(Double.self, forKey: .time)
-        
+
         floor = try? container.decode(Int.self, forKey: .floor)
         speed = try? container.decode(Double.self, forKey: .speed).isLessThanZeroThenNil()
         accuracySpeed = try? container.decode(Double.self, forKey: .accuracySpeed).isLessThanZeroThenNil()
@@ -72,16 +71,16 @@ struct GeoJSONProperties: Codable {
         if let accuracyValidationError = LocationValidator.isAccuracyValid(location.horizontalAccuracy) {
             throw accuracyValidationError
         }
-        
+
         accuracyHorizontal = location.horizontalAccuracy
         time = location.timestamp
-        
+
         floor = location.floorLevel
         speed = location.speed.isLessThanZeroThenNil()
         accuracySpeed = location.speedAccuracy.isLessThanZeroThenNil()
         accuracyVertical = location.verticalAccuracy.isLessThanZeroThenNil()
         bearing = location.course.isLessThanZeroThenNil()
-        
+
         if #available(iOS 13.4, *) {
             accuracyBearing = location.courseAccuracy.isLessThanZeroThenNil()
         } else {
@@ -92,16 +91,16 @@ struct GeoJSONProperties: Codable {
 
 private extension Optional where Wrapped == Double {
     func isLessThanZeroThenNil() -> Double? {
-        guard let value = self else {
+        guard let self else {
             return nil
         }
-        
-        return value.isLessThanZeroThenNil()
+
+        return self.isLessThanZeroThenNil()
     }
 }
 
 private extension Double {
     func isLessThanZeroThenNil() -> Double? {
-        return self.isLess(than: 0) ? nil : self
+        self.isLess(than: 0) ? nil : self
     }
 }

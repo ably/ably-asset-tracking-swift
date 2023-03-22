@@ -1,15 +1,15 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /**
- Factory class used only to get `SubscriberBuilder`
+ Factory used only to get `SubscriberBuilder`
  */
-public class SubscriberFactory {
+public enum SubscriberFactory {
     /**
      Returns the default state of the `SubscriberBuilder`, which is incapable of starting of  `Subscriber`
      instances until it has been configured fully.
      */
     public static func subscribers() -> SubscriberBuilder {
-        return DefaultSubscriberBuilder()
+        DefaultSubscriberBuilder()
     }
 }

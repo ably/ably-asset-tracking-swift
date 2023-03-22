@@ -1,8 +1,6 @@
-//
-
-import SwiftUI
 import AblyAssetTrackingPublisher
 import Logging
+import SwiftUI
 
 struct CreatePublisherView: View {
     @StateObject private var viewModel: CreatePublisherViewModel
@@ -17,20 +15,21 @@ struct CreatePublisherView: View {
     @State private var error: ErrorInformation?
     @State private var showAlert = false
     @Environment(\.colorScheme) var colorScheme
-        
+
     private var s3Helper: S3Helper?
 
     init(logger: Logger, s3Helper: S3Helper? = nil, locationHistoryDataHandler: LocationHistoryDataHandlerProtocol? = nil) {
         self.s3Helper = s3Helper
         _viewModel = StateObject(wrappedValue: CreatePublisherViewModel(logger: logger, s3Helper: s3Helper, locationHistoryDataHandler: locationHistoryDataHandler))
     }
-    
+
     var body: some View {
         VStack {
             // https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-programmatic-navigation-in-swiftui
+            // swiftlint:disable:next multiline_arguments
             NavigationLink(isActive: $isShowingPublisherDetailsView) {
                 // This seems a bit dodgy, not really sure of the right way to pass data to the destination of a NavigationLink
-                if let publisher = publisher {
+                if let publisher {
                     PublisherDetailsView(publisher: publisher)
                 } else {
                     EmptyView()
@@ -38,7 +37,7 @@ struct CreatePublisherView: View {
             } label: {
                 EmptyView()
             }
-            
+
             List {
                 Section {
                     TitleValueListItem(title: "Desired Accuracy", value: viewModel.constantResolutionAccuracy)
@@ -67,7 +66,7 @@ struct CreatePublisherView: View {
                         Toggle(isOn: $viewModel.isConstantResolutionEnabled) {}
                     }
                 }
-                
+
                 Section {
                     Toggle(isOn: $viewModel.areRawLocationsEnabled) {
                         Text("Raw locations enabled")
@@ -75,7 +74,7 @@ struct CreatePublisherView: View {
                 } header: {
                     Text("Other settings")
                 }
-                
+
                 Section {
                     TitleValueListItem(title: "Location Source", value: viewModel.locationSource.description())
                         .onTapGesture {
@@ -140,14 +139,14 @@ struct CreatePublisherView: View {
                 } header: {
                     Text("Navigation Settings")
                 }
-                
+
                 Section {
                     Button {
                         isCreatingPublisher = true
                         // This is a temporary workaround so that the keyboard is no longer present if we
                         // navigate back to this screen. We can remove it after the fix to #421 below.
                         UIApplication.endEditing(true)
-                        
+
                         viewModel.save()
                         Task {
                             do {
@@ -172,7 +171,7 @@ struct CreatePublisherView: View {
                         .init(title: "Failed to create publisher", errorInformation: error)
                     }
                 }
-                
+
                 Section {
                 } header: {
                     HStack {

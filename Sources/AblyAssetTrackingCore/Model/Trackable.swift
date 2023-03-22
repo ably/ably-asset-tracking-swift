@@ -19,18 +19,24 @@ public class Trackable {
      */
     public let constraints: ResolutionConstraints?
 
-    public init(id: String,
-                destination: LocationCoordinate? = nil,
-                constraints: ResolutionConstraints? = nil) {
+    // swiftlint:disable:next missing_docs
+    public init(
+        id: String,
+        destination: LocationCoordinate? = nil,
+        constraints: ResolutionConstraints? = nil
+    ) {
         self.id = id
         self.destination = destination
         self.constraints = constraints
     }
-    
-    public init(id: String,
-                metadata: String? = nil,
-                destination: LocationCoordinate,
-                constraints: ResolutionConstraints? = nil) {
+
+    // swiftlint:disable:next missing_docs
+    public init(
+        id: String,
+        metadata: String? = nil,
+        destination: LocationCoordinate,
+        constraints: ResolutionConstraints? = nil
+    ) {
         self.id = id
         self.destination = (destination.latitude == 0 && destination.longitude == 0) ? nil : destination
         self.constraints = constraints
@@ -41,7 +47,7 @@ extension Trackable: Hashable, Equatable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
+
     public static func == (lhs: Trackable, rhs: Trackable) -> Bool {
         lhs.id == rhs.id
     }

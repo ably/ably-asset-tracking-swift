@@ -1,9 +1,9 @@
 import Foundation
 
+// sourcery: AutoMockable
 /**
  * Simple protocol that allows to handle logs sent from the SDK.
  */
-// sourcery: AutoMockable
 public protocol LogHandler {
     /**
      * Gets called when a log message is sent from the SDK.
@@ -18,9 +18,11 @@ public protocol LogHandler {
  * Defines importance levels for log messages.
  */
 public enum LogLevel {
+    // swiftlint:disable missing_docs
     case verbose
     case info
     case debug
     case warn
     case error
+    // swiftlint:enable missing_docs
 }

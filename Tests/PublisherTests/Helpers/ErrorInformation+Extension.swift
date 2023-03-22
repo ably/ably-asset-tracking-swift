@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 extension ErrorInformation {
     func isEqual(to error: ErrorInformation) -> Bool {

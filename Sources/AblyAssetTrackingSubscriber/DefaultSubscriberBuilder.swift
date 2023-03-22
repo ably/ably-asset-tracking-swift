@@ -1,6 +1,6 @@
-import UIKit
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import UIKit
 
 class DefaultSubscriberBuilder: SubscriberBuilder {
     private var connection: ConnectionConfiguration?
@@ -11,11 +11,13 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
 
     init() { }
 
-    private init(connection: ConnectionConfiguration?,
-                 trackingId: String?,
-                 resolution: Resolution?,
-                 logHandler: LogHandler?,
-                 delegate: SubscriberDelegate?) {
+    private init(
+        connection: ConnectionConfiguration?,
+        trackingId: String?,
+        resolution: Resolution?,
+        logHandler: LogHandler?,
+        delegate: SubscriberDelegate?
+    ) {
         self.connection = connection
         self.trackingId = trackingId
         self.resolution = resolution
@@ -24,22 +26,24 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     }
 
     func start(completion: @escaping ResultHandler<Void>) -> Subscriber? {
-        guard let connection = connection
+        guard let connection
         else {
             let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "ConnectionConfiguration", forBuilderOption: "connection"))
             completion(.failure(error))
             return nil
         }
 
-        guard let trackingId = trackingId
+        guard let trackingId
         else {
             let error = ErrorInformation(type: .incompleteConfiguration(missingProperty: "TrackingId", forBuilderOption: "trackingId"))
             completion(.failure(error))
             return nil
         }
-        
-        let internalLogHandler = DefaultInternalLogHandler(logHandler: logHandler,
-                                                           subsystems: [.assetTracking, .named("subscriber")])
+
+        let internalLogHandler = DefaultInternalLogHandler(
+            logHandler: logHandler,
+            subsystems: [.assetTracking, .named("subscriber")]
+        )
 
         let defaultAbly = DefaultAbly(
             factory: AblyCocoaSDKRealtimeFactory(),
@@ -60,42 +64,52 @@ class DefaultSubscriberBuilder: SubscriberBuilder {
     }
 
     func connection(_ configuration: ConnectionConfiguration) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(connection: configuration,
-                                        trackingId: trackingId,
-                                        resolution: resolution,
-                                        logHandler: logHandler,
-                                        delegate: delegate)
+        DefaultSubscriberBuilder(
+            connection: configuration,
+            trackingId: trackingId,
+            resolution: resolution,
+            logHandler: logHandler,
+            delegate: delegate
+        )
     }
 
     func trackingId(_ trackingId: String) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(connection: connection,
-                                        trackingId: trackingId,
-                                        resolution: resolution,
-                                        logHandler: logHandler,
-                                        delegate: delegate)
+        DefaultSubscriberBuilder(
+            connection: connection,
+            trackingId: trackingId,
+            resolution: resolution,
+            logHandler: logHandler,
+            delegate: delegate
+        )
     }
 
     func resolution(_ resolution: Resolution) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(connection: connection,
-                                        trackingId: trackingId,
-                                        resolution: resolution,
-                                        logHandler: logHandler,
-                                        delegate: delegate)
+        DefaultSubscriberBuilder(
+            connection: connection,
+            trackingId: trackingId,
+            resolution: resolution,
+            logHandler: logHandler,
+            delegate: delegate
+        )
     }
 
     func delegate(_ delegate: SubscriberDelegate) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(connection: connection,
-                                        trackingId: trackingId,
-                                        resolution: resolution,
-                                        logHandler: logHandler,
-                                        delegate: delegate)
+        DefaultSubscriberBuilder(
+            connection: connection,
+            trackingId: trackingId,
+            resolution: resolution,
+            logHandler: logHandler,
+            delegate: delegate
+        )
     }
-    
+
     func logHandler(handler: LogHandler?) -> SubscriberBuilder {
-        return DefaultSubscriberBuilder(connection: connection,
-                                        trackingId: trackingId,
-                                        resolution: resolution,
-                                        logHandler: handler,
-                                        delegate: delegate)
+        DefaultSubscriberBuilder(
+            connection: connection,
+            trackingId: trackingId,
+            resolution: resolution,
+            logHandler: handler,
+            delegate: delegate
+        )
     }
 }

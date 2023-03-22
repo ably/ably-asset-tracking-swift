@@ -7,13 +7,13 @@ import AblyAssetTrackingInternal
 public class WorkerFactoryMock: WorkerFactory {
     public typealias PropertiesType = WorkerQueuePropertiesMock
     public typealias WorkerSpecificationType = WorkerMock
-    
+
     public init() {}
 
     // MARK: - createWorker
     public var createWorkerWorkerSpecificationLogHandlerCallsCount = 0
     public var createWorkerWorkerSpecificationLogHandlerCalled: Bool {
-        return createWorkerWorkerSpecificationLogHandlerCallsCount > 0
+        createWorkerWorkerSpecificationLogHandlerCallsCount > 0
     }
     public var createWorkerWorkerSpecificationReceivedArguments: (workerSpecification: WorkerSpecificationType, logHandler: InternalLogHandler?)?
     public var createWorkerWorkerSpecificationLogHandlerReceivedInvocations: [(workerSpecification: WorkerSpecificationType, logHandler: InternalLogHandler?)] = []
@@ -24,7 +24,7 @@ public class WorkerFactoryMock: WorkerFactory {
         createWorkerWorkerSpecificationLogHandlerCallsCount += 1
         createWorkerWorkerSpecificationReceivedArguments = (workerSpecification: workerSpecification, logHandler: logHandler)
         createWorkerWorkerSpecificationLogHandlerReceivedInvocations.append((workerSpecification: workerSpecification, logHandler: logHandler))
-        if let createWorkerWorkerSpecificationLogHandlerClosure = createWorkerWorkerSpecificationLogHandlerClosure {
+        if let createWorkerWorkerSpecificationLogHandlerClosure {
             return createWorkerWorkerSpecificationLogHandlerClosure(workerSpecification, logHandler)
         } else {
             return createWorkerWorkerSpecificationLogHandlerReturnValue

@@ -1,11 +1,11 @@
-import XCTest
 import AblyAssetTrackingTesting
+import XCTest
 
 struct NetworkConnectivityTestsParam: ParameterizedTestCaseParam {
     var faultName: String
 
     var methodNameComponent: String {
-        return faultName
+        faultName
     }
 }
 

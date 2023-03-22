@@ -1,9 +1,9 @@
-import SwiftUI
 import AblyAssetTrackingCore
+import SwiftUI
 
 struct AddTrackableView: View {
     @ObservedObject var publisher: ObservablePublisher
-    
+
     @Environment(\.presentationMode) private var presentationMode
     @StateObject private var locationManager = LocationManager.shared
     @State private var error: ErrorInformation?
@@ -12,7 +12,7 @@ struct AddTrackableView: View {
     @State private var hasAdded = false
     @StateObject private var viewModel = AddTrackableViewModel()
     @State var showDefaultAccuracies = false
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Form {
@@ -35,8 +35,8 @@ struct AddTrackableView: View {
                     Toggle(isOn: $viewModel.setResolutionConstraints) {
                         Text("Set resolution constraints")
                     }
-                    
-                    if viewModel.setResolutionConstraints {                        
+
+                    if viewModel.setResolutionConstraints {
                         TitleValueListItem(title: "Accuracy", value: viewModel.resolutionAccuracy)
                             .onTapGesture {
                                 self.showDefaultAccuracies = true
@@ -60,7 +60,7 @@ struct AddTrackableView: View {
                 } header: {
                     Text("Resolution constraints")
                 }
-                
+
                 Section {
                     Button {
                         let trackable = viewModel.createTrackable()
@@ -89,11 +89,13 @@ struct AddTrackableView: View {
                               isAdding ||
                               hasAdded)
                     .alert(isPresented: $showAlert) {
-                        Alert(title: "Failed to add trackable",
-                              errorInformation: error)
+                        Alert(
+                            title: "Failed to add trackable",
+                            errorInformation: error
+                        )
                     }
                 }
-                
+
                 Section {
                     Text("Location permission status:")
                         .foregroundColor(.gray)
@@ -109,7 +111,7 @@ struct AddTrackableView: View {
                             else {
                                 return
                             }
-                            
+
                             UIApplication.shared.open(settingsURL)
                         }
                         .font(.system(size: 10))

@@ -1,17 +1,14 @@
-//
-
 import SwiftUI
 
 struct TitleValueListItem: View {
-    
     private let title: String
     private let value: String
-    
+
     init(title: String, value: String) {
         self.title = title
         self.value = value
     }
-    
+
     var body: some View {
         ListItem {
             HStack {

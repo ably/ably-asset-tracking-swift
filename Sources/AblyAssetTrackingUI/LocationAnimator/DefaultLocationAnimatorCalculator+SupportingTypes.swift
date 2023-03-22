@@ -53,7 +53,7 @@ extension DefaultLocationAnimatorCalculator {
 
                 /// The value that this prediction tells us will be returned by `CACurrentMediaTime` at the moment when updated information about the asset’s current location is next received.
                 var expectedAt: MediaTime {
-                    return receivedAt + nextUpdateExpectedIn
+                    receivedAt + nextUpdateExpectedIn
                 }
 
                 /// The duration after which, according to this prediction, we expect to receive updated information about the asset’s current location. Always returns a non-negative value; that is, if the expected time has already elapsed, then it returns zero.
@@ -61,7 +61,7 @@ extension DefaultLocationAnimatorCalculator {
                 /// - Parameters:
                 ///     - now: The current time, as returned by `CACurrentMediaTime`.
                 func timeUntilExpected(now: MediaTime) -> TimeInterval {
-                    return max(0, expectedAt - now)
+                    max(0, expectedAt - now)
                 }
             }
 
@@ -149,7 +149,7 @@ extension DefaultLocationAnimatorCalculator {
 
                         /// The number of locations awaiting animation. Always >= 1.
                         var count: Int {
-                            return LocationsAwaitingAnimation(oneOrMoreLocationsAwaitingAnimation: self).count
+                            LocationsAwaitingAnimation(oneOrMoreLocationsAwaitingAnimation: self).count
                         }
                     }
 
@@ -178,12 +178,14 @@ extension DefaultLocationAnimatorCalculator {
                             Double(numberOfLocationsToPop)
 
                         if locations.count > 1 {
-                            return .multipleLocations(.init(
-                                first: locations[0],
-                                second: locations[1],
-                                proportionOfFirstToSecondAlreadyAnimated: firstToSecondAlreadyAnimatedAfterProgressing,
-                                remaining: Array(locations.dropFirst(2))
-                            ))
+                            return .multipleLocations(
+                                .init(
+                                    first: locations[0],
+                                    second: locations[1],
+                                    proportionOfFirstToSecondAlreadyAnimated: firstToSecondAlreadyAnimatedAfterProgressing,
+                                    remaining: Array(locations.dropFirst(2))
+                                )
+                            )
                         } else { // locations.count == 1, confirmed by the “sense check” precondition above
                             return .singleLocation(locations[0])
                         }
@@ -191,12 +193,12 @@ extension DefaultLocationAnimatorCalculator {
 
                     /// The number of transitions between locations that remain to be animated, taking into account the proportion of the journey between the first and second location we’ve already animated.
                     var locationTransitionsCount: Double {
-                        return 1 + Double(remaining.count) - proportionOfFirstToSecondAlreadyAnimated
+                        1 + Double(remaining.count) - proportionOfFirstToSecondAlreadyAnimated
                     }
 
                     /// The last position to be animated, taking into account the proportion of the journey between the first and second location we’ve already animated.
                     var startPosition: Position {
-                        return MultipleLocations.interpolatePositionLinear(
+                        MultipleLocations.interpolatePositionLinear(
                             first: first.toPosition(),
                             second: second.toPosition(),
                             progress: proportionOfFirstToSecondAlreadyAnimated
@@ -276,17 +278,20 @@ extension DefaultLocationAnimatorCalculator {
                     case .noLocations, .singleLocation:
                         self = .init(locations: newLocations)
                     case let .multipleLocations(multipleLocations):
-                        self = .multipleLocations(.init(first: newLocations[0],
-                                                        second: newLocations[1],
-                                                        proportionOfFirstToSecondAlreadyAnimated: multipleLocations
-                                                            .proportionOfFirstToSecondAlreadyAnimated,
-                                                        remaining: Array(newLocations.dropFirst(2))))
+                        self = .multipleLocations(
+                            .init(
+                                first: newLocations[0],
+                                second: newLocations[1],
+                                proportionOfFirstToSecondAlreadyAnimated: multipleLocations.proportionOfFirstToSecondAlreadyAnimated,
+                                remaining: Array(newLocations.dropFirst(2))
+                            )
+                        )
                     }
                 }
 
                 /// The number of locations that this `LocationsAwaitingAnimation` value contains.
                 var count: Int {
-                    return locations.count
+                    locations.count
                 }
             }
 

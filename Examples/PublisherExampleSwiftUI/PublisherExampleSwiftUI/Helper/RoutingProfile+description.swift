@@ -1,7 +1,6 @@
 import AblyAssetTrackingPublisher
 
 extension RoutingProfile {
-    
     func description() -> String {
         switch self {
         case .driving:
@@ -14,7 +13,7 @@ extension RoutingProfile {
             return "cycling"
         }
     }
-    
+
     static func fromDescription(description: String) -> RoutingProfile {
         if description == "driving" {
             return .driving

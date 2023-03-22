@@ -13,7 +13,7 @@ public enum ConnectionState: Int {
      Asset is not connected
      */
     case offline
-    
+
     /**
      Connection has failed
      */
@@ -22,17 +22,17 @@ public enum ConnectionState: Int {
 
 extension ConnectionState {
     var string: String {
-        get {
-            switch self {
-            case .online:
-                return "online"
-            case .offline:
-                return "offline"
-            case .failed:
-                return "failed"
-            }
+        switch self {
+        case .online:
+            return "online"
+        case .offline:
+            return "offline"
+        case .failed:
+            return "failed"
         }
     }
+
+    // swiftlint:disable:next missing_docs
     public var description: String {
         "ConnectionState.\(string)"
     }

@@ -2,7 +2,7 @@ import AblyAssetTrackingPublisher
 
 extension RoutingProfile {
     static var all: [RoutingProfile] = [.driving, .drivingTraffic, .cycling, .walking]
-    
+
     func asInfo() -> String {
         switch self {
         case .driving:

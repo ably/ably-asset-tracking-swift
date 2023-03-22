@@ -1,6 +1,6 @@
-import Foundation
-import AblyAssetTrackingPublisher
 import AblyAssetTrackingCore
+import AblyAssetTrackingPublisher
+import Foundation
 
 struct PublisherInfoViewModel {
     var rawLocationsInfo: [StackedTextModel]
@@ -13,7 +13,7 @@ struct PublisherInfoViewModel {
 extension PublisherInfoViewModel {
     static func create(fromPublisherConfigInfo publisherConfigInfo: ObservablePublisher.PublisherConfigInfo, resolution: Resolution?, routingProfile: RoutingProfile?, lastError: ErrorInformation?) -> PublisherInfoViewModel {
         let rawLocationsInfo: [StackedTextModel] = [.init(label: "Publish raw locations: ", value: "\(publisherConfigInfo.areRawLocationsEnabled ? "enabled" : "disabled")")]
-        
+
         var constantResolutionInfo: [StackedTextModel] = []
         if let constantResolution = publisherConfigInfo.constantResolution {
             constantResolutionInfo.append(.init(label: "Constant engine resolution", value: "", isHeader: true))
@@ -22,10 +22,10 @@ extension PublisherInfoViewModel {
         } else {
             constantResolutionInfo.append(.init(label: "Constant resolution: ", value: "disabled"))
         }
-        
+
         var resolutionInfo: [StackedTextModel] = []
         resolutionInfo.append(.init(label: "Resolution policy", value: "", isHeader: true))
-        if let resolution = resolution {
+        if let resolution {
             resolutionInfo.append(StackedTextModel(label: "Accurancy:", value: " \(resolution.accuracy.asInfo())"))
             resolutionInfo.append(StackedTextModel(label: "Min. displacement:", value: " \(resolution.minimumDisplacement)m"))
             resolutionInfo.append(StackedTextModel(label: "Desired interval:", value: " \(resolution.desiredInterval)ms"))
@@ -34,22 +34,22 @@ extension PublisherInfoViewModel {
             resolutionInfo.append(StackedTextModel(label: "Min. displacement:", value: " -"))
             resolutionInfo.append(StackedTextModel(label: "Desired interval:", value: " -"))
         }
-        
+
         let routingProfileInfo = [StackedTextModel(label: "Routing profile:", value: " \(routingProfile?.asInfo() ?? "-")")]
-        
+
         let errorInfo: String?
-        
-        if let lastError = lastError {
+
+        if let lastError {
             errorInfo = """
         Code: \(lastError.code)
         Status code: \(lastError.statusCode)
-        
+
         \(lastError.message)
         """
         } else {
             errorInfo = nil
         }
-        
+
         return .init(rawLocationsInfo: rawLocationsInfo, constantResolutionInfo: constantResolutionInfo, resolutionInfo: resolutionInfo, routingProfileInfo: routingProfileInfo, errorInfo: errorInfo)
     }
 }

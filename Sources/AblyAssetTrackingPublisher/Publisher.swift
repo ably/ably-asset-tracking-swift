@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /**
  Main `Publisher` interface implemented in SDK by `DefaultPublisher`

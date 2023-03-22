@@ -14,10 +14,12 @@ class DefaultResolutionPolicy: ResolutionPolicy {
     private var trackedTrackables: Set<Trackable>
     private var activeTrackable: Trackable?
 
-    init(hooks: ResolutionPolicyHooks,
-         methods: ResolutionPolicyMethods,
-         defaultResolution: Resolution,
-         batteryLevelProvider: BatteryLevelProvider) {
+    init(
+        hooks: ResolutionPolicyHooks,
+        methods: ResolutionPolicyMethods,
+        defaultResolution: Resolution,
+        batteryLevelProvider: BatteryLevelProvider
+    ) {
         self.hooks = hooks
         self.methods = methods
         self.defaultResolution = defaultResolution
@@ -53,45 +55,47 @@ class DefaultResolutionPolicy: ResolutionPolicy {
     }
 
     func resolve(resolutions: Set<Resolution>) -> Resolution {
-        return resolveFromRequests(requests: resolutions)
+        resolveFromRequests(requests: resolutions)
     }
 
     // MARK: Utils
     private func resolveFromRequests(requests: Set<Resolution>) -> Resolution {
-        return requests.isEmpty ? defaultResolution : createFinalResolution(resolutions: requests)
+        requests.isEmpty ? defaultResolution : createFinalResolution(resolutions: requests)
     }
 
     private func createFinalResolution(resolutions: Set<Resolution>) -> Resolution {
         var accuracy = Accuracy.minimum
         var desiredInterval = Double.greatestFiniteMagnitude
         var minimumDisplacement = Double.greatestFiniteMagnitude
-        resolutions.forEach {
-            accuracy = higher(accuracy, $0.accuracy)
-            desiredInterval = min(desiredInterval, $0.desiredInterval)
-            minimumDisplacement = min(minimumDisplacement, $0.minimumDisplacement)
+        resolutions.forEach { resolution in
+            accuracy = higher(accuracy, resolution.accuracy)
+            desiredInterval = min(desiredInterval, resolution.desiredInterval)
+            minimumDisplacement = min(minimumDisplacement, resolution.minimumDisplacement)
         }
 
         return Resolution(accuracy: accuracy, desiredInterval: desiredInterval, minimumDisplacement: minimumDisplacement)
     }
 
     private func higher(_ lhs: Accuracy, _ rhs: Accuracy) -> Accuracy {
-        return lhs > rhs ? lhs : rhs
+        lhs > rhs ? lhs : rhs
     }
 
     private func adjustToBatteryLevel(resolution: Resolution, constraints: DefaultResolutionConstraints) -> Resolution {
         if let currentBatteryLevel = batteryLevelProvider.currentBatteryPercentage,
            currentBatteryLevel < constraints.batteryLevelThreshold {
             let newInterval = resolution.desiredInterval * Double(constraints.lowBatteryMultiplier)
-            return Resolution(accuracy: resolution.accuracy,
-                              desiredInterval: newInterval,
-                              minimumDisplacement: resolution.minimumDisplacement)
+            return Resolution(
+                accuracy: resolution.accuracy,
+                desiredInterval: newInterval,
+                minimumDisplacement: resolution.minimumDisplacement
+            )
         } else {
             return resolution
         }
     }
 
     private func hasSubscribers(forTrackable trackable: Trackable) -> Bool {
-        return trackedSubscribers.contains { $0.trackable == trackable }
+        trackedSubscribers.contains { $0.trackable == trackable }
     }
 }
 
@@ -106,7 +110,7 @@ extension DefaultResolutionPolicy: DefaultTrackableSetListenerDelegate {
 
     func trackableSetListener(sender: DefaultTrackableSetListener, onActiveTrackableChanged trackable: Trackable?) {
         activeTrackable = trackable
-        if let trackable = trackable,
+        if let trackable,
            let constraints = trackable.constraints as? DefaultResolutionConstraints {
             methods.setProximityThreshold(threshold: constraints.proximityThreshold, handler: proximityHandler)
         } else {
@@ -138,9 +142,18 @@ extension DefaultResolutionPolicy: DefaultProximityHandlerDelegate {
 
 extension DefaultResolutionSet {
     func getResolution(isNear: Bool, hasSubscriber: Bool) -> Resolution {
-        if isNear && hasSubscriber { return nearWithSubscriber }
-        if isNear && !hasSubscriber { return nearWithoutSubscriber }
-        if !isNear && hasSubscriber { return farWithSubscriber }
+        if isNear && hasSubscriber {
+            return nearWithSubscriber
+        }
+
+        if isNear && !hasSubscriber {
+            return nearWithoutSubscriber
+        }
+
+        if !isNear && hasSubscriber {
+            return farWithSubscriber
+        }
+
         return farWithoutSubscriber
     }
 }

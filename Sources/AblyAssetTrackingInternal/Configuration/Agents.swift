@@ -1,30 +1,31 @@
-import AblyAssetTrackingCore
 import Ably
+import AblyAssetTrackingCore
 
+// swiftlint:disable:next missing_docs
 public struct Agents {
     private struct Agent {
-        public var name: String
-        public var version: String?
-        
+        fileprivate var name: String
+        fileprivate var version: String?
+
         init(name: String, version: String?) {
             self.name = name
             self.version = version
         }
     }
-    
+
     private var agents: [Agent]
-    
+
+    // swiftlint:disable:next missing_docs
     public static let libraryAgents: Agents = .init(agents: [
         .init(name: "ably-asset-tracking-swift", version: Version.libraryVersion)
     ])
 }
 
 extension Agents {
+    // swiftlint:disable:next missing_docs
     public var ablyCocoaAgentsDictionary: [String: String] {
-        return agents.reduce([:]) { dict, agent in
-            var newDict = dict
-            newDict[agent.name] = agent.version ?? ARTClientInformationAgentNotVersioned
-            return newDict
+        agents.reduce(into: [:]) { dict, agent in
+            dict[agent.name] = agent.version ?? ARTClientInformationAgentNotVersioned
         }
     }
 }
