@@ -51,11 +51,11 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
 
 /// A protocol used to avoid duplication of default ``doWork``, ``doWhenStopped``,  ``onUnexpectedError`` and
 /// ``onUnexpectedAsyncError`` implementation for workers without callbacks
-protocol DefaultWorker<PropertiesType, WorkerSpecificationType>: Worker {}
+public protocol DefaultWorker<PropertiesType, WorkerSpecificationType>: Worker {}
 
 /// A protocol used to avoid duplication of default ``doWork``, ``doWhenStopped``,  ``onUnexpectedError`` and
 /// ``onUnexpectedAsyncError`` implementation for workers with a callback
-protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
+public protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
     var callbackFunction: ResultHandler<Void> { get set }
 }
 
