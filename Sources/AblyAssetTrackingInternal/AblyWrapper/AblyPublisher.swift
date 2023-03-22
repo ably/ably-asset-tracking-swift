@@ -33,14 +33,14 @@ public protocol AblyPublisherDelegate: AnyObject {
      Tells the delegate that channel presence data was changed.
      
      - Parameter sender:        The `AblyPublisher` object which is delegating the change.
-     - Parameter presence:      The `Presence` object affected by the change.
+     - Parameter presence:      The `PresenceMessage` object affected by the change.
      - Parameter trackable:     The `Trackable` object affected by the change.
      - Parameter presenceData:  The `PresenceData` object that contains info related to presence change.
      - Parameter clientId:      The `Ably` client identifier.
      */
     func ablyPublisher(
         _ sender: AblyPublisher,
-        didReceivePresenceUpdate presence: Presence,
+        didReceivePresenceUpdate presence: PresenceMessage,
         forTrackable trackable: Trackable,
         presenceData: PresenceData,
         clientId: String

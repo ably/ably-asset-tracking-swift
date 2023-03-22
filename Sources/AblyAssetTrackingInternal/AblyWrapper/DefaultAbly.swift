@@ -309,7 +309,7 @@ public class DefaultAbly: AblyCommon {
             let clientId = message.clientId
         else { return }
 
-        let presence = Presence(
+        let presence = PresenceMessage(
             action: message.action.toPresenceAction(),
             type: data.type.toPresenceType()
         )
