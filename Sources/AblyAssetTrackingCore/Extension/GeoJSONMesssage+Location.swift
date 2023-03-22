@@ -1,8 +1,9 @@
 import Foundation
 
 public extension GeoJSONMessage {
+    // swiftlint:disable:next missing_docs
     func toLocation() -> Location {
-        return Location(
+        Location(
             coordinate: LocationCoordinate(latitude: geometry.latitude, longitude: geometry.longitude),
             altitude: geometry.altitude,
             ellipsoidalAltitude: .zero,
@@ -13,6 +14,7 @@ public extension GeoJSONMessage {
             speed: properties.speed ?? -1,
             speedAccuracy: properties.accuracySpeed ?? .zero,
             floorLevel: properties.floor,
-            timestamp: properties.time)
+            timestamp: properties.time
+        )
     }
 }

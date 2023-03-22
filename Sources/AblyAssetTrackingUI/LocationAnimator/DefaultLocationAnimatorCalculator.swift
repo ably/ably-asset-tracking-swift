@@ -1,7 +1,7 @@
 import AblyAssetTrackingCore
 import QuartzCore
 
-struct DefaultLocationAnimatorCalculator {
+enum DefaultLocationAnimatorCalculator {
     /// Calculates the events that should be emitted to subscribers of an asset’s map position in the current animation frame.
     ///
     /// - Parameters:
@@ -20,8 +20,10 @@ struct DefaultLocationAnimatorCalculator {
 
             let shouldEmitCameraPositionUpdate = input.state.numberOfLocationsPoppedSinceLastCameraUpdate == nil
 
-            let subscriberUpdates = CalculationResult.SubscriberUpdates(positionToEmit: location.toPosition(),
-                                                                        shouldEmitCameraPositionUpdate: shouldEmitCameraPositionUpdate)
+            let subscriberUpdates = CalculationResult.SubscriberUpdates(
+                positionToEmit: location.toPosition(),
+                shouldEmitCameraPositionUpdate: shouldEmitCameraPositionUpdate
+            )
 
             return .init(newState: newState, subscriberUpdates: subscriberUpdates)
         case let .multipleLocations(multipleLocations):

@@ -1,5 +1,7 @@
-import Foundation
 import AblyAssetTrackingInternal
+import Foundation
+
+// swiftlint:disable orphaned_doc_comment
 
 /// This protocol is to be implemented by the subscriber, and is used to give
 /// the worker queue access to certain operations on the subscriber.

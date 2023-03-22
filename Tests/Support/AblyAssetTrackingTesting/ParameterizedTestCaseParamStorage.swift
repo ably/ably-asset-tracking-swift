@@ -28,7 +28,7 @@ struct ParameterizedTestCaseParamStorage {
         }
 
         func param(forTestMethodNamed name: Selector) -> Any? {
-            return paramsByTestMethodName[name]
+            paramsByTestMethodName[name]
         }
     }
 

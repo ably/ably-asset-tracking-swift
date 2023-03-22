@@ -1,6 +1,6 @@
-import SwiftUI
 import Logging
 import LoggingFormatAndPipe
+import SwiftUI
 
 @main
 struct PublisherExampleSwiftUIApp: App {
@@ -8,7 +8,7 @@ struct PublisherExampleSwiftUIApp: App {
     @State private var s3Helper: S3Helper?
     @StateObject private var uploadsManager: UploadsManager
     @State private var locationHistoryDataHandler: LocationHistoryDataHandlerProtocol
-    
+
     init() {
         let logger = Logger(label: "com.ably.PublisherExampleSwiftUI") { _ in
             // Format logged timestamps as an ISO 8601 timestamp with fractional seconds.
@@ -18,26 +18,28 @@ struct PublisherExampleSwiftUIApp: App {
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSSSSSZZZZZ"
             dateFormatter.locale = .init(identifier: "en_US_POSIX")
             let formatter = BasicFormatter(BasicFormatter.apple.format, timestampFormatter: dateFormatter)
-            
-            var handler = LoggingFormatAndPipe.Handler(formatter: formatter,
-                                                       pipe: LoggerTextOutputStreamPipe.standardError)
-            
+
+            var handler = LoggingFormatAndPipe.Handler(
+                formatter: formatter,
+                pipe: LoggerTextOutputStreamPipe.standardError
+            )
+
             handler.logLevel = .info
-            
+
             return handler
         }
-            
+
         self._logger = State(wrappedValue: logger)
-                
+
         let s3Helper = try? S3Helper()
         self._s3Helper = State(wrappedValue: s3Helper)
-        
+
         let uploadsManager = UploadsManager(s3Helper: s3Helper, logger: logger)
         _uploadsManager = StateObject(wrappedValue: uploadsManager)
-        
+
         self._locationHistoryDataHandler = State(wrappedValue: LocationHistoryDataUploader(uploadsManager: uploadsManager))
     }
-    
+
     var body: some Scene {
         WindowGroup {
             TabView {
@@ -56,6 +58,7 @@ struct PublisherExampleSwiftUIApp: App {
                 */
                 .navigationViewStyle(.stack)
                 NavigationView {
+                    // swiftlint:disable:next trailing_closure
                     SettingsView(uploads: uploadsManager.uploads, retry: { upload in
                         uploadsManager.retry(upload)
                     })

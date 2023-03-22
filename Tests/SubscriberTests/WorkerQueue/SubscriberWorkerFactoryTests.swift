@@ -1,43 +1,15 @@
-import XCTest
 import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
 @testable import AblyAssetTrackingSubscriber
 import AblyAssetTrackingSubscriberTesting
+import XCTest
 
 class SubscriberWorkerFactoryTests: XCTestCase {
     private let logHandler = InternalLogHandlerMockThreadSafe()
-    private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
-    private var ablySubscriber: MockAblySubscriber!
-    private let logger = InternalLogHandlerMock.configured
-
-    private var subscriber: DefaultSubscriber?
-    private var properties: SubscriberWorkerQueueProperties?
-    
+    private let properties = SubscriberWorkerQueueProperties(initialResolution: nil)
     private let factory = SubscriberWorkerFactory()
 
-    override func setUp() {
-        ablySubscriber = MockAblySubscriber(configuration: configuration, mode: .subscribe)
-        subscriber = DefaultSubscriber(
-            ablySubscriber: ablySubscriber,
-            trackableId: "testId",
-            resolution: nil,
-            logHandler: logger
-        )
-        
-        properties = SubscriberWorkerQueueProperties(initialResolution: Resolution(accuracy: .balanced, desiredInterval: 1.0, minimumDisplacement: 1.0))
-        
-        let workerQueue = WorkerQueue(
-            properties: SubscriberWorkerQueueProperties(initialResolution: nil),
-            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
-            logHandler: logger,
-            workerFactory: SubscriberWorkerFactory(),
-            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
-            getStoppedError: { return ErrorInformation(type: .subscriberStoppedException)}
-        )
-        workerQueue.properties.subscriber = subscriber
-    }
-
-    func test_ItBuildsLegacyWork() {
+    func test_ItBuildsLegacyWork() throws {
         var legacyWorkerCalled = false
         let callback = {
             legacyWorkerCalled = true
@@ -50,8 +22,8 @@ class SubscriberWorkerFactoryTests: XCTestCase {
         )
 
         XCTAssertTrue(worker is LegacyWorker<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>)
-        _ = try! worker.doWork(
-            properties: properties!,
+        _ = try worker.doWork(
+            properties: properties,
             doAsyncWork: { _ in },
             postWork: { _ in }
         )

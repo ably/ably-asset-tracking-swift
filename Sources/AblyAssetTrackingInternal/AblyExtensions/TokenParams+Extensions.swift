@@ -1,6 +1,6 @@
-import Foundation
 import Ably
 import AblyAssetTrackingCore
+import Foundation
 
 extension TokenParams {
     internal func toARTTokenParams() -> ARTTokenParams {
@@ -14,11 +14,12 @@ extension TokenParams {
 
 extension ARTTokenParams {
     internal func toTokenParams() -> TokenParams {
-        return TokenParams(ttl: ttl != nil ? Int(exactly: ttl!) : nil,
-                capability: capability,
-                clientId: clientId,
-                timestamp: timestamp,
-                nonce: nonce
+        TokenParams(
+            ttl: ttl != nil ? Int(exactly: ttl!) : nil,
+            capability: capability,
+            clientId: clientId,
+            timestamp: timestamp,
+            nonce: nonce
         )
     }
 }

@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingInternal
+import Foundation
 
 struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     public var isStopped = false
@@ -93,11 +93,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
                 trackableState = .offline
             case .failed:
                 trackableState = .failed
-            case .publishing:
-                break
             }
-            break
-        case .publishing:
             break
         case .offline:
             trackableState = .offline

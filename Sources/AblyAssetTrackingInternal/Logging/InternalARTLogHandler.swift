@@ -1,6 +1,6 @@
-import Foundation
 import Ably
 import AblyAssetTrackingCore
+import Foundation
 
 /**
  * This log handler provides an subclass of the ably-cocoa SDK’s ``ARTLog`` class.
@@ -48,12 +48,12 @@ public class InternalARTLogHandler: ARTLog {
             return LogLevel.warn
         }
     }
-    
+
     override public func log(_ message: String, with level: ARTLogLevel) {
         let convertedLogLevel = convertLogLevel(artLogLevel: level)
         log(message, level: convertedLogLevel, error: nil)
     }
-    
+
     override public func logWithError(_ error: ARTErrorInfo) {
         let convertedLogLevel = convertLogLevel(artLogLevel: .error)
         log(error.message, level: convertedLogLevel, error: nil)

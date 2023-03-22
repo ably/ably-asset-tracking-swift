@@ -1,8 +1,7 @@
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct Map: View {
-    
     @Binding private var center: CLLocationCoordinate2D
     @State private var span: MKCoordinateSpan?
 
@@ -12,7 +11,7 @@ struct Map: View {
                 latitudeDelta: 0.2,
                 longitudeDelta: 0.2
             )
-            
+
             return MKCoordinateRegion(center: center, span: span)
         } set: { region in
             DispatchQueue.main.async {
@@ -21,11 +20,11 @@ struct Map: View {
             }
         }
     }
-    
+
     init(center: Binding<CLLocationCoordinate2D>) {
         _center = center
     }
-    
+
     var body: some View {
         MapKit.Map(
             coordinateRegion: region,
@@ -35,7 +34,6 @@ struct Map: View {
 }
 
 struct Map_Previews: PreviewProvider {
-        
     static var previews: some View {
         Map(center: .constant(CLLocationCoordinate2D(latitude: 0, longitude: 0)))
     }

@@ -1,6 +1,6 @@
+import AblyAssetTrackingInternal
 import Foundation
 import XCTest
-import AblyAssetTrackingInternal
 
 /// Provides convenience methods for blocking the current thread until an asynchronous piece of work completes.
 public enum Blocking {
@@ -213,7 +213,8 @@ public enum Blocking {
         }
 
         /// Executed on the run loop of `waiterThread`.
-        @objc func checkForExpectations() {
+        @objc
+        func checkForExpectations() {
             logHandler.debug(message: "Thread checking for pending expectations in run loop", error: nil)
             queueLock.lock()
             let expectation = queue.dequeue()

@@ -1,5 +1,5 @@
-import CoreLocation
 import AblyAssetTrackingCore
+import CoreLocation
 
 protocol LocationServiceDelegate: AnyObject {
     func locationService(sender: LocationService, didFailWithError error: ErrorInformation)

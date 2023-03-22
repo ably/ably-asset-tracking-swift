@@ -1,11 +1,11 @@
-import UIKit
-import MapKit
-import Logging
-import LoggingFormatAndPipe
 import AblyAssetTrackingSubscriber
 import AblyAssetTrackingUI
+import Logging
+import LoggingFormatAndPipe
+import MapKit
+import UIKit
 
-private struct MapConstraints {
+private enum MapConstraints {
     static let regionLatitude: CLLocationDistance = 400
     static let regionLongitude: CLLocationDistance = 400
     static let minimumDistanceToCenter: CLLocationDistance = 100
@@ -36,7 +36,7 @@ class MapViewController: UIViewController {
 
     private var currentResolution: Resolution?
     private var resolutionDebounceTimer: Timer?
-    
+
     private let logger = Logger(label: "com.ably.SubscriberExample") { _ in
         // Format logged timestamps as an ISO 8601 timestamp with fractional seconds.
         // Unfortunately BasicFormatter doesn’t allow us to pass an ISO8601DateFormatter,
@@ -45,12 +45,14 @@ class MapViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSSSSSZZZZZ"
         dateFormatter.locale = .init(identifier: "en_US_POSIX")
         let formatter = BasicFormatter(BasicFormatter.apple.format, timestampFormatter: dateFormatter)
-        
-        var handler = LoggingFormatAndPipe.Handler(formatter: formatter,
-                                                   pipe: LoggerTextOutputStreamPipe.standardError)
-        
+
+        var handler = LoggingFormatAndPipe.Handler(
+            formatter: formatter,
+            pipe: LoggerTextOutputStreamPipe.standardError
+        )
+
         handler.logLevel = .info
-        
+
         return handler
     }
     private let subscriberLogger: SubscriberLogger
@@ -60,7 +62,7 @@ class MapViewController: UIViewController {
     // MARK: - Initialization
     init(trackingId: String) {
         self.subscriberLogger = SubscriberLogger(logger: logger)
-        
+
         self.trackingId = trackingId
         self.locationAnimator = DefaultLocationAnimator(logHandler: subscriberLogger)
         self.locationUpdateIntervalInMilliseconds = resolution.desiredInterval
@@ -83,21 +85,21 @@ class MapViewController: UIViewController {
         setupMapView()
         setupControlsBehaviour()
         updateSubscriberResolutionLabels()
-        
+
         locationAnimator.subscribeForPositionUpdates { [weak self] position in
             guard self?.animationSwitch.isOn == true else {
                 return
             }
-            
+
             self?.updateTruckAnnotation(position: position, type: .enhanced)
             self?.updateHorizontalAccuracyAnnotation(position: position, type: .enhanced)
         }
-        
+
         locationAnimator.subscribeForCameraPositionUpdates { [weak self] position in
             guard self?.animationSwitch.isOn == true else {
                 return
             }
-            
+
             self?.scrollToReceivedLocation(position: position)
         }
     }
@@ -120,7 +122,7 @@ class MapViewController: UIViewController {
     private func setupControlsBehaviour() {
         assetStatusLabel.font = UIFont.systemFont(ofSize: 14)
     }
-    
+
     // MARK: - Subscriber setup
     private func setupSubscriber() {
         // An example of using AuthCallback is shown in the PublisherExample's MapViewController.swift
@@ -141,20 +143,20 @@ class MapViewController: UIViewController {
                 }
             }
     }
-    
+
     // MARK: Utils
     private func updateTruckAnnotation(position: Position, type: AnnotationType) {
         let coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
-        
+
         let annotation: TruckAnnotation = createAnnotationIfNeeded(type: type)
         annotation.bearing = position.bearing
         annotation.coordinate = coordinate
-        
+
         if let view = mapView.view(for: annotation) as? TruckAnnotationView {
             view.bearing = position.bearing
         }
     }
-    
+
     private func updateHorizontalAccuracyAnnotation(position: Position, type: AnnotationType) {
         let coordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: position.accuracy, longitudinalMeters: position.accuracy)
@@ -163,15 +165,15 @@ class MapViewController: UIViewController {
         let annotation: HorizontalAccuracyAnnotation = createAnnotationIfNeeded(type: type)
         annotation.accuracy = position.accuracy
         annotation.coordinate = coordinate
-        
+
         if let view = mapView.view(for: annotation) as? HorizontalAccuracyAnnotationView {
             view.accuracy = Double(rect.size.width)
         }
     }
-    
+
     private func createAnnotationIfNeeded<T: MKPointAnnotation & Annotatable>(type: AnnotationType) -> T {
-        if let annotation = mapView.annotations.first(where: {
-            if let object = $0 as? T {
+        if let annotation = mapView.annotations.first(where: { annotation in
+            if let object = annotation as? T {
                 return object.type == type
             }
             return false
@@ -181,7 +183,7 @@ class MapViewController: UIViewController {
             var annotation = T()
             annotation.type = type
             mapView.addAnnotation(annotation)
-            
+
             return annotation
         }
     }
@@ -195,21 +197,21 @@ class MapViewController: UIViewController {
             latitudinalMeters: MapConstraints.regionLatitude,
             longitudinalMeters: MapConstraints.regionLongitude
         )
-        
+
         mapView.setRegion(region, animated: true)
     }
 
     // MARK: Request new resolution based on zoom
     private func scheduleResolutionUpdate() {
         resolutionDebounceTimer?.invalidate()
-        resolutionDebounceTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
+        resolutionDebounceTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] _ in
             self?.performResolutionUpdate()
-        })
+        }
     }
 
     private func performResolutionUpdate() {
         let resolution = ResolutionHelper.createResolution(forZoom: mapView.getZoomLevel())
-        
+
         guard resolution != currentResolution else {
             return
         }
@@ -234,25 +236,25 @@ class MapViewController: UIViewController {
             subscriberResolutionMinDisplacementlabel.text = "-"
             return
         }
-        
+
         subscriberResolutionAccuracyLabel.text = "\(resolution.accuracy)"
         subscriberResolutionIntervalLabel.text = "\(resolution.desiredInterval)ms"
         subscriberResolutionMinDisplacementlabel.text = "\(resolution.minimumDisplacement)m"
     }
-    
+
     private func updatePublisherResolutionLabels(resolution: Resolution?) {
-        guard let resolution = resolution else {
+        guard let resolution else {
             publisherResolutionAccuracyLabel.text = "-"
             publisherResolutionIntervalLabel.text = "-"
             publisherResolutionMinDisplacementlabel.text = "-"
             return
         }
-        
+
         publisherResolutionAccuracyLabel.text = "\(resolution.accuracy)"
         publisherResolutionIntervalLabel.text = "\(resolution.desiredInterval)ms"
         publisherResolutionMinDisplacementlabel.text = "\(resolution.minimumDisplacement)m"
     }
-    
+
     private func showErrorDialog(withMessage message: String) {
         let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -263,13 +265,11 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? TruckAnnotation {
-            
             return createTruckAnnotationView(for: annotation)
         } else if let annotation = annotation as? HorizontalAccuracyAnnotation {
-            
             return createHorizontalAccuracyView(for: annotation)
         }
-        
+
         return nil
     }
 
@@ -278,7 +278,7 @@ extension MapViewController: MKMapViewDelegate {
         logger.debug("Current map zoom level: \(zoom)")
         scheduleResolutionUpdate()
     }
-    
+
     private func createTruckAnnotationView(for annotation: TruckAnnotation) -> TruckAnnotationView {
         let annotationView: TruckAnnotationView = getAnnotationView(for: annotation)
         annotationView.bearing = annotation.bearing
@@ -286,19 +286,19 @@ extension MapViewController: MKMapViewDelegate {
 
         return annotationView
     }
-    
+
     private func createHorizontalAccuracyView(for annotation: HorizontalAccuracyAnnotation) -> HorizontalAccuracyAnnotationView {
         let annotationView: HorizontalAccuracyAnnotationView = getAnnotationView(for: annotation)
         annotationView.zPriority = zPriorityBackground
 
         return annotationView
     }
-        
+
     private func getAnnotationView<T: MKAnnotationView & Identifiable>(for annotation: MKPointAnnotation) -> T {
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: T.identifier) as? T else {
             return T(annotation: annotation, reuseIdentifier: T.identifier)
         }
-        
+
         return annotationView
     }
 }
@@ -316,10 +316,10 @@ extension MapViewController: SubscriberDelegate {
             updateTruckAnnotation(position: locationUpdate.location.toPosition(), type: .enhanced)
             scrollToReceivedLocation(position: locationUpdate.location.toPosition())
         }
-        
+
         self.location = locationUpdate.location.toCoreLocation()
     }
-    
+
     func subscriber(sender: Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate) {
         let position = locationUpdate.location.toPosition()
         updateTruckAnnotation(position: position, type: .raw)
@@ -331,17 +331,17 @@ extension MapViewController: SubscriberDelegate {
         assetStatusLabel.textColor = statusDescAndColor.color
         assetStatusLabel.text = statusDescAndColor.desc
     }
-    
+
     func subscriber(sender: Subscriber, didUpdatePublisherPresence isPresent: Bool) {
         let presenceDescAndColor = DescriptionsHelper.AssetStateHelper.getDescriptionAndColor(for: .subscriberPresence(isPresent: isPresent))
         publisherPresenceLabel.textColor = presenceDescAndColor.color
         publisherPresenceLabel.text = presenceDescAndColor.desc
     }
-    
+
     func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {
         updatePublisherResolutionLabels(resolution: resolution)
     }
-    
+
     func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {
         locationUpdateIntervalInMilliseconds = interval
     }

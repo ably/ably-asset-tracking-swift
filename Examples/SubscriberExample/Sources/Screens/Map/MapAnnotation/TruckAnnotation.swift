@@ -1,5 +1,5 @@
-import UIKit
 import MapKit
+import UIKit
 
 class TruckAnnotation: MKPointAnnotation, Annotatable {
     var type: AnnotationType = .enhanced

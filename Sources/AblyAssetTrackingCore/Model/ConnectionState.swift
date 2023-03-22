@@ -8,19 +8,12 @@ public enum ConnectionState: Int {
      Asset is connected to tracking system and we're receiving their position
      */
     case online
-    
-    /**
-     Asset state is publishing when its locations are being published but it is not able to detect subscribers or receive data from them.
-     This state allows the asset to be actively tracked, however, its features are limited compared to the online state.
-     This state can change to either online, offline or failed.
-     */
-    case publishing
-    
+
     /**
      Asset is not connected
      */
     case offline
-    
+
     /**
      Connection has failed
      */
@@ -29,19 +22,17 @@ public enum ConnectionState: Int {
 
 extension ConnectionState {
     var string: String {
-        get {
-            switch self {
-            case .online:
-                return "online"
-            case .publishing:
-                return "publishing"
-            case .offline:
-                return "offline"
-            case .failed:
-                return "failed"
-            }
+        switch self {
+        case .online:
+            return "online"
+        case .offline:
+            return "offline"
+        case .failed:
+            return "failed"
         }
     }
+
+    // swiftlint:disable:next missing_docs
     public var description: String {
         "ConnectionState.\(string)"
     }

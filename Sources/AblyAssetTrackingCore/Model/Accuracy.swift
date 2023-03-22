@@ -58,11 +58,16 @@ extension Accuracy: Codable, RawRepresentable {
 
     public var rawValue: String {
         switch self {
-        case .minimum: return AccuracyKeys.minimum.rawValue
-        case .low: return AccuracyKeys.low.rawValue
-        case .balanced: return AccuracyKeys.balanced.rawValue
-        case .high: return AccuracyKeys.high.rawValue
-        case .maximum: return AccuracyKeys.maximum.rawValue
+        case .minimum:
+            return AccuracyKeys.minimum.rawValue
+        case .low:
+            return AccuracyKeys.low.rawValue
+        case .balanced:
+            return AccuracyKeys.balanced.rawValue
+        case .high:
+            return AccuracyKeys.high.rawValue
+        case .maximum:
+            return AccuracyKeys.maximum.rawValue
         }
     }
 
@@ -87,23 +92,28 @@ extension Accuracy: Codable, RawRepresentable {
 extension Accuracy: Comparable, Equatable {
     private var index: Int {
         switch self {
-        case .minimum: return 1
-        case .low: return 2
-        case .balanced: return 3
-        case .high: return 4
-        case .maximum: return 5
+        case .minimum:
+            return 1
+        case .low:
+            return 2
+        case .balanced:
+            return 3
+        case .high:
+            return 4
+        case .maximum:
+            return 5
         }
     }
-    
+
     public static func < (lhs: Accuracy, rhs: Accuracy) -> Bool {
-        return lhs.index < rhs.index
+        lhs.index < rhs.index
     }
-    
+
     public static func > (lhs: Accuracy, rhs: Accuracy) -> Bool {
-        return lhs.index > rhs.index
+        lhs.index > rhs.index
     }
-    
+
     public static func == (lhs: Accuracy, rhs: Accuracy) -> Bool {
-        return lhs.index == rhs.index
+        lhs.index == rhs.index
     }
 }

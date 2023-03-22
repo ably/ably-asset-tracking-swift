@@ -1,33 +1,33 @@
-import XCTest
-import CoreLocation
 import AblyAssetTrackingCore
-import AblyAssetTrackingInternal
-@testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingCoreTesting
+import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
+@testable import AblyAssetTrackingPublisher
 import AblyAssetTrackingPublisherTesting
+import CoreLocation
+import XCTest
 
-class PublisherHelper {    
+class PublisherHelper {
     enum SendLocationResultPolicy {
         case success
         case retry
         case fail
     }
-    
+
     private let defaultTimeout: TimeInterval
     private var addedTrackables: [String] = []
-    
+
     init(defaultTimeout: TimeInterval = 5.0) {
         self.defaultTimeout = defaultTimeout
     }
-        
+
     func sendLocationUpdate(
         ablyPublisher: MockAblyPublisher,
         publisher: DefaultPublisher,
         locationUpdate: EnhancedLocationUpdate,
         trackable: Trackable,
         locationService: LocationService = MockLocationService(),
-        enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate>,
+        enhancedLocationState: TrackableState<EnhancedLocationUpdate>,
         resultPolicy: SendLocationResultPolicy = .success,
         error: ErrorInformation = ErrorInformation(type: .commonError(errorMessage: "Failure"))
     ) {
@@ -44,21 +44,22 @@ class PublisherHelper {
                 self.addedTrackables.append(trackable.id)
                 connectCompletionHandlerExpectation.fulfill()
             }
-            
+
             publisher.track(trackable: trackable) { _ in }
-            
+
             switch XCTWaiter.wait(for: [connectCompletionHandlerExpectation], timeout: defaultTimeout) {
             case .timedOut:
                 XCTFail("Timeout \(connectCompletionHandlerExpectation.description)")
-            default: ()
+            default:
+                ()
             }
         }
-        
+
         ablyPublisher.sendEnhancedAssetLocationUpdateCounter = .zero
-                
+
         let expectationDidSendEnhancedLocation = XCTestExpectation(description: "Publisher did send enhanced location")
-        
-        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in            
+
+        ablyPublisher.sendEnhancedAssetLocationUpdateParamCompletionHandler = { completion in
             switch resultPolicy {
             case .success:
                 completion?(.success)
@@ -77,26 +78,26 @@ class PublisherHelper {
                 }
             }
         }
-        
+
         publisher.locationService(sender: locationService, didUpdateEnhancedLocationUpdate: locationUpdate)
 
         switch XCTWaiter.wait(for: [expectationDidSendEnhancedLocation], timeout: defaultTimeout) {
         case .timedOut:
             XCTFail("Timeout \(expectationDidSendEnhancedLocation.description)")
-        default: ()
+        default:
+            ()
         }
     }
-    
+
     static func createPublisher(
         ablyPublisher: AblyPublisher,
         routingProfile: RoutingProfile = .driving,
         resolutionPolicyFactory: ResolutionPolicyFactory = MockResolutionPolicyFactory(),
         locationService: LocationService = MockLocationService(),
         routeProvider: RouteProvider = MockRouteProvider(),
-        enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate> = LocationsPublishingState<EnhancedLocationUpdate>(),
+        enhancedLocationState: TrackableState<EnhancedLocationUpdate> = TrackableState<EnhancedLocationUpdate>(),
         logHandler: InternalLogHandlerMockThreadSafe = InternalLogHandlerMockThreadSafe()
     ) -> DefaultPublisher {
-        
         DefaultPublisher(
             routingProfile: routingProfile,
             resolutionPolicyFactory: resolutionPolicyFactory,

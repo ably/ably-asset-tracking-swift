@@ -1,6 +1,8 @@
-import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import Foundation
+
+// swiftlint:disable orphaned_doc_comment
 
 /// A protocol that the publisher implements which allows
 /// other internal classes (such as workers) to interact with it.
@@ -91,7 +93,7 @@ protocol PublisherInteractor {
     //     properties: PublisherWorkerQueueProperties,
     //     trackableId: String
     // )
-    
+
     /// Given publisher properties, a trackable id and an enhanced location update, increment
     /// the retry count for this location update and try to send it again.
     // func retrySendingEnhancedLocation(

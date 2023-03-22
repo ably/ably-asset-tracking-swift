@@ -3,7 +3,7 @@ import SwiftUI
 struct UploadView: View {
     var upload: Upload
     var retry: () -> Void
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             if #available(iOS 15.0, *) {

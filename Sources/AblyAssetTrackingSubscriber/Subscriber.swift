@@ -1,6 +1,6 @@
-import UIKit
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
+import UIKit
 
 /**
  Main `Subscriber` interface implemented in SDK by `DefaultSubscriber`

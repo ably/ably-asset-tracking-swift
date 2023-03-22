@@ -1,35 +1,34 @@
-import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import Foundation
 
 public class MockAblyPublisher: AblyPublisher {
-    
     public var initConnectionConfiguration: ConnectionConfiguration?
     public var initMode: AblyMode?
     public required init(configuration: ConnectionConfiguration, mode: AblyMode) {
         self.initConnectionConfiguration = configuration
         self.initMode = mode
     }
-    
+
     public var subscribeForAblyStateChangeCalled = false
     public func subscribeForAblyStateChange() {
         subscribeForAblyStateChangeCalled = true
     }
-    
+
     public var subscribeForChannelStateChangeCalled = false
     public var subscribeForChannelStateChangeTrackable: Trackable?
     public func subscribeForChannelStateChange(trackable: Trackable) {
         subscribeForChannelStateChangeCalled = true
         subscribeForChannelStateChangeTrackable = trackable
     }
-    
+
     public var subscribeForPresenceMessagesCalled = false
     public var subscribeForPresenceMessagesTrackable: Trackable?
     public func subscribeForPresenceMessages(trackable: Trackable) {
         subscribeForPresenceMessagesCalled = true
         subscribeForPresenceMessagesTrackable = trackable
     }
-    
+
     public var connectCalled = false
     public var connectTrackableId: String?
     public var connectPresenceData: PresenceData?
@@ -42,8 +41,8 @@ public class MockAblyPublisher: AblyPublisher {
         connectUseRewind = useRewind
         connectCompletionHandler?(completion)
     }
-    
-    public var disconnectCalled: Bool = false
+
+    public var disconnectCalled = false
     public var disconnectParamTrackableId: String?
     public var disconnectParamResultHandler: ResultHandler<Bool>?
     public var disconnectResultCompletionHandler: ((ResultHandler<Bool>?) -> Void)?
@@ -54,13 +53,13 @@ public class MockAblyPublisher: AblyPublisher {
         disconnectResultCompletionHandler?(completion)
     }
 
-    public var wasDelegateSet: Bool = false
+    public var wasDelegateSet = false
     public var publisherDelegate: AblyPublisherDelegate? {
         didSet { wasDelegateSet = true }
     }
 
     public var sendEnhancedAssetLocationUpdateCounter: Int = .zero
-    public var sendEnhancedAssetLocationUpdateCalled: Bool = false
+    public var sendEnhancedAssetLocationUpdateCalled = false
     public var sendEnhancedAssetLocationUpdateParamLocationUpdate: EnhancedLocationUpdate?
     public var sendEnhancedAssetLocationUpdateParamTrackable: Trackable?
     public var sendEnhancedAssetLocationUpdateParamCompletion: ResultHandler<Void>?
@@ -73,7 +72,7 @@ public class MockAblyPublisher: AblyPublisher {
         sendEnhancedAssetLocationUpdateParamCompletion = completion
         sendEnhancedAssetLocationUpdateParamCompletionHandler?(completion)
     }
-    
+
     public var sendRawLocationWasCalled = false
     public var sendRawLocationParamLocation: RawLocationUpdate?
     public var sendRawLocationParamTrackable: Trackable?
@@ -86,7 +85,7 @@ public class MockAblyPublisher: AblyPublisher {
         sendRawLocationParamCompletion = completion
         sendRawLocationParamCompletionHandler?(completion)
     }
-    
+
     public var sendResolutionWasCalled = false
     public var sendResolutionParamResolution: Resolution?
     public var sendResolutionParamTrackable: Trackable?
@@ -99,8 +98,8 @@ public class MockAblyPublisher: AblyPublisher {
         sendResolutionParamCompletion = completion
         sendResolutionParamCompletionHandler?(completion)
     }
-    
-    public var closeCalled: Bool = false
+
+    public var closeCalled = false
     public var closePresenceData: PresenceData?
     public var closeCompletion: ResultHandler<Void>?
     public var closeResultCompletionHandler: ((ResultHandler<Void>?) -> Void)?
@@ -110,7 +109,7 @@ public class MockAblyPublisher: AblyPublisher {
         closeCompletion = completion
         closeResultCompletionHandler?(completion)
     }
-    
+
     public var updatePresenceDataWasCalled = false
     public var updatePresenceDataTrackableId: String?
     public var updatePresenceDataPresenceData: PresenceData?

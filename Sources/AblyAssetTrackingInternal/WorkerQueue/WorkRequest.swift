@@ -9,6 +9,7 @@ public struct WorkRequest<WorkerSpecificationType> {
     /// The specification of the work to be performed.
     public let workerSpecification: WorkerSpecificationType
 
+    // swiftlint:disable:next missing_docs
     public init(workerSpecification: WorkerSpecificationType) {
         self.workerSpecification = workerSpecification
     }

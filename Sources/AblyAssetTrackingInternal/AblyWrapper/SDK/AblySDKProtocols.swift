@@ -1,6 +1,8 @@
 import Ably
 import AblyAssetTrackingCore
 
+// swiftlint:disable missing_docs
+
 // sourcery: AutoMockable
 public protocol AblySDKRealtimeFactory {
     func create(withConfiguration configuration: ConnectionConfiguration, logHandler: InternalARTLogHandler, host: Host?) -> AblySDKRealtime
@@ -11,7 +13,7 @@ public protocol AblySDKRealtime {
     var channels: AblySDKRealtimeChannels { get }
     var connection: AblySDKConnection { get }
     var auth: AblySDKAuth { get }
-    
+
     func close()
 }
 
@@ -23,28 +25,44 @@ public protocol AblySDKRealtimeChannels {
 // sourcery: AutoMockable
 public protocol AblySDKRealtimeChannel {
     var presence: AblySDKRealtimePresence { get }
-    @discardableResult func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> AblySDKEventListener?
+
+    @discardableResult
+    func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> AblySDKEventListener?
+
     func unsubscribe()
+
     func detach(_ callback: ARTCallback?)
-    @discardableResult func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> AblySDKEventListener
+
+    @discardableResult
+    func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> AblySDKEventListener
+
     func publish(_ messages: [ARTMessage], callback: ARTCallback?)
+
     func attach(_ callback: ARTCallback?)
+
     var state: ARTRealtimeChannelState { get }
 }
 
 // sourcery: AutoMockable
 public protocol AblySDKRealtimePresence {
     func get(_ callback: @escaping ARTPresenceMessagesCallback)
+
     func enter(_ data: Any?, callback: ARTCallback?)
+
     func update(_ data: Any?, callback: ARTCallback?)
+
     func leave(_ data: Any?, callback: ARTCallback?)
-    @discardableResult func subscribe(_ callback: @escaping ARTPresenceMessageCallback) -> AblySDKEventListener?
+
+    @discardableResult
+    func subscribe(_ callback: @escaping ARTPresenceMessageCallback) -> AblySDKEventListener?
+
     func unsubscribe()
 }
 
 // sourcery: AutoMockable
 public protocol AblySDKConnection {
-    @discardableResult func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener
+    @discardableResult
+    func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener
 }
 
 // sourcery: AutoMockable
