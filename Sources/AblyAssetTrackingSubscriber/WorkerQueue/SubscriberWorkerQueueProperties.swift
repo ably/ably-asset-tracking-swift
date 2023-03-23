@@ -6,7 +6,6 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     var presenceData: PresenceData
     weak var subscriber: Subscriber?
 
-    private var updatingResolutions: [String: [Resolution?]] = [:]
     private var presentPublisherMemberKeys: Set<String> = []
     private var lastEmittedValueOfIsPublisherVisible: Bool?
     private var lastEmittedTrackableState: ConnectionState = .offline
@@ -25,29 +24,6 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
 
     public init(initialResolution: Resolution?) {
         self.presenceData = PresenceData(type: .subscriber, resolution: initialResolution)
-    }
-
-    mutating func addUpdatingResolution(trackableId: String, resolution: Resolution?) {
-        var updatingList = updatingResolutions[trackableId] ?? []
-        updatingList.append(resolution)
-        updatingResolutions[trackableId] = updatingList
-    }
-
-    func containsUpdatingResolution(trackableId: String, resolution: Resolution?) -> Bool {
-        updatingResolutions[trackableId]?.contains(resolution) ?? false
-    }
-
-    func isLastUpdatingResolution(trackableId: String, resolution: Resolution?) -> Bool {
-        updatingResolutions[trackableId]?.last == resolution
-    }
-
-    mutating func removeUpdatingResolution(trackableId: String, resolution: Resolution?) {
-        updatingResolutions[trackableId]?.removeAll { resolutionToRemove in
-            resolutionToRemove == resolution
-        }
-        if updatingResolutions[trackableId]?.isEmpty == true {
-            updatingResolutions.removeValue(forKey: trackableId)
-        }
     }
 
     mutating func updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange) {
