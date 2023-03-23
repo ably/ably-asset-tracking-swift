@@ -6,7 +6,9 @@ import XCTest
 
 class SubscriberWorkerFactoryTests: XCTestCase {
     private let logHandler = InternalLogHandlerMockThreadSafe()
-    private let properties = SubscriberWorkerQueuePropertiesProxy(underlying: .init(initialResolution: nil), recordInvocations: false)
+    private let properties = SubscriberWorkerQueueProperties(
+        subscriberProperties: SubscriberWorkerQueuePropertiesImpl(initialResolution: nil)
+    )
     private let factory = SubscriberWorkerFactory()
 
     func test_ItBuildsLegacyWork() throws {
@@ -21,7 +23,7 @@ class SubscriberWorkerFactoryTests: XCTestCase {
             logHandler: logHandler
         )
 
-        XCTAssertTrue(worker is LegacyWorker<SubscriberWorkerQueuePropertiesProxy, SubscriberWorkSpecification>)
+        XCTAssertTrue(worker is LegacyWorker<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>)
         _ = try worker.doWork(
             properties: properties,
             doAsyncWork: { _ in },

@@ -16,4 +16,5 @@ run_sourcery () {
 
 run_sourcery "CoreTestingMocks"
 run_sourcery "InternalTestingMocks"
+run_sourcery "SubscriberMocks"
 run_sourcery "SubscriberTestingMocks"

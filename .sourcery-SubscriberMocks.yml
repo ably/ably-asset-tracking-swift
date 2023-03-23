@@ -1,0 +1,11 @@
+sources:
+  - Sources/AblyAssetTrackingSubscriber/WorkerQueue/SubscriberWorkerQueueProperties.swift
+templates:
+  - Sourcery/templates/AutoMockable.stencil
+output:
+  Tests/SubscriberTests/Mocks/GeneratedMocks.swift
+args:
+  autoMockableTestableImports:
+    - AblyAssetTrackingSubscriber
+  autoMockableImports:
+    - AblyAssetTrackingInternal

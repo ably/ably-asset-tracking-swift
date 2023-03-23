@@ -14,7 +14,7 @@ private enum SubscriberState {
 }
 
 class DefaultSubscriber: Subscriber {
-    private var workerQueue: WorkerQueue<SubscriberWorkerQueuePropertiesProxy, SubscriberWorkSpecification>
+    private var workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
@@ -37,9 +37,11 @@ class DefaultSubscriber: Subscriber {
     ) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
 
+        let properties = SubscriberWorkerQueuePropertiesImpl(initialResolution: resolution)
+
         // swiftlint:disable:next trailing_closure
         self.workerQueue = WorkerQueue(
-            properties: SubscriberWorkerQueuePropertiesProxy(underlying: .init(initialResolution: resolution), recordInvocations: false),
+            properties: .init(subscriberProperties: properties),
             workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
             logHandler: self.logHandler,
             workerFactory: SubscriberWorkerFactory(),
@@ -53,7 +55,7 @@ class DefaultSubscriber: Subscriber {
         self.ablySubscriber.subscriberDelegate = self
 
         self.ablySubscriber.subscribeForAblyStateChange()
-        self.workerQueue.properties.subscriber = self
+        self.workerQueue.properties.subscriberProperties.subscriber = self
     }
 
     func resolutionPreference(resolution: Resolution?, completion publicCompletion: @escaping ResultHandler<Void>) {
