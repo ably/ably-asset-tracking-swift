@@ -12,6 +12,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     var specific: SubscriberSpecificWorkerQueuePropertiesProtocol
 }
 
+// sourcery: AutoMockable
 protocol SubscriberSpecificWorkerQueuePropertiesProtocol {
     var presenceData: PresenceData { get set }
 
