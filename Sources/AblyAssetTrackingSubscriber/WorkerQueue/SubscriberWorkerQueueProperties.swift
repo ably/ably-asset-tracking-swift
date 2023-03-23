@@ -38,14 +38,16 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
 
     mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [Presence]) {
         for presenceMessage in presenceMessages where presenceMessage.data.type == .publisher {
-            if presenceMessage.action == .leave || presenceMessage.action == .absent {
+            switch presenceMessage.action {
+            case .leave, .absent:
                 presentPublisherMemberKeys.remove(presenceMessage.memberKey)
-            } else if presenceMessage.action == .present || presenceMessage.action == .enter || presenceMessage.action == .update {
+            case .present, .enter, .update:
                 presentPublisherMemberKeys.insert(presenceMessage.memberKey)
-
                 if let publisherResolution = presenceMessage.data.resolution {
                     pendingPublisherResolutions.add(resolution: publisherResolution)
                 }
+            case .unknown:
+                break
             }
         }
         delegateStateEventsIfRequired()
