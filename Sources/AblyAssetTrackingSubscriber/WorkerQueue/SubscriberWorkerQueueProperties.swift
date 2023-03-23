@@ -142,14 +142,14 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     }
 }
 
-private class PendingResolutions {
+private struct PendingResolutions {
     private var resolutions: [Resolution] = []
 
-    func add(resolution: Resolution) {
+    mutating func add(resolution: Resolution) {
         resolutions.append(resolution)
     }
 
-    func drain() -> [Resolution] {
+    mutating func drain() -> [Resolution] {
         let array = resolutions
         resolutions.removeAll()
         return array
