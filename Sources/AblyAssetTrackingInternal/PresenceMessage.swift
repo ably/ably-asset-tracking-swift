@@ -1,4 +1,5 @@
 // swiftlint:disable missing_docs
+
 public enum PresenceAction {
     case absent
     case present
@@ -8,10 +9,14 @@ public enum PresenceAction {
     case unknown
 }
 
+extension PresenceAction: Equatable {}
+
 public enum PresenceType {
     case publisher
     case subscriber
 }
+
+extension PresenceType: Equatable {}
 
 /**
  Wrapper for ``ARTPresenceMessage`` to hide ``Ably`` interface
@@ -32,3 +37,5 @@ public struct PresenceMessage {
         self.memberKey = memberKey
     }
 }
+
+extension PresenceMessage: Equatable {}
