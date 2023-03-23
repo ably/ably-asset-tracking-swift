@@ -44,11 +44,11 @@ class DefaultSubscriber: Subscriber {
         self.ablySubscriber.subscriberDelegate = self
 
         self.ablySubscriber.subscribeForAblyStateChange()
-        let properties = SubscriberWorkerQueueProperties(initialResolution: resolution, subscriber: self)
+        let specificProperties = SubscriberSpecificWorkerQueuePropertiesImpl(initialResolution: resolution, subscriber: self)
 
         // swiftlint:disable:next trailing_closure
         self.workerQueue = WorkerQueue(
-            properties: properties,
+            properties: .init(isStopped: false, specific: specificProperties),
             workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
             logHandler: self.logHandler,
             workerFactory: SubscriberWorkerFactory(),
