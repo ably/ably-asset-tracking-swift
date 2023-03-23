@@ -14,7 +14,7 @@ private enum SubscriberState {
 }
 
 class DefaultSubscriber: Subscriber {
-    private var workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>
+    private var workerQueue: WorkerQueue<SubscriberWorkerQueuePropertiesProxy, SubscriberWorkSpecification>
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
@@ -39,7 +39,7 @@ class DefaultSubscriber: Subscriber {
 
         // swiftlint:disable:next trailing_closure
         self.workerQueue = WorkerQueue(
-            properties: SubscriberWorkerQueueProperties(initialResolution: resolution),
+            properties: SubscriberWorkerQueuePropertiesProxy(underlying: .init(initialResolution: resolution), recordInvocations: false),
             workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
             logHandler: self.logHandler,
             workerFactory: SubscriberWorkerFactory(),

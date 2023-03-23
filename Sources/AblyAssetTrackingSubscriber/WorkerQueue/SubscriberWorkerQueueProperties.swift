@@ -1,6 +1,211 @@
 import AblyAssetTrackingInternal
 import Foundation
 
+// TODO document, explain why not generated, explain limitations
+struct SubscriberWorkerQueuePropertiesProxy: WorkerQueueProperties {
+    private var underlying: SubscriberWorkerQueueProperties
+    private var recordInvocations: Bool
+
+    // MARK: Initializer
+
+    public init(underlying: SubscriberWorkerQueueProperties, recordInvocations: Bool) {
+        self.underlying = underlying
+        self.recordInvocations = recordInvocations
+    }
+
+    // MARK: Recording invocations
+
+    private(set) var invocations: [Invocation] = []
+
+    enum Invocation {
+        case addUpdatingResolution(trackableId: String, resolution: Resolution?)
+        case removeUpdatingResolution(trackableId: String, resolution: Resolution?)
+        case updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?)
+        case updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?)
+        case updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [PresenceMessage], logHandler: InternalLogHandler?)
+        case delegateStateEventsIfRequired(logHandler: InternalLogHandler?)
+        case notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate)
+        case notifyRawLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?)
+        case notifyPublisherPresenceUpdated(isPublisherPresent: Bool, logHandler: InternalLogHandler?)
+        case notifyTrackableStateUpdated(trackableState: ConnectionState, logHandler: InternalLogHandler?)
+        case notifyDidFailWithError(error: ErrorInformation, logHandler: InternalLogHandler?)
+        case notifyResolutionsChanged(resolutions: [Resolution], logHandler: InternalLogHandler?)
+    }
+
+    private mutating func recordInvocation(_ invocation: Invocation) {
+        guard recordInvocations else {
+            return
+        }
+
+        invocations.append(invocation)
+    }
+
+    // MARK: Proxying to underlying properties
+
+    public var isStopped: Bool {
+        get {
+            underlying.isStopped
+        }
+
+        set {
+            underlying.isStopped = newValue
+        }
+    }
+
+    var presenceData: PresenceData {
+        get {
+            underlying.presenceData
+        }
+
+        set {
+            underlying.presenceData = newValue
+        }
+    }
+
+    weak var subscriber: Subscriber? {
+        get {
+            underlying.subscriber
+        }
+
+        set {
+            underlying.subscriber = newValue
+        }
+    }
+    
+    var enhancedLocation: LocationUpdate? {
+        get {
+            underlying.enhancedLocation
+        }
+
+        set {
+            underlying.enhancedLocation = newValue
+        }
+    }
+    var rawLocation: LocationUpdate? {
+        get {
+            underlying.rawLocation
+        }
+
+        set {
+            underlying.rawLocation = newValue
+        }
+    }
+    var trackableState: ConnectionState {
+        get {
+            underlying.trackableState
+        }
+
+        set {
+            underlying.trackableState = newValue
+        }
+    }
+    var publisherPresence: Bool {
+        get {
+            underlying.publisherPresence
+        }
+
+        set {
+            underlying.publisherPresence = newValue
+        }
+    }
+    var resolution: Resolution? {
+        get {
+            underlying.resolution
+        }
+
+        set {
+            underlying.resolution = newValue
+        }
+    }
+    var nextLocationUpdateInterval: Double? {
+        get {
+            underlying.nextLocationUpdateInterval
+        }
+
+        set {
+            underlying.nextLocationUpdateInterval = newValue
+        }
+    }
+    
+    weak var delegate: SubscriberDelegate? {
+        get {
+            underlying.delegate
+        }
+
+        set {
+            underlying.delegate = newValue
+        }
+    }
+    
+    mutating func addUpdatingResolution(trackableId: String, resolution: Resolution?) {
+        recordInvocation(.addUpdatingResolution(trackableId: trackableId, resolution: resolution))
+        underlying.addUpdatingResolution(trackableId: trackableId, resolution: resolution)
+    }
+    
+    func containsUpdatingResolution(trackableId: String, resolution: Resolution?) -> Bool {
+        return underlying.containsUpdatingResolution(trackableId: trackableId, resolution: resolution)
+    }
+    
+    func isLastUpdatingResolution(trackableId: String, resolution: Resolution?) -> Bool {
+        return underlying.isLastUpdatingResolution(trackableId: trackableId, resolution: resolution)
+    }
+    
+    mutating func removeUpdatingResolution(trackableId: String, resolution: Resolution?) {
+        recordInvocation(.removeUpdatingResolution(trackableId: trackableId, resolution: resolution))
+        underlying.removeUpdatingResolution(trackableId: trackableId, resolution: resolution)
+    }
+    
+    mutating func updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?) {
+        recordInvocation(.updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: stateChange, logHandler: logHandler))
+        underlying.updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: stateChange, logHandler: logHandler)
+    }
+    
+    mutating func updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?) {
+        recordInvocation(.updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: stateChange, logHandler: logHandler))
+        underlying.updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: stateChange, logHandler: logHandler)
+    }
+    
+    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [PresenceMessage], logHandler: InternalLogHandler?) {
+        recordInvocation(.updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: presenceMessages, logHandler: logHandler))
+        underlying.updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: presenceMessages, logHandler: logHandler)
+    }
+    
+    mutating func delegateStateEventsIfRequired(logHandler: InternalLogHandler?) {
+        recordInvocation(.delegateStateEventsIfRequired(logHandler: logHandler))
+        underlying.delegateStateEventsIfRequired(logHandler: logHandler)
+    }
+    
+    mutating func notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate) {
+        recordInvocation(.notifyEnhancedLocationUpdated(locationUpdate: locationUpdate))
+        underlying.notifyEnhancedLocationUpdated(locationUpdate: locationUpdate)
+    }
+    
+    mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?) {
+        recordInvocation(.notifyRawLocationUpdated(locationUpdate: locationUpdate, logHandler: logHandler))
+        underlying.notifyRawLocationUpdated(locationUpdate: locationUpdate, logHandler: logHandler)
+    }
+    
+    mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool, logHandler: InternalLogHandler?) {
+        recordInvocation(.notifyPublisherPresenceUpdated(isPublisherPresent: isPublisherPresent, logHandler: logHandler))
+        underlying.notifyPublisherPresenceUpdated(isPublisherPresent: isPublisherPresent, logHandler: logHandler)
+    }
+    
+    mutating func notifyTrackableStateUpdated(trackableState: ConnectionState, logHandler: InternalLogHandler?) {
+        recordInvocation(.notifyTrackableStateUpdated(trackableState: trackableState, logHandler: logHandler))
+        underlying.notifyTrackableStateUpdated(trackableState: trackableState, logHandler: logHandler)
+    }
+    
+    mutating func notifyDidFailWithError(error: ErrorInformation, logHandler: InternalLogHandler?) {
+        recordInvocation(.notifyDidFailWithError(error: error, logHandler: logHandler))
+        underlying.notifyDidFailWithError(error: error, logHandler: logHandler)
+    }
+    
+    mutating func notifyResolutionsChanged(resolutions: [Resolution], logHandler: InternalLogHandler?) {
+        recordInvocation(.notifyResolutionsChanged(resolutions: resolutions, logHandler: logHandler))
+        underlying.notifyResolutionsChanged(resolutions: resolutions, logHandler: logHandler)
+    }
+}
+
 struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     public var isStopped = false
     var presenceData: PresenceData
