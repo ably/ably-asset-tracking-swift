@@ -129,15 +129,15 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     }
 
     mutating func notifyResolutionsChanged(resolutions: [Resolution]) {
-        if !resolutions.isEmpty {
-            for resolution in resolutions {
-                self.resolution = resolution
-                self.nextLocationUpdateInterval = resolution.desiredInterval
-                guard let subscriber
-                else { return }
-                subscriber.delegate?.subscriber(sender: subscriber, didUpdateResolution: resolution)
-                subscriber.delegate?.subscriber(sender: subscriber, didUpdateDesiredInterval: resolution.desiredInterval)
-            }
+        guard !resolutions.isEmpty
+        else { return }
+        for resolution in resolutions {
+            self.resolution = resolution
+            self.nextLocationUpdateInterval = resolution.desiredInterval
+            guard let subscriber
+            else { return }
+            subscriber.delegate?.subscriber(sender: subscriber, didUpdateResolution: resolution)
+            subscriber.delegate?.subscriber(sender: subscriber, didUpdateDesiredInterval: resolution.desiredInterval)
         }
     }
 }
