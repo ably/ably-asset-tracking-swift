@@ -24,17 +24,17 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         self.presenceData = PresenceData(type: .subscriber, resolution: initialResolution)
     }
 
-    mutating func updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange) {
+    mutating func updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?) {
         lastConnectionStateChange = stateChange
-        delegateStateEventsIfRequired()
+        delegateStateEventsIfRequired(logHandler: logHandler)
     }
 
-    mutating func updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange) {
+    mutating func updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?) {
         lastChannelConnectionStateChange = stateChange
-        delegateStateEventsIfRequired()
+        delegateStateEventsIfRequired(logHandler: logHandler)
     }
 
-    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [Presence]) {
+    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [Presence], logHandler: InternalLogHandler?) {
         for presenceMessage in presenceMessages where presenceMessage.data.type == .publisher {
             switch presenceMessage.action {
             case .leave, .absent:
@@ -48,10 +48,10 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
                 break
             }
         }
-        delegateStateEventsIfRequired()
+        delegateStateEventsIfRequired(logHandler: logHandler)
     }
 
-    mutating func delegateStateEventsIfRequired() {
+    mutating func delegateStateEventsIfRequired(logHandler: InternalLogHandler?) {
         let isAPublisherPresent = !presentPublisherMemberKeys.isEmpty
 
         var trackableState: ConnectionState?
@@ -73,7 +73,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
 
         if let trackableState, trackableState != lastEmittedTrackableState {
             lastEmittedTrackableState = trackableState
-            notifyTrackableStateUpdated(trackableState: trackableState)
+            notifyTrackableStateUpdated(trackableState: trackableState, logHandler: logHandler)
         }
         // It is possible for presentPublisherMemberKeys to not be empty, even when there's no connectivity from our side,
         // because it's possible to have presence entry events without subsequent leave events.
@@ -88,47 +88,52 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
 
         if lastEmittedValueOfIsPublisherVisible != isPublisherVisible {
             lastEmittedValueOfIsPublisherVisible = isPublisherVisible
-            notifyPublisherPresenceUpdated(isPublisherPresent: isPublisherVisible)
+            notifyPublisherPresenceUpdated(isPublisherPresent: isPublisherVisible, logHandler: logHandler)
         }
 
-        notifyResolutionsChanged(resolutions: pendingPublisherResolutions.drain())
+        notifyResolutionsChanged(resolutions: pendingPublisherResolutions.drain(), logHandler: logHandler)
     }
 
-    mutating func notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate) {
+    mutating func notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?) {
         enhancedLocation = locationUpdate
         guard let subscriber
         else { return }
+        logHandler?.logPublicAPICall(label: "Calling delegate didUpdateEnhancedLocation: \(locationUpdate)")
         subscriber.delegate?.subscriber(sender: subscriber, didUpdateEnhancedLocation: locationUpdate)
     }
 
-    mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate) {
+    mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?) {
         rawLocation = locationUpdate
         guard let subscriber
         else { return }
+        logHandler?.logPublicAPICall(label: "Calling delegate didUpdateRawLocation: \(locationUpdate)")
         subscriber.delegate?.subscriber(sender: subscriber, didUpdateRawLocation: locationUpdate)
     }
 
-    mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool) {
+    mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool, logHandler: InternalLogHandler?) {
         publisherPresence = isPublisherPresent
         guard let subscriber
         else { return }
+        logHandler?.logPublicAPICall(label: "Calling delegate didUpdatePublisherPresence: \(publisherPresence)")
         subscriber.delegate?.subscriber(sender: subscriber, didUpdatePublisherPresence: publisherPresence)
     }
 
-    mutating func notifyTrackableStateUpdated(trackableState: ConnectionState) {
+    mutating func notifyTrackableStateUpdated(trackableState: ConnectionState, logHandler: InternalLogHandler?) {
         self.trackableState = trackableState
         guard let subscriber
         else { return }
+        logHandler?.logPublicAPICall(label: "Calling delegate didChangeAssetConnectionStatus: \(trackableState)")
         subscriber.delegate?.subscriber(sender: subscriber, didChangeAssetConnectionStatus: trackableState)
     }
 
-    mutating func notifyDidFailWithError(error: ErrorInformation) {
+    mutating func notifyDidFailWithError(error: ErrorInformation, logHandler: InternalLogHandler?) {
         guard let subscriber
         else { return }
+        logHandler?.logPublicAPICall(label: "Calling delegate didFailWithError: \(error)")
         subscriber.delegate?.subscriber(sender: subscriber, didFailWithError: error)
     }
 
-    mutating func notifyResolutionsChanged(resolutions: [Resolution]) {
+    mutating func notifyResolutionsChanged(resolutions: [Resolution], logHandler: InternalLogHandler?) {
         guard !resolutions.isEmpty
         else { return }
         for resolution in resolutions {
@@ -136,7 +141,9 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
             self.nextLocationUpdateInterval = resolution.desiredInterval
             guard let subscriber
             else { return }
+            logHandler?.logPublicAPICall(label: "Calling delegate didUpdateResolution: \(resolution)")
             subscriber.delegate?.subscriber(sender: subscriber, didUpdateResolution: resolution)
+            logHandler?.logPublicAPICall(label: "Calling delegate didUpdateDesiredInterval: \(resolution.desiredInterval)")
             subscriber.delegate?.subscriber(sender: subscriber, didUpdateDesiredInterval: resolution.desiredInterval)
         }
     }
