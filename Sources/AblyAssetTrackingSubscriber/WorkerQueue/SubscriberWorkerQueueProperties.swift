@@ -20,8 +20,6 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     var resolution: Resolution?
     var nextLocationUpdateInterval: Double?
 
-    weak var delegate: SubscriberDelegate?
-
     public init(initialResolution: Resolution?) {
         self.presenceData = PresenceData(type: .subscriber, resolution: initialResolution)
     }
@@ -100,34 +98,34 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         enhancedLocation = locationUpdate
         guard let subscriber
         else { return }
-        delegate?.subscriber(sender: subscriber, didUpdateEnhancedLocation: locationUpdate)
+        subscriber.delegate?.subscriber(sender: subscriber, didUpdateEnhancedLocation: locationUpdate)
     }
 
     mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate) {
         rawLocation = locationUpdate
         guard let subscriber
         else { return }
-        delegate?.subscriber(sender: subscriber, didUpdateRawLocation: locationUpdate)
+        subscriber.delegate?.subscriber(sender: subscriber, didUpdateRawLocation: locationUpdate)
     }
 
     mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool) {
         publisherPresence = isPublisherPresent
         guard let subscriber
         else { return }
-        delegate?.subscriber(sender: subscriber, didUpdatePublisherPresence: publisherPresence)
+        subscriber.delegate?.subscriber(sender: subscriber, didUpdatePublisherPresence: publisherPresence)
     }
 
     mutating func notifyTrackableStateUpdated(trackableState: ConnectionState) {
         self.trackableState = trackableState
         guard let subscriber
         else { return }
-        delegate?.subscriber(sender: subscriber, didChangeAssetConnectionStatus: trackableState)
+        subscriber.delegate?.subscriber(sender: subscriber, didChangeAssetConnectionStatus: trackableState)
     }
 
     mutating func notifyDidFailWithError(error: ErrorInformation) {
         guard let subscriber
         else { return }
-        delegate?.subscriber(sender: subscriber, didFailWithError: error)
+        subscriber.delegate?.subscriber(sender: subscriber, didFailWithError: error)
     }
 
     mutating func notifyResolutionsChanged(resolutions: [Resolution]) {
@@ -137,8 +135,8 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
                 self.nextLocationUpdateInterval = resolution.desiredInterval
                 guard let subscriber
                 else { return }
-                delegate?.subscriber(sender: subscriber, didUpdateResolution: resolution)
-                delegate?.subscriber(sender: subscriber, didUpdateDesiredInterval: resolution.desiredInterval)
+                subscriber.delegate?.subscriber(sender: subscriber, didUpdateResolution: resolution)
+                subscriber.delegate?.subscriber(sender: subscriber, didUpdateDesiredInterval: resolution.desiredInterval)
             }
         }
     }
