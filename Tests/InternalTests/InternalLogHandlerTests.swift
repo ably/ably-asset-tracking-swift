@@ -1,6 +1,6 @@
-import XCTest
 import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
+import XCTest
 
 class InternalLogHandlerTests: XCTestCase {
     func test_protocolExtension_logMessage_defaultArguments_populatesFileAndLine() throws {
@@ -8,9 +8,9 @@ class InternalLogHandlerTests: XCTestCase {
 
         let expectedLine = #line + 1
         handler.logMessage(level: .info, message: "Here is a message", error: nil)
-        
+
         let receivedArguments = try XCTUnwrap(handler.logMessageLevelMessageErrorCodeLocationReceivedArguments)
-        
+
         XCTAssertEqual(receivedArguments.level, .info)
         XCTAssertEqual(receivedArguments.message, "Here is a message")
         XCTAssertNil(receivedArguments.error)

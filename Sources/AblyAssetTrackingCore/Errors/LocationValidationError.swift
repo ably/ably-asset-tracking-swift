@@ -7,7 +7,7 @@ import Foundation
 public struct LocationValidationError: Error {
     public let errors: [Error]
     public let message: String
-    
+
     public init(errors: [Error]) {
         self.errors = errors
         self.message = "Failed to validate a location object, errors: \(errors)"

@@ -1,15 +1,15 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /**
- Factory class used only to get `PublisherBuilder`
+ Factory used only to get `PublisherBuilder`
  */
-public class PublisherFactory {
+public enum PublisherFactory {
     /**
      Returns the default state of the publisher `PublisherBuilder`, which is incapable of starting of  `Publisher`
      instances until it has been configured fully.
      */
-    static public func publishers() -> PublisherBuilder {
-        return DefaultPublisherBuilder()
+    public static func publishers() -> PublisherBuilder {
+        DefaultPublisherBuilder()
     }
 }

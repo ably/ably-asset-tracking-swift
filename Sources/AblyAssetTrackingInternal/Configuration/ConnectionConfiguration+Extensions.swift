@@ -2,32 +2,31 @@ import Ably
 import AblyAssetTrackingCore
 
 extension ConnectionConfiguration {
-    
     /**
      Create ClientOptions for Ably SDK, to be passed to Ably Client
      */
     public func getClientOptions(logHandler: InternalARTLogHandler, remainPresentForMilliseconds: Int?, host: Host?) -> ARTClientOptions {
         let clientOptions = ARTClientOptions()
-        if let clientId = clientId {
+        if let clientId {
             clientOptions.clientId = clientId
         }
-        
-        if let authCallback = authCallback {
+
+        if let authCallback {
             clientOptions.authCallback = createAuthCallback(authCallback)
         } else {
             clientOptions.key = apiKey
         }
         clientOptions.logLevel = .verbose
         clientOptions.logHandler = logHandler
-        
+
         clientOptions.agents = Agents.libraryAgents.ablyCocoaAgentsDictionary
         clientOptions.autoConnect = false
-        
-        if let environment = environment {
+
+        if let environment {
             clientOptions.environment = environment
         }
-        
-        if let remainPresentForMilliseconds = remainPresentForMilliseconds {
+
+        if let remainPresentForMilliseconds {
             let remainPresentForStringifiable = ARTStringifiable.withNumber(remainPresentForMilliseconds as NSNumber)
             clientOptions.transportParams = ["remainPresentFor": remainPresentForStringifiable]
         }
@@ -40,7 +39,7 @@ extension ConnectionConfiguration {
 
         return clientOptions
     }
-    
+
     /**
      Wraps the ARTAuthCallback into a AuthCallback without dependency on Ably-cocoa, by
      receiving Ably types and converting it into Ably Asset Tracking Types,
@@ -49,7 +48,7 @@ extension ConnectionConfiguration {
     private func createAuthCallback(_ authCallback: @escaping AuthCallback) -> (ARTTokenParams, @escaping (ARTTokenDetailsCompatible?, NSError?) -> Void?) -> Void {
         func authCallbackWrapper(artTokenParams: ARTTokenParams, callback: @escaping (ARTTokenDetailsCompatible?, NSError?) -> Void?) {
             let tokenParams = artTokenParams.toTokenParams()
-            authCallback(tokenParams, { result in
+            authCallback(tokenParams) { result in
                 switch result {
                 case .success(.jwt(let jwt)):
                     callback(NSString(utf8String: jwt), nil)
@@ -63,9 +62,9 @@ extension ConnectionConfiguration {
                     callback(nil, error)
                     return
                 }
-            })
+            }
         }
-        
+
         return authCallbackWrapper
     }
 }

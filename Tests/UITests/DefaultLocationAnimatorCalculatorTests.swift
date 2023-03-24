@@ -145,7 +145,7 @@ private func assertEqualSubscriberUpdates(
         )
     }
 
-    if let subscriberUpdates1 = subscriberUpdates1, let subscriberUpdates2 = subscriberUpdates2 {
+    if let subscriberUpdates1, let subscriberUpdates2 {
         assertEqualPositions(
             subscriberUpdates1.positionToEmit,
             subscriberUpdates2.positionToEmit,
@@ -532,14 +532,18 @@ final class DefaultLocationAnimatorCalculatorTests: XCTestCase {
         assertEqualResults(
             result,
             .init(
-                newState: .init(displayLinkLastFiredAt: 7, locationsAwaitingAnimation:
-                    .multipleLocations(.init(
-                        first: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
-                        second: .init(coordinate: .init(latitude: 11, longitude: 21)),
-                        proportionOfFirstToSecondAlreadyAnimated: 0.066,
-                        remaining: []
-                    )),
-                    numberOfLocationsPoppedSinceLastCameraUpdate: 2),
+                newState: .init(
+                    displayLinkLastFiredAt: 7,
+                    locationsAwaitingAnimation: .multipleLocations(
+                        .init(
+                            first: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
+                            second: .init(coordinate: .init(latitude: 11, longitude: 21)),
+                            proportionOfFirstToSecondAlreadyAnimated: 0.066,
+                            remaining: []
+                        )
+                    ),
+                    numberOfLocationsPoppedSinceLastCameraUpdate: 2
+                ),
                 subscriberUpdates: .init(
                     positionToEmit: .init(latitude: 10.533, longitude: 20.533, accuracy: 0, bearing: 0),
                     shouldEmitCameraPositionUpdate: false
@@ -556,12 +560,14 @@ final class DefaultLocationAnimatorCalculatorTests: XCTestCase {
             context: .init(now: 5, nextLocationUpdatePrediction: .init(receivedAt: 1, nextUpdateExpectedIn: 3)),
             state: .init(
                 displayLinkLastFiredAt: 4.5,
-                locationsAwaitingAnimation: .multipleLocations(.init(
-                    first: .init(coordinate: .init(latitude: 10, longitude: 20)),
-                    second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
-                    proportionOfFirstToSecondAlreadyAnimated: 0,
-                    remaining: [.init(coordinate: .init(latitude: 11, longitude: 21))]
-                )),
+                locationsAwaitingAnimation: .multipleLocations(
+                    .init(
+                        first: .init(coordinate: .init(latitude: 10, longitude: 20)),
+                        second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
+                        proportionOfFirstToSecondAlreadyAnimated: 0,
+                        remaining: [.init(coordinate: .init(latitude: 11, longitude: 21))]
+                    )
+                ),
                 numberOfLocationsPoppedSinceLastCameraUpdate: 1
             )
         )
@@ -583,12 +589,14 @@ final class DefaultLocationAnimatorCalculatorTests: XCTestCase {
             .init(
                 newState: .init(
                     displayLinkLastFiredAt: 5,
-                    locationsAwaitingAnimation: .multipleLocations(.init(
-                        first: .init(coordinate: .init(latitude: 10, longitude: 20)),
-                        second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
-                        proportionOfFirstToSecondAlreadyAnimated: 0.5,
-                        remaining: [.init(coordinate: .init(latitude: 11, longitude: 21))]
-                    )),
+                    locationsAwaitingAnimation: .multipleLocations(
+                        .init(
+                            first: .init(coordinate: .init(latitude: 10, longitude: 20)),
+                            second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
+                            proportionOfFirstToSecondAlreadyAnimated: 0.5,
+                            remaining: [.init(coordinate: .init(latitude: 11, longitude: 21))]
+                        )
+                    ),
                     numberOfLocationsPoppedSinceLastCameraUpdate: 1
                 ),
                 subscriberUpdates: .init(
@@ -606,12 +614,14 @@ final class DefaultLocationAnimatorCalculatorTests: XCTestCase {
             context: .init(now: 5, nextLocationUpdatePrediction: .init(receivedAt: 2, nextUpdateExpectedIn: 6)),
             state: .init(
                 displayLinkLastFiredAt: nil,
-                locationsAwaitingAnimation: .multipleLocations(.init(
-                    first: .init(coordinate: .init(latitude: 10, longitude: 20)),
-                    second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
-                    proportionOfFirstToSecondAlreadyAnimated: 0,
-                    remaining: []
-                )),
+                locationsAwaitingAnimation: .multipleLocations(
+                    .init(
+                        first: .init(coordinate: .init(latitude: 10, longitude: 20)),
+                        second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
+                        proportionOfFirstToSecondAlreadyAnimated: 0,
+                        remaining: []
+                    )
+                ),
                 numberOfLocationsPoppedSinceLastCameraUpdate: nil
             )
         )
@@ -638,12 +648,14 @@ final class DefaultLocationAnimatorCalculatorTests: XCTestCase {
             ),
             state: .init(
                 displayLinkLastFiredAt: 1,
-                locationsAwaitingAnimation: .multipleLocations(.init(
-                    first: .init(coordinate: .init(latitude: 10, longitude: 20)),
-                    second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
-                    proportionOfFirstToSecondAlreadyAnimated: 0,
-                    remaining: [.init(coordinate: .init(latitude: 11, longitude: 21))]
-                )),
+                locationsAwaitingAnimation: .multipleLocations(
+                    .init(
+                        first: .init(coordinate: .init(latitude: 10, longitude: 20)),
+                        second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
+                        proportionOfFirstToSecondAlreadyAnimated: 0,
+                        remaining: [.init(coordinate: .init(latitude: 11, longitude: 21))]
+                    )
+                ),
                 numberOfLocationsPoppedSinceLastCameraUpdate: 4
             )
         )
@@ -661,12 +673,14 @@ final class DefaultLocationAnimatorCalculatorTests: XCTestCase {
             context: .init(now: 20, nextLocationUpdatePrediction: .init(receivedAt: 2, nextUpdateExpectedIn: 6)),
             state: .init(
                 displayLinkLastFiredAt: 15,
-                locationsAwaitingAnimation: .multipleLocations(.init(
-                    first: .init(coordinate: .init(latitude: 10, longitude: 20)),
-                    second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
-                    proportionOfFirstToSecondAlreadyAnimated: 0,
-                    remaining: []
-                )),
+                locationsAwaitingAnimation: .multipleLocations(
+                    .init(
+                        first: .init(coordinate: .init(latitude: 10, longitude: 20)),
+                        second: .init(coordinate: .init(latitude: 10.5, longitude: 20.5)),
+                        proportionOfFirstToSecondAlreadyAnimated: 0,
+                        remaining: []
+                    )
+                ),
                 numberOfLocationsPoppedSinceLastCameraUpdate: 1
             )
         )
@@ -678,8 +692,14 @@ final class DefaultLocationAnimatorCalculatorTests: XCTestCase {
             .init(
                 newState: .init(
                     displayLinkLastFiredAt: 20,
-                    locationsAwaitingAnimation: .singleLocation(.init(coordinate: .init(latitude: 10.5,
-                                                                                        longitude: 20.5))),
+                    locationsAwaitingAnimation: .singleLocation(
+                        .init(
+                            coordinate: .init(
+                                latitude: 10.5,
+                                longitude: 20.5
+                            )
+                        )
+                    ),
                     numberOfLocationsPoppedSinceLastCameraUpdate: 2
                 ),
                 subscriberUpdates: .init(

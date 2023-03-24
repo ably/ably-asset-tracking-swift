@@ -1,6 +1,6 @@
+import AblyAssetTrackingCore
 import CoreLocation
 import MapboxDirections
-import AblyAssetTrackingCore
 
 protocol RouteProvider {
     func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>)
@@ -21,7 +21,6 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     func getRoute(to destination: CLLocationCoordinate2D, withRoutingProfile routingProfile: RoutingProfile, completion: @escaping ResultHandler<Route>) {
-
         if isCalculating(resultHandler: completion) {
             return
         }
@@ -34,13 +33,17 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     private func handleLocationUpdate(location: CLLocation) {
-        guard let destination = destination,
-              let routingProfile = routingProfile else { return }
+        guard let destination,
+              let routingProfile else { return }
 
-        let options = RouteOptions(coordinates: [destination, location.coordinate],
-                                   profileIdentifier: routingProfile.toMapboxProfileIdentifier())
-        directions.calculate(options) { [weak self] (_, result) in
-            guard let self = self else { return }
+        let options = RouteOptions(
+            coordinates: [destination, location.coordinate],
+            profileIdentifier: routingProfile.toMapboxProfileIdentifier()
+        )
+        directions.calculate(options) { [weak self] _, result in
+            guard let self else {
+                return
+            }
             switch result {
             case .failure(let error):
                 self.handleErrorCallback(error: ErrorInformation(error: error))
@@ -56,7 +59,9 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     private func handleErrorCallback(error: ErrorInformation) {
-        guard let resultHandler = self.resultHandler else { return }
+        guard let resultHandler = self.resultHandler else {
+            return
+        }
         resultHandler(.failure(error))
 
         self.destination = nil
@@ -64,7 +69,9 @@ class DefaultRouteProvider: NSObject, RouteProvider {
     }
 
     private func handleRouteCallback(route: Route) {
-        guard let resultHandler = self.resultHandler else { return }
+        guard let resultHandler = self.resultHandler else {
+            return
+        }
         resultHandler(.success(route))
 
         self.resultHandler = nil
@@ -83,7 +90,9 @@ class DefaultRouteProvider: NSObject, RouteProvider {
 
 extension DefaultRouteProvider: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return }
+        guard let location = locations.first else {
+            return
+        }
         locationManager.delegate = nil
         handleLocationUpdate(location: location)
     }

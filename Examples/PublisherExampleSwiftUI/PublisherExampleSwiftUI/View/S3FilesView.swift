@@ -4,12 +4,12 @@ struct S3FilesView: View {
     @Binding var fileName: String?
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel: S3FilesViewModel
-    
+
     init(s3Helper: S3Helper? = nil, fileName: Binding<String?>) {
         _viewModel = StateObject(wrappedValue: S3FilesViewModel(s3Helper: s3Helper))
         _fileName = fileName
     }
-    
+
     var body: some View {
         NavigationView {
             List {

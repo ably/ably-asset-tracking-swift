@@ -13,7 +13,7 @@ struct GeoJSONGeometry: Codable {
     let latitude: Double
     let longitude: Double
     let altitude: Double
-    
+
     private let longitudeIndex = 0
     private let latitudeIndex = 1
     private let altitudeIndex = 2
@@ -38,7 +38,7 @@ struct GeoJSONGeometry: Codable {
         else {
             throw ErrorInformation(type: .commonError(errorMessage: "Invalid count of coordinates in GeoJSONGeometry. Received: \(coordinates)"))
         }
-        
+
         if let validationError = LocationValidator.validate(latitude: latitude, longitude: longitude) {
             throw validationError
         }
@@ -56,14 +56,14 @@ struct GeoJSONGeometry: Codable {
 
     init(location: Location) throws {
         type = .point
-        
+
         if let validationError = LocationValidator.validate(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude
         ) {
             throw validationError
         }
-        
+
         latitude = location.coordinate.latitude
         longitude = location.coordinate.longitude
         altitude = location.altitude
@@ -72,6 +72,6 @@ struct GeoJSONGeometry: Codable {
 
 private extension Collection {
     func element(at index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
+        indices.contains(index) ? self[index] : nil
     }
 }

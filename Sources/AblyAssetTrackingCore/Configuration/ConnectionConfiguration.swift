@@ -10,21 +10,27 @@ public enum AuthResult {
     case tokenDetails(TokenDetails)
 }
 
+// swiftlint:disable:next missing_docs
 public typealias Token = String
+// swiftlint:disable:next missing_docs
 public typealias AuthCallback = (TokenParams, @escaping (Result<AuthResult, Error>) -> Void) -> Void
 
 /// A container for connection configuration data used when connecting to Ably
 public class ConnectionConfiguration {
+    // swiftlint:disable:next missing_docs
     public let apiKey: String?
+    // swiftlint:disable:next missing_docs
     public let clientId: String?
+    // swiftlint:disable:next missing_docs
     public let remainPresentForMilliseconds: Int?
+    // swiftlint:disable:next missing_docs
     public let authCallback: AuthCallback?
     /**
      * For development or non-default production environments.
      * Allows a non-default Ably environment to be used such as 'sandbox'.
      */
     public var environment: String?
-    
+
     /**
      Connect to Ably using basic authentication (API Key)
      
@@ -34,16 +40,18 @@ public class ConnectionConfiguration {
         - authCallback: A callback that will be used to authenticate with Ably, including at initial connection and for renewing an expired token.
         - remainPresentForMilliseconds: Specifies for how long should the SDK remain present in a channel when the connection is gone. For more details please see https://ably.com/docs/realtime/presence#unstable-connections
      */
-    private init(apiKey: String?,
-                 clientId: String?,
-                 authCallback: AuthCallback?,
-                 remainPresentForMilliseconds: Int?) {
+    private init(
+        apiKey: String?,
+        clientId: String?,
+        authCallback: AuthCallback?,
+        remainPresentForMilliseconds: Int?
+    ) {
         self.apiKey = apiKey
         self.clientId = clientId
         self.authCallback = authCallback
         self.remainPresentForMilliseconds = remainPresentForMilliseconds
     }
-    
+
     // TODO make clientId optional [RSA7b2], and use the clientId provided in the auth callback. Pending ably-cocoa: https://github.com/ably/ably-cocoa/issues/1126
     /**
      Connect to Ably with authCallback authentication, where the authCallback is passed a [TokenRequest]
@@ -56,30 +64,43 @@ public class ConnectionConfiguration {
     @available(*, deprecated,
                 message: "The ability to specify a client ID when using token-based authentication has been deprecated. You should use init(authCallback:) instead, which will use the client ID contained in the fetched token.",
                 renamed: "init(authCallback:)")
-    public convenience init(clientId: String,
-                            authCallback: @escaping AuthCallback,
-                            remainPresentForMilliseconds: Int? = nil) {
-        self.init(apiKey: nil,
-                  clientId: clientId,
-                  authCallback: authCallback,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds)
-    }
-    
     public convenience init(
-                            authCallback: @escaping AuthCallback,
-                            remainPresentForMilliseconds: Int? = nil) {
-        self.init(apiKey: nil,
-                  clientId: nil,
-                  authCallback: authCallback,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds)
+        clientId: String,
+        authCallback: @escaping AuthCallback,
+        remainPresentForMilliseconds: Int? = nil
+    ) {
+        self.init(
+            apiKey: nil,
+            clientId: clientId,
+            authCallback: authCallback,
+            remainPresentForMilliseconds: remainPresentForMilliseconds
+        )
     }
-    
-    public convenience init(apiKey: String,
-                            clientId: String? = nil,
-                            remainPresentForMilliseconds: Int? = nil) {
-        self.init(apiKey: apiKey,
-                  clientId: clientId,
-                  authCallback: nil,
-                  remainPresentForMilliseconds: remainPresentForMilliseconds)
+
+    // swiftlint:disable:next missing_docs
+    public convenience init(
+        authCallback: @escaping AuthCallback,
+        remainPresentForMilliseconds: Int? = nil
+    ) {
+        self.init(
+            apiKey: nil,
+            clientId: nil,
+            authCallback: authCallback,
+            remainPresentForMilliseconds: remainPresentForMilliseconds
+        )
+    }
+
+    // swiftlint:disable:next missing_docs
+    public convenience init(
+        apiKey: String,
+        clientId: String? = nil,
+        remainPresentForMilliseconds: Int? = nil
+    ) {
+        self.init(
+            apiKey: apiKey,
+            clientId: clientId,
+            authCallback: nil,
+            remainPresentForMilliseconds: remainPresentForMilliseconds
+        )
     }
 }

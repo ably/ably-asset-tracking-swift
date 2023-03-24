@@ -1,11 +1,12 @@
 import AblyAssetTrackingCore
 
+// swiftlint:disable:next missing_docs
 public protocol AblyCommon {
     /**
      Observe for the `ARTRealtime` state updates.
      */
     func subscribeForAblyStateChange()
-    
+
     /**
      Observe  for the channel state updates.
      
@@ -14,7 +15,7 @@ public protocol AblyCommon {
      - Parameter trackable: The `Trackable` object
      */
     func subscribeForChannelStateChange(trackable: Trackable)
-    
+
     /**
      Observe  for the presence messages that are received from the channel's presence.
      
@@ -23,7 +24,7 @@ public protocol AblyCommon {
      - Parameter trackable:  The `Trackable` object
      */
     func subscribeForPresenceMessages(trackable: Trackable)
-    
+
     /**
      Updates presence data in the `trackableId` channel's presence.
      
@@ -42,7 +43,7 @@ public protocol AblyCommon {
      - Parameter callback: The closure that will be called when connecting completes. If something goes wrong it will be called with an `error`object.
      */
     func startConnection(completion: @escaping ResultHandler<Void>)
-    
+
     /**
      Joins the presence of the channel for the given `trackableId` and add it to the connected channels.
      
@@ -55,7 +56,7 @@ public protocol AblyCommon {
      - Parameter completion:    The closure that will be called when connecting completes. If something goes wrong it will be called with `error` object.
      */
     func connect(trackableId: String, presenceData: PresenceData, useRewind: Bool, completion: @escaping ResultHandler<Void>)
-    
+
     /**
      Removes the `trackableId` channel from the connected channels and leaves the presence of that channel.
      
@@ -66,7 +67,7 @@ public protocol AblyCommon {
      - Parameter completion:    The closure that will be called when disconnecting completes. If something goes wrong it will be called with `error` object.
      */
     func disconnect(trackableId: String, presenceData: PresenceData?, completion: @escaping ResultHandler<Bool>)
-    
+
     /**
      Cleanups and closes all the connected channels and their presence. In the end closes Ably connection.
      
@@ -88,11 +89,11 @@ public protocol AblyCommon {
  */
 public struct AblyMode: OptionSet {
     public let rawValue: Int
-    
+
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
-    
+
     public static let publish = AblyMode(rawValue: 1 << 0)
     public static let subscribe = AblyMode(rawValue: 1 << 1)
 }

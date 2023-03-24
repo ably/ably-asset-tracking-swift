@@ -1,5 +1,5 @@
-import Foundation
 import CommonCrypto
+import Foundation
 
 extension String {
     // https://ably.com/documentation/rest-api/token-request-spec#hmac

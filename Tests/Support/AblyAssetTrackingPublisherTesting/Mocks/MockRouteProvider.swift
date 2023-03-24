@@ -1,12 +1,12 @@
-import MapboxDirections
-import CoreLocation
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
+import CoreLocation
+import MapboxDirections
 
 public class MockRouteProvider: RouteProvider {
     public init() {}
 
-    public var getRouteCalled: Bool = false
+    public var getRouteCalled = false
     public var getRouteParamDestination: CLLocationCoordinate2D?
     public var getRouteParamRoutingProfile: RoutingProfile?
     public var getRouteParamResultHandler: ResultHandler<Route>?

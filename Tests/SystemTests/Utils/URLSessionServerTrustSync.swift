@@ -5,7 +5,6 @@ import XCTest
  Helper class for synchronous URL requests.
  */
 class URLSessionServerTrustSync: NSObject, URLSessionDelegate, URLSessionTaskDelegate {
-
     /**
      This method makes synchronous requests to the URL
      */
@@ -19,16 +18,16 @@ class URLSessionServerTrustSync: NSObject, URLSessionDelegate, URLSessionTaskDel
         let queue = OperationQueue()
         let session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: queue)
 
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
             if let response = response as? HTTPURLResponse {
                 responseData = data
                 responseError = error as NSError?
                 httpResponse = response
-            } else if let error = error {
+            } else if let error {
                 responseError = error as NSError?
             }
             requestCompleted = true
-        })
+        }
         task.resume()
 
         /**

@@ -1,12 +1,12 @@
-import XCTest
-import AblyAssetTrackingInternalTesting
 import AblyAssetTrackingInternal
+import AblyAssetTrackingInternalTesting
+import XCTest
 
 class LegacyWorkerTests: XCTestCase {
     private let logHandler = InternalLogHandlerMockThreadSafe()
     private let properties = WorkerQueuePropertiesMock()
 
-    func test_doWorkShouldCallPassedInWorkCallbackAndReturnProperties() {
+    func test_doWorkShouldCallPassedInWorkCallbackAndReturnProperties() throws {
         properties.isStopped = true
         var called = false
         let callback = {
@@ -15,7 +15,7 @@ class LegacyWorkerTests: XCTestCase {
         }
 
         let worker = LegacyWorker<WorkerQueuePropertiesMock, WorkerFactoryMock.WorkerSpecificationType>(work: callback, logger: logHandler)
-        let updatedProperties = try! worker.doWork(
+        let updatedProperties = try worker.doWork(
             properties: properties,
             doAsyncWork: { _ in },
             postWork: { _ in }

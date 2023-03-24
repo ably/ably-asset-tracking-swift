@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 public extension Encodable {
     /**
@@ -11,7 +11,7 @@ public extension Encodable {
      */
     func toJSONString() throws -> String {
         let data = try JSONEncoder().encode(self)
-        if let result =  String(data: data, encoding: .utf8) {
+        if let result = String(data: data, encoding: .utf8) {
             return result
         }
         throw ErrorInformation(type: .JSONCodingError(for: "\(data.self)"))
@@ -35,7 +35,7 @@ public extension Decodable {
         }
         return try JSONDecoder().decode(T.self, from: data)
     }
-    
+
     /**
      Utility function to construct given `Decodable` object from  Dictionary object.
      - Parameters:
@@ -44,10 +44,10 @@ public extension Decodable {
      */
     static func fromDictionary<T: Decodable>(_ dictionary: [AnyHashable: Any]) throws -> T {
         let data = try JSONSerialization.data(withJSONObject: dictionary, options: .fragmentsAllowed)
-        
+
         return try JSONDecoder().decode(T.self, from: data)
     }
-    
+
     /**
      Helper function to construct given `Decodable` from `JSON string` or `Dictionary object`.
      - Parameters:

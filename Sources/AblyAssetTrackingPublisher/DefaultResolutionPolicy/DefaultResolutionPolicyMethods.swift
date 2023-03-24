@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 protocol DefaultResolutionPolicyMethodsDelegate: AnyObject {
     func resolutionPolicyMethods(refreshWithSender sender: DefaultResolutionPolicyMethods)

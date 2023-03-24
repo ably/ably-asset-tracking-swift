@@ -2,13 +2,13 @@ import AblyAssetTrackingCore
 
 /// A description of some software component which wishes to identify itself in a log message.
 public enum Subsystem {
-    // One of the Ably Asset Tracking SDKs.
+    /// One of the Ably Asset Tracking SDKs.
     case assetTracking
     /// An arbitrary component with a name.
     case named(String)
     /// A component that is a Swift type.
     case typed(Any.Type)
-    
+
     /// The text that will be used to identify this component in a log message.
     var name: String {
         switch self {
@@ -28,17 +28,17 @@ public struct CodeLocation: Equatable {
     public var file: String
     /// The line number in the source code file.
     public var line: Int
-    
+
     public init(file: String, line: Int) {
         self.file = file
         self.line = line
     }
 }
 
+// sourcery: AutoMockable
 /// A log handler to be used by components of the Asset Tracking SDKs. It provides SDK components with functionality for augmenting the log output.
 ///
 /// It stores a hierarchy of subsystems of increasing granularity, for example ["asset-tracking", "publisher", "DefaultPublisher"]. It is expected that it will use this information to output some sort of information about these subsystems in the log messages that it outputs, for example by adding a string "[asset-tracking.publisher.DefaultPublisher]".
-// sourcery: AutoMockable
 public protocol InternalLogHandler {
     /// Logs a message.
     /// - Parameters:
@@ -66,13 +66,13 @@ extension InternalLogHandler {
     /// - Parameter type: The Swift type to add, for example `DefaultPublisher.self`.
     /// - Returns: A new log handler.
     public func addingSubsystem(_ type: Any.Type) -> InternalLogHandler {
-        return addingSubsystem(.typed(type))
+        addingSubsystem(.typed(type))
     }
-    
+
     /// A convenience logging method that uses the call site’s #file and #line values.
     public func logMessage(level: LogLevel, message: String, error: Error?, file: String? = #file, line: Int? = #line) {
         let codeLocation: CodeLocation?
-        if let file = file, let line = line {
+        if let file, let line {
             codeLocation = CodeLocation(file: file, line: line)
         } else {
             codeLocation = nil

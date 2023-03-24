@@ -1,6 +1,6 @@
-import Foundation
 import AblyAssetTrackingCore
 import AblyAssetTrackingInternal
+import Foundation
 
 /// Provides shared logger instances for use by tests.
 public enum TestLogging {
@@ -31,7 +31,7 @@ private class TestLogHandler: AblyAssetTrackingCore.LogHandler {
         }
 
         let suffix: String
-        if let error = error {
+        if let error {
             suffix = " (error: \(error.localizedDescription))"
         } else {
             suffix = ""

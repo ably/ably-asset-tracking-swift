@@ -5,7 +5,7 @@ struct SettingsView: View {
     @State var showDefaultAccuracies = false
     var uploads: [Upload]
     var retry: (Upload) -> Void
-    
+
     var body: some View {
         List {
             Section {
@@ -31,13 +31,14 @@ struct SettingsView: View {
             } header: {
                 Text("Default resolution when setting resolution constraints")
             }
-            
+
             Section {
                 Toggle(isOn: $viewModel.useMapboxMap) {
                     Text("Use Mapbox map")
                 }
-                
+
                 NavigationLink("Uploads") {
+                    // swiftlint:disable:next trailing_closure
                     UploadsView(uploads: uploads, retry: { upload in
                         retry(upload)
                     })
@@ -45,7 +46,7 @@ struct SettingsView: View {
             } header: {
                 Text("Other settings")
             }
-            
+
             Section {
                 Toggle(isOn: $viewModel.logLocationHistoryJSON) {
                     Text("Log location history JSON")

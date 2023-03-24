@@ -1,6 +1,6 @@
+import AblyAssetTrackingCore
 import CoreLocation
 import Foundation
-import AblyAssetTrackingCore
 
 // sourcery: AutoMockable
 public protocol SubscriberDelegate: AnyObject {
@@ -21,7 +21,7 @@ public protocol SubscriberDelegate: AnyObject {
         - location: Received location update.
      */
     func subscriber(sender: Subscriber, didUpdateEnhancedLocation locationUpdate: LocationUpdate)
-    
+
     /**
      Called when the `Subscriber` receive any Raw Location update for observed trackable
      
@@ -30,7 +30,7 @@ public protocol SubscriberDelegate: AnyObject {
         - location: Received location update.
      */
     func subscriber(sender: Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate)
-    
+
     /**
      Called when the `Subscriber` receive any Resolution update for observed trackable
      
@@ -39,7 +39,7 @@ public protocol SubscriberDelegate: AnyObject {
         - resolution: Received `Resolution` object.
      */
     func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution)
-    
+
     /**
      Called when the `Subscriber` receive estimated next location update intervals (in milliseconds) for observed trackable
      */
@@ -53,7 +53,7 @@ public protocol SubscriberDelegate: AnyObject {
         - status: Updated connection status.
      */
     func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState)
-    
+
     /**
      Called when the `Subscriber` receives updated information about whether the publisher is present.
      
@@ -71,17 +71,17 @@ public extension SubscriberDelegate {
      Default implementation to make this method `optional`
      */
     func subscriber(sender: Subscriber, didUpdateResolution resolution: Resolution) {}
-    
+
     /**
      Default implementation to make this method `optional`
      */
     func subscriber(sender: Subscriber, didUpdateRawLocation locationUpdate: LocationUpdate) {}
-    
+
     /**
      Default implementation to make this method `optional`
     */
     func subscriber(sender: Subscriber, didUpdateDesiredInterval interval: Double) {}
-    
+
     /**
      Default implementation to make this method `optional`
     */

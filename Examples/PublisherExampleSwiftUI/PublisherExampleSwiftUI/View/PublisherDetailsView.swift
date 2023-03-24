@@ -1,5 +1,5 @@
-import SwiftUI
 import AblyAssetTrackingPublisher
+import SwiftUI
 
 struct PublisherDetailsView: View {
     @StateObject private var locationManager = LocationManager.shared
@@ -12,17 +12,19 @@ struct PublisherDetailsView: View {
     @State private var showRoutingProfileSheet = false
     @State private var isChangingRoutingProfile = false
     @Environment(\.presentationMode) private var presentationMode
-    
+
     @ObservedObject var publisher: ObservablePublisher
-    
+
     var sortedTrackables: [(trackable: Trackable, state: ObservablePublisher.TrackableState)] {
-        return publisher.trackables.sorted { pair1, pair2 in
-            return pair1.key.id < pair2.key.id
-        }.map { pair in
-            (trackable: pair.key, state: pair.value)
-        }
+        publisher.trackables
+            .sorted { pair1, pair2 in
+                pair1.key.id < pair2.key.id
+            }
+            .map { pair in
+                (trackable: pair.key, state: pair.value)
+            }
     }
-    
+
     var body: some View {
         List {
             Section {
@@ -46,14 +48,14 @@ struct PublisherDetailsView: View {
             } header: {
                 Text("Current trackables")
             }
-            
+
             Section {
                 NavigationLink {
                     AddTrackableView(publisher: publisher)
                 } label: {
                     Text("Add trackable")
                 }
-                
+
                 Button {
                     showRoutingProfileSheet = true
                 } label: {
@@ -81,9 +83,9 @@ struct PublisherDetailsView: View {
                             }
                         }
                     }
-                    
+
                     buttons.append(.cancel())
-                    
+
                     return ActionSheet(
                         title: Text("Routing profiles"),
                         message: Text("Select a profile"),
@@ -91,10 +93,12 @@ struct PublisherDetailsView: View {
                     )
                 }
                 .alert(isPresented: $showChangeRoutingProfileErrorAlert) {
-                    Alert(title: "Failed to change routing profile",
-                          errorInformation: changeRoutingProfileError)
+                    Alert(
+                        title: "Failed to change routing profile",
+                        errorInformation: changeRoutingProfileError
+                    )
                 }
-                
+
                 HStack {
                     Button {
                         isStoppingPublisher = true
@@ -115,8 +119,10 @@ struct PublisherDetailsView: View {
                     .accentColor(.red)
                     .disabled(isStoppingPublisher || hasStoppedPublisher)
                     .alert(isPresented: $showStopPublisherErrorAlert) {
-                        Alert(title: "Failed to stop publisher",
-                              errorInformation: stopPublisherError)
+                        Alert(
+                            title: "Failed to stop publisher",
+                            errorInformation: stopPublisherError
+                        )
                     }
                     Spacer()
                     ProgressView()
@@ -125,7 +131,7 @@ struct PublisherDetailsView: View {
             } header: {
                 Text("Actions")
             }
-            
+
             Section {
                 let publisherInfoViewModel = PublisherInfoViewModel.create(fromPublisherConfigInfo: publisher.configInfo, resolution: publisher.resolution, routingProfile: publisher.routingProfile, lastError: publisher.lastError)
 
@@ -167,7 +173,7 @@ struct PublisherDetailsView: View {
     }
 }
 
-struct PublisherDetailsView_Previews: PreviewProvider {    
+struct PublisherDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         let publisher = ObservablePublisher(publisher: DummyPublisher(), configInfo: .init(areRawLocationsEnabled: false))
         NavigationView {

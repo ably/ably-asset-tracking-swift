@@ -1,5 +1,3 @@
-//
-
 import SwiftUI
 
 struct TitleTextFieldListItem: View {
@@ -7,14 +5,14 @@ struct TitleTextFieldListItem: View {
     private let title: String
     private let placeholder: String
     private let keyboardType: UIKeyboardType
-    
+
     init(title: String, value: Binding<String>, placeholder: String, keyboardType: UIKeyboardType) {
         self.title = title
         self.value = value
         self.placeholder = placeholder
         self.keyboardType = keyboardType
     }
-    
+
     var body: some View {
         ListItem {
             HStack {

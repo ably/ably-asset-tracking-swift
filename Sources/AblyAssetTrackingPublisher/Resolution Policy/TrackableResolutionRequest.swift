@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /**
   A request for a tracking `Resolution` for a `Trackable` object.

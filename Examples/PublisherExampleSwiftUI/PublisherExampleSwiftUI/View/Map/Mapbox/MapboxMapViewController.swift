@@ -1,27 +1,27 @@
-import UIKit
 import MapboxMaps
+import UIKit
 
 class MapboxMapViewController: UIViewController {
     internal var mapView: MapboxMaps.MapView?
-    
+
     var center: CLLocationCoordinate2D? {
         get {
-            return _center
+            underlyingCenter
         }
         set {
-            if newValue != _center {
-                _center = newValue
+            if newValue != underlyingCenter {
+                underlyingCenter = newValue
                 reload()
             }
         }
     }
-    var _center: CLLocationCoordinate2D?
-    
+    var underlyingCenter: CLLocationCoordinate2D?
+
     var onCameraChange: ((CLLocationCoordinate2D) -> Void)?
-    
+
     override public func viewDidLoad() {
         super.viewDidLoad()
-        let resourceOptions = ResourceOptions(accessToken: EnvironmentHelper.MAPBOX_ACCESS_TOKEN)
+        let resourceOptions = ResourceOptions(accessToken: EnvironmentHelper.mapboxAccessToken)
         let cameraOptions = CameraOptions(center: center, zoom: 10)
         let mapInitOptions = MapInitOptions(resourceOptions: resourceOptions, cameraOptions: cameraOptions)
 
@@ -32,9 +32,9 @@ class MapboxMapViewController: UIViewController {
         self.view.addSubview(mapView)
         self.mapView = mapView
     }
-    
+
     func reload() {
-        guard let mapView = mapView else {
+        guard let mapView else {
             return
         }
         mapView.mapboxMap.setCamera(to: CameraOptions(center: center))
@@ -42,17 +42,16 @@ class MapboxMapViewController: UIViewController {
 }
 
 extension MapboxMapViewController: GestureManagerDelegate {
-    
     func gestureManager(_ gestureManager: MapboxMaps.GestureManager, didBegin gestureType: MapboxMaps.GestureType) {
     }
-    
+
     func gestureManager(_ gestureManager: MapboxMaps.GestureManager, didEnd gestureType: MapboxMaps.GestureType, willAnimate: Bool) {
         if let cameraCenter = mapView?.cameraState.center, center != cameraCenter {
-            _center = cameraCenter
+            underlyingCenter = cameraCenter
             onCameraChange?(cameraCenter)
         }
     }
-    
+
     func gestureManager(_ gestureManager: MapboxMaps.GestureManager, didEndAnimatingFor gestureType: MapboxMaps.GestureType) {
     }
 }

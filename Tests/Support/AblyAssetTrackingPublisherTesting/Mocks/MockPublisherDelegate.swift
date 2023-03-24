@@ -1,12 +1,12 @@
-import CoreLocation
-import Foundation
 import AblyAssetTrackingCore
 @testable import AblyAssetTrackingPublisher
+import CoreLocation
+import Foundation
 
 public class MockPublisherDelegate: PublisherDelegate {
     public init() {}
 
-    public var publisherDidFailWithErrorCalled: Bool = false
+    public var publisherDidFailWithErrorCalled = false
     public var publisherDidFailWithErrorParamSender: Publisher?
     public var publisherDidFailWithErrorParamError: ErrorInformation?
     public var publisherDidFailWithErrorCallback: (() -> Void)?
@@ -17,7 +17,7 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidFailWithErrorCallback?()
     }
 
-    public var publisherDidUpdateEnhancedLocationCalled: Bool = false
+    public var publisherDidUpdateEnhancedLocationCalled = false
     public var publisherDidUpdateEnhancedLocationParamSender: Publisher?
     public var publisherDidUpdateEnhancedLocationParamLocation: EnhancedLocationUpdate?
     public var publisherDidUpdateEnhancedLocationCallback: (() -> Void)?
@@ -28,7 +28,7 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidUpdateEnhancedLocationCallback?()
     }
 
-    public var publisherDidChangeTrackableConnectionStateCalled: Bool = false
+    public var publisherDidChangeTrackableConnectionStateCalled = false
     public var publisherDidChangeTrackableConnectionStateParamSender: Publisher?
     public var publisherDidChangeTrackableConnectionStateParamState: ConnectionState?
     public var publisherDidChangeTrackableConnectionStateParamTrackable: Trackable?
@@ -40,8 +40,8 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidChangeTrackableConnectionStateParamTrackable = trackable
         publisherDidChangeTrackableConnectionStateCallback?()
     }
-    
-    public var publisherDidUpdateResolutionCalled: Bool = false
+
+    public var publisherDidUpdateResolutionCalled = false
     public var publisherDidUpdateResolutionParamSender: Publisher?
     public var publisherDidUpdateResolutionParamResolution: Resolution?
     public var publisherDidUpdateResolutionCallback: (() -> Void)?
@@ -51,8 +51,8 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidUpdateResolutionParamResolution = resolution
         publisherDidUpdateResolutionCallback?()
     }
-    
-    public var publisherDidChangeTrackablesCalled: Bool = false
+
+    public var publisherDidChangeTrackablesCalled = false
     public var publisherDidChangeTrackablesParamSender: Publisher?
     public var publisherDidChangeTrackablesParamTrackables: Set<Trackable>?
     public var publisherDidChangeTrackablesCallback: (() -> Void)?
@@ -62,8 +62,8 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidChangeTrackablesParamTrackables = trackables
         publisherDidChangeTrackablesCallback?()
     }
-    
-    public var publisherDidFinishRecordingLocationHistoryDataCalled: Bool = false
+
+    public var publisherDidFinishRecordingLocationHistoryDataCalled = false
     public var publisherDidFinishRecordingLocationHistoryDataParamSender: Publisher?
     public var publisherDidFinishRecordingLocationHistoryDataParamLocationHistoryData: LocationHistoryData?
     public var publisherDidFinishRecordingLocationHistoryDataCallback: (() -> Void)?
@@ -73,8 +73,8 @@ public class MockPublisherDelegate: PublisherDelegate {
         publisherDidFinishRecordingLocationHistoryDataParamLocationHistoryData = locationHistoryData
         publisherDidFinishRecordingLocationHistoryDataCallback?()
     }
-    
-    public var publisherDidFinishRecordingRawMapboxDataToTemporaryFileCalled: Bool = false
+
+    public var publisherDidFinishRecordingRawMapboxDataToTemporaryFileCalled = false
     public var publisherDidFinishRecordingRawMapboxDataToTemporaryFileParamSender: Publisher?
     public var publisherDidFinishRecordingRawMapboxDataToTemporaryFileParamTemporaryFile: TemporaryFile?
     public var publisherDidFinishRecordingRawMapboxDataToTemporaryFileCallback: (() -> Void)?

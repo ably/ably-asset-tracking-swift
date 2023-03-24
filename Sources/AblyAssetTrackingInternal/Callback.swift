@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingCore
+import Foundation
 
 /// Represents a callback to be executed by ``DefaultPublisher`` or ``DefaultSubscriber``. Provides an opaque wrapper that allows these classes to treat all callbacks the same regardless of where they came from, whilst respecting any specific threading requirements (such as the requirement that callbacks passed to the public API of these classes must be called on the main thread).
 public struct Callback<T> {

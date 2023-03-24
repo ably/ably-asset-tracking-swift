@@ -4,12 +4,12 @@ import AblyAssetTrackingCore
 public class MockResolutionPolicyMethods: ResolutionPolicyMethods {
     public init() {}
 
-    public var refreshCalled: Bool = false
+    public var refreshCalled = false
     public func refresh() {
         refreshCalled = true
     }
 
-    public var setProximityThresholdCalled: Bool = false
+    public var setProximityThresholdCalled = false
     public var setProximityThresholdParamThreshold: Proximity?
     public var setProximityThresholdParamHandler: ProximityHandler?
     public func setProximityThreshold(threshold: Proximity, handler: ProximityHandler) {
@@ -18,7 +18,7 @@ public class MockResolutionPolicyMethods: ResolutionPolicyMethods {
         setProximityThresholdParamHandler = handler
     }
 
-    public var cancelProximityThresholdCalled: Bool = false
+    public var cancelProximityThresholdCalled = false
     public func cancelProximityThreshold() {
         cancelProximityThresholdCalled = true
     }

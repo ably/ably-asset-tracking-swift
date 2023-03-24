@@ -26,18 +26,28 @@ class TruckAnnotationView: MKAnnotationView, Identifiable {
     private func updateImage() {
         let step = 22.5
         switch bearing {
-        case 360-step..<360: imageView.image = UIImage(named: "truckN")
-        case 0..<step: imageView.image = UIImage(named: "truckN")
-        case 45-step..<45+step: imageView.image = UIImage(named: "truckNE")
-        case 90-step..<90+step: imageView.image = UIImage(named: "truckE")
-        case 135-step..<135+step: imageView.image = UIImage(named: "truckSE")
-        case 180-step..<180+step: imageView.image = UIImage(named: "truckS")
-        case 225-step..<225+step: imageView.image = UIImage(named: "truckSW")
-        case 225-step..<225+step: imageView.image = UIImage(named: "truckW")
-        case 315-step..<315+step: imageView.image = UIImage(named: "truckNW")
-        default: break
+        case 360 - step..<360:
+            imageView.image = UIImage(named: "truckN")
+        case 0..<step:
+            imageView.image = UIImage(named: "truckN")
+        case 45 - step..<45 + step:
+            imageView.image = UIImage(named: "truckNE")
+        case 90 - step..<90 + step:
+            imageView.image = UIImage(named: "truckE")
+        case 135 - step..<135 + step:
+            imageView.image = UIImage(named: "truckSE")
+        case 180 - step..<180 + step:
+            imageView.image = UIImage(named: "truckS")
+        case 225 - step..<225 + step:
+            imageView.image = UIImage(named: "truckSW")
+        case 225 - step..<225 + step:
+            imageView.image = UIImage(named: "truckW")
+        case 315 - step..<315 + step:
+            imageView.image = UIImage(named: "truckNW")
+        default:
+            break
         }
-        
+
         if let annotation = annotation as? Annotatable, annotation.type == .raw {
             imageView.image = imageView.image?.withTintColor(.red)
             alpha = 0.3

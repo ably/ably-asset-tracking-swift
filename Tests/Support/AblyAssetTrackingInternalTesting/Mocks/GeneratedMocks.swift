@@ -234,7 +234,7 @@ public class AblySDKRealtimeChannelMock: AblySDKRealtimeChannel {
     
     public var onReceivedCallback: ((ARTChannelStateChange) -> Void)?
     public var onReceivedInvocations: [((ARTChannelStateChange) -> Void)] = []
-    public var onReturnValue: AblySDKEventListener!
+    public var onReturnValue: ARTEventListener!
     public var onClosure: ((@escaping (ARTChannelStateChange) -> Void) -> ARTEventListener)?
 
     @discardableResult

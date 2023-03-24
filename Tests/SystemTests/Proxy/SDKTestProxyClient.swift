@@ -1,5 +1,5 @@
-import Foundation
 import AblyAssetTrackingInternal
+import Foundation
 
 /// A client for communicating with an instance of the SDK test proxy server. Provides methods for creating and managing proxies which are able to simulate connectivity faults that might occur during use of the Ably Asset Tracking SDKs.
 class SDKTestProxyClient {
@@ -13,7 +13,7 @@ class SDKTestProxyClient {
     }
 
     private func url(forPathComponents pathComponents: String...) -> URL {
-        return pathComponents.reduce(baseURL) { (url, pathComponent) in
+        pathComponents.reduce(baseURL) { url, pathComponent in
             url.appendingPathComponent(pathComponent)
         }
     }
@@ -32,12 +32,14 @@ class SDKTestProxyClient {
         request.httpMethod = method.rawValue
 
         let task = urlSession.dataTask(with: request) { data, response, error in
-            if let error = error {
+            if let error {
                 completionHandler(.failure(error))
                 return
             }
 
-            let httpResponse = response as! HTTPURLResponse
+            guard let httpResponse = response as? HTTPURLResponse else {
+                fatalError("Expected an HTTPURLResponse but got \(type(of: response))")
+            }
 
             guard httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
                 completionHandler(.failure(RequestError.unexpectedStatus(httpResponse.statusCode)))
@@ -54,7 +56,9 @@ class SDKTestProxyClient {
         logHandler.info(message: "Performing operation: \(loggingLabel)", error: nil)
 
         makeRequest(for: url, method: .post) { [weak self] result in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
 
             switch result {
             case .success:
@@ -73,7 +77,9 @@ class SDKTestProxyClient {
         let url = url(forPathComponents: "faults")
 
         makeRequest(for: url, method: .get) { [weak self] result in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
 
             do {
                 let decoder = JSONDecoder()
@@ -96,7 +102,9 @@ class SDKTestProxyClient {
         let url = url(forPathComponents: "faults", name, "simulation")
 
         makeRequest(for: url, method: .post) { [weak self] result in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
 
             do {
                 let decoder = JSONDecoder()

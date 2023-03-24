@@ -10,7 +10,7 @@ public struct TokenRequest: Codable {
     public let timestamp: Int
     public let nonce: String
     public let mac: String
-    
+
     public init(keyName: String, clientId: String?, capability: String?, timestamp: Int, nonce: String, mac: String) {
         self.keyName = keyName
         self.clientId = clientId
