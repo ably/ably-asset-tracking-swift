@@ -231,7 +231,6 @@ public class AblySDKRealtimeChannelMock: AblySDKRealtimeChannel {
     public var onCalled: Bool {
         return onCallsCount > 0
     }
-    
     public var onReceivedCallback: ((ARTChannelStateChange) -> Void)?
     public var onReceivedInvocations: [((ARTChannelStateChange) -> Void)] = []
     public var onReturnValue: ARTEventListener!
@@ -491,19 +490,19 @@ public class AblySubscriberDelegateMock: AblySubscriberDelegate {
 
     //MARK: - ablySubscriber
 
-    public var ablySubscriberDidReceivePresenceUpdateCallsCount = 0
-    public var ablySubscriberDidReceivePresenceUpdateCalled: Bool {
-        return ablySubscriberDidReceivePresenceUpdateCallsCount > 0
+    public var ablySubscriberDidReceivePresenceMessageCallsCount = 0
+    public var ablySubscriberDidReceivePresenceMessageCalled: Bool {
+        return ablySubscriberDidReceivePresenceMessageCallsCount > 0
     }
-    public var ablySubscriberDidReceivePresenceUpdateReceivedArguments: (sender: AblySubscriber, presence: PresenceMessage)?
-    public var ablySubscriberDidReceivePresenceUpdateReceivedInvocations: [(sender: AblySubscriber, presence: PresenceMessage)] = []
-    public var ablySubscriberDidReceivePresenceUpdateClosure: ((AblySubscriber, PresenceMessage) -> Void)?
+    public var ablySubscriberDidReceivePresenceMessageReceivedArguments: (sender: AblySubscriber, presence: PresenceMessage)?
+    public var ablySubscriberDidReceivePresenceMessageReceivedInvocations: [(sender: AblySubscriber, presence: PresenceMessage)] = []
+    public var ablySubscriberDidReceivePresenceMessageClosure: ((AblySubscriber, PresenceMessage) -> Void)?
 
-    public func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: PresenceMessage) {
-        ablySubscriberDidReceivePresenceUpdateCallsCount += 1
-        ablySubscriberDidReceivePresenceUpdateReceivedArguments = (sender: sender, presence: presence)
-        ablySubscriberDidReceivePresenceUpdateReceivedInvocations.append((sender: sender, presence: presence))
-        ablySubscriberDidReceivePresenceUpdateClosure?(sender, presence)
+    public func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceMessage presence: PresenceMessage) {
+        ablySubscriberDidReceivePresenceMessageCallsCount += 1
+        ablySubscriberDidReceivePresenceMessageReceivedArguments = (sender: sender, presence: presence)
+        ablySubscriberDidReceivePresenceMessageReceivedInvocations.append((sender: sender, presence: presence))
+        ablySubscriberDidReceivePresenceMessageClosure?(sender, presence)
     }
 
     //MARK: - ablySubscriber

@@ -23,7 +23,7 @@ extension DefaultPublisher {
         case refreshResolutionPolicy(RefreshResolutionPolicyEvent)
         case changeLocationEngineResolution(ChangeLocationEngineResolutionEvent)
         case changeRoutingProfile(ChangeRoutingProfileEvent)
-        case presenceUpdate(PresenceUpdateEvent)
+        case presenceMessage(PresenceMessageEvent)
         case stop(StopEvent)
         case ablyConnectionClosed(AblyConnectionClosedEvent)
         case ablyClientConnectionStateChanged(AblyClientConnectionStateChangedEvent)
@@ -111,7 +111,7 @@ extension DefaultPublisher {
             let completion: Callback<Void>
         }
 
-        struct PresenceUpdateEvent {
+        struct PresenceMessageEvent {
             let trackable: Trackable
             let presence: PresenceMessage
             let presenceData: PresenceData

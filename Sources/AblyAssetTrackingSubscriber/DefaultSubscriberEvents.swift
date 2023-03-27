@@ -8,7 +8,7 @@ extension DefaultSubscriber {
         case start(StartEvent)
         case stop(StopEvent)
         case changeResolution(ChangeResolutionEvent)
-        case presenceUpdate(PresenceUpdateEvent)
+        case presenceMessageReceived(PresenceMessageReceivedEvent)
         case ablyConnectionClosed(AblyConnectionClosedEvent)
         case ablyClientConnectionStateChanged(AblyClientConnectionStateChangedEvent)
         case ablyChannelConnectionStateChanged(AblyChannelConnectionStateChangedEvent)
@@ -27,7 +27,7 @@ extension DefaultSubscriber {
             let completion: Callback<Void>
         }
 
-        struct PresenceUpdateEvent {
+        struct PresenceMessageReceivedEvent {
             let presence: PresenceMessage
         }
 
