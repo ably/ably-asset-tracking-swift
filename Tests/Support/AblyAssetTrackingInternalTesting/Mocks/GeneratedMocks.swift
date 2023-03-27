@@ -495,11 +495,11 @@ public class AblySubscriberDelegateMock: AblySubscriberDelegate {
     public var ablySubscriberDidReceivePresenceUpdateCalled: Bool {
         return ablySubscriberDidReceivePresenceUpdateCallsCount > 0
     }
-    public var ablySubscriberDidReceivePresenceUpdateReceivedArguments: (sender: AblySubscriber, presence: Presence)?
-    public var ablySubscriberDidReceivePresenceUpdateReceivedInvocations: [(sender: AblySubscriber, presence: Presence)] = []
-    public var ablySubscriberDidReceivePresenceUpdateClosure: ((AblySubscriber, Presence) -> Void)?
+    public var ablySubscriberDidReceivePresenceUpdateReceivedArguments: (sender: AblySubscriber, presence: PresenceMessage)?
+    public var ablySubscriberDidReceivePresenceUpdateReceivedInvocations: [(sender: AblySubscriber, presence: PresenceMessage)] = []
+    public var ablySubscriberDidReceivePresenceUpdateClosure: ((AblySubscriber, PresenceMessage) -> Void)?
 
-    public func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence) {
+    public func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: PresenceMessage) {
         ablySubscriberDidReceivePresenceUpdateCallsCount += 1
         ablySubscriberDidReceivePresenceUpdateReceivedArguments = (sender: sender, presence: presence)
         ablySubscriberDidReceivePresenceUpdateReceivedInvocations.append((sender: sender, presence: presence))

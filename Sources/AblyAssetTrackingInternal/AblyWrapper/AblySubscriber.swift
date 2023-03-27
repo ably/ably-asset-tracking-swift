@@ -24,9 +24,9 @@ public protocol AblySubscriberDelegate: AnyObject {
      Tells the delegate that channel presence was changed.
      
      - Parameter sender:        The `AblySubscriber` object which is delegating the change.
-     - Parameter presence:      The `Presence` object affected by the change.
+     - Parameter presence:      The `PresenceMessage` object affected by the change.
      */
-    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence)
+    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: PresenceMessage)
 
     /**
      Tells the delegate that an error occurred.

@@ -16,7 +16,7 @@ public enum PresenceType {
 /**
  Wrapper for ``ARTPresenceMessage`` to hide ``Ably`` interface
  */
-public struct Presence {
+public struct PresenceMessage {
     public let action: PresenceAction
     public let type: PresenceType
 }
