@@ -23,6 +23,71 @@ public class DefaultAbly: AblyCommon {
         self.connectionConfiguration = configuration
     }
 
+    public func startConnection(completion: @escaping AblyAssetTrackingCore.ResultHandler<Void>) {
+        var listener: ARTEventListener?
+
+        guard client.connection.state != ARTRealtimeConnectionState.connected else {
+            completion(.success)
+            return
+        }
+
+        guard client.connection.state != ARTRealtimeConnectionState.failed else {
+            let errorInfo = client.connection.errorReason != nil
+            ? ErrorInformation.init(error: client.connection.errorReason!)
+            : ErrorInformation(code: 0, statusCode: 0, message: "No error reason provided", cause: nil, href: nil)
+
+            completion(.failure(errorInfo))
+            return
+        }
+
+        /**
+         According to the ably spec, connection.on should accept some sort of object with an actual identity, allowing you to do something
+         like [connection.off(self)]. This is helpful for us here as we want to detach the listener once the connection comes online.
+         
+         However, ably-cocoa does not allow this and accepts a callback function, so we have to do this workaround by maintaining an optional
+         reference to the instance returned by the SDK. To ensure that we don't hit any race conditions between the listener being returned
+         and the state coming through, a semaphore is used.
+         */
+        let stateGuard = DispatchSemaphore(value: 1)
+        stateGuard.wait()
+        listener = client.connection.on { [weak self] stateChange in
+            stateGuard.wait()
+
+            defer {
+                stateGuard.signal()
+            }
+
+            guard let self else {
+                return
+            }
+
+            switch stateChange.current.toConnectionState() {
+            case .online:
+                self.client.connection.off(listener!)
+                completion(.success)
+            case .failed:
+                self.client.connection.off(listener!)
+                completion(
+                    .failure(
+                        ErrorInformation(code: 0, statusCode: 0, message: "Connection failed waiting for start", cause: nil, href: nil)
+                    )
+                )
+            case .closed:
+                self.client.connection.off(listener!)
+                completion(
+                    .failure(
+                        ErrorInformation(code: 0, statusCode: 0, message: "Connection closed waiting for start", cause: nil, href: nil)
+                    )
+                )
+            case .offline:
+                break
+            }
+        }
+
+        stateGuard.signal()
+        client.connect()
+    }
+
     public func connect(
         trackableId: String,
         presenceData: PresenceData,
@@ -189,7 +254,7 @@ public class DefaultAbly: AblyCommon {
 
         closingDispatchGroup.notify(queue: .main) { [weak self] in
             self?.logHandler?.info(message: "All trackables removed.", error: nil)
-            self?.closeConnection(completion: completion)
+            self?.stopConnection(completion: completion)
         }
     }
 
@@ -298,21 +363,46 @@ public class DefaultAbly: AblyCommon {
         }
     }
 
-    private func closeConnection(completion: @escaping ResultHandler<Void>) {
-        client.connection.on {[weak self] stateChange in
+    public func stopConnection(completion: @escaping ResultHandler<Void>) {
+        var listener: ARTEventListener?
+
+        /**
+         According to the ably spec, connection.on should accept some sort of object with an actual identity, allowing you to do something
+         like [connection.off(self)]. This is helpful for us here as we want to detach the listener once the connection comes online.
+         
+         However, ably-cocoa does not allow this and accepts a callback function, so we have to do this workaround by maintaining an optional
+         reference to the instance returned by the SDK. To ensure that we don't hit any race conditions between the listener being returned
+         and the state coming through, a semaphore is used.
+         */
+        let stateChangeGuard = DispatchSemaphore(value: 1)
+        stateChangeGuard.wait()
+        listener = client.connection.on {[weak self] stateChange in
+            stateChangeGuard.wait()
+
+            defer {
+                stateChangeGuard.signal()
+            }
+
+            guard let self else {
+                return
+            }
+
             switch stateChange.current {
             case .closed:
-                self?.logHandler?.info(message: "Ably connection closed successfully.", error: nil)
+                self.logHandler?.info(message: "Ably connection closed successfully.", error: nil)
+                self.client.connection.off(listener!)
                 completion(.success)
             case .failed:
                 let errorInfo = stateChange.reason?.toErrorInformation() ?? ErrorInformation(type: .publisherError(errorMessage: "Cannot close connection"))
-                self?.logHandler?.error(message: "Error while closing connection", error: errorInfo)
+                self.logHandler?.error(message: "Error while closing connection", error: errorInfo)
+                self.client.connection.off(listener!)
                 completion(.failure(errorInfo))
             default:
-                return
+                break
             }
         }
 
+        stateChangeGuard.signal()
         client.close()
     }
 }

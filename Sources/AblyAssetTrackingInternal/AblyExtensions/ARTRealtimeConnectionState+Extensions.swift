@@ -11,7 +11,9 @@ extension ARTRealtimeConnectionState {
         switch self {
         case .connected:
             return ConnectionState.online
-        case .initialized, .connecting, .disconnected, .suspended, .closing, .closed:
+        case .closed:
+            return ConnectionState.closed
+        case .initialized, .connecting, .disconnected, .suspended, .closing:
             return ConnectionState.offline
         case .failed:
             return ConnectionState.failed

@@ -50,7 +50,8 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: track
     func testTrack_success() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
 
         // When tracking a trackable
@@ -90,7 +91,8 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: track
     func testTrack_destination() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
 
         let destination = LocationCoordinate(latitude: 12.3456, longitude: 56.789)
@@ -113,6 +115,7 @@ class DefaultPublisherTests: XCTestCase {
     }
     func testTrack_trackableAddedEarlier() {
         ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         var expectation = XCTestExpectation()
 
         // When adding a new trackable
@@ -143,7 +146,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func test_trackCalledMultipleTimes_shouldPass() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         var expectations = [XCTestExpectation]()
         let trackMethodCalls = 5
 
@@ -166,9 +170,31 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: expectations, timeout: 5.0)
     }
 
-    func testTrack_error_ably_service_error() {
+    func testTrack_error_ably_service_error_startConnection() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.failure(errorInformation)) }
+        ablyPublisher.stopConnectionCompletionHandler = { completion in completion?(.success) }
+        let expectation = XCTestExpectation()
+
+        // When tracking a trackable and receive error response from ablyPublisher
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure(let error):
+                // It should call failure callback with received error
+                XCTAssertTrue(error.isEqual(to: errorInformation))
+                expectation.fulfill()
+            }
+        }
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertTrue(ablyPublisher.stopConnectionCalled)
+    }
+
+    func testTrack_error_ably_service_error_connect() {
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
         // When tracking a trackable and receive error response from ablyPublisher
@@ -186,7 +212,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testTrack_successMainThread() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
 
         let expectation = XCTestExpectation()
         // onSuccess callback should be called on the main thread
@@ -203,9 +230,31 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
 
-    func testTrack_failureMainThread() {
+    func testTrack_failureMainThread_startConnection() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.failure(errorInformation)) }
+        ablyPublisher.stopConnectionCompletionHandler = { completion in completion?(.success) }
+        let expectation = XCTestExpectation()
+
+        // onError callback should be called on the main thread
+        publisher.track(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure:
+                dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertTrue(ablyPublisher.stopConnectionCalled)
+    }
+
+    func testTrack_failureMainThread_connect() {
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
         // onError callback should be called on the main thread
@@ -224,7 +273,8 @@ class DefaultPublisherTests: XCTestCase {
 
     // MARK: add
     func testAdd_success() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
 
         // When adding a trackable
@@ -261,7 +311,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_track_success() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
         expectation.expectedFulfillmentCount = 2
 
@@ -289,9 +340,41 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertEqual(publisher.activeTrackable, trackable)
     }
 
-    func testAdd_track_error() {
+    func testAdd_track_error_startConnection() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.failure(errorInformation)) }
+        ablyPublisher.stopConnectionCompletionHandler = { completion in completion?(.success) }
+        let expectation = XCTestExpectation()
+
+        // When adding a trackable and receive error response from ablyPublisher
+        publisher.add(trackable: trackable) { [weak self] result in
+            guard let self
+            else {
+                XCTFail("self shouldn't be nil")
+                return
+            }
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure(let error):
+                // It should call onError callback with received error
+                XCTAssertTrue(error.isEqual(to: errorInformation))
+
+                // It should not notify the delegate that the trackables changed
+                XCTAssertFalse(self.delegate.publisherDidChangeTrackablesCalled)
+                XCTAssertNil(self.delegate.publisherDidChangeTrackablesParamTrackables)
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertTrue(ablyPublisher.stopConnectionCalled)
+    }
+
+    func testAdd_track_error_connect() {
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
         // When adding a trackable and receive error response from ablyPublisher
@@ -319,7 +402,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testAdd_success_thread() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         let expectation = XCTestExpectation()
         // `onSuccess` callback should be called on main thread
         // Notice - in case of failure it will crash whole test suite
@@ -336,9 +420,32 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
 
-    func testAdd_error_thread() {
+    func testAdd_error_thread_startConnection() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.failure(errorInformation)) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.failure(errorInformation)) }
+        ablyPublisher.stopConnectionCompletionHandler = { completion in completion?(.success) }
+        let expectation = XCTestExpectation()
+
+        // `onError` callback should be called on main thread
+        // Notice - in case of failure it will crash whole test suite
+        publisher.add(trackable: trackable) { result in
+            switch result {
+            case .success:
+                XCTFail("Success callback shouldn't be called")
+            case .failure:
+                dispatchPrecondition(condition: .onQueue(DispatchQueue.main))
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertTrue(ablyPublisher.stopConnectionCalled)
+    }
+
+    func testAdd_error_thread_connect() {
+        let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.failure(errorInformation)) }
         let expectation = XCTestExpectation()
 
         // `onError` callback should be called on main thread
@@ -361,6 +468,7 @@ class DefaultPublisherTests: XCTestCase {
         let synchronizationQueue = DispatchQueue(label: #function)
         var connectCompletion: ResultHandler<Void>?
         let connectCalledExpectation = expectation(description: "ablyPublisher’s connect method is called")
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in
             synchronizationQueue.async {
                 numberOfTimesConnectCalled += 1
@@ -410,6 +518,7 @@ class DefaultPublisherTests: XCTestCase {
         let synchronizationQueue = DispatchQueue(label: #function)
         var connectCompletion: ResultHandler<Void>?
         let connectCalledExpectation = expectation(description: "ablyPublisher’s connect method is called")
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in
             synchronizationQueue.async {
                 numberOfTimesConnectCalled += 1
@@ -462,7 +571,8 @@ class DefaultPublisherTests: XCTestCase {
         var receivedWasPresent: Bool?
 
         ablyPublisher.disconnectResultCompletionHandler = { completion in completion?(.success(wasPresent)) }
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
 
         publisher.add(trackable: Trackable(id: "Trackable1")) { _ in }
         publisher.add(trackable: Trackable(id: "Trackable2")) { _ in }
@@ -504,6 +614,7 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_activeTrackable() {
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.success(true)) }
 
@@ -551,7 +662,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testRemove_nonActiveTrackable() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.disconnectResultCompletionHandler = { handler in handler?(.success(true)) }
 
         var expectation = XCTestExpectation(description: "Handler for `track` call")
@@ -672,7 +784,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testChangeRoutingProfile_withActiveTrackableWithoutDestination_updatesRoutingProfile_andCallsCallbackWithSuccess() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
 
         let trackExpectation = expectation(description: "track completes successfully")
 
@@ -705,7 +818,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testChangeRoutingProfile_withActiveTrackableWithDestination_callsGetRouteOnRouteProvider_andWhenThatSucceeds_itUpdatesRoutingProfile_andCallsCallbackWithSuccess() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
         routeProvider.getRouteBody = { handler in handler(.success(.init(legs: [], shape: nil, distance: .infinity, expectedTravelTime: 0))) }
 
         let trackExpectation = expectation(description: "track completes successfully")
@@ -993,7 +1107,8 @@ class DefaultPublisherTests: XCTestCase {
     }
 
     func testStopEventCauseImpossibilityOfEnqueueOtherEvents() {
-        ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
+        ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
+        ablyPublisher.connectCompletionHandler = { completion in completion?(.success) }
         ablyPublisher.closeResultCompletionHandler = { completion in completion?(.success) }
         locationService.stopRecordingLocationCallback = { completion in completion(.success(nil)) }
 

@@ -13,6 +13,13 @@ class ConnectionConfigurationTests: XCTestCase {
         XCTAssertNil(clientOptions.authCallback)
     }
 
+    func test_getClientOptions_makesAutoconnectFalse() throws {
+        let configuration = ConnectionConfiguration(apiKey: "An API key", clientId: "A client ID")
+        let clientOptions = configuration.getClientOptions(logHandler: internalARTLogHandler, remainPresentForMilliseconds: nil, host: nil)
+
+        XCTAssertFalse(clientOptions.autoConnect)
+    }
+
     @available(*, deprecated, message: "Testing deprecated ConnectionConfiguration(clientId:authCallback:) initializer")
     func test_getClientOptions_populatesClientId() throws {
         let clientId = "My client id"

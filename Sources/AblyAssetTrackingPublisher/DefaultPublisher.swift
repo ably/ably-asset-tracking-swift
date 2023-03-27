@@ -364,20 +364,38 @@ extension DefaultPublisher {
 
         duplicateTrackableGuard.startAddingTrackableWithId(trackable.id)
 
-        ablyPublisher.connect(
-                trackableId: trackable.id,
-                presenceData: presenceData,
-                useRewind: false
-        ) { [weak self] result in
+        ablyPublisher.startConnection { [weak self, presenceData] result in
+            guard let self else {
+                return
+            }
+
             switch result {
-            case .success:
-                self?.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, completion: completion)))
+            case.success:
+                self.ablyPublisher.connect(
+                        trackableId: trackable.id,
+                        presenceData: presenceData,
+                        useRewind: false
+                ) { [weak self] result in
+                    guard let self else {
+                        return
+                    }
+
+                    switch result {
+                    case .success:
+                        self.enqueue(event: .presenceJoinedSuccessfully(.init(trackable: trackable, completion: completion)))
+                    case .failure(let error):
+                        completion.handleError(error)
+                        self.duplicateTrackableGuard.finishAddingTrackableWithId(trackable.id, result: .failure(error))
+                    }
+                }
             case .failure(let error):
-                completion.handleError(error)
-                self?.duplicateTrackableGuard.finishAddingTrackableWithId(trackable.id, result: .failure(error))
+                self.ablyPublisher.stopConnection(completion: { [error] _ in
+                    completion.handleError(error)
+                })
             }
         }
     }
+
     // MARK: Add trackable
     private func performAddTrackableEvent(_ event: Event.AddTrackableEvent) {
         performAddOrTrack(event.trackable, completion: event.completion)
@@ -478,10 +496,14 @@ extension DefaultPublisher {
                     : .offline
             case .offline:
                 newTrackableState = .offline
+            case .closed:
+                newTrackableState = .offline
             case .failed:
                 newTrackableState = .failed
             }
         case .offline:
+            newTrackableState = .offline
+        case .closed:
             newTrackableState = .offline
         case .failed:
             newTrackableState = .failed

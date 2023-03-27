@@ -8,6 +8,216 @@ import XCTest
 class DefaultAblyTests: XCTestCase {
     let logger = InternalLogHandlerMockThreadSafe()
 
+    func test_startConnection_callsCallbackWIthSuccessWhenAlreadyConnected() {
+        let connection = AblySDKConnectionMock()
+        let realtime = AblySDKRealtimeMock()
+        realtime.connection = connection
+
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
+
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
+        connection.state = ARTRealtimeConnectionState.connected
+
+        let expectation = expectation(description: "DefaultAbly startConnection when connected")
+        ably.startConnection { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Received failure result")
+            }
+        }
+
+        waitForExpectations(timeout: 5)
+    }
+
+    func test_startConnection_callsCallbackWithFailureWhenAlreadyFailed() {
+        let connection = AblySDKConnectionMock()
+        let realtime = AblySDKRealtimeMock()
+        realtime.connection = connection
+
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
+
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
+        connection.state = ARTRealtimeConnectionState.failed
+        connection.errorReason = ARTErrorInfo.create(withCode: 40400, message: "Test Failure Msg")
+
+        let expectation = expectation(description: "DefaultAbly startConnection when failed")
+        ably.startConnection { result in
+            switch result {
+            case .success:
+                XCTFail("Received success result")
+            case .failure(let error):
+                XCTAssertEqual("Test Failure Msg", error.message)
+                XCTAssertEqual(40400, error.code)
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 5)
+    }
+
+    func test_startConnection_callsCallbackWithFailureWhenAlreadyFailedNoErrorInfo() {
+        let connection = AblySDKConnectionMock()
+        let realtime = AblySDKRealtimeMock()
+        realtime.connection = connection
+
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
+
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
+        connection.state = ARTRealtimeConnectionState.failed
+        connection.errorReason = nil
+
+        let expectation = expectation(description: "DefaultAbly startConnection when failed")
+        ably.startConnection { result in
+            switch result {
+            case .success:
+                XCTFail("Received success result")
+            case .failure(let error):
+                XCTAssertEqual("No error reason provided", error.message)
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 5)
+    }
+
+    func test_startConnection_callsCallbackWithSuccessWhenStateChangesToOnline() {
+        let connection = AblySDKConnectionMock()
+        let realtime = AblySDKRealtimeMock()
+        let onReturnedListener = ARTEventListener()
+        realtime.connection = connection
+
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
+
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
+        connection.state = ARTRealtimeConnectionState.disconnected
+        connection.onReturnValue = onReturnedListener
+
+        let expectation = expectation(description: "DefaultAbly startConnection changes state to connected")
+        ably.startConnection { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Received failure result")
+            }
+        }
+
+        XCTAssertEqual(1, connection.onCallsCount)
+        let connectionStateChange = ARTConnectionStateChange(current: ARTRealtimeConnectionState.connected, previous: ARTRealtimeConnectionState.disconnected, event: ARTRealtimeConnectionEvent.connected, reason: nil)
+        connection.onReceivedInvocations[0](connectionStateChange)
+        waitForExpectations(timeout: 5)
+
+        XCTAssertEqual(1, connection.offCallsCount)
+        XCTAssertIdentical(onReturnedListener, connection.offReceivedListener! as AnyObject)
+    }
+
+    func test_startConnection_callsCallbackWithFailureWhenStateChangesToFailed() {
+        let connection = AblySDKConnectionMock()
+        let realtime = AblySDKRealtimeMock()
+        let onReturnedListener = ARTEventListener()
+        realtime.connection = connection
+
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
+
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
+        connection.state = ARTRealtimeConnectionState.disconnected
+        connection.onReturnValue = onReturnedListener
+
+        let expectation = expectation(description: "DefaultAbly startConnection changes state to failed")
+        ably.startConnection { result in
+            switch result {
+            case .success:
+                XCTFail("Received success result")
+            case .failure(let error):
+                XCTAssertEqual("Connection failed waiting for start", error.message)
+                expectation.fulfill()
+            }
+        }
+
+        XCTAssertEqual(1, connection.onCallsCount)
+        let connectionStateChange = ARTConnectionStateChange(current: ARTRealtimeConnectionState.failed, previous: ARTRealtimeConnectionState.disconnected, event: ARTRealtimeConnectionEvent.connected, reason: nil)
+        connection.onReceivedInvocations[0](connectionStateChange)
+        waitForExpectations(timeout: 5)
+
+        XCTAssertEqual(1, connection.offCallsCount)
+        XCTAssertIdentical(onReturnedListener, connection.offReceivedListener! as AnyObject)
+    }
+
+    func test_startConnection_callsCallbackWithFailureWhenStateChangesToClosed() {
+        let connection = AblySDKConnectionMock()
+        let realtime = AblySDKRealtimeMock()
+        let onReturnedListener = ARTEventListener()
+        realtime.connection = connection
+
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
+
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
+        connection.state = ARTRealtimeConnectionState.disconnected
+        connection.onReturnValue = onReturnedListener
+
+        let expectation = expectation(description: "DefaultAbly startConnection changes state to closed")
+        ably.startConnection { result in
+            switch result {
+            case .success:
+                XCTFail("Received success result")
+            case .failure(let error):
+                XCTAssertEqual("Connection closed waiting for start", error.message)
+                expectation.fulfill()
+            }
+        }
+
+        XCTAssertEqual(1, connection.onCallsCount)
+        let connectionStateChange = ARTConnectionStateChange(current: ARTRealtimeConnectionState.closed, previous: ARTRealtimeConnectionState.disconnected, event: ARTRealtimeConnectionEvent.connected, reason: nil)
+        connection.onReceivedInvocations[0](connectionStateChange)
+        waitForExpectations(timeout: 5)
+
+        XCTAssertEqual(1, connection.offCallsCount)
+        XCTAssertIdentical(onReturnedListener, connection.offReceivedListener! as AnyObject)
+    }
+
+    func test_startConnection_doesNotCallCallbackOnOtherStateChanges() {
+        let connection = AblySDKConnectionMock()
+        let realtime = AblySDKRealtimeMock()
+        let onReturnedListener = ARTEventListener()
+        realtime.connection = connection
+
+        let factory = AblySDKRealtimeFactoryMock()
+        factory.createWithConfigurationLogHandlerHostReturnValue = realtime
+        let connectionConfiguration = ConnectionConfiguration(apiKey: "abc123")
+
+        let ably = DefaultAbly(factory: factory, configuration: connectionConfiguration, host: nil, mode: [], logHandler: logger)
+        connection.state = ARTRealtimeConnectionState.disconnected
+        connection.onReturnValue = onReturnedListener
+
+        ably.startConnection { result in
+            switch result {
+            case .success:
+                XCTFail("Received success result")
+            case .failure:
+                XCTFail("Received failure result")
+            }
+        }
+
+        XCTAssertEqual(1, connection.onCallsCount)
+        let connectionStateChange = ARTConnectionStateChange(current: ARTRealtimeConnectionState.connecting, previous: ARTRealtimeConnectionState.disconnected, event: ARTRealtimeConnectionEvent.connected, reason: nil)
+        connection.onReceivedInvocations[0](connectionStateChange)
+        XCTAssertEqual(0, connection.offCallsCount)
+    }
+
     func test_connect_whenNotConfiguredToUseToken_whenPresenceEnterFails_withAnErrorRelatedToCapabilities_itFails() {
         let presence = AblySDKRealtimePresenceMock()
         presence.enterCallbackClosure = { _, callback in
@@ -415,7 +625,7 @@ class DefaultAblyTests: XCTestCase {
             let message = ARTMessage(name: nil, data: data)
             callback(message)
 
-            return AblySDKEventListenerMock()
+            return ARTEventListener()
         }
 
         channel.presence = presence

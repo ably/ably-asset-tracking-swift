@@ -16,6 +16,10 @@ struct AblyCocoaSDKRealtime: AblySDKRealtime {
         AblyCocoaSDKAuth(auth: realtime.auth)
     }
 
+    func connect() {
+        realtime.connect()
+    }
+
     func close() {
         realtime.close()
     }
@@ -37,9 +41,9 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
         AblyCocoaSDKRealtimePresence(presence: channel.presence)
     }
 
-    func subscribe(_ name: String, callback: @escaping (ARTMessage) -> Void) -> AblySDKEventListener? {
+    func subscribe(_ name: String, callback: @escaping (ARTMessage) -> Void) -> ARTEventListener? {
         if let eventListener = channel.subscribe(name, callback: callback) {
-            return AblyCocoaSDKEventListener(eventListener: eventListener)
+            return eventListener
         } else {
             return nil
         }
@@ -53,8 +57,8 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
         channel.detach(callback)
     }
 
-    func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> AblySDKEventListener {
-        AblyCocoaSDKEventListener(eventListener: channel.on(callback))
+    func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> ARTEventListener {
+        channel.on(callback)
     }
 
     func publish(_ messages: [ARTMessage], callback: ARTCallback?) {
@@ -89,9 +93,9 @@ struct AblyCocoaSDKRealtimePresence: AblySDKRealtimePresence {
         presence.leave(data, callback: callback)
     }
 
-    func subscribe(_ callback: @escaping (ARTPresenceMessage) -> Void) -> AblySDKEventListener? {
+    func subscribe(_ callback: @escaping (ARTPresenceMessage) -> Void) -> ARTEventListener? {
         if let eventListener = presence.subscribe(callback) {
-            return AblyCocoaSDKEventListener(eventListener: eventListener)
+            return eventListener
         } else {
             return nil
         }
@@ -104,9 +108,20 @@ struct AblyCocoaSDKRealtimePresence: AblySDKRealtimePresence {
 
 struct AblyCocoaSDKConnection: AblySDKConnection {
     fileprivate let connection: ARTConnection
+    var state: ARTRealtimeConnectionState {
+        self.connection.state
+    }
 
-    func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener {
-        AblyCocoaSDKEventListener(eventListener: connection.on(callback))
+    var errorReason: ARTErrorInfo? {
+        self.connection.errorReason
+    }
+
+    func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> ARTEventListener {
+        connection.on(callback)
+    }
+
+    func off(_ listener: ARTEventListener) {
+        connection.off(listener)
     }
 }
 
@@ -116,10 +131,6 @@ struct AblyCocoaSDKAuth: AblySDKAuth {
     func authorize(_ callback: @escaping (ARTTokenDetails?, Error?) -> Void) {
         auth.authorize(callback)
     }
-}
-
-struct AblyCocoaSDKEventListener: AblySDKEventListener {
-    fileprivate let eventListener: ARTEventListener
 }
 
 public class AblyCocoaSDKRealtimeFactory: AblySDKRealtimeFactory {

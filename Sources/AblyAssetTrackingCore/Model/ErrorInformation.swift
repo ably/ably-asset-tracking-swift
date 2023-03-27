@@ -1,3 +1,4 @@
+import Ably
 import Foundation
 
 /**
@@ -119,6 +120,14 @@ public struct ErrorInformation: Error, CustomNSError, CustomStringConvertible {
         self.message = (error as? ErrorInformation)?.message ?? error.localizedDescription
         self.cause = error
         self.href = nil
+    }
+
+    public init(error: ARTErrorInfo) {
+        self.code = error.code
+        self.statusCode = error.statusCode
+        self.message = error.message
+        self.cause = error.cause
+        self.href = error.href
     }
 
     public init(type: ErrorInformationType) {

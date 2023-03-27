@@ -29,6 +29,20 @@ public class MockAblyPublisher: AblyPublisher {
         subscribeForPresenceMessagesTrackable = trackable
     }
 
+    public var startConnectionCalled = false
+    public var startConnectionCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    public func startConnection(completion: @escaping ResultHandler<Void>) {
+        startConnectionCalled = true
+        startConnectionCompletionHandler?(completion)
+    }
+
+    public var stopConnectionCalled = false
+    public var stopConnectionCompletionHandler: ((ResultHandler<Void>?) -> Void)?
+    public func stopConnection(completion: @escaping ResultHandler<Void>) {
+        stopConnectionCalled = true
+        stopConnectionCompletionHandler?(completion)
+    }
+
     public var connectCalled = false
     public var connectTrackableId: String?
     public var connectPresenceData: PresenceData?
