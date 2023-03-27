@@ -14,8 +14,7 @@ import Foundation
 ///     semantics
 ///     - WorkerSpecificationType - the type of specification used to post worker back to the queue
 public class WorkerQueue<PropertiesType, WorkerSpecificationType> where PropertiesType: WorkerQueueProperties {
-    // swiftlint:disable:next missing_docs
-    public var properties: PropertiesType
+    var properties: PropertiesType
     let workingQueue: DispatchQueue
     let logHandler: InternalLogHandler?
     let workerFactory: any WorkerFactory<PropertiesType, WorkerSpecificationType>

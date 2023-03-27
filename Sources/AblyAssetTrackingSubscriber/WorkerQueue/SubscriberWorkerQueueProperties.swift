@@ -4,7 +4,7 @@ import Foundation
 struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     public var isStopped = false
     var presenceData: PresenceData
-    weak var subscriber: Subscriber?
+    private let subscriber: Subscriber
 
     private(set) var presentPublisherMemberKeys: Set<String> = []
     private(set) var lastEmittedValueOfIsPublisherVisible: Bool?
@@ -20,8 +20,9 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     private(set) var resolution: Resolution?
     private(set) var nextLocationUpdateInterval: Double?
 
-    public init(initialResolution: Resolution?) {
+    public init(initialResolution: Resolution?, subscriber: Subscriber) {
         self.presenceData = PresenceData(type: .subscriber, resolution: initialResolution)
+        self.subscriber = subscriber
     }
 
     mutating func updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?) {
@@ -96,51 +97,37 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
 
     mutating func notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?) {
         enhancedLocation = locationUpdate
-        guard let subscriber
-        else { return }
         logHandler?.logPublicAPICall(label: "Calling delegate didUpdateEnhancedLocation: \(locationUpdate)")
         subscriber.delegate?.subscriber(sender: subscriber, didUpdateEnhancedLocation: locationUpdate)
     }
 
     mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?) {
         rawLocation = locationUpdate
-        guard let subscriber
-        else { return }
         logHandler?.logPublicAPICall(label: "Calling delegate didUpdateRawLocation: \(locationUpdate)")
         subscriber.delegate?.subscriber(sender: subscriber, didUpdateRawLocation: locationUpdate)
     }
 
     mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool, logHandler: InternalLogHandler?) {
         publisherPresence = isPublisherPresent
-        guard let subscriber
-        else { return }
         logHandler?.logPublicAPICall(label: "Calling delegate didUpdatePublisherPresence: \(publisherPresence)")
         subscriber.delegate?.subscriber(sender: subscriber, didUpdatePublisherPresence: publisherPresence)
     }
 
     mutating func notifyTrackableStateUpdated(trackableState: ConnectionState, logHandler: InternalLogHandler?) {
         self.trackableState = trackableState
-        guard let subscriber
-        else { return }
         logHandler?.logPublicAPICall(label: "Calling delegate didChangeAssetConnectionStatus: \(trackableState)")
         subscriber.delegate?.subscriber(sender: subscriber, didChangeAssetConnectionStatus: trackableState)
     }
 
     mutating func notifyDidFailWithError(error: ErrorInformation, logHandler: InternalLogHandler?) {
-        guard let subscriber
-        else { return }
         logHandler?.logPublicAPICall(label: "Calling delegate didFailWithError: \(error)")
         subscriber.delegate?.subscriber(sender: subscriber, didFailWithError: error)
     }
 
     mutating func notifyResolutionsChanged(resolutions: [Resolution], logHandler: InternalLogHandler?) {
-        guard !resolutions.isEmpty
-        else { return }
         for resolution in resolutions {
             self.resolution = resolution
             self.nextLocationUpdateInterval = resolution.desiredInterval
-            guard let subscriber
-            else { return }
             logHandler?.logPublicAPICall(label: "Calling delegate didUpdateResolution: \(resolution)")
             subscriber.delegate?.subscriber(sender: subscriber, didUpdateResolution: resolution)
             logHandler?.logPublicAPICall(label: "Calling delegate didUpdateDesiredInterval: \(resolution.desiredInterval)")

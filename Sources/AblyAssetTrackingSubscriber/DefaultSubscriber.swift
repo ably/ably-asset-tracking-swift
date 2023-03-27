@@ -14,7 +14,7 @@ private enum SubscriberState {
 }
 
 class DefaultSubscriber: Subscriber {
-    private var workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>
+    private var workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>!
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
@@ -37,15 +37,6 @@ class DefaultSubscriber: Subscriber {
     ) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
 
-        // swiftlint:disable:next trailing_closure
-        self.workerQueue = WorkerQueue(
-            properties: SubscriberWorkerQueueProperties(initialResolution: resolution),
-            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
-            logHandler: self.logHandler,
-            workerFactory: SubscriberWorkerFactory(),
-            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
-            getStoppedError: { ErrorInformation(type: .subscriberStoppedException) }
-        )
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
@@ -53,7 +44,17 @@ class DefaultSubscriber: Subscriber {
         self.ablySubscriber.subscriberDelegate = self
 
         self.ablySubscriber.subscribeForAblyStateChange()
-        self.workerQueue.properties.subscriber = self
+        let properties = SubscriberWorkerQueueProperties(initialResolution: resolution, subscriber: self)
+
+        // swiftlint:disable:next trailing_closure
+        self.workerQueue = WorkerQueue(
+            properties: properties,
+            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
+            logHandler: self.logHandler,
+            workerFactory: SubscriberWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
+            getStoppedError: { ErrorInformation(type: .subscriberStoppedException) }
+        )
     }
 
     func resolutionPreference(resolution: Resolution?, completion publicCompletion: @escaping ResultHandler<Void>) {

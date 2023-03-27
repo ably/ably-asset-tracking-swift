@@ -5,7 +5,7 @@ import AblyAssetTrackingSubscriberTesting
 import XCTest
 
 class SubscriberWorkerQueuePropertiesTests: XCTestCase {
-    private var subscriberProperties = SubscriberWorkerQueueProperties(initialResolution: nil)
+    private var subscriberProperties: SubscriberWorkerQueueProperties!
 
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
     private let subscriberDelegate = SubscriberDelegateMock()
@@ -24,6 +24,7 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
             resolution: nil,
             logHandler: logger
         )
+        subscriberProperties = SubscriberWorkerQueueProperties(initialResolution: nil, subscriber: subscriber)
     }
 
     func test_subscriberProperties_updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired_changes_lastConnectionStateChange() {
@@ -82,7 +83,6 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
 
     func test_subscriberProperties_notifyEnhancedLocationUpdated_calls_didUpdateEnhancedLocation_delegate() {
         subscriber.delegate = subscriberDelegate
-        subscriberProperties.subscriber = subscriber
 
         let location = Location(coordinate: LocationCoordinate(latitude: 0.5, longitude: 0.5))
         let locationUpdate = EnhancedLocationUpdate(location: location)
@@ -102,7 +102,6 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
 
     func test_subscriberProperties_notifyRawLocationUpdated_calls_didUpdateRawLocation_delegate() {
         subscriber.delegate = subscriberDelegate
-        subscriberProperties.subscriber = subscriber
 
         let location = Location(coordinate: LocationCoordinate(latitude: 0.5, longitude: 0.5))
         let locationUpdate = RawLocationUpdate(location: location)
@@ -122,7 +121,6 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
 
     func test_subscriberProperties_notifyPublisherPresenceUpdated_calls_didUpdatePublisherPresence_delegate() {
         subscriber.delegate = subscriberDelegate
-        subscriberProperties.subscriber = subscriber
 
         let delegateDidUpdatePublisherPresenceExpectation = expectation(description: "Subscriber's delegate receives didUpdatePublisherPresence")
         subscriberDelegate.subscriberSenderDidUpdatePublisherPresenceClosure = { _, isPresent in
@@ -138,7 +136,6 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
 
     func test_subscriberProperties_notifyTrackableStateUpdated_calls_didChangeAssetConnectionStatus_delegate() {
         subscriber.delegate = subscriberDelegate
-        subscriberProperties.subscriber = subscriber
 
         let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber's delegate receives didChangeAssetConnectionStatus")
         subscriberDelegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, connectionState  in
@@ -154,7 +151,6 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
 
     func test_subscriberProperties_notifyDidFailWithError_calls_didFailWithError_delegate() {
         subscriber.delegate = subscriberDelegate
-        subscriberProperties.subscriber = subscriber
 
         let error = ErrorInformation(type: ErrorInformationType.commonError(errorMessage: "testErrorMessage"))
 
@@ -170,7 +166,6 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
 
     func test_subscriberProperties_notifyResolutionsChanged_calls_delegate_methods() {
         subscriber.delegate = subscriberDelegate
-        subscriberProperties.subscriber = subscriber
 
         let resolution = Resolution(accuracy: .balanced, desiredInterval: 10.2, minimumDisplacement: 10.2)
         let delegateDidUpdateResolutionExpectation = expectation(description: "Subscriber's delegate receives didUpdateResolution")
@@ -216,7 +211,6 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
         }
 
         subscriber.delegate = subscriberDelegate
-        subscriberProperties.subscriber = subscriber
         let connectionStateChange = ConnectionStateChange(state: .online, errorInformation: nil)
 
         subscriberProperties.updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: connectionStateChange, logHandler: logger)
