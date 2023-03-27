@@ -184,8 +184,8 @@ extension DefaultPublisher {
                 self?.performRefreshResolutionPolicyEvent(event)
             case .changeLocationEngineResolution(let event):
                 self?.performChangeLocationEngineResolutionEvent(event)
-            case .presenceUpdate(let event):
-                self?.performPresenceUpdateEvent(event)
+            case .presenceMessage(let event):
+                self?.performPresenceMessageEvent(event)
             case .clearRemovedTrackableMetadata(let event):
                 self?.performClearRemovedTrackableMetadataEvent(event)
             case .setDestinationSuccess(let event):
@@ -847,9 +847,9 @@ extension DefaultPublisher {
     }
 
     // MARK: Subscribers handling
-    private func performPresenceUpdateEvent(_ event: Event.PresenceUpdateEvent) {
+    private func performPresenceMessageEvent(_ event: Event.PresenceMessageEvent) {
         guard !state.isStoppingOrStopped else {
-            logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "Cannot perform PresenceUpdateEvent. Publisher is either stopped or stopping.")))
+            logHandler?.error(error: ErrorInformation(type: .publisherError(errorMessage: "Cannot perform PresenceMessageEvent. Publisher is either stopped or stopping.")))
             return
         }
 
@@ -980,13 +980,13 @@ extension DefaultPublisher: AblyPublisherDelegate {
 
     func ablyPublisher(
         _ sender: AblyPublisher,
-        didReceivePresenceUpdate presence: PresenceMessage,
+        didReceivePresenceMessage presence: PresenceMessage,
         forTrackable trackable: Trackable,
         presenceData: PresenceData,
         clientId: String
     ) {
-        logHandler?.debug(message: "publisherService.didReceivePresenceUpdate. Presence: \(presence), Trackable: \(trackable)", error: nil)
-        enqueue(event: .presenceUpdate(.init(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId)))
+        logHandler?.debug(message: "publisherService.didReceivePresenceMessage. Presence: \(presence), Trackable: \(trackable)", error: nil)
+        enqueue(event: .presenceMessage(.init(trackable: trackable, presence: presence, presenceData: presenceData, clientId: clientId)))
     }
 }
 

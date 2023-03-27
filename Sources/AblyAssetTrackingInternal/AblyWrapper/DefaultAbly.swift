@@ -316,7 +316,7 @@ public class DefaultAbly: AblyCommon {
         )
 
         // AblySubscriber delegate
-        self.subscriberDelegate?.ablySubscriber(self, didReceivePresenceUpdate: presence)
+        self.subscriberDelegate?.ablySubscriber(self, didReceivePresenceMessage: presence)
         self.subscriberDelegate?.ablySubscriber(self, didChangeChannelConnectionState: presence.action.toConnectionState())
 
         // Deleagate `Publisher` resolution if present in PresenceData
@@ -327,7 +327,7 @@ public class DefaultAbly: AblyCommon {
         // AblyPublisher delegate
         self.publisherDelegate?.ablyPublisher(
             self,
-            didReceivePresenceUpdate: presence,
+            didReceivePresenceMessage: presence,
             forTrackable: trackable,
             presenceData: data,
             clientId: clientId
