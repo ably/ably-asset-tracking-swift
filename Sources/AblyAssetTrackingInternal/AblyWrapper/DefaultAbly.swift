@@ -320,7 +320,7 @@ public class DefaultAbly: AblyCommon {
         self.subscriberDelegate?.ablySubscriber(self, didChangeChannelConnectionState: presence.action.toConnectionState())
 
         // Deleagate `Publisher` resolution if present in PresenceData
-        if let resolution = data.resolution, data.type == .publisher {
+        if let resolution = data.resolution, data.type == .publisher, ![.absent, .leave].contains(presence.action) {
             self.subscriberDelegate?.ablySubscriber(self, didReceiveResolution: resolution)
         }
 
