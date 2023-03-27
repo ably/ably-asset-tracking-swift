@@ -6,19 +6,19 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     var presenceData: PresenceData
     weak var subscriber: Subscriber?
 
-    private var presentPublisherMemberKeys: Set<String> = []
-    private var lastEmittedValueOfIsPublisherVisible: Bool?
-    private var lastEmittedTrackableState: ConnectionState = .offline
-    private var lastConnectionStateChange = ConnectionStateChange(state: .offline, errorInformation: nil)
-    private var lastChannelConnectionStateChange = ConnectionStateChange(state: .offline, errorInformation: nil)
-    private var pendingPublisherResolutions = PendingResolutions()
+    private(set) var presentPublisherMemberKeys: Set<String> = []
+    private(set) var lastEmittedValueOfIsPublisherVisible: Bool?
+    private(set) var lastEmittedTrackableState: ConnectionState = .offline
+    private(set) var lastConnectionStateChange = ConnectionStateChange(state: .offline, errorInformation: nil)
+    private(set) var lastChannelConnectionStateChange = ConnectionStateChange(state: .offline, errorInformation: nil)
+    private(set) var pendingPublisherResolutions = PendingResolutions()
 
-    var enhancedLocation: LocationUpdate?
-    var rawLocation: LocationUpdate?
-    var trackableState: ConnectionState = .offline
-    var publisherPresence = false
-    var resolution: Resolution?
-    var nextLocationUpdateInterval: Double?
+    private(set) var enhancedLocation: LocationUpdate?
+    private(set) var rawLocation: LocationUpdate?
+    private(set) var trackableState: ConnectionState = .offline
+    private(set) var publisherPresence = false
+    private(set) var resolution: Resolution?
+    private(set) var nextLocationUpdateInterval: Double?
 
     public init(initialResolution: Resolution?) {
         self.presenceData = PresenceData(type: .subscriber, resolution: initialResolution)
@@ -149,7 +149,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     }
 }
 
-private struct PendingResolutions {
+struct PendingResolutions {
     private var resolutions: [Resolution] = []
 
     mutating func add(resolution: Resolution) {

@@ -25,4 +25,10 @@ public struct Presence {
      See: https://sdk.ably.com/builds/ably/specification/main/features/#TP3h
      */
     public let memberKey: String
+
+    public init(action: PresenceAction, data: PresenceData, memberKey: String) {
+        self.action = action
+        self.data = data
+        self.memberKey = memberKey
+    }
 }
