@@ -38,6 +38,13 @@ public protocol AblyCommon {
     func updatePresenceData(trackableId: String, presenceData: PresenceData, completion: ResultHandler<Void>?)
 
     /**
+     Starts the connection to Ably.
+
+     - Parameter callback: The closure that will be called when connecting completes. If something goes wrong it will be called with an `error`object.
+     */
+    func startConnection(completion: @escaping ResultHandler<Void>)
+
+    /**
      Joins the presence of the channel for the given `trackableId` and add it to the connected channels.
      
      If successfully joined the presence then the channel is added to the connected channels.
@@ -68,6 +75,13 @@ public protocol AblyCommon {
      - Parameter completion:    The closure that will be called when `Ably` connection state will change to `closed` or `failed`.
      */
     func close(presenceData: PresenceData, completion: @escaping ResultHandler<Void>)
+
+    /**
+     Closes the ably connection.
+
+     - Parameter completion: The closer to be called when the `Ably` connection state changes to `closed` or `failed`
+     */
+    func stopConnection(completion: @escaping ResultHandler<Void>)
 }
 
 /**

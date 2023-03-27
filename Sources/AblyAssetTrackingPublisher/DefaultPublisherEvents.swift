@@ -113,7 +113,7 @@ extension DefaultPublisher {
 
         struct PresenceUpdateEvent {
             let trackable: Trackable
-            let presence: Presence
+            let presence: PresenceMessage
             let presenceData: PresenceData
             let clientId: String
         }

@@ -7,8 +7,8 @@ extension ConnectionState {
             return "Online"
         case .offline:
             return "Offline"
-        case .publishing:
-            return "Publishing"
+        case .closed:
+            return "Closed"
         case .failed:
             return "Failed"
         }

@@ -60,8 +60,8 @@ enum DescriptionsHelper {
                         return ("online", .systemGreen)
                     case .offline:
                         return ("offline", .systemRed)
-                    case .publishing:
-                        return ("publishing", .systemGreen)
+                    case .closed:
+                        return ("closed", .systemRed)
                     case .failed:
                         return ("failed", .systemRed)
                     }

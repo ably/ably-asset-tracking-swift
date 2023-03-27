@@ -13,7 +13,7 @@ public protocol AblySDKRealtime {
     var channels: AblySDKRealtimeChannels { get }
     var connection: AblySDKConnection { get }
     var auth: AblySDKAuth { get }
-
+    func connect()
     func close()
 }
 
@@ -27,14 +27,14 @@ public protocol AblySDKRealtimeChannel {
     var presence: AblySDKRealtimePresence { get }
 
     @discardableResult
-    func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> AblySDKEventListener?
+    func subscribe(_ name: String, callback: @escaping ARTMessageCallback) -> ARTEventListener?
 
     func unsubscribe()
 
     func detach(_ callback: ARTCallback?)
 
     @discardableResult
-    func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> AblySDKEventListener
+    func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> ARTEventListener
 
     func publish(_ messages: [ARTMessage], callback: ARTCallback?)
 
@@ -54,21 +54,23 @@ public protocol AblySDKRealtimePresence {
     func leave(_ data: Any?, callback: ARTCallback?)
 
     @discardableResult
-    func subscribe(_ callback: @escaping ARTPresenceMessageCallback) -> AblySDKEventListener?
+    func subscribe(_ callback: @escaping ARTPresenceMessageCallback) -> ARTEventListener?
 
     func unsubscribe()
 }
 
 // sourcery: AutoMockable
 public protocol AblySDKConnection {
+    var state: ARTRealtimeConnectionState {get}
+    var errorReason: ARTErrorInfo? {get}
+
     @discardableResult
-    func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> AblySDKEventListener
+    func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> ARTEventListener
+
+    func off(_ listener: ARTEventListener)
 }
 
 // sourcery: AutoMockable
 public protocol AblySDKAuth {
     func authorize(_ callback: @escaping ARTTokenDetailsCallback)
 }
-
-// sourcery: AutoMockable
-public protocol AblySDKEventListener {}

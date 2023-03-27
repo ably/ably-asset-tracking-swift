@@ -155,24 +155,37 @@ extension DefaultSubscriber {
 
     // MARK: Start/Stop
     private func performStart(_ event: Event.StartEvent) {
-        ablySubscriber.connect(
-            trackableId: trackableId,
-            presenceData: presenceData,
-            useRewind: true
-        ) { [weak self] result in
+        ablySubscriber.startConnection { [weak self] result in
             guard let self else {
                 return
             }
 
             switch result {
             case .success:
-                self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
-                self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
-                self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
+                self.ablySubscriber.connect(
+                    trackableId: self.trackableId,
+                    presenceData: self.presenceData,
+                    useRewind: true
+                ) { [weak self] result in
+                    guard let self else {
+                        return
+                    }
 
-                event.completion.handleSuccess()
+                    switch result {
+                    case .success:
+                        self.ablySubscriber.subscribeForPresenceMessages(trackable: .init(id: self.trackableId))
+                        self.ablySubscriber.subscribeForRawEvents(trackableId: self.trackableId)
+                        self.ablySubscriber.subscribeForEnhancedEvents(trackableId: self.trackableId)
+
+                        event.completion.handleSuccess()
+                    case .failure(let error):
+                        event.completion.handleError(error)
+                    }
+                }
             case .failure(let error):
-                event.completion.handleError(error)
+                self.ablySubscriber.stopConnection(completion: { [error] _ in
+                    event.completion.handleError(error)
+                })
             }
         }
     }
@@ -237,6 +250,8 @@ extension DefaultSubscriber {
                 newConnectionState = isPublisherOnline ? .online : .offline
             case .offline:
                 newConnectionState = .offline
+            case .closed:
+                newConnectionState = .offline
             case .failed:
                 newConnectionState = .failed
             }
@@ -244,6 +259,8 @@ extension DefaultSubscriber {
             newConnectionState = .offline
         case .failed:
             newConnectionState = .failed
+        case .closed:
+            newConnectionState = .offline
         }
 
         if newConnectionState != currentTrackableConnectionState {
@@ -304,7 +321,7 @@ extension DefaultSubscriber {
 }
 
 extension DefaultSubscriber: AblySubscriberDelegate {
-    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: Presence) {
+    func ablySubscriber(_ sender: AblySubscriber, didReceivePresenceUpdate presence: PresenceMessage) {
         logHandler?.debug(message: "ablySubscriber.didReceivePresenceUpdate. Presence: \(presence)", error: nil)
         enqueue(event: .presenceUpdate(.init(presence: presence)))
     }

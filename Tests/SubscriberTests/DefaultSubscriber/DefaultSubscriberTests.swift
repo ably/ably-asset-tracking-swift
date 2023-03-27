@@ -251,6 +251,7 @@ class DefaultSubscriberTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation()
         ablySubscriber.connectCompletionHandler = { completion in completion?(.success) }
+        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success) }
 
         // When
         subscriber.start { _ in
@@ -260,7 +261,9 @@ class DefaultSubscriberTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
 
         // Then
+        XCTAssertTrue(ablySubscriber.startConnectionCalled)
         XCTAssertTrue(ablySubscriber.connectCalled)
+        XCTAssertNotNil(ablySubscriber.startConnectionCompletion)
         XCTAssertNotNil(ablySubscriber.connectCompletion)
     }
 
@@ -268,6 +271,7 @@ class DefaultSubscriberTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation()
         ablySubscriber.connectCompletionHandler = { completion in completion?(.success) }
+        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success) }
         var isSuccess = false
 
         // When
@@ -287,10 +291,42 @@ class DefaultSubscriberTests: XCTestCase {
         XCTAssertTrue(isSuccess)
     }
 
+    func test_subscriberStart_failure_startConnection() {
+        // Given
+        let expectation = XCTestExpectation()
+        let stopError = ErrorInformation(type: .subscriberError(errorMessage: "test_start_error"))
+        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.failure(stopError)) }
+        ablySubscriber.stopConnectionCompletionHandler = { completion in completion?(.success) }
+        var isFailure = false
+        var receivedError: ErrorInformation?
+
+        // When
+        subscriber.start { result in
+            switch result {
+            case .success:
+                XCTFail("Success not expected.")
+            case .failure(let error):
+                receivedError = error
+                isFailure.toggle()
+            }
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 5.0)
+
+        // Then
+        XCTAssertTrue(isFailure)
+        XCTAssertNotNil(receivedError)
+        XCTAssertEqual(receivedError?.message, stopError.message)
+        XCTAssertTrue(ablySubscriber.startConnectionCalled)
+        XCTAssertTrue(ablySubscriber.stopConnectionCalled)
+    }
+
     func test_subscriberStart_failure() {
         // Given
         let expectation = XCTestExpectation()
         let stopError = ErrorInformation(type: .subscriberError(errorMessage: "test_start_error"))
+        ablySubscriber.startConnectionCompletionHandler = { completion in completion?(.success) }
         ablySubscriber.connectCompletionHandler = { completion in completion?(.failure(stopError)) }
         var isFailure = false
         var receivedError: ErrorInformation?
@@ -392,7 +428,7 @@ class DefaultSubscriberTests: XCTestCase {
             XCTAssertEqual(isPresent, expectedIsPresent)
             delegateDidFailWithErrorCalledExpectation.fulfill()
         }
-        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceUpdate: Presence(action: presenceAction, data: PresenceData(type: .publisher, resolution: nil), memberKey: ""))
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceUpdate: PresenceMessage(action: presenceAction, data: PresenceData(type: .publisher, resolution: nil), memberKey: ""))
 
         waitForExpectations(timeout: 10)
     }

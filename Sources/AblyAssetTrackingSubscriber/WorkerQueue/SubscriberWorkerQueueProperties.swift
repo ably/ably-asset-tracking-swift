@@ -35,7 +35,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         delegateStateEventsIfRequired(logHandler: logHandler)
     }
 
-    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [Presence], logHandler: InternalLogHandler?) {
+    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [PresenceMessage], logHandler: InternalLogHandler?) {
         for presenceMessage in presenceMessages where presenceMessage.data.type == .publisher {
             switch presenceMessage.action {
             case .leave, .absent:
@@ -65,11 +65,15 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
                 trackableState = .offline
             case .failed:
                 trackableState = .failed
+            case .closed:
+                trackableState = .closed
             }
         case .offline:
             trackableState = .offline
         case .failed:
             trackableState = .failed
+        case .closed:
+            trackableState = .closed
         }
 
         if let trackableState, trackableState != lastEmittedTrackableState {

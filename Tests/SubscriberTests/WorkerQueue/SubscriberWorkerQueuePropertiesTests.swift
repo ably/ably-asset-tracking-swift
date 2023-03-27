@@ -55,7 +55,7 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
         // Given
         let testMemberKey = "testMemberKey"
         let presenceData = PresenceData(type: .publisher, resolution: .default)
-        let presenceEnter = Presence(action: .enter, data: presenceData, memberKey: testMemberKey)
+        let presenceEnter = PresenceMessage(action: .enter, data: presenceData, memberKey: testMemberKey)
         XCTAssertTrue(subscriberProperties.presentPublisherMemberKeys.isEmpty)
 
         // When
@@ -70,8 +70,8 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
         // Given
         let testMemberKey = "testMemberKey"
         let presenceData = PresenceData(type: .publisher, resolution: .default)
-        let presenceEnter = Presence(action: .enter, data: presenceData, memberKey: testMemberKey)
-        let presenceLeave = Presence(action: .leave, data: presenceData, memberKey: testMemberKey)
+        let presenceEnter = PresenceMessage(action: .enter, data: presenceData, memberKey: testMemberKey)
+        let presenceLeave = PresenceMessage(action: .leave, data: presenceData, memberKey: testMemberKey)
         subscriberProperties.updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [presenceEnter], logHandler: logger)
 
         // When
@@ -215,7 +215,7 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
 
         subscriberProperties.updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: connectionStateChange, logHandler: logger)
         subscriberProperties.updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: connectionStateChange, logHandler: logger)
-        subscriberProperties.updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [Presence(action: .enter, data: PresenceData(type: .publisher, resolution: .default), memberKey: "testMemberKey")], logHandler: logger)
+        subscriberProperties.updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [PresenceMessage(action: .enter, data: PresenceData(type: .publisher, resolution: .default), memberKey: "testMemberKey")], logHandler: logger)
 
         waitForExpectations(timeout: 10)
     }
