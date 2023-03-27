@@ -75,7 +75,7 @@ class DefaultPublisher_LocationServiceTests: XCTestCase {
         let locationUpdate = EnhancedLocationUpdate(location: location)
         let expectationAddTrackable = XCTestExpectation()
         let expectationUpdateLocation = XCTestExpectation()
-        
+
         ablyPublisher.startConnectionCompletionHandler = { completion in  completion?(.success) }
         ablyPublisher.connectCompletionHandler = { completion in  completion?(.success) }
 

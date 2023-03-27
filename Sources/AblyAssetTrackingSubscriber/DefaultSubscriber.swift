@@ -154,9 +154,8 @@ extension DefaultSubscriber {
 
     // MARK: Start/Stop
     private func performStart(_ event: Event.StartEvent) {
-
         ablySubscriber.startConnection { [weak self] result in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -167,7 +166,7 @@ extension DefaultSubscriber {
                     presenceData: self.presenceData,
                     useRewind: true
                 ) { [weak self] result in
-                    guard let self = self else {
+                    guard let self else {
                         return
                     }
 

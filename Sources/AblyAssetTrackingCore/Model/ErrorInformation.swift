@@ -1,5 +1,5 @@
-import Foundation
 import Ably
+import Foundation
 
 /**
  Default error types used in SDK error calls.

@@ -365,7 +365,7 @@ extension DefaultPublisher {
         duplicateTrackableGuard.startAddingTrackableWithId(trackable.id)
 
         ablyPublisher.startConnection { [weak self, presenceData] result in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -376,7 +376,7 @@ extension DefaultPublisher {
                         presenceData: presenceData,
                         useRewind: false
                 ) { [weak self] result in
-                    guard let self = self else {
+                    guard let self else {
                         return
                     }
 

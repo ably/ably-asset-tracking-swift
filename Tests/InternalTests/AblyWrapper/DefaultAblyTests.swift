@@ -624,7 +624,7 @@ class DefaultAblyTests: XCTestCase {
         channel.subscribeCallbackClosure = { _, callback in
             let message = ARTMessage(name: nil, data: data)
             callback(message)
-            
+
             return ARTEventListener()
         }
 

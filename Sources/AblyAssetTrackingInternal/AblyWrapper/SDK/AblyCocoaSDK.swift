@@ -40,7 +40,7 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
     var presence: AblySDKRealtimePresence {
         AblyCocoaSDKRealtimePresence(presence: channel.presence)
     }
-    
+
     func subscribe(_ name: String, callback: @escaping (ARTMessage) -> Void) -> ARTEventListener? {
         if let eventListener = channel.subscribe(name, callback: callback) {
             return eventListener
@@ -56,9 +56,9 @@ struct AblyCocoaSDKRealtimeChannel: AblySDKRealtimeChannel {
     func detach(_ callback: ARTCallback?) {
         channel.detach(callback)
     }
-    
+
     func on(_ callback: @escaping (ARTChannelStateChange) -> Void) -> ARTEventListener {
-        return channel.on(callback)
+        channel.on(callback)
     }
 
     func publish(_ messages: [ARTMessage], callback: ARTCallback?) {
@@ -109,19 +109,15 @@ struct AblyCocoaSDKRealtimePresence: AblySDKRealtimePresence {
 struct AblyCocoaSDKConnection: AblySDKConnection {
     fileprivate let connection: ARTConnection
     var state: ARTRealtimeConnectionState {
-        get {
-            return self.connection.state
-        }
+        self.connection.state
     }
 
     var errorReason: ARTErrorInfo? {
-        get {
-            return self.connection.errorReason
-        }
+        self.connection.errorReason
     }
-    
+
     func on(_ callback: @escaping (ARTConnectionStateChange) -> Void) -> ARTEventListener {
-        return connection.on(callback)
+        connection.on(callback)
     }
 
     func off(_ listener: ARTEventListener) {

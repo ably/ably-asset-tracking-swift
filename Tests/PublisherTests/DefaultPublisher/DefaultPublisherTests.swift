@@ -190,7 +190,7 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         XCTAssertTrue(ablyPublisher.stopConnectionCalled)
     }
-    
+
     func testTrack_error_ably_service_error_connect() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
         ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
@@ -250,7 +250,7 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         XCTAssertTrue(ablyPublisher.stopConnectionCalled)
     }
-    
+
     func testTrack_failureMainThread_connect() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
         ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
@@ -348,7 +348,7 @@ class DefaultPublisherTests: XCTestCase {
 
         // When adding a trackable and receive error response from ablyPublisher
         publisher.add(trackable: trackable) { [weak self] result in
-            guard let self = self
+            guard let self
             else {
                 XCTFail("self shouldn't be nil")
                 return
@@ -362,7 +362,7 @@ class DefaultPublisherTests: XCTestCase {
 
                 // It should not notify the delegate that the trackables changed
                 XCTAssertFalse(self.delegate.publisherDidChangeTrackablesCalled)
-                XCTAssertEqual(self.delegate.publisherDidChangeTrackablesParamTrackables, nil)
+                XCTAssertNil(self.delegate.publisherDidChangeTrackablesParamTrackables)
                 expectation.fulfill()
             }
         }
@@ -370,7 +370,7 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         XCTAssertTrue(ablyPublisher.stopConnectionCalled)
     }
-    
+
     func testAdd_track_error_connect() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisherService error"))
         ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
@@ -441,7 +441,7 @@ class DefaultPublisherTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         XCTAssertTrue(ablyPublisher.stopConnectionCalled)
     }
-    
+
     func testAdd_error_thread_connect() {
         let errorInformation = ErrorInformation(type: .publisherError(errorMessage: "Test AblyPublisher error"))
         ablyPublisher.startConnectionCompletionHandler = { completion in completion?(.success) }
