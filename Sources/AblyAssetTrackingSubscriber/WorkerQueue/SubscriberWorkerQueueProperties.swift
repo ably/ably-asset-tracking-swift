@@ -101,41 +101,112 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
 
     mutating func notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?) {
         enhancedLocation = locationUpdate
-        logHandler?.logPublicAPICall(label: "Calling delegate didUpdateEnhancedLocation: \(locationUpdate)")
-        subscriber.delegate?.subscriber(sender: subscriber, didUpdateEnhancedLocation: locationUpdate)
+        delegateEvent(event: .delegateEnhancedLocationReceived(DelegateEvent.DelegateEnhancedLocationReceivedEvent(locationUpdate: locationUpdate)), logHandler: logHandler)
     }
 
     mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?) {
         rawLocation = locationUpdate
-        logHandler?.logPublicAPICall(label: "Calling delegate didUpdateRawLocation: \(locationUpdate)")
-        subscriber.delegate?.subscriber(sender: subscriber, didUpdateRawLocation: locationUpdate)
+        delegateEvent(event: .delegateRawLocationReceived(DelegateEvent.DelegateRawLocationReceivedEvent(locationUpdate: locationUpdate)), logHandler: logHandler)
     }
 
     mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool, logHandler: InternalLogHandler?) {
         publisherPresence = isPublisherPresent
-        logHandler?.logPublicAPICall(label: "Calling delegate didUpdatePublisherPresence: \(publisherPresence)")
-        subscriber.delegate?.subscriber(sender: subscriber, didUpdatePublisherPresence: publisherPresence)
+        delegateEvent(event: .delegateUpdatedPublisherPresence(DelegateEvent.DelegateUpdatedPublisherPresenceEvent(isPresent: isPublisherPresent)), logHandler: logHandler)
     }
 
     mutating func notifyTrackableStateUpdated(trackableState: ConnectionState, logHandler: InternalLogHandler?) {
         self.trackableState = trackableState
-        logHandler?.logPublicAPICall(label: "Calling delegate didChangeAssetConnectionStatus: \(trackableState)")
-        subscriber.delegate?.subscriber(sender: subscriber, didChangeAssetConnectionStatus: trackableState)
+        delegateEvent(event: .delegateConnectionStatusChanged(DelegateEvent.DelegateConnectionStatusChangedEvent(status: trackableState)), logHandler: logHandler)
     }
 
     mutating func notifyDidFailWithError(error: ErrorInformation, logHandler: InternalLogHandler?) {
         logHandler?.logPublicAPICall(label: "Calling delegate didFailWithError: \(error)")
-        subscriber.delegate?.subscriber(sender: subscriber, didFailWithError: error)
+        delegateEvent(event: .delegateError(DelegateEvent.DelegateErrorEvent(error: error)), logHandler: logHandler)
     }
 
     mutating func notifyResolutionsChanged(resolutions: [Resolution], logHandler: InternalLogHandler?) {
         for resolution in resolutions {
             self.resolution = resolution
             self.nextLocationUpdateInterval = resolution.desiredInterval
-            logHandler?.logPublicAPICall(label: "Calling delegate didUpdateResolution: \(resolution)")
-            subscriber.delegate?.subscriber(sender: subscriber, didUpdateResolution: resolution)
-            logHandler?.logPublicAPICall(label: "Calling delegate didUpdateDesiredInterval: \(resolution.desiredInterval)")
-            subscriber.delegate?.subscriber(sender: subscriber, didUpdateDesiredInterval: resolution.desiredInterval)
+
+            delegateEvent(event: .delegateResolutionReceived(DelegateEvent.DelegateResolutionReceivedEvent(resolution: resolution)), logHandler: logHandler)
+            delegateEvent(event: .delegateDesiredIntervalReceived(DelegateEvent.DelegateDesiredIntervalReceivedEvent(desiredInterval: resolution.desiredInterval)), logHandler: logHandler)
+        }
+    }
+
+    // MARK: Delegating events
+    // This logic is for now duplicated from DefaultSubscriber and DefaultSubscriberEvents extension. DefaultSubscriber's logic can be removed once we finish replacing the current Events mechanism with WorkerQueue.
+    private enum DelegateEvent {
+        case delegateError(DelegateErrorEvent)
+        case delegateEnhancedLocationReceived(DelegateEnhancedLocationReceivedEvent)
+        case delegateRawLocationReceived(DelegateRawLocationReceivedEvent)
+        case delegateResolutionReceived(DelegateResolutionReceivedEvent)
+        case delegateDesiredIntervalReceived(DelegateDesiredIntervalReceivedEvent)
+        case delegateConnectionStatusChanged(DelegateConnectionStatusChangedEvent)
+        case delegateUpdatedPublisherPresence(DelegateUpdatedPublisherPresenceEvent)
+
+        struct DelegateErrorEvent {
+            let error: ErrorInformation
+        }
+
+        struct DelegateEnhancedLocationReceivedEvent {
+            let locationUpdate: LocationUpdate
+        }
+
+        struct DelegateRawLocationReceivedEvent {
+            let locationUpdate: LocationUpdate
+        }
+
+        struct DelegateResolutionReceivedEvent {
+            let resolution: Resolution
+        }
+
+        struct DelegateDesiredIntervalReceivedEvent {
+            let desiredInterval: Double
+        }
+
+        struct DelegateConnectionStatusChangedEvent {
+            let status: ConnectionState
+        }
+
+        struct DelegateUpdatedPublisherPresenceEvent {
+            let isPresent: Bool
+        }
+    }
+
+    private func delegateEvent(event: DelegateEvent, logHandler: InternalLogHandler?) {
+        logHandler?.verbose(message: "Received event to send to delegate, dispatching call to main thread: \(event)", error: nil)
+        DispatchQueue.main.async {
+            guard let delegate = subscriber.delegate
+            else { return }
+
+            let log = { (description: String) in
+                logHandler?.logPublicAPIOutput(label: "Calling delegate \(description)")
+            }
+
+            switch event {
+            case .delegateError(let event):
+                log("didFailWithError: \(event.error)")
+                delegate.subscriber(sender: subscriber, didFailWithError: event.error)
+            case .delegateConnectionStatusChanged(let event):
+                log("didChangeAssetConnectionStatus: \(event.status)")
+                delegate.subscriber(sender: subscriber, didChangeAssetConnectionStatus: event.status)
+            case .delegateEnhancedLocationReceived(let event):
+                log("didUpdateEnhancedLocation: \(event.locationUpdate)")
+                delegate.subscriber(sender: subscriber, didUpdateEnhancedLocation: event.locationUpdate)
+            case .delegateRawLocationReceived(let event):
+                log("didUpdateRawLocation: \(event.locationUpdate)")
+                delegate.subscriber(sender: subscriber, didUpdateRawLocation: event.locationUpdate)
+            case .delegateResolutionReceived(let event):
+                log("didUpdateResolution: \(event.resolution)")
+                delegate.subscriber(sender: subscriber, didUpdateResolution: event.resolution)
+            case .delegateDesiredIntervalReceived(let event):
+                log("didUpdateDesiredInterval: \(event.desiredInterval)")
+                delegate.subscriber(sender: subscriber, didUpdateDesiredInterval: event.desiredInterval)
+            case .delegateUpdatedPublisherPresence(let event):
+                log("didUpdatePublisherPresence: \(event.isPresent)")
+                delegate.subscriber(sender: subscriber, didUpdatePublisherPresence: event.isPresent)
+            }
         }
     }
 }
