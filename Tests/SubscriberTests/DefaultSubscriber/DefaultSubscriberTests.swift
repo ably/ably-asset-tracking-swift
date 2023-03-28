@@ -428,8 +428,7 @@ class DefaultSubscriberTests: XCTestCase {
             XCTAssertEqual(isPresent, expectedIsPresent)
             delegateDidFailWithErrorCalledExpectation.fulfill()
         }
-
-        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceMessage: .init(action: presenceAction, type: .publisher))
+        ablySubscriber.subscriberDelegate?.ablySubscriber(ablySubscriber, didReceivePresenceMessage: PresenceMessage(action: presenceAction, data: PresenceData(type: .publisher, resolution: nil), memberKey: ""))
 
         waitForExpectations(timeout: 10)
     }

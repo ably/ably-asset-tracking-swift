@@ -3,8 +3,6 @@ import AblyAssetTrackingInternal
 import CoreLocation
 import Foundation
 
-// Default logger used in Subscriber SDK
-
 private enum SubscriberState {
     case working
     case stopping
@@ -16,7 +14,7 @@ private enum SubscriberState {
 }
 
 class DefaultSubscriber: Subscriber {
-    private let workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>
+    private var workerQueue: WorkerQueue<SubscriberWorkerQueueProperties, SubscriberWorkSpecification>!
     private let trackableId: String
     private let presenceData: PresenceData
     private let logHandler: InternalLogHandler?
@@ -38,15 +36,7 @@ class DefaultSubscriber: Subscriber {
         logHandler: InternalLogHandler?
     ) {
         self.logHandler = logHandler?.addingSubsystem(Self.self)
-        // swiftlint:disable:next trailing_closure
-        self.workerQueue = WorkerQueue(
-            properties: SubscriberWorkerQueueProperties(),
-            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
-            logHandler: self.logHandler,
-            workerFactory: SubscriberWorkerFactory(),
-            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
-            getStoppedError: { ErrorInformation(type: .subscriberStoppedException) }
-        )
+
         self.ablySubscriber = ablySubscriber
         self.trackableId = trackableId
         self.presenceData = PresenceData(type: .subscriber, resolution: resolution)
@@ -54,6 +44,17 @@ class DefaultSubscriber: Subscriber {
         self.ablySubscriber.subscriberDelegate = self
 
         self.ablySubscriber.subscribeForAblyStateChange()
+        let properties = SubscriberWorkerQueueProperties(initialResolution: resolution, subscriber: self)
+
+        // swiftlint:disable:next trailing_closure
+        self.workerQueue = WorkerQueue(
+            properties: properties,
+            workingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber", qos: .default),
+            logHandler: self.logHandler,
+            workerFactory: SubscriberWorkerFactory(),
+            asyncWorkWorkingQueue: DispatchQueue(label: "com.ably.Subscriber.DefaultSubscriber.async", qos: .default),
+            getStoppedError: { ErrorInformation(type: .subscriberStoppedException) }
+        )
     }
 
     func resolutionPreference(resolution: Resolution?, completion publicCompletion: @escaping ResultHandler<Void>) {
@@ -203,7 +204,7 @@ extension DefaultSubscriber {
     }
 
     private func performPresenceMessageReceived(_ event: Event.PresenceMessageReceivedEvent) {
-        guard event.presence.type == .publisher else {
+        guard event.presence.data.type == .publisher else {
             return
         }
 

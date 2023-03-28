@@ -44,3 +44,24 @@ extension ConnectionState {
         "ConnectionState.\(string)"
     }
 }
+
+/**
+ A change in state of a connection to the Ably service.
+ */
+public struct ConnectionStateChange {
+    // swiftlint:disable:next missing_docs
+    public init(state: ConnectionState, errorInformation: ErrorInformation?) {
+        self.state = state
+        self.errorInformation = errorInformation
+    }
+
+    /**
+    The new state, which is now current.
+     */
+    public let state: ConnectionState
+
+    /**
+    Information about what went wrong, if state is `failed` or failing in some way.
+     */
+    public let errorInformation: ErrorInformation?
+}
