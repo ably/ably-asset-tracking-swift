@@ -3,7 +3,8 @@ import Foundation
 
 /// A client for communicating with an instance of the SDK test proxy server. Provides methods for creating and managing proxies which are able to simulate connectivity faults that might occur during use of the Ably Asset Tracking SDKs.
 class SDKTestProxyClient {
-    private let baseURL: URL
+    /// The base URL of the SDK test proxy server.
+    public let baseURL: URL
     private let logHandler: InternalLogHandler
     private let urlSession = URLSession(configuration: .default)
 

@@ -33,6 +33,47 @@ import AblyAssetTrackingSubscriber
 
 
 
+public class SubscriberMock: Subscriber {
+
+    public init() {}
+
+    public var delegate: SubscriberDelegate?
+
+    //MARK: - resolutionPreference
+
+    public var resolutionPreferenceResolutionCompletionCallsCount = 0
+    public var resolutionPreferenceResolutionCompletionCalled: Bool {
+        return resolutionPreferenceResolutionCompletionCallsCount > 0
+    }
+    public var resolutionPreferenceResolutionCompletionReceivedArguments: (resolution: Resolution?, completion: ResultHandler<Void>)?
+    public var resolutionPreferenceResolutionCompletionReceivedInvocations: [(resolution: Resolution?, completion: ResultHandler<Void>)] = []
+    public var resolutionPreferenceResolutionCompletionClosure: ((Resolution?, @escaping ResultHandler<Void>) -> Void)?
+
+    public func resolutionPreference(resolution: Resolution?, completion: @escaping ResultHandler<Void>) {
+        resolutionPreferenceResolutionCompletionCallsCount += 1
+        resolutionPreferenceResolutionCompletionReceivedArguments = (resolution: resolution, completion: completion)
+        resolutionPreferenceResolutionCompletionReceivedInvocations.append((resolution: resolution, completion: completion))
+        resolutionPreferenceResolutionCompletionClosure?(resolution, completion)
+    }
+
+    //MARK: - stop
+
+    public var stopCompletionCallsCount = 0
+    public var stopCompletionCalled: Bool {
+        return stopCompletionCallsCount > 0
+    }
+    public var stopCompletionReceivedCompletion: ResultHandler<Void>?
+    public var stopCompletionReceivedInvocations: [ResultHandler<Void>] = []
+    public var stopCompletionClosure: ((@escaping ResultHandler<Void>) -> Void)?
+
+    public func stop(completion: @escaping ResultHandler<Void>) {
+        stopCompletionCallsCount += 1
+        stopCompletionReceivedCompletion = completion
+        stopCompletionReceivedInvocations.append(completion)
+        stopCompletionClosure?(completion)
+    }
+
+}
 public class SubscriberDelegateMock: SubscriberDelegate {
 
     public init() {}
