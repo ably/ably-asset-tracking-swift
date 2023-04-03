@@ -51,37 +51,45 @@ public protocol Worker<PropertiesType, WorkerSpecificationType>: AnyObject {
 
 /// A protocol used to avoid duplication of default ``doWork``, ``doWhenStopped``,  ``onUnexpectedError`` and
 /// ``onUnexpectedAsyncError`` implementation for workers without callbacks
-protocol DefaultWorker<PropertiesType, WorkerSpecificationType>: Worker {}
+public protocol DefaultWorker<PropertiesType, WorkerSpecificationType>: Worker {}
 
 /// A protocol used to avoid duplication of default ``doWork``, ``doWhenStopped``,  ``onUnexpectedError`` and
 /// ``onUnexpectedAsyncError`` implementation for workers with a callback
-protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
+public protocol CallbackWorker<PropertiesType, WorkerSpecificationType>: Worker {
     var callbackFunction: ResultHandler<Void> { get set }
 }
 
-extension DefaultWorker {
+public extension DefaultWorker {
+    /// Provides a default implementation of this method, which does nothing.
     func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
         properties
     }
 
+    /// Provides a default implementation of this method, which does nothing.
     func doWhenStopped(error: Error) {}
+    /// Provides a default implementation of this method, which does nothing.
     func onUnexpectedError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {}
+    /// Provides a default implementation of this method, which does nothing.
     func onUnexpectedAsyncError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {}
 }
 
-extension CallbackWorker {
+public extension CallbackWorker {
+    /// Provides a default implementation of this method, which does nothing.
     func doWork(properties: PropertiesType, doAsyncWork: (@escaping (WorkerAsyncWorkCompletionHandler) -> Void) -> Void, postWork: @escaping (WorkerSpecificationType) -> Void) throws -> PropertiesType {
         properties
     }
 
+    /// Provides a default implementation of this method, which calls the callback with the given error.
     func doWhenStopped(error: Error) {
         callbackFunction(Result.failure(ErrorInformation(error: error)))
     }
 
+    /// Provides a default implementation of this method, which calls the callback with the given error.
     func onUnexpectedError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {
         callbackFunction(Result.failure(ErrorInformation(error: error)))
     }
 
+    /// Provides a default implementation of this method, which calls the callback with the given error.
     func onUnexpectedAsyncError(error: Error, postWork: @escaping (WorkerSpecificationType) -> Void) {
         callbackFunction(Result.failure(ErrorInformation(error: error)))
     }
