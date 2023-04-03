@@ -137,10 +137,10 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
     func test_subscriberProperties_notifyTrackableStateUpdated_calls_didChangeAssetConnectionStatus_delegate() {
         subscriber.delegate = subscriberDelegate
 
-        let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber's delegate receives didChangeAssetConnectionStatus")
-        subscriberDelegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, connectionState  in
-            XCTAssertEqual(connectionState, .online)
-            delegateDidChangeAssetConnectionStatusExpectation.fulfill()
+        let delegateDidChangeTrackableStateExpectation = expectation(description: "Subscriber's delegate receives didChangeTrackableState")
+        subscriberDelegate.subscriberSenderDidChangeTrackableStateClosure = { _, trackableState  in
+            XCTAssertEqual(trackableState, .online)
+            delegateDidChangeTrackableStateExpectation.fulfill()
         }
 
         subscriberProperties.notifyTrackableStateUpdated(trackableState: .online, logHandler: logger)
@@ -190,10 +190,10 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
     }
 
     func test_subscriberProperties_delegatesEvents() {
-        let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeAssetConnectionStatus")
-        subscriberDelegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+        let delegateDidChangeTrackableStateExpectation = expectation(description: "Subscriber’s delegate receives didChangeTrackableState")
+        subscriberDelegate.subscriberSenderDidChangeTrackableStateClosure = { _, status in
             XCTAssertEqual(status, .online)
-            delegateDidChangeAssetConnectionStatusExpectation.fulfill()
+            delegateDidChangeTrackableStateExpectation.fulfill()
         }
 
         let delegateDidUpdatePresence = expectation(description: "Subscriber's delegate receives didUpdatePublisherPresence")

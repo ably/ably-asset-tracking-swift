@@ -16,7 +16,7 @@ struct MapView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            StackedText(texts: MapViewModel.createViewModel(forConnectionState: publisher.trackables.first { key, _ in key.id == trackableId }?.value.connectionState))
+            StackedText(texts: MapViewModel.createViewModel(forTrackableState: publisher.trackables.first { key, _ in key.id == trackableId }?.value.trackableState))
                 .padding(.leading, 10)
             // This padding is very bad - for some reason, I wasn't able to tap on the "Remove trackable" button without it. I'm probably doing something very very wrong but don't have time to look into it now. See https://github.com/ably/ably-asset-tracking-swift/issues/422
                 .padding(.bottom, 25)

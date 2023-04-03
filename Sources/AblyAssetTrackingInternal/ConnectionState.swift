@@ -1,17 +1,11 @@
+import AblyAssetTrackingCore
 import Foundation
 
 /**
- Indicates Asset connection status (i.e. if courier is publishing their location)
+ The state of connectivity to the Ably service.
  */
 public enum ConnectionState: Int {
-    /**
-     Asset is connected to tracking system and we're receiving their position
-     */
     case online
-
-    /**
-     Asset is not connected
-     */
     case offline
 
     /**

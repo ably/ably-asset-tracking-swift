@@ -28,8 +28,8 @@ extension SubscriberNetworkConnectivityTests {
         private let subscriberClientID: String
         private let label: String
         private let trackableID: String
-        private let expectedState: ConnectionState
-        private let failureStates: Set<ConnectionState>
+        private let expectedState: TrackableState
+        private let failureStates: Set<TrackableState>
         private let expectedSubscriberPresence: Bool?
         private let expectedPublisherPresence: Bool
         private let expectedLocation: Location?
@@ -49,7 +49,7 @@ extension SubscriberNetworkConnectivityTests {
             }
         }
 
-        init(sharedState: SharedState, logHandler: InternalLogHandler, subscriber: Subscriber, subscriberClientID: String, label: String, trackableID: String, expectedState: ConnectionState, failureStates: Set<ConnectionState>, expectedSubscriberPresence: Bool?, expectedPublisherPresence: Bool, expectedLocation: Location?, expectedPublisherResolution: Resolution?, expectedSubscriberResolution: Resolution?, timeout: TimeInterval, subscriberResolutionPreferences: AnyPublisher<Resolution, Never>) {
+        init(sharedState: SharedState, logHandler: InternalLogHandler, subscriber: Subscriber, subscriberClientID: String, label: String, trackableID: String, expectedState: TrackableState, failureStates: Set<TrackableState>, expectedSubscriberPresence: Bool?, expectedPublisherPresence: Bool, expectedLocation: Location?, expectedPublisherResolution: Resolution?, expectedSubscriberResolution: Resolution?, timeout: TimeInterval, subscriberResolutionPreferences: AnyPublisher<Resolution, Never>) {
             self.sharedState = sharedState
             self.logHandler = logHandler.addingSubsystem(.named("SubscriberMonitor(\(label))"))
             self.subscriber = subscriber
@@ -214,9 +214,9 @@ extension SubscriberNetworkConnectivityTests {
         }
 
         /**
-         * Maps received `ConnectionState` to a success/fail/ignore outcome for this test.
+         * Maps received `TrackableState` to a success/fail/ignore outcome for this test.
          */
-        private static func receive(_ state: ConnectionState, failureStates: Set<ConnectionState>, expectedState: ConnectionState, logHandler: InternalLogHandler) -> Bool? {
+        private static func receive(_ state: TrackableState, failureStates: Set<TrackableState>, expectedState: TrackableState, logHandler: InternalLogHandler) -> Bool? {
             if failureStates.contains(state) {
                 logHandler.logMessage(level: .error, message: "(FAIL) Got state \(state)", error: nil)
                 return false

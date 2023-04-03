@@ -8,14 +8,14 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
 
     private(set) var presentPublisherMemberKeys: Set<String> = []
     private(set) var lastEmittedValueOfIsPublisherVisible: Bool?
-    private(set) var lastEmittedTrackableState: ConnectionState = .offline
+    private(set) var lastEmittedTrackableState: TrackableState = .offline
     private(set) var lastConnectionStateChange = ConnectionStateChange(state: .offline, errorInformation: nil)
     private(set) var lastChannelConnectionStateChange = ConnectionStateChange(state: .offline, errorInformation: nil)
     private(set) var pendingPublisherResolutions = PendingResolutions()
 
     private(set) var enhancedLocation: LocationUpdate?
     private(set) var rawLocation: LocationUpdate?
-    private(set) var trackableState: ConnectionState = .offline
+    private(set) var trackableState: TrackableState = .offline
     private(set) var publisherPresence = false
     private(set) var resolution: Resolution?
     private(set) var nextLocationUpdateInterval: Double?
@@ -55,7 +55,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
     mutating func delegateStateEventsIfRequired(logHandler: InternalLogHandler?) {
         let isAPublisherPresent = !presentPublisherMemberKeys.isEmpty
 
-        var trackableState: ConnectionState?
+        var trackableState: TrackableState?
         switch lastConnectionStateChange.state {
         case .online:
             switch lastChannelConnectionStateChange.state {
@@ -65,15 +65,17 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
                 trackableState = .offline
             case .failed:
                 trackableState = .failed
+            // TODO investigate, https://github.com/ably/ably-asset-tracking-swift/issues/642
             case .closed:
-                trackableState = .closed
+                trackableState = .offline
             }
         case .offline:
             trackableState = .offline
         case .failed:
             trackableState = .failed
+        // TODO investigate, https://github.com/ably/ably-asset-tracking-swift/issues/642
         case .closed:
-            trackableState = .closed
+            trackableState = .offline
         }
 
         if let trackableState, trackableState != lastEmittedTrackableState {
@@ -114,9 +116,9 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         delegateEvent(event: .delegateUpdatedPublisherPresence(DelegateEvent.DelegateUpdatedPublisherPresenceEvent(isPresent: isPublisherPresent)), logHandler: logHandler)
     }
 
-    mutating func notifyTrackableStateUpdated(trackableState: ConnectionState, logHandler: InternalLogHandler?) {
+    mutating func notifyTrackableStateUpdated(trackableState: TrackableState, logHandler: InternalLogHandler?) {
         self.trackableState = trackableState
-        delegateEvent(event: .delegateConnectionStatusChanged(DelegateEvent.DelegateConnectionStatusChangedEvent(status: trackableState)), logHandler: logHandler)
+        delegateEvent(event: .delegateTrackableStateChanged(DelegateEvent.DelegateTrackableStateChangedEvent(state: trackableState)), logHandler: logHandler)
     }
 
     mutating func notifyDidFailWithError(error: ErrorInformation, logHandler: InternalLogHandler?) {
@@ -142,7 +144,7 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
         case delegateRawLocationReceived(DelegateRawLocationReceivedEvent)
         case delegateResolutionReceived(DelegateResolutionReceivedEvent)
         case delegateDesiredIntervalReceived(DelegateDesiredIntervalReceivedEvent)
-        case delegateConnectionStatusChanged(DelegateConnectionStatusChangedEvent)
+        case delegateTrackableStateChanged(DelegateTrackableStateChangedEvent)
         case delegateUpdatedPublisherPresence(DelegateUpdatedPublisherPresenceEvent)
 
         struct DelegateErrorEvent {
@@ -165,8 +167,8 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
             let desiredInterval: Double
         }
 
-        struct DelegateConnectionStatusChangedEvent {
-            let status: ConnectionState
+        struct DelegateTrackableStateChangedEvent {
+            let state: TrackableState
         }
 
         struct DelegateUpdatedPublisherPresenceEvent {
@@ -188,9 +190,9 @@ struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
             case .delegateError(let event):
                 log("didFailWithError: \(event.error)")
                 delegate.subscriber(sender: subscriber, didFailWithError: event.error)
-            case .delegateConnectionStatusChanged(let event):
-                log("didChangeAssetConnectionStatus: \(event.status)")
-                delegate.subscriber(sender: subscriber, didChangeAssetConnectionStatus: event.status)
+            case .delegateTrackableStateChanged(let event):
+                log("didChangeTrackableState: \(event.state)")
+                delegate.subscriber(sender: subscriber, didChangeTrackableState: event.state)
             case .delegateEnhancedLocationReceived(let event):
                 log("didUpdateEnhancedLocation: \(event.locationUpdate)")
                 delegate.subscriber(sender: subscriber, didUpdateEnhancedLocation: event.locationUpdate)

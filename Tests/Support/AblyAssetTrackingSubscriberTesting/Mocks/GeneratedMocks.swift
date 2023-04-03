@@ -166,19 +166,19 @@ public class SubscriberDelegateMock: SubscriberDelegate {
 
     //MARK: - subscriber
 
-    public var subscriberSenderDidChangeAssetConnectionStatusCallsCount = 0
-    public var subscriberSenderDidChangeAssetConnectionStatusCalled: Bool {
-        return subscriberSenderDidChangeAssetConnectionStatusCallsCount > 0
+    public var subscriberSenderDidChangeTrackableStateCallsCount = 0
+    public var subscriberSenderDidChangeTrackableStateCalled: Bool {
+        return subscriberSenderDidChangeTrackableStateCallsCount > 0
     }
-    public var subscriberSenderDidChangeAssetConnectionStatusReceivedArguments: (sender: Subscriber, status: ConnectionState)?
-    public var subscriberSenderDidChangeAssetConnectionStatusReceivedInvocations: [(sender: Subscriber, status: ConnectionState)] = []
-    public var subscriberSenderDidChangeAssetConnectionStatusClosure: ((Subscriber, ConnectionState) -> Void)?
+    public var subscriberSenderDidChangeTrackableStateReceivedArguments: (sender: Subscriber, state: TrackableState)?
+    public var subscriberSenderDidChangeTrackableStateReceivedInvocations: [(sender: Subscriber, state: TrackableState)] = []
+    public var subscriberSenderDidChangeTrackableStateClosure: ((Subscriber, TrackableState) -> Void)?
 
-    public func subscriber(sender: Subscriber, didChangeAssetConnectionStatus status: ConnectionState) {
-        subscriberSenderDidChangeAssetConnectionStatusCallsCount += 1
-        subscriberSenderDidChangeAssetConnectionStatusReceivedArguments = (sender: sender, status: status)
-        subscriberSenderDidChangeAssetConnectionStatusReceivedInvocations.append((sender: sender, status: status))
-        subscriberSenderDidChangeAssetConnectionStatusClosure?(sender, status)
+    public func subscriber(sender: Subscriber, didChangeTrackableState state: TrackableState) {
+        subscriberSenderDidChangeTrackableStateCallsCount += 1
+        subscriberSenderDidChangeTrackableStateReceivedArguments = (sender: sender, state: state)
+        subscriberSenderDidChangeTrackableStateReceivedInvocations.append((sender: sender, state: state))
+        subscriberSenderDidChangeTrackableStateClosure?(sender, state)
     }
 
     //MARK: - subscriber

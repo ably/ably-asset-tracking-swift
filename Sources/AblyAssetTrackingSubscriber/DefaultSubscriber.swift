@@ -23,7 +23,7 @@ class DefaultSubscriber: Subscriber {
     private var subscriberState: SubscriberState = .working
     private var receivedAblyClientConnectionState: ConnectionState = .offline
     private var receivedAblyChannelConnectionState: ConnectionState = .offline
-    private var currentTrackableConnectionState: ConnectionState = .offline
+    private var currentTrackableState: TrackableState = .offline
     private var isPublisherOnline = false
     private var lastEmittedIsPublisherOnline: Bool?
 
@@ -131,9 +131,9 @@ extension DefaultSubscriber {
             case .delegateError(let event):
                 log("didFailWithError: \(event.error)")
                 delegate.subscriber(sender: self, didFailWithError: event.error)
-            case .delegateConnectionStatusChanged(let event):
-                log("didChangeAssetConnectionStatus: \(event.status)")
-                delegate.subscriber(sender: self, didChangeAssetConnectionStatus: event.status)
+            case .delegateTrackableStateChanged(let event):
+                log("didChangeTrackableState: \(event.state)")
+                delegate.subscriber(sender: self, didChangeTrackableState: event.state)
             case .delegateEnhancedLocationReceived(let event):
                 log("didUpdateEnhancedLocation: \(event.locationUpdate)")
                 delegate.subscriber(sender: self, didUpdateEnhancedLocation: event.locationUpdate)
@@ -236,36 +236,36 @@ extension DefaultSubscriber {
     }
 
     private func handleConnectionStateChange() {
-        if currentTrackableConnectionState == .failed {
+        if currentTrackableState == .failed {
             logHandler?.debug(message: "Ignoring state change since state is already .failed", error: nil)
             return
         }
 
-        var newConnectionState: ConnectionState = .offline
+        var newTrackableState: TrackableState = .offline
 
         switch receivedAblyClientConnectionState {
         case .online:
             switch receivedAblyChannelConnectionState {
             case .online:
-                newConnectionState = isPublisherOnline ? .online : .offline
+                newTrackableState = isPublisherOnline ? .online : .offline
             case .offline:
-                newConnectionState = .offline
+                newTrackableState = .offline
             case .closed:
-                newConnectionState = .offline
+                newTrackableState = .offline
             case .failed:
-                newConnectionState = .failed
+                newTrackableState = .failed
             }
         case .offline:
-            newConnectionState = .offline
+            newTrackableState = .offline
         case .failed:
-            newConnectionState = .failed
+            newTrackableState = .failed
         case .closed:
-            newConnectionState = .offline
+            newTrackableState = .offline
         }
 
-        if newConnectionState != currentTrackableConnectionState {
-            currentTrackableConnectionState = newConnectionState
-            callback(event: .delegateConnectionStatusChanged(.init(status: newConnectionState)))
+        if newTrackableState != currentTrackableState {
+            currentTrackableState = newTrackableState
+            callback(event: .delegateTrackableStateChanged(.init(state: newTrackableState)))
         }
     }
 
@@ -294,9 +294,9 @@ extension DefaultSubscriber {
         callback(event: .delegateError(.init(error: event.error)))
 
         if event.error.code == ErrorCode.invalidMessage.rawValue {
-            logHandler?.error(message: "invalidMessage error received, emitting failed connection status", error: event.error)
-            currentTrackableConnectionState = .failed
-            callback(event: .delegateConnectionStatusChanged(.init(status: .failed)))
+            logHandler?.error(message: "invalidMessage error received, emitting failed trackable state", error: event.error)
+            currentTrackableState = .failed
+            callback(event: .delegateTrackableStateChanged(.init(state: .failed)))
 
             ablySubscriber.disconnect(trackableId: trackableId, presenceData: nil) { [weak self, trackableId] error in
                 if case .failure(let error) = error {

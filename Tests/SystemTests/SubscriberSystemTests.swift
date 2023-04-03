@@ -31,8 +31,8 @@ class SubscriberSystemTests: XCTestCase {
             delegateDidFailWithErrorCalledExpectation.fulfill()
         }
 
-        let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeAssetConnectionStatus")
-        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+        let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeTrackableState")
+        delegate.subscriberSenderDidChangeTrackableStateClosure = { _, status in
             XCTAssertEqual(status, .failed)
             delegateDidChangeAssetConnectionStatusExpectation.fulfill()
         }

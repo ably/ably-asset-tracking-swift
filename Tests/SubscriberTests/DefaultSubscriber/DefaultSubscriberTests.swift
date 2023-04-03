@@ -361,8 +361,8 @@ class DefaultSubscriberTests: XCTestCase {
             delegateDidFailWithErrorCalledExpectation.fulfill()
         }
 
-        let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeAssetConnectionStatus")
-        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+        let delegateDidChangeAssetConnectionStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeTrackableState")
+        delegate.subscriberSenderDidChangeTrackableStateClosure = { _, status in
             XCTAssertEqual(status, .failed)
             delegateDidChangeAssetConnectionStatusExpectation.fulfill()
         }
@@ -383,8 +383,8 @@ class DefaultSubscriberTests: XCTestCase {
         let delegate = SubscriberDelegateMock()
         subscriber.delegate = delegate
 
-        let failedStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeAssetConnectionStatus with failed status")
-        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, status in
+        let failedStatusExpectation = expectation(description: "Subscriber’s delegate receives didChangeTrackableState with failed status")
+        delegate.subscriberSenderDidChangeTrackableStateClosure = { _, status in
             XCTAssertEqual(status, .failed)
             failedStatusExpectation.fulfill()
         }
@@ -393,7 +393,7 @@ class DefaultSubscriberTests: XCTestCase {
 
         waitForExpectations(timeout: 10)
 
-        delegate.subscriberSenderDidChangeAssetConnectionStatusClosure = { _, _ in
+        delegate.subscriberSenderDidChangeTrackableStateClosure = { _, _ in
             XCTFail("Subscriber’s delegate received a connection status update")
         }
 

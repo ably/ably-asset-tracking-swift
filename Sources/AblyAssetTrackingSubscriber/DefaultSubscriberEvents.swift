@@ -56,7 +56,7 @@ extension DefaultSubscriber {
         case delegateRawLocationReceived(DelegateRawLocationReceivedEvent)
         case delegateResolutionReceived(DelegateResolutionReceivedEvent)
         case delegateDesiredIntervalReceived(DelegateDesiredIntervalReceivedEvent)
-        case delegateConnectionStatusChanged(DelegateConnectionStatusChangedEvent)
+        case delegateTrackableStateChanged(DelegateTrackableStateChangedEvent)
         case delegateUpdatedPublisherPresence(DelegateUpdatedPublisherPresenceEvent)
 
         struct DelegateErrorEvent {
@@ -79,8 +79,8 @@ extension DefaultSubscriber {
             let desiredInterval: Double
         }
 
-        struct DelegateConnectionStatusChangedEvent {
-            let status: ConnectionState
+        struct DelegateTrackableStateChangedEvent {
+            let state: TrackableState
         }
 
         struct DelegateUpdatedPublisherPresenceEvent {

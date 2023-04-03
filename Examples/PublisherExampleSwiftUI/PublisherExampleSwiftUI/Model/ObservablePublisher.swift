@@ -14,10 +14,10 @@ class ObservablePublisher: ObservableObject {
         var constantResolution: Resolution?
     }
 
-    struct TrackableState {
-        var connectionState: ConnectionState?
+    struct ObservablePublisherTrackableState {
+        var trackableState: TrackableState?
     }
-    @Published private(set) var trackables: [Trackable: TrackableState] = [:]
+    @Published private(set) var trackables: [Trackable: ObservablePublisherTrackableState] = [:]
     @Published private(set) var location: EnhancedLocationUpdate?
     @Published private(set) var resolution: Resolution?
     @Published private(set) var routingProfile: RoutingProfile?
@@ -60,12 +60,12 @@ class ObservablePublisher: ObservableObject {
         }
     }
 
-    private func updateConnectionState(_ connectionState: ConnectionState, forTrackable trackable: Trackable) {
-        guard let trackableState = trackables[trackable] else {
+    private func updateState(_ trackableState: TrackableState, forTrackable trackable: Trackable) {
+        guard let observablePublisherTrackableState = trackables[trackable] else {
             return
         }
-        var newTrackableState = trackableState
-        newTrackableState.connectionState = connectionState
+        var newTrackableState = observablePublisherTrackableState
+        newTrackableState.trackableState = trackableState
         trackables[trackable] = newTrackableState
     }
 }
@@ -79,8 +79,8 @@ extension ObservablePublisher: PublisherDelegate {
         self.location = location
     }
 
-    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didChangeConnectionState state: AblyAssetTrackingCore.ConnectionState, forTrackable trackable: AblyAssetTrackingCore.Trackable) {
-        updateConnectionState(state, forTrackable: trackable)
+    func publisher(sender: AblyAssetTrackingPublisher.Publisher, didChangeState state: TrackableState, forTrackable trackable: Trackable) {
+        updateState(state, forTrackable: trackable)
     }
 
     func publisher(sender: AblyAssetTrackingPublisher.Publisher, didUpdateResolution resolution: AblyAssetTrackingCore.Resolution) {

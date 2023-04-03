@@ -45,7 +45,7 @@ enum DescriptionsHelper {
     }
 
     enum AssetState {
-        case connectionState(_: ConnectionState?)
+        case trackableState(_: TrackableState?)
         case subscriberPresence(isPresent: Bool?)
     }
 
@@ -53,20 +53,18 @@ enum DescriptionsHelper {
     enum AssetStateHelper {
         static func getDescriptionAndColor(for state: AssetState) -> (desc: String, color: UIColor) {
             switch state {
-            case .connectionState(let connectionState):
-                if let connectionState {
-                    switch connectionState {
+            case .trackableState(let trackableState):
+                if let trackableState {
+                    switch trackableState {
                     case .online:
                         return ("online", .systemGreen)
                     case .offline:
                         return ("offline", .systemRed)
-                    case .closed:
-                        return ("closed", .systemRed)
                     case .failed:
                         return ("failed", .systemRed)
                     }
                 } else {
-                    return ("The asset connection status is not determined", .black)
+                    return ("The trackable state is not determined", .black)
                 }
             case .subscriberPresence(let isPresent):
                 if let isPresent {

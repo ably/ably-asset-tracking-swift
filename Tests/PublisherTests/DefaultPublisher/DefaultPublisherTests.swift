@@ -18,7 +18,7 @@ class DefaultPublisherTests: XCTestCase {
     var trackable: Trackable!
     var publisher: DefaultPublisher!
     var delegate: MockPublisherDelegate!
-    var enhancedLocationState: TrackableState<EnhancedLocationUpdate>!
+    var enhancedLocationState: LocationsPublishingState<EnhancedLocationUpdate>!
 
     let logger = InternalLogHandlerMockThreadSafe()
     let waitAsync = WaitAsync()
@@ -35,7 +35,7 @@ class DefaultPublisherTests: XCTestCase {
             destination: LocationCoordinate(latitude: 3.1415, longitude: 2.7182)
         )
         delegate = MockPublisherDelegate()
-        enhancedLocationState = TrackableState<EnhancedLocationUpdate>()
+        enhancedLocationState = LocationsPublishingState<EnhancedLocationUpdate>()
         publisher = DefaultPublisher(
             routingProfile: .driving,
             resolutionPolicyFactory: resolutionPolicyFactory,
@@ -893,10 +893,10 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertNotNil(ablyPublisher.closeCompletion)
     }
 
-    func testDefaultTrackableStateRetry() {
+    func testDefaultLocationsPublishingStateRetry() {
         let trackableId = "trackable_1"
         let otherTrackableId = "trackable_2"
-        let state = TrackableState<EnhancedLocationUpdate>()
+        let state = LocationsPublishingState<EnhancedLocationUpdate>()
 
         /**
          The `shouldRetry` method wraps few functionalities:
@@ -926,11 +926,11 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertEqual(state.getRetryCounter(for: trackableId), 0)
     }
 
-    func testDefaultTrackableStateWaiting() {
+    func testDefaultLocationsPublishingStateWaiting() {
         let trackableId = "trackable_1"
         let locationUpdate = EnhancedLocationUpdate(location: Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1)))
         let anotherLocationUpdate = EnhancedLocationUpdate(location: Location(coordinate: LocationCoordinate(latitude: 2, longitude: 2)))
-        let state = TrackableState<EnhancedLocationUpdate>()
+        let state = LocationsPublishingState<EnhancedLocationUpdate>()
 
         /**
          Add two location updates
@@ -958,9 +958,9 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertNil(state.nextWaitingLocation(for: trackableId))
     }
 
-    func testDefaultTrackableStatePending() {
+    func testDefaultLocationsPublishingStatePending() {
         let trackableId = "trackable_1"
-        let state = TrackableState<EnhancedLocationUpdate>()
+        let state = LocationsPublishingState<EnhancedLocationUpdate>()
 
         XCTAssertFalse(state.hasPendingMessage(for: trackableId))
 
@@ -973,11 +973,11 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertFalse(state.hasPendingMessage(for: trackableId))
     }
 
-    func testDefaultTrackableStateRemove() {
+    func testDefaultLocationsPublishingStateRemove() {
         let trackableId = "trackable_1"
         let trackableId2 = "trackable_2"
         let locationUpdate = EnhancedLocationUpdate(location: Location(coordinate: LocationCoordinate(latitude: 1, longitude: 1)))
-        let state = TrackableState<EnhancedLocationUpdate>()
+        let state = LocationsPublishingState<EnhancedLocationUpdate>()
 
         state.markMessageAsPending(for: trackableId)
         state.markMessageAsPending(for: trackableId2)
@@ -1095,8 +1095,8 @@ class DefaultPublisherTests: XCTestCase {
         XCTAssertEqual(state.locationsList(for: trackableId).last!.location, overflowLocation)
     }
 
-    private func createSkippedLocationState(with data: [String: [Location]] = [:], capacity: Int = 10) -> TrackableState<EnhancedLocationUpdate> {
-        let state = TrackableState<EnhancedLocationUpdate>(maxSkippedLocationsSize: capacity)
+    private func createSkippedLocationState(with data: [String: [Location]] = [:], capacity: Int = 10) -> LocationsPublishingState<EnhancedLocationUpdate> {
+        let state = LocationsPublishingState<EnhancedLocationUpdate>(maxSkippedLocationsSize: capacity)
         for (trackableId, locations) in data {
             locations.map(EnhancedLocationUpdate.init).forEach { enhancedLocationUpdate in
                 state.addLocation(for: trackableId, location: enhancedLocationUpdate)
