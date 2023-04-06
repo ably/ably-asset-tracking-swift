@@ -23,7 +23,10 @@ class SubscriberWorkerFactoryTests: XCTestCase {
             resolution: nil,
             logHandler: logger
         )
-        properties = SubscriberWorkerQueueProperties(initialResolution: nil, subscriber: subscriber)
+        properties = SubscriberWorkerQueueProperties(
+            isStopped: false,
+            specific: SubscriberSpecificWorkerQueuePropertiesImpl(initialResolution: nil, subscriber: subscriber)
+        )
     }
 
     func test_ItBuildsLegacyWork() throws {

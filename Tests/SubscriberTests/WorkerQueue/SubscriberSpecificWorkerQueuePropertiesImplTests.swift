@@ -4,8 +4,8 @@ import AblyAssetTrackingInternalTesting
 import AblyAssetTrackingSubscriberTesting
 import XCTest
 
-class SubscriberWorkerQueuePropertiesTests: XCTestCase {
-    private var subscriberProperties: SubscriberWorkerQueueProperties!
+class SubscriberSpecificWorkerQueuePropertiesImplTests: XCTestCase {
+    private var subscriberProperties: SubscriberSpecificWorkerQueuePropertiesImpl!
 
     private let configuration = ConnectionConfiguration(apiKey: "API_KEY", clientId: "CLIENT_ID")
     private let subscriberDelegate = SubscriberDelegateMock()
@@ -24,7 +24,7 @@ class SubscriberWorkerQueuePropertiesTests: XCTestCase {
             resolution: nil,
             logHandler: logger
         )
-        subscriberProperties = SubscriberWorkerQueueProperties(initialResolution: nil, subscriber: subscriber)
+        subscriberProperties = SubscriberSpecificWorkerQueuePropertiesImpl(initialResolution: nil, subscriber: subscriber)
     }
 
     func test_subscriberProperties_updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired_changes_lastConnectionStateChange() {

@@ -1,8 +1,48 @@
 import AblyAssetTrackingInternal
 import Foundation
 
+/*
+We use this intermediate struct, instead of directly making SubscriberWorkerQueueProperties a protocol, for two reasons:
+
+1. If it were a protocol, we would not be able create a WorkerQueue whose PropertiesType is SubscriberWorkerQueueProperties (we’d get an error "Type 'any SubscriberWorkerQueueProperties' cannot conform to 'WorkerQueueProperties' — Only concrete types such as structs, enums and classes can conform to protocols")
+2. Sourcery is unable to generate mocks for protocols that inherit from other protocols. This means that if SubscriberWorkerQueueProperties were to inherit directly from WorkerQueueProperties, we would not be able to use Sourcery to generate mocks for it.
+*/
 struct SubscriberWorkerQueueProperties: WorkerQueueProperties {
-    public var isStopped = false
+    var isStopped: Bool
+    var specific: SubscriberSpecificWorkerQueuePropertiesProtocol
+}
+
+// sourcery: AutoMockable
+protocol SubscriberSpecificWorkerQueuePropertiesProtocol {
+    var presenceData: PresenceData { get set }
+
+    var presentPublisherMemberKeys: Set<String> { get }
+    var lastEmittedValueOfIsPublisherVisible: Bool? { get }
+    var lastEmittedTrackableState: TrackableState { get }
+    var lastConnectionStateChange: ConnectionStateChange { get }
+    var lastChannelConnectionStateChange: ConnectionStateChange { get }
+    var pendingPublisherResolutions: PendingResolutions { get }
+
+    var enhancedLocation: LocationUpdate? { get }
+    var rawLocation: LocationUpdate? { get }
+    var trackableState: TrackableState { get }
+    var publisherPresence: Bool { get }
+    var resolution: Resolution? { get }
+    var nextLocationUpdateInterval: Double? { get }
+
+    mutating func updateForConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?)
+    mutating func updateForChannelConnectionStateChangeAndThenDelegateStateEventsIfRequired(stateChange: ConnectionStateChange, logHandler: InternalLogHandler?)
+    mutating func updateForPresenceMessagesAndThenDelegateStateEventsIfRequired(presenceMessages: [PresenceMessage], logHandler: InternalLogHandler?)
+    mutating func delegateStateEventsIfRequired(logHandler: InternalLogHandler?)
+    mutating func notifyEnhancedLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?)
+    mutating func notifyRawLocationUpdated(locationUpdate: LocationUpdate, logHandler: InternalLogHandler?)
+    mutating func notifyPublisherPresenceUpdated(isPublisherPresent: Bool, logHandler: InternalLogHandler?)
+    mutating func notifyTrackableStateUpdated(trackableState: TrackableState, logHandler: InternalLogHandler?)
+    mutating func notifyDidFailWithError(error: ErrorInformation, logHandler: InternalLogHandler?)
+    mutating func notifyResolutionsChanged(resolutions: [Resolution], logHandler: InternalLogHandler?)
+}
+
+struct SubscriberSpecificWorkerQueuePropertiesImpl: SubscriberSpecificWorkerQueuePropertiesProtocol {
     var presenceData: PresenceData
     private let subscriber: Subscriber
 
