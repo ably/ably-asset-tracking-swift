@@ -9,6 +9,8 @@ class SubscriberWorkerFactory: WorkerFactory {
             switch workerSpecification {
             case .legacy(callback: let callback):
                 return LegacyWorker(work: callback, logger: logHandler)
+            case .updatePublisherPresence(presenceMessage: let presenceMessage):
+                return UpdatePublisherPresenceWorker(presenceMessage: presenceMessage, logHandler: logHandler)
             }
     }
 }

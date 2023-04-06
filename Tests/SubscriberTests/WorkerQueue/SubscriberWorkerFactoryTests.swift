@@ -1,4 +1,4 @@
-import AblyAssetTrackingInternal
+@testable import AblyAssetTrackingInternal
 import AblyAssetTrackingInternalTesting
 @testable import AblyAssetTrackingSubscriber
 import AblyAssetTrackingSubscriberTesting
@@ -48,5 +48,16 @@ class SubscriberWorkerFactoryTests: XCTestCase {
             postWork: { _ in }
         )
         XCTAssertTrue(legacyWorkerCalled, "Legacy worker work not called")
+    }
+
+    func test_updatePublisherPresence() {
+        let worker = factory.createWorker(
+            workerSpecification: .updatePublisherPresence(
+                presenceMessage: .init(action: .present, data: .init(type: .publisher), memberKey: "")
+            ),
+            logHandler: nil
+        )
+
+        XCTAssertTrue(worker is UpdatePublisherPresenceWorker)
     }
 }
