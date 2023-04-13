@@ -64,7 +64,7 @@ These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be develo
 
 - Swift 5.7+
 
-### Swift package manager
+### Swift Package Manager
 
 - To install this package in an **Xcode Project**:
 - Paste `https://github.com/ably/ably-asset-tracking-swift` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
