@@ -71,14 +71,15 @@ In order to install the Ably Asset Tracking SDKs, you need to first configure yo
 ### Swift Package Manager
 
 - To install this package in an **Xcode Project**:
-- Paste `https://github.com/ably/ably-asset-tracking-swift` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
-- Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
-- [This apple guide](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) explains the steps in more detail.
+  - Paste `https://github.com/ably/ably-asset-tracking-swift` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
+  - Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
+  - [This apple guide](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) explains the steps in more detail.
+
 - To install this package into a **Swift Package**, add the following to your manifest (`Package.swift`):
 
-```swift
-.package(url: "https://github.com/ably/ably-asset-tracking-swift", from: LATEST_VERSION),
-```
+  ```swift
+  .package(url: "https://github.com/ably/ably-asset-tracking-swift", from: LATEST_VERSION),
+  ```
 
 _You can find the version on the [releases](https://github.com/ably/ably-asset-tracking-swift/releases) page._
 
