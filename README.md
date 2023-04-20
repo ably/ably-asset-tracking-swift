@@ -64,23 +64,28 @@ These SDKs support support iOS and iPadOS. Support for macOS/ tvOS may be develo
 
 - Swift 5.7+
 
-### Swift package manager
+### Mapbox setup
+
+In order to install the Ably Asset Tracking SDKs, you need to first configure your development machine so that it has permissions to download the Mapbox Navigation SDK. To do this, follow the instructions under "Configure your secret token" in the [Mapbox installation guide](https://docs.mapbox.com/ios/navigation/guides/get-started/install/#configure-credentials) in order to set up your `~/.netrc` file.
+
+### Swift Package Manager
 
 - To install this package in an **Xcode Project**:
-- Paste `https://github.com/ably/ably-asset-tracking-swift` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
-- Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
-- [This apple guide](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) explains the steps in more detail.
+  - Paste `https://github.com/ably/ably-asset-tracking-swift` in the "Swift Packages" search box. (Xcode project > Swift Packages.. > `+` button)
+  - Select the relevant SDK for your target. (Publisher SDK, Subscriber SDK or both)
+  - [This apple guide](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) explains the steps in more detail.
+
 - To install this package into a **Swift Package**, add the following to your manifest (`Package.swift`):
 
-```swift
-.package(url: "https://github.com/ably/ably-asset-tracking-swift", from: LATEST_VERSION),
-```
+  ```swift
+  .package(url: "https://github.com/ably/ably-asset-tracking-swift", from: LATEST_VERSION),
+  ```
 
 _You can find the version on the [releases](https://github.com/ably/ably-asset-tracking-swift/releases) page._
 
 ## Example Apps
 
-- Configure your Mapbox credentials (`~/.netrc`) to download the Mapbox SDK by following [this](https://docs.mapbox.com/ios/search/guides/install/#configure-credentials) guide. You'll need a Mapbox account.
+- If you have not already, [configure your development machine](#mapbox-setup) so that it has permissions to download the Mapbox Navigation SDK.
 - An `Examples/Secrets.xcconfig` file containing credentials (keys/ tokens) is required to build the example apps. (You can use the example `Examples/Example.Secrets.xcconfig`, e.g. by running `cp Examples/Example.Secrets.xcconfig Examples/Secrets.xcconfig`). Update the following values in `Examples/Secrets.xcconfig`:
 - `ABLY_API_KEY`: Used by all example apps to authenticate with Ably using basic authentication. Not recommended in production, and can be taken from [here](https://ably.com/accounts).
 - `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs, and can be taken from [here](https://account.mapbox.com/). Using the Mapbox token is only required to run the **Publisher** example apps.
