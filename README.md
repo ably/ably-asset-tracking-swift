@@ -12,7 +12,7 @@ Ably Asset Tracking SDKs provide an easy way to track multiple assets with realt
 
 ### Status
 
-This SDK is a beta version. That means it contains a subset of the final SDK functionality, and the APIs are subject to change. The latest release of the SDKs is available in the [Releases section](https://github.com/ably/ably-asset-tracking-swift/releases) of this repository.
+This SDK is an alpha version. That means it contains a subset of the final SDK functionality, the APIs are subject to change, and it is not ready for production use. The latest release of the SDKs is available in the [Releases section](https://github.com/ably/ably-asset-tracking-swift/releases) of this repository.
 
 **Ably Asset Tracking is:**
 
