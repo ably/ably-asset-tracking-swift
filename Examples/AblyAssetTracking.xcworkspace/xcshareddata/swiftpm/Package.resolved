@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ably/ably-cocoa",
       "state" : {
-        "branch" : "ffc9efb",
-        "revision" : "ffc9efb99f5abcaf907feececfb1ed84f919a6d8"
+        "revision" : "0a97ac35ee8f994762e963a9e501df492247a578",
+        "version" : "1.2.20"
       }
     },
     {
