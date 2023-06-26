@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PublisherExampleSwiftUI/PublisherExampleSwiftUI.xcodeproj">
+      location = "group:PublisherExample/PublisherExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:SubscriberExample/SubscriberExample.xcodeproj">

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D544FAF12771B3560015925C"
-               BuildableName = "PublisherExampleSwiftUI.app"
-               BlueprintName = "PublisherExampleSwiftUI"
-               ReferencedContainer = "container:PublisherExampleSwiftUI.xcodeproj">
+               BuildableName = "PublisherExample.app"
+               BlueprintName = "PublisherExample"
+               ReferencedContainer = "container:PublisherExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D544FAF12771B3560015925C"
-            BuildableName = "PublisherExampleSwiftUI.app"
-            BlueprintName = "PublisherExampleSwiftUI"
-            ReferencedContainer = "container:PublisherExampleSwiftUI.xcodeproj">
+            BuildableName = "PublisherExample.app"
+            BlueprintName = "PublisherExample"
+            ReferencedContainer = "container:PublisherExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,9 +63,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D544FAF12771B3560015925C"
-            BuildableName = "PublisherExampleSwiftUI.app"
-            BlueprintName = "PublisherExampleSwiftUI"
-            ReferencedContainer = "container:PublisherExampleSwiftUI.xcodeproj">
+            BuildableName = "PublisherExample.app"
+            BlueprintName = "PublisherExample"
+            ReferencedContainer = "container:PublisherExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

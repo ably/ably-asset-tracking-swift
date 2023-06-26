@@ -28,7 +28,7 @@ test-results/
 # User defined configuration
 **/Secrets.xcconfig
 **/Secrets.swift
-Examples/PublisherExampleSwiftUI/PublisherExampleSwiftUI/Optional Resources/amplifyconfiguration.json
+Examples/PublisherExample/PublisherExample/Optional Resources/amplifyconfiguration.json
 
 # Documentation output from Jazzy - see jazzy/build.sh
 /docs/
