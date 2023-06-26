@@ -32,4 +32,4 @@ echo
 echo '\033[1mBuild: PublisherExample (SwiftUI)\033[0m'
 echo
 
-xcodebuild build -scheme "PublisherExampleSwiftUI" -workspace "./Examples/AblyAssetTracking.xcworkspace" -destination "platform=iOS Simulator,name=iPhone 14" -configuration "Debug" | xcpretty
+xcodebuild build -scheme "PublisherExample" -workspace "./Examples/AblyAssetTracking.xcworkspace" -destination "platform=iOS Simulator,name=iPhone 14" -configuration "Debug" | xcpretty

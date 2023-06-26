@@ -50,7 +50,7 @@ class ExampleAppSDKLogLineTests: XCTestCase {
     }
 
     func test_init_withLogLineNotFromSDK_throwsError() {
-        let line = "2022-12-13 09:06:04.088025-0300 PublisherExampleSwiftUI[44811:4709249] [Mapbox] [Info, maps-core]: Using Mapbox Core Maps SDK v10.9.0(10541225b5)"
+        let line = "2022-12-13 09:06:04.088025-0300 PublisherExample[44811:4709249] [Mapbox] [Info, maps-core]: Using Mapbox Core Maps SDK v10.9.0(10541225b5)"
 
         XCTAssertThrowsError(try ExampleAppSDKLogLine(line: line)) { error in
             XCTAssertEqual(error as? ExampleAppSDKLogLine.ParseError, .generalError)

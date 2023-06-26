@@ -90,19 +90,19 @@ _You can find the version on the [releases](https://github.com/ably/ably-asset-t
 - `ABLY_API_KEY`: Used by all example apps to authenticate with Ably using basic authentication. Not recommended in production, and can be taken from [here](https://ably.com/accounts).
 - `MAPBOX_ACCESS_TOKEN`: Used to access Mapbox Navigation SDK/ APIs, and can be taken from [here](https://account.mapbox.com/). Using the Mapbox token is only required to run the **Publisher** example apps.
 - Open `AblyAssetTracking.xcworkspace` to open an Xcode workspace containing the Subscriber example app and the Swift Package containing the SDKs that showcase how to use the subscriber part of the Ably Asset Tracking SDKs.
-- Open `PublisherExampleSwiftUI.xcodeproj` to open an Xcode workspace containing the Publisher exmple app
+- Open `PublisherExample.xcodeproj` to open an Xcode workspace containing the Publisher exmple app
 
 ### AWS S3 support in publisher app (optional)
 
-The publisher example app is able to fetch a location history file from an AWS S3 bucket and use it to replay previously-recorded journeys. To enable this functionality, you need to place an [Amplify configuration file](https://docs.amplify.aws/lib/project-setup/create-application/q/platform/ios/#3-provision-the-backend-with-amplify-cli) at `Examples/PublisherExampleSwiftUI/PublisherExampleSwiftUI/Optional Resources/amplifyconfiguration.json`. The example app is configured to use Cognito for auth and S3 for storage.
+The publisher example app is able to fetch a location history file from an AWS S3 bucket and use it to replay previously-recorded journeys. To enable this functionality, you need to place an [Amplify configuration file](https://docs.amplify.aws/lib/project-setup/create-application/q/platform/ios/#3-provision-the-backend-with-amplify-cli) at `Examples/PublisherExample/PublisherExample/Optional Resources/amplifyconfiguration.json`. The example app is configured to use Cognito for auth and S3 for storage.
 
 ### Running example apps on a real device
 
 No additional setup is required when running the example apps on simulators, but if you try to run them on a real device you'll run into code signing errors.
 
 To run the example apps on a device you'll need to change the code signing settings in Xcode:
-- Select the `PublisherExampleSwiftUI` or `SubscriberExample` in the top of the Project Navigator.
-- Select the `PublisherExampleSwiftUI` or `SubscriberExample` target from the targets list.
+- Select the `PublisherExample` or `SubscriberExample` in the top of the Project Navigator.
+- Select the `PublisherExample` or `SubscriberExample` target from the targets list.
 - Select the `Signing & Capabilities` tab.
 - By default the `Team` option is set to `none`. You'll need to change it, preferably to a `... (Personal team)`.
 - Since the default `bundle identifier` is already being used by Ably, you won't be able to reuse it in a different team. You'll need to change it to any other value that's not already in use on App Store Connect.

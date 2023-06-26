@@ -49,7 +49,7 @@
 		21F1993228FF40E6004FE626 /* PublisherDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F1993128FF40E6004FE626 /* PublisherDetailsView.swift */; };
 		21F1993428FF40F3004FE626 /* TrackableState+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F1993328FF40F3004FE626 /* TrackableState+Formatting.swift */; };
 		21F1993628FF41B2004FE626 /* PublisherInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F1993528FF41B2004FE626 /* PublisherInfoViewModel.swift */; };
-		D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */; };
+		D544FAF62771B3560015925C /* PublisherExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D544FAF52771B3560015925C /* PublisherExampleApp.swift */; };
 		D544FAFA2771B3580015925C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D544FAF92771B3580015925C /* Assets.xcassets */; };
 		D544FAFD2771B3580015925C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D544FAFC2771B3580015925C /* Preview Assets.xcassets */; };
 		D544FB072771B3850015925C /* AblyAssetTrackingPublisher in Frameworks */ = {isa = PBXBuildFile; productRef = D544FB062771B3850015925C /* AblyAssetTrackingPublisher */; };
@@ -100,8 +100,8 @@
 		21F1993128FF40E6004FE626 /* PublisherDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherDetailsView.swift; sourceTree = "<group>"; };
 		21F1993328FF40F3004FE626 /* TrackableState+Formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackableState+Formatting.swift"; sourceTree = "<group>"; };
 		21F1993528FF41B2004FE626 /* PublisherInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublisherInfoViewModel.swift; sourceTree = "<group>"; };
-		D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExampleSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExampleSwiftUIApp.swift; sourceTree = "<group>"; };
+		D544FAF22771B3560015925C /* PublisherExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublisherExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D544FAF52771B3560015925C /* PublisherExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExampleApp.swift; sourceTree = "<group>"; };
 		D544FAF92771B3580015925C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D544FAFC2771B3580015925C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D544FB042771B3790015925C /* ably-asset-tracking-swift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ably-asset-tracking-swift"; path = ../..; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				D544FB032771B3790015925C /* Packages */,
-				D544FAF42771B3560015925C /* PublisherExampleSwiftUI */,
+				D544FAF42771B3560015925C /* PublisherExample */,
 				D544FAF32771B3560015925C /* Products */,
 				D544FB052771B3850015925C /* Frameworks */,
 			);
@@ -213,12 +213,12 @@
 		D544FAF32771B3560015925C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */,
+				D544FAF22771B3560015925C /* PublisherExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D544FAF42771B3560015925C /* PublisherExampleSwiftUI */ = {
+		D544FAF42771B3560015925C /* PublisherExample */ = {
 			isa = PBXGroup;
 			children = (
 				2108B75A290975BC002778CA /* Optional Resources */,
@@ -232,11 +232,11 @@
 				D544FB202771D8290015925C /* View */,
 				D544FB1B2771CAB50015925C /* Component */,
 				D544FB102771BC0C0015925C /* Extension */,
-				D544FAF52771B3560015925C /* PublisherExampleSwiftUIApp.swift */,
+				D544FAF52771B3560015925C /* PublisherExampleApp.swift */,
 				D544FAF92771B3580015925C /* Assets.xcassets */,
 				D544FAFB2771B3580015925C /* Preview Content */,
 			);
-			path = PublisherExampleSwiftUI;
+			path = PublisherExample;
 			sourceTree = "<group>";
 		};
 		D544FAFB2771B3580015925C /* Preview Content */ = {
@@ -345,9 +345,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D544FAF12771B3560015925C /* PublisherExampleSwiftUI */ = {
+		D544FAF12771B3560015925C /* PublisherExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D544FB002771B3580015925C /* Build configuration list for PBXNativeTarget "PublisherExampleSwiftUI" */;
+			buildConfigurationList = D544FB002771B3580015925C /* Build configuration list for PBXNativeTarget "PublisherExample" */;
 			buildPhases = (
 				D544FAEE2771B3560015925C /* Sources */,
 				D544FAEF2771B3560015925C /* Frameworks */,
@@ -357,7 +357,7 @@
 			);
 			dependencies = (
 			);
-			name = PublisherExampleSwiftUI;
+			name = PublisherExample;
 			packageProductDependencies = (
 				D544FB062771B3850015925C /* AblyAssetTrackingPublisher */,
 				0C3E7C3E28BF695000171D14 /* Logging */,
@@ -366,8 +366,8 @@
 				2108B75629097498002778CA /* Amplify */,
 				21ABD57F293F6D1C0031A34B /* LoggingFormatAndPipe */,
 			);
-			productName = PublisherExampleSwiftUI;
-			productReference = D544FAF22771B3560015925C /* PublisherExampleSwiftUI.app */;
+			productName = PublisherExample;
+			productReference = D544FAF22771B3560015925C /* PublisherExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -385,7 +385,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D544FAED2771B3550015925C /* Build configuration list for PBXProject "PublisherExampleSwiftUI" */;
+			buildConfigurationList = D544FAED2771B3550015925C /* Build configuration list for PBXProject "PublisherExample" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -403,7 +403,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D544FAF12771B3560015925C /* PublisherExampleSwiftUI */,
+				D544FAF12771B3560015925C /* PublisherExample */,
 			);
 		};
 /* End PBXProject section */
@@ -433,7 +433,7 @@
 				21F1993228FF40E6004FE626 /* PublisherDetailsView.swift in Sources */,
 				0CC893BA28FEBBB3004F7B9A /* VehicleProfile+description.swift in Sources */,
 				2139286728F783A40073DE99 /* Alert+ErrorInformation.swift in Sources */,
-				D544FAF62771B3560015925C /* PublisherExampleSwiftUIApp.swift in Sources */,
+				D544FAF62771B3560015925C /* PublisherExampleApp.swift in Sources */,
 				21AE71A4290B1D6500427F04 /* UploadsView.swift in Sources */,
 				D5DBAF7527748116008B8DED /* RoutingProfile.swift in Sources */,
 				2144B8212908276F00958144 /* SelectDestinationView.swift in Sources */,
@@ -600,11 +600,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PublisherExampleSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PublisherExample/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PublisherExampleSwiftUI/Info.plist;
+				INFOPLIST_FILE = PublisherExample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Asset Publisher";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Used to send your location to asset subscribers";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Used to send your location to asset subscribers";
@@ -635,11 +635,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PublisherExampleSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PublisherExample/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PublisherExampleSwiftUI/Info.plist;
+				INFOPLIST_FILE = PublisherExample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Asset Publisher";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Used to send your location to asset subscribers";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Used to send your location to asset subscribers";
@@ -665,7 +665,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D544FAED2771B3550015925C /* Build configuration list for PBXProject "PublisherExampleSwiftUI" */ = {
+		D544FAED2771B3550015925C /* Build configuration list for PBXProject "PublisherExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D544FAFE2771B3580015925C /* Debug */,
@@ -674,7 +674,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D544FB002771B3580015925C /* Build configuration list for PBXNativeTarget "PublisherExampleSwiftUI" */ = {
+		D544FB002771B3580015925C /* Build configuration list for PBXNativeTarget "PublisherExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D544FB012771B3580015925C /* Debug */,

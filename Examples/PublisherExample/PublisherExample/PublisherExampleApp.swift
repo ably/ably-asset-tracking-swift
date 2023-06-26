@@ -3,14 +3,14 @@ import LoggingFormatAndPipe
 import SwiftUI
 
 @main
-struct PublisherExampleSwiftUIApp: App {
+struct PublisherExampleApp: App {
     @State private var logger: Logger
     @State private var s3Helper: S3Helper?
     @StateObject private var uploadsManager: UploadsManager
     @State private var locationHistoryDataHandler: LocationHistoryDataHandlerProtocol
 
     init() {
-        let logger = Logger(label: "com.ably.PublisherExampleSwiftUI") { _ in
+        let logger = Logger(label: "com.ably.PublisherExample") { _ in
             // Format logged timestamps as an ISO 8601 timestamp with fractional seconds.
             // Unfortunately BasicFormatter doesn’t allow us to pass an ISO8601DateFormatter,
             // so we fall back to following https://developer.apple.com/library/archive/qa/qa1480/_index.html
